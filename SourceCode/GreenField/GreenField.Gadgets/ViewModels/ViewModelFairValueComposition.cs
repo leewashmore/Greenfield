@@ -411,6 +411,12 @@ namespace GreenField.Gadgets.ViewModels
                     SetIsEditableProprty(result);
                 }
 
+                string primaryAnalyst = (from p in result
+                                         select p.PrimaryAnalyst).FirstOrDefault();
+
+                string industryAnalyst = (from p in result
+                                          select p.IndustryAnalyst).FirstOrDefault();
+
                 temp.Add(new FairValueData()
                 {
                     Source = "Primary Analyst",
@@ -420,9 +426,7 @@ namespace GreenField.Gadgets.ViewModels
                     Upside = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.Upside).FirstOrDefault() : null,
                     Date = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.Date).FirstOrDefault() : null,
                     DataId = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.DataId).FirstOrDefault() : null,
-                    IsReadOnly = (result.Select(a => a.Source).Contains("Primary Analyst") && 
-                    result.Where(a => a.Source == "Primary Analyst").Select(a => a.PrimaryAnalyst).First().
-                    Equals(user, StringComparison.InvariantCultureIgnoreCase)) ? false: true,
+                    IsReadOnly = primaryAnalyst.Equals(user, StringComparison.InvariantCultureIgnoreCase) ? false: true,
                 });
                 temp.Add(new FairValueData()
                 {
@@ -433,9 +437,7 @@ namespace GreenField.Gadgets.ViewModels
                     Upside = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Upside).FirstOrDefault() : null,
                     Date = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Date).FirstOrDefault() : null,
                     DataId = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.DataId).FirstOrDefault() : null,
-                    IsReadOnly = (result.Select(a => a.Source).Contains("Industry Analyst") &&
-                    result.Where(a => a.Source == "Industry Analyst").Select(a => a.IndustryAnalyst).First().
-                    Equals(user, StringComparison.InvariantCultureIgnoreCase))? false : true,
+                    IsReadOnly = industryAnalyst.Equals(user, StringComparison.InvariantCultureIgnoreCase) ? false: true,
                 });
                 if (result != null && result.Count > 0)
                 {

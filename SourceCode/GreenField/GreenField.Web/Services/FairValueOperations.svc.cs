@@ -336,6 +336,10 @@ namespace GreenField.Web.Services
                                 {
                                     item.Source = "Industry Analyst";
                                 }
+                                else
+                                {
+                                    item.Source = record.SOURCE;
+                                }
                             }
                         }
                         item.Measure = record.MEASURE;
