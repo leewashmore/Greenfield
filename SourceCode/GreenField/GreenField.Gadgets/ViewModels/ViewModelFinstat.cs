@@ -1,25 +1,17 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Practices.Prism.ViewModel;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
-using GreenField.Common;
-using GreenField.DataContracts;
-using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using GreenField.Gadgets.Models;
+using System.Linq;
+using System.Windows;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
+using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.Models;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.ExternalResearchDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -32,11 +24,10 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// MEF Singletons
         /// </summary>
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
-        private EntitySelectionData _entitySelectionData;
-
+        private IEventAggregator eventAggregator;
+        private IDBInteractivity dbInteractivity;
+        private ILoggerFacade logger;
+        private EntitySelectionData entitySelectionData;
         #endregion
 
         #region Constructor
@@ -45,10 +36,10 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public ViewModelFinstat(DashboardGadgetParam param)
         {
-            _logger = param.LoggerFacade;
-            _dbInteractivity = param.DBInteractivity;
-            _eventAggregator = param.EventAggregator;
-            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            logger = param.LoggerFacade;
+            dbInteractivity = param.DBInteractivity;
+            eventAggregator = param.EventAggregator;
+            entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
 
             PeriodColumns.PeriodColumnNavigate += (e) =>
             {
@@ -59,177 +50,193 @@ namespace GreenField.Gadgets.ViewModels
                 }
             };
 
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
             }
 
-            if (_entitySelectionData != null)
+            if (entitySelectionData != null)
             {
-                HandleSecurityReferenceSetEvent(_entitySelectionData);
+                HandleSecurityReferenceSetEvent(entitySelectionData);
             }
         } 
         #endregion
 
-        #region Properties
-       
+        #region Properties       
         #region Security Information
         /// <summary>
         /// IssueName Property
         /// </summary>
-        private string _issueName;
+        private string issueName;
         public string IssueName
         {
-            get { return _issueName; }
+            get { return issueName; }
             set
             {
-                if (_issueName != value)
-                    _issueName = value;
-                RaisePropertyChanged(() => this.IssueName);
+                if (issueName != value)
+                {
+                    issueName = value;
+                    RaisePropertyChanged(() => this.IssueName);
+                }
             }
         }
 
         /// <summary>
         /// Ticker Property
         /// </summary>
-        private string _ticker;
+        private string ticker;
         public string Ticker
         {
-            get { return _ticker; }
+            get { return ticker; }
             set
             {
-                if (_ticker != value)
-                    _ticker = value;
-                RaisePropertyChanged(() => this.Ticker);
+                if (ticker != value)
+                {
+                    ticker = value;
+                    RaisePropertyChanged(() => this.Ticker);
+                }
             }
         }
 
         /// <summary>
         /// Country Property
         /// </summary>
-        private string _country;
+        private string country;
         public string Country
         {
-            get { return _country; }
+            get { return country; }
             set
             {
-                if (_country != value)
-                    _country = value;
-                RaisePropertyChanged(() => this.Country);
+                if (country != value)
+                {
+                    country = value;
+                    RaisePropertyChanged(() => this.Country);
+                }
             }
         }
 
         /// <summary>
         /// Sector Property
         /// </summary>
-        private string _sector;
+        private string sector;
         public string Sector
         {
-            get { return _sector; }
+            get { return sector; }
             set
             {
-                if (_sector != value)
-                    _sector = value;
-                RaisePropertyChanged(() => this.Sector);
+                if (sector != value)
+                {
+                    sector = value;
+                    RaisePropertyChanged(() => this.Sector);
+                }
             }
         }
 
         /// <summary>
         /// Industry Property
         /// </summary>
-        private string _industry;
+        private string industry;
         public string Industry
         {
-            get { return _industry; }
+            get { return industry; }
             set
             {
-                if (_industry != value)
-                    _industry = value;
-                RaisePropertyChanged(() => this.Industry);
+                if (industry != value)
+                {
+                    industry = value;
+                    RaisePropertyChanged(() => this.Industry);
+                }
             }
         }
 
         /// <summary>
         /// SubIndustry Property
         /// </summary>
-        private string _subIndustry;
+        private string subIndustry;
         public string SubIndustry
         {
-            get { return _subIndustry; }
+            get { return subIndustry; }
             set
             {
-                if (_subIndustry != value)
-                    _subIndustry = value;
-                RaisePropertyChanged(() => this.SubIndustry);
+                if (subIndustry != value)
+                {
+                    subIndustry = value;
+                    RaisePropertyChanged(() => this.SubIndustry);
+                }
             }
         }
 
         /// <summary>
         /// PrimaryAnalyst Property
         /// </summary>
-        private string _primaryAnalyst;
+        private string primaryAnalyst;
         public string PrimaryAnalyst
         {
-            get { return _primaryAnalyst; }
+            get { return primaryAnalyst; }
             set
             {
-                if (_primaryAnalyst != value)
-                    _primaryAnalyst = value;
-                RaisePropertyChanged(() => this.PrimaryAnalyst);
+                if (primaryAnalyst != value)
+                {
+                    primaryAnalyst = value;
+                    RaisePropertyChanged(() => this.PrimaryAnalyst);
+                }
             }
         }
 
         /// <summary>
         /// Currency Property
         /// </summary>
-        private string _currency;
+        private string currency;
         public string Currency
         {
-            get { return _currency; }
+            get { return currency; }
             set
             {
-                if (_currency != value)
-                    _currency = value;
-                RaisePropertyChanged(() => this.Currency);
+                if (currency != value)
+                {
+                    currency = value;
+                    RaisePropertyChanged(() => this.Currency);
+                }
             }
         }
 
         /// <summary>
         /// PrimaryAnalyst Property
         /// </summary>
-        private string _industryAnalyst;
+        private string industryAnalyst;
         public string IndustryAnalyst
         {
-            get { return _industryAnalyst; }
+            get { return industryAnalyst; }
             set
             {
-                if (_industryAnalyst != value)
-                    _industryAnalyst = value;
-                RaisePropertyChanged(() => this.IndustryAnalyst);
+                if (industryAnalyst != value)
+                {
+                    industryAnalyst = value;
+                    RaisePropertyChanged(() => this.IndustryAnalyst);
+                }
             }
         }
-
         #endregion
 
         #region Busy Indicator
-        private bool _busyIndicatorIsBusy;
+        private bool busyIndicatorIsBusy;
         public bool BusyIndicatorIsBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return busyIndicatorIsBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
+                busyIndicatorIsBusy = value;
                 RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
             }
         }
 
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
@@ -239,13 +246,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Pivoted Financial Information to be dispayed on grid
         /// </summary>
-        private List<PeriodColumnDisplayData> _finstatDetailDisplayInfo;
+        private List<PeriodColumnDisplayData> finstatDetailDisplayInfo;
         public List<PeriodColumnDisplayData> FinstatDetailDisplayInfo
         {
-            get { return _finstatDetailDisplayInfo; }
+            get { return finstatDetailDisplayInfo; }
             set
             {
-                _finstatDetailDisplayInfo = value;
+                finstatDetailDisplayInfo = value;
                 RaisePropertyChanged(() => this.FinstatDetailDisplayInfo);
             }
         }
@@ -253,25 +260,24 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Unpivoted FinstatDetail Information received from stored procedure
         /// </summary>
-        private List<FinstatDetailData> _finstatDetailInfo;
+        private List<FinstatDetailData> finstatDetailInfo;
         public List<FinstatDetailData> FinstatDetailInfo
         {
             get
             {
-                if (_finstatDetailInfo == null)
-                    _finstatDetailInfo = new List<FinstatDetailData>();
-                return _finstatDetailInfo;
+                if (finstatDetailInfo == null)
+                { finstatDetailInfo = new List<FinstatDetailData>(); }
+                return finstatDetailInfo;
             }
             set
             {
-                if (_finstatDetailInfo != value)
+                if (finstatDetailInfo != value)
                 {
-                    _finstatDetailInfo = value;
+                    finstatDetailInfo = value;
                     SetFinstatDetailDisplayInfo();
                 }
             }
         }
-
         #endregion
 
         #region Period Information
@@ -283,16 +289,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Period Record storing period information based on iteration
         /// </summary>
-        private PeriodRecord _periodRecord;
+        private PeriodRecord periodRecord;
         public PeriodRecord PeriodRecord
         {
             get
             {
-                if (_periodRecord == null)
-                    _periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 4, netColumnCount: 7, isQuarterImplemented: false);
-                return _periodRecord;
+                if (periodRecord == null)
+                { periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 4, netColumnCount: 7, isQuarterImplemented: false); }
+                return periodRecord;
             }
-            set { _periodRecord = value; }
+            set { periodRecord = value; }
         }
         #endregion
 
@@ -300,18 +306,18 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores period column headers
         /// </summary>
-        private List<String> _periodColumnHeader;
+        private List<String> periodColumnHeaderInfo;
         public List<String> PeriodColumnHeader
         {
             get
             {
-                if (_periodColumnHeader == null)
-                    _periodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
-                return _periodColumnHeader;
+                if (periodColumnHeaderInfo == null)
+                { periodColumnHeaderInfo = PeriodColumns.SetColumnHeaders(PeriodRecord, false); }
+                return periodColumnHeaderInfo;
             }
             set
             {
-                _periodColumnHeader = value;
+                periodColumnHeaderInfo = value;
                 RaisePropertyChanged(() => this.PeriodColumnHeader);
                 if (value != null)
                 {
@@ -321,7 +327,6 @@ namespace GreenField.Gadgets.ViewModels
                         PeriodColumnHeader = value,
                         PeriodRecord = PeriodRecord,
                         PeriodIsYearly = true
-                        //PeriodIsYearly = SelectedPeriodType == FinancialStatementPeriodType.ANNUAL
                     });
                 }
             }
@@ -331,56 +336,54 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get
-            {
-                return _isActive;
-            }
+            get{ return isActive; }
             set
             {
-                if (_isActive != value)
+                if (isActive != value)
                 {
-                    _isActive = value;
-                    if (_entitySelectionData != null && IsActive)
+                    isActive = value;
+                    if (entitySelectionData != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
-                        _dbInteractivity.RetrieveIssuerReferenceData(_entitySelectionData, RetrieveIssuerReferenceDataCallbackMethod);
+                        dbInteractivity.RetrieveIssuerReferenceData(entitySelectionData, RetrieveIssuerReferenceDataCallbackMethod);
                     }
                 }
             }
         }
 
         #region Year Range Start Selection
-
-        private List<Int32> _startYearRange = new List<Int32>() { (Convert.ToInt32(DateTime.Today.AddYears(-4).Year)) };
+        /// <summary>
+        /// property to contain start year range
+        /// </summary>
+        private List<Int32> startYearRange = new List<Int32>() { (Convert.ToInt32(DateTime.Today.AddYears(-4).Year)) };
         public List<Int32> StartYearRange
         {
-            get
-            {
-                return _startYearRange;                
-            }
+            get{ return startYearRange; }
             set
             {
-                if (_startYearRange != value)
+                if (startYearRange != value)
                 {
-                    _startYearRange = value;
+                    startYearRange = value;
                     RaisePropertyChanged(() => StartYearRange);
                 }
             }
         }
 
-
-        private Int32 _selectedyearRange = Convert.ToInt32(DateTime.Now.AddYears(-4).Year);
+        /// <summary>
+        /// property to conatin selected year range
+        /// </summary>
+        private Int32 selectedyearRange = Convert.ToInt32(DateTime.Now.AddYears(-4).Year);
         public Int32 SelectedYearRange
         {
-            get { return _selectedyearRange; }
+            get { return selectedyearRange; }
             set
             {
-                if (_selectedyearRange != value)
+                if (selectedyearRange != value)
                 {
-                    _selectedyearRange = value;
+                    selectedyearRange = value;
                     RaisePropertyChanged(() => SelectedYearRange);
                     Iterator = value - DateTime.Today.Year + 4;
                     SetFinstatDetailDisplayInfo();
@@ -392,11 +395,11 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Displays reprt run date
         /// </summary>
-        private string _reportRunDate = DateTime.Now.Date.ToShortDateString();
+        private string reportRunDate = DateTime.Now.Date.ToShortDateString();
         public string ReportRunDate
         {
-            get { return _reportRunDate; }
-            set { _reportRunDate = value; }
+            get { return reportRunDate; }
+            set { reportRunDate = value; }
         }
 
         #region Data Source
@@ -411,15 +414,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected FinancialStatementDataSource
         /// </summary>
-        private FinancialStatementDataSource _selectedDataSource = FinancialStatementDataSource.PRIMARY;
+        private FinancialStatementDataSource selectedDataSource = FinancialStatementDataSource.PRIMARY;
         public FinancialStatementDataSource SelectedDataSource
         {
-            get { return _selectedDataSource; }
+            get { return selectedDataSource; }
             set
             {
-                if (_selectedDataSource != value)
+                if (selectedDataSource != value)
                 {
-                    _selectedDataSource = value;
+                    selectedDataSource = value;
                     RaisePropertyChanged(() => this.SelectedDataSource);
                     RetrieveFinstatData();
                 }
@@ -439,17 +442,17 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected FinancialStatementFiscalType
         /// </summary>
-        private FinancialStatementFiscalType _selectedFiscalType = FinancialStatementFiscalType.FISCAL;
+        private FinancialStatementFiscalType selectedFiscalType = FinancialStatementFiscalType.FISCAL;
         public FinancialStatementFiscalType SelectedFiscalType
         {
-            get { return _selectedFiscalType; }
+            get { return selectedFiscalType; }
             set
             {
-                if (_selectedFiscalType != value)
+                if (selectedFiscalType != value)
                 {
-                    if (_selectedFiscalType != value)
+                    if (selectedFiscalType != value)
                     {
-                        _selectedFiscalType = value;
+                        selectedFiscalType = value;
                         RaisePropertyChanged(() => this.SelectedFiscalType);
                         RetrieveFinstatData();
                     }
@@ -462,15 +465,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores Reported issuer domicile currency and "USD"
         /// </summary>
-        private ObservableCollection<String> _currencyInfo = new ObservableCollection<string> { "USD" };
+        private ObservableCollection<String> currencyInfo = new ObservableCollection<string> { "USD" };
         public ObservableCollection<String> CurrencyInfo
         {
-            get { return _currencyInfo; }
+            get { return currencyInfo; }
             set
             {
-                if (_currencyInfo != value)
+                if (currencyInfo != value)
                 {
-                    _currencyInfo = value;
+                    currencyInfo = value;
                     RaisePropertyChanged(() => this.CurrencyInfo);
                 }
             }
@@ -479,13 +482,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected currency
         /// </summary>
-        private String _selectedCurrency = "USD";
+        private String selectedCurrency = "USD";
         public String SelectedCurrency
         {
-            get { return _selectedCurrency; }
+            get { return selectedCurrency; }
             set
             {
-                _selectedCurrency = value;
+                selectedCurrency = value;
                 RaisePropertyChanged(() => this.SelectedCurrency);
                 RetrieveFinstatData();
             }
@@ -497,18 +500,18 @@ namespace GreenField.Gadgets.ViewModels
         /// Stores Issuer related data
         /// </summary>
         /// 
-        private IssuerReferenceData _issuerReferenceInfo;
+        private IssuerReferenceData issuerReferenceInfo;
         public IssuerReferenceData IssuerReferenceInfo
         {
-            get { return _issuerReferenceInfo; }
+            get { return issuerReferenceInfo; }
             set
             {
-                _issuerReferenceInfo = value;
+                issuerReferenceInfo = value;
                 if (value != null)
                 {
                     CurrencyInfo = new ObservableCollection<String> { "USD" };
                     if (IssuerReferenceInfo.CurrencyCode != "USD")
-                        CurrencyInfo.Add(IssuerReferenceInfo.CurrencyCode);
+                    { CurrencyInfo.Add(IssuerReferenceInfo.CurrencyCode); }
                     SelectedCurrency = "USD";
                 }
             }
@@ -525,33 +528,32 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSetEvent(EntitySelectionData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    _entitySelectionData = result;
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    entitySelectionData = result;
 
-                    if (_entitySelectionData != null && IsActive)
+                    if (entitySelectionData != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
-                        _dbInteractivity.RetrieveIssuerReferenceData(result, RetrieveIssuerReferenceDataCallbackMethod);
+                        dbInteractivity.RetrieveIssuerReferenceData(result, RetrieveIssuerReferenceDataCallbackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-      
+            Logging.LogEndMethod(logger, methodNamespace);
+        }      
         #endregion
         
         #region CallBack Methods
@@ -562,7 +564,7 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveIssuerReferenceDataCallbackMethod(IssuerReferenceData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
@@ -581,17 +583,17 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     BusyIndicatorNotification();
-                    Prompt.ShowDialog("No Issuer linked to the entity " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + " : " + _entitySelectionData.InstrumentID + ")");
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Prompt.ShowDialog("No Issuer linked to the entity " + entitySelectionData.LongName + " (" + entitySelectionData.ShortName + " : "
+                        + entitySelectionData.InstrumentID + ")");
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
-
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -601,19 +603,18 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveFinstatDetailDataCallbackMethod(List<FinstatDetailData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                   // FinstatDetailInfo = new List<FinstatDetailData>();
                     FinstatDetailInfo = result;
                     StartYearRange = new List<Int32>(FinstatDetailInfo.OrderBy(a => a.PeriodYear).Select(a => a.PeriodYear).Distinct().ToList());
                     StartYearRange.Remove(4000);
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
                 BusyIndicatorNotification();
             }
@@ -621,19 +622,21 @@ namespace GreenField.Gadgets.ViewModels
             {
                 BusyIndicatorNotification();
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
         #region Helper Methods
+        /// <summary>
+        /// method to retrieve data for gadget
+        /// </summary>
         public void RetrieveFinstatData()
         {
             if (IssuerReferenceInfo != null && IsActive)
             {
-                _dbInteractivity.RetrieveFinstatDetailData(IssuerReferenceInfo.IssuerId,
+                dbInteractivity.RetrieveFinstatDetailData(IssuerReferenceInfo.IssuerId,
                                                             (IssuerReferenceInfo.SecurityId).ToString(),
                                                             SelectedDataSource, SelectedFiscalType,
                                                             SelectedCurrency, SelectedYearRange,
@@ -642,10 +645,12 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// method to create display data
+        /// </summary>
         public void SetFinstatDetailDisplayInfo()
         {
             BusyIndicatorNotification(true, "Updating information based on selected preference");
-
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 4, netColumnCount: 7, isQuarterImplemented: false);
             FinstatDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinstatDetailInfo, out periodRecord,
                 periodRecord, uniqueByGroupDesc: true, additionalFirstDescPropertyName: "HarmonicFirst", additionalSecondDescPropertyName: "HarmonicSecond");
@@ -654,15 +659,23 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorNotification();
         }
 
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSetEvent);
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSetEvent);
         }
 
+        /// <summary>
+        /// method to set busy indicator status
+        /// </summary>
+        /// <param name="showBusyIndicator"></param>
+        /// <param name="message"></param>
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
-                BusyIndicatorContent = message;
+            { BusyIndicatorContent = message; }
             BusyIndicatorIsBusy = showBusyIndicator;
         }
         #endregion        

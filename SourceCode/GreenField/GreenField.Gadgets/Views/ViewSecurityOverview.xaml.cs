@@ -26,8 +26,8 @@ namespace GreenField.Gadgets.Views
             set
             {
                 isActive = value;
-                if (DataContextSecurityOverview != null) //DataContext instance
-                    DataContextSecurityOverview.IsActive = isActive;
+                if (DataContextSecurityOverview != null)
+                { DataContextSecurityOverview.IsActive = isActive; }
             }
         }
         #endregion

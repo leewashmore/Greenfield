@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.Helpers;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Common;
-using GreenField.ServiceCaller;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
+using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -24,35 +17,26 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelRiskIndexExposures _dataContextViewModelTopHoldings;
+        private ViewModelRiskIndexExposures dataContextViewModelTopHoldings;
         public ViewModelRiskIndexExposures DataContextViewModelTopHoldings
         {
-            get { return _dataContextViewModelTopHoldings; }
-            set { _dataContextViewModelTopHoldings = value; }
+            get { return dataContextViewModelTopHoldings; }
+            set { dataContextViewModelTopHoldings = value; }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextViewModelTopHoldings != null) //DataContext instance
-                    DataContextViewModelTopHoldings.IsActive = _isActive;
+                isActive = value;
+                if (DataContextViewModelTopHoldings != null) 
+                { DataContextViewModelTopHoldings.IsActive = isActive; }
             }
-        }
-
-        /// <summary>
-        /// Export Types to be passed to the ExportOptions class
-        /// </summary>
-        private static class ExportTypes
-        {
-            public const string HOLDINGS_RELATIVE_RISK_CHART = "Relative Risk";
-            public const string HOLDINGS_RELATIVE_RISK_GRID = "Relative Risk";
         }
         #endregion
 
@@ -65,15 +49,14 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            // dataContextSource.RiskIndexExposuresDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRiskIndexExposuresLoadedevent);
             this.DataContextViewModelTopHoldings = dataContextSource;
         }
         #endregion
 
+        #region Helper Methods
         #region Method to Flip
         /// <summary>
         /// Flipping between Grid & PieChart
-        /// Using the method FlipItem in class Flipper.cs
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -102,36 +85,27 @@ namespace GreenField.Gadgets.Views
             {
                 if (this.chartRelativerisk.Visibility == Visibility.Visible)
                 {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {                   
-                    new RadExportOptions()
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>{ new RadExportOptions()
                     {
-                        ElementName = ExportTypes.HOLDINGS_RELATIVE_RISK_CHART,
+                        ElementName =  "Relative Risk Data",
                         Element = this.chartRelativerisk, 
                         ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER 
-                    },                    
-                    
-                };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo,
-                    "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
+                    },};
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
                     childExportOptions.Show();
                 }
-
                 else
                 {
                     if (this.dgRelativeRisk.Visibility == Visibility.Visible)
                     {
-                        ChildExportOptions childExportOptions = new ChildExportOptions
-                            (new List<RadExportOptions>
-                            {
-                                new RadExportOptions() 
-                                {
-                                    Element = this.dgRelativeRisk,
-                                    ElementName = "Relative Risk Data",
-                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-                                }
-                            }
-                            , "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
+                        ChildExportOptions childExportOptions = new ChildExportOptions(new List<RadExportOptions>
+                        { new RadExportOptions() 
+                             {
+                                Element = this.dgRelativeRisk,
+                                ElementName = "Relative Risk Data",
+                                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                             }
+                        }, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
                         childExportOptions.Show();
                     }
                 }
@@ -142,16 +116,38 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Handles element exporting while export to excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgRelativeRisk_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, showGroupFooters: true, aggregatedColumnIndex: new List<int> { 1, 2, 3 });
         }
-        #endregion
-
-        private void dgRelativeRisk_RowLoaded(object sender, RowLoadedEventArgs e)
+        #endregion 
+          
+        /// <summary>
+        /// calculating axis values for chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chartRelativerisk_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
         {
-            
+            if (this.DataContext as ViewModelRiskIndexExposures != null)
+            {
+                if ((this.DataContext as ViewModelRiskIndexExposures).RiskIndexExposuresChartInfo != null)
+                {
+                    (this.DataContext as ViewModelRiskIndexExposures).AxisXMinValue = Convert.ToDecimal(((this.DataContext as ViewModelRiskIndexExposures)
+                        .RiskIndexExposuresChartInfo.OrderBy(a => a.Value)).Select(a => a.Value).FirstOrDefault());
+                    (this.DataContext as ViewModelRiskIndexExposures).AxisXMaxValue = Convert.ToDecimal(((this.DataContext as ViewModelRiskIndexExposures)
+                        .RiskIndexExposuresChartInfo.OrderByDescending(a => a.Value)).Select(a => a.Value).FirstOrDefault());
+
+                    this.chartRelativerisk.DefaultView.ChartArea.AxisY.Step = 10;
+                }
+            }
         }
+        #endregion
 
         #region Dispose Method
         /// <summary>
@@ -164,21 +160,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        private void chartRelativerisk_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
-        {
-            if (this.DataContext as ViewModelRiskIndexExposures != null)
-            {
-                if ((this.DataContext as ViewModelRiskIndexExposures).RiskIndexExposuresChartInfo != null)
-                {
-                    (this.DataContext as ViewModelRiskIndexExposures).AxisXMinValue = Convert.ToDecimal(((this.DataContext as ViewModelRiskIndexExposures).RiskIndexExposuresChartInfo.OrderBy(a => a.Value)).
-                        Select(a => a.Value).FirstOrDefault());
-                    (this.DataContext as ViewModelRiskIndexExposures).AxisXMaxValue = Convert.ToDecimal(((this.DataContext as ViewModelRiskIndexExposures).RiskIndexExposuresChartInfo.OrderByDescending(a => a.Value)).
-                        Select(a => a.Value).FirstOrDefault());
-
-                    this.chartRelativerisk.DefaultView.ChartArea.AxisY.Step = 10;
-                }
-            }
-        }
     }
 }

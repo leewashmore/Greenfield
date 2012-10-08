@@ -1,52 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.Helpers;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Models;
-using GreenField.Common;
 using Telerik.Windows.Documents.Model;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.Models;
+using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// class for view for Finstat
+    /// </summary>
     public partial class ViewFinstat : ViewBaseUserControl
     {
         #region Properties
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelFinstat _dataContextFinstat;
+        private ViewModelFinstat dataContextFinstat;
         public ViewModelFinstat DataContextFinstat
         {
-            get { return _dataContextFinstat; }
-            set { _dataContextFinstat = value; }
+            get { return dataContextFinstat; }
+            set { dataContextFinstat = value; }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextFinstat != null) //DataContext instance
-                    DataContextFinstat.IsActive = _isActive;
+                isActive = value;
+                if (DataContextFinstat != null)
+                { DataContextFinstat.IsActive = isActive; }
             }
         }
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewFinstat(ViewModelFinstat dataContextSource)
         {
             InitializeComponent();
@@ -65,7 +64,6 @@ namespace GreenField.Gadgets.Views
             dgFinstat.Columns[9].Header = "Harmonic Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
             SettingGridColumnUniqueNames(periodColumnHeader);
 
-
             PeriodColumns.PeriodColumnUpdate += (e) =>
             {
                 if (e.PeriodColumnNamespace == this.DataContext.GetType().FullName)
@@ -77,28 +75,37 @@ namespace GreenField.Gadgets.Views
                     SettingGridColumnUniqueNames(e.PeriodColumnHeader);
                     this.btnExportExcel.IsEnabled = true;
                 }
-            };
-
-           
+            };           
         } 
         #endregion
 
         #region Export/Pdf/Print
-
         #region ExportToExcel
+        /// <summary>
+        /// handles element exporting when exported to excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgFinstat_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
         }
 
+        /// <summary>
+        /// catch export to excel button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            //ExportExcel.ExportGridExcel(dgFinstat);
             List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
-            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Finstat Report", Element = this.dgFinstat, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-          //  RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Security Details", Element = this.dgIssueDetails, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            { 
+                ElementName = "Finstat Report",
+                Element = this.dgFinstat,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER 
+            });
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Finstat Report");
             childExportOptions.Show(); 
         }
@@ -117,7 +124,6 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Printing the DataGrid
-
         /// <summary>
         /// Printing the DataGrid
         /// </summary>
@@ -129,12 +135,11 @@ namespace GreenField.Gadgets.Views
             {
                 RichTextBox.Document = PDFExporter.Print(dgFinstat, 6);
             }));
-
             this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
             RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
         }
-
-        #endregion 
+        #endregion       
+        #endregion
 
         #region Helper Method
         /// <summary>
@@ -153,12 +158,13 @@ namespace GreenField.Gadgets.Views
             dgFinstat.Columns[7].UniqueName = periodColumnHeader[6];
             dgFinstat.Columns[8].UniqueName = "Harmonic Avg " + periodColumnHeader[1] + "-" + periodColumnHeader[3];
             dgFinstat.Columns[9].UniqueName = "Harmonic Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
-        } 
-        #endregion
-
+        }
         #endregion
 
         #region Dispose Method
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
         public override void Dispose()
         {
             (this.DataContext as ViewModelFinstat).Dispose();

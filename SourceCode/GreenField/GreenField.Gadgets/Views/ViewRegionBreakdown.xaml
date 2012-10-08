@@ -18,7 +18,8 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" Style="{StaticResource BusyIndicatorStyle}" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" Style="{StaticResource BusyIndicatorStyle}" IsEnabled="True" DisplayAfter="0"
+                              IsBusy="{Binding BusyIndicatorStatus}">
         <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -31,6 +32,7 @@
                                        Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
                 <Image Source="../Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </telerik:RadButton>
+                
                 <!--button to export the grid to excel-->
                 <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"
                     Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click">
@@ -40,7 +42,6 @@
                 </Button>
             </StackPanel>
             </Grid>
-
 
             <Grid Grid.Row="1">
             <!--doughnut chart-->
@@ -112,21 +113,24 @@
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" DataMemberBinding="{Binding Security}" 
                                                         Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         MinWidth="150" CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" IsFilterable="False" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
+                            <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" IsFilterable="False" 
+                                                        DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
                                                         Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         FooterTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <telerik:SumFunction SourceField="PortfolioShare" ResultFormatString="{}{0:n2}%" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
-                            <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" IsFilterable="False" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" 
+                            <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" IsFilterable="False" 
+                                                        DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" 
                                                         Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         FooterTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <telerik:SumFunction SourceField="BenchmarkShare" ResultFormatString="{}{0:n2}%" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
-                            <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="Active Position" IsFilterable="False" DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
+                            <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="Active Position" IsFilterable="False"
+                                                        DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
                                                         Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         FooterTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}">
                                 <telerik:GridViewDataColumn.AggregateFunctions>

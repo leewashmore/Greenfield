@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
-using GreenField.ServiceCaller.PerformanceDefinitions;
-using GreenField.ServiceCaller.ModelFXDefinitions;
-using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
-using GreenField.ServiceCaller.MeetingDefinitions;
-using GreenField.ServiceCaller.AlertDefinitions;
-using GreenField.ServiceCaller.DocumentWorkSpaceDefinitions;
 using GreenField.ServiceCaller.DCFDefinitions;
-using GreenField.ServiceCaller.CustomScreeningDefinitions;
+using GreenField.ServiceCaller.ExternalResearchDefinitions;
+using GreenField.ServiceCaller.MeetingDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.ServiceCaller
 {
@@ -251,9 +243,28 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-        void RetrieveFinstatDetailData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, String currency, Int32 yearRange, Action<List<FinstatDetailData>> callback);
+        /// <summary>
+        /// service call for Finstat detail data retrieval
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="securityId"></param>
+        /// <param name="dataSource"></param>
+        /// <param name="fiscalType"></param>
+        /// <param name="currency"></param>
+        /// <param name="yearRange"></param>
+        /// <param name="callback"></param>
+        void RetrieveFinstatDetailData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, 
+                                                                                        String currency, Int32 yearRange, Action<List<FinstatDetailData>> callback);
 
-        void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetail>> callback);
+        /// <summary>
+        /// service call for Consensus estimate detail data retrieval
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="periodType"></param>
+        /// <param name="currency"></param>
+        /// <param name="callback"></param>
+        void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, 
+                                                                                            Action<List<ConsensusEstimateDetail>> callback);
 
         void RetrieveRatioComparisonData(String contextSecurityXML, Action<List<RatioComparisonData>> callback);
 
@@ -262,7 +273,16 @@ namespace GreenField.ServiceCaller
         void RetrieveCOASpecificData(String issuerId, int? securityId, FinancialStatementDataSource cSource, FinancialStatementFiscalType cFiscalType, String cCurrency, Action<List<COASpecificData>> callback);
 
         void RetrieveValuationGrowthData(PortfolioSelectionData selectedPortfolio, DateTime? effectiveDate, String filterType, String filterValue, bool lookThruEnabled, Action<List<ValuationQualityGrowthData>> callback);
-        void RetrieveConsensusEstimateDetailedBrokerData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetail>> callback);
+
+        /// <summary>
+        /// service call for Consensus estimate detail broker data retrieval
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="periodType"></param>
+        /// <param name="currency"></param>
+        /// <param name="callback"></param>
+        void RetrieveConsensusEstimateDetailedBrokerData(string issuerId, FinancialStatementPeriodType periodType, String currency,
+                                                                                                                    Action<List<ConsensusEstimateDetail>> callback);
         #endregion
 
         #region Internal Research

@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
-using GreenField.Common;
-using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Controls;
-using System.Windows.Media;
-using System;
+using Telerik.Windows.Controls.GridView;
+using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
-using GreenField.DataContracts;
-
 
 namespace GreenField.Gadgets.Views
 {
@@ -20,35 +16,26 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelRegionBreakdown _dataContextRegionBreakdown;
+        private ViewModelRegionBreakdown dataContextRegionBreakdown;
         public ViewModelRegionBreakdown DataContextRegionBreakdown
         {
-            get { return _dataContextRegionBreakdown; }
-            set { _dataContextRegionBreakdown = value; }
+            get { return dataContextRegionBreakdown; }
+            set { dataContextRegionBreakdown = value; }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextRegionBreakdown != null) //DataContext instance
-                    DataContextRegionBreakdown.IsActive = _isActive;
+                isActive = value;
+                if (DataContextRegionBreakdown != null)
+                { DataContextRegionBreakdown.IsActive = isActive; }
             }
-        }
-
-        /// <summary>
-        /// Export Types to be passed to the ExportOptions class
-        /// </summary>
-        private static class ExportTypes
-        {
-            public const string HOLDINGS_REGION_BREAKDOWN_CHART = "Region Breakdown";
-            public const string HOLDINGS_REGION_BREAKDOWN_GRID = "Region Breakdown";
         }
         #endregion
 
@@ -56,7 +43,7 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// constructor
         /// </summary>
-        /// <param name="dataContextSource"></param>
+        /// <param name="dataContextSource">ViewModelRegionBreakdown</param>
         public ViewRegionBreakdown(ViewModelRegionBreakdown dataContextSource)
         {
             InitializeComponent();
@@ -68,7 +55,6 @@ namespace GreenField.Gadgets.Views
         #region Method to Flip
         /// <summary>
         /// Flipping between Grid & PieChart
-        /// Using the method FlipItem in class Flipper.cs
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -97,27 +83,23 @@ namespace GreenField.Gadgets.Views
             {
                 if (this.crtRegionBreakdown.Visibility == Visibility.Visible)
                 {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                 {                   
                     new RadExportOptions()
                     {
-                        ElementName = ExportTypes.HOLDINGS_REGION_BREAKDOWN_CHART,
+                        ElementName = "Region Breakdown Data",
                         Element = this.crtRegionBreakdown, 
                         ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER 
-                    },                    
-                    
+                    },                 
                 };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo,
-                    "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
                     childExportOptions.Show();
                 }
-
                 else
                 {
                     if (this.dgRegionBreakdown.Visibility == Visibility.Visible)
                     {
-                        ChildExportOptions childExportOptions = new ChildExportOptions(
-                            new List<RadExportOptions>
+                        ChildExportOptions childExportOptions = new ChildExportOptions(new List<RadExportOptions>
                             {
                                 new RadExportOptions() 
                                 {
@@ -125,8 +107,7 @@ namespace GreenField.Gadgets.Views
                                     ElementName = "Region Breakdown Data",
                                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
                                 }
-                            }
-                            , "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
+                            }, "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
                         childExportOptions.Show();
                     }
                 }
@@ -137,9 +118,13 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// handles element exporting for export to excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgRegionBreakdown_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
-            //RadGridView_ElementExport.ElementExporting(e, showGroupFooters: true);
             RadGridView_ElementExport.ElementExporting(e, showGroupFooters: true, aggregatedColumnIndex: new List<int> { 1, 2, 3 });
         }
         #endregion
@@ -155,10 +140,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        private void dgRegionBreakdown_RowLoaded(object sender, RowLoadedEventArgs e)
-        {
-           
-        }
     }
 }

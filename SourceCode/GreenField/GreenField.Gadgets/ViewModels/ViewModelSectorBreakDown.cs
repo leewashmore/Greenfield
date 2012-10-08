@@ -1,57 +1,45 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using GreenField.Common;
-using System.Collections.Generic;
+using System.Windows;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.ViewModel;
-using GreenField.Gadgets.Models;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.Common;
 using GreenField.DataContracts;
+using GreenField.Gadgets.Models;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
     /// <summary>
-    /// view model for ViewSectorBreakDown
+    /// View model for ViewSectorBreakDown
     /// </summary>
     public class ViewModelSectorBreakdown : NotificationObject
     {
         #region Fields
-
         /// <summary>
         /// MEF Singletons
         /// </summary>
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
+        private IEventAggregator eventAggregator;
+        private IDBInteractivity dbInteractivity;
+        private ILoggerFacade logger;
 
         /// <summary>
         /// DashboardGadgetPayLoad fields
         /// </summary>
-        private PortfolioSelectionData _PortfolioSelectionData;
+        private PortfolioSelectionData portfolioSelectionDataInfo;
 
         /// <summary>
         /// Private member to store info about including or excluding cash securities
         /// </summary>
-        private bool _isExCashSecurity = false;
+        private bool isExCashSecurity = false;
 
         /// <summary>
         /// Private member to store info about look thru enabled or not
         /// </summary>
-        private bool _lookThruEnabled = false;
-                
+        private bool lookThruEnabled = false;                
         #endregion
 
         #region Constructor
@@ -61,46 +49,44 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param">DashBoardGadgetParam</param>
         public ViewModelSectorBreakdown(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-
-            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            portfolioSelectionDataInfo = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-            _isExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
-            _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
+            isExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
+            lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
 
-            if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+            if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
             {
-                _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity,_lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                dbInteractivity.RetrieveSectorBreakdownData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),isExCashSecurity,lookThruEnabled, 
+                                                                                                                        RetrieveSectorBreakdownDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
-
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
-                _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Subscribe(HandleExCashSecuritySetEvent);
-                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+                eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                eventAggregator.GetEvent<ExCashSecuritySetEvent>().Subscribe(HandleExCashSecuritySetEvent);
+                eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
             }
         }
         #endregion
 
         #region Properties
         #region UI Fields
-
         /// <summary>
         /// contains data for the grid in the gadget
         /// </summary>
-        private ObservableCollection<SectorBreakdownData> _sectorBreakdownInfo;
+        private ObservableCollection<SectorBreakdownData> sectorBreakdownInfo;
         public ObservableCollection<SectorBreakdownData> SectorBreakdownInfo
         {
-            get { return _sectorBreakdownInfo; }
+            get { return sectorBreakdownInfo; }
             set
             {
-                if (_sectorBreakdownInfo != value)
+                if (sectorBreakdownInfo != value)
                 {
-                    _sectorBreakdownInfo = value;
+                    sectorBreakdownInfo = value;
                     RaisePropertyChanged(() => this.SectorBreakdownInfo);
                 }
             }
@@ -109,15 +95,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// contains data for the chart in the gadget
         /// </summary>
-        private ObservableCollection<SectorSpecificData> _sectorSpecificInfo;
+        private ObservableCollection<SectorSpecificData> sectorSpecificInfo;
         public ObservableCollection<SectorSpecificData> SectorSpecificInfo
         {
-            get { return _sectorSpecificInfo; }
+            get { return sectorSpecificInfo; }
             set
             {
-                if (_sectorSpecificInfo != value)
+                if (sectorSpecificInfo != value)
                 {
-                    _sectorSpecificInfo = value;
+                    sectorSpecificInfo = value;
                     RaisePropertyChanged(() => this.SectorSpecificInfo);
                 }
             }
@@ -126,32 +112,32 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// property to contain effective date value from EffectiveDate Datepicker
         /// </summary>
-        private DateTime? _effectiveDate;
+        private DateTime? effectiveDateInfo;
         public DateTime? EffectiveDate
         {
-            get { return _effectiveDate; }
+            get { return effectiveDateInfo; }
             set
             {
-                if (_effectiveDate != value)
+                if (effectiveDateInfo != value)
                 {
-                    _effectiveDate = value;
+                    effectiveDateInfo = value;
                     RaisePropertyChanged(() => EffectiveDate);
                 }
             }
         }
 
         /// <summary>
-        /// property to contain status value for busy indicator of the gadget
+        /// Property to contain status value for busy indicator of the gadget
         /// </summary>
-        private bool _busyIndicatorStatus;
+        private bool busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
-            get { return _busyIndicatorStatus; }
+            get { return busyIndicatorStatus; }
             set
             {
-                if (_busyIndicatorStatus != value)
+                if (busyIndicatorStatus != value)
                 {
-                    _busyIndicatorStatus = value;
+                    busyIndicatorStatus = value;
                     RaisePropertyChanged(() => BusyIndicatorStatus);
                 }
             }
@@ -160,21 +146,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get
-            {
-                return _isActive;
-            }
+            get{ return isActive; }
             set
             {
-                if (_isActive != value)
+                if (isActive != value)
                 {
-                    _isActive = value;
-                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && _isActive)
+                    isActive = value;
+                    if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && isActive)
                     {
-                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                        dbInteractivity.RetrieveSectorBreakdownData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo), isExCashSecurity,
+                                                                                                        lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -191,31 +175,31 @@ namespace GreenField.Gadgets.ViewModels
         public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (portfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
-                    _PortfolioSelectionData = portfolioSelectionData;
-                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                    Logging.LogMethodParameter(logger, methodNamespace, portfolioSelectionData, 1);
+                    portfolioSelectionDataInfo = portfolioSelectionData;
+                    if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
                    {
-                         _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity,_lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                         dbInteractivity.RetrieveSectorBreakdownData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),isExCashSecurity,
+                                                                                                        lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
                          BusyIndicatorStatus = true;
                    }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -225,30 +209,31 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (effectiveDate != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                    if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
                     {
-                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                        dbInteractivity.RetrieveSectorBreakdownData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo), isExCashSecurity, 
+                                                                                                          lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -258,17 +243,18 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleExCashSecuritySetEvent(bool isExCashSec)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
-                if (_isExCashSecurity != isExCashSec)
+                Logging.LogMethodParameter(logger, methodNamespace, isExCashSec, 1);
+                if (isExCashSecurity != isExCashSec)
                 {
-                    _isExCashSecurity = isExCashSec;
+                    isExCashSecurity = isExCashSec;
 
-                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                    if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
                     {
-                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                        dbInteractivity.RetrieveSectorBreakdownData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo), isExCashSecurity, 
+                                                                                                        lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -276,10 +262,9 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
-
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -289,16 +274,17 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleLookThruReferenceSetEvent(bool enableLookThru)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
-                if (_lookThruEnabled != enableLookThru)
+                Logging.LogMethodParameter(logger, methodNamespace, enableLookThru, 1);
+                if (lookThruEnabled != enableLookThru)
                 {
-                    _lookThruEnabled = enableLookThru;
-                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                    lookThruEnabled = enableLookThru;
+                    if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
                     {
-                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                        dbInteractivity.RetrieveSectorBreakdownData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo), isExCashSecurity, 
+                                                                                                        lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -306,9 +292,9 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion              
 
@@ -320,12 +306,12 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveSectorBreakdownDataCallbackMethod(List<SectorBreakdownData> sectorBreakdownData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (sectorBreakdownData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, sectorBreakdownData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, sectorBreakdownData, 1);
                     List<SectorBreakdownData> templist = new List<SectorBreakdownData>(sectorBreakdownData);
                     foreach (SectorBreakdownData item in templist)
                     {
@@ -335,13 +321,10 @@ namespace GreenField.Gadgets.ViewModels
                         if(item.Industry == null || item.Industry == string.Empty || item.Industry == " ")
                             item.Industry = CapitalizeFirstLetterAfterSpace("Not classified");
                     }
-
-                    SectorBreakdownInfo = new ObservableCollection<SectorBreakdownData>(templist);
-                   
+                    SectorBreakdownInfo = new ObservableCollection<SectorBreakdownData>(templist);                   
                     SectorSpecificInfo = new ObservableCollection<SectorSpecificData>();
                     foreach (SectorBreakdownData item in SectorBreakdownInfo)
-                    {
-                       
+                    {                       
                         if (SectorSpecificInfo.Where(i => i.Sector == item.Sector).Count().Equals(0))
                         {
                             SectorSpecificInfo.Add(new SectorSpecificData()
@@ -355,29 +338,31 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }              
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
                 BusyIndicatorStatus = false;
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
         #region Helper Methods
+        /// <summary>
+        /// Scan through the letters, checking for spaces and convert the lowercase letters to uppercaes which follow spaces
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public string CapitalizeFirstLetterAfterSpace(string value)
         {
             char[] array = value.ToCharArray();
-
-            // Scan through the letters, checking for spaces.
-            // ... Uppercase the lowercase letters following spaces.
             for (int i = 1; i < array.Length; i++)
             {
                 if (array[i - 1] == ' ')
@@ -398,12 +383,11 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
-            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
-            _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Unsubscribe(HandleExCashSecuritySetEvent);
-            _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
+            eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+            eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            eventAggregator.GetEvent<ExCashSecuritySetEvent>().Unsubscribe(HandleExCashSecuritySetEvent);
+            eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
         }
-
         #endregion
     }
 }

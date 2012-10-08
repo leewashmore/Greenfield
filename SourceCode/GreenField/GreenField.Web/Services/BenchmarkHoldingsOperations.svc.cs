@@ -1,21 +1,16 @@
-﻿using System.ServiceModel;
-using System.ServiceModel.Activation;
-using GreenField.Web.DimensionEntitiesService;
-using System.Resources;
-using GreenField.Web.Helpers.Service_Faults;
-using System;
-using System.Configuration;
-using GreenField.DataContracts;
+﻿using System;
 using System.Collections.Generic;
-using GreenField.Web.Helpers;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Data.SqlClient;
+using System.Configuration;
 using System.Data;
-using GreenField.DAL;
-using System.ServiceModel.Description;
-using System.Data.Objects;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Resources;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using GreenField.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
+using GreenField.Web.Helpers;
+using GreenField.Web.Helpers.Service_Faults;
 
 namespace GreenField.Web.Services
 {
@@ -128,57 +123,53 @@ namespace GreenField.Web.Services
                 List<SectorBreakdownData> result = new List<SectorBreakdownData>();
 
                 if (portfolioSelectionData == null || effectiveDate == null)
-                    return result;
+                { return result; }
 
                 //checking if the service is down
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
                 if (!isServiceUp)
-                    throw new Exception();
+                { throw new Exception(); }
 
                 if (lookThruEnabled)
                 {
                     #region Look - thru enabled
                     //Retrieve GF_PORTFOLIO_HOLDINGS data SECURITYTHEMECODE
                     List<GF_PORTFOLIO_LTHOLDINGS> data = isExCashSecurity
-                                                       ? DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                               && record.PORTFOLIO_DATE == effectiveDate.Date
-                                                                                                               && record.SECURITYTHEMECODE != "CASH").ToList()
-                                                       : DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                               && record.PORTFOLIO_DATE == effectiveDate.Date).ToList();
-
-
-                    if (data.Count.Equals(0))
-                        return result;
+                                                  ? DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                           && record.PORTFOLIO_DATE == effectiveDate.Date
+                                                                                                           && record.SECURITYTHEMECODE != "CASH").ToList()
+                                                  : DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                           && record.PORTFOLIO_DATE == effectiveDate.Date).ToList();
+                    if (data == null || data.Count.Equals(0))
+                    { return result; }
 
                     Decimal? netPortfolioValuation = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
 
                     if (netPortfolioValuation == 0 || netPortfolioValuation == null)
-                        throw new InvalidOperationException();
+                    { throw new InvalidOperationException(); }
 
                     //Retrieve the Id of benchmark associated with the Portfolio
                     List<string> benchmarkId = data.Select(a => a.BENCHMARK_ID).Distinct().ToList();
 
                     //If the DataBase doesn't return a single Benchmark for a Portfolio
                     if (benchmarkId.Count != 1)
-                        throw new InvalidOperationException();
+                    { throw new InvalidOperationException(); }
 
                     List<GF_BENCHMARK_HOLDINGS> benchmarkData = DimensionEntity.GF_BENCHMARK_HOLDINGS.
                         Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
 
-
                     foreach (GF_PORTFOLIO_LTHOLDINGS record in data)
                     {
                         if (record.DIRTY_VALUE_PC == null)
-                            continue;
+                        { continue; }
 
                         //Calculate Portfolio Weight
                         decimal? portfolioWeight = (record.DIRTY_VALUE_PC / netPortfolioValuation) * 100;
 
                         //Retrieve Benchmark Weight 
-                        decimal? benchmarkWeight = (Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()));
-
+                        decimal? benchmarkWeight = (Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT)
+                                                                                                                                    .FirstOrDefault()));
                         //Calculate Active Position
                         decimal? activePosition = portfolioWeight - benchmarkWeight;
 
@@ -192,7 +183,6 @@ namespace GreenField.Web.Services
                             ActivePosition = activePosition
                         });
                     }
-
                     return result;
                     #endregion
                 }
@@ -201,43 +191,40 @@ namespace GreenField.Web.Services
                     #region Look - thru disabled
                     //Retrieve GF_PORTFOLIO_HOLDINGS data SECURITYTHEMECODE
                     List<GF_PORTFOLIO_HOLDINGS> data = isExCashSecurity
-                                                       ? DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                               && record.PORTFOLIO_DATE == effectiveDate.Date
-                                                                                                               && record.SECURITYTHEMECODE != "CASH").ToList()
-                                                       : DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                               && record.PORTFOLIO_DATE == effectiveDate.Date).ToList();
-
-
-                    if (data.Count.Equals(0))
-                        return result;
+                                                    ? DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                             && record.PORTFOLIO_DATE == effectiveDate.Date
+                                                                                                             && record.SECURITYTHEMECODE != "CASH").ToList()
+                                                     : DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                             && record.PORTFOLIO_DATE == effectiveDate.Date).ToList();
+                    if (data == null || data.Count.Equals(0))
+                    { return result; }
 
                     Decimal? netPortfolioValuation = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
 
                     if (netPortfolioValuation == 0 || netPortfolioValuation == null)
-                        throw new InvalidOperationException();
+                    { throw new InvalidOperationException(); }
 
                     //Retrieve the Id of benchmark associated with the Portfolio
                     List<string> benchmarkId = data.Select(a => a.BENCHMARK_ID).Distinct().ToList();
 
                     //If the DataBase doesn't return a single Benchmark for a Portfolio
                     if (benchmarkId.Count != 1)
-                        throw new InvalidOperationException();
+                    { throw new InvalidOperationException(); }
 
                     List<GF_BENCHMARK_HOLDINGS> benchmarkData = DimensionEntity.GF_BENCHMARK_HOLDINGS.
                         Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
 
-
                     foreach (GF_PORTFOLIO_HOLDINGS record in data)
                     {
                         if (record.DIRTY_VALUE_PC == null)
-                            continue;
+                        { continue; }
 
                         //Calculate Portfolio Weight
                         decimal? portfolioWeight = (record.DIRTY_VALUE_PC / netPortfolioValuation) * 100;
 
                         //Retrieve Benchmark Weight 
-                        decimal? benchmarkWeight = (Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()));
-
+                        decimal? benchmarkWeight = (Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT)
+                                                                                                                                 .FirstOrDefault()));
                         //Calculate Active Position
                         decimal? activePosition = portfolioWeight - benchmarkWeight;
 
@@ -251,7 +238,6 @@ namespace GreenField.Web.Services
                             ActivePosition = activePosition
                         });
                     }
-
                     return result;
                     #endregion
                 }
@@ -300,8 +286,7 @@ namespace GreenField.Web.Services
                                                                                                                        && record.SECURITYTHEMECODE != "CASH").ToList()
                                                    : DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
                                                                                                               && record.PORTFOLIO_DATE == effectiveDate.Date).ToList();
-
-                    if (data.Count.Equals(0))
+                    if (data == null || data.Count.Equals(0))
                     { return result; }
 
                     Decimal? netPortfolioValuation = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
@@ -356,8 +341,7 @@ namespace GreenField.Web.Services
                                                                                                               && record.SECURITYTHEMECODE != "CASH").ToList()
                                                      : DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
                                                                                                               && record.PORTFOLIO_DATE == effectiveDate.Date).ToList();
-
-                    if (data.Count.Equals(0))
+                    if (data == null || data.Count.Equals(0))
                     { return result; }
 
                     Decimal? netPortfolioValuation = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
@@ -384,7 +368,8 @@ namespace GreenField.Web.Services
                         decimal? portfolioWeight = (record.DIRTY_VALUE_PC / netPortfolioValuation) * 100;
 
                         //Retrieve Benchmark Weight
-                        decimal? benchmarkWeight = Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault());
+                        decimal? benchmarkWeight = Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT)
+                                                                                                                                    .FirstOrDefault());
 
                         //Calculate Active Position
                         decimal? activePosition = portfolioWeight - benchmarkWeight;

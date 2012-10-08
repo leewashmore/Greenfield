@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.ServiceModel.Activation;
-using System.Resources;
-using GreenField.Web.Helpers.Service_Faults;
-using GreenField.Web.Helpers;
-using GreenField.DataContracts;
-using GreenField.DAL;
-using System.Data.Objects;
-using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
-using GreenField.Web.DataContracts;
-using System.Data;
+using System.Linq;
+using System.Resources;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using System.Text;
+using GreenField.DAL;
+using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
+using GreenField.Web.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
+using GreenField.Web.Helpers;
+using GreenField.Web.Helpers.Service_Faults;
 
 namespace GreenField.Web.Services
 {
@@ -173,10 +170,10 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Get data for Consensus Estimate Detailed gadget
         /// </summary>
-        /// <param name="issuerId"></param>
-        /// <param name="periodType"></param>
-        /// <param name="currency"></param>
-        /// <returns></returns>
+        /// <param name="issuerId">string</param>
+        /// <param name="periodType">FinancialStatementPeriodType</param>
+        /// <param name="currency">String</param>
+        /// <returns>list of ConsensusEstimateDetail</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<ConsensusEstimateDetail> RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency)
@@ -184,23 +181,21 @@ namespace GreenField.Web.Services
             try
             {
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
-
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-
                 List<ConsensusEstimateDetailData> data = new List<ConsensusEstimateDetailData>();
                 List<ConsensusEstimateDetail> result = new List<ConsensusEstimateDetail>();
 
                 data = entity.GetConsensusDetail(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
 
                 if (data == null)
-                    return result;
+                { return result; }
+
                 decimal previousYearQuarterAmount;
                 data = data.OrderBy(record => record.ESTIMATE_DESC).ThenByDescending(record => record.PERIOD_YEAR).ToList();
 
                 for (int i = 0; i < data.Count; i++)
                 {
                     ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
-
                     if (data[i].ESTIMATE_ID == 17)
                         temp.SortOrder = 1;
                     else if (data[i].ESTIMATE_ID == 7)
@@ -239,9 +234,13 @@ namespace GreenField.Web.Services
                         && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
 
                     if (previousYearQuarterAmount == null || previousYearQuarterAmount == 0)
+                    {
                         temp.YOYGrowth = 0;
+                    }
                     else
+                    {
                         temp.YOYGrowth = (temp.YOYGrowth / previousYearQuarterAmount - 1) * 100;
+                    }
                     result.Add(temp);
                 }
                 return result.OrderBy(a => a.SortOrder).ToList();
@@ -257,10 +256,10 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Get data for Broker Details In Consensus Detail gadget
         /// </summary>
-        /// <param name="issuerId"></param>
-        /// <param name="periodType"></param>
-        /// <param name="currency"></param>
-        /// <returns></returns>
+        /// <param name="issuerId">string</param>
+        /// <param name="periodType">FinancialStatementPeriodType</param>
+        /// <param name="currency">String</param>
+        /// <returns>list of ConsensusEstimateDetail</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<ConsensusEstimateDetail> RetrieveConsensusEstimateDetailedBrokerData(string issuerId, FinancialStatementPeriodType periodType, String currency)
@@ -268,17 +267,15 @@ namespace GreenField.Web.Services
             try
             {
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
-
                 ExternalResearchEntities entity = new ExternalResearchEntities();
                 entity.CommandTimeout = 100;
-
                 List<BrokerDetailData> data = new List<BrokerDetailData>();
                 List<ConsensusEstimateDetail> result = new List<ConsensusEstimateDetail>();
 
                 data = entity.GetBrokerDetail(issuerId, null, _periodType, currency).ToList();
 
                 if (data == null)
-                    return result;
+                { return result; }
 
                 List<BrokerDetailData> requiredBrokerDetailsList = new List<BrokerDetailData>();
 
@@ -325,7 +322,6 @@ namespace GreenField.Web.Services
                 for (int i = 0; i < requiredBrokerDetailsList.Count; i++)
                 {
                     ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
-
                     if (data[i].EstimateType == "Revenue")
                         temp.SortOrder = 1;
                     else if (data[i].EstimateType == "EBITDA")
@@ -362,35 +358,33 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Get data for Finstat Gadget
         /// </summary>
-        /// <param name="issuerId"></param>
-        /// <param name="securityId"></param>
-        /// <param name="dataSource"></param>
-        /// <param name="fiscalType"></param>
-        /// <param name="currency"></param>
-        /// <param name="yearRange"></param>
-        /// <returns></returns>
+        /// <param name="issuerId">string</param>
+        /// <param name="securityId">string</param>
+        /// <param name="dataSource">FinancialStatementDataSource</param>
+        /// <param name="fiscalType">FinancialStatementFiscalType</param>
+        /// <param name="currency">String</param>
+        /// <param name="yearRange">Int32</param>
+        /// <returns>list of FinstatDetailData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<FinstatDetailData> RetrieveFinstatData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, String currency, Int32 yearRangeStart)
+        public List<FinstatDetailData> RetrieveFinstatData(string issuerId, string securityId, FinancialStatementDataSource dataSource, 
+            FinancialStatementFiscalType fiscalType, String currency, Int32 yearRangeStart)
         {
             try
             {
                 string _dataSource = EnumUtils.ToString(dataSource);
                 string _fiscalType = EnumUtils.ToString(fiscalType);
-
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-
                 List<FinstatDetail> data = new List<FinstatDetail>();
                 List<FinstatDetailData> result = new List<FinstatDetailData>();
 
                 data = entity.GetFinstatDetail(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
                 if (data == null || data.Count() == 0)
-                    return result;
+                { return result; }
 
                 #region DataSource group
                 List<int> distinctPeriodYear = data.Select(a => a.PERIOD_YEAR).Distinct().ToList();
                 List<FinstatDetail> distinctRootSource = data.Where(a => a.ROOT_SOURCE != null).OrderBy(a => a.PERIOD_YEAR).ThenBy(a => a.DATA_SOURCE).ToList();
-
 
                 foreach (int item in distinctPeriodYear)
                 {
@@ -421,7 +415,6 @@ namespace GreenField.Web.Services
                     tempData.IsPercentage = "N";
                     result.Add(tempData);
                 }
-
                 #endregion
 
                 #region Preparing display data for group names
@@ -446,31 +439,32 @@ namespace GreenField.Web.Services
                         decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
 
                         decimal year1Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 3
-                                                                                && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year1 = (year1Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year1Value));
-
                         decimal year2Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
-                                                                                && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year2 = (year2Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year2Value));
-
                         decimal year3Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 1
-                                                                               && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year3 = (year3Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year3Value));
-
                         decimal year4Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
-                                                                               && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year4 = (year4Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year4Value));
                         decimal year5Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 1
-                                                                               && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year5 = (year5Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year5Value));
                         decimal year6Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
-                                                                               && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year6 = (year6Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year6Value));
 
                         if (year1 != 0 && year2 != 0 && year3 != 0 && year1 != null && year2 != null && year3 != null)
-                            temp.HarmonicFirst = Convert.ToDecimal((1 / (year1 + year2 + year3)) * data[i].MULTIPLIER);
+                        {
+                            temp.HarmonicFirst = Convert.ToDecimal((1 / (year1 + year2 + year3)) * data[i].MULTIPLIER); 
+                        }
                         if (year4 != 0 && year5 != 0 && year6 != 0 && year4 != null && year5 != null && year6 != null)
+                        { 
                             temp.HarmonicSecond = Convert.ToDecimal((1 / (year4 + year5 + year6)) * data[i].MULTIPLIER);
+                        }
                     }
                     result.Add(temp);
                 }
@@ -543,7 +537,6 @@ namespace GreenField.Web.Services
                     tempData.RootSource = _dataSource;
                     tempData.RootSourceDate = DateTime.Now;
                     tempData.Decimals = item.DECIMALS;
-                    //tempData.Multiplier = item.MULTIPLIER;
                     tempData.IsPercentage = item.PERCENTAGE;
                     if (item.VALUE == "step1")
                     {
@@ -555,7 +548,7 @@ namespace GreenField.Web.Services
                     {
                         tempData.BoldFont = "N";
                         tempData.Description = item.DATA_ID == 11 ? "Consensus Net Income" :
-                                                   item.DATA_ID == 166 ? "Consensus P/E" : item.DATA_ID == 164 ? "Consensus P/BV" : item.DATA_ID == 19 ? "Consensus ROE" : "";
+                                             item.DATA_ID == 166 ? "Consensus P/E" : item.DATA_ID == 164 ? "Consensus P/BV" : item.DATA_ID == 19 ? "Consensus ROE": "";
                     }
                     else if (item.VALUE == "step3")
                     {
@@ -592,21 +585,24 @@ namespace GreenField.Web.Services
                     {
                         case 166:
                             record.Description = "Relative Country P/E";
-                            decimal countryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 166).Select(a => a.AMOUNT).FirstOrDefault());
+                            decimal countryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 166).Select(a => a.AMOUNT)
+                                .FirstOrDefault());
                             if (countryPE != 0)
-                                record.Amount = Math.Round((item.AMOUNT / countryPE), 2);
+                            { record.Amount = Math.Round((item.AMOUNT / countryPE), 2); }
                             break;
                         case 164:
                             record.Description = "Relative Country P/BV";
-                            decimal countryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 164).Select(a => a.AMOUNT).FirstOrDefault());
+                            decimal countryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 164).Select(a => a.AMOUNT)
+                                .FirstOrDefault());
                             if (countryPBV != 0)
-                                record.Amount = Math.Round((item.AMOUNT / countryPBV), 2);
+                            { record.Amount = Math.Round((item.AMOUNT / countryPBV), 2); }
                             break;
                         case 133:
                             record.Description = "Relative Country ROE";
-                            decimal countryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 133).Select(a => a.AMOUNT).FirstOrDefault());
+                            decimal countryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 133).Select(a => a.AMOUNT)
+                                .FirstOrDefault());
                             if (countryROE != 0)
-                                record.Amount = Math.Round((item.AMOUNT / countryROE), 2);
+                            { record.Amount = Math.Round((item.AMOUNT / countryROE), 2); }
                             break;
                         default:
                             break;
@@ -628,29 +624,30 @@ namespace GreenField.Web.Services
                     {
                         case 166:
                             record.Description = "Relative Industry P/E";
-                            decimal industryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 166).Select(a => a.AMOUNT).FirstOrDefault());
+                            decimal industryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 166).Select(a => a.AMOUNT)
+                                .FirstOrDefault());
                             if (industryPE != 0)
-                                record.Amount = Math.Round((item.AMOUNT / industryPE), 2);
+                            { record.Amount = Math.Round((item.AMOUNT / industryPE), 2); }
                             break;
                         case 164:
                             record.Description = "Relative Industry P/BV";
-                            decimal industryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 164).Select(a => a.AMOUNT).FirstOrDefault());
+                            decimal industryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 164).Select(a => a.AMOUNT)
+                                .FirstOrDefault());
                             if (industryPBV != 0)
-                                record.Amount = Math.Round((item.AMOUNT / industryPBV), 2);
+                            { record.Amount = Math.Round((item.AMOUNT / industryPBV), 2); }
                             break;
                         case 133:
                             record.Description = "Relative Industry ROE";
-                            decimal industryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 133).Select(a => a.AMOUNT).FirstOrDefault());
+                            decimal industryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 133).Select(a => a.AMOUNT)
+                                .FirstOrDefault());
                             if (industryROE != 0)
-                                record.Amount = Math.Round((item.AMOUNT / industryROE), 2);
+                            { record.Amount = Math.Round((item.AMOUNT / industryROE), 2); }
                             break;
                         default:
                             break;
                     }
                 }
-
                 #endregion
-
                 return result;
             }
             catch (Exception ex)
@@ -1017,13 +1014,12 @@ namespace GreenField.Web.Services
 
         #endregion
 
+        #region Consensus Estimates Summary Gadget
         /// <summary>
         /// Retrieve data for consensus Estimates Summary Gadget
         /// </summary>
         /// <param name="entityIdentifier">Security identifier selected by the user</param>
         /// <returns>Returns data in the list of type ConsensusEstimatesSummaryData</returns>
-        /// 
-        #region Consensus Estimates Summary Gadget
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> RetrieveConsensusEstimatesSummaryData(EntitySelectionData entityIdentifier)

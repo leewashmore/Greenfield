@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel.Composition;
-using GreenField.ServiceCaller;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.ObjectModel;
-using System.Windows;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
-using GreenField.ServiceCaller.PerformanceDefinitions;
+using System.ComponentModel.Composition;
+using System.Linq;
 using System.ServiceModel;
-using GreenField.DataContracts;
-using GreenField.ServiceCaller.ModelFXDefinitions;
-using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using GreenField.DataContracts.DataContracts;
+using System.Windows;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.UserSession;
-using GreenField.ServiceCaller.MeetingDefinitions;
+using GreenField.DataContracts;
+using GreenField.DataContracts.DataContracts;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.ServiceCaller.CustomScreeningDefinitions;
 using GreenField.ServiceCaller.DCFDefinitions;
 using GreenField.ServiceCaller.DocumentWorkSpaceDefinitions;
-using System.IO;
-using GreenField.ServiceCaller.CustomScreeningDefinitions;
+using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using GreenField.ServiceCaller.FairValueDefinitions;
-
+using GreenField.ServiceCaller.MeetingDefinitions;
+using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
+using GreenField.UserSession;
 
 namespace GreenField.ServiceCaller
 {
@@ -2597,11 +2593,19 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-        public void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetail>> callback)
+        /// <summary>
+        /// service call for Consensus estimate detail data retrieval
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="periodType"></param>
+        /// <param name="currency"></param>
+        /// <param name="callback"></param>
+        public void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency,
+                                                                                                            Action<List<ConsensusEstimateDetail>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+                                                                                                                                    : "Unspecified");
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
             client.RetrieveConsensusEstimateDetailedDataAsync(issuerId, periodType, currency);
             client.RetrieveConsensusEstimateDetailedDataCompleted += (se, e) =>
@@ -2626,15 +2630,16 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                    ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
@@ -2796,12 +2801,22 @@ namespace GreenField.ServiceCaller
 
         }
 
+        /// <summary>
+        /// service call for Finstat detail data retrieval
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="securityId"></param>
+        /// <param name="dataSource"></param>
+        /// <param name="fiscalType"></param>
+        /// <param name="currency"></param>
+        /// <param name="yearRange"></param>
+        /// <param name="callback"></param>
         public void RetrieveFinstatDetailData(string issuerId, string securityId, FinancialStatementDataSource dataSource,
-                                                    FinancialStatementFiscalType fiscalType, String currency, Int32 yearRange, Action<List<FinstatDetailData>> callback)
+                                               FinancialStatementFiscalType fiscalType, String currency, Int32 yearRange, Action<List<FinstatDetailData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
+                                                                                                                                 : "Unspecified");
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
             client.RetrieveFinstatDataAsync(issuerId, securityId, dataSource, fiscalType, currency, yearRange);
             client.RetrieveFinstatDataCompleted += (se, e) =>
@@ -2826,23 +2841,32 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                                ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
-        public void RetrieveConsensusEstimateDetailedBrokerData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetail>> callback)
+        /// <summary>
+        /// service call for Consensus estimate detail broker data retrieval
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="periodType"></param>
+        /// <param name="currency"></param>
+        /// <param name="callback"></param>
+        public void RetrieveConsensusEstimateDetailedBrokerData(string issuerId, FinancialStatementPeriodType periodType, String currency,
+                                                                                                            Action<List<ConsensusEstimateDetail>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+                                                                                                                                            : "Unspecified");
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
             client.RetrieveConsensusEstimateDetailedBrokerDataAsync(issuerId, periodType, currency);
             client.RetrieveConsensusEstimateDetailedBrokerDataCompleted += (se, e) =>
@@ -2867,17 +2891,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                                ? SessionManager.SESSION.UserName : "Unspecified");
             };
-
         }
         #endregion
 
@@ -5634,6 +5658,5 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
-
     }
 }

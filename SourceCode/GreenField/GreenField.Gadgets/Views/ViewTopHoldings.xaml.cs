@@ -30,8 +30,8 @@ namespace GreenField.Gadgets.Views
             set
             {
                 isActive = value;
-                if (DataContextViewModelTopHoldings != null) //DataContext instance
-                    DataContextViewModelTopHoldings.IsActive = isActive;
+                if (DataContextViewModelTopHoldings != null)
+                { DataContextViewModelTopHoldings.IsActive = isActive; }
             }
         }
         #endregion

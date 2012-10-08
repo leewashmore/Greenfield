@@ -305,8 +305,8 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="exportElement"></param>
         /// <param name="cellValueConverter"></param>
-        public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null, Func<object> headerCellValueConverter = null
-            , bool showGroupFooters = true, List<int> hideColumnIndex = null, List<int> aggregatedColumnIndex = null)
+        public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null, 
+            Func<object> headerCellValueConverter = null, bool showGroupFooters = true, List<int> hideColumnIndex = null, List<int> aggregatedColumnIndex = null)
         {
             ExportElementOptions element = ExportElementOptions.Where(t => t.ExportElementType == exportElement.Element).FirstOrDefault();
             if (element != null)

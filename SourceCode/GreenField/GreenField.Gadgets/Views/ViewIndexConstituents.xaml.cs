@@ -30,8 +30,8 @@ namespace GreenField.Gadgets.Views
             set
             {
                 isActive = value;
-                if (DataContextIndexConstituents != null) //DataContext instance
-                    DataContextIndexConstituents.IsActive = isActive;
+                if (DataContextIndexConstituents != null)
+                { DataContextIndexConstituents.IsActive = isActive; }
             }
         }
         #endregion
@@ -57,11 +57,8 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            ChildExportOptions childExportOptions = new ChildExportOptions
-                (
-                new List<RadExportOptions>
-                {
-                    new RadExportOptions() 
+            ChildExportOptions childExportOptions = new ChildExportOptions( new List<RadExportOptions>
+                { new RadExportOptions() 
                     {
                         Element = this.dgIndexConstituents,
                         ElementName = "Index Constituent Data",
