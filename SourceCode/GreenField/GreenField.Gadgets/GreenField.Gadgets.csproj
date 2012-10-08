@@ -206,10 +206,10 @@
     <Compile Include="ViewModels\Market Performance\ChildViewModelInsertEntity.cs" />
     <Compile Include="ViewModels\Market Performance\ViewModelMarketPerformanceSnapshot.cs" />
     <Compile Include="ViewModels\PortfolioPeriodData.cs" />
-    <Compile Include="ViewModels\ViewModelAssetAllocation.cs" />
+    <Compile Include="ViewModels\Portfolio Holdings\ViewModelAssetAllocation.cs" />
     <Compile Include="ViewModels\ViewModelAttribution.cs" />
     <Compile Include="ViewModels\ViewModelBasicData.cs" />
-    <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
+    <Compile Include="ViewModels\Slice1\ViewModelClosingPriceChart.cs" />
     <Compile Include="ViewModels\ViewModelCommodityIndex.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimatesDetails.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
@@ -229,13 +229,13 @@
     <Compile Include="ViewModels\ViewModelMacroDBKeyAnnualReport.cs" />
     <Compile Include="ViewModels\ViewModelMacroDBKeyAnnualReportEMSummary.cs" />
     <Compile Include="ViewModels\ViewModelMarketCapitalization.cs" />
-    <Compile Include="ViewModels\ViewModelMultiLineBenchmark.cs" />
+    <Compile Include="ViewModels\Performance\ViewModelMultiLineBenchmark.cs" />
     <Compile Include="ViewModels\ViewModelPBV.cs" />
     <Compile Include="ViewModels\ViewModelPCE.cs" />
     <Compile Include="ViewModels\ViewModelPE.cs" />
     <Compile Include="ViewModels\ViewModelPerformanceGadget.cs" />
     <Compile Include="ViewModels\ViewModelPerformanceGrid.cs" />
-    <Compile Include="ViewModels\ViewModelPortfolioDetails.cs" />
+    <Compile Include="ViewModels\Portfolio Holdings\ViewModelPortfolioDetails.cs" />
     <Compile Include="ViewModels\ViewModelPortfolioRiskReturns.cs" />
     <Compile Include="ViewModels\ViewModelPRevenue.cs" />
     <Compile Include="ViewModels\ViewModelQuarterlyResultsComparison.cs" />
@@ -244,12 +244,12 @@
     <Compile Include="ViewModels\ViewModelRelativePerformanceCountryActivePosition.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformanceSectorActivePosition.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformanceSecurityActivePosition.cs" />
-    <Compile Include="ViewModels\ViewModelRelativePeroformanceUI.cs" />
+    <Compile Include="ViewModels\Performance\ViewModelRelativePeroformanceUI.cs" />
     <Compile Include="ViewModels\ViewModelRiskIndexExposures.cs" />
     <Compile Include="ViewModels\ViewModelScatterGraph.cs" />
     <Compile Include="ViewModels\ViewModelSectorBreakdown.cs" />
     <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
-    <Compile Include="ViewModels\ViewModelSlice1ChartExtension.cs" />
+    <Compile Include="ViewModels\Performance\ViewModelSlice1ChartExtension.cs" />
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
@@ -405,7 +405,7 @@
     <Compile Include="Views\ViewMacroDBKeyAnnualReportEMSummary.xaml.cs">
       <DependentUpon>ViewMacroDBKeyAnnualReportEMSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewMultiLineBenchmark.xaml.cs">
+    <Compile Include="Views\Performance\ViewMultiLineBenchmark.xaml.cs">
       <DependentUpon>ViewMultiLineBenchmark.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewPBV.xaml.cs">
@@ -417,7 +417,7 @@
     <Compile Include="Views\ViewPE.xaml.cs">
       <DependentUpon>ViewPE.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewPortfolioDetails.xaml.cs">
+    <Compile Include="Views\Portfolio Holdings\ViewPortfolioDetails.xaml.cs">
       <DependentUpon>ViewPortfolioDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewPRevenue.xaml.cs">
@@ -432,13 +432,13 @@
     <Compile Include="Views\ViewRelativePerformanceSectorActivePosition.xaml.cs">
       <DependentUpon>ViewRelativePerformanceSectorActivePosition.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewAssetAllocation.xaml.cs">
+    <Compile Include="Views\Portfolio Holdings\ViewAssetAllocation.xaml.cs">
       <DependentUpon>ViewAssetAllocation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewAttribution.xaml.cs">
       <DependentUpon>ViewAttribution.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewClosingPriceChart.xaml.cs">
+    <Compile Include="Views\Slice1\ViewClosingPriceChart.xaml.cs">
       <DependentUpon>ViewClosingPriceChart.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewRelativePerformanceCountryActivePosition.xaml.cs">
@@ -474,7 +474,7 @@
     <Compile Include="Views\ViewRelativePerformance.xaml.cs">
       <DependentUpon>ViewRelativePerformance.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewRelativePerformanceUI.xaml.cs">
+    <Compile Include="Views\Performance\ViewRelativePerformanceUI.xaml.cs">
       <DependentUpon>ViewRelativePerformanceUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewRiskIndexExposures.xaml.cs">
@@ -489,7 +489,7 @@
     <Compile Include="Views\ViewSecurityOverview.xaml.cs">
       <DependentUpon>ViewSecurityOverview.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewSlice1ChartExtension.xaml.cs">
+    <Compile Include="Views\Performance\ViewSlice1ChartExtension.xaml.cs">
       <DependentUpon>ViewSlice1ChartExtension.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewTopHoldings.xaml.cs">
@@ -714,7 +714,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewMultiLineBenchmark.xaml">
+    <Page Include="Views\Performance\ViewMultiLineBenchmark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -730,7 +730,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewPortfolioDetails.xaml">
+    <Page Include="Views\Portfolio Holdings\ViewPortfolioDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -750,7 +750,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewAssetAllocation.xaml">
+    <Page Include="Views\Portfolio Holdings\ViewAssetAllocation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -758,7 +758,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewClosingPriceChart.xaml">
+    <Page Include="Views\Slice1\ViewClosingPriceChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -806,7 +806,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewRelativePerformanceUI.xaml">
+    <Page Include="Views\Performance\ViewRelativePerformanceUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -826,7 +826,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewSlice1ChartExtension.xaml">
+    <Page Include="Views\Performance\ViewSlice1ChartExtension.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

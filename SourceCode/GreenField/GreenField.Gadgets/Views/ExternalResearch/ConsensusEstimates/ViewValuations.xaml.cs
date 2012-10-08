@@ -28,17 +28,17 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of View-Model
         /// </summary>
-        private ViewModelValuations _dataContextValuations;
+        private ViewModelValuations dataContextValuations;
         public ViewModelValuations DataContextValuations
         {
-            get { return _dataContextValuations; }
-            set { _dataContextValuations = value; }
+            get { return dataContextValuations; }
+            set { dataContextValuations = value; }
         }
 
         /// <summary>
         /// Instance of EntitySelectionData
         /// </summary>
-        private EntitySelectionData _entitySelectionData;
+        private EntitySelectionData entitySelectionData;
         private bool _periodIsYearly = true;
 
         #endregion
@@ -47,15 +47,17 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextValuations != null)
-                    DataContextValuations.IsActive = _isActive;
+                {
+                    DataContextValuations.IsActive = isActive;
+                }
             }
         }
         #endregion
@@ -96,6 +98,7 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region GridNavigationButtons
+
         /// <summary>
         /// Left Navigation Button Click
         /// </summary>
@@ -105,7 +108,6 @@ namespace GreenField.Gadgets.Views
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(this.DataContextValuations.Logger, methodNamespace);
-
             try
             {
                 PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
@@ -130,7 +132,6 @@ namespace GreenField.Gadgets.Views
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(this.DataContextValuations.Logger, methodNamespace);
-
             try
             {
                 PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
@@ -168,8 +169,7 @@ namespace GreenField.Gadgets.Views
         {
             RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 12 });
         }
-
-
+        
         /// <summary>
         /// Export to Excel Button Click
         /// </summary>
@@ -182,17 +182,16 @@ namespace GreenField.Gadgets.Views
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-                String elementName = "Consensus Estimate - " + (this.DataContextValuations.EntitySelectionInfo).LongName + " (" + (this.DataContextValuations.EntitySelectionInfo).ShortName + ") " +
+                String elementName = "Consensus Estimate - " + (this.DataContextValuations.EntitySelectionInfo).LongName + 
+                    " (" + (this.DataContextValuations.EntitySelectionInfo).ShortName + ") " +
                     (_periodIsYearly ? this.dgConsensusEstimateValuations.Columns[2].Header : this.dgConsensusEstimateValuations.Columns[6].Header) + " - " +
                     (_periodIsYearly ? this.dgConsensusEstimateValuations.Columns[7].Header : this.dgConsensusEstimateValuations.Columns[11].Header);
                 RadExportOptionsInfo.Add(new RadExportOptions()
                 {
                     ElementName = elementName,
-                    Element = this.dgConsensusEstimateValuations
-                    ,
+                    Element = this.dgConsensusEstimateValuations,
                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
                 });
-
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
                 childExportOptions.Show();
             }
@@ -202,6 +201,7 @@ namespace GreenField.Gadgets.Views
                 Logging.LogException(this.DataContextValuations.Logger, ex);
             }
         }
+
         #endregion
 
     }

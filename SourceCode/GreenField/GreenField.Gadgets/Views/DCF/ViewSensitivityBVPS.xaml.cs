@@ -1,34 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
 using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 using Telerik.Windows.Documents.Model;
-using Telerik.Windows.Controls;
-using System.Text.RegularExpressions;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code-behind for Sensitivity BVPS
+    /// </summary>
     public partial class ViewSensitivityBVPS : ViewBaseUserControl
     {
-        private ViewModelDCF _dataContextSource;
+        /// <summary>
+        /// Instance of View-Model: ViewModelDCF
+        /// </summary>
+        private ViewModelDCF dataContextSource;
         public ViewModelDCF DataContextSource
         {
-            get { return _dataContextSource; }
-            set { _dataContextSource = value; }
+            get { return dataContextSource; }
+            set { dataContextSource = value; }
         }
 
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">ViewModel</param>
         public ViewSensitivityBVPS(ViewModelDCF dataContextSource)
         {
             InitializeComponent();
@@ -43,7 +45,6 @@ namespace GreenField.Gadgets.Views
             if (!Decimal.TryParse(textEntered, out value))
             {
                 txtFWDBVPS.Text = "";
-                //Prompt.ShowDialog("FWD BVPS can only be Numeric");
             }
         }
 
@@ -73,7 +74,8 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                                new RadExportOptions() { ElementName = ExportTypes.Sensitivity_BVPS, Element = this.dgDCFSensitivity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                new RadExportOptions() { ElementName = ExportTypes.Sensitivity_BVPS, Element = this.dgDCFSensitivity,
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                         };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.Sensitivity_BVPS);
                     childExportOptions.Show();
@@ -185,7 +187,7 @@ namespace GreenField.Gadgets.Views
         {
             if (e.Key == Key.Tab)
             {
-                return; //Added to handle TAB key after below post
+                return; //added to handle tab key 
             }
             var thisKeyStr = "";
             if (e.PlatformKeyCode == 190 || e.PlatformKeyCode == 110)
@@ -197,7 +199,6 @@ namespace GreenField.Gadgets.Views
                 thisKeyStr = e.Key.ToString().Replace("D", "").Replace("NumPad", "");
             }
             var s = (sender as TextBox).Text + thisKeyStr;
-            //var rStr = "^[0-9]*[0-9](|.[0-9]*[0-9]|,([0-9]*[0-9]))?$";
             var rStr = "^[0-9]+[.]?([0-9]{1,10})*$";
             var r = new Regex(rStr, RegexOptions.IgnoreCase);
             e.Handled = !r.IsMatch(s);

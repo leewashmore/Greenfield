@@ -16,7 +16,6 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-
     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" BusyContent="{Binding BusyIndicatorContent}"
                                       IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
         <Grid x:Name="LayoutRoot" Background="White">
@@ -35,7 +34,6 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-
                 
                 <Button Height="15" Width="15" Grid.Column="2"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
@@ -195,7 +193,6 @@
                 </Grid>
             </Grid>
             <telerik:RadRichTextBox Grid.Row="3" x:Name="RichTextBox" />
-
         </Grid>
     </telerik:RadBusyIndicator>
 

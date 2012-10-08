@@ -15,64 +15,60 @@ using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code-Behind for AssetAllocation
+    /// </summary>
     public partial class ViewAssetAllocation : ViewBaseUserControl
     {
         #region PropertyDeclaration
-        private ViewModelAssetAllocation _dataContextAssetAllocation;
+
+        /// <summary>
+        /// Instance of View-Model
+        /// </summary>
+        private ViewModelAssetAllocation dataContextAssetAllocation;
         public ViewModelAssetAllocation DataContextAssetAllocation
         {
             get
             {
-                return _dataContextAssetAllocation;
+                return dataContextAssetAllocation;
             }
             set
             {
-                _dataContextAssetAllocation = value;
+                dataContextAssetAllocation = value;
             }
         }
 
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextAssetAllocation != null)
-                    DataContextAssetAllocation.IsActive = _isActive;
+                    DataContextAssetAllocation.IsActive = isActive;
             }
         }
 
         #endregion
 
         #region Constructor
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">View-Model</param>
         public ViewAssetAllocation(ViewModelAssetAllocation dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextAssetAllocation = dataContextSource;
-            dataContextSource.AssetAllocationDataLoadedEvent += new Common.DataRetrievalProgressIndicatorEventHandler(DataContextSource_AssetAllocationDataLoadedEvent);
         }
+        
         #endregion
-
-        /// <summary>
-        /// Data Retrieval Progress Indicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSource_AssetAllocationDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-            {
-                this.busyIndicatorGrid.IsBusy = true;
-            }
-            else
-            {
-                this.busyIndicatorGrid.IsBusy = false;
-            }
-        }
 
         #region EventUnsubscribe
         public override void Dispose()
@@ -82,6 +78,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-                
     }
 }

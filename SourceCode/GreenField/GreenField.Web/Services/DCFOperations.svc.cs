@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.ServiceModel.Activation;
-using System.Resources;
-using GreenField.Web.Helpers.Service_Faults;
-using GreenField.Web.Helpers;
-using GreenField.DataContracts;
-using GreenField.DAL;
-using System.Data.Objects;
-using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
-using GreenField.Web.DataContracts;
-using System.Data;
-using GreenField.DataContracts.DataContracts;
+using System.Linq;
+using System.Resources;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using GreenField.DAL;
+using GreenField.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
+using GreenField.Web.Helpers;
+using GreenField.Web.Helpers.Service_Faults;
 
 namespace GreenField.Web.Services
 {
@@ -26,6 +20,9 @@ namespace GreenField.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class DCFOperations
     {
+        /// <summary>
+        /// Service FaultResource manager
+        /// </summary>
         public ResourceManager ServiceFaultResourceManager
         {
             get
@@ -34,6 +31,9 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Instance of Dimension Service
+        /// </summary>
         private Entities dimensionEntity;
         public Entities DimensionEntity
         {
@@ -64,20 +64,20 @@ namespace GreenField.Web.Services
                 List<DCFAnalysisSummaryData_Result> dbResult;
                 MODEL_INPUTS_CTY modelData = new MODEL_INPUTS_CTY();
                 decimal marketCap;
-
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-
                 if (entitySelectionData == null)
+                {
                     return new List<DCFAnalysisSummaryData>();
-
+                }
                 #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
+                {
                     throw new Exception("Services are not available");
-
+                }
                 #endregion
 
                 GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
@@ -86,18 +86,18 @@ namespace GreenField.Web.Services
                         record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
 
                 if (securityDetails == null)
+                {
                     return new List<DCFAnalysisSummaryData>();
-
+                }
                 issuerId = securityDetails.ISSUER_ID;
                 if (issuerId == null)
+                {
                     return new List<DCFAnalysisSummaryData>();
-
+                }
                 dbResult = entity.RetrieveDCFAnalysisSummaryData(issuerId, "PRIMARY", "C", "FISCAL", "USD").ToList();
                 modelData = entity.GetDCFRiskFreeRate(Convert.ToString(securityDetails.ISO_COUNTRY_CODE)).FirstOrDefault();
                 marketCap = Convert.ToDecimal(entity.GetDCFMarketCap(Convert.ToString(securityDetails.SECURITY_ID)).FirstOrDefault());
-
                 DCFAnalysisSummaryData data = new DCFAnalysisSummaryData();
-
                 data.SecurityId = securityDetails.ASEC_SEC_SHORT_NAME;
                 data.IssuerId = securityDetails.ISSUER_ID;
                 data.Beta = (securityDetails.BARRA_BETA == null) ?
@@ -106,7 +106,6 @@ namespace GreenField.Web.Services
                 data.MarginalTaxRate = dbResult.Where(a => a.DATA_ID == 289 && a.PERIOD_TYPE.Trim() == "C").Select(a => a.AMOUNT).FirstOrDefault();
                 data.GrossDebt = dbResult.Where(a => a.DATA_ID == 256 && a.PERIOD_TYPE.Trim() == "C").Select(a => a.AMOUNT).FirstOrDefault();
                 data.MarketCap = Convert.ToDecimal(marketCap);
-
                 if (modelData != null)
                 {
                     data.RiskFreeRate = (modelData.RISK_FREE_RATE != null ? modelData.RISK_FREE_RATE : 0);
@@ -142,20 +141,19 @@ namespace GreenField.Web.Services
                 Dictionary<string, decimal> dataROIC_SDPR = new Dictionary<string, decimal>();
                 List<DCFCashFlowData> cashFlowResult = new List<DCFCashFlowData>();
                 string issuerId;
-
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-
                 if (entitySelectionData == null)
+                {
                     return new List<DCFTerminalValueCalculationsData>();
-
+                }
                 #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
                 if (!isServiceUp)
+                {
                     throw new Exception("Services are not available");
-
+                }
                 #endregion
 
                 GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
@@ -165,15 +163,12 @@ namespace GreenField.Web.Services
 
                 issuerId = securityDetails.ISSUER_ID;
                 if (issuerId == null)
+                {
                     return new List<DCFTerminalValueCalculationsData>();
-
-                //cashFlowResult = entity.GetDCFCashFlow(issuerId).ToList();
-
+                }
                 decimal longTermGDPGrowth = Convert.ToDecimal(entity.GetDCFGDP(Convert.ToString(securityDetails.ISO_COUNTRY_CODE)).FirstOrDefault());
                 DCFTerminalValueCalculationsData data = new DCFTerminalValueCalculationsData();
-
                 dataROIC_SDPR = GetROIC(issuerId);
-
                 if (dataROIC_SDPR.ContainsKey("ROIC"))
                 {
                     data.SustainableROIC = dataROIC_SDPR.Where(a => a.Key == "ROIC").Select(a => a.Value).FirstOrDefault();
@@ -184,7 +179,6 @@ namespace GreenField.Web.Services
                 }
                 data.LongTermNominalGDPGrowth = longTermGDPGrowth;
                 result.Add(data);
-
                 return result;
             }
             catch (Exception ex)
@@ -271,16 +265,18 @@ namespace GreenField.Web.Services
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
                 if (entitySelectionData == null)
+                {
                     return new List<DCFCashFlowData>();
-
+                }
                 #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
+                {
                     throw new Exception("Services are not available");
-
+                }
                 #endregion
 
                 GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
@@ -290,8 +286,9 @@ namespace GreenField.Web.Services
 
                 string issuerId = securityDetails.ISSUER_ID;
                 if (issuerId == null)
+                {
                     return new List<DCFCashFlowData>();
-
+                }
                 dbResult = entity.GetDCFCashFlow(issuerId).OrderBy(a => a.PERIOD_YEAR).ToList();
                 if (dbResult == null || dbResult.Count == 0)
                 {
@@ -305,14 +302,11 @@ namespace GreenField.Web.Services
                         result.Add(dbResult.Where(a => a.PERIOD_YEAR == currentYear + i).FirstOrDefault());
                     }
                 }
-
                 decimal average = result.Where(a => a.PERIOD_YEAR < currentYear + 5).Select(a => Convert.ToDecimal(a.AMOUNT)).Average();
-
                 for (int i = 5; i < 10; i++)
                 {
                     result.Add(new DCFCashFlowData() { AMOUNT = 0, DISCOUNTING_FACTOR = 0, PERIOD_YEAR = currentYear + i });
                 }
-
                 foreach (DCFCashFlowData item in result)
                 {
                     if (item.PERIOD_YEAR > currentYear + 4)
@@ -345,20 +339,20 @@ namespace GreenField.Web.Services
                 List<DCFSummaryData> result = new List<DCFSummaryData>();
                 List<DCFSummaryDBData> dbResult = new List<DCFSummaryDBData>();
                 List<DCFSummaryDBData> dbResultShares = new List<DCFSummaryDBData>();
-
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-
                 if (entitySelectionData == null)
+                {
                     return new List<DCFSummaryData>();
-
+                }
                 #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
+                {
                     throw new Exception("Services are not available");
-
+                }
                 #endregion
 
                 GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
@@ -368,20 +362,18 @@ namespace GreenField.Web.Services
 
                 string issuerId = securityDetails.ISSUER_ID;
                 if (issuerId == null)
+                {
                     return new List<DCFSummaryData>();
-
+                }
                 dbResult = entity.GetDCFSummaryData(issuerId).ToList();
                 dbResultShares = entity.GetDCF_NumberOfShares(Convert.ToString(securityDetails.SECURITY_ID)).ToList();
-
                 DCFSummaryData data = new DCFSummaryData();
-
                 data.Cash = dbResult.Where(a => a.DATA_ID == 255).Select(a => a.AMOUNT).FirstOrDefault();
                 data.FVInvestments = dbResult.Where(a => a.DATA_ID == 258).Select(a => a.AMOUNT).FirstOrDefault();
                 data.GrossDebt = dbResult.Where(a => a.DATA_ID == 256).Select(a => a.AMOUNT).FirstOrDefault();
                 data.FVMinorities = dbResult.Where(a => a.DATA_ID == 257).Select(a => a.AMOUNT).FirstOrDefault();
                 data.NumberOfShares = dbResultShares.Select(a => a.AMOUNT).FirstOrDefault();
                 result.Add(data);
-
                 return result;
             }
             catch (Exception ex)
@@ -404,16 +396,18 @@ namespace GreenField.Web.Services
             try
             {
                 if (entitySelectionData == null)
+                {
                     return 0;
-
+                }
                 #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
+                {
                     throw new Exception("Services are not available");
-
+                }
                 #endregion
 
                 GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
@@ -421,8 +415,9 @@ namespace GreenField.Web.Services
                         record.ISSUE_NAME == entitySelectionData.LongName &&
                         record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
                 if (securityDetails == null)
+                {
                     return 0;
-
+                }
                 return Convert.ToDecimal(securityDetails.CLOSING_PRICE);
             }
             catch (Exception ex)
@@ -463,7 +458,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-        
+
         #region FairValue
 
         /// <summary>
@@ -558,16 +553,11 @@ namespace GreenField.Web.Services
         {
             ExternalResearchEntities entity = new ExternalResearchEntities();
             Dictionary<string, decimal> result = new Dictionary<string, decimal>();
-
-
             List<decimal?> collectionROIC = new List<decimal?>();
             List<decimal?> collectionSustainableDividendPayoutRatio = new List<decimal?>();
-
             decimal? valueROIC;
             decimal? valueSustainableDividendPayoutRatio;
-
             int currentYear = DateTime.Today.Year;
-
             for (int i = 0; i < 5; i++)
             {
                 valueROIC = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 162 && a.FISCAL == "CALENDAR")
@@ -578,7 +568,6 @@ namespace GreenField.Web.Services
                 }
                 valueSustainableDividendPayoutRatio = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 141 && a.FISCAL == "FISCAL")
                     .Select(a => a.AMOUNT).FirstOrDefault();
-
                 if (valueSustainableDividendPayoutRatio != null)
                 {
                     collectionSustainableDividendPayoutRatio.Add(valueSustainableDividendPayoutRatio);
@@ -607,7 +596,6 @@ namespace GreenField.Web.Services
                     result.Add("SDPR", Convert.ToDecimal(0.3333));
                 }
             }
-
             return result;
         }
 

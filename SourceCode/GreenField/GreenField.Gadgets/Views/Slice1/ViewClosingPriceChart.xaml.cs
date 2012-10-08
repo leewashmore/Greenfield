@@ -40,25 +40,25 @@ namespace GreenField.Gadgets.Views
             public const string VOLUME_CHART = "Volume Chart";
         }
 
-        private ViewModelClosingPriceChart _dataContextClosingPriceChart;
+        private ViewModelClosingPriceChart dataContextClosingPriceChart;
         public ViewModelClosingPriceChart DataContextClosingPriceChart
         {
-            get { return _dataContextClosingPriceChart; }
-            set { _dataContextClosingPriceChart = value; }
+            get { return dataContextClosingPriceChart; }
+            set { dataContextClosingPriceChart = value; }
         }
 
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextClosingPriceChart != null)
-                    DataContextClosingPriceChart.IsActive = _isActive;
+                    DataContextClosingPriceChart.IsActive = isActive;
             }
         }
 
@@ -75,7 +75,6 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextClosingPriceChart = dataContextSource;
-            //dataContextSource.ClosingPriceDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSource_closingPriceDataLoadedEvent);
             dataContextSource.ChartAreaPricing = this.chPricing.DefaultView.ChartArea;
             this.chPricing.DataBound += dataContextSource.ChartDataBound;
             dataContextSource.ChartAreaVolume = this.chVolume.DefaultView.ChartArea;
@@ -93,7 +92,7 @@ namespace GreenField.Gadgets.Views
         private void ApplyChartStyles()
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextClosingPriceChart._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextClosingPriceChart.logger, methodNamespace);
             try
             {
                 this.chPricing.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
@@ -110,7 +109,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextClosingPriceChart._logger, ex);
+                Logging.LogException(this.DataContextClosingPriceChart.logger, ex);
             }
         }
 
@@ -250,7 +249,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextClosingPriceChart._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextClosingPriceChart.logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
@@ -272,7 +271,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextClosingPriceChart._logger, ex);
+                Logging.LogException(this.DataContextClosingPriceChart.logger, ex);
             }
         }
 
@@ -300,13 +299,13 @@ namespace GreenField.Gadgets.Views
         {
             List<string> aggregates = new List<string>();
 
-            foreach (AggregateFunction f in column.AggregateFunctions)
+            foreach (AggregateFunction function in column.AggregateFunctions)
             {
-                foreach (AggregateResult r in group.AggregateResults)
+                foreach (AggregateResult result in group.AggregateResults)
                 {
-                    if (f.FunctionName == r.FunctionName && r.FormattedValue != null)
+                    if (function.FunctionName == result.FunctionName && result.FormattedValue != null)
                     {
-                        aggregates.Add(r.FormattedValue.ToString());
+                        aggregates.Add(result.FormattedValue.ToString());
                     }
                 }
             }
@@ -321,7 +320,7 @@ namespace GreenField.Gadgets.Views
         private void cmbTime_DropDownClosed(object sender, EventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextClosingPriceChart._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextClosingPriceChart.logger, methodNamespace);
             try
             {
                 if (Convert.ToString(cmbTime.SelectedValue) == "Custom")
@@ -350,19 +349,9 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextClosingPriceChart._logger, ex);
+                Logging.LogException(this.DataContextClosingPriceChart.logger, ex);
             }
-        }
-
-        /// <summary>
-        /// Selection Changed Event for Time ComboBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
+        }       
 
         /// <summary>
         /// Add Series Drop Down Opening Event
@@ -371,9 +360,9 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void cmbAddSeries_DropDownOpened(object sender, EventArgs e)
         {
-            if (SelectionData.EntitySelectionData != null && _dataContextClosingPriceChart.SeriesReferenceSource == null)
+            if (SelectionData.EntitySelectionData != null && dataContextClosingPriceChart.SeriesReferenceSource == null)
             {
-                _dataContextClosingPriceChart.RetrieveEntitySelectionDataCallBackMethod(SelectionData.EntitySelectionData);
+                dataContextClosingPriceChart.RetrieveEntitySelectionDataCallBackMethod(SelectionData.EntitySelectionData);
             }
         }
 

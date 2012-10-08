@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using Telerik.Windows.Controls;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
-using Telerik.Windows.Controls;
-using System.Windows.Printing;
 using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
@@ -23,34 +15,32 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewRelativePerformanceUI : ViewBaseUserControl
     {
-        #region PrivateVariables
-
-        #endregion
-
         #region PropertyDeclaration
 
         /// <summary>
         /// Property of type View-Model
         /// </summary>
-        private ViewModelRelativePerformanceUI _dataContextRelativePerformanceUI;
+        private ViewModelRelativePerformanceUI dataContextRelativePerformanceUI;
         public ViewModelRelativePerformanceUI DataContextRelativePerformanceUI
         {
-            get { return _dataContextRelativePerformanceUI; }
-            set { _dataContextRelativePerformanceUI = value; }
+            get { return dataContextRelativePerformanceUI; }
+            set { dataContextRelativePerformanceUI = value; }
         }
 
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextRelativePerformanceUI != null)
-                    DataContextRelativePerformanceUI.IsActive = _isActive;
+                {
+                    DataContextRelativePerformanceUI.IsActive = isActive;
+                }
             }
         }
 
@@ -75,9 +65,24 @@ namespace GreenField.Gadgets.Views
 
         #region PrivateVariablesPrinting
 
+        /// <summary>
+        /// OffSet value
+        /// </summary>
         double offsetY;
+
+        /// <summary>
+        /// Total Height
+        /// </summary>
         double totalHeight;
+
+        /// <summary>
+        /// Canvas
+        /// </summary>
         Canvas canvas;
+        
+        /// <summary>
+        /// Instance of RadGrid
+        /// </summary>
         RadGridView grid;
 
         #endregion
@@ -90,7 +95,7 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextRelativePerformanceUI._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextRelativePerformanceUI.logger, methodNamespace);
 
             try
             {
@@ -104,7 +109,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextRelativePerformanceUI._logger, ex);
+                Logging.LogException(this.DataContextRelativePerformanceUI.logger, ex);
             }
         }
 
@@ -129,7 +134,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextRelativePerformanceUI._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextRelativePerformanceUI.logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
@@ -142,7 +147,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextRelativePerformanceUI._logger, ex);
+                Logging.LogException(this.DataContextRelativePerformanceUI.logger, ex);
             }
         }
 
@@ -157,12 +162,7 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-
-        #region ApplyStyles
-
-
-        #endregion
-
+                
         #region EventsUnsubscribe
 
         /// <summary>
@@ -176,6 +176,5 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-
     }
 }

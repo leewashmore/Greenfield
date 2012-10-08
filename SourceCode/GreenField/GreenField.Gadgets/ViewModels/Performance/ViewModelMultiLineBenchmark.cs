@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using GreenField.ServiceCaller;
-using System.Linq;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using System.Collections.Generic;
-using System.Windows.Data;
-using System.Collections.ObjectModel;
-using GreenField.Common;
-using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.Charting;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using Telerik.Windows.Controls;
 using GreenField.DataContracts;
-
+using GreenField.ServiceCaller;
+using GreenField.Common;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -26,15 +21,31 @@ namespace GreenField.Gadgets.ViewModels
     public class ViewModelMultiLineBenchmark : NotificationObject
     {
         #region Private Fields
-
+        
         /// <summary>
-        /// MEF Singletons
+        /// Instance of IDbInteractivity
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
-        private IEventAggregator _eventAggregator;
-        private FilterSelectionData _filterSelectionData;
-        private string _periodSelectionData;
+        private IDBInteractivity dbInteractivity;
+        
+        /// <summary>
+        /// Instance of Logger facade
+        /// </summary>
+        private ILoggerFacade logger;
+        
+        /// <summary>
+        /// Instance of Event Aggregator
+        /// </summary>
+        private IEventAggregator eventAggregator;
+        
+        /// <summary>
+        /// Instance of FilterSelectionData
+        /// </summary>
+        private FilterSelectionData filterSelectionData;
+        
+        /// <summary>
+        /// Period SelectionData
+        /// </summary>
+        private string periodSelectionData;
         
         
 
@@ -50,45 +61,45 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (param != null)
             {
-                _dbInteractivity = param.DBInteractivity;
-                _logger = param.LoggerFacade;
-                _eventAggregator = param.EventAggregator;
+                dbInteractivity = param.DBInteractivity;
+                logger = param.LoggerFacade;
+                eventAggregator = param.EventAggregator;
 
-                _selectedPortfolio = param.DashboardGadgetPayload.PortfolioSelectionData;
-                _periodSelectionData = param.DashboardGadgetPayload.PeriodSelectionData;
-                _filterSelectionData = param.DashboardGadgetPayload.FilterSelectionData;
+                selectedPortfolio = param.DashboardGadgetPayload.PortfolioSelectionData;
+                periodSelectionData = param.DashboardGadgetPayload.PeriodSelectionData;
+                filterSelectionData = param.DashboardGadgetPayload.FilterSelectionData;
 
-                if (_eventAggregator != null)
-                    SubscribeEvents(_eventAggregator);
+                if (eventAggregator != null)
+                    SubscribeEvents(eventAggregator);
 
-                if ((_selectedPortfolio != null) && (_periodSelectionData != null))
+                if ((selectedPortfolio != null) && (periodSelectionData != null))
                 {
                     Dictionary<string, string> objSelectedEntity = new Dictionary<string, string>();
-                    if (_selectedPortfolio.PortfolioId != null)
-                        objSelectedEntity.Add("PORTFOLIO", _selectedPortfolio.PortfolioId);
+                    if (selectedPortfolio.PortfolioId != null)
+                        objSelectedEntity.Add("PORTFOLIO", selectedPortfolio.PortfolioId);
 
-                    if (_filterSelectionData != null && _filterSelectionData.FilterValues != null)
+                    if (filterSelectionData != null && filterSelectionData.FilterValues != null)
                     {
                         if (SelectedEntities.ContainsKey("COUNTRY"))
                             SelectedEntities.Remove("COUNTRY");
                         if (SelectedEntities.ContainsKey("SECTOR"))
                             SelectedEntities.Remove("SECTOR");
 
-                        if (_filterSelectionData.Filtertype == "Country")
+                        if (filterSelectionData.Filtertype == "Country")
                         {
-                            if (_filterSelectionData.FilterValues != null)
-                                SelectedEntities.Add("COUNTRY", _filterSelectionData.FilterValues);
+                            if (filterSelectionData.FilterValues != null)
+                                SelectedEntities.Add("COUNTRY", filterSelectionData.FilterValues);
                         }
-                        else if (_filterSelectionData.Filtertype == "Sector")
+                        else if (filterSelectionData.Filtertype == "Sector")
                         {
-                            if (_filterSelectionData.FilterValues != null)
-                                SelectedEntities.Add("SECTOR", _filterSelectionData.FilterValues);
+                            if (filterSelectionData.FilterValues != null)
+                                SelectedEntities.Add("SECTOR", filterSelectionData.FilterValues);
                         }
                     }
 
                     if (objSelectedEntity != null || objSelectedEntity.Count != 0 && IsActive)
                     {
-                        _dbInteractivity.RetrieveBenchmarkChartReturnData(objSelectedEntity, RetrieveBenchmarkChartDataCallBackMethod);
+                        dbInteractivity.RetrieveBenchmarkChartReturnData(objSelectedEntity, RetrieveBenchmarkChartDataCallBackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -99,18 +110,18 @@ namespace GreenField.Gadgets.ViewModels
 
         #region PropertyDeclaration
 
-        private ObservableCollection<BenchmarkSelectionData> _chartEntityList;
+        private ObservableCollection<BenchmarkSelectionData> chartEntityList;
         public ObservableCollection<BenchmarkSelectionData> ChartEntityList
         {
             get
             {
-                if (_chartEntityList == null)
-                    _chartEntityList = new ObservableCollection<BenchmarkSelectionData>();
-                return _chartEntityList;
+                if (chartEntityList == null)
+                    chartEntityList = new ObservableCollection<BenchmarkSelectionData>();
+                return chartEntityList;
             }
             set
             {
-                _chartEntityList = value;
+                chartEntityList = value;
                 this.RaisePropertyChanged(() => this.ChartEntityList);
             }
         }
@@ -118,37 +129,37 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Portfolio
         /// </summary>
-        private PortfolioSelectionData _selectedPortfolio;
+        private PortfolioSelectionData selectedPortfolio;
         public PortfolioSelectionData PortfolioSelectionData
         {
             get
             {
-                if (_selectedPortfolio == null)
-                    _selectedPortfolio = new PortfolioSelectionData();
-                return _selectedPortfolio;
+                if (selectedPortfolio == null)
+                    selectedPortfolio = new PortfolioSelectionData();
+                return selectedPortfolio;
             }
             set
             {
-                _selectedPortfolio = value;
-                this.RaisePropertyChanged(() => this._selectedPortfolio);
+                selectedPortfolio = value;
+                this.RaisePropertyChanged(() => this.selectedPortfolio);
             }
         }
 
         /// <summary>
         /// Selected Entities
         /// </summary>
-        private Dictionary<string, string> _selectedEntities;
+        private Dictionary<string, string> selectedEntities;
         public Dictionary<string, string> SelectedEntities
         {
             get
             {
-                if (_selectedEntities == null)
-                    _selectedEntities = new Dictionary<string, string>();
-                return _selectedEntities;
+                if (selectedEntities == null)
+                    selectedEntities = new Dictionary<string, string>();
+                return selectedEntities;
             }
             set
             {
-                _selectedEntities = value;
+                selectedEntities = value;
                 this.RaisePropertyChanged(() => this.SelectedEntities);
             }
         }
@@ -156,16 +167,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Period from the tool-bar
         /// </summary>
-        private string _selectedPeriod;
+        private string selectedPeriod;
         public string SelectedPeriod
         {
             get
             {
-                return _selectedPeriod;
+                return selectedPeriod;
             }
             set
             {
-                _selectedPeriod = value;
+                selectedPeriod = value;
                 this.RaisePropertyChanged(() => this.SelectedPeriod);
             }
         }
@@ -173,16 +184,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Status of Busy Indicator
         /// </summary>
-        private bool _busyIndicatorStatus;
+        private bool busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
             get
             {
-                return _busyIndicatorStatus;
+                return busyIndicatorStatus;
             }
             set
             {
-                _busyIndicatorStatus = value;
+                busyIndicatorStatus = value;
                 this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
             }
         }
@@ -190,20 +201,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                _isActive = value;
-                if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _isActive)
+                isActive = value;
+                if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && isActive)
                 {
-                    _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
-                    _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
+                    dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
+                    dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
                     BusyIndicatorStatus = true;
                 }
             }
@@ -214,67 +225,78 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Collection of Benchmark Data-Chart
         /// </summary>
-        private RangeObservableCollection<BenchmarkChartReturnData> _multiLineBenchmarkUIChartData;
+        private RangeObservableCollection<BenchmarkChartReturnData> multiLineBenchmarkUIChartData;
         public RangeObservableCollection<BenchmarkChartReturnData> MultiLineBenchmarkUIChartData
         {
             get
             {
-                if (_multiLineBenchmarkUIChartData == null)
-                    _multiLineBenchmarkUIChartData = new RangeObservableCollection<BenchmarkChartReturnData>();
-                return _multiLineBenchmarkUIChartData;
+                if (multiLineBenchmarkUIChartData == null)
+                {
+                    multiLineBenchmarkUIChartData = new RangeObservableCollection<BenchmarkChartReturnData>();
+                }
+                return multiLineBenchmarkUIChartData;
             }
             set
             {
-                _multiLineBenchmarkUIChartData = value;
+                multiLineBenchmarkUIChartData = value;
                 this.RaisePropertyChanged(() => this.MultiLineBenchmarkUIChartData);
             }
         }
 
-        private ChartArea _chartAreaMultiLineBenchmark;
+        /// <summary>
+        /// Chart Area bound to the chart
+        /// </summary>
+        private ChartArea chartAreaMultiLineBenchmark;
         public ChartArea ChartAreaMultiLineBenchmark
         {
             get
             {
-                return this._chartAreaMultiLineBenchmark;
+                return this.chartAreaMultiLineBenchmark;
             }
             set
             {
-                this._chartAreaMultiLineBenchmark = value;
+                this.chartAreaMultiLineBenchmark = value;
             }
         }
-
-
-
-        private double _axisXMinValue;
+        
+        /// <summary>
+        /// Minimum Value of X-Axis
+        /// </summary>
+        private double axisXMinValue;
         public double AxisXMinValue
         {
-            get { return _axisXMinValue; }
+            get { return axisXMinValue; }
             set
             {
-                _axisXMinValue = value;
+                axisXMinValue = value;
                 this.RaisePropertyChanged(() => this.AxisXMinValue);
             }
         }
 
-        private double _axisXMaxValue;
+        /// <summary>
+        /// Maximum value of X-Axis
+        /// </summary>
+        private double axisXMaxValue;
         public double AxisXMaxValue
         {
-            get { return _axisXMaxValue; }
+            get { return axisXMaxValue; }
             set
             {
-                _axisXMaxValue = value;
+                axisXMaxValue = value;
                 this.RaisePropertyChanged(() => this.AxisXMaxValue);
             }
         }
 
-        private int _axisXStep;
+        /// <summary>
+        /// Step of the Chart
+        /// </summary>
+        private int axisXStep;
         public int AxisXStep
         {
-            get { return _axisXStep; }
+            get { return axisXStep; }
             set
             {
-                _axisXStep = value;
-
+                axisXStep = value;
             }
         }
 
@@ -285,62 +307,73 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Collection of Benchmark Data-Grid
         /// </summary>
-        private RangeObservableCollection<BenchmarkGridReturnData> _multiLineBenchmarkUIGridData;
+        private RangeObservableCollection<BenchmarkGridReturnData> multiLineBenchmarkUIGridData;
         public RangeObservableCollection<BenchmarkGridReturnData> MultiLineBenchmarUIGridData
         {
             get
             {
-                if (_multiLineBenchmarkUIGridData == null)
-                    _multiLineBenchmarkUIGridData = new RangeObservableCollection<BenchmarkGridReturnData>();
-                return _multiLineBenchmarkUIGridData;
+                if (multiLineBenchmarkUIGridData == null)
+                {
+                    multiLineBenchmarkUIGridData = new RangeObservableCollection<BenchmarkGridReturnData>();
+                }
+                return multiLineBenchmarkUIGridData;
             }
             set
             {
-                _multiLineBenchmarkUIGridData = value;
+                multiLineBenchmarkUIGridData = value;
                 this.RaisePropertyChanged(() => this.MultiLineBenchmarUIGridData);
             }
         }
 
         #region GridEntities
 
-        private string _previousYearData = DateTime.Now.AddYears(-1).Year.ToString();
+        /// <summary>
+        /// Previous YearHeader
+        /// </summary>
+        private string previousYearData = DateTime.Now.AddYears(-1).Year.ToString();
         public string PreviousYearDataColumnHeader
         {
             get
             {
-                return _previousYearData;
+                return previousYearData;
             }
             set
             {
-                _previousYearData = value;
+                previousYearData = value;
                 this.RaisePropertyChanged(() => this.PreviousYearDataColumnHeader);
             }
         }
 
-        private string _twoPreviousYearData = DateTime.Now.AddYears(-2).Year.ToString();
+        /// <summary>
+        /// 2-Previous YearsHeader
+        /// </summary>
+        private string twoPreviousYearData = DateTime.Now.AddYears(-2).Year.ToString();
         public string TwoPreviousYearDataColumnHeader
         {
             get
             {
-                return _twoPreviousYearData;
+                return twoPreviousYearData;
             }
             set
             {
-                _twoPreviousYearData = value;
+                twoPreviousYearData = value;
                 this.RaisePropertyChanged(() => this.TwoPreviousYearDataColumnHeader);
             }
         }
 
-        private string _threePreviousYearData = DateTime.Now.AddYears(-3).Year.ToString();
+        /// <summary>
+        /// 3-Previous YearsHeader
+        /// </summary>
+        private string threePreviousYearData = DateTime.Now.AddYears(-3).Year.ToString();
         public string ThreePreviousYearDataColumnHeader
         {
             get
             {
-                return _threePreviousYearData;
+                return threePreviousYearData;
             }
             set
             {
-                _threePreviousYearData = value;
+                threePreviousYearData = value;
                 this.RaisePropertyChanged(() => this.ThreePreviousYearDataColumnHeader);
             }
         }
@@ -349,24 +382,19 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #endregion
-
-        #region Events
-
-
-        #endregion
+        #endregion      
 
         #region EventSubscribe
 
         /// <summary>
         /// Subscribing to Events
         /// </summary>
-        /// <param name="_eventAggregator"></param>
-        public void SubscribeEvents(IEventAggregator _eventAggregator)
+        /// <param name="eventAggregator"></param>
+        public void SubscribeEvents(IEventAggregator eventAggregator)
         {
-            _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
-            _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSet);
+            eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
+            eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+            eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSet);
         }
 
         #endregion
@@ -376,32 +404,32 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Zoom-In Command Button
         /// </summary>
-        private ICommand _zoomInCommand;
+        private ICommand zoomInCommand;
         public ICommand ZoomInCommand
         {
             get
             {
-                if (_zoomInCommand == null)
+                if (zoomInCommand == null)
                 {
-                    _zoomInCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomInCommandMethod, ZoomInCommandValidation);
+                    zoomInCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomInCommandMethod, ZoomInCommandValidation);
                 }
-                return _zoomInCommand;
+                return zoomInCommand;
             }
         }
 
         /// <summary>
         /// Zoom-Out Command Button
         /// </summary>
-        private ICommand _zoomOutCommand;
+        private ICommand zoomOutCommand;
         public ICommand ZoomOutCommand
         {
             get
             {
-                if (_zoomOutCommand == null)
+                if (zoomOutCommand == null)
                 {
-                    _zoomOutCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomOutCommandMethod, ZoomOutCommandValidation);
+                    zoomOutCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomOutCommandMethod, ZoomOutCommandValidation);
                 }
-                return _zoomOutCommand;
+                return zoomOutCommand;
             }
         }
 
@@ -416,47 +444,54 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleFilterReferenceSet(FilterSelectionData filterSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 //ArgumentNullException
                 if (filterSelectionData != null)
                 {
-                    _filterSelectionData = filterSelectionData;
+                    this.filterSelectionData = filterSelectionData;
 
                     if (SelectedEntities.ContainsKey("COUNTRY"))
+                    {
                         SelectedEntities.Remove("COUNTRY");
+                    }
                     if (SelectedEntities.ContainsKey("SECTOR"))
+                    {
                         SelectedEntities.Remove("SECTOR");
-
+                    }
                     if (filterSelectionData.Filtertype == "Country")
                     {
                         if (filterSelectionData.FilterValues != null)
+                        {
                             SelectedEntities.Add("COUNTRY", filterSelectionData.FilterValues);
+                        }
                     }
                     else if (filterSelectionData.Filtertype == "Sector")
                     {
                         if (filterSelectionData.FilterValues != null)
+                        {
                             SelectedEntities.Add("SECTOR", filterSelectionData.FilterValues);
+                        }
                     }
 
                     if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && IsActive)
                     {
-                        _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
-                        _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
+                        dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
+                        dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
 
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -467,33 +502,34 @@ namespace GreenField.Gadgets.ViewModels
         public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 //ArgumentNullException
                 if (portfolioSelectionData != null && portfolioSelectionData.PortfolioId != null)
                 {
                     if (SelectedEntities.ContainsKey("PORTFOLIO"))
-                        SelectedEntities.Remove("PORTFOLIO");
-
-                    SelectedEntities.Add("PORTFOLIO", portfolioSelectionData.PortfolioId);
-                    if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _periodSelectionData != null && IsActive)
                     {
-                        _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
-                        _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
+                        SelectedEntities.Remove("PORTFOLIO");
+                    }
+                    SelectedEntities.Add("PORTFOLIO", portfolioSelectionData.PortfolioId);
+                    if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && periodSelectionData != null && IsActive)
+                    {
+                        dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
+                        dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
 
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -504,13 +540,13 @@ namespace GreenField.Gadgets.ViewModels
         public void HandlePeriodReferenceSet(string periodSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 //ArgumentNullException
                 if (periodSelectionData != null)
                 {
-                    _periodSelectionData = periodSelectionData;
+                    this.periodSelectionData = periodSelectionData;
 
                     if (MultiLineBenchmarkUIChartData.Count != 0)
                     {
@@ -520,24 +556,24 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     else
                     {
-                        if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _periodSelectionData != null && IsActive)
+                        if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && periodSelectionData != null && IsActive)
                         {
-                            _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
-                            _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
+                            dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
+                            dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
                             BusyIndicatorStatus = true;
                         }
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
 
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorStatus = false;
             }
         }
@@ -553,8 +589,8 @@ namespace GreenField.Gadgets.ViewModels
         public void ZoomInCommandMethod(object parameter)
         {
             ZoomIn(this.ChartAreaMultiLineBenchmark);
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -564,8 +600,9 @@ namespace GreenField.Gadgets.ViewModels
         public bool ZoomInCommandValidation(object parameter)
         {
             if (this.ChartAreaMultiLineBenchmark == null)
+            {
                 return false;
-
+            }
             return
                 this.ChartAreaMultiLineBenchmark.ZoomScrollSettingsX.Range > this.ChartAreaMultiLineBenchmark.ZoomScrollSettingsX.MinZoomRange;
         }
@@ -577,8 +614,8 @@ namespace GreenField.Gadgets.ViewModels
         public void ZoomOutCommandMethod(object parameter)
         {
             ZoomOut(this.ChartAreaMultiLineBenchmark);
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -588,8 +625,9 @@ namespace GreenField.Gadgets.ViewModels
         public bool ZoomOutCommandValidation(object parameter)
         {
             if (this.ChartAreaMultiLineBenchmark == null)
+            {
                 return false;
-
+            }
             return this.ChartAreaMultiLineBenchmark.ZoomScrollSettingsX.Range < 1d;
         }
 
@@ -604,7 +642,7 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveBenchmarkChartDataCallBackMethod(List<BenchmarkChartReturnData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
@@ -612,17 +650,17 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     MultiLineBenchmarkUIChartData.Clear();
                     MultiLineBenchmarkUIChartData.AddRange(result);
-                    MultiLineBenchmarkUIChartData = CalculateDataAccordingToPeriod(MultiLineBenchmarkUIChartData, _periodSelectionData);
+                    MultiLineBenchmarkUIChartData = CalculateDataAccordingToPeriod(MultiLineBenchmarkUIChartData, periodSelectionData);
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
@@ -637,7 +675,7 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveBenchmarkGridDataCallBackMethod(List<BenchmarkGridReturnData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
@@ -647,13 +685,13 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
@@ -672,8 +710,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="e"></param>
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
         {
-            ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -704,17 +742,19 @@ namespace GreenField.Gadgets.ViewModels
             double newRange = Math.Min(1, chartArea.ZoomScrollSettingsX.Range) * 2;
 
             if (zoomCenter + (newRange / 2) > 1)
+            {
                 zoomCenter = 1 - (newRange / 2);
+            }
             else if (zoomCenter - (newRange / 2) < 0)
+            {
                 zoomCenter = newRange / 2;
-
+            }
             chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - newRange / 2);
             chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
 
             chartArea.ZoomScrollSettingsX.ResumeNotifications();
         }
-
-
+        
         /// <summary>
         /// Validation Method for Zoom Out button
         /// </summary>
@@ -723,8 +763,9 @@ namespace GreenField.Gadgets.ViewModels
         public bool CanZoomOut(object parameter)
         {
             if (this.ChartAreaMultiLineBenchmark == null)
+            {
                 return false;
-
+            }
             return this.ChartAreaMultiLineBenchmark.ZoomScrollSettingsX.Range < 1d;
         }
 
@@ -796,6 +837,20 @@ namespace GreenField.Gadgets.ViewModels
                     }
             }
             return plottedSeries;
+        }
+
+        #endregion
+
+        #region UnsubscribeEvents
+
+        /// <summary>
+        /// Unsubscribe to Events
+        /// </summary>
+        public void Dispose()
+        {
+            eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
+            eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+            eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Unsubscribe(HandleFilterReferenceSet);
         }
 
         #endregion

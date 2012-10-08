@@ -21,14 +21,17 @@ namespace GreenField.Web.Helpers
         public static List<PortfolioDetailsData> AddBenchmarkSecurities(List<PortfolioDetailsData> result, List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities)
         {
             if (onlyBenchmarkSecurities == null)
+            {
                 return result;
-
+            }
             if (onlyBenchmarkSecurities.Count == 0)
+            {
                 return result;
-
+            }
             if (result == null)
+            {
                 return new List<PortfolioDetailsData>();
-
+            }
             foreach (GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
             {
                 PortfolioDetailsData benchmarkResult = new PortfolioDetailsData();
@@ -49,7 +52,6 @@ namespace GreenField.Web.Helpers
                 benchmarkResult.Type = "BENCHMARK";
                 result.Add(benchmarkResult);
             }
-
             return result;
         }
 
@@ -61,10 +63,13 @@ namespace GreenField.Web.Helpers
         public static List<PortfolioDetailsData> CalculatePortfolioDetails(List<PortfolioDetailsData> portfolioDetailsData)
         {
             if (portfolioDetailsData == null)
+            {
                 throw new InvalidOperationException();
+            }
             if (portfolioDetailsData.Count == 0)
+            {
                 return new List<PortfolioDetailsData>();
-
+            }
             decimal? sumDirtyValuePC = 0;
             decimal? sumModelWeight = 0;
 
@@ -98,12 +103,17 @@ namespace GreenField.Web.Helpers
             List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
 
             if (dimensionPortfolioHoldingsData == null)
+            {
                 return result;
+            }
             if (dimensionPortfolioHoldingsData.Count == 0)
+            {
                 return result;
+            }
             if (dimensionBenchmarkHoldingsData == null)
+            {
                 return result;
-
+            }
             foreach (GF_PORTFOLIO_HOLDINGS item in dimensionPortfolioHoldingsData)
             {
                 PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
@@ -139,12 +149,17 @@ namespace GreenField.Web.Helpers
             List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
 
             if (dimensionPortfolioLTHoldingsData == null)
+            {
                 return result;
+            }
             if (dimensionPortfolioLTHoldingsData.Count == 0)
+            {
                 return result;
+            }
             if (dimensionBenchmarkHoldingsData == null)
+            {
                 return result;
-
+            }
             foreach (GF_PORTFOLIO_LTHOLDINGS item in dimensionPortfolioLTHoldingsData)
             {
                 PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
@@ -166,7 +181,6 @@ namespace GreenField.Web.Helpers
                 portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
                 result.Add(portfolioResult);
             }
-
             return result;
         }
     }

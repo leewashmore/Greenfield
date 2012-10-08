@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
 using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 using Telerik.Windows.Documents.Model;
-using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -42,32 +34,33 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Instance of View-Model TerminalValueCalculations
         /// </summary>
-        private ViewModelDCF _dataContextSource;
+        private ViewModelDCF dataContextSource;
         public ViewModelDCF DataContextSource
         {
-            get { return _dataContextSource; }
-            set { _dataContextSource = value; }
+            get { return dataContextSource; }
+            set { dataContextSource = value; }
         }
 
         /// <summary>
         /// Check for Active Dashboard
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextSource != null)
+                {
                     this.DataContextSource.IsActive = value;
+                }
             }
         }
-
-
+        
         #endregion
 
         #region ExportToExcel/PDF/Print
@@ -96,7 +89,8 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                                new RadExportOptions() { ElementName = ExportTypes.Terminal_Value_Calculations, Element = this.dgTerminalValueCalculations, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                new RadExportOptions() { ElementName = ExportTypes.Terminal_Value_Calculations, Element = this.dgTerminalValueCalculations,
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                         };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.Terminal_Value_Calculations);
                     childExportOptions.Show();

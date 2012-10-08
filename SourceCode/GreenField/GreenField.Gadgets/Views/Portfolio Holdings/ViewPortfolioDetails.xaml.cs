@@ -3,27 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using Telerik.Windows.Controls;
 using System.IO;
-using Telerik.Windows.Documents.Model;
-using Telerik.Windows.Documents.FormatProviders.Pdf;
-using Telerik.Windows.Data;
 using System.Collections;
-using GreenField.DataContracts;
-
+using System.Windows.Printing;
 #if !SILVERLIGHT
 using Microsoft.Win32;
 #else
 using System.Windows.Controls;
-using System.Windows.Printing;
-using GreenField.Gadgets.Helpers;
-using Telerik.Windows.Controls.GridView;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Common;
-using Telerik.Windows.Documents.UI;
-using GreenField.ServiceCaller;
 #endif
+using Telerik.Windows.Controls.GridView;
+using Telerik.Windows.Documents.UI;
+using Telerik.Windows.Documents.Model;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Documents.FormatProviders.Pdf;
+using Telerik.Windows.Data;
+using GreenField.DataContracts;
+using GreenField.ServiceCaller;
+using GreenField.Common;
+using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
@@ -34,41 +33,64 @@ namespace GreenField.Gadgets.Views
     {
         #region Private Variables
 
+        /// <summary>
+        /// OffSet
+        /// </summary>
         double offsetY;
+
+        /// <summary>
+        /// Total Height
+        /// </summary>
         double totalHeight;
+
+        /// <summary>
+        /// Instance of Canvas
+        /// </summary>
         Canvas canvas;
+
+        /// <summary>
+        /// Instance of RadGrid
+        /// </summary>
         RadGridView grid;
+
+        /// <summary>
+        /// Instance of GridView-Filter Descriptor
+        /// </summary>
         FilterDescriptorCollection gridFilterDescriptors;
+
+        /// <summary>
+        /// Data Source of the Grid
+        /// </summary>
         RangeObservableCollection<PortfolioDetailsData> gridDataSource;
 
         /// <summary>
         /// View Model
         /// </summary>
-        private ViewModelPortfolioDetails _dataContextPortfolioDetails;
+        private ViewModelPortfolioDetails dataContextPortfolioDetails;
         public ViewModelPortfolioDetails DataContextPortfolioDetails
         {
             get
             {
-                return _dataContextPortfolioDetails;
+                return dataContextPortfolioDetails;
             }
             set
             {
-                _dataContextPortfolioDetails = value;
+                dataContextPortfolioDetails = value;
             }
         }
 
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextPortfolioDetails != null)
-                    DataContextPortfolioDetails.IsActive = _isActive;
+                    DataContextPortfolioDetails.IsActive = isActive;
             }
         }
 
@@ -93,6 +115,7 @@ namespace GreenField.Gadgets.Views
         #region ExportToExcel/PDF/Print
 
         #region ExcelExport
+
         /// <summary>
         /// Static class storing string types
         /// </summary>
@@ -115,9 +138,10 @@ namespace GreenField.Gadgets.Views
                 if (this.dgPortfolioDetails.Visibility == Visibility.Visible)
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {
-                        new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgPortfolioDetails, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
-                };
+                        {
+                                new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgPortfolioDetails, 
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                        };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.PORTFOLIO_DETAILS_UI);
                     childExportOptions.Show();
                 }
@@ -246,7 +270,7 @@ namespace GreenField.Gadgets.Views
             {
                 MemberColumnFilterDescriptor filteredColumn = e.ColumnFilterDescriptor as MemberColumnFilterDescriptor;
                 DataContextPortfolioDetails.FilterDescriptor = filteredColumn.Member;
-                bool a = e.Cancel;
+                bool action = e.Cancel;
             }
             catch (Exception ex)
             {
@@ -354,16 +378,6 @@ namespace GreenField.Gadgets.Views
                     this.dgPortfolioDetails.Items.CommitEdit();
                 }
             }
-        }
-
-        /// <summary>
-        /// DataLoadingEvent of DataGrid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgPortfolioDetails_DataLoading(object sender, GridViewDataLoadingEventArgs e)
-        {
-
         }
 
         /// <summary>

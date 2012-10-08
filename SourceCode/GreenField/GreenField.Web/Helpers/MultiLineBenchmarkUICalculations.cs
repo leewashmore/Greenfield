@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using GreenField.DataContracts;
-using GreenField.Web.Services;
 using GreenField.Web.DimensionEntitiesService;
+using GreenField.Web.Services;
 
 namespace GreenField.Web.Helpers
 {
@@ -22,17 +22,17 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                //Arguement null Exception
+                //arguement null exception
                 if (benchmarkReturns == null)
+                {
                     throw new InvalidOperationException();
-
+                }
                 if (benchmarkReturns.Count == 0)
+                {
                     return new List<BenchmarkChartReturnData>();
-
+                }
                 List<BenchmarkChartReturnData> result = new List<BenchmarkChartReturnData>();
-
                 BenchmarkChartReturnData data = new BenchmarkChartReturnData();
-                //Returns for Country/Sector
                 if (countrySectorReturns != null)
                 {
                     if (countrySectorReturns.Count != 0)
@@ -53,8 +53,6 @@ namespace GreenField.Web.Helpers
                         }
                     }
                 }
-
-                //Returns for Benchmark
                 if (benchmarkReturns != null)
                 {
                     if (benchmarkReturns.Count != 0)
@@ -75,7 +73,6 @@ namespace GreenField.Web.Helpers
                         }
                     }
                 }
-
                 return result.OrderBy(a => a.Type).ToList();
             }
             catch (Exception ex)
@@ -96,25 +93,27 @@ namespace GreenField.Web.Helpers
             try
             {
                 List<BenchmarkGridReturnData> result = new List<BenchmarkGridReturnData>();
-
-                //Arguement null exception
+                //arguement null exception
                 if (benchmarkReturn == null)
+                {
                     return result;
-
+                }
                 if (benchmarkReturn.Count == 0)
+                {
                     return result;
+                }
 
                 #region Dates
                 int numberOfDays = 0;
                 DateTime lastDayPreviousMonth;
                 DateTime currentDate = DateTime.Today;
-
                 DateTime endDatePreviousYear = new DateTime(currentDate.Year - 1, 12, 31);
                 DateTime endDateTwoPreviousYear = new DateTime(currentDate.Year - 2, 12, 31);
                 DateTime endDateThreePreviousYear = new DateTime(currentDate.Year - 3, 12, 31);
-
                 if (currentDate.Month == 1)
+                {
                     lastDayPreviousMonth = new DateTime(currentDate.Year - 1, 12, 1);
+                }
                 else
                 {
                     numberOfDays = DateTime.DaysInMonth(currentDate.Year, currentDate.Month - 1);
@@ -124,11 +123,8 @@ namespace GreenField.Web.Helpers
                 #endregion
 
                 BenchmarkGridReturnData data = new BenchmarkGridReturnData();
-
-                //Adding details for Country/Sector
                 data.Name = Convert.ToString(sectorCountryReturn.Select(a => a.BMNAME).FirstOrDefault()) + " " +
                     Convert.ToString(sectorCountryReturn.Select(a => a.AGG_LVL_1_LONG_NAME).FirstOrDefault());
-
                 data.Type = Convert.ToString(sectorCountryReturn.Select(a => a.NODE_NAME).FirstOrDefault());
                 data.MTD = Convert.ToDecimal((sectorCountryReturn.
                     Where(a => a.TO_DATE == lastDayPreviousMonth).Select(a => a.BM1_RC_TWR_MTD).FirstOrDefault()));
@@ -146,8 +142,6 @@ namespace GreenField.Web.Helpers
                 result.Add(data);
 
                 data = new BenchmarkGridReturnData();
-
-                //Adding details for Benchmark
                 data.Name = Convert.ToString(benchmarkReturn.Select(a => a.BMNAME).FirstOrDefault());
                 data.Type = "BENCHMARK";
                 data.MTD = Convert.ToDecimal((benchmarkReturn.Where(a => a.TO_DATE == lastDayPreviousMonth).Select(a => a.BM1_TOP_RC_TWR_MTD).FirstOrDefault()));
@@ -172,6 +166,10 @@ namespace GreenField.Web.Helpers
             }
         }
 
+        /// <summary>
+        /// Method to calculate EndDates
+        /// </summary>
+        /// <returns>List of Dates</returns>
         public static List<DateTime> CalculateEndDates()
         {
             try

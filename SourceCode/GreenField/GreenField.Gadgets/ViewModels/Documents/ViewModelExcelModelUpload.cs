@@ -25,26 +25,26 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Instance of EventAggregator
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// Instance of IDbInteractivity
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// Instance of IloggerFacade
         /// </summary>
-        private ILoggerFacade _logger;
+        private ILoggerFacade logger;
         public ILoggerFacade Logger
         {
             get
             {
-                return _logger;
+                return logger;
             }
             set
             {
-                _logger = value;
+                logger = value;
             }
         }
 
@@ -57,9 +57,9 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public ViewModelExcelModelUpload(DashboardGadgetParam param)
         {
-            this._dbInteractivity = param.DBInteractivity;
-            this._eventAggregator = param.EventAggregator;
-            this._logger = param.LoggerFacade;
+            this.dbInteractivity = param.DBInteractivity;
+            this.eventAggregator = param.EventAggregator;
+            this.logger = param.LoggerFacade;
 
             if (SelectionData.EntitySelectionData != null && SeriesReferenceSource == null)
             {
@@ -67,9 +67,9 @@ namespace GreenField.Gadgets.ViewModels
             }
             else
             {
-                if (_dbInteractivity != null)
+                if (dbInteractivity != null)
                 {
-                    _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
+                    dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
                 }
             }
         }
@@ -81,16 +81,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Security
         /// </summary>
-        private EntitySelectionData _selectedSecurity;
+        private EntitySelectionData selectedSecurity;
         public EntitySelectionData SelectedSecurity
         {
             get
             {
-                return _selectedSecurity;
+                return selectedSecurity;
             }
             set
             {
-                _selectedSecurity = value;
+                selectedSecurity = value;
                 HandleSecurityReferenceSet();
                 this.RaisePropertyChanged(() => this.SelectedSecurity);
             }
@@ -99,18 +99,18 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores the list of EntitySelectionData for all entity Types
         /// </summary>
-        private List<EntitySelectionData> _entitySelectionInfo;
+        private List<EntitySelectionData> entitySelectionInfo;
         public List<EntitySelectionData> EntitySelectionInfo
         {
             get
             {
-                if (_entitySelectionInfo == null)
-                    _entitySelectionInfo = new List<EntitySelectionData>();
-                return _entitySelectionInfo;
+                if (entitySelectionInfo == null)
+                    entitySelectionInfo = new List<EntitySelectionData>();
+                return entitySelectionInfo;
             }
             set
             {
-                _entitySelectionInfo = value;
+                entitySelectionInfo = value;
                 RaisePropertyChanged(() => this.EntitySelectionInfo);
 
                 SecuritySelectorInfo = value
@@ -122,13 +122,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores the list of EntitySelectionData for entity type - SECURITY
         /// </summary>
-        private List<EntitySelectionData> _securitySelectorInfo;
+        private List<EntitySelectionData> securitySelectorInfo;
         public List<EntitySelectionData> SecuritySelectorInfo
         {
-            get { return _securitySelectorInfo; }
+            get { return securitySelectorInfo; }
             set
             {
-                _securitySelectorInfo = value;
+                securitySelectorInfo = value;
                 RaisePropertyChanged(() => this.SecuritySelectorInfo);
             }
         }
@@ -136,13 +136,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores search text entered by user - Refines SecuritySelectionInfo based on the text entered
         /// </summary>
-        private string _securitySearchText;
+        private string securitySearchText;
         public string SecuritySearchText
         {
-            get { return _securitySearchText; }
+            get { return securitySearchText; }
             set
             {
-                _securitySearchText = value;
+                securitySearchText = value;
                 RaisePropertyChanged(() => this.SecuritySearchText);
                 if (value != null)
                 {
@@ -166,15 +166,15 @@ namespace GreenField.Gadgets.ViewModels
         /// Stores Issuer related data
         /// </summary>
         /// 
-        private IssuerReferenceData _issuerReferenceInfo;
+        private IssuerReferenceData issuerReferenceInfo;
         public IssuerReferenceData IssuerReferenceInfo
         {
-            get { return _issuerReferenceInfo; }
+            get { return issuerReferenceInfo; }
             set
             {
-                if (_issuerReferenceInfo != value)
+                if (issuerReferenceInfo != value)
                 {
-                    _issuerReferenceInfo = value;
+                    issuerReferenceInfo = value;
                     this.RaisePropertyChanged(() => this.IssuerReferenceInfo);
                 }
             }
@@ -186,13 +186,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Busy Indicator Status
         /// </summary>
-        private bool _busyIndicatorIsBusy;
+        private bool busyIndicatorIsBusy;
         public bool BusyIndicatorIsBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return busyIndicatorIsBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
+                busyIndicatorIsBusy = value;
                 RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
             }
         }
@@ -200,37 +200,32 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Busy Indicator Content
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
         #endregion
-
-        #region DashboardActiveStatus
-
-
-        #endregion
-
-        #region Plotting Additional Series
+                
+        #region SecurityComboBox
         /// <summary>
         /// Grouped Collection View for Auto-Complete Box
         /// </summary>
-        private CollectionViewSource _seriesReference;
+        private CollectionViewSource seriesReference;
         public CollectionViewSource SeriesReference
         {
             get
             {
-                return _seriesReference;
+                return seriesReference;
             }
             set
             {
-                _seriesReference = value;
+                seriesReference = value;
                 RaisePropertyChanged(() => this.SeriesReference);
             }
         }
@@ -243,16 +238,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Entity
         /// </summary>
-        private EntitySelectionData _selectedSeriesReference = new EntitySelectionData();
+        private EntitySelectionData selectedSeriesReference = new EntitySelectionData();
         public EntitySelectionData SelectedSeriesReference
         {
             get
             {
-                return _selectedSeriesReference;
+                return selectedSeriesReference;
             }
             set
             {
-                _selectedSeriesReference = value;
+                selectedSeriesReference = value;
                 this.RaisePropertyChanged(() => this.SelectedSeriesReference);
             }
         }
@@ -260,15 +255,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Search Mode Filter - Checked (StartsWith); Unchecked (Contains)
         /// </summary>
-        private bool _searchFilterEnabled;
+        private bool searchFilterEnabled;
         public bool SearchFilterEnabled
         {
-            get { return _searchFilterEnabled; }
+            get { return searchFilterEnabled; }
             set
             {
-                if (_searchFilterEnabled != value)
+                if (searchFilterEnabled != value)
                 {
-                    _searchFilterEnabled = value;
+                    searchFilterEnabled = value;
                     RaisePropertyChanged(() => SearchFilterEnabled);
                 }
             }
@@ -277,13 +272,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Entered Text in the Auto-Complete Box - filters SeriesReferenceSource
         /// </summary>
-        private string _seriesEnteredText;
+        private string seriesEnteredText;
         public string SeriesEnteredText
         {
-            get { return _seriesEnteredText; }
+            get { return seriesEnteredText; }
             set
             {
-                _seriesEnteredText = value;
+                seriesEnteredText = value;
                 RaisePropertyChanged(() => this.SeriesEnteredText);
                 if (value != null)
                     SeriesReference.Source = SearchFilterEnabled == false
@@ -299,60 +294,69 @@ namespace GreenField.Gadgets.ViewModels
         /// if true:Commodity/Index/Currency Added
         /// if false:only securities added 
         /// </summary>
-        private bool _chartEntityTypes = true;
+        private bool chartEntityTypes = true;
         public bool ChartEntityTypes
         {
             get
             {
-                return _chartEntityTypes;
+                return chartEntityTypes;
             }
             set
             {
-                _chartEntityTypes = value;
+                chartEntityTypes = value;
                 this.RaisePropertyChanged(() => this.ChartEntityTypes);
             }
         }
 
         #endregion
 
-        private bool _enableDownload;
+        /// <summary>
+        /// Enable downloading the sheet
+        /// </summary>
+        private bool enableDownload;
         public bool EnableDownload
         {
             get
             {
-                return _enableDownload;
+                return enableDownload;
             }
             set
             {
-                _enableDownload = value;
+                enableDownload = value;
                 this.RaisePropertyChanged(() => this.EnableDownload);
             }
         }
 
-        private byte[] _modelWorkbook;
+        /// <summary>
+        /// Byte Stream of Model-Download workbook
+        /// </summary>
+        private byte[] modelWorkbook;
         public byte[] ModelWorkbook
         {
             get
             {
-                return _modelWorkbook;
+                return modelWorkbook;
             }
             set
             {
-                _modelWorkbook = value;
+                modelWorkbook = value;
                 this.RaisePropertyChanged(() => this.ModelWorkbook);
             }
         }
 
-        private byte[] _uploadWorkbook;
+        /// <summary>
+        /// Byte Stream of Model-Upload workbook
+        /// </summary>
+        private byte[] uploadWorkbook;
         public byte[] UploadWorkbook
         {
             get
             {
-                return _uploadWorkbook;
+                return uploadWorkbook;
             }
             set
             {
-                _uploadWorkbook = value;
+                uploadWorkbook = value;
                 if (value != null)
                 {
                     HandleModelWorkbookUploadReferenceSet();
@@ -360,8 +364,7 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.UploadWorkbook);
             }
         }
-
-
+        
         #endregion
 
         #region EventHandlers
@@ -373,21 +376,21 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSet()
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                //ArgumentNullException
+                //argument null exception
                 if (SelectedSecurity != null)
                 {
                     EnableDownload = false;
                     BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
-                    _dbInteractivity.RetrieveDocumentsData(SelectedSecurity, RetrieveDocumentsDataCallbackMethod);
+                    dbInteractivity.RetrieveDocumentsData(SelectedSecurity, RetrieveDocumentsDataCallbackMethod);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -400,14 +403,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (UploadWorkbook != null)
                 {
-                    _dbInteractivity.UploadModelExcelSheet(UploadWorkbook, UserSession.SessionManager.SESSION.UserName, RetrieveModelWorkbookUploadCallbackMethod);
+                    dbInteractivity.UploadModelExcelSheet(UploadWorkbook, UserSession.SessionManager.SESSION.UserName, RetrieveModelWorkbookUploadCallbackMethod);
                     BusyIndicatorNotification(true, "Reading the Excel Sheet");
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -422,25 +425,24 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveEntitySelectionDataCallBackMethod(List<EntitySelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     EntitySelectionInfo = result.OrderBy(t => t.LongName).ToList();
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
@@ -455,7 +457,7 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveDocumentsDataCallbackMethod(byte[] result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
@@ -465,13 +467,13 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
@@ -491,7 +493,7 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
@@ -511,7 +513,9 @@ namespace GreenField.Gadgets.ViewModels
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
+            }
             BusyIndicatorIsBusy = showBusyIndicator;
         }
 

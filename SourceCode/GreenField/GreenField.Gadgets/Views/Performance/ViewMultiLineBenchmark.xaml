@@ -43,19 +43,19 @@
                                        HorizontalAlignment="Center" Click="btnExportExcel_Click"
                                        VerticalAlignment="Center" Margin="5,0,0,0"  
                                        ToolTipService.ToolTip="Export to Excel">
-                <Image Source="../Images/ExportExcel.png"/>
+                <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
             </telerik:RadButton>
             <Rectangle Margin="5,0,0,0" Grid.Column="4" Width="1" Stroke="Gray" Opacity="0.2"/>
             <telerik:RadButton x:Name="btnZoomIn" Grid.Column="5"  Height="15" Width="15" 
                                        HorizontalAlignment="Center" VerticalAlignment="Center"
                                        Margin="5,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In">
-                <Image Source="../Images/zoom_in.png"  />
+                <Image Source="/GreenField.Gadgets;component/Images/zoom_in.png"  />
             </telerik:RadButton>
             <telerik:RadButton x:Name="btnZoomOut" Grid.Column="6"  Height="15" Width="15" 
                                        HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="5,0,0,0" 
                                        Command="{Binding ZoomOutCommand}" 
                                        ToolTipService.ToolTip="Zoom Out">
-                <Image Source="../Images/zoom_out.png"  />
+                <Image Source="/GreenField.Gadgets;component/Images/zoom_out.png"  />
             </telerik:RadButton>
         </Grid>
 

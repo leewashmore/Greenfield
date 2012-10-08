@@ -38,31 +38,31 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of type View-Model
         /// </summary>
-        private ViewModelTargetPrice _dataContextTargetPrice;
+        private ViewModelTargetPrice dataContextTargetPrice;
         public ViewModelTargetPrice DataContextTargetPrice
         {
             get
             {
-                return _dataContextTargetPrice;
+                return dataContextTargetPrice;
             }
             set
             {
-                _dataContextTargetPrice = value;
+                dataContextTargetPrice = value;
             }
         }
 
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextTargetPrice != null)
-                    DataContextTargetPrice.IsActive = _isActive;
+                    DataContextTargetPrice.IsActive = isActive;
             }
         }
 
@@ -75,10 +75,9 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         public void Dispose()
         {
-
+            this.DataContextTargetPrice.Dispose();
         }
 
         #endregion
-
     }
 }

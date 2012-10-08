@@ -125,11 +125,7 @@
                 VerticalAlignment="Top" Click="btnDownload_Click" IsEnabled="{Binding EnableDownload}"/>
 
             <Button x:Name="bOpenFileDialog" Content="Upload Model" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Center"
-                VerticalAlignment="Top" Width="120"
-                 HorizontalAlignment="Left" 
-                 Click="bOpenFileDialog_Click" />
-
-
+                    VerticalAlignment="Top" Width="120" HorizontalAlignment="Left" Click="bOpenFileDialog_Click" />
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

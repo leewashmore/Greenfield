@@ -52,9 +52,7 @@
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
                         Margin="5,0,0,0" Click="btnPrint_Click">
                     <Image Source="/GreenField.Gadgets;component/Images/Print.png"/>
-
                 </Button>
-
             </Grid>
 
             <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
@@ -87,17 +85,16 @@
                                          GridLinesVisibility="None">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn Header="Terminal Value Calculations" UniqueName="Terminal Value Calculations" DataMemberBinding="{Binding PropertyName,Mode=TwoWay}" 
-                                                    HeaderTextAlignment="Left" TextAlignment="Left"
+                                                    HeaderTextAlignment="Left" TextAlignment="Left" TextWrapping="NoWrap"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn Header=" " UniqueName="Values" DataMemberBinding="{Binding Value,Mode=TwoWay}" HeaderTextAlignment="Right" TextAlignment="Right"
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
+                                                    TextWrapping="NoWrap"/>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Grid>
 
-            <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" >
-
-            </telerik:RadRichTextBox>
+            <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" />
 
         </Grid>
     </telerik:RadBusyIndicator>

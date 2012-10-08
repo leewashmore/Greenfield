@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using Telerik.Windows.Controls;
+using GreenField.ServiceCaller;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
-using Telerik.Windows.Controls;
-using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -40,31 +33,33 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of type View-Model
         /// </summary>
-        private ViewModelMultiLineBenchmark _dataContextMultilineBenchmark;
+        private ViewModelMultiLineBenchmark dataContextMultilineBenchmark;
         public ViewModelMultiLineBenchmark DataContextMultilineBenchmark
         {
             get
             {
-                return _dataContextMultilineBenchmark;
+                return dataContextMultilineBenchmark;
             }
             set
             {
-                _dataContextMultilineBenchmark = value;
+                dataContextMultilineBenchmark = value;
             }
         }
 
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextMultilineBenchmark != null)
-                    DataContextMultilineBenchmark.IsActive = _isActive;
+                {
+                    DataContextMultilineBenchmark.IsActive = isActive;
+                }
             }
         }
 
@@ -88,12 +83,7 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-
-        #region ProgressIndicator
-
-
-        #endregion
-
+                
         #region Export
 
         /// <summary>
@@ -117,8 +107,10 @@ namespace GreenField.Gadgets.Views
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_CHART, Element = this.chMultiLineBenchmarkChart, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_GRID, Element = this.dgBenchmarkUI, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_CHART, Element = this.chMultiLineBenchmarkChart, 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_GRID, Element = this.dgBenchmarkUI,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
                 };
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
                 childExportOptions.Show();                
@@ -138,7 +130,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         public override void Dispose()
         {
-
+            this.DataContextMultilineBenchmark.Dispose();
         }
 
         #endregion
@@ -168,6 +160,11 @@ namespace GreenField.Gadgets.Views
             this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisX.TicksDistance = 50;
         }
 
+        /// <summary>
+        /// Data-Bound Event of the Chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chMultiLineBenchmarkChart_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
         {
             if (this.DataContext as ViewModelMultiLineBenchmark != null)

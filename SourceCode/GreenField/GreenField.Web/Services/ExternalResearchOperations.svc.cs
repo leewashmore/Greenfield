@@ -16,10 +16,16 @@ using GreenField.Web.Helpers.Service_Faults;
 
 namespace GreenField.Web.Services
 {
+    /// <summary>
+    /// Service for External Research
+    /// </summary>
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ExternalResearchOperations
     {
+        /// <summary>
+        /// Fault Resource Manager
+        /// </summary>
         public ResourceManager ServiceFaultResourceManager
         {
             get
@@ -28,6 +34,9 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Instance of DimensionService
+        /// </summary>
         private Entities dimensionEntity;
         public Entities DimensionEntity
         {
@@ -353,7 +362,6 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
 
         /// <summary>
         /// Get data for Finstat Gadget
@@ -762,30 +770,31 @@ namespace GreenField.Web.Services
         {
             List<TargetPriceCEData> result = new List<TargetPriceCEData>();
             TargetPriceCEData data = new TargetPriceCEData();
-
             if (entitySelectionData == null)
+            {
                 return new List<TargetPriceCEData>();
+            }
             DimensionEntitiesService.Entities dimensionEntity = DimensionEntity;
-
             List<GF_SECURITY_BASEVIEW> securityData = (dimensionEntity.GF_SECURITY_BASEVIEW.
                 Where(a => a.ISSUE_NAME.ToUpper().Trim() == entitySelectionData.LongName.ToUpper().Trim()).ToList());
             if (securityData == null)
                 return result;
-
             string XRef = securityData.Select(a => a.XREF).FirstOrDefault();
-
             if (XRef == null)
+            {
                 return result;
-
+            }
             List<GetTargetPrice_Result> dbResult = new List<GetTargetPrice_Result>();
             ExternalResearchEntities entity = new ExternalResearchEntities();
             dbResult = entity.GetTargetPrice(XRef).ToList();
-
             if (dbResult == null)
+            {
                 return result;
+            }
             if (dbResult.Count == 0)
+            {
                 return result;
-
+            }
             foreach (GetTargetPrice_Result item in dbResult)
             {
                 data = new TargetPriceCEData();
@@ -803,7 +812,6 @@ namespace GreenField.Web.Services
                 data.CurrentPriceDate = Convert.ToDateTime(item.CurrentPriceDate);
                 result.Add(data);
             }
-
             return result;
         }
 
@@ -825,36 +833,47 @@ namespace GreenField.Web.Services
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
                 decimal previousYearQuarterAmount;
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-
                 data = entity.GetConsensusEstimateData(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
                 List<int> dataDesc = new List<int>() { 17, 7, 11, 8, 18, 19 };
 
                 if (data == null)
+                {
                     return new List<ConsensusEstimateMedian>();
+                }
                 if (data.Count == 0)
+                {
                     return new List<ConsensusEstimateMedian>();
-
+                }
                 data = data.OrderBy(record => record.ESTIMATE_DESC).ThenByDescending(record => record.PERIOD_YEAR).ToList();
-
                 for (int i = 0; i < data.Count; i++)
                 {
                     if (dataDesc.Contains(data[i].ESTIMATE_ID))
                     {
                         ConsensusEstimateMedian temp = new ConsensusEstimateMedian();
-
                         if (data[i].ESTIMATE_ID == 17)
+                        {
                             temp.SortOrder = 1;
+                        }
                         else if (data[i].ESTIMATE_ID == 7)
+                        {
                             temp.SortOrder = 2;
+                        }
                         else if (data[i].ESTIMATE_ID == 11)
+                        {
                             temp.SortOrder = 3;
+                        }
                         else if (data[i].ESTIMATE_ID == 8)
+                        {
                             temp.SortOrder = 4;
+                        }
                         else if (data[i].ESTIMATE_ID == 18)
+                        {
                             temp.SortOrder = 5;
+                        }
                         else if (data[i].ESTIMATE_ID == 19)
+                        {
                             temp.SortOrder = 6;
-
+                        }
                         temp.IssuerId = data[i].ISSUER_ID;
                         temp.EstimateId = data[i].ESTIMATE_ID;
                         temp.Description = data[i].ESTIMATE_DESC;
@@ -873,30 +892,28 @@ namespace GreenField.Web.Services
                         temp.DataSourceDate = data[i].DATA_SOURCE_DATE;
 
                         if (data[i].ESTIMATE_ID == 18 || data[i].ESTIMATE_ID == 19)
+                        {
                             temp.Actual = Convert.ToString(Math.Round(Convert.ToDecimal(data[i].ACTUAL), 2)) + "%";
+                        }
                         else
+                        {
                             temp.Actual = Convert.ToString(Math.Round(Convert.ToDecimal(data[i].ACTUAL), 2));
-
+                        }
                         temp.YOYGrowth = data[i].AMOUNT;
                         temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
-
                         previousYearQuarterAmount = data.Where(a => a.ESTIMATE_DESC == data[i].ESTIMATE_DESC && a.PERIOD_YEAR == (data[i].PERIOD_YEAR - 1)
                             && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
-
                         if (previousYearQuarterAmount == null || previousYearQuarterAmount == 0)
+                        {
                             temp.YOYGrowth = 0;
+                        }
                         else
+                        {
                             temp.YOYGrowth = (temp.YOYGrowth / previousYearQuarterAmount - 1) * 100;
-
+                        }
                         result.Add(temp);
                     }
                 }
-                //if (result != null)
-                //    result = ConsensusEstimateCalculations.CalculateEPSValues(result, periodType);
-
-                //if (result != null)
-                //    result = ConsensusEstimateCalculations.CalculateNetIncomeValues(result, periodType);
-
                 return result.OrderBy(a => a.SortOrder).ToList();
             }
             catch (Exception ex)
@@ -925,9 +942,7 @@ namespace GreenField.Web.Services
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
                 decimal previousYearQuarterAmount;
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-
                 GF_SECURITY_BASEVIEW securityData = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == longName).FirstOrDefault();
-
                 string securityId;
                 if (securityData == null)
                 {
@@ -937,36 +952,47 @@ namespace GreenField.Web.Services
                 {
                     securityId = Convert.ToString(securityData.SECURITY_ID);
                 }
-
                 data = entity.GetConsensusEstimatesValuation(issuerId, "REUTERS", _periodType, "FISCAL", currency, null, null, securityId).ToList();
                 List<int> dataDesc = new List<int>() { 166, 170, 171, 164, 192, 172 };
 
                 if (data == null)
+                {
                     return new List<ConsensusEstimatesValuations>();
+                }
                 if (data.Count == 0)
+                {
                     return new List<ConsensusEstimatesValuations>();
-
+                }
                 data = data.OrderBy(record => record.ESTIMATE_DESC).ThenByDescending(record => record.PERIOD_YEAR).ToList();
-
                 for (int i = 0; i < data.Count; i++)
                 {
                     if (dataDesc.Contains(data[i].ESTIMATE_ID))
                     {
                         ConsensusEstimatesValuations temp = new ConsensusEstimatesValuations();
-
                         if (data[i].ESTIMATE_ID == 170)
+                        {
                             temp.SortOrder = 1;
+                        }
                         else if (data[i].ESTIMATE_ID == 171)
+                        {
                             temp.SortOrder = 2;
+                        }
                         else if (data[i].ESTIMATE_ID == 166)
+                        {
                             temp.SortOrder = 3;
+                        }
                         else if (data[i].ESTIMATE_ID == 172)
+                        {
                             temp.SortOrder = 4;
+                        }
                         else if (data[i].ESTIMATE_ID == 164)
+                        {
                             temp.SortOrder = 5;
+                        }
                         else if (data[i].ESTIMATE_ID == 192)
+                        {
                             temp.SortOrder = 6;
-
+                        }
                         temp.IssuerId = data[i].ISSUER_ID;
                         temp.EstimateId = data[i].ESTIMATE_ID;
                         temp.Description = data[i].ESTIMATE_DESC;
@@ -984,23 +1010,21 @@ namespace GreenField.Web.Services
                         temp.DataSource = data[i].DATA_SOURCE;
                         temp.DataSourceDate = data[i].DATA_SOURCE_DATE;
                         temp.Actual = data[i].ACTUAL;
-
                         temp.YOYGrowth = data[i].AMOUNT;
                         temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
-
                         previousYearQuarterAmount = data.Where(a => a.ESTIMATE_DESC == data[i].ESTIMATE_DESC && a.PERIOD_YEAR == (data[i].PERIOD_YEAR - 1)
                                 && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
-
                         if (previousYearQuarterAmount == null || previousYearQuarterAmount == 0)
+                        {
                             temp.YOYGrowth = 0;
+                        }
                         else
+                        {
                             temp.YOYGrowth = (temp.YOYGrowth / previousYearQuarterAmount - 1) * 100;
-
+                        }
                         result.Add(temp);
                     }
-
                 }
-
                 return result.OrderBy(a => a.SortOrder).ToList();
             }
             catch (Exception ex)
@@ -1026,7 +1050,7 @@ namespace GreenField.Web.Services
         {
             try
             {
-                List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();             
+                List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 research.CommandTimeout = 5000;
                 result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
@@ -1119,7 +1143,7 @@ namespace GreenField.Web.Services
                 if (chartTitle == "EV/EBITDA")
                 {
                     resultDB_EV_EBITDA = extResearch.ExecuteStoreQuery<GetEV_EBITDAData_Result>("exec Get_EV_EBITDA @SecurityID={0},@issuerId={1},@chartTitle={2}", Convert.ToString(svcData.SECURITY_ID), svcData.ISSUER_ID, chartTitle).ToList();
-                    
+
                     //Comparer to fetch only unique rows
                     if (resultDB_EV_EBITDA != null && resultDB_EV_EBITDA.Count > 1)
                     {
@@ -1184,7 +1208,7 @@ namespace GreenField.Web.Services
                     {
                         PRevenueData data = new PRevenueData();
                         decimal? sumAmount = null;
-                       
+
                         data.PeriodLabel = resultDB[_index].PeriodLabel;
 
                         if ((resultDB[_index].USDPrice == null || resultDB[_index].USDPrice == 0) || (resultDB[_index].Shares_Outstanding == null || resultDB[_index].Shares_Outstanding == 0))
@@ -1312,7 +1336,7 @@ namespace GreenField.Web.Services
                 string _dataSource = EnumUtils.ToString(cSource);
                 string _fiscalType = EnumUtils.ToString(cFiscalType);
                 List<GreenField.DAL.COASpecificData> result = new List<GreenField.DAL.COASpecificData>();
-                List<GreenField.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.COASpecificData>();                
+                List<GreenField.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.COASpecificData>();
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 research.CommandTimeout = 5000;
                 result = research.GetDataForPeriodGadgets(_dataSource, _fiscalType, cCurrency, issuerId, securityId.ToString()).ToList();
@@ -1501,20 +1525,20 @@ namespace GreenField.Web.Services
                     {
                         distinctSecuritiesForBenchmark = dataBenchmark.Select(record => record.ISSUE_NAME).Distinct().ToList();
                     }
-                
+
                     foreach (String issueName in distinctSecuritiesForPortfolio)
-                    {                       
+                    {
                         GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
                          .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
                         if (securityDetails != null)
-                        {                            
+                        {
                             check = 0;
                             issuerIDPortfolio.Append(",'" + securityDetails.ISSUER_ID + "'");
                             securityIDPortfolio.Append(",'" + securityDetails.SECURITY_ID + "'");
                             listForPortfolio.Add(securityDetails.SECURITY_ID.ToString(), securityDetails.ISSUE_NAME);
                         }
                     }
-                  
+
                     issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
                     securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
 
@@ -1939,7 +1963,7 @@ namespace GreenField.Web.Services
         {
             Decimal? portWeight = 0;
             Decimal? multipliedValue = 0;
-            
+
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
             {
                 initialSumDirtyValuePC = initialSumDirtyValuePC + row.PortfolioPercent;
@@ -2046,30 +2070,6 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
-        ///// <summary>
-        ///// Get data for Consensus Estimate Detailed gadget
-        ///// </summary>
-        ///// <param name="issuerId"></param>
-        ///// <param name="periodType"></param>
-        ///// <param name="currency"></param>
-        ///// <returns></returns>
-        //[OperationContract]
-        //[FaultContract(typeof(ServiceFault))]
-        //public List<SecurityOverviewData> GetSecurityUniverse(PortfolioSelectionData portfolio, BenchmarkSelectionData benchmark, String currency)
-        //{
-        //    try
-        //    {
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ExceptionTrace.LogException(ex);
-        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-        //    }
-        //}
-
 
     }
 }

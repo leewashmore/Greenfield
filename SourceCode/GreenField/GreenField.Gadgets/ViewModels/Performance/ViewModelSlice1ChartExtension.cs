@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Linq;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Events;
+using Telerik.Windows.Controls.Charting;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
-using System.Collections.Generic;
-using Telerik.Windows.Controls.Charting;
-using System.Collections.ObjectModel;
+using GreenField.ServiceCaller;
 using GreenField.DataContracts;
-using System.Linq;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -21,36 +21,32 @@ namespace GreenField.Gadgets.ViewModels
     public class ViewModelSlice1ChartExtension : NotificationObject
     {
         #region Fields
-
-        //MEF Singletons
-
+               
         /// <summary>
         /// Event Aggregator
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// Instance of Service Caller Class
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// Instance of LoggerFacade
         /// </summary>
-        public ILoggerFacade _logger;
+        public ILoggerFacade logger;
 
         /// <summary>
         /// Details of selected Security
         /// </summary>
-        private EntitySelectionData _entitySelectionData;
+        private EntitySelectionData entitySelectionData;
 
         /// <summary>
         /// Details of Selected Period
         /// </summary>
-        private string _period;
-
-
-
+        private string period;
+        
         #endregion
 
         #region Constructor
@@ -61,26 +57,27 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         public ViewModelSlice1ChartExtension(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _selectedPortfolio = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            _period = param.DashboardGadgetPayload.PeriodSelectionData;
-            if (_entitySelectionData != null && _period != null)
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            selectedPortfolio = param.DashboardGadgetPayload.PortfolioSelectionData;
+            entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            period = param.DashboardGadgetPayload.PeriodSelectionData;
+            if (entitySelectionData != null && period != null)
             {
                 Dictionary<string, string> objDictionary = new Dictionary<string, string>();
-                objDictionary.Add("SECURITY", _entitySelectionData.LongName);
+                objDictionary.Add("SECURITY", entitySelectionData.LongName);
                 DateTime startDate = DateTime.Today.AddYears(-1);
-
                 if (IsActive)
                 {
-                    _dbInteractivity.RetrieveChartExtensionData(objDictionary, startDate, RetrieveChartExtensionDataCallbackMethod);
+                    dbInteractivity.RetrieveChartExtensionData(objDictionary, startDate, RetrieveChartExtensionDataCallbackMethod);
                     BusyIndicatorStatus = true;
                 }
             }
-            if (_eventAggregator != null)
-                SubscribeEvents(_eventAggregator);
+            if (eventAggregator != null)
+            {
+                SubscribeEvents(eventAggregator);
+            }
         }
 
         #endregion
@@ -90,18 +87,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Collection of ChartExtensionData
         /// </summary>
-        private RangeObservableCollection<ChartExtensionData> _chartExtensionPlottedData;
+        private RangeObservableCollection<ChartExtensionData> chartExtensionPlottedData;
         public RangeObservableCollection<ChartExtensionData> ChartExtensionPlottedData
         {
             get
             {
-                if (_chartExtensionPlottedData == null)
-                    _chartExtensionPlottedData = new RangeObservableCollection<ChartExtensionData>();
-                return _chartExtensionPlottedData;
+                if (chartExtensionPlottedData == null)
+                {
+                    chartExtensionPlottedData = new RangeObservableCollection<ChartExtensionData>();
+                }
+                return chartExtensionPlottedData;
             }
             set
             {
-                _chartExtensionPlottedData = value;
+                chartExtensionPlottedData = value;
                 this.RaisePropertyChanged(() => this.ChartExtensionPlottedData);
             }
         }
@@ -109,16 +108,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Details of Selected Security
         /// </summary>
-        private EntitySelectionData _selectedSecurity;
+        private EntitySelectionData selectedSecurity;
         public EntitySelectionData SelectedSecurity
         {
             get
             {
-                return _selectedSecurity;
+                return selectedSecurity;
             }
             set
             {
-                _selectedSecurity = value;
+                selectedSecurity = value;
                 this.RaisePropertyChanged(() => this.SelectedSecurity);
             }
         }
@@ -126,16 +125,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Details of Selected Portfolio
         /// </summary>
-        private PortfolioSelectionData _selectedPortfolio;
+        private PortfolioSelectionData selectedPortfolio;
         public PortfolioSelectionData SelectedPortfolio
         {
             get
             {
-                return _selectedPortfolio;
+                return selectedPortfolio;
             }
             set
             {
-                _selectedPortfolio = value;
+                selectedPortfolio = value;
                 this.RaisePropertyChanged(() => this.SelectedPortfolio);
             }
         }
@@ -143,16 +142,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Details of Selected Date
         /// </summary>
-        private DateTime? _selectedStartDate = DateTime.Today.AddYears(-1);
+        private DateTime? selectedStartDate = DateTime.Today.AddYears(-1);
         public DateTime? SelectedStartDate
         {
             get
             {
-                return _selectedStartDate;
+                return selectedStartDate;
             }
             set
             {
-                _selectedStartDate = value;
+                selectedStartDate = value;
                 this.RaisePropertyChanged(() => this.SelectedStartDate);
             }
         }
@@ -160,18 +159,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Id's of selected Portfolio & Security
         /// </summary>
-        private Dictionary<string, string> _selectedEntities;
+        private Dictionary<string, string> selectedEntities;
         public Dictionary<string, string> SelectedEntities
         {
             get
             {
-                if (_selectedEntities == null)
-                    _selectedEntities = new Dictionary<string, string>();
-                return _selectedEntities;
+                if (selectedEntities == null)
+                {
+                    selectedEntities = new Dictionary<string, string>();
+                }
+                return selectedEntities;
             }
             set
             {
-                _selectedEntities = value;
+                selectedEntities = value;
                 this.RaisePropertyChanged(() => this.SelectedEntities);
             }
         }
@@ -179,32 +180,32 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// ChartArea property bound to ChartArea of dgChartExtension 
         /// </summary>
-        private ChartArea _chartArea;
+        private ChartArea chartArea;
         public ChartArea ChartArea
         {
             get
             {
-                return this._chartArea;
+                return this.chartArea;
             }
             set
             {
-                this._chartArea = value;
+                this.chartArea = value;
             }
         }
 
         /// <summary>
         /// Busy Indicator Status
         /// </summary>
-        private bool _busyIndicatorStatus;
+        private bool busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
             get
             {
-                return _busyIndicatorStatus;
+                return busyIndicatorStatus;
             }
             set
             {
-                _busyIndicatorStatus = value;
+                busyIndicatorStatus = value;
                 this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
             }
         }
@@ -225,22 +226,23 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selection Time Range option
         /// </summary>
-        private string _selectedTimeRange = "1-Year";
+        private string selectedTimeRange = "1-Year";
         public string SelectedTimeRange
         {
             get
             {
-                return _selectedTimeRange;
+                return selectedTimeRange;
             }
             set
             {
-                _selectedTimeRange = value;
+                selectedTimeRange = value;
                 GetPeriod();
                 if (SelectedEntities != null && SelectedStartDate != null)
                 {
-                    if ((SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY")) || (SelectedEntities.ContainsKey("SECURITY")))
+                    if ((SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY"))
+                        || (SelectedEntities.ContainsKey("SECURITY")))
                     {
-                        _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
+                        dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -251,16 +253,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Legend Label for Transaction Axis
         /// </summary>
-        private string _transactionLegendLabel;
+        private string transactionLegendLabel;
         public string TransactionLegendLabel
         {
             get
             {
-                return _transactionLegendLabel;
+                return transactionLegendLabel;
             }
             set
             {
-                _transactionLegendLabel = value;
+                transactionLegendLabel = value;
                 this.RaisePropertyChanged(() => this.TransactionLegendLabel);
             }
         }
@@ -269,13 +271,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Minimum Value for X-Axis of Chart
         /// </summary>
-        private double _axisXMinValue;
+        private double axisXMinValue;
         public double AxisXMinValue
         {
-            get { return _axisXMinValue; }
+            get { return axisXMinValue; }
             set
             {
-                _axisXMinValue = value;
+                axisXMinValue = value;
                 this.RaisePropertyChanged(() => this.AxisXMinValue);
             }
         }
@@ -283,13 +285,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Maximum Value for X-Axis of Chart
         /// </summary>
-        private double _axisXMaxValue;
+        private double axisXMaxValue;
         public double AxisXMaxValue
         {
-            get { return _axisXMaxValue; }
+            get { return axisXMaxValue; }
             set
             {
-                _axisXMaxValue = value;
+                axisXMaxValue = value;
                 this.RaisePropertyChanged(() => this.AxisXMaxValue);
             }
         }
@@ -297,33 +299,32 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Step size of XAxis of Chart
         /// </summary>
-        private int _axisXStep;
+        private int axisXStep;
         public int AxisXStep
         {
-            get { return _axisXStep; }
+            get { return axisXStep; }
             set
             {
-                _axisXStep = value;
-
+                axisXStep = value;
             }
         }
 
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                _isActive = value;
-                if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null && _period != null && _isActive)
+                isActive = value;
+                if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null && period != null && isActive)
                 {
-                    _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
+                    dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                     BusyIndicatorStatus = true;
                 }
             }
@@ -334,38 +335,37 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Zoom-In Command Button
         /// </summary>
-        private ICommand _zoomInCommand;
+        private ICommand zoomInCommand;
         public ICommand ZoomInCommand
         {
             get
             {
-                if (_zoomInCommand == null)
+                if (zoomInCommand == null)
                 {
-                    _zoomInCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomInCommandMethod, ZoomInCommandValidation);
+                    zoomInCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomInCommandMethod, ZoomInCommandValidation);
                 }
-                return _zoomInCommand;
+                return zoomInCommand;
             }
         }
 
         /// <summary>
         /// Zoom-Out Command Button
         /// </summary>
-        private ICommand _zoomOutCommand;
+        private ICommand zoomOutCommand;
         public ICommand ZoomOutCommand
         {
             get
             {
-                if (_zoomOutCommand == null)
+                if (zoomOutCommand == null)
                 {
-                    _zoomOutCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomOutCommandMethod, ZoomOutCommandValidation);
+                    zoomOutCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomOutCommandMethod, ZoomOutCommandValidation);
                 }
-                return _zoomOutCommand;
+                return zoomOutCommand;
             }
         }
 
         #endregion
-
-
+        
         #endregion
 
         #region ICommandMethods
@@ -377,8 +377,8 @@ namespace GreenField.Gadgets.ViewModels
         public void ZoomInCommandMethod(object parameter)
         {
             ZoomIn(this.ChartArea);
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -392,7 +392,6 @@ namespace GreenField.Gadgets.ViewModels
 
             return
                 this.ChartArea.ZoomScrollSettingsX.Range > this.ChartArea.ZoomScrollSettingsX.MinZoomRange;
-
         }
 
         /// <summary>
@@ -402,8 +401,8 @@ namespace GreenField.Gadgets.ViewModels
         public void ZoomOutCommandMethod(object parameter)
         {
             ZoomOut(this.ChartArea);
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -413,8 +412,9 @@ namespace GreenField.Gadgets.ViewModels
         public bool ZoomOutCommandValidation(object parameter)
         {
             if (this.ChartArea == null)
+            {
                 return false;
-
+            }
             return this.ChartArea.ZoomScrollSettingsX.Range < 1d;
         }
 
@@ -422,6 +422,10 @@ namespace GreenField.Gadgets.ViewModels
 
         #region EventSubscribers
 
+        /// <summary>
+        /// Subscribe Events
+        /// </summary>
+        /// <param name="_eventAggregator">Event Aggregator</param>
         private void SubscribeEvents(IEventAggregator _eventAggregator)
         {
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
@@ -440,10 +444,10 @@ namespace GreenField.Gadgets.ViewModels
         public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                //Arguement Null Exception
+                //arguement null exception
                 if (PortfolioSelectionData != null)
                 {
                     SelectedPortfolio = PortfolioSelectionData;
@@ -451,21 +455,21 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("PORTFOLIO");
                     SelectedEntities.Add("PORTFOLIO", PortfolioSelectionData.PortfolioId);
 
-                    if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null && _period != null && IsActive)
+                    if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null && period != null && IsActive)
                     {
-                        _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
+                        dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -476,10 +480,10 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                //ArgumentNullException
+                //argument null exception
                 if (entitySelectionData != null)
                 {
                     SelectedSecurity = entitySelectionData;
@@ -487,25 +491,22 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("SECURITY");
                     SelectedEntities.Add("SECURITY", entitySelectionData.LongName);
 
-                    if (SelectedStartDate != null && SelectedEntities != null && _period != null && SelectedEntities.ContainsKey("PORTFOLIO") && IsActive)
+                    if (SelectedStartDate != null && SelectedEntities != null && period != null && SelectedEntities.ContainsKey("PORTFOLIO") && IsActive)
                     {
-                        _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
+                        dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                         BusyIndicatorStatus = true;
-
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
-
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-
         }
 
         /// <summary>
@@ -515,35 +516,35 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleEffectivePeriodSet(string period)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (period != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, period, 1);
-                    _period = period;
+                    Logging.LogMethodParameter(logger, methodNamespace, period, 1);
+                    this.period = period;
                     if (ChartExtensionPlottedData.Count != 0)
                     {
-                        RetrieveChartAccordingDataPeriod(_period);
+                        RetrieveChartAccordingDataPeriod(period);
                     }
-                    else if (SelectedEntities != null && SelectedStartDate != null && _period != null && SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && IsActive)
+                    else if (SelectedEntities != null && SelectedStartDate != null && period != null && SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && IsActive)
                     {
-                        _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
+                        dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
 
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -553,8 +554,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="e"></param>
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
         {
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         #endregion
@@ -568,12 +569,12 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveChartExtensionDataCallbackMethod(List<ChartExtensionData> chartExtensionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (chartExtensionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, chartExtensionData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, chartExtensionData, 1);
                     ChartExtensionPlottedData.Clear();
                     if (chartExtensionData.Any(a => a.AmountTraded != null))
                     {
@@ -584,23 +585,23 @@ namespace GreenField.Gadgets.ViewModels
                         TransactionLegendLabel = " ";
                     }
                     ChartExtensionPlottedData.AddRange(chartExtensionData.OrderBy(a => a.SortId).ToList());
-                    RetrieveChartAccordingDataPeriod(_period);
+                    RetrieveChartAccordingDataPeriod(period);
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
                 BusyIndicatorStatus = false;
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -617,12 +618,17 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 if (selectedPeriod == null)
+                {
                     return;
+                }
                 if (ChartExtensionPlottedData == null)
+                {
                     return;
+                }
                 if (ChartExtensionPlottedData.Count == 0)
+                {
                     return;
-
+                }
                 List<ChartExtensionData> data = ChartExtensionPlottedData.ToList();
 
                 #region SwitchAccordingToPeriod
@@ -695,7 +701,6 @@ namespace GreenField.Gadgets.ViewModels
                             }
                             break;
                         }
-
                     default:
                         {
                             foreach (ChartExtensionData item in data)
@@ -717,7 +722,7 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -740,7 +745,7 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -758,10 +763,13 @@ namespace GreenField.Gadgets.ViewModels
                 double newRange = Math.Min(1, chartArea.ZoomScrollSettingsX.Range) * 2;
 
                 if (zoomCenter + (newRange / 2) > 1)
+                {
                     zoomCenter = 1 - (newRange / 2);
+                }
                 else if (zoomCenter - (newRange / 2) < 0)
+                {
                     zoomCenter = newRange / 2;
-
+                }
                 chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - newRange / 2);
                 chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
 
@@ -770,7 +778,7 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -834,15 +842,14 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
-                _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandleEffectivePeriodSet);
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+                eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandleEffectivePeriodSet);
             }
         }
 
         #endregion
-
     }
 }

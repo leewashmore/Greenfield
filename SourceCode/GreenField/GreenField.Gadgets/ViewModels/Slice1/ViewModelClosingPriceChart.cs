@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using GreenField.ServiceCaller;
 using System.Linq;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.ViewModel;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.Generic;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
+using Microsoft.Practices.Prism.Events;
+using Telerik.Windows.Controls.Charting;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
-using Telerik.Windows.Controls.Charting;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -25,41 +25,40 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         #region Private Fields
 
-
-        //Instance of IDBInteractivity
-        private IDBInteractivity _dbInteractivity;
+        ///Instance of IDBInteractivity        
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// Instance of ILoggerFacade
         /// </summary>
-        public ILoggerFacade _logger;
+        public ILoggerFacade logger;
 
         /// <summary>
         /// Instance of IEventAggregator
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// Instance of EntitySelectionData
         /// </summary>
-        private EntitySelectionData _entitySelectionData;
+        private EntitySelectionData entitySelectionData;
 
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
-        public bool IsActive 
+        private bool isActive;
+        public bool IsActive
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                _isActive = value;
-                if (_entitySelectionData != null && _isActive)
+                isActive = value;
+                if (entitySelectionData != null && isActive)
                 {
-                    HandleSecurityReferenceSet(_entitySelectionData);
+                    HandleSecurityReferenceSet(entitySelectionData);
                 }
             }
         }
@@ -77,22 +76,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="entitySelectionData"></param>
         public ViewModelClosingPriceChart(DashboardGadgetParam param)
         {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
+            entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
 
-            if (SelectionData.EntitySelectionData != null && SeriesReferenceSource == null )
+            if (SelectionData.EntitySelectionData != null && SeriesReferenceSource == null)
             {
                 RetrieveEntitySelectionDataCallBackMethod(SelectionData.EntitySelectionData);
             }
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
 
-            //_dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
-
-            if (_entitySelectionData != null)
+            if (entitySelectionData != null)
             {
-                HandleSecurityReferenceSet(_entitySelectionData);
+                HandleSecurityReferenceSet(entitySelectionData);
             }
         }
 
@@ -100,35 +97,35 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
 
-        #region UI Fields
-
-
-        #endregion
-
         /// <summary>
         /// Storing the names of all entities added to chart.
         /// </summary>
-        private ObservableCollection<EntitySelectionData> _chartEntityList;
+        private ObservableCollection<EntitySelectionData> chartEntityList;
         public ObservableCollection<EntitySelectionData> ChartEntityList
         {
             get
             {
-                if (_chartEntityList == null)
-                    _chartEntityList = new ObservableCollection<EntitySelectionData>();
-                if (_chartEntityList.Count >= 1)
+                if (chartEntityList == null)
+                {
+                    chartEntityList = new ObservableCollection<EntitySelectionData>();
+                }
+                if (chartEntityList.Count >= 1)
+                {
                     AddToChartVisibility = "Visible";
+                }
                 else
+                {
                     AddToChartVisibility = "Collapsed";
-                return _chartEntityList;
+                }
+                return chartEntityList;
             }
             set
             {
-                _chartEntityList = value;
+                chartEntityList = value;
                 if (ChartEntityList.Count != 0)
                 {
                     SelectedBaseSecurity = ChartEntityList[0].ToString();
                 }
-
                 this.RaisePropertyChanged(() => this.ChartEntityList);
             }
         }
@@ -136,21 +133,22 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Display the name of Base Security Selected
         /// </summary>
-        private string _selectedBaseSecurity = "No Security Added";
+        private string selectedBaseSecurity = "No Security Added";
         public string SelectedBaseSecurity
         {
             get
             {
-                return _selectedBaseSecurity;
+                return selectedBaseSecurity;
             }
             set
             {
-                _selectedBaseSecurity = value;
+                selectedBaseSecurity = value;
                 this.RaisePropertyChanged(() => this.SelectedBaseSecurity);
             }
         }
 
         #region Time Period Selection
+        
         /// <summary>
         /// Collection of Time Range Options
         /// </summary>
@@ -166,38 +164,36 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selection Time Range option
         /// </summary>
-        private string _selectedTimeRange = "1-Year";
+        private string selectedTimeRange = "1-Year";
         public string SelectedTimeRange
         {
             get
             {
-                return _selectedTimeRange;
+                return selectedTimeRange;
             }
             set
             {
-                if ((_selectedTimeRange != value) || (value == "Custom"))
+                if ((selectedTimeRange != value) || (value == "Custom"))
                 {
                     if (value == "Custom")
                     {
-                        _selectedTimeRange = value;
+                        selectedTimeRange = value;
 
                         //Retrieve Pricing Data for updated Time Range
                         if (ChartEntityList.Count != 0)
                         {
-                            RetrievePricingData(ChartEntityList,
-                                    RetrievePricingReferenceDataCallBackMethod_TimeRange);
+                            RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_TimeRange);
                         }
                         this.RaisePropertyChanged(() => this.SelectedTimeRange);
                     }
                     else
                     {
-                        _selectedTimeRange = value;
+                        selectedTimeRange = value;
                         GetPeriod();
                         //Retrieve Pricing Data for updated Time Range
                         if (ChartEntityList.Count != 0)
                         {
-                            RetrievePricingData(ChartEntityList,
-                                    RetrievePricingReferenceDataCallBackMethod_TimeRange);
+                            RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_TimeRange);
                         }
                         this.RaisePropertyChanged(() => this.SelectedTimeRange);
                     }
@@ -209,15 +205,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected StartDate Option in case of Custom Time Range
         /// </summary>
-        private DateTime _selectedStartDate = DateTime.Now.AddYears(-1);
+        private DateTime selectedStartDate = DateTime.Now.AddYears(-1);
         public DateTime SelectedStartDate
         {
-            get { return _selectedStartDate; }
+            get { return selectedStartDate; }
             set
             {
-                if (_selectedStartDate != value)
+                if (selectedStartDate != value)
                 {
-                    _selectedStartDate = value;
+                    selectedStartDate = value;
                     RaisePropertyChanged(() => this.SelectedStartDate);
                 }
             }
@@ -226,15 +222,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected EndDate Option in case of Custom Time Range
         /// </summary>
-        private DateTime _selectedEndDate = DateTime.Today;
+        private DateTime selectedEndDate = DateTime.Today;
         public DateTime SelectedEndDate
         {
-            get { return _selectedEndDate; }
+            get { return selectedEndDate; }
             set
             {
-                if (_selectedEndDate != value)
+                if (selectedEndDate != value)
                 {
-                    _selectedEndDate = value;
+                    selectedEndDate = value;
                     RaisePropertyChanged(() => this.SelectedEndDate);
                 }
             }
@@ -246,26 +242,26 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Frequency Interval for chart
         /// </summary>
-        private ObservableCollection<string> _frequencyInterval;
+        private ObservableCollection<string> frequencyInterval;
         public ObservableCollection<string> FrequencyInterval
         {
             get
             {
-                if (_frequencyInterval == null)
+                if (frequencyInterval == null)
                 {
-                    _frequencyInterval = new ObservableCollection<string>();
-                    _frequencyInterval.Add("Daily");
-                    _frequencyInterval.Add("Weekly");
-                    _frequencyInterval.Add("Monthly");
-                    _frequencyInterval.Add("Quarterly");
-                    _frequencyInterval.Add("Half-Yearly");
-                    _frequencyInterval.Add("Yearly");
+                    frequencyInterval = new ObservableCollection<string>();
+                    frequencyInterval.Add("Daily");
+                    frequencyInterval.Add("Weekly");
+                    frequencyInterval.Add("Monthly");
+                    frequencyInterval.Add("Quarterly");
+                    frequencyInterval.Add("Half-Yearly");
+                    frequencyInterval.Add("Yearly");
                 }
-                return _frequencyInterval;
+                return frequencyInterval;
             }
             set
             {
-                _frequencyInterval = value;
+                frequencyInterval = value;
                 this.RaisePropertyChanged(() => this.FrequencyInterval);
             }
         }
@@ -273,16 +269,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Frequency interval
         /// </summary>
-        private string _selectedFrequencyInterval = "Daily";
+        private string selectedFrequencyInterval = "Daily";
         public string SelectedFrequencyInterval
         {
             get
             {
-                return _selectedFrequencyInterval;
+                return selectedFrequencyInterval;
             }
             set
             {
-                _selectedFrequencyInterval = value;
+                selectedFrequencyInterval = value;
                 if (ChartEntityList.Count != 0)
                 {
                     RetrievePricingData(ChartEntityList,
@@ -298,16 +294,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Grouped Collection View for Auto-Complete Box
         /// </summary>
-        private CollectionViewSource _seriesReference;
+        private CollectionViewSource seriesReference;
         public CollectionViewSource SeriesReference
         {
             get
             {
-                return _seriesReference;
+                return seriesReference;
             }
             set
             {
-                _seriesReference = value;
+                seriesReference = value;
                 RaisePropertyChanged(() => this.SeriesReference);
             }
         }
@@ -320,16 +316,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Entity
         /// </summary>
-        private EntitySelectionData _selectedSeriesReference = new EntitySelectionData();
+        private EntitySelectionData selectedSeriesReference = new EntitySelectionData();
         public EntitySelectionData SelectedSeriesReference
         {
             get
             {
-                return _selectedSeriesReference;
+                return selectedSeriesReference;
             }
             set
             {
-                _selectedSeriesReference = value;
+                selectedSeriesReference = value;
                 this.RaisePropertyChanged(() => this.SelectedSeriesReference);
             }
         }
@@ -337,15 +333,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Search Mode Filter - Checked (StartsWith); Unchecked (Contains)
         /// </summary>
-        private bool _searchFilterEnabled;
+        private bool searchFilterEnabled;
         public bool SearchFilterEnabled
         {
-            get { return _searchFilterEnabled; }
+            get { return searchFilterEnabled; }
             set
             {
-                if (_searchFilterEnabled != value)
+                if (searchFilterEnabled != value)
                 {
-                    _searchFilterEnabled = value;
+                    searchFilterEnabled = value;
                     RaisePropertyChanged(() => SearchFilterEnabled);
                 }
             }
@@ -354,20 +350,24 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Entered Text in the Auto-Complete Box - filters SeriesReferenceSource
         /// </summary>
-        private string _seriesEnteredText;
+        private string seriesEnteredText;
         public string SeriesEnteredText
         {
-            get { return _seriesEnteredText; }
+            get { return seriesEnteredText; }
             set
             {
-                _seriesEnteredText = value;
+                seriesEnteredText = value;
                 RaisePropertyChanged(() => this.SeriesEnteredText);
                 if (value != null)
+                {
                     SeriesReference.Source = SearchFilterEnabled == false
-                        ? SeriesReferenceSource.Where(o => o.ShortName.ToLower().Contains(value.ToLower()))
-                        : SeriesReferenceSource.Where(o => o.ShortName.ToLower().StartsWith(value.ToLower()));
+                          ? SeriesReferenceSource.Where(o => o.ShortName.ToLower().Contains(value.ToLower()))
+                          : SeriesReferenceSource.Where(o => o.ShortName.ToLower().StartsWith(value.ToLower()));
+                }
                 else
+                {
                     SeriesReference.Source = SeriesReferenceSource;
+                }
             }
         }
 
@@ -376,16 +376,16 @@ namespace GreenField.Gadgets.ViewModels
         /// if true:Commodity/Index/Currency Added
         /// if false:only securities added 
         /// </summary>
-        private bool _chartEntityTypes = true;
+        private bool chartEntityTypes = true;
         public bool ChartEntityTypes
         {
             get
             {
-                return _chartEntityTypes;
+                return chartEntityTypes;
             }
             set
             {
-                _chartEntityTypes = value;
+                chartEntityTypes = value;
                 this.RaisePropertyChanged(() => this.ChartEntityTypes);
             }
         }
@@ -394,6 +394,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Chart/Grid Entities
 
+        /// <summary>
+        /// New Entity
+        /// </summary>
         private string newEntity;
         public string NewEntity
         {
@@ -411,24 +414,24 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// CheckBox Selection for Total Return/Gross Return
         /// </summary>
-        private bool _returnTypeSelection;
+        private bool returnTypeSelection;
         public bool ReturnTypeSelection
         {
             get
             {
-                return _returnTypeSelection;
+                return returnTypeSelection;
             }
             set
             {
-                if (_returnTypeSelection != value)
+                if (returnTypeSelection != value)
                 {
-                    _returnTypeSelection = value;
+                    returnTypeSelection = value;
                     if (ChartEntityList.Count != 0)
                     {
                         RetrievePricingData(ChartEntityList,
                                 RetrievePricingReferenceDataCallBackMethod_TimeRange);
                     }
-                    if (_returnTypeSelection)
+                    if (returnTypeSelection)
                     {
                         SelectedBaseSecurity = SelectedBaseSecurity + " (total)";
                         foreach (EntitySelectionData item in ComparisonSeries)
@@ -460,20 +463,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Plotted Series on the Chart
         /// </summary>
-        private RangeObservableCollection<PricingReferenceData> _plottedSeries;
+        private RangeObservableCollection<PricingReferenceData> plottedSeries;
         public RangeObservableCollection<PricingReferenceData> PlottedSeries
         {
             get
             {
-                if (_plottedSeries == null)
-                    _plottedSeries = new RangeObservableCollection<PricingReferenceData>();
-                return _plottedSeries;
+                if (plottedSeries == null)
+                    plottedSeries = new RangeObservableCollection<PricingReferenceData>();
+                return plottedSeries;
             }
             set
             {
-                if (_plottedSeries != value)
+                if (plottedSeries != value)
                 {
-                    _plottedSeries = value;
+                    plottedSeries = value;
                     RaisePropertyChanged(() => this.PlottedSeries);
                 }
             }
@@ -482,20 +485,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Series bound to Volume Chart
         /// </summary>
-        private RangeObservableCollection<PricingReferenceData> _primaryPlottedSeries;
+        private RangeObservableCollection<PricingReferenceData> primaryPlottedSeries;
         public RangeObservableCollection<PricingReferenceData> PrimaryPlottedSeries
         {
             get
             {
-                if (_primaryPlottedSeries == null)
-                    _primaryPlottedSeries = new RangeObservableCollection<PricingReferenceData>();
-                return _primaryPlottedSeries;
+                if (primaryPlottedSeries == null)
+                    primaryPlottedSeries = new RangeObservableCollection<PricingReferenceData>();
+                return primaryPlottedSeries;
             }
             set
             {
-                if (_primaryPlottedSeries != value)
+                if (primaryPlottedSeries != value)
                 {
-                    _primaryPlottedSeries = value;
+                    primaryPlottedSeries = value;
                     RaisePropertyChanged(() => this.PrimaryPlottedSeries);
                 }
             }
@@ -504,16 +507,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Series to show List of Securities Added to chart
         /// </summary>
-        private ObservableCollection<EntitySelectionData> _comparisonSeries = new ObservableCollection<EntitySelectionData>();
+        private ObservableCollection<EntitySelectionData> comparisonSeries = new ObservableCollection<EntitySelectionData>();
         public ObservableCollection<EntitySelectionData> ComparisonSeries
         {
             get
             {
-                return _comparisonSeries;
+                return comparisonSeries;
             }
             set
             {
-                _comparisonSeries = value;
+                comparisonSeries = value;
                 this.RaisePropertyChanged(() => this.ComparisonSeries);
             }
         }
@@ -521,16 +524,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Busy Indicator Status
         /// </summary>
-        private bool _busyIndicatorStatus;
+        private bool busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
             get
             {
-                return _busyIndicatorStatus;
+                return busyIndicatorStatus;
             }
             set
             {
-                _busyIndicatorStatus = value;
+                busyIndicatorStatus = value;
                 this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
             }
         }
@@ -538,48 +541,48 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Bound to ChartArea in View(Pricing Chart)
         /// </summary>
-        private ChartArea _chartAreaPricing;
+        private ChartArea chartAreaPricing;
         public ChartArea ChartAreaPricing
         {
             get
             {
-                return this._chartAreaPricing;
+                return this.chartAreaPricing;
             }
             set
             {
-                this._chartAreaPricing = value;
+                this.chartAreaPricing = value;
             }
         }
 
         /// <summary>
         /// Bound to ChartArea in View(Volume Chart)
         /// </summary>
-        private ChartArea _chartAreaVolume;
+        private ChartArea chartAreaVolume;
         public ChartArea ChartAreaVolume
         {
             get
             {
-                return this._chartAreaVolume;
+                return this.chartAreaVolume;
             }
             set
             {
-                this._chartAreaVolume = value;
+                this.chartAreaVolume = value;
             }
         }
 
         /// <summary>
         /// Show/Hide Add to Chart Control
         /// </summary>
-        private string _addToChartVisibility = "Collapsed";
+        private string addToChartVisibility = "Collapsed";
         public string AddToChartVisibility
         {
             get
             {
-                return _addToChartVisibility;
+                return addToChartVisibility;
             }
             set
             {
-                _addToChartVisibility = value;
+                addToChartVisibility = value;
                 this.RaisePropertyChanged(() => this.AddToChartVisibility);
             }
         }
@@ -661,7 +664,7 @@ namespace GreenField.Gadgets.ViewModels
                     ChartEntityTypes = true;
 
                     BusyIndicatorStatus = true;
-                    _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, (result) =>
+                    dbInteractivity.RetrievePricingReferenceData(ChartEntityList, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, (result) =>
                     {
                         PlottedSeries.Clear();
                         PlottedSeries.AddRange(result.OrderBy(a => a.SortingID).ToList());
@@ -693,7 +696,9 @@ namespace GreenField.Gadgets.ViewModels
             List<PricingReferenceData> removeItem = new List<PricingReferenceData>();
             removeItem = PlottedSeries.Where(w => w.InstrumentID == a.InstrumentID).ToList();
             if (removeItem != null)
+            {
                 PlottedSeries.RemoveRange(removeItem);
+            }
             ComparisonSeries.Remove(a);
             ChartEntityList.Remove(a);
             if (ChartEntityList.Count == 1)
@@ -746,11 +751,21 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="parameter"></param>
         public bool ZoomOutCommandValidation(object parameter)
         {
-            if (this.ChartAreaPricing == null || this.ChartAreaVolume == null)
+            try
+            {
+                if (this.ChartAreaPricing == null || this.ChartAreaVolume == null)
+                {
+                    return false;
+                }
+                return this.ChartAreaPricing.ZoomScrollSettingsX.Range < 1d &&
+                    this.ChartAreaVolume.ZoomScrollSettingsX.Range < 1d;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
                 return false;
-
-            return this.ChartAreaPricing.ZoomScrollSettingsX.Range < 1d &&
-                this.ChartAreaVolume.ZoomScrollSettingsX.Range < 1d;
+            }
         }
 
         #endregion
@@ -763,7 +778,7 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveEntitySelectionDataCallBackMethod(List<EntitySelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
@@ -785,13 +800,13 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -802,7 +817,7 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrievePricingReferenceDataCallBackMethod_TimeRange(List<PricingReferenceData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
@@ -826,14 +841,14 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
@@ -848,7 +863,7 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrievePricingReferenceDataCallBackMethod_SecurityReference(List<PricingReferenceData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
@@ -861,14 +876,14 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
@@ -887,7 +902,7 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 //ArgumentNullException
@@ -903,7 +918,7 @@ namespace GreenField.Gadgets.ViewModels
                             PlottedSeries.Clear();
                             PrimaryPlottedSeries.Clear();
                         }
-                        _entitySelectionData = entitySelectionData;
+                        this.entitySelectionData = entitySelectionData;
                         ChartEntityList.Clear();
                         ChartEntityList.Add(entitySelectionData);
 
@@ -917,14 +932,14 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     else
                     {
-                        Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                        Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     }
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
 
         }
@@ -951,8 +966,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="callback">CallBack Method Predicate</param>
         private void RetrievePricingData(ObservableCollection<EntitySelectionData> entityIdentifiers, Action<List<PricingReferenceData>> callback)
         {
-            BusyIndicatorStatus = true;
-            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, callback);
+            try
+            {
+                BusyIndicatorStatus = true;
+                dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, callback);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
         }
 
         /// <summary>
@@ -1030,18 +1053,19 @@ namespace GreenField.Gadgets.ViewModels
         private void ZoomOut(ChartArea chartArea)
         {
             chartArea.ZoomScrollSettingsX.SuspendNotifications();
-
             double zoomCenter = chartArea.ZoomScrollSettingsX.RangeStart + (chartArea.ZoomScrollSettingsX.Range / 2);
             double newRange = Math.Min(1, chartArea.ZoomScrollSettingsX.Range) * 2;
 
             if (zoomCenter + (newRange / 2) > 1)
+            {
                 zoomCenter = 1 - (newRange / 2);
+            }
             else if (zoomCenter - (newRange / 2) < 0)
+            {
                 zoomCenter = newRange / 2;
-
+            }
             chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - newRange / 2);
             chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
-
             chartArea.ZoomScrollSettingsX.ResumeNotifications();
         }
 
@@ -1054,7 +1078,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
         }
 
         #endregion

@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.ServiceModel.Activation;
-using System.Resources;
-using GreenField.Web.Helpers.Service_Faults;
-using GreenField.Web.Helpers;
-using System.Security.Principal;
 using System.Configuration;
-using System.IO;
+using System.Linq;
 using System.Net;
-using GreenField.Web.DocumentCopyService;
-using GreenField.DataContracts;
-using GreenField.DAL;
-using GreenField.Web.ListsDefinitions;
+using System.Resources;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
 using System.Xml;
-using GreenField.Web.DimensionEntitiesService;
-using GreenField.Web.ExcelModel;
+using GreenField.DAL;
+using GreenField.DataContracts;
 using GreenField.Web.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
+using GreenField.Web.DocumentCopyService;
+using GreenField.Web.ExcelModel;
+using GreenField.Web.Helpers;
+using GreenField.Web.Helpers.Service_Faults;
+using GreenField.Web.ListsDefinitions;
 
 namespace GreenField.Web.Services
 {
@@ -190,7 +186,6 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
@@ -382,11 +377,11 @@ namespace GreenField.Web.Services
                     }
                 }
 
-                if (! OnlyTags)
+                if (!OnlyTags)
                 {
                     metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.IssuerName).Distinct().ToList());
                     metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityName).Distinct().ToList());
-                    metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityTicker).Distinct().ToList()); 
+                    metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityTicker).Distinct().ToList());
                 }
                 for (int i = 0; i < metaTagsInfo.Count; i++)
                 {
@@ -396,7 +391,7 @@ namespace GreenField.Web.Services
                     }
                 }
 
-                metaTagsInfo = metaTagsInfo.Where(record => record != null && record != String.Empty).ToList();               
+                metaTagsInfo = metaTagsInfo.Where(record => record != null && record != String.Empty).ToList();
                 metaTagsInfo = metaTagsInfo.Distinct().ToList();
                 return metaTagsInfo;
 
@@ -556,8 +551,9 @@ namespace GreenField.Web.Services
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
                 if (selectedSecurity == null)
+                {
                     return new byte[1];
-
+                }
                 GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == selectedSecurity.InstrumentID &&
                         record.ISSUE_NAME == selectedSecurity.LongName &&
@@ -570,10 +566,8 @@ namespace GreenField.Web.Services
                 .Where(record => record.COUNTRY_CODE == securityDetails.ISO_COUNTRY_CODE &&
                  record.COUNTRY_NAME == securityDetails.ASEC_SEC_COUNTRY_NAME)
                 .FirstOrDefault();
-
                 string issuerID = securityDetails.ISSUER_ID;
                 string currency = countryDetails.CURRENCY_CODE;
-
                 if (issuerID == null)
                 {
                     return new byte[1];
@@ -615,7 +609,6 @@ namespace GreenField.Web.Services
                         resultConsensus = new List<ModelConsensusEstimatesData>();
                     }
                 }
-
                 dataPointsExcelUpload = RetrieveModelUploadDataPoints(issuerID);
                 dataPointsModelReference = RetrieveExcelModelReferenceData(issuerID, securityDetails);
                 commodities = entity.RetrieveCommodityForecasts().ToList();
@@ -664,6 +657,8 @@ namespace GreenField.Web.Services
 
         #endregion
 
+        #region Helper Methods
+
         /// <summary>
         /// Get CE Data 
         /// </summary>
@@ -675,11 +670,9 @@ namespace GreenField.Web.Services
         public List<ModelConsensusEstimatesData> RetrieveCEData(string issuerID, String currency)
         {
             List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
-
             List<FinancialStatementPeriodType> periodType = new List<FinancialStatementPeriodType>() { FinancialStatementPeriodType.ANNUAL, FinancialStatementPeriodType.QUARTERLY };
             ExternalResearchEntities entity = new ExternalResearchEntities();
             List<ModelConsensusEstimatesData> data = new List<ModelConsensusEstimatesData>();
-
             foreach (FinancialStatementPeriodType item in periodType)
             {
                 data = entity.GetModelConsensusEstimates(issuerID, "REUTERS", EnumUtils.ToString(item), "FISCAL", currency).ToList();
@@ -689,7 +682,6 @@ namespace GreenField.Web.Services
                 }
                 resultConsensus.AddRange(data);
             }
-
             return resultConsensus;
         }
 
@@ -743,9 +735,7 @@ namespace GreenField.Web.Services
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
                 List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
-
                 List<ModelConsensusEstimatesData> data = new List<ModelConsensusEstimatesData>();
-
                 List<FinancialStatementType> statementType = new List<FinancialStatementType>() { FinancialStatementType.INCOME_STATEMENT, FinancialStatementType.BALANCE_SHEET, FinancialStatementType.CASH_FLOW_STATEMENT };
                 List<FinancialStatementPeriodType> periodType = new List<FinancialStatementPeriodType>() { FinancialStatementPeriodType.ANNUAL, FinancialStatementPeriodType.QUARTERLY };
 
@@ -757,12 +747,10 @@ namespace GreenField.Web.Services
                         resultConsensus.AddRange(data);
                     }
                 }
-
                 foreach (ModelConsensusEstimatesData item in resultConsensus)
                 {
                     item.SortOrder = ReturnSortOrder(item.ESTIMATE_ID);
                 }
-
                 return resultConsensus.OrderBy(a => a.SortOrder).ThenBy(a => a.PERIOD_YEAR).ThenBy(a => a.PERIOD_TYPE).ToList();
             }
             catch (Exception ex)
@@ -813,15 +801,18 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Retrieve List of DataPoints for Model-Upload worksheet
+        /// </summary>
+        /// <param name="issuerId">Issuer Id of the Selected Security</param>
+        /// <returns>List of DataPointsModelUploadData</returns>
         private List<DataPointsModelUploadData> RetrieveModelUploadDataPoints(string issuerId)
         {
             try
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
                 List<DataPointsModelUploadData> result = new List<DataPointsModelUploadData>();
-
                 result = entity.RetrieveDataPointsModelUpload(issuerId).ToList();
-
                 return result;
             }
             catch (Exception ex)
@@ -832,6 +823,12 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Retrieve Data for Model-Reference worksheet
+        /// </summary>
+        /// <param name="issuerId">IssuerId of the selected Security</param>
+        /// <param name="securityDetails">Data of the selected security from GF_SECURITY_BASEVIEW</param>
+        /// <returns>object of type ModelReferenceDatapoints</returns>
         private ModelReferenceDataPoints RetrieveExcelModelReferenceData(string issuerId, GF_SECURITY_BASEVIEW securityDetails)
         {
             try
@@ -841,12 +838,10 @@ namespace GreenField.Web.Services
                 data.IssuerId = issuerId;
                 data.IssuerName = securityDetails.ISSUER_NAME;
                 INTERNAL_ISSUER issuerData = entity.RetrieveCOAType(issuerId).FirstOrDefault();
-
                 if (issuerData != null)
                 {
                     data.COATypes = issuerData.COA_TYPE;
                 }
-
                 return data;
             }
             catch (Exception ex)
@@ -856,6 +851,8 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
+        
+        #endregion
 
         #endregion
 

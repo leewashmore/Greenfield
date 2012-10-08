@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Documents.Model;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
-using Telerik.Windows.Controls;
 using GreenField.Common;
 using GreenField.ServiceCaller;
-using GreenField.DataContracts;
-using Telerik.Windows.Controls.Charting;
-using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Views
 {
@@ -35,8 +29,7 @@ namespace GreenField.Gadgets.Views
             public const string CHART_EXTENSION = "Chart Extension";
             public const string CHART_EXTENSION_DATA = "Chart Extension Data";
         }
-
-
+        
         #endregion
 
         #region PropertyDeclaration
@@ -44,31 +37,33 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
-        private ViewModelSlice1ChartExtension _dataContextSlice1ChartExtension;
+        private ViewModelSlice1ChartExtension dataContextSlice1ChartExtension;
         public ViewModelSlice1ChartExtension DataContextSlice1ChartExtension
         {
             get
             {
-                return _dataContextSlice1ChartExtension;
+                return dataContextSlice1ChartExtension;
             }
             set
             {
-                _dataContextSlice1ChartExtension = value;
+                dataContextSlice1ChartExtension = value;
             }
         }
 
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextSlice1ChartExtension != null)
-                    DataContextSlice1ChartExtension.IsActive = _isActive;
+                {
+                    DataContextSlice1ChartExtension.IsActive = isActive;
+                }
             }
         }
 
@@ -148,16 +143,28 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
                 if (grdRadChart.Visibility == Visibility.Visible)
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION, Element = this.chChartExtension, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.CHART_EXTENSION,
+                        Element = this.chChartExtension,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER
+                    });
+                }
                 else if (grdRadGridView.Visibility == Visibility.Visible)
                 {
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION_DATA, Element = this.dgChartExtension, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.CHART_EXTENSION_DATA,
+                        Element = this.dgChartExtension,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    });
                 }
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_CHART_EXTENTION);
                 childExportOptions.Show();
@@ -165,7 +172,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextSlice1ChartExtension._logger, ex);
+                Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
@@ -177,7 +184,7 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
                 if (grdRadGridView.Visibility == Visibility.Visible)
@@ -198,13 +205,12 @@ namespace GreenField.Gadgets.Views
                     }));
 
                     RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
-
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextSlice1ChartExtension._logger, ex);
+                Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
@@ -218,7 +224,7 @@ namespace GreenField.Gadgets.Views
         private void ApplyChartStyles()
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
                 this.chChartExtension.DefaultView.ChartArea.AxisX.TicksDistance = 50;
@@ -228,7 +234,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextSlice1ChartExtension._logger, ex);
+                Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
@@ -260,7 +266,7 @@ namespace GreenField.Gadgets.Views
         private void chChartExtension_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
                 if (this.DataContext as ViewModelSlice1ChartExtension != null)
@@ -323,16 +329,14 @@ namespace GreenField.Gadgets.Views
                                 Where(a => a.Type.ToUpper() == "SECTOR").Select(a => a.Ticker).FirstOrDefault();
                             this.chChartExtension.DefaultView.ChartLegend.Items.Add(sectorLegendItem);
                         }
-
                     }
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextSlice1ChartExtension._logger, ex);
+                Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
-
         }
 
         /// <summary>
@@ -343,7 +347,7 @@ namespace GreenField.Gadgets.Views
         private void chChartExtension_Loaded(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
                 if (chChartExtension.DefaultView.ChartLegend.Items.Count != 0)
@@ -355,11 +359,10 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextSlice1ChartExtension._logger, ex);
+                Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
         #endregion
-
     }
 }

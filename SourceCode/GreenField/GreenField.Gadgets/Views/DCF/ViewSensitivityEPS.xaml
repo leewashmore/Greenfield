@@ -16,7 +16,6 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-
     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" BusyContent="{Binding BusyIndicatorContent}"
                                       IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
         <Grid x:Name="LayoutRoot" Background="White">
@@ -53,7 +52,6 @@
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
                         Margin="5,0,0,0" Click="btnPrint_Click">
                     <Image Source="/GreenField.Gadgets;component/Images/Print.png"/>
-
                 </Button>
 
             </Grid>
@@ -197,5 +195,4 @@
             <telerik:RadRichTextBox Grid.Row="3" x:Name="RichTextBox" />
         </Grid>
     </telerik:RadBusyIndicator>
-
 </helpers:ViewBaseUserControl>

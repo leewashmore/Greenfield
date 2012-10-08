@@ -23,10 +23,10 @@ namespace GreenField.Web.Helpers
             try
             {
                 if (dimensionDailyPerfData == null && dimensionBenchmarkReturnData == null)
+                {
                     return new List<RelativePerformanceUIData>();
-
+                }
                 List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
-
                 RelativePerformanceUIData data = new RelativePerformanceUIData();
                 if (dimensionDailyPerfData != null)
                 {
@@ -61,7 +61,6 @@ namespace GreenField.Web.Helpers
                             }
                             result.Add(data);
                         }
-
                     }
                 }
 
@@ -81,7 +80,6 @@ namespace GreenField.Web.Helpers
                         result.Add(data);
                     }
                 }
-
                 //To be Removed
                 if (result != null)
                 {
@@ -89,7 +87,6 @@ namespace GreenField.Web.Helpers
                     if (removeSecurity != null)
                         result.Remove(removeSecurity);
                 }
-
                 return result;
             }
             catch (Exception ex)

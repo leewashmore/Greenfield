@@ -16,7 +16,6 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-
     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" BusyContent="{Binding BusyIndicatorContent}"
                                       IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
         <Grid x:Name="LayoutRoot" Background="White">
@@ -39,21 +38,20 @@
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                         Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
                     <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
-
                 </Button>
+                
                 <Button Height="15" Width="15" Grid.Column="1"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnExportPDF"
                         Margin="5,0,0,0" Click="btnExportPDF_Click">
                     <Image Source="/GreenField.Gadgets;component/Images/PDF.png"/>
-
                 </Button>
+                
                 <Button Height="15" Width="15" Grid.Column="2"
                         BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
                         Margin="5,0,0,0" Click="btnPrint_Click">
                     <Image Source="/GreenField.Gadgets;component/Images/Print.png"/>
-
                 </Button>
 
             </Grid>
@@ -71,7 +69,7 @@
                                          CanUserSortColumns="False"
                                          RowIndicatorVisibility="Collapsed" 
                                          UseLayoutRounding="True" 
-                                     IsFilteringAllowed="False"
+                                         IsFilteringAllowed="False"
                                          ColumnWidth="Auto" ShowColumnFooters="False"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
@@ -89,22 +87,18 @@
                                          RowLoaded="dgDCFSummary_RowLoaded"
                                          BeginningEdit="dgDCFSummary_BeginningEdit"
                                          RowEditEnded="dgDCFSummary_RowEditEnded"
-                                         CellValidating="dgDCFSummary_CellValidating"
-                                     >
+                                         CellValidating="dgDCFSummary_CellValidating">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn Header="Summary" UniqueName="Summary" DataMemberBinding="{Binding PropertyName,Mode=TwoWay}" 
-                                                    HeaderTextAlignment="Left" TextAlignment="Left"
+                                                    HeaderTextAlignment="Left" TextAlignment="Left" TextWrapping="NoWrap"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn Header=" " UniqueName="Values" DataMemberBinding="{Binding Value,Mode=TwoWay}" HeaderTextAlignment="Left" TextAlignment="Left"
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
+                                                    TextWrapping="NoWrap"/>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Grid>
-
-            <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" >
-
-            </telerik:RadRichTextBox>
-
+            <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" />
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

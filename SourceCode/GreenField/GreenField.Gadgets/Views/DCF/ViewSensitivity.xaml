@@ -173,8 +173,7 @@
 
                 </Grid>
             </Grid>
-            <telerik:RadRichTextBox Grid.Row="3" x:Name="RichTextBox" >
-            </telerik:RadRichTextBox>
+            <telerik:RadRichTextBox Grid.Row="3" x:Name="RichTextBox" />
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

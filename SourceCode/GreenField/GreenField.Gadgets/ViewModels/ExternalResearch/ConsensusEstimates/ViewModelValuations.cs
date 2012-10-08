@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,20 +10,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
-using GreenField.DataContracts;
-using Microsoft.Practices.Prism.Events;
 using GreenField.Common;
-using Microsoft.Practices.Prism.ViewModel;
-using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using GreenField.Gadgets.Models;
+using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
+using GreenField.Gadgets.Models;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.ExternalResearchDefinitions;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View-Model for ConsensusValuations
+    /// </summary>
     public class ViewModelValuations : NotificationObject
     {
         #region PrivateFields
@@ -29,30 +32,29 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Instance of Service Caller
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// LoggerFacade
         /// </summary>
-        private ILoggerFacade _logger;
+        private ILoggerFacade logger;
         public ILoggerFacade Logger
         {
             get
             {
-                return _logger;
+                return logger;
             }
             set
             {
-                _logger = value;
+                logger = value;
             }
         }
 
         /// <summary>
         /// Event Aggregator
         /// </summary>
-        private IEventAggregator _eventAggregator;
-
-
+        private IEventAggregator eventAggregator;
+        
         #endregion
 
         #region Constructor
@@ -62,9 +64,9 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public ViewModelValuations(DashboardGadgetParam param)
         {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
 
             PeriodColumns.PeriodColumnNavigate += (e) =>
             {
@@ -80,14 +82,12 @@ namespace GreenField.Gadgets.ViewModels
                     BusyIndicatorNotification();
                 }
             };
-
-
+            
             EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
             }
-
             if (EntitySelectionInfo != null)
             {
                 HandleSecurityReferenceSetEvent(EntitySelectionInfo);
@@ -101,60 +101,83 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Security
         /// </summary>
-        private EntitySelectionData _entitySelectionInfo;
+        private EntitySelectionData entitySelectionInfo;
         public EntitySelectionData EntitySelectionInfo
         {
             get
             {
-                return _entitySelectionInfo;
+                return entitySelectionInfo;
             }
             set
             {
-                _entitySelectionInfo = value;
+                entitySelectionInfo = value;
                 this.RaisePropertyChanged(() => this.EntitySelectionInfo);
             }
         }
 
-        private List<PeriodColumnGroupingDetail> _dataGrouping;
+        private List<PeriodColumnGroupingDetail> dataGrouping;
         public List<PeriodColumnGroupingDetail> DataGrouping
         {
             get
             {
-                if (_dataGrouping == null)
+                if (dataGrouping == null)
                 {
-                    _dataGrouping = new List<PeriodColumnGroupingDetail>();
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Amount", GroupPropertyName = "Amount", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "YOY", GroupPropertyName = "YOYGrowth", GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "AshmoreEMM", GroupPropertyName = "AshmoreEmmAmount", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Variance%", GroupPropertyName = "Variance", GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Actual", GroupPropertyName = "Actual", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "# of Estimates", GroupPropertyName = "NumberOfEstimates", GroupDataType = PeriodColumnGroupingType.INT });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "High", GroupPropertyName = "High", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Low", GroupPropertyName = "Low", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Standard Deviation", GroupPropertyName = "StandardDeviation", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Last Update", GroupPropertyName = "DataSourceDate", GroupDataType = PeriodColumnGroupingType.SHORT_DATETIME });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Reported Currency", GroupPropertyName = "SourceCurrency", GroupDataType = PeriodColumnGroupingType.STRING });                    
+                    dataGrouping = new List<PeriodColumnGroupingDetail>();
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Amount", 
+                        GroupPropertyName = "Amount", 
+                        GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "YOY", 
+                        GroupPropertyName = "YOYGrowth", 
+                        GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "AshmoreEMM",
+                        GroupPropertyName = "AshmoreEmmAmount", 
+                        GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Variance%", 
+                        GroupPropertyName = "Variance", 
+                        GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Actual", 
+                        GroupPropertyName = "Actual", 
+                        GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "# of Estimates", 
+                        GroupPropertyName = "NumberOfEstimates", 
+                        GroupDataType = PeriodColumnGroupingType.INT });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "High", 
+                        GroupPropertyName = "High", 
+                        GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Low", 
+                        GroupPropertyName = "Low", 
+                        GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Standard Deviation", 
+                        GroupPropertyName = "StandardDeviation", 
+                        GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Last Update", 
+                        GroupPropertyName = "DataSourceDate", 
+                        GroupDataType = PeriodColumnGroupingType.SHORT_DATETIME });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Reported Currency", 
+                        GroupPropertyName = "SourceCurrency", 
+                        GroupDataType = PeriodColumnGroupingType.STRING });                    
                 }
-                return _dataGrouping;
+                return dataGrouping;
             }
         }
-
-
+        
         /// <summary>
         /// Pivoted Financial Information to be dispayed on grid
         /// </summary>
-        private List<PeriodColumnDisplayData> _consensusEstimateDetailDisplayInfo;
+        private List<PeriodColumnDisplayData> consensusEstimateDetailDisplayInfo;
         public List<PeriodColumnDisplayData> ConsensusEstimateDetailDisplayInfo
         {
             get
             {
-                if (_consensusEstimateDetailDisplayInfo == null)
-                    _consensusEstimateDetailDisplayInfo = new List<PeriodColumnDisplayData>();
-                return _consensusEstimateDetailDisplayInfo;
+                if (consensusEstimateDetailDisplayInfo == null)
+                {
+                    consensusEstimateDetailDisplayInfo = new List<PeriodColumnDisplayData>();
+                }
+                return consensusEstimateDetailDisplayInfo;
             }
             set
             {
-                _consensusEstimateDetailDisplayInfo = value;
+                consensusEstimateDetailDisplayInfo = value;
                 RaisePropertyChanged(() => this.ConsensusEstimateDetailDisplayInfo);
             }
         }
@@ -162,16 +185,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// ConsensusEstimates Detailed Info
         /// </summary>
-        private List<ConsensusEstimatesValuations> _consensusEstimateDetailInfo;
+        private List<ConsensusEstimatesValuations> consensusEstimateDetailInfo;
         public List<ConsensusEstimatesValuations> ConsensusEstimateDetailInfo
         {
             get
             {
-                return _consensusEstimateDetailInfo;
+                return consensusEstimateDetailInfo;
             }
             set
             {
-                _consensusEstimateDetailInfo = value;
+                consensusEstimateDetailInfo = value;
                 SetConsensusEstimateMedianDisplayInfo();
             }
         }
@@ -181,22 +204,22 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                _isActive = value;
-                if (_isActive)
+                isActive = value;
+                if (isActive)
                 {
                     if (EntitySelectionInfo != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
-                        _dbInteractivity.RetrieveIssuerReferenceData(EntitySelectionInfo, RetrieveIssuerReferenceDataCallbackMethod);
+                        dbInteractivity.RetrieveIssuerReferenceData(EntitySelectionInfo, RetrieveIssuerReferenceDataCallbackMethod);
                     }
                 }
             }
@@ -208,13 +231,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Busy Indicator Status
         /// </summary>
-        private bool _busyIndicatorIsBusy;
+        private bool busyIndicatorIsBusy;
         public bool BusyIndicatorIsBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return busyIndicatorIsBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
+                busyIndicatorIsBusy = value;
                 RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
             }
         }
@@ -222,13 +245,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Busy Indicator Content
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
@@ -238,15 +261,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores Reported issuer domicile currency and "USD"
         /// </summary>
-        private ObservableCollection<String> _currencyInfo = new ObservableCollection<string> { "USD" };
+        private ObservableCollection<String> currencyInfo = new ObservableCollection<string> { "USD" };
         public ObservableCollection<String> CurrencyInfo
         {
-            get { return _currencyInfo; }
+            get { return currencyInfo; }
             set
             {
-                if (_currencyInfo != value)
+                if (currencyInfo != value)
                 {
-                    _currencyInfo = value;
+                    currencyInfo = value;
                     RaisePropertyChanged(() => this.CurrencyInfo);
                 }
             }
@@ -255,21 +278,21 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected currency
         /// </summary>
-        private String _selectedCurrency = "USD";
+        private String selectedCurrency = "USD";
         public String SelectedCurrency
         {
             get
             {
-                return _selectedCurrency;
+                return selectedCurrency;
             }
             set
             {
-                _selectedCurrency = value;
+                selectedCurrency = value;
                 RaisePropertyChanged(() => this.SelectedCurrency);
                 RetrieveConsensusEstimatesValuationData();
             }
-
         }
+
         #endregion
 
         #region Period Type
@@ -284,15 +307,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected FinancialStatementPeriodType
         /// </summary>
-        private FinancialStatementPeriodType _selectedPeriodType = FinancialStatementPeriodType.ANNUAL;
+        private FinancialStatementPeriodType selectedPeriodType = FinancialStatementPeriodType.ANNUAL;
         public FinancialStatementPeriodType SelectedPeriodType
         {
-            get { return _selectedPeriodType; }
+            get { return selectedPeriodType; }
             set
             {
-                if (_selectedPeriodType != value)
+                if (selectedPeriodType != value)
                 {
-                    _selectedPeriodType = value;
+                    selectedPeriodType = value;
                     RaisePropertyChanged(() => this.SelectedPeriodType);
                     RetrieveConsensusEstimatesValuationData();
                 }
@@ -304,18 +327,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores period column headers
         /// </summary>
-        private List<String> _periodColumnHeader;
+        private List<String> periodColumnHeader;
         public List<String> PeriodColumnHeader
         {
             get
             {
-                if (_periodColumnHeader == null)
-                    _periodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
-                return _periodColumnHeader;
+                if (periodColumnHeader == null)
+                {
+                    periodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
+                }
+                return periodColumnHeader;
             }
             set
             {
-                _periodColumnHeader = value;
+                periodColumnHeader = value;
                 RaisePropertyChanged(() => this.PeriodColumnHeader);
                 if (value != null)
                 {
@@ -340,16 +365,18 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Period Record storing period information based on iteration
         /// </summary>
-        private PeriodRecord _periodRecord;
+        private PeriodRecord periodRecord;
         public PeriodRecord PeriodRecord
         {
             get
             {
-                if (_periodRecord == null)
-                    _periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
-                return _periodRecord;
+                if (periodRecord == null)
+                {
+                    periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
+                }
+                return periodRecord;
             }
-            set { _periodRecord = value; }
+            set { periodRecord = value; }
         }
         #endregion
 
@@ -359,29 +386,30 @@ namespace GreenField.Gadgets.ViewModels
         /// Stores Issuer related data
         /// </summary>
         /// 
-        private IssuerReferenceData _issuerReferenceInfo;
+        private IssuerReferenceData issuerReferenceInfo;
         public IssuerReferenceData IssuerReferenceInfo
         {
-            get { return _issuerReferenceInfo; }
+            get { return issuerReferenceInfo; }
             set
             {
-                if (_issuerReferenceInfo != value)
+                if (issuerReferenceInfo != value)
                 {
-                    _issuerReferenceInfo = value;
+                    issuerReferenceInfo = value;
                     if (value != null)
                     {
                         CurrencyInfo = new ObservableCollection<String>();
                         CurrencyInfo.Add("USD");
                         if (IssuerReferenceInfo.CurrencyCode != "USD")
+                        {
                             CurrencyInfo.Add(IssuerReferenceInfo.CurrencyCode);
+                        }
                         SelectedCurrency = CurrencyInfo[0];
                     }
                 }
             }
         }
         #endregion
-
-
+        
         #endregion
 
         #region EventHandlers
@@ -393,31 +421,30 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSetEvent(EntitySelectionData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     EntitySelectionInfo = result;
-
                     if (EntitySelectionInfo != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
-                        _dbInteractivity.RetrieveIssuerReferenceData(result, RetrieveIssuerReferenceDataCallbackMethod);
+                        dbInteractivity.RetrieveIssuerReferenceData(result, RetrieveIssuerReferenceDataCallbackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -431,7 +458,7 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveIssuerReferenceDataCallbackMethod(IssuerReferenceData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
@@ -440,17 +467,17 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + " (" + EntitySelectionInfo.ShortName + " : " + EntitySelectionInfo.InstrumentID + ")");
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + 
+                        " (" + EntitySelectionInfo.ShortName + " : " + EntitySelectionInfo.InstrumentID + ")");
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
-                // BusyIndicatorNotification();
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -460,7 +487,7 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveConsensusEstimateDataCallbackMethod(List<ConsensusEstimatesValuations> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
@@ -469,19 +496,19 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -493,7 +520,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            //Implement Dispose Here
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSetEvent);            
         }
 
         #endregion
@@ -501,7 +528,7 @@ namespace GreenField.Gadgets.ViewModels
         #region HelperMethods
 
         /// <summary>
-        /// 
+        /// Set Display Data
         /// </summary>
         public void SetConsensusEstimateMedianDisplayInfo()
         {
@@ -521,7 +548,9 @@ namespace GreenField.Gadgets.ViewModels
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
+            }
             BusyIndicatorIsBusy = showBusyIndicator;
         }
 
@@ -538,7 +567,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (IssuerReferenceInfo.IssuerId != null)
                         {
-                            _dbInteractivity.RetrieveConsensusEstimatesValuationsData
+                            dbInteractivity.RetrieveConsensusEstimatesValuationsData
                                 (IssuerReferenceInfo.IssuerId, Convert.ToString(EntitySelectionInfo.LongName), SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
                             BusyIndicatorNotification(true, "Updating information based on selected Security");
                         }
@@ -548,7 +577,7 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 

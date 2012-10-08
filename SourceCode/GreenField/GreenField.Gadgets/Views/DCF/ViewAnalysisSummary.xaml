@@ -39,18 +39,19 @@
                         Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
                     <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
                 </Button>
+                
                 <Button Height="15" Width="15" Grid.Column="1"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnExportPDF"
                         Margin="5,0,0,0" Click="btnExportPDF_Click">
                     <Image Source="/GreenField.Gadgets;component/Images/PDF.png"/>
                 </Button>
+                
                 <Button Height="15" Width="15" Grid.Column="2"
                         BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
                         Margin="5,0,0,0" Click="btnPrint_Click">
                     <Image Source="/GreenField.Gadgets;component/Images/Print.png"/>
-
                 </Button>
 
             </Grid>
@@ -90,18 +91,16 @@
                                          CellValidating="dgDCFAnalysisSummary_CellValidating">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn Header="Assumptions" UniqueName="Assumptions" DataMemberBinding="{Binding PropertyName,Mode=TwoWay}" 
-                                                    HeaderTextAlignment="Left" TextAlignment="Left"
+                                                    HeaderTextAlignment="Left" TextAlignment="Left" TextWrapping="NoWrap"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn Header="High" UniqueName="High" DataMemberBinding="{Binding Value,Mode=TwoWay}" HeaderTextAlignment="Right" TextAlignment="Right"
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" TextWrapping="NoWrap"/>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Grid>
 
-            <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" >
-
-            </telerik:RadRichTextBox>
-
+            <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" />
+            
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

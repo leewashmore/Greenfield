@@ -1,24 +1,13 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Common;
-using GreenField.ServiceCaller;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.Gadgets.Helpers;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using GreenField.ServiceCaller.ExternalResearchDefinitions;
+using Microsoft.Practices.Prism.ViewModel;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -30,30 +19,38 @@ namespace GreenField.Gadgets.ViewModels
         #region PrivateVariables
 
         /// <summary>
-        /// MEF Singletons
+        /// Instance of IDbInteractivity
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
-        private IEventAggregator _eventAggregator;
+        private IDBInteractivity dbInteractivity;
+
+        /// <summary>
+        /// Instance of ILoggerFacade
+        /// </summary>
+        private ILoggerFacade logger;
+
+        /// <summary>
+        /// Instance of Event Aggregator
+        /// </summary>
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                _isActive = value;
-                if (_isActive)
+                isActive = value;
+                if (isActive)
                 {
                     if (SelectedSecurity != null)
                     {
-                        _dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
+                        dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
                         BusyIndicatorNotification(true, "Updating information based on selected Security");
                     }
                 }
@@ -71,19 +68,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         public ViewModelTargetPrice(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            this._dbInteractivity = param.DBInteractivity;
-            this._logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
+            this.dbInteractivity = param.DBInteractivity;
+            this.logger = param.LoggerFacade;
             this.SelectedSecurity = param.DashboardGadgetPayload.EntitySelectionData;
-            this._eventAggregator = param.EventAggregator;
+            this.eventAggregator = param.EventAggregator;
             if (SelectedSecurity != null)
             {
-                _dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
+                dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
             }
         }
 
@@ -94,16 +91,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Security from the ToolBar
         /// </summary>
-        private EntitySelectionData _selectedSecurity;
+        private EntitySelectionData selectedSecurity;
         public EntitySelectionData SelectedSecurity
         {
             get
             {
-                return _selectedSecurity;
+                return selectedSecurity;
             }
             set
             {
-                _selectedSecurity = value;
+                selectedSecurity = value;
                 this.RaisePropertyChanged(() => this.SelectedSecurity);
             }
         }
@@ -111,16 +108,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Variable of type TargetPriceCEData
         /// </summary>
-        private TargetPriceCEData _targetPriceData;
+        private TargetPriceCEData targetPriceData;
         public TargetPriceCEData TargetPriceData
         {
             get
             {
-                return _targetPriceData;
+                return targetPriceData;
             }
             set
             {
-                _targetPriceData = value;
+                targetPriceData = value;
                 this.RaisePropertyChanged(() => this.TargetPriceData);
             }
         }
@@ -129,16 +126,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Busy Indicator Status
         /// </summary>
-        private bool _busyIndicatorStatus;
+        private bool busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
             get
             {
-                return _busyIndicatorStatus;
+                return busyIndicatorStatus;
             }
             set
             {
-                _busyIndicatorStatus = value;
+                busyIndicatorStatus = value;
                 this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
             }
         }
@@ -147,13 +144,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Busy Indicator Status
         /// </summary>
-        private bool _busyIndicatorIsBusy;
+        private bool busyIndicatorIsBusy;
         public bool BusyIndicatorIsBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return busyIndicatorIsBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
+                busyIndicatorIsBusy = value;
                 RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
             }
         }
@@ -161,13 +158,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Busy Indicator Content
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
@@ -202,7 +199,7 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 //ArgumentNullException
@@ -211,20 +208,20 @@ namespace GreenField.Gadgets.ViewModels
                     SelectedSecurity = entitySelectionData;
                     if (SelectedSecurity != null && IsActive)
                     {
-                        _dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
+                        dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
                         BusyIndicatorNotification(true, "Updating information based on selected Security");
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
 
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
 
         }
@@ -241,7 +238,7 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveTargetPriceDataCallbackMethod(List<TargetPriceCEData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
@@ -250,26 +247,26 @@ namespace GreenField.Gadgets.ViewModels
                     CurrentPriceText = "Current Price";
                     if (result.Count != 0)
                     {
-                        Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                        Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                         TargetPriceData = result.FirstOrDefault();
                         CurrentPriceText = "Current Price (" + Convert.ToDateTime(TargetPriceData.CurrentPriceDate).ToShortDateString() + " )";
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion

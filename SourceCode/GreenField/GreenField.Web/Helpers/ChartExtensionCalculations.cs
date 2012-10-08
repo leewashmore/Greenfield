@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using GreenField.Web.DimensionEntitiesService;
 using GreenField.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
 
 namespace GreenField.Web.Helpers
 {
@@ -23,10 +22,10 @@ namespace GreenField.Web.Helpers
             try
             {
                 List<ChartExtensionData> result = new List<ChartExtensionData>();
-
                 if (dimensionSecurityPricingData == null)
+                {
                     throw new InvalidOperationException();
-
+                }
                 decimal objAdjustedDollarPrice = 0;
                 decimal objPreviousDailySpotFx = 0;
                 decimal objPriceReturn = 0;
@@ -35,18 +34,17 @@ namespace GreenField.Web.Helpers
                 if (dimensionSecurityPricingData.Count != 0)
                 {
                     List<GF_PRICING_BASEVIEW> dimensionPricingData = new List<GF_PRICING_BASEVIEW>(dimensionSecurityPricingData);
-
                     foreach (GF_PRICING_BASEVIEW item in dimensionPricingData)
                     {
                         if (item.DAILY_SPOT_FX == 0)
                             dimensionSecurityPricingData.Remove(item);
                     }
-
                     foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionSecurityPricingData)
                     {
                         if (pricingItem.DAILY_SPOT_FX == 0)
+                        {
                             continue;
-
+                        }
                         ChartExtensionData data = new ChartExtensionData();
                         data.Ticker = pricingItem.TICKER;
                         data.Type = "SECURITY";
@@ -62,7 +60,6 @@ namespace GreenField.Web.Helpers
                         {
                             data.AdjustedDollarPrice = objAdjustedDollarPrice / ((1 + (objReturn / 100)) * (Convert.ToDecimal(pricingItem.DAILY_SPOT_FX) / objPreviousDailySpotFx));
                         }
-
                         objAdjustedDollarPrice = data.AdjustedDollarPrice;
                         objPreviousDailySpotFx = Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
                         objReturn = ((totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN)));
@@ -93,7 +90,6 @@ namespace GreenField.Web.Helpers
                     {
                         item.PriceReturn = item.PriceReturn - 100;
                     }
-
                 }
                 return result;
             }
@@ -114,19 +110,20 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                //Arguement null Exception
+                //arguement null exception
                 if (dimensionTransactionData == null || securityExtensionData == null)
+                {
                     throw new InvalidOperationException();
-
+                }
                 if (dimensionTransactionData.Count == 0)
+                {
                     return securityExtensionData;
-
+                }
                 decimal sumBuyTransactions;
                 decimal sumSellTransactions;
                 decimal sumTotalTransaction;
                 ChartExtensionData data = new ChartExtensionData();
                 string securityLongName = securityExtensionData.Select(a => a.Ticker).First();
-
                 List<DateTime?> transactionDates = dimensionTransactionData.Select(a => a.TRADE_DATE).ToList();
                 if (transactionDates == null || transactionDates.Count == 0)
                 {
@@ -136,10 +133,11 @@ namespace GreenField.Web.Helpers
 
                 foreach (DateTime tradeDate in transactionDates)
                 {
-                    sumBuyTransactions = dimensionTransactionData.Where(a => a.TRADE_DATE == tradeDate && a.TRANSACTION_CODE.ToUpper() == "BUY").Sum(a => Convert.ToDecimal(a.VALUE_PC));
-                    sumSellTransactions = (-1) * dimensionTransactionData.Where(a => a.TRADE_DATE == tradeDate && a.TRANSACTION_CODE.ToUpper() == "SELL").Sum(a => Convert.ToDecimal(a.VALUE_PC));
+                    sumBuyTransactions = dimensionTransactionData.Where(a => a.TRADE_DATE == tradeDate && a.TRANSACTION_CODE.ToUpper() == "BUY").
+                        Sum(a => Convert.ToDecimal(a.VALUE_PC));
+                    sumSellTransactions = (-1) * dimensionTransactionData.Where(a => a.TRADE_DATE == tradeDate && a.TRANSACTION_CODE.ToUpper() == "SELL").
+                        Sum(a => Convert.ToDecimal(a.VALUE_PC));
                     sumTotalTransaction = sumBuyTransactions + sumSellTransactions;
-
                     if (securityExtensionData.Where(a => a.ToDate == tradeDate) != null )
                     {
                         if ( securityExtensionData.Where(a => a.ToDate == tradeDate).ToList().Count != 0)
@@ -168,7 +166,6 @@ namespace GreenField.Web.Helpers
                         securityExtensionData.Add(data);
                     }
                 }
-
                 return securityExtensionData;
             }
             catch (Exception ex)
@@ -188,11 +185,11 @@ namespace GreenField.Web.Helpers
         {
             List<ChartExtensionData> result = new List<ChartExtensionData>();
             ChartExtensionData data = new ChartExtensionData();
-            //Arguement null Exception
+            //arguement null exception
             if (dimensionReturnData == null)
+            {
                 throw new InvalidOperationException();
-
-
+            }
             foreach (GF_PERF_DAILY_ATTRIBUTION item in dimensionReturnData)
             {
                 data = new ChartExtensionData();
@@ -217,9 +214,7 @@ namespace GreenField.Web.Helpers
                 data.OneY = Convert.ToDecimal(item.BM1_RC_TWR_1Y) * 100;
                 result.Add(data);
             }
-
             return result;
         }
     }
-
 }

@@ -19,36 +19,47 @@ using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code-Behind for DCFSummary
+    /// </summary>
     public partial class ViewDCFSummary : ViewBaseUserControl
     {
         #region PropertyDeclaration
 
-        private ViewModelDCF _dataContextSource;
+        /// <summary>
+        /// Instance of View-Model
+        /// </summary>
+        private ViewModelDCF dataContextSource;
         public ViewModelDCF DataContextSource
         {
-            get { return _dataContextSource; }
-            set { _dataContextSource = value; }
+            get { return dataContextSource; }
+            set { dataContextSource = value; }
         }
 
-        private string _minorityInvestment = "";
+        /// <summary>
+        /// FV Minority Investment
+        /// </summary>
+        private string minorityInvestment = "";
         public string MinorityInvestment
         {
-            get { return _minorityInvestment; }
-            set { _minorityInvestment = value; }
+            get { return minorityInvestment; }
+            set { minorityInvestment = value; }
         }
 
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextSource != null)
+                {
                     DataContextSource.IsActive = value;
+                }
             }
         }
 
@@ -95,7 +106,8 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                                new RadExportOptions() { ElementName = ExportTypes.DCF_Summary, Element = this.dgDCFSummary, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                new RadExportOptions() { ElementName = ExportTypes.DCF_Summary, Element = this.dgDCFSummary, 
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                         };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.DCF_Summary);
                     childExportOptions.Show();

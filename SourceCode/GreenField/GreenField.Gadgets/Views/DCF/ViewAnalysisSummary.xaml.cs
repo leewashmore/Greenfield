@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
 using GreenField.Common;
-using GreenField.ServiceCaller;
-using Telerik.Windows.Documents.Model;
-using Telerik.Windows.Controls;
+using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
+using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller;
 using GreenField.UserSession;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Views
 {
@@ -30,16 +24,16 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of Type ViewModelAnalysisSummary- ViewModel
         /// </summary>
-        private ViewModelDCF _dataContextSource;
+        private ViewModelDCF dataContextSource;
         public ViewModelDCF DataContextSource
         {
             get
             {
-                return _dataContextSource;
+                return dataContextSource;
             }
             set
             {
-                _dataContextSource = value;
+                dataContextSource = value;
             }
         }
 
@@ -48,15 +42,17 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextSource != null)
+                {
                     DataContextSource.IsActive = value;
+                }
             }
         }
 
@@ -73,7 +69,6 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextSource = dataContextSource;
-
         }
 
         #endregion
@@ -104,7 +99,8 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                                new RadExportOptions() { ElementName = ExportTypes.Analysis_Summary, Element = this.dgDCFAnalysisSummary, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                new RadExportOptions() { ElementName = ExportTypes.Analysis_Summary, Element = this.dgDCFAnalysisSummary, 
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                         };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.Analysis_Summary);
                     childExportOptions.Show();
@@ -230,8 +226,6 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        #endregion
-
         /// <summary>
         /// Event that occurs after the Editing is completed
         /// </summary>
@@ -261,7 +255,9 @@ namespace GreenField.Gadgets.Views
                 {
                     var data = e.Row.DataContext as DCFDisplayData;
                     if (data == null)
+                    {
                         return;
+                    }
                     if ((e.Row.DataContext as DCFDisplayData).PropertyName == "Stock Specific Discount")
                     {
                         e.Row.Background = new SolidColorBrush(Colors.Yellow);
@@ -269,6 +265,10 @@ namespace GreenField.Gadgets.Views
                 }
             }
         }
+
+        #endregion
+       
+        #region PDF Export
 
         /// <summary>
         /// create RadDocument from the DataGrid
@@ -292,5 +292,7 @@ namespace GreenField.Gadgets.Views
                 return null;
             }
         }
+        
+        #endregion
     }
 }

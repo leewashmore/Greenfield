@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using GreenField.DAL;
-using DocumentFormat.OpenXml.Spreadsheet;
-using System.IO;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml;
 using System.Drawing;
-using X14 = DocumentFormat.OpenXml.Office2010.Excel;
-using GreenField.Web.DataContracts;
+using System.IO;
+using System.Linq;
 using System.Text;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using GreenField.DAL;
+using GreenField.Web.DataContracts;
+using X14 = DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace GreenField.Web.ExcelModel
 {
@@ -21,70 +20,89 @@ namespace GreenField.Web.ExcelModel
     {
         #region PropertyDeclaration
 
-        private static ExcelModelData _modelData;
+        /// <summary>
+        /// Object of type ExcelModelData
+        /// </summary>
+        private static ExcelModelData modelData;
         public static ExcelModelData ModelData
         {
-            get { return _modelData; }
-            set { _modelData = value; }
+            get { return modelData; }
+            set { modelData = value; }
         }
 
-        private static List<DataPointsModelUploadData> _modelUploadDataPoints;
+        /// <summary>
+        /// DataPoints of ExcelModel- ModelUpload sheet
+        /// </summary>
+        private static List<DataPointsModelUploadData> modelUploadDataPoints;
         public static List<DataPointsModelUploadData> ModelUploadDataPoints
         {
             get
             {
-                return _modelUploadDataPoints;
+                return modelUploadDataPoints;
             }
             set
             {
-                _modelUploadDataPoints = value;
+                modelUploadDataPoints = value;
             }
         }
 
-        private static ModelReferenceDataPoints _modelReferenceData;
+        /// <summary>
+        /// object of type ModelReferenceDataPoints-ModelReferenceSheet
+        /// </summary>
+        private static ModelReferenceDataPoints modelReferenceData;
         public static ModelReferenceDataPoints ModelReferenceData
         {
-            get { return _modelReferenceData; }
-            set { _modelReferenceData = value; }
+            get { return modelReferenceData; }
+            set { modelReferenceData = value; }
         }
 
-        private static List<string> _currencies;
+        /// <summary>
+        /// List of Currencies
+        /// </summary>
+        private static List<string> currencies;
         public static List<string> Currencies
         {
-            get { return _currencies; }
-            set { _currencies = value; }
+            get { return currencies; }
+            set { currencies = value; }
         }
 
-        private static List<string> _commodities;
+        /// <summary>
+        /// List of Commodities
+        /// </summary>
+        private static List<string> commodities;
         public static List<string> Commodities
         {
             get
             {
-                if (_commodities == null)
+                if (commodities == null)
                 {
-                    _commodities = new List<string>();
+                    commodities = new List<string>();
                 }
-                return _commodities;
+                return commodities;
             }
-            set { _commodities = value; }
+            set { commodities = value; }
         }
 
-        private static DoubleValue _maxWidth;
+        /// <summary>
+        /// MaxWidth of a Column
+        /// </summary>
+        private static DoubleValue maxWidth;
         public static DoubleValue MaxWidth
         {
-            get { return _maxWidth; }
-            set { _maxWidth = value; }
+            get { return maxWidth; }
+            set { maxWidth = value; }
         }
 
 
         #endregion
 
+        #region Public Methods
         /// <summary>
         /// Method to Generate Byte[] for the Excel File
         /// </summary>
-        /// <param name="financialData"></param>
-        /// <param name="consensusData"></param>
-        /// <returns></returns>
+        /// <param name="financialData">FinancialStatement Data</param>
+        /// <param name="consensusData">Consensus Data</param>
+        /// <returns>Byte Stream of Excel Sheet</returns>
         public static byte[] GenerateExcel(List<FinancialStatementDataModels> financialData, List<ModelConsensusEstimatesData> consensusData, string currencyReuters, string currencyConsensus, ExcelModelData modelData)
         {
             try
@@ -95,17 +113,17 @@ namespace GreenField.Web.ExcelModel
                 ModelUploadDataPoints = modelData.ModelUploadDataPoints;
                 Commodities = modelData.Commodities;
                 Currencies = modelData.Currencies;
-                // Create a spreadsheet document by supplying the filepath.
-                // By default, AutoSave = true, Editable = true, and Type = xlsx.
+                // create a spreadsheet document by supplying the filepath.
+                // by default, AutoSave = true, Editable = true, and Type = xlsx.
                 using (SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.
                     Create(fileName, SpreadsheetDocumentType.Workbook))
                 {
                     UInt32 sheetId;
-                    // Add a WorkbookPart to the document.
+                    // add a WorkbookPart to the document.
                     WorkbookPart workbookpart = spreadsheetDocument.AddWorkbookPart();
                     workbookpart.Workbook = new Workbook();
 
-                    // Add a WorksheetPart to the WorkbookPart.
+                    // add a WorksheetPart to the WorkbookPart.
                     WorksheetPart worksheetPart = workbookpart.AddNewPart<WorksheetPart>("rId3");
                     worksheetPart.Worksheet = new Worksheet();
 
@@ -132,8 +150,8 @@ namespace GreenField.Web.ExcelModel
                     #endregion
 
                     #region ConsensusData
-                    //Generating 2nd WorkSheet
-                    // Add a WorksheetPart to the WorkbookPart.
+                    //generating 2nd WorkSheet
+                    // add a WorksheetPart to the WorkbookPart.
                     WorksheetPart worksheetPartConsensus = workbookpart.AddNewPart<WorksheetPart>("rId2");
                     worksheetPartConsensus.Worksheet = new Worksheet();
                     worksheetPartConsensus.Worksheet.Save();
@@ -151,7 +169,7 @@ namespace GreenField.Web.ExcelModel
 
                     #region ModelUpload
 
-                    // Add a WorksheetPart to the WorkbookPart.
+                    // add a WorksheetPart to the WorkbookPart.
                     WorksheetPart worksheetPartModelUpload = workbookpart.AddNewPart<WorksheetPart>("rId1");
                     worksheetPartModelUpload.Worksheet = new Worksheet();
                     worksheetPartModelUpload.Worksheet.Save();
@@ -169,7 +187,7 @@ namespace GreenField.Web.ExcelModel
 
                     #region Model Reference
 
-                    // Add a WorksheetPart to the WorkbookPart.
+                    // add a WorksheetPart to the WorkbookPart.
                     WorksheetPart worksheetPartModelReference = workbookpart.AddNewPart<WorksheetPart>("rId0");
                     worksheetPartModelReference.Worksheet = new Worksheet();
                     worksheetPartModelReference.Worksheet.Save();
@@ -186,28 +204,100 @@ namespace GreenField.Web.ExcelModel
 
                     workbookpart.Workbook.Save();
 
-                    // Close the document.
+                    // close the document.
                     spreadsheetDocument.Close();
                     return GetBytsForFile(fileName);
                 }
             }
             catch (Exception ex)
             {
-                //ExceptionTrace.LogException(ex);
+                GreenField.Web.Helpers.ExceptionTrace.LogException(ex);
                 return null;
             }
         }
+        #endregion
+
+        #region ConsensusEstimates Sheet
+        /// <summary>
+        /// Generate Headers of Consensus Sheet
+        /// </summary>
+        /// <param name="worksheetPart">Worksheetpart- Worksheet Consensus</param>
+        /// <param name="consensusData">Consensus Data from DataBase</param>
+        private static void GenerateConsensusHeaders(WorksheetPart worksheetPart, List<ModelConsensusEstimatesData> consensusData, string currency)
+        {
+            var worksheet = worksheetPart.Worksheet;
+            SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
+            var row = new Row { RowIndex = 1 };
+            SheetFormatProperties sheetFormatProperties1;
+            sheetData.Append(row);
+            Columns sheetColumns = new Columns();
+            Column mergeColumns;
+            string maxLengthStr;
+
+            if (consensusData.Count != 0)
+            {
+                var maxLength = consensusData.Max(s => s.ESTIMATE_DESC.Length);
+                maxLengthStr = consensusData.FirstOrDefault(s => s.ESTIMATE_DESC.Length == maxLength).ESTIMATE_DESC;
+            }
+            else
+            {
+                maxLengthStr = "Data Description";
+            }
+
+            DoubleValue maxWidth = GetColumnWidth(maxLengthStr);
+            Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = maxWidth };
+            sheetColumns.Append(firstColumn);
+
+            int firstYear = consensusData.Select(a => a.PERIOD_YEAR).OrderBy(a => a).FirstOrDefault();
+            int lastYear = consensusData.Select(a => a.PERIOD_YEAR).OrderByDescending(a => a).FirstOrDefault();
+            int numberOfYears = lastYear - firstYear;
+            var cell = new Cell();
+            cell = CreateHeaderCell("Data Id");
+            row.InsertAt(cell, 0);
+            cell = new Cell();
+            cell = CreateHeaderCell("Data in " + Convert.ToString(currency) + " (Millions)");
+            row.InsertAt(cell, 1);
+
+            for (int i = 0; i <= numberOfYears * 5; i = i + 5)
+            {
+                cell = new Cell();
+                cell = CreateHeaderCell(firstYear + " Q1");
+                row.InsertAt(cell, i + 2);
+
+                cell = new Cell();
+                cell = CreateHeaderCell(firstYear + " Q2");
+                row.InsertAt(cell, i + 3);
+
+                cell = new Cell();
+                cell = CreateHeaderCell(firstYear + " Q3");
+                row.InsertAt(cell, i + 4);
+
+                cell = new Cell();
+                cell = CreateHeaderCell(firstYear + " Q4");
+                row.InsertAt(cell, i + 5);
+
+                cell = new Cell();
+                cell = CreateHeaderCell(firstYear + " A");
+                row.InsertAt(cell, i + 6);
+                firstYear++;
+                mergeColumns = new Column() { Min = Convert.ToUInt32(i + 3), Max = Convert.ToUInt32(i + 6), CustomWidth = true, OutlineLevel = 1, Hidden = false };
+                sheetColumns.Append(mergeColumns);
+            }
+            sheetFormatProperties1 = new SheetFormatProperties() { DefaultRowHeight = 15D, OutlineLevelColumn = 1, DyDescent = 0.25D };
+            worksheet.Append(sheetFormatProperties1);
+            worksheet.Append(sheetColumns);
+            worksheet.Append(sheetData);
+        }
 
         /// <summary>
-        /// 
+        /// Generate Data in ConsensusSheet
         /// </summary>
-        /// <param name="worksheetPart"></param>
-        /// <param name="consensusData"></param>
+        /// <param name="worksheetPart">Worksheetpart-WroksheetConsensus</param>
+        /// <param name="consensusData">ConsensusData from Database</param>
         private static void InsertConsensusDataInWorksheet(WorksheetPart worksheetPart, List<ModelConsensusEstimatesData> consensusData)
         {
             var worksheet = worksheetPart.Worksheet;
             var sheetData = worksheet.GetFirstChild<SheetData>();
-            //SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
             var row = new Row { RowIndex = 2 };
             sheetData.Append(row);
             int rowIndex = 2;
@@ -236,34 +326,28 @@ namespace GreenField.Web.ExcelModel
                             Select(a => a.AMOUNT).FirstOrDefault());
                         row.InsertAt(cell, i + 2);
 
-
                         cell = new Cell();
                         cell = CreateNumberCell(consensusData.Where(a => a.PERIOD_YEAR == (firstYear) && a.ESTIMATE_DESC == item && a.PERIOD_TYPE.Trim() == "Q2")
                             .Select(a => a.AMOUNT).FirstOrDefault());
                         row.InsertAt(cell, i + 3);
-
 
                         cell = new Cell();
                         cell = CreateNumberCell(consensusData.Where(a => a.PERIOD_YEAR == (firstYear) && a.ESTIMATE_DESC == item && a.PERIOD_TYPE.Trim() == "Q3")
                             .Select(a => a.AMOUNT).FirstOrDefault());
                         row.InsertAt(cell, i + 4);
 
-
                         cell = new Cell();
                         cell = CreateNumberCell(consensusData.Where(a => a.PERIOD_YEAR == (firstYear) && a.ESTIMATE_DESC == item && a.PERIOD_TYPE.Trim() == "Q4")
                             .Select(a => a.AMOUNT).FirstOrDefault());
                         row.InsertAt(cell, i + 5);
-
 
                         cell = new Cell();
                         cell = CreateNumberCell(consensusData.Where(a => a.PERIOD_YEAR == (firstYear) && a.ESTIMATE_DESC == item && a.PERIOD_TYPE.Trim() == "A")
                             .Select(a => a.AMOUNT).FirstOrDefault());
                         row.InsertAt(cell, i + 6);
 
-
                         firstYear++;
                     }
-
                     ++rowIndex;
                     row = new Row { RowIndex = Convert.ToUInt32(rowIndex) };
                     sheetData.Append(row);
@@ -271,11 +355,15 @@ namespace GreenField.Web.ExcelModel
             }
         }
 
+        #endregion
+
+        #region Reuters Reported
+
         /// <summary>
         /// Insert Financial Values in WorkSheet
         /// </summary>
-        /// <param name="worksheetPart"></param>
-        /// <param name="financialData"></param>
+        /// <param name="worksheetPart">WorkSheetpart</param>
+        /// <param name="financialData">FinancialStatementData</param>
         private static void InsertValuesInWorksheet(WorksheetPart worksheetPart, List<FinancialStatementDataModels> financialData)
         {
             var worksheet = worksheetPart.Worksheet;
@@ -339,10 +427,10 @@ namespace GreenField.Web.ExcelModel
         }
 
         /// <summary>
-        /// 
+        /// Generate Headers in Reuters Sheet
         /// </summary>
-        /// <param name="worksheetPart"></param>
-        /// <param name="financialData"></param>
+        /// <param name="worksheetPart">WorkSheetPart</param>
+        /// <param name="financialData">FinancialStatementData</param>
         private static void GenerateReutersHeaders(WorksheetPart worksheetPart, List<FinancialStatementDataModels> financialData, string currency)
         {
             var worksheet = worksheetPart.Worksheet;
@@ -417,12 +505,14 @@ namespace GreenField.Web.ExcelModel
             worksheet.Append(sheetData);
         }
 
+        #endregion
+
         #region ExcelModel- Model Upload
 
         /// <summary>
         /// Generate Headers for Model Upload Sheet
         /// </summary>
-        /// <param name="worksheetPart"></param>
+        /// <param name="worksheetPart">WorkSheetpart</param>
         private static void GenerateModelUploadHeaders(WorksheetPart worksheetPart)
         {
             var worksheet = worksheetPart.Worksheet;
@@ -713,7 +803,6 @@ namespace GreenField.Web.ExcelModel
         {
             var worksheet = worksheetPart.Worksheet;
             var sheetData = worksheet.GetFirstChild<SheetData>();
-
             var row = new Row { RowIndex = 7 };
 
             UInt32 rowIndex = 7;
@@ -756,12 +845,18 @@ namespace GreenField.Web.ExcelModel
 
             #region DataValidations
 
-            DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "C5" } };
-            DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "D5" } };
-            DataValidation dataValidation3 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "E5" } };
-            DataValidation dataValidation4 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "F5" } };
-            DataValidation dataValidation5 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "G5" } };
-            DataValidation dataValidation6 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "H5" } };
+            DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "C5" } };
+            DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "D5" } };
+            DataValidation dataValidation3 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "E5" } };
+            DataValidation dataValidation4 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "F5" } };
+            DataValidation dataValidation5 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "G5" } };
+            DataValidation dataValidation6 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "H5" } };
             Formula1 formula11 = new Formula1();
             formula11.Text = commodityList.ToString();
             Formula1 formula12 = new Formula1();
@@ -806,12 +901,18 @@ namespace GreenField.Web.ExcelModel
             overideValues.Append(formulaText);
             overideValues.Append('"');
 
-            DataValidation dataValidation7 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "C4" } };
-            DataValidation dataValidation8 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "D4" } };
-            DataValidation dataValidation9 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "E4" } };
-            DataValidation dataValidation10 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "F4" } };
-            DataValidation dataValidation11 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "G4" } };
-            DataValidation dataValidation12 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "H4" } };
+            DataValidation dataValidation7 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "C4" } };
+            DataValidation dataValidation8 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "D4" } };
+            DataValidation dataValidation9 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "E4" } };
+            DataValidation dataValidation10 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "F4" } };
+            DataValidation dataValidation11 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "G4" } };
+            DataValidation dataValidation12 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, 
+                ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "H4" } };
 
             Formula1 formula11 = new Formula1();
             formula11.Text = overideValues.ToString();
@@ -845,84 +946,6 @@ namespace GreenField.Web.ExcelModel
 
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="worksheetPart"></param>
-        /// <param name="consensusData"></param>
-        private static void GenerateConsensusHeaders(WorksheetPart worksheetPart, List<ModelConsensusEstimatesData> consensusData, string currency)
-        {
-            var worksheet = worksheetPart.Worksheet;
-            //var sheetData = worksheet.GetFirstChild<SheetData>();
-            SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
-            var row = new Row { RowIndex = 1 };
-            SheetFormatProperties sheetFormatProperties1;
-            sheetData.Append(row);
-
-            Columns sheetColumns = new Columns();
-            Column mergeColumns;
-            string maxLengthStr;
-
-            if (consensusData.Count != 0)
-            {
-                var maxLength = consensusData.Max(s => s.ESTIMATE_DESC.Length);
-                maxLengthStr = consensusData.FirstOrDefault(s => s.ESTIMATE_DESC.Length == maxLength).ESTIMATE_DESC;
-            }
-            else
-            {
-                maxLengthStr = "Data Description";
-            }
-
-            DoubleValue maxWidth = GetColumnWidth(maxLengthStr);
-
-            Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = maxWidth };
-
-            sheetColumns.Append(firstColumn);
-
-            int firstYear = consensusData.Select(a => a.PERIOD_YEAR).OrderBy(a => a).FirstOrDefault();
-            int lastYear = consensusData.Select(a => a.PERIOD_YEAR).OrderByDescending(a => a).FirstOrDefault();
-            int numberOfYears = lastYear - firstYear;
-
-            var cell = new Cell();
-
-            cell = CreateHeaderCell("Data Id");
-            row.InsertAt(cell, 0);
-
-            cell = new Cell();
-            cell = CreateHeaderCell("Data in " + Convert.ToString(currency) + " (Millions)");
-            row.InsertAt(cell, 1);
-
-            for (int i = 0; i <= numberOfYears * 5; i = i + 5)
-            {
-                cell = new Cell();
-                cell = CreateHeaderCell(firstYear + " Q1");
-                row.InsertAt(cell, i + 2);
-
-                cell = new Cell();
-                cell = CreateHeaderCell(firstYear + " Q2");
-                row.InsertAt(cell, i + 3);
-
-                cell = new Cell();
-                cell = CreateHeaderCell(firstYear + " Q3");
-                row.InsertAt(cell, i + 4);
-
-                cell = new Cell();
-                cell = CreateHeaderCell(firstYear + " Q4");
-                row.InsertAt(cell, i + 5);
-
-                cell = new Cell();
-                cell = CreateHeaderCell(firstYear + " A");
-                row.InsertAt(cell, i + 6);
-                firstYear++;
-                mergeColumns = new Column() { Min = Convert.ToUInt32(i + 3), Max = Convert.ToUInt32(i + 6), CustomWidth = true, OutlineLevel = 1, Hidden = false };
-                sheetColumns.Append(mergeColumns);
-            }
-            sheetFormatProperties1 = new SheetFormatProperties() { DefaultRowHeight = 15D, OutlineLevelColumn = 1, DyDescent = 0.25D };
-            worksheet.Append(sheetFormatProperties1);
-            worksheet.Append(sheetColumns);
-            worksheet.Append(sheetData);
-        }
-
         #region ExcelModel- ModelReference
 
         /// <summary>
@@ -936,8 +959,6 @@ namespace GreenField.Web.ExcelModel
             worksheet.AddNamespaceDeclaration("r", "http://schemas.openxmlformats.org/officeDocument/2006/relationships");
             worksheet.AddNamespaceDeclaration("mc", "http://schemas.openxmlformats.org/markup-compatibility/2006");
             worksheet.AddNamespaceDeclaration("x14ac", "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac");
-            //SheetDimension sheetDimension1 = new SheetDimension() { Reference = "A1" };
-
             SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
             SheetFormatProperties sheetFormatProperties1;
             Columns sheetColumns = new Columns();
@@ -1020,17 +1041,17 @@ namespace GreenField.Web.ExcelModel
             worksheet.Append(sheetColumns);
             worksheet.Append(sheetData);
             worksheet.Append(dataValidations1);
-
         }
 
         #endregion
 
         #region Helper Methods
+
         /// <summary>
-        /// 
+        /// Create Text Cell
         /// </summary>
-        /// <param name="cellValue"></param>
-        /// <returns></returns>
+        /// <param name="cellValue">CellValue</param>
+        /// <returns>Cell</returns>
         private static Cell CreateTextCell(string cellValue)
         {
             Cell cell = new Cell();
@@ -1040,10 +1061,10 @@ namespace GreenField.Web.ExcelModel
         }
 
         /// <summary>
-        /// 
+        /// Creating Number Cell
         /// </summary>
-        /// <param name="cellValue"></param>
-        /// <returns></returns>
+        /// <param name="cellValue">CellValue</param>
+        /// <returns>Cell</returns>
         private static Cell CreateNumberCell(Decimal? cellValue)
         {
             Cell cell = new Cell();
@@ -1080,7 +1101,6 @@ namespace GreenField.Web.ExcelModel
             double fTruncWidth = 0.0f;
 
             System.Drawing.Font drawfont = new System.Drawing.Font("Calibri", 11);
-            // I just need a Graphics object. Any reasonable bitmap size will do.
             Graphics g = Graphics.FromImage(new Bitmap(200, 200));
             fWidthOfZero = (double)g.MeasureString("0", drawfont).Width;
             fSimpleWidth = (double)g.MeasureString(sILT, drawfont).Width;
@@ -1100,13 +1120,12 @@ namespace GreenField.Web.ExcelModel
             fTruncWidth = Math.Truncate((sILT.ToCharArray().Count() * fMaxDigitWidth + 5.0) / fMaxDigitWidth * 256.0) / 256.0;
 
             return fTruncWidth;
-
         }
 
         /// <summary>
         /// StyleSheet for the excel File
         /// </summary>
-        /// <returns></returns>
+        /// <returns>StyleSheet</returns>
         private static Stylesheet CreateStylesheet()
         {
             Stylesheet stylesheet1 = new Stylesheet() { MCAttributes = new MarkupCompatibilityAttributes() { Ignorable = "x14ac" } };
@@ -1214,10 +1233,14 @@ namespace GreenField.Web.ExcelModel
             cellStyleFormats1.Append(cellFormat1);
 
             CellFormats cellFormats1 = new CellFormats() { Count = (UInt32Value)4U };
-            CellFormat cellFormat2 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U };
-            CellFormat cellFormat3 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)2U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
-            CellFormat cellFormat4 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)1U, FillId = (UInt32Value)3U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
-            CellFormat cellFormat5 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)4U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
+            CellFormat cellFormat2 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, 
+                BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U };
+            CellFormat cellFormat3 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)2U, 
+                BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
+            CellFormat cellFormat4 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)1U, FillId = (UInt32Value)3U, 
+                BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
+            CellFormat cellFormat5 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)4U, 
+                BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
 
             cellFormats1.Append(cellFormat2);
             cellFormats1.Append(cellFormat3);
@@ -1254,9 +1277,9 @@ namespace GreenField.Web.ExcelModel
         }
 
         /// <summary>
-        /// 
+        /// Generate Filename
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Name of File</returns>
         private static string GetFileName()
         {
             string fileName = Path.GetTempPath() + Guid.NewGuid() + "_Model.xlsx";
@@ -1266,8 +1289,8 @@ namespace GreenField.Web.ExcelModel
         /// <summary>
         /// Generate byte-Array from Excel
         /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
+        /// <param name="filePath">Path of the File</param>
+        /// <returns>Byte Stream of the File</returns>
         private static byte[] GetBytsForFile(string filePath)
         {
             try
@@ -1283,7 +1306,7 @@ namespace GreenField.Web.ExcelModel
             }
             catch (Exception ex)
             {
-                //ExceptionTrace.LogException(ex);
+                GreenField.Web.Helpers.ExceptionTrace.LogException(ex);
                 return null;
             }
         }

@@ -31,18 +31,17 @@ namespace GreenField.Web.Helpers
                 decimal? sumDirtyValuePC = 0;
                 decimal? sumModelWeight = 0;
                 decimal? sumBenchmarkWeight = 0;
-
                 List<AssetAllocationData> result = new List<AssetAllocationData>();
 
                 if ((dimensionPortfolioHoldingsData == null) || (portfolioSelectionData == null))
+                {
                     throw new ArgumentNullException();
-
+                }
                 List<string> countryNames = dimensionPortfolioHoldingsData.Select(a => a.COUNTRYNAME).Distinct().ToList();
-
-                //If COUNTRY values are not present in DataBase
                 if (countryNames.Count == 0)
+                {
                     throw new InvalidOperationException();
-
+                }
                 foreach (string item in countryNames)
                 {
                     sumDirtyValuePC = dimensionPortfolioHoldingsData.Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC));
@@ -50,25 +49,28 @@ namespace GreenField.Web.Helpers
 
                     //if sum of DirtyValuePC or ModelWeight is zero then return empty set
                     if ((sumDirtyValuePC == 0) || (sumBenchmarkWeight == 0) || (sumModelWeight == 0))
+                    {
                         return result;
-
+                    }
                     modelWeight = dimensionPortfolioHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).
+                        Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
                     portfolioWeight = dimensionPortfolioHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).
+                        Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
                     modelWeightCash = modelWeightCash + dimensionPortfolioHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).
+                        Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
                     portfolioWeightCash = portfolioWeightCash + dimensionPortfolioHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
-
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).
+                        Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
                     benchmarkWeight = dimensionBenchmarkHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).
+                        Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
                     benchmarkWeightCash = benchmarkWeightCash + dimensionBenchmarkHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
-
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).
+                        Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
                     activePosition = modelWeight - benchmarkWeight;
-
-                    //Adding Values which are not CASH
                     AssetAllocationData data = new AssetAllocationData();
                     data.BenchmarkWeight = benchmarkWeight;
                     data.Country = item;
@@ -78,9 +80,6 @@ namespace GreenField.Web.Helpers
                     data.ActivePosition = activePosition;
                     result.Add(data);
                 }
-
-                //Including CASH values
-
                 if (dimensionPortfolioHoldingsData.Any(a => a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH"))
                 {
                     AssetAllocationData dataCash = new AssetAllocationData();
@@ -92,7 +91,6 @@ namespace GreenField.Web.Helpers
                     dataCash.ActivePosition = modelWeightCash - benchmarkWeightCash;
                     result.Add(dataCash);
                 }
-
                 return result.OrderBy(a => a.Country).ToList();
             }
             catch (Exception ex)
@@ -122,27 +120,26 @@ namespace GreenField.Web.Helpers
                 decimal? sumDirtyValuePC = 0;
                 decimal? sumModelWeight = 0;
                 decimal? sumBenchmarkWeight = 0;
-
                 List<AssetAllocationData> result = new List<AssetAllocationData>();
 
                 if ((dimensionPortfolioLTHoldingsData == null) || (portfolioSelectionData == null))
+                {
                     throw new ArgumentNullException();
-
+                }
                 List<string> countryNames = dimensionPortfolioLTHoldingsData.Select(a => a.COUNTRYNAME).Distinct().ToList();
-
-                //If COUNTRY values are not present in DataBase
                 if (countryNames.Count == 0)
+                {
                     throw new InvalidOperationException();
-
+                }
                 foreach (string item in countryNames)
                 {
                     sumDirtyValuePC = dimensionPortfolioLTHoldingsData.Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC));
                     sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
-
                     //if sum of DirtyValuePC or ModelWeight is zero then return empty set
                     if ((sumDirtyValuePC == 0) || (sumBenchmarkWeight == 0) || (sumModelWeight == 0))
+                    {
                         return result;
-
+                    }
                     modelWeight = dimensionPortfolioLTHoldingsData.
                         Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
                     portfolioWeight = dimensionPortfolioLTHoldingsData.
@@ -156,10 +153,9 @@ namespace GreenField.Web.Helpers
                         Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
                     benchmarkWeightCash = benchmarkWeightCash + dimensionBenchmarkHoldingsData.
                         Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
-
                     activePosition = modelWeight - benchmarkWeight;
 
-                    //Adding Values which are not CASH
+                    //adding values which are not cash
                     AssetAllocationData data = new AssetAllocationData();
                     data.BenchmarkWeight = benchmarkWeight;
                     data.Country = item;
@@ -170,7 +166,7 @@ namespace GreenField.Web.Helpers
                     result.Add(data);
                 }
 
-                //Inclusing CASH values
+                //inclusing cash values
                 if (dimensionPortfolioLTHoldingsData.Any(a => a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH"))
                 {
                     AssetAllocationData dataCash = new AssetAllocationData();
@@ -189,9 +185,6 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
                 return null;
             }
-        }
-
-
-
+        }        
     }
 }

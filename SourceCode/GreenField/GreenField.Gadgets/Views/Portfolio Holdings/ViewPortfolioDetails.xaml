@@ -40,33 +40,35 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <CheckBox Content="Include Benchmark" Grid.Column="1" ToolTipService.ToolTip="Include Benchmark Securities" Style="{StaticResource CheckBoxStyle}"
-                      Height="15" VerticalContentAlignment="Center" IsChecked="{Binding GetBenchmarkData,Mode=TwoWay}" Checked="CheckBox_Checked" />
+            <CheckBox Content="Include Benchmark" Grid.Column="1" ToolTipService.ToolTip="Include Benchmark Securities"
+                      Style="{StaticResource CheckBoxStyle}"
+                      Height="15" VerticalContentAlignment="Center" IsChecked="{Binding GetBenchmarkData,Mode=TwoWay}" 
+                      Checked="CheckBox_Checked" />
             <Button Height="15" Width="15" Grid.Column="2"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                         Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
-                <Image Source="../Images/ExportExcel.png" />
+                <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" />
             </Button>
             <Button Height="15" Width="15" Grid.Column="3"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnExportPDF"
                         Margin="5,0,0,0" Click="btnExportPDF_Click">
-                <Image Source="../Images/PDF.png" />
+                <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
             </Button>
             <Button Height="15" Width="15" Grid.Column="4"
                         BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
                         Margin="5,0,0,0" Click="btnPrint_Click">
-                <Image Source="../Images/Print.png" />
+                <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
             </Button>
-
         </Grid>
 
         <!-- Data Grid -->
         <Grid Grid.Row="1">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
+                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+                                          Style="{StaticResource BusyIndicatorStyle}"
                                           DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <telerik:RadGridView x:Name="dgPortfolioDetails" 
                                          ShowGroupPanel="True" 
@@ -95,7 +97,7 @@
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          ElementExporting="dgPortfolioDetails_ElementExporting"
                                          ScrollMode="Deferred"
-                                         AlternationCount="2" DataLoading="dgPortfolioDetails_DataLoading"
+                                         AlternationCount="2" 
                                          MinColumnWidth="70" DataLoaded="dgPortfolioDetails_DataLoaded"
                                          EnableRowVirtualization="True"
                                          EnableColumnVirtualization="True"
@@ -112,10 +114,6 @@
                             <telerik:GridViewDataColumn Header="Security Type" UniqueName="Security Type" DataMemberBinding="{Binding SecurityType}" HeaderTextAlignment="Left"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Left"/>
-                            <!--<telerik:GridViewDataColumn Header="Type" DataMemberBinding="{Binding SecurityType}" IsGroupable="False" 
-                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>-->
                             <telerik:GridViewDataColumn Header="Region Code" UniqueName="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"
                                                         IsGroupable="True" IsFilterable="True" TextAlignment="Left"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
@@ -141,15 +139,6 @@
                                                         HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <!--<telerik:GridViewDataColumn.AggregateFunctions>
-                                    <local:BenchmarkWeightFunction SourceField="BenchmarkWeight" Caption="Benchmark Weight:"
-                                                                   ResultFormatString="{}{0:n4}" />
-                                    <local:BenchmarkWeightFunction SourceField="PortfolioWeight" Caption="Portfolio Weight:"
-                                                                   ResultFormatString="{}{0:n4}" />
-                                    <local:BenchmarkWeightFunction SourceField="AshEmmModelWeight" Caption="Model Weight:"
-                                                                   ResultFormatString="{}{0:n4}" />
-                                </telerik:GridViewDataColumn.AggregateFunctions>-->
-
                             <telerik:GridViewDataColumn Header="Model %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
                                                         DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
@@ -189,9 +178,7 @@
         </Grid>
 
         <Grid Grid.Row="3">
-            <telerik:RadRichTextBox x:Name="RichTextBox" Width="0">
-                <!--For Printing the grid-->
-            </telerik:RadRichTextBox>
+            <telerik:RadRichTextBox x:Name="RichTextBox" Width="0"/>           
         </Grid>
 
         <Grid Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left">
@@ -200,4 +187,3 @@
         </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>
-

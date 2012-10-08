@@ -58,15 +58,17 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextEstimates != null)
-                    DataContextEstimates.IsActive = _isActive;
+                {
+                    DataContextEstimates.IsActive = isActive;
+                }
             }
         }
         #endregion
@@ -75,11 +77,11 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Instance of ViewModelEstimates
         /// </summary>
-        private ViewModelEstimates _dataContextEstimates;
+        private ViewModelEstimates dataContextEstimates;
         public ViewModelEstimates DataContextEstimates
         {
-            get { return _dataContextEstimates; }
-            set { _dataContextEstimates = value; }
+            get { return dataContextEstimates; }
+            set { dataContextEstimates = value; }
         }
 
        
@@ -99,7 +101,6 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextEstimates.Logger, methodNamespace);
             try
             {
-
                 PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
                 {
                     PeriodColumnNamespace = typeof(ViewModelEstimates).FullName,
@@ -124,7 +125,6 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextEstimates.Logger, methodNamespace);
             try
             {
-
                 PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
                 {
                     PeriodColumnNamespace = typeof(ViewModelEstimates).FullName,
@@ -153,6 +153,7 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Export
+
         /// <summary>
         /// Excel exporting EventHandler
         /// </summary>
@@ -181,8 +182,7 @@ namespace GreenField.Gadgets.Views
                 RadExportOptionsInfo.Add(new RadExportOptions()
                 {
                     ElementName = elementName,
-                    Element = this.dgConsensusEstimate
-                    ,
+                    Element = this.dgConsensusEstimate,
                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
                 });
 
@@ -195,7 +195,7 @@ namespace GreenField.Gadgets.Views
                 Logging.LogException(this.DataContextEstimates.Logger, ex);
             }
         }
-        #endregion
 
+        #endregion
     }
 }

@@ -60,6 +60,9 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Service Fault Resource manager
+        /// </summary>
         public ResourceManager ServiceFaultResourceManager
         {
             get
@@ -182,8 +185,9 @@ namespace GreenField.Web.Services
             try
             {
                 if (entityIdentifiers == null || frequencyDuration == null)
+                {
                     return new List<PricingReferenceData>();
-
+                }
                 decimal objAdjustedDollarPrice = 0;
                 decimal objPreviousDailySpotFx = 0;
                 decimal objIndexedPrice = 0;
