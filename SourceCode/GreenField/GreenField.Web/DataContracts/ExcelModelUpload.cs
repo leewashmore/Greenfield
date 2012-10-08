@@ -26,6 +26,9 @@ namespace GreenField.Web.DataContracts
     /// </summary>
     public class ExcelModelUploadSheet
     {
+        /// <summary>
+        /// COA type
+        /// </summary>
         private string _COAType;
         public string COAType
         {
@@ -33,6 +36,9 @@ namespace GreenField.Web.DataContracts
             set { _COAType = value; }
         }
 
+        /// <summary>
+        /// Data Description
+        /// </summary>
         private string  _dataDescription;
         public string  DataDescription
         {
@@ -40,6 +46,9 @@ namespace GreenField.Web.DataContracts
             set { _dataDescription = value; }
         }
 
+        /// <summary>
+        /// Year One Data
+        /// </summary>
         private object _yearOne;
         public object YearOne
         {
@@ -47,6 +56,9 @@ namespace GreenField.Web.DataContracts
             set { _yearOne = value; }
         }
 
+        /// <summary>
+        /// Year Two Data
+        /// </summary>
         private object _yearTwo;
         public object YearTwo
         {
@@ -54,6 +66,9 @@ namespace GreenField.Web.DataContracts
             set { _yearTwo = value; }
         }
 
+        /// <summary>
+        /// Year Three Data
+        /// </summary>
         private object _yearThree;
         public object YearThree
         {
@@ -61,6 +76,9 @@ namespace GreenField.Web.DataContracts
             set { _yearThree = value; }
         }
 
+        /// <summary>
+        /// Year Four Data
+        /// </summary>
         private object _yearFour;
         public object YearFour
         {
@@ -68,6 +86,9 @@ namespace GreenField.Web.DataContracts
             set { _yearFour = value; }
         }
 
+        /// <summary>
+        /// Year Five Data
+        /// </summary>
         private object _yearFive;
         public object YearFive
         {
@@ -75,6 +96,9 @@ namespace GreenField.Web.DataContracts
             set { _yearFive = value; }
         }
 
+        /// <summary>
+        /// Year Six Data
+        /// </summary>
         private object _yearSix;
         public object YearSix
         {
@@ -85,6 +109,9 @@ namespace GreenField.Web.DataContracts
 
     public class ExcelModelDataUpload
     {
+        /// <summary>
+        /// COA
+        /// </summary>
         private string _COA;
         public string COA
         {
@@ -92,6 +119,9 @@ namespace GreenField.Web.DataContracts
             set { _COA = value; }
         }
 
+        /// <summary>
+        /// Description
+        /// </summary>
         private string _descritption;
         public string Description
         {
@@ -99,6 +129,9 @@ namespace GreenField.Web.DataContracts
             set { _descritption = value; }
         }
 
+        /// <summary>
+        /// PeriodYear Value
+        /// </summary>
         private string year;
         public string Year
         {
@@ -106,6 +139,9 @@ namespace GreenField.Web.DataContracts
             set { year = value; }
         }
 
+        /// <summary>
+        /// Amount Value
+        /// </summary>
         private object _amount;
         public object Amount
         {
@@ -113,6 +149,5 @@ namespace GreenField.Web.DataContracts
             set { _amount = value; }
         }
         
-
     }
 }

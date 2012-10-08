@@ -49,7 +49,7 @@ namespace GreenField.ServiceCaller
         /// <param name="fundSelectionData">Selected Portfolio</param>
         /// <param name="effectiveDate">selected Date</param>
         /// <param name="callback">List of AssetAllocationData</param>
-        void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, bool lookThru, bool excludeCash, 
+        void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, bool lookThru, bool excludeCash,
             Action<List<AssetAllocationData>> callback);
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace GreenField.ServiceCaller
         /// <param name="filterType"></param>
         /// <param name="filterValue"></param>
         /// <param name="callback"></param>
-        void RetrieveRiskIndexExposuresData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, 
+        void RetrieveRiskIndexExposuresData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled,
             string filterType, string filterValue, Action<List<RiskIndexExposuresData>> callback);
 
         void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback);
@@ -238,7 +238,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveConsensusEstimatesMedianData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateMedian>> callback);
 
-        void RetrieveConsensusEstimatesValuationsData(string issuerId,string longName, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimatesValuations>> callback);
+        void RetrieveConsensusEstimatesValuationsData(string issuerId, string longName, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimatesValuations>> callback);
 
 
         #endregion
@@ -253,7 +253,7 @@ namespace GreenField.ServiceCaller
         /// <param name="currency"></param>
         /// <param name="yearRange"></param>
         /// <param name="callback"></param>
-        void RetrieveFinstatDetailData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, 
+        void RetrieveFinstatDetailData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType,
                                                                                         String currency, Int32 yearRange, Action<List<FinstatDetailData>> callback);
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace GreenField.ServiceCaller
         /// <param name="periodType"></param>
         /// <param name="currency"></param>
         /// <param name="callback"></param>
-        void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, 
+        void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency,
                                                                                             Action<List<ConsensusEstimateDetail>> callback);
 
         void RetrieveRatioComparisonData(String contextSecurityXML, Action<List<RatioComparisonData>> callback);
@@ -404,8 +404,6 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-        void RetrieveCompanyData(Action<List<String>> callback);
-
         #region Custom Screening Tool
 
         void RetrieveCustomControlsList(string parameter, Action<List<string>> callback);
@@ -416,10 +414,10 @@ namespace GreenField.ServiceCaller
 
         void RetrieveCurrentFinancialsTabDataPoints(Action<List<CustomSelectionData>> callback);
 
-        void RetrieveFairValueTabDataPoints(Action<List<CustomSelectionData>> callback);        
+        void RetrieveFairValueTabDataPoints(Action<List<CustomSelectionData>> callback);
 
         void RetrieveSecurityData(PortfolioSelectionData portfolio, EntitySelectionData benchmark, String region, String country, String sector, String industry,
-                                        List<CSTUserPreferenceInfo> userPreference,Action<List<CustomScreeningSecurityData>> callback);
+                                        List<CSTUserPreferenceInfo> userPreference, Action<List<CustomScreeningSecurityData>> callback);
 
         void SaveUserDataPointsPreference(string userPreference, string username, Action<Boolean?> callback);
 
@@ -430,23 +428,27 @@ namespace GreenField.ServiceCaller
         void RetrieveFairValueTabSource(Action<List<string>> callback);
         #endregion
 
-        #region Documents
+        #region ExcelModel
 
-        void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback);        
+        void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback);
+
+        void UploadModelExcelSheet(byte[] fileStream, string userName, Action<string> callback);
+
         #endregion
 
-        #region FAIR VALUE 
+        #region FAIR VALUE
         void RetrieveFairValueCompostionSummary(EntitySelectionData entitySelectionData, Action<List<FairValueCompositionSummaryData>> callback);
         void RetrieveFairValueCompostionSummaryData(EntitySelectionData entitySelectionData, Action<List<FairValueCompositionSummaryData>> callback);
 
         void RetrieveFairValueDataWithNewUpside(EntitySelectionData entitySelectionData, FairValueCompositionSummaryData editedFairValueData
-            ,Action<FairValueCompositionSummaryData> callback);
+            , Action<FairValueCompositionSummaryData> callback);
 
         void SaveUpdatedFairValueData(EntitySelectionData entitySelectionData, List<FairValueCompositionSummaryData> editedFairValueDataList
             , Action<List<FairValueCompositionSummaryData>> callback);
 
         #endregion
 
-        void UploadModelExcelSheet(byte[] fileStream, string userName, Action<string> callback);
+        void RetrieveCompanyData(Action<List<String>> callback);
+
     }
 }
