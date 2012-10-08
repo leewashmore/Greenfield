@@ -675,6 +675,14 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private string BLOOMBERG_DESCRIPTIONField;
         
+        private string CHG_PCT_1YRField;
+        
+        private string CHG_PCT_MTDField;
+        
+        private string CHG_PCT_QTDField;
+        
+        private string CHG_PCT_YTDField;
+        
         private System.Nullable<decimal> CLOSING_PRICEField;
         
         private string CUSIPField;
@@ -965,6 +973,58 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((object.ReferenceEquals(this.BLOOMBERG_DESCRIPTIONField, value) != true)) {
                     this.BLOOMBERG_DESCRIPTIONField = value;
                     this.RaisePropertyChanged("BLOOMBERG_DESCRIPTION");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CHG_PCT_1YR {
+            get {
+                return this.CHG_PCT_1YRField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CHG_PCT_1YRField, value) != true)) {
+                    this.CHG_PCT_1YRField = value;
+                    this.RaisePropertyChanged("CHG_PCT_1YR");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CHG_PCT_MTD {
+            get {
+                return this.CHG_PCT_MTDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CHG_PCT_MTDField, value) != true)) {
+                    this.CHG_PCT_MTDField = value;
+                    this.RaisePropertyChanged("CHG_PCT_MTD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CHG_PCT_QTD {
+            get {
+                return this.CHG_PCT_QTDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CHG_PCT_QTDField, value) != true)) {
+                    this.CHG_PCT_QTDField = value;
+                    this.RaisePropertyChanged("CHG_PCT_QTD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CHG_PCT_YTD {
+            get {
+                return this.CHG_PCT_YTDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CHG_PCT_YTDField, value) != true)) {
+                    this.CHG_PCT_YTDField = value;
+                    this.RaisePropertyChanged("CHG_PCT_YTD");
                 }
             }
         }

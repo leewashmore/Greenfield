@@ -24,6 +24,10 @@
       <xs:element minOccurs="0" name="BARRA_BETA" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="BETA" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BLOOMBERG_DESCRIPTION" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CHG_PCT_1YR" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CHG_PCT_MTD" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CHG_PCT_QTD" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CHG_PCT_YTD" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CLOSING_PRICE" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="CUSIP" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FIFTYTWO_WEEK_HIGH" nillable="true" type="xs:decimal" />

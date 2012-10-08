@@ -23,8 +23,12 @@ namespace GreenField.Gadgets.Helpers
             {
                 if (value == null)
                     return null;
-                DateTime dateTime =new DateTime(((DateTime)value).Ticks, DateTimeKind.Utc);
+                DateTime dateTime = new DateTime(((DateTime)value).Ticks, DateTimeKind.Utc);
 
+                if ((DateTime.Now - DateTime.UtcNow) != TimeZoneInfo.Local.BaseUtcOffset)
+                {
+                    return dateTime.Add(DateTime.Now - DateTime.UtcNow);
+                }
                 return dateTime.Add(TimeZoneInfo.Local.BaseUtcOffset);
             }
             return value;

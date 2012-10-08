@@ -92,7 +92,7 @@
         <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
         <Property Name="EQUITYKEYS_SECIK" Type="Edm.Int32" Nullable="true" />
         <Property Name="EQUITYKEYS_FROMDATE" Type="Edm.DateTime" Nullable="true" />
-        <Property Name="EQKEY13_PX_VOLUME" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY13_PX_VOLUME" Type="Edm.Decimal" Nullable="true" Precision="20" Scale="6" />
         <Property Name="EQKEY14_CHG_PCT_1D" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
         <Property Name="EQKEY15_D2D_TOT_RET_GROSS_DVDS" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
         <Property Name="EQKEY16_EQY_SH_OUT" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />

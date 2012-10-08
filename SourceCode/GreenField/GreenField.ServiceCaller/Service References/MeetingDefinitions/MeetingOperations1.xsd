@@ -75,6 +75,7 @@
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="FileID" type="xs:long" />
+          <xs:element minOccurs="0" name="IssuerName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MeetingAttachedFileInfoes" nillable="true" type="tns:ArrayOfMeetingAttachedFileInfo" />
           <xs:element minOccurs="0" name="MetaTags" nillable="true" type="xs:string" />

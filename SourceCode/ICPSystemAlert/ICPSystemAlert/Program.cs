@@ -581,7 +581,7 @@ namespace ICPSystemAlert
                         String issuerNames = String.Join(";", issuerNamesCollection.ToArray());
                         String securityNames = String.Join(";", presentationFinalizeInfo.Select(record => record.SecurityName).ToList().Distinct().ToArray());
                         String securityTickers = String.Join(";", presentationFinalizeInfo.Select(record => record.SecurityTicker).ToList().Distinct().ToArray());
-                        
+
                         Int32? updateFileMasterResult = _entity.SetICPMeetingAttachedFileInfo("System", meetingId, fileName
                             , issuerNames
                             , securityNames
@@ -1784,3 +1784,6 @@ namespace ICPSystemAlert
         public Int64 MeetingIdentifier { get; set; }
     }
 }
+
+
+

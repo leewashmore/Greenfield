@@ -108,7 +108,7 @@
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioTarget" nillable="true" type="xs:anyType" />
       <xs:element minOccurs="0" name="PortfolioTargetInCountry" nillable="true" type="xs:anyType" />
-      <xs:element minOccurs="0" name="SecurityId" type="xs:int" />
+      <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Target" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>

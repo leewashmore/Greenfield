@@ -466,7 +466,7 @@
             <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetPresentationFinalizeDetails" ReturnType="Collection(ICPModel.PresentationFinalizeDetails)">
-          <Parameter Name="ScheduleMinutes" Mode="In" Type="Int32" />
+            <Parameter Name="ScheduleMinutes" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SetICPresentationAttachedFileInfo" ReturnType="Collection(Int32)">
             <Parameter Name="UserName" Mode="In" Type="String" />
@@ -497,7 +497,7 @@
             <Parameter Name="DeletionFlag" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GetPresentationVotingDeadlineDetails" ReturnType="Collection(ICPModel.PresentationVotingDeadlineDetails)">
-          <Parameter Name="ScheduleMinutes" Mode="In" Type="Int32" />
+            <Parameter Name="ScheduleMinutes" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SetICPMeetingPresentationStatus" ReturnType="Collection(Int32)">
             <Parameter Name="UserName" Mode="In" Type="String" />
@@ -537,7 +537,7 @@
             <Parameter Name="MeetingId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GetPresentationDeadlineDetails" ReturnType="Collection(ICPModel.PresentationDeadlineDetails)">
-          <Parameter Name="ScheduleMinutes" Mode="In" Type="Int32" />
+            <Parameter Name="ScheduleMinutes" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="RetrieveICPresentationOverviewData" ReturnType="Collection(ICPModel.ICPresentationOverviewData)" />
           <FunctionImport Name="RetrieveICPresentationOverviewDataForId" ReturnType="Collection(ICPModel.ICPresentationOverviewData)">

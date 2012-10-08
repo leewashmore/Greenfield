@@ -755,6 +755,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private long FileIDField;
         
+        private string IssuerNameField;
+        
         private string LocationField;
         
         private System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo> MeetingAttachedFileInfoesField;
@@ -836,6 +838,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((this.FileIDField.Equals(value) != true)) {
                     this.FileIDField = value;
                     this.RaisePropertyChanged("FileID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IssuerName {
+            get {
+                return this.IssuerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuerNameField, value) != true)) {
+                    this.IssuerNameField = value;
+                    this.RaisePropertyChanged("IssuerName");
                 }
             }
         }

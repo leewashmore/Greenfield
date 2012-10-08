@@ -300,7 +300,7 @@ namespace GreenField.Gadgets.ViewModels
         private void SubmitCommandMethod(object param)
         {
             if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING
-                && SelectedPresentationOverviewInfo.MeetingDateTime < DateTime.UtcNow)
+                && SelectedPresentationOverviewInfo.MeetingDateTime > DateTime.UtcNow)
             {
                 Prompt.ShowDialog("Please ensure that all changes have been made before submitting meeting presentation for voting", "", MessageBoxButton.OKCancel, (result) =>
                 {

@@ -271,11 +271,29 @@ namespace GreenField.Gadgets.ViewModels
             DateTime presentationDateTime = Convert.ToDateTime(SelectedPresentationDateTime);
             config.PresentationDay = GetDateTimeFromDayTime(presentationDateTime.DayOfWeek.ToString(), presentationDateTime, false).ToUniversalTime().DayOfWeek.ToString();
             config.PresentationTime = GetDateTimeFromDayTime(presentationDateTime.DayOfWeek.ToString(), presentationDateTime, false).ToUniversalTime();
+            if ((config.PresentationTime - presentationDateTime) != (DateTime.UtcNow - DateTime.Now))
+            {
+                config.PresentationTime = (config.PresentationTime > presentationDateTime)
+                    ? presentationDateTime.Add(DateTime.UtcNow - DateTime.Now)
+                    : presentationDateTime.Add(DateTime.Now - DateTime.UtcNow);
+            }
             config.PresentationTimeZone = "UTC";//SelectedTimeZone;
             config.PresentationDeadlineDay = GetDateTimeFromDayTime(PresentationDeadline.DayOfWeek.ToString(), PresentationDeadline, false).ToUniversalTime().DayOfWeek.ToString();
             config.PresentationDeadlineTime = GetDateTimeFromDayTime(PresentationDeadline.DayOfWeek.ToString(), PresentationDeadline, false).ToUniversalTime();
+            if ((config.PresentationDeadlineTime - PresentationDeadline) != (DateTime.UtcNow - DateTime.Now))
+            {
+                config.PresentationDeadlineTime = (config.PresentationDeadlineTime > PresentationDeadline)
+                    ? PresentationDeadline.Add(DateTime.UtcNow - DateTime.Now)
+                    : PresentationDeadline.Add(DateTime.Now - DateTime.UtcNow);
+            }
             config.PreMeetingVotingDeadlineDay = GetDateTimeFromDayTime(PreMeetingVotingDeadline.DayOfWeek.ToString(), PreMeetingVotingDeadline, false).ToUniversalTime().DayOfWeek.ToString();
             config.PreMeetingVotingDeadlineTime = GetDateTimeFromDayTime(PreMeetingVotingDeadline.DayOfWeek.ToString(), PreMeetingVotingDeadline, false).ToUniversalTime();
+            if ((config.PreMeetingVotingDeadlineTime - PreMeetingVotingDeadline) != (DateTime.UtcNow - DateTime.Now))
+            {
+                config.PreMeetingVotingDeadlineTime = (config.PreMeetingVotingDeadlineTime > PreMeetingVotingDeadline)
+                    ? PreMeetingVotingDeadline.Add(DateTime.UtcNow - DateTime.Now)
+                    : PreMeetingVotingDeadline.Add(DateTime.Now - DateTime.UtcNow);
+            }
             config.CreatedBy = "System";
             config.CreatedOn = DateTime.UtcNow;
             config.ModifiedBy = "System";
