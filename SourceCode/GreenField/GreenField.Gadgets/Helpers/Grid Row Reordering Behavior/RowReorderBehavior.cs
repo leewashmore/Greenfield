@@ -20,6 +20,7 @@ using System.Collections;
 using System.Globalization;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.DataContracts;
 using Telerik.Windows.Controls.TreeView;
 
 namespace GreenField.Gadgets.Helpers
@@ -518,12 +519,12 @@ namespace GreenField.Gadgets.Helpers
             {
                 if (gridView != null)
                 {
-                    if ((gridView.Items[gridView.Items.Count - 1] as MarketSnapshotPerformanceData).MarketSnapshotPreferenceInfo.EntityName == null)
-                    {
-                        ContentControl destinationCue = new ContentControl();
-                        destinationCue.Content = "No Content in Group";
-                        e.Options.DestinationCue = destinationCue;
-                    }
+                    //if ((gridView.Items[gridView.Items.Count - 1] as MarketSnapshotPerformanceData).MarketSnapshotPreferenceInfo.EntityName == null)
+                    //{
+                    //    ContentControl destinationCue = new ContentControl();
+                    //    destinationCue.Content = "No Content in Group";
+                    //    e.Options.DestinationCue = destinationCue;
+                    //}
                     this.UpdateDragCueContent(cue, gridView.Items[gridView.Items.Count - 1], "Move after: ");
                     cue.IsDropPossible = true;
                 }

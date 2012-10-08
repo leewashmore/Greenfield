@@ -696,7 +696,8 @@
                                 <helpers:RowReorderBehavior x:Name="ReorderBehavior"
                                                     DragCueItemTemplate="{StaticResource DraggedItemTemplate}"
                                                     DragCueStyle="{StaticResource DragCueStyle}"
-                                                    DragCueTooltipContentTemplate="{StaticResource DropItemTemplate}"/>
+                                                    DragCueTooltipContentTemplate="{StaticResource DropItemTemplate}"
+                                                    Reordered="ReorderBehavior_Reordered" Reordering="ReorderBehavior_Reordering"/>
                             </i:Interaction.Behaviors>
 
                         </telerik:RadGridView>
