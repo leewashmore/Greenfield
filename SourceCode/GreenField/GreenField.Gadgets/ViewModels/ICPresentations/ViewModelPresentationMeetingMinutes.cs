@@ -410,6 +410,10 @@ namespace GreenField.Gadgets.ViewModels
                         BusyIndicatorNotification(true, "Retrieving application user info...");
                         _dbInteractivity.GetAllUsers(GetAllUsersCallbackMethod);
                     }
+                    else
+                    {
+                        BusyIndicatorNotification();
+                    }
                 }
                 else
                 {
