@@ -8,16 +8,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.ComponentModel;
 using System.Windows.Shapes;
+using System.Windows.Data;
+using Telerik.Windows.Data;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.GridView;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller.ModelFXDefinitions;
-using Telerik.Windows.Data;
-using System.ComponentModel;
-using Telerik.Windows.Controls;
-using System.Windows.Data;
 using GreenField.Common;
-using Telerik.Windows.Controls.GridView;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller;
 
@@ -29,11 +29,11 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// private list
         /// </summary>
-        private List<MacroDatabaseKeyAnnualReportData> _macroInfo;
+        private List<MacroDatabaseKeyAnnualReportData> macroInfo;
         /// <summary>
         /// stores the current year value
         /// </summary>
-        private int _currentYear = DateTime.Now.Year;
+        private int currentYear = DateTime.Now.Year;
         #endregion
 
         #region constructor
@@ -48,7 +48,7 @@ namespace GreenField.Gadgets.Views
             this.DataContextMacroDBKeyAnnualReport = dataContextSource;
             dataContextSource.RetrieveMacroDataCompletedEvent += new Common.RetrieveMacroCountrySummaryDataCompleteEventHandler(dataContextSource_RetrieveMacroDataCompletedEvent);
             dataContextSource.macroDBKeyAnnualReportCountryDataLoadedEvent +=
-           new DataRetrievalProgressIndicatorEventHandler(dataContextSource_macroDBKeyAnnualReportCountryDataLoadedEvent);
+            new DataRetrievalProgressIndicatorEventHandler(dataContextSource_macroDBKeyAnnualReportCountryDataLoadedEvent);
             SetGridColumnHeaders();
         }
         #endregion
@@ -75,16 +75,16 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         public void dataContextSource_RetrieveMacroDataCompletedEvent(Common.RetrieveMacroCountrySummaryDataCompleteEventArgs e)
         {
-
-
-            _macroInfo = e.MacroInfo;
+            macroInfo = e.MacroInfo;
             this.dgMacroDBKeyReport.ItemsSource = ((ViewModelMacroDBKeyAnnualReport)this.DataContext).FiveYearMacroCountryData;
             this.dgMacroDBKeyReport.GroupDescriptors.Clear();
             this.dgMacroDBKeyReport.SortDescriptors.Clear();
-            _currentYear = ((ViewModelMacroDBKeyAnnualReport)this.DataContext).CurrentYear;
-            if (_currentYear >= 2024 || _currentYear <= 1989)
+            currentYear = ((ViewModelMacroDBKeyAnnualReport)this.DataContext).CurrentYear;
+            if (currentYear >= 2024 || currentYear <= 1989)
+            {
                 return;
-            if (_macroInfo != null)
+            }
+            if (macroInfo != null)
             {
                 GroupDescriptor descriptor = new GroupDescriptor();
                 descriptor.Member = "CategoryName";               
@@ -94,14 +94,14 @@ namespace GreenField.Gadgets.Views
                 sdescriptor.SortDirection = ListSortDirection.Ascending;
                 this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);
                 this.dgMacroDBKeyReport.AutoGenerateColumns = false;
-                dgMacroDBKeyReport.Columns[2].Header = (_currentYear - 3).ToString();
-                dgMacroDBKeyReport.Columns[3].Header = (_currentYear - 2).ToString();
-                dgMacroDBKeyReport.Columns[4].Header = (_currentYear - 1).ToString();
-                dgMacroDBKeyReport.Columns[5].Header = (_currentYear).ToString();
-                dgMacroDBKeyReport.Columns[6].Header = (_currentYear + 1).ToString();
-                dgMacroDBKeyReport.Columns[7].Header = (_currentYear + 2).ToString();
-                int currentYear = DateTime.Today.Year;
-                dgMacroDBKeyReport.Columns[9].Header = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
+                dgMacroDBKeyReport.Columns[2].Header = (currentYear - 3).ToString();
+                dgMacroDBKeyReport.Columns[3].Header = (currentYear - 2).ToString();
+                dgMacroDBKeyReport.Columns[4].Header = (currentYear - 1).ToString();
+                dgMacroDBKeyReport.Columns[5].Header = (currentYear).ToString();
+                dgMacroDBKeyReport.Columns[6].Header = (currentYear + 1).ToString();
+                dgMacroDBKeyReport.Columns[7].Header = (currentYear + 2).ToString();
+                int currentYearLocal = DateTime.Today.Year;
+                dgMacroDBKeyReport.Columns[9].Header = "Five Year Average" + "(" + (currentYearLocal - 4).ToString() + "-" + (currentYearLocal).ToString() + ")";
             }
         }
         #endregion
@@ -110,31 +110,32 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Data context Property
         /// </summary>
-        private ViewModelMacroDBKeyAnnualReport _dataContextMacroDBKeyAnnualReport;
+        private ViewModelMacroDBKeyAnnualReport dataContextMacroDBKeyAnnualReport;
         public ViewModelMacroDBKeyAnnualReport DataContextMacroDBKeyAnnualReport
         {
-            get { return _dataContextMacroDBKeyAnnualReport; }
-            set { _dataContextMacroDBKeyAnnualReport = value; }
+            get { return dataContextMacroDBKeyAnnualReport; }
+            set { dataContextMacroDBKeyAnnualReport = value; }
         }
 
         /// <summary>
         /// True if gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (this.DataContext != null)
-                    ((ViewModelMacroDBKeyAnnualReport)this.DataContext).IsActive = _isActive;
+                {
+                    ((ViewModelMacroDBKeyAnnualReport)this.DataContext).IsActive = isActive;
+                }
             }
         }
         #endregion
 
         #region Class Methods
-
         /// <summary>
         /// Event Handler for LeftNavigation Click
         /// </summary>
@@ -143,7 +144,9 @@ namespace GreenField.Gadgets.Views
         public void LeftButton_Click(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)
+            {
                 (this.DataContext as ViewModelMacroDBKeyAnnualReport).MoveLeftCommandMethod(null);
+            }
         }
 
         /// <summary>
@@ -154,7 +157,9 @@ namespace GreenField.Gadgets.Views
         public void RightButton_Click(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)
+            {
                 (this.DataContext as ViewModelMacroDBKeyAnnualReport).MoveRightCommandMethod(null);
+            }
         }
 
         /// <summary>
@@ -170,9 +175,7 @@ namespace GreenField.Gadgets.Views
             dgMacroDBKeyReport.Columns[6].Header = (currentYear + 1).ToString();
             dgMacroDBKeyReport.Columns[7].Header = (currentYear + 2).ToString();
             dgMacroDBKeyReport.Columns[9].Header = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
-
-        }
-      
+        }      
 
         /// <summary>
         /// Method to catch Click Event of Export to Excel
@@ -192,7 +195,6 @@ namespace GreenField.Gadgets.Views
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.MODELS_FX_MACRO_ECONOMICS_MACRO_DATABASE_KEY_ANNUAL_DATA_REPORT);
                     childExportOptions.Show();
                 }
-
             }
             catch (Exception ex)
             {
@@ -204,7 +206,6 @@ namespace GreenField.Gadgets.Views
         {
             RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 8 });
         }
-
         #endregion
 
         #region RemoveEvents
@@ -218,7 +219,6 @@ namespace GreenField.Gadgets.Views
             this.DataContextMacroDBKeyAnnualReport = null;
             this.DataContext = null;
         }
-
         #endregion
     }
 }

@@ -9,11 +9,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
 using System.IO;
 using GreenField.Common;
 using GreenField.ServiceCaller;
+using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
@@ -29,30 +29,33 @@ namespace GreenField.Gadgets.Views
         {
             public const string UNREALIZED_GAINLOSS_CHART = "Unrealized Gain/Loss Chart";
             public const string UNREALIZED_GAINLOSS_DATA = "Unrealized Gain/Loss Data";
-        }
-
-        private ViewModelUnrealizedGainLoss _dataContextUnrealizedGainLossChart;
+        }        
 
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextUnrealizedGainLossChart != null)
-                    DataContextUnrealizedGainLossChart.IsActive = _isActive;
+                {
+                    DataContextUnrealizedGainLossChart.IsActive = isActive;
+                }
             }
         }
 
-
+        /// <summary>
+        /// Data Context property of the Veiw Model
+        /// </summary>
+        private ViewModelUnrealizedGainLoss dataContextUnrealizedGainLossChart;
         public ViewModelUnrealizedGainLoss DataContextUnrealizedGainLossChart
         {
-            get { return _dataContextUnrealizedGainLossChart; }
-            set { _dataContextUnrealizedGainLossChart = value; }
+            get { return dataContextUnrealizedGainLossChart; }
+            set { dataContextUnrealizedGainLossChart = value; }
         }
 
         /// <summary>
@@ -82,8 +85,7 @@ namespace GreenField.Gadgets.Views
             this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
             this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisY.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
-            this.chUnrealizedGainLoss.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;
-            //this.dgUnrealizedGainLoss. = this.Resources["GridViewHeaderRow"] as Style;
+            this.chUnrealizedGainLoss.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;           
         }
 
         /// <summary>
@@ -113,11 +115,14 @@ namespace GreenField.Gadgets.Views
         private void btnFlip_Click(object sender, RoutedEventArgs e)
         {
             if (this.grdRadGridView.Visibility == Visibility.Visible)
+            {
                 Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
+            }
             else
+            {
                 Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
+            }
         }
-
 
         /// <summary>
         /// Method to catch Click Event of Export to Excel
@@ -131,9 +136,8 @@ namespace GreenField.Gadgets.Views
                 if (this.grdRadChart.Visibility == Visibility.Visible)
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {
-                  
-                    new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_CHART, Element = this.chUnrealizedGainLoss, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
+                {                  
+                    new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_CHART, Element = this.chUnrealizedGainLoss, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                   
                     
                 };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_UNREALIZED_GAIN_LOSS);
@@ -151,7 +155,6 @@ namespace GreenField.Gadgets.Views
                         childExportOptions.Show();
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -216,14 +219,20 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-
+        /// <summary>
+        /// Element Exporting for Export to excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">event object</param>
         private void dgUnrealizedGainLoss_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e);
         }
 
         #region RemoveEvents
-
+        /// <summary>
+        /// Disposing events
+        /// </summary>
         public override void Dispose()
         {
             this.DataContextUnrealizedGainLossChart.unrealizedGainLossDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_unrealizedGainLossDataLoadedEvent);
@@ -232,10 +241,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        private void dgUnrealizedGainLoss_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            //GroupedGridRowLoadedHandler.Implement(e);
-        }
     }
 }

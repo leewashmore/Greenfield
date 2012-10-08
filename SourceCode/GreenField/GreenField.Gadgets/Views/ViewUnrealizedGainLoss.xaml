@@ -140,8 +140,6 @@
         </Style>
 
         <!--Chart Axis Label Styles End-->
-
-
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
@@ -164,24 +162,30 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"/>
+                    
                     <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
+                    
                     <telerik:RadButton x:Name="btnFlip" Grid.Column="2" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
                                        Margin="5,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
                         <Image Source="../Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
+                    
                     <telerik:RadButton x:Name="btnExportExcel" Grid.Column="3" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
                                        Margin="5,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
                         <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
+                    
                     <Rectangle Margin="5,0,0,0" Grid.Column="4" Width="1" Stroke="Gray" Opacity="0.2"/>
+                    
                     <telerik:RadButton x:Name="btnZoomIn" Grid.Column="5"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
                                        Margin="5,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In">
                         <Image Source="../Images/zoom_in.png" Width="16" Height="16" Margin="3" />
                     </telerik:RadButton>
+                    
                     <telerik:RadButton x:Name="btnZoomOut" Grid.Column="6"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
                                        Margin="5,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out">
                         <Image Source="../Images/zoom_out.png" Width="16" Height="16" Margin="3" />
-                    </telerik:RadButton>
+                    </telerik:RadButton>                    
                 </Grid>
             </telerik:RadExpander.Header>
             <telerik:RadExpander.Content>
@@ -197,6 +201,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Time" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                        
                         <telerik:RadComboBox x:Name="cmbTime" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
                                      HorizontalAlignment="Stretch" 
                                      ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}"/>

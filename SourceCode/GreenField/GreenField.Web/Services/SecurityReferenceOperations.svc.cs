@@ -730,8 +730,9 @@ namespace GreenField.Web.Services
                 List<UnrealizedGainLossData> result = new List<UnrealizedGainLossData>();
 
                 if (entityIdentifier == null || entityIdentifier.ShortName == null || endDateTime < startDateTime)
+                {
                     return result;
-
+                }
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<DimensionEntitiesService.GF_PRICING_BASEVIEW> resultSet
                     = entity.GF_PRICING_BASEVIEW
@@ -739,11 +740,11 @@ namespace GreenField.Web.Services
                         .OrderByDescending(record => record.FROMDATE)
                         .ToList();
 
-
                 int noOfRows = resultSet.Count();
-
                 if (noOfRows < 90)
+                {
                     return result;
+                }
 
                 //Calculating the Adjusted price for a security and storing it in the list.
                 List<UnrealizedGainLossData> adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(resultSet);
@@ -777,9 +778,7 @@ namespace GreenField.Web.Services
 
                 //Calculating the date points based on Data Frequency
                 List<DateTime> allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
-
                 result = UnrealizedGainLossCalculations.RetrieveUnrealizedGainLossData(timeFilteredUnrealizedGainLossResult, allEndDates);
-
                 return result;
             }
             catch (Exception ex)

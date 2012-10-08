@@ -1,20 +1,20 @@
 ﻿using System;
-using Microsoft.Practices.Prism.ViewModel;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.Common;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 using System.Linq;
 using System.Collections.Generic;
-using GreenField.Gadgets.Helpers;
-using GreenField.Common.Helper;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Practices.Prism.ViewModel;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
 using Telerik.Windows.Controls.Charting;
 using Telerik.Windows.Controls;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
+using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.Common.Helper;
 using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
@@ -25,72 +25,66 @@ namespace GreenField.Gadgets.ViewModels
     public class ViewModelUnrealizedGainLoss : NotificationObject
     {
         #region PrivateMembers
-
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
-
+        private IEventAggregator eventAggregator;
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
-
+        private IDBInteractivity dbInteractivity;
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
-
+        private ILoggerFacade logger;
         /// <summary>
         /// private member object of the EntitySelectionData class for storing Entity Selection Data
         /// </summary>
-        private EntitySelectionData _entitySelectionData;        
-
+        private EntitySelectionData entitySelectionData; 
         #endregion
 
         #region Constructor
-
         /// <summary>
         /// Constructor of the class that initializes various objects
         /// </summary>
         /// <param name="param">MEF Eventaggrigator instance</param>
         public ViewModelUnrealizedGainLoss(DashboardGadgetParam param)
         {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-
-            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
-            if (_entitySelectionData != null)
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
+            entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
+            if (entitySelectionData != null)
             {
                 if (null != unrealizedGainLossDataLoadedEvent)
+                {
                     unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                RetrieveUnrealizedGainLossData(_entitySelectionData);
+                }
+                RetrieveUnrealizedGainLossData(entitySelectionData);
             }
         }
         #endregion
 
         #region Properties
         #region UI Fields
-
         /// <summary>
         /// Collection binded to the Comparison chart - consists of unrealized gain loss,closing price and Closing date for the primary entity
         /// </summary>
-        private RangeObservableCollection<UnrealizedGainLossData> _plottedSeries;
+        private RangeObservableCollection<UnrealizedGainLossData> plottedSeries;
         public RangeObservableCollection<UnrealizedGainLossData> PlottedSeries
         {
             get
             {
-                if (_plottedSeries == null)
-                    _plottedSeries = new RangeObservableCollection<UnrealizedGainLossData>();
-                return _plottedSeries;
+                if (plottedSeries == null)
+                    plottedSeries = new RangeObservableCollection<UnrealizedGainLossData>();
+                return plottedSeries;
             }
             set
             {
-                if (_plottedSeries != value)
+                if (plottedSeries != value)
                 {
-                    _plottedSeries = value;
+                    plottedSeries = value;
                     RaisePropertyChanged(() => this.PlottedSeries);
                 }
             }
@@ -99,22 +93,21 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Property that is binded to the security selected by the user
         /// </summary>
-        private string _selectedSecurityName = "";
+        private string selectedSecurityName = "";
         public string PlottedSecurityName
         {
             get
             {
-                return _selectedSecurityName;
+                return selectedSecurityName;
             }
             set
             {
-                _selectedSecurityName = value;
+                selectedSecurityName = value;
                 this.RaisePropertyChanged(() => this.PlottedSecurityName);
             }
         }
-
        
-        private bool _isActive;
+        private bool isActive;
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -122,13 +115,13 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                _isActive = value;
-                if (_entitySelectionData != null && _isActive)
-                    RetrieveUnrealizedGainLossData(_entitySelectionData);
+                isActive = value;
+                if (entitySelectionData != null && isActive)
+                    RetrieveUnrealizedGainLossData(entitySelectionData);
             }
         }
 
@@ -160,18 +153,17 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Property to be updated on Selection of Time Range option
         /// </summary>
-        private string _selectedTimeRange = "1-Year";
+        private string selectedTimeRange = "1-Year";
         public string SelectedTimeRange
         {
-            get { return _selectedTimeRange; }
+            get { return selectedTimeRange; }
             set
             {
-                if (_selectedTimeRange != value)
+                if (selectedTimeRange != value)
                 {
-                    _selectedTimeRange = value;
-
-                    if (_entitySelectionData != null)
-                        RetrieveUnrealizedGainLossData(_entitySelectionData);
+                    selectedTimeRange = value;
+                    if (entitySelectionData != null)
+                        RetrieveUnrealizedGainLossData(entitySelectionData);
                     RaisePropertyChanged(() => this.SelectedTimeRange);
                 }
             }
@@ -180,19 +172,17 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Property to be updated on Selection of Frequency Range Option 
         /// </summary>
-        private string _selectedFrequencyRange = "Daily";
+        private string selectedFrequencyRange = "Daily";
         public string SelectedFrequencyRange
         {
-            get { return _selectedFrequencyRange; }
+            get { return selectedFrequencyRange; }
             set
             {
-                if (_selectedFrequencyRange != value)
+                if (selectedFrequencyRange != value)
                 {
-                    _selectedFrequencyRange = value;
-
-                    if (_entitySelectionData != null)
-
-                        RetrieveUnrealizedGainLossData(_entitySelectionData);
+                    selectedFrequencyRange = value;
+                    if (entitySelectionData != null)
+                        RetrieveUnrealizedGainLossData(entitySelectionData);
                     RaisePropertyChanged(() => this.SelectedFrequencyRange);
                 }
             }
@@ -201,16 +191,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Collection that defines the chart area
         /// </summary>
-        private ChartArea _chartArea;
+        private ChartArea chartArea;
         public ChartArea ChartArea
         {
             get
             {
-                return this._chartArea;
+                return this.chartArea;
             }
             set
             {
-                this._chartArea = value;
+                this.chartArea = value;
             }
         }
 
@@ -221,6 +211,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region CallBack Methods        
 
+        /// <summary>
         /// Method that calls the service Method through propertyName call to Service Caller
         /// </summary>
         /// <param name="Ticker">Unique Identifier for propertyName security</param>
@@ -228,40 +219,40 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveUnrealizedGainLossData(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (entitySelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, entitySelectionData, 1);
                     PlottedSecurityName = entitySelectionData.LongName;
                     DateTime periodStartDate;
                     DateTime periodEndDate;
                     GetPeriod(out periodStartDate, out periodEndDate);
                     if (IsActive)
-                    {                        
+                    {
                         if (null != unrealizedGainLossDataLoadedEvent)
+                        {
                             unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveUnrealizedGainLossData(entitySelectionData, periodStartDate, periodEndDate, SelectedFrequencyRange, RetrieveUnrealizedGainLossDataCallBackMethod);
-                    }
-                   
+                        }
+                        dbInteractivity.RetrieveUnrealizedGainLossData(entitySelectionData, periodStartDate, periodEndDate, SelectedFrequencyRange, RetrieveUnrealizedGainLossDataCallBackMethod);
+                    }                   
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
-
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
-        ///Method that calculates the Start Date and End Date time  
+        /// Method that calculates the Start Date and End Date time  
         /// </summary>
         /// <param name="startDate">returns the start date</param>
         /// <param name="endDate">returns the end date</param>
@@ -318,32 +309,32 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// ICommand property for Zoom in button
         /// </summary>
-        ICommand _zoomInCommand;
+        ICommand zoomInCommand;
         public ICommand ZoomInCommand
         {
             get
             {
-                if (_zoomInCommand == null)
+                if (zoomInCommand == null)
                 {
-                    _zoomInCommand = new DelegateCommand(ZoomIn, CanZoomIn);
+                    zoomInCommand = new DelegateCommand(ZoomIn, CanZoomIn);
                 }
-                return _zoomInCommand;
+                return zoomInCommand;
             }
         }
 
         /// <summary>
         /// ICommand property for Zoom out button
         /// </summary>
-        ICommand _zoomOutCommand;
+        ICommand zoomOutCommand;
         public ICommand ZoomOutCommand
         {
             get
             {
-                if (_zoomOutCommand == null)
+                if (zoomOutCommand == null)
                 {
-                    _zoomOutCommand = new DelegateCommand(ZoomOut, CanZoomOut);
+                    zoomOutCommand = new DelegateCommand(ZoomOut, CanZoomOut);
                 }
-                return _zoomOutCommand;
+                return zoomOutCommand;
             }
         }
 
@@ -366,16 +357,13 @@ namespace GreenField.Gadgets.ViewModels
         public void ZoomIn(object parameter)
         {
             this.ChartArea.ZoomScrollSettingsX.SuspendNotifications();
-
             double zoomCenter = this.ChartArea.ZoomScrollSettingsX.RangeStart + (this.ChartArea.ZoomScrollSettingsX.Range / 2);
             double newRange = Math.Max(this.ChartArea.ZoomScrollSettingsX.MinZoomRange, this.ChartArea.ZoomScrollSettingsX.Range) / 2;
             this.ChartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - (newRange / 2));
             this.ChartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + (newRange / 2));
-
             this.ChartArea.ZoomScrollSettingsX.ResumeNotifications();
-
-            ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -386,8 +374,9 @@ namespace GreenField.Gadgets.ViewModels
         public bool CanZoomIn(object parameter)
         {
             if (this.ChartArea == null)
+            {
                 return false;
-
+            }
             return this.ChartArea.ZoomScrollSettingsX.Range > this.ChartArea.ZoomScrollSettingsX.MinZoomRange;
         }
 
@@ -398,22 +387,21 @@ namespace GreenField.Gadgets.ViewModels
         public void ZoomOut(object parameter)
         {
             this.ChartArea.ZoomScrollSettingsX.SuspendNotifications();
-
             double zoomCenter = this.ChartArea.ZoomScrollSettingsX.RangeStart + (this.ChartArea.ZoomScrollSettingsX.Range / 2);
             double newRange = Math.Min(1, this.ChartArea.ZoomScrollSettingsX.Range) * 2;
-
             if (zoomCenter + (newRange / 2) > 1)
+            {
                 zoomCenter = 1 - (newRange / 2);
+            }
             else if (zoomCenter - (newRange / 2) < 0)
+            {
                 zoomCenter = newRange / 2;
-
+            }
             this.ChartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - newRange / 2);
             this.ChartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
-
             this.ChartArea.ZoomScrollSettingsX.ResumeNotifications();
-
-            ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -424,12 +412,11 @@ namespace GreenField.Gadgets.ViewModels
         public bool CanZoomOut(object parameter)
         {
             if (this.ChartArea == null)
+            {
                 return false;
-
+            }
             return this.ChartArea.ZoomScrollSettingsX.Range < 1d;
         }
-
-
         #endregion
 
         #region Event Handlers
@@ -439,30 +426,28 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="securityReferenceData">entitySelectionData</param>
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (entitySelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    _entitySelectionData = entitySelectionData;
+                    Logging.LogMethodParameter(logger, methodNamespace, entitySelectionData, 1);
+                  //  _entitySelectionData = entitySelectionData;
                     RetrieveUnrealizedGainLossData(entitySelectionData);
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
-
         #endregion
 
         #region CallbackMethods
@@ -473,12 +458,12 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveUnrealizedGainLossDataCallBackMethod(List<UnrealizedGainLossData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     PlottedSeries.Clear();
                     PlottedSeries.AddRange(result);                    
                     if (null != unrealizedGainLossDataLoadedEvent)
@@ -486,17 +471,16 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
-
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }            
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -506,18 +490,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="e"></param>
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
         {
-            ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
         #endregion
 
         #region EventUnSubscribe
-
+        /// <summary>
+        /// disposing events
+        /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
         }
-
         #endregion
     }
 }

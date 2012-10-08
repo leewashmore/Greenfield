@@ -67,7 +67,7 @@
                     <telerik:GridViewDataColumn Header="Benchmark"                                                     
                                                  DataMemberBinding="{Binding Benchmark}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                  Width="Auto"   
                                                  HeaderTextAlignment="Right"  
                                                  IsFilterable="False"
