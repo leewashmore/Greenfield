@@ -98,7 +98,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgFairValueComposition_CellValidating(object sender, GridViewCellValidatingEventArgs e)
         {
-            if (e.Cell.Column.UniqueName == "Sell")
+            if (e.Cell.Column.UniqueName == "Sell" || e.Cell.Column.UniqueName == "Buy")
             {
                 decimal value;
                 var textEntered = e.NewValue.ToString();
