@@ -723,7 +723,6 @@ namespace GreenField.ServiceCaller
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled);
             client.RetrieveHoldingsPercentageDataForRegionCompleted += (se, e) =>
@@ -748,13 +747,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -772,7 +775,6 @@ namespace GreenField.ServiceCaller
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled);
             client.RetrieveHoldingsPercentageDataCompleted += (se, e) =>
@@ -797,13 +799,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };

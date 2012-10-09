@@ -21,6 +21,7 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewHoldingsPieChartRegion : ViewBaseUserControl
     {
+        #region Private Fields
         /// <summary>
         /// Export Types to be passed to the ExportOptions class
         /// </summary>
@@ -29,6 +30,7 @@ namespace GreenField.Gadgets.Views
             public const string HOLDINGS_PIE_CHART_REGION = "Holdings Pie Chart for Region";
             public const string HOLDINGS_PIE_GRID_REGION = "Holdings Pie Grid for Region";
         }
+        #endregion
 
         #region Constructor
         /// <summary>
@@ -44,35 +46,39 @@ namespace GreenField.Gadgets.Views
                 new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartRegionDataLoadedEvent);
             this.crtHoldingsPercentageRegion.Visibility = Visibility.Visible;
             this.dgHoldingsPercentageRegion.Visibility = Visibility.Collapsed;
-
         }
         #endregion
 
+        #region Properties
         /// <summary>
         /// Data Context Property
         /// </summary>
-        private ViewModelHoldingsPieChartRegion _dataContextHoldingsPieChartRegion;
+        private ViewModelHoldingsPieChartRegion dataContextHoldingsPieChartRegion;
         public ViewModelHoldingsPieChartRegion DataContextHoldingsPieChartRegion
         {
-            get { return _dataContextHoldingsPieChartRegion; }
-            set { _dataContextHoldingsPieChartRegion = value; }
+            get { return dataContextHoldingsPieChartRegion; }
+            set { dataContextHoldingsPieChartRegion = value; }
         }
 
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextHoldingsPieChartRegion != null)
-                    DataContextHoldingsPieChartRegion.IsActive = _isActive;
+                {
+                    DataContextHoldingsPieChartRegion.IsActive = isActive;
+                }
             }
         }
+        #endregion
 
+        #region Events
         /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
@@ -100,9 +106,13 @@ namespace GreenField.Gadgets.Views
         private void btnFlip_Click(object sender, RoutedEventArgs e)
         {
             if (this.dgHoldingsPercentageRegion.Visibility == Visibility.Visible)
+            {
                 Flipper.FlipItem(this.dgHoldingsPercentageRegion, this.crtHoldingsPercentageRegion);
+            }
             else
+            {
                 Flipper.FlipItem(this.crtHoldingsPercentageRegion, this.dgHoldingsPercentageRegion);
+            }
         }
 
         /// <summary>
@@ -124,8 +134,6 @@ namespace GreenField.Gadgets.Views
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART);
                     childExportOptions.Show();
                 }
-
-
                 else
                 {
                     if (this.dgHoldingsPercentageRegion.Visibility == Visibility.Visible)
@@ -137,18 +145,19 @@ namespace GreenField.Gadgets.Views
                         ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART);
                         childExportOptions.Show();
                     }
-
                 }
             }
-
             catch (Exception ex)
             {
                 Prompt.ShowDialog(ex.Message);
             }
         }
+        #endregion
 
         #region RemoveEvents
-
+        /// <summary>
+        /// Disposes Events
+        /// </summary>
         public override void Dispose()
         {
             this.DataContextHoldingsPieChartRegion.holdingsPieChartForRegionDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartRegionDataLoadedEvent);
@@ -156,11 +165,6 @@ namespace GreenField.Gadgets.Views
             this.DataContextHoldingsPieChartRegion = null;
             this.DataContext = null;
         }
-        #endregion
-
-        private void dgHoldingsPercentageRegion_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            //GroupedGridRowLoadedHandler.Implement(e);
-        }
+        #endregion        
     }
 }

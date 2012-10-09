@@ -8,15 +8,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
-using GreenField.Common;
-using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.Common;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -29,35 +29,30 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
-
+        private IEventAggregator eventAggregator;
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
-
+        private IDBInteractivity dbInteractivity;
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
-
+        private ILoggerFacade logger;
         /// <summary>
         /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private PortfolioSelectionData _PortfolioSelectionData;
-
+        private PortfolioSelectionData portfolioSelectionData;
         /// <summary>
         /// Private member containing the Key Value Pair
         /// </summary>
-        private FilterSelectionData _holdingDataFilter;
-
+        private FilterSelectionData holdingDataFilter;
         /// <summary>
         /// Private member to store info about look thru enabled or not
         /// </summary>
-        private bool _lookThruEnabled;
+        private bool lookThruEnabled;
 
         #endregion
-
+        
         #region Constructor
         /// <summary>
         /// Constructor
@@ -65,92 +60,82 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param">MEF Eventaggrigator instance</param>
         public ViewModelHoldingsPieChartRegion(DashboardGadgetParam param)
         {
-
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
+            portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-            _holdingDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
-            _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
+            holdingDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
+            lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
 
-            if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+            if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && IsActive)
             {
-                _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues,_lookThruEnabled, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                dbInteractivity.RetrieveHoldingsPercentageDataForRegion(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues,lookThruEnabled, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
             }
-
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSetEvent);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateReferenceSetEvent);
-                _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
-                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSetEvent);
+                eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateReferenceSetEvent);
+                eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
+                eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
             }
-
-            if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null)
+            if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null)
             {
-                _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ",_lookThruEnabled, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
-            }
-
-           
+                dbInteractivity.RetrieveHoldingsPercentageDataForRegion(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ",lookThruEnabled, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+            }           
         }
         #endregion
 
         #region Properties
-        #region UI Fields
-
-      
+        #region UI Fields    
 
         /// <summary>
         /// Collection that contains the holdings data to be binded to the region chart
         /// </summary>
-        private ObservableCollection<HoldingsPercentageData> _holdingsPercentageInfoForRegion;
+        private ObservableCollection<HoldingsPercentageData> holdingsPercentageInfoForRegion;
         public ObservableCollection<HoldingsPercentageData> HoldingsPercentageInfoForRegion
         {
-            get { return _holdingsPercentageInfoForRegion; }
+            get { return holdingsPercentageInfoForRegion; }
             set
             {
-                _holdingsPercentageInfoForRegion = value;
+                holdingsPercentageInfoForRegion = value;
                 RaisePropertyChanged(() => this.HoldingsPercentageInfoForRegion);
             }
         }
         /// <summary>
         /// Effective date appended by as of
         /// </summary>
-        private String _effectiveDateString;
+        private String effectiveDateString;
         public String EffectiveDateString
         {
             get
             {
-                return _effectiveDateString;
+                return effectiveDateString;
             }
-
             set
             {
-                _effectiveDateString = value;
+                effectiveDateString = value;
                 RaisePropertyChanged(() => this.EffectiveDateString);
             }
         }
-
         /// <summary>
         ///Effective Date as selected by the user 
         /// </summary>
-        private DateTime? _effectiveDate;
+        private DateTime? effectiveDate;
         public DateTime? EffectiveDate
         {
-            get { return _effectiveDate; }
+            get { return effectiveDate; }
             set
             {
-                if (_effectiveDate != value)
+                if (effectiveDate != value)
                 {
-                    _effectiveDate = value;
+                    effectiveDate = value;
                     EffectiveDateString = Convert.ToDateTime(EffectiveDate).ToLongDateString();
 
-                    if (_PortfolioSelectionData != null && EffectiveDate != null && _holdingDataFilter != null)
+                    if (portfolioSelectionData != null && EffectiveDate != null && holdingDataFilter != null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues,_lookThruEnabled, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                        dbInteractivity.RetrieveHoldingsPercentageDataForRegion(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues,lookThruEnabled, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
-
                     RaisePropertyChanged(() => this.EffectiveDate);
                 }
             }
@@ -173,7 +158,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        private bool _isActive;
+        private bool isActive;
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -181,19 +166,18 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                _isActive = value;
-                if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && _isActive)
+                isActive = value;
+                if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && isActive)
                 {
-                    BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled);
+                    BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, lookThruEnabled);
                 }
-
-                if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && _isActive)
+                if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null && isActive)
                 {
-                    BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", _lookThruEnabled);
+                    BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", lookThruEnabled);
                 }
             }
         }
@@ -214,76 +198,73 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleEffectiveDateReferenceSetEvent(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (effectiveDate != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+                    if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && IsActive)
                     {                        
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled);
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, lookThruEnabled);
                     }
-
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                    if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null && IsActive)
                     {                        
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", _lookThruEnabled);
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", lookThruEnabled);
                     }
-
-
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
         /// Assigns UI Field Properties based on Fund reference
         /// </summary>
         /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData Class</param>
-        public void HandleFundReferenceSetEvent(PortfolioSelectionData PortfolioSelectionData)
+        public void HandleFundReferenceSetEvent(PortfolioSelectionData portSelectionData)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (PortfolioSelectionData != null)
+                if (portSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
-                    _PortfolioSelectionData = PortfolioSelectionData;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+                    Logging.LogMethodParameter(logger, methodNamespace, portSelectionData, 1);
+                    portfolioSelectionData = portSelectionData;
+                    if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && IsActive)
                     {                        
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled);
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, lookThruEnabled);
                     }
-
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                    if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null && IsActive)
                     {
                         if (null != holdingsPieChartForRegionDataLoadedEvent)
+                        {
                             holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", _lookThruEnabled);
+                        }
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", lookThruEnabled);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -293,31 +274,33 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleFilterReferenceSetEvent(FilterSelectionData filterSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (filterSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, filterSelectionData, 1);
-                    _holdingDataFilter = filterSelectionData;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+                    Logging.LogMethodParameter(logger, methodNamespace, filterSelectionData, 1);
+                    holdingDataFilter = filterSelectionData;
+                    if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && IsActive)
                     {
                         if (null != holdingsPieChartForRegionDataLoadedEvent)
+                        {
                             holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled);
+                        }
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, lookThruEnabled);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -327,46 +310,47 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleLookThruReferenceSetEvent(bool enableLookThru)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
-            {
-               
-                    Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
-                    _lookThruEnabled = enableLookThru;
-
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+            {           
+                    Logging.LogMethodParameter(logger, methodNamespace, enableLookThru, 1);
+                    lookThruEnabled = enableLookThru;
+                    if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && IsActive)
                     {                        
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled);
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, lookThruEnabled);
                     }
-
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                    if (EffectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null && IsActive)
                     {                        
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", _lookThruEnabled);
-                    }
-                
-               
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", lookThruEnabled);
+                    }    
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
-
-        private void BeginWebServiceCall(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue
-            , bool enableLookThru)
+        /// <summary>
+        /// Calling Web services through dbInteractivity
+        /// </summary>
+        /// <param name="portSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="filterType"></param>
+        /// <param name="filterValue"></param>
+        /// <param name="enableLookThru"></param>
+        private void BeginWebServiceCall(PortfolioSelectionData portSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool enableLookThru)
         {
             if (null != holdingsPieChartForRegionDataLoadedEvent)
+            {
                 holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-            _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData, effectiveDate, filterType, filterValue, enableLookThru, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+            }
+            dbInteractivity.RetrieveHoldingsPercentageDataForRegion(portSelectionData, effectiveDate, filterType, filterValue, enableLookThru, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
         }
     
         #endregion
 
-        #region Callback Methods
-
-       
+        #region Callback Methods       
         /// <summary>
         /// Callback method that assigns value to the HoldingsPercentageInfoForRegion property
         /// </summary>
@@ -374,7 +358,7 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveHoldingsPercentageDataForRegionCallbackMethod(List<HoldingsPercentageData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null && result.Count > 0)
@@ -382,22 +366,24 @@ namespace GreenField.Gadgets.ViewModels
                     HoldingsPercentageInfoForRegion = new ObservableCollection<HoldingsPercentageData>(result);
                     BenchmarkName = result[0].BenchmarkName;
                     if (null != holdingsPieChartForRegionDataLoadedEvent)
+                    {
                         holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    }
                 }
                 else
                 {
                     HoldingsPercentageInfoForRegion = new ObservableCollection<HoldingsPercentageData>();
                     BenchmarkName = "";
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
   
@@ -409,14 +395,11 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSetEvent);
-            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateReferenceSetEvent);
-            _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Unsubscribe(HandleFilterReferenceSetEvent);
-            _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
+            eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSetEvent);
+            eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateReferenceSetEvent);
+            eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Unsubscribe(HandleFilterReferenceSetEvent);
+            eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
         }
-
         #endregion
-
-
     }
 }

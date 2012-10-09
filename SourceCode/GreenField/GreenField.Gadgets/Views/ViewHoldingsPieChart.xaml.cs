@@ -9,11 +9,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Controls.Charting;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
 using GreenField.ServiceCaller;
+using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
@@ -22,6 +22,7 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewHoldingsPieChart : ViewBaseUserControl
     {
+        #region Private Fields
         /// <summary>
         /// Export Types to be passed to the ExportOptions class
         /// </summary>
@@ -30,6 +31,7 @@ namespace GreenField.Gadgets.Views
             public const string HOLDINGS_PIE_CHART = "Holdings Pie Chart for Sector";
             public const string HOLDINGS_PIE_GRID = "Holdings Pie Grid for Sector";
         }
+        #endregion
 
         #region Constructor
         /// <summary>
@@ -44,35 +46,40 @@ namespace GreenField.Gadgets.Views
             dataContextSource.holdingsPieChartDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartDataLoadedEvent);
             this.crtHoldingsPercentageSector.Visibility = Visibility.Visible;
-            this.dgHoldingsPercentageSector.Visibility = Visibility.Collapsed;
-            //this.dgHoldingsPercentageSector.ItemsSource = ((ViewModelHoldingsPieChart)this.DataContext).HoldingsPercentageInfo;
+            this.dgHoldingsPercentageSector.Visibility = Visibility.Collapsed;        
         }
         #endregion
+
+        #region Properties
         /// <summary>
         /// Data Context Property
         /// </summary>
-        private ViewModelHoldingsPieChart _dataContextHoldingsPieChart;
+        private ViewModelHoldingsPieChart dataContextHoldingsPieChart;
         public ViewModelHoldingsPieChart DataContextHoldingsPieChart
         {
-            get { return _dataContextHoldingsPieChart; }
-            set { _dataContextHoldingsPieChart = value; }
+            get { return dataContextHoldingsPieChart; }
+            set { dataContextHoldingsPieChart = value; }
         }
 
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextHoldingsPieChart != null)
-                    DataContextHoldingsPieChart.IsActive = _isActive;
+                {
+                    DataContextHoldingsPieChart.IsActive = isActive;
+                }
             }
         }
+        #endregion
 
+        #region Events
         /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
@@ -100,9 +107,13 @@ namespace GreenField.Gadgets.Views
         private void btnFlip_Click(object sender, RoutedEventArgs e)
         {
             if (this.dgHoldingsPercentageSector.Visibility == Visibility.Visible)
+            {
                 Flipper.FlipItem(this.dgHoldingsPercentageSector, this.crtHoldingsPercentageSector);
+            }
             else
+            {
                 Flipper.FlipItem(this.crtHoldingsPercentageSector, this.dgHoldingsPercentageSector);
+            }
         }
 
         /// <summary>
@@ -114,19 +125,16 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-
                 if (this.crtHoldingsPercentageSector.Visibility == Visibility.Visible)
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {
-                   
+                {                   
                     new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_CHART, Element = this.crtHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
                     
                 };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART);
                     childExportOptions.Show();
                 }
-
                 else
                 {
                     if (this.dgHoldingsPercentageSector.Visibility == Visibility.Visible)
@@ -138,7 +146,6 @@ namespace GreenField.Gadgets.Views
                         ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART);
                         childExportOptions.Show();
                     }
-
                 }
             }
             catch (Exception ex)
@@ -146,9 +153,12 @@ namespace GreenField.Gadgets.Views
                 Prompt.ShowDialog(ex.Message);
             }
         }
+        #endregion
 
+        /// <summary>
+        /// Dispose events
+        /// </summary>
         #region RemoveEvents
-
         public override void Dispose()
         {
             this.DataContextHoldingsPieChart.holdingsPieChartDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartDataLoadedEvent);
@@ -156,11 +166,6 @@ namespace GreenField.Gadgets.Views
             this.DataContextHoldingsPieChart = null;
             this.DataContext = null;
         }
-        #endregion
-
-        private void dgHoldingsPercentageSector_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            //GroupedGridRowLoadedHandler.Implement(e);
-        }
+        #endregion        
     }
 }
