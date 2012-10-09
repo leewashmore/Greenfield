@@ -949,6 +949,13 @@
         <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
     </Style>
 
+    <!--RadContextMenu Style-->
+    <Style TargetType="telerik:RadContextMenu" x:Name="RadContextMenuStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+    </Style>
+
     <!--TextBox Style-->
     <Style TargetType="TextBox" x:Name="TextBoxStyle">
         <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>

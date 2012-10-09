@@ -128,21 +128,21 @@
                     <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtBMWeight" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityBMWeight}" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Active Weight :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtActiveWeight" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityActiveWeight}" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Margin="0,2,0,0" Grid.Row="4" Grid.Column="0" Text="YTD Ret - Absolute :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Margin="0,2,0,0" Grid.Row="4" Grid.Column="0" Text="12m Ret - Absolute :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" Margin="5,2,0,0">
                         <TextBox Width="50" HorizontalAlignment="Left" x:Name="txtbYTDAbsolute" TextWrapping="Wrap" VerticalAlignment="Center" 
                                  Style="{StaticResource TextBoxStyle}" LostFocus="txtbYTDAbsolute_LostFocus" Text="0.0000"/>
                         <TextBlock Text="%" Margin="2,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"
                                    FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     </StackPanel>
-                    <TextBlock Margin="0,2,0,0" Grid.Row="5" Grid.Column="0" Text="YTD Ret - Rel to Loc :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Margin="0,2,0,0" Grid.Row="5" Grid.Column="0" Text="12m Ret - Rel to Loc :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="5,2,0,0">
                         <TextBox Width="50" HorizontalAlignment="Left" x:Name="txtbYTDReltoLoc" TextWrapping="Wrap" VerticalAlignment="Center" 
                                  Style="{StaticResource TextBoxStyle}" LostFocus="txtbYTDReltoLoc_LostFocus" Text="0.0000"/>
                         <TextBlock Text="%" Margin="2,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"
                                    FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     </StackPanel>                    
-                    <TextBlock Margin="0,2,0,0" Grid.Row="6" Grid.Column="0" Text="YTD Ret - Rel to EM :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Margin="0,2,0,0" Grid.Row="6" Grid.Column="0" Text="12m Ret - Rel to EM :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" Margin="5,2,0,0">
                         <TextBox Width="50" HorizontalAlignment="Left" x:Name="txtbYTDReltoEM" TextWrapping="Wrap" VerticalAlignment="Center" 
                                  Style="{StaticResource TextBoxStyle}" LostFocus="txtbYTDReltoEM_LostFocus" Text="0.0000"/>

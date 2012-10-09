@@ -1,45 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using Telerik.Windows;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
-using System.Collections.ObjectModel;
-using GreenField.ServiceCaller.PerformanceDefinitions;
-using GreenField.Gadgets.Models;
 using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewMarketPerformanceSnapshot : ViewBaseUserControl
     {
-        #region Fields
-        private ViewModelMarketPerformanceSnapshot _dataContextSource;
+        #region Properties
+        /// <summary>
+        /// View Model Instance
+        /// </summary>
+        private ViewModelMarketPerformanceSnapshot dataContextSource;
+        public ViewModelMarketPerformanceSnapshot DataContextSource 
+        {
+            get { return dataContextSource; }
+            set { dataContextSource = value; }
+        }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (_dataContextSource != null) //DataContext instance
-                    _dataContextSource.IsActive = _isActive;
+                isActive = value;
+                if (DataContextSource != null)
+                {
+                    DataContextSource.IsActive = isActive;
+                }
             }
         }
         #endregion
@@ -53,11 +52,8 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-
-            _dataContextSource = dataContextSource;
+            DataContextSource = dataContextSource;
             this.SetGridHeaders();
-
-
         }
         #endregion
 
@@ -76,7 +72,6 @@ namespace GreenField.Gadgets.Views
 
             if (menu == null)
                 return;
-
 
             GridViewRow row = menu.GetClickedElement<GridViewRow>();
             GridViewGroupRow groupRow = menu.GetClickedElement<GridViewGroupRow>();
@@ -127,17 +122,6 @@ namespace GreenField.Gadgets.Views
             }
 
             menu.IsOpen = false;
-
-        }
-
-        /// <summary>
-        /// radGridSnapshot RowLoaded Event Handler - applied custom styles
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">RowLoadedEventArgs</param>
-        private void radGridSnapshot_RowLoaded(object sender, RowLoadedEventArgs e)
-        {
-            
         }
 
         /// <summary>
@@ -148,29 +132,11 @@ namespace GreenField.Gadgets.Views
         private void ReorderBehavior_Reordered(object sender, ReorderedEventArgs e)
         {
             //Update MarketSnapshotPreferenceInfo after reordering
-            _dataContextSource.MarketSnapshotPreferenceInfo = _dataContextSource.MarketSnapshotPerformanceInfo
+            DataContextSource.MarketSnapshotPreferenceInfo = DataContextSource.MarketSnapshotPerformanceInfo
                 .Select(record => record.MarketSnapshotPreferenceInfo)
                 .ToList();
 
-            #region Client cache implementation
-            //if (_dataContextSource.PopulatedMarketPerformanceSnapshotInfo != null)
-            //{
-            //    PopulatedMarketSnapshotPerformanceData selectedPopulatedMarketPerformanceSnapshotInfo = _dataContextSource.PopulatedMarketPerformanceSnapshotInfo
-            //                        .Where(record => record.MarketSnapshotSelectionInfo == _dataContextSource.SelectedMarketSnapshotSelectionInfo).FirstOrDefault();
-
-            //    if (selectedPopulatedMarketPerformanceSnapshotInfo != null)
-            //    {
-            //        _dataContextSource.PopulatedMarketPerformanceSnapshotInfo
-            //            .Where(record => record.MarketSnapshotSelectionInfo == _dataContextSource.SelectedMarketSnapshotSelectionInfo)
-            //            .FirstOrDefault()
-            //            .MarketPerformanceSnapshotInfo = _dataContextSource.MarketPerformanceSnapshotInfo.ToList();
-            //    }
-            //}
-            #endregion
-
             this.radGridSnapshot.Rebind();
-            _dataContextSource.TestEntityOrdering();
-
         }
 
         /// <summary>
@@ -180,36 +146,40 @@ namespace GreenField.Gadgets.Views
         /// <param name="e">ReorderingEventArgs</param>
         private void ReorderBehavior_Reordering(object sender, ReorderingEventArgs e)
         {
-            //If there are no dragged Items reordering is redundant
+            //if there are no dragged Items reordering is redundant
             if (e.DraggedItems.Count().Equals(0))
                 return;
 
             #region Get Dragged Element
-            //Dragged Element
+            //dragged Element
             MarketSnapshotPerformanceData draggedElement = e.DraggedItems.FirstOrDefault() as MarketSnapshotPerformanceData;
 
-            //Null Exception Handling
+            //null Exception Handling
             if (draggedElement == null)
+            {
                 return;
+            }
             #endregion
 
             #region Get Data Context
-            //Collection of MorningSnapshotData binded to the grid
+            //collection of MorningSnapshotData binded to the grid
             List<MarketSnapshotPerformanceData> dataContext = (e.SourceGrid.ItemsSource as ObservableCollection<MarketSnapshotPerformanceData>).ToList();
 
-            //Null Exception Handling
+            //null Exception Handling
             if (dataContext == null)
+            {
                 return;
+            }
             #endregion
 
             #region Get Drag Drop Details
-            //Drag Drop Indexes
+            //drag drop Indexes
             int dragIndex = dataContext.IndexOf(draggedElement);
             int dropIndex = e.DropIndex;
-            //True if insertion is done after an element and False if it's done  before the element
-            bool dropPositionIsAfter = DragDropPosition.Value == DropPosition.After;
-            //Check if the drop Index exceed the Count of List - item dropped after the last element
-            bool dropIndexExceedsCount = dropIndex >= dataContext.Count;
+            //true if insertion is done after an element and False if it's done  before the element
+            bool isDropPositionAfter = DragDropPosition.Value == DropPosition.After;
+            //check if the drop Index exceed the Count of List - item dropped after the last element
+            bool isDropIndexExceedingCount = dropIndex >= dataContext.Count;
             #endregion
 
             #region Drag Location Parameters
@@ -226,44 +196,39 @@ namespace GreenField.Gadgets.Views
             #region Drop Location Parameters
             MarketSnapshotPreference dropBenchmarkDetails = new MarketSnapshotPreference()
             {
-                EntityName = dropIndexExceedsCount ? null : dataContext.ElementAt(dropIndex).MarketSnapshotPreferenceInfo.EntityName,
-                EntityReturnType = dropIndexExceedsCount ? null : dataContext.ElementAt(e.DropIndex).MarketSnapshotPreferenceInfo.EntityReturnType,
-                EntityOrder = dropIndexExceedsCount
-                                    ? dataContext.ElementAt(dropIndex - 1).MarketSnapshotPreferenceInfo.EntityOrder + 1
-                                    : dataContext.ElementAt(dropIndex).MarketSnapshotPreferenceInfo.EntityOrder,
-                GroupName = dropIndexExceedsCount
-                                ? dataContext.ElementAt(dropIndex - 1).MarketSnapshotPreferenceInfo.GroupName
-                                : dataContext.ElementAt(dropIndex).MarketSnapshotPreferenceInfo.GroupName,
-                GroupPreferenceID = dropIndexExceedsCount
-                                ? dataContext.ElementAt(dropIndex - 1).MarketSnapshotPreferenceInfo.GroupPreferenceID
-                                : dataContext.ElementAt(dropIndex).MarketSnapshotPreferenceInfo.GroupPreferenceID
+                EntityName = isDropIndexExceedingCount ? null : dataContext.ElementAt(dropIndex).MarketSnapshotPreferenceInfo.EntityName,
+                EntityReturnType = isDropIndexExceedingCount ? null : dataContext.ElementAt(e.DropIndex).MarketSnapshotPreferenceInfo.EntityReturnType,
+                EntityOrder = isDropIndexExceedingCount
+                    ? dataContext.ElementAt(dropIndex - 1).MarketSnapshotPreferenceInfo.EntityOrder + 1
+                    : dataContext.ElementAt(dropIndex).MarketSnapshotPreferenceInfo.EntityOrder,
+                GroupName = isDropIndexExceedingCount
+                    ? dataContext.ElementAt(dropIndex - 1).MarketSnapshotPreferenceInfo.GroupName
+                    : dataContext.ElementAt(dropIndex).MarketSnapshotPreferenceInfo.GroupName,
+                GroupPreferenceID = isDropIndexExceedingCount
+                    ? dataContext.ElementAt(dropIndex - 1).MarketSnapshotPreferenceInfo.GroupPreferenceID
+                    : dataContext.ElementAt(dropIndex).MarketSnapshotPreferenceInfo.GroupPreferenceID
             };
             #endregion
 
             #region Managing discrepancies in drop location
-            //If drop location is after the last element of same or another group the behavior picks the next element nevertheless
+            //if drop location is after the last element of same or another group the behavior picks the next element nevertheless
+            bool isDragdropGroupSame = dragBenchmarkDetails.GroupPreferenceID == dropBenchmarkDetails.GroupPreferenceID;
+            bool isDropEntityMisread = dropBenchmarkDetails.EntityOrder == 1 && isDropPositionAfter;
 
-            bool dragdropGroupIsSame = dragBenchmarkDetails.GroupPreferenceID == dropBenchmarkDetails.GroupPreferenceID;
-            bool dropEntityIsMisread = dropBenchmarkDetails.EntityOrder == 1 && dropPositionIsAfter;
-
-            //bool dropIsLastOfSameGroup = dragdropGroupIsSame
-            //    ? dropBenchmarkDetails.EntityOrder == GetBenchmarkCountInGroup(dataContext, dropBenchmarkDetails.GroupPreferenceID) + 1
-            //    : dropBenchmarkDetails.EntityOrder == 1 && dropPositionIsAfter;
-
-            bool dropIsLastOfSameGroup = GetLastGroupPreferenceId(dataContext, dropBenchmarkDetails.GroupPreferenceID) == dragBenchmarkDetails.GroupPreferenceID
-                                            && dropEntityIsMisread;
-            bool dropIsLastOfOtherGroup = (!dropIsLastOfSameGroup) && dropEntityIsMisread;
+            bool isDropLastOfSameGroup = GetLastGroupPreferenceId(dataContext, dropBenchmarkDetails.GroupPreferenceID) 
+                == dragBenchmarkDetails.GroupPreferenceID && isDropEntityMisread;
+            bool isDropLastOfOtherGroup = (!isDropLastOfSameGroup) && isDropEntityMisread;
             #endregion
 
-            bool dragIsWithinGroup = dragdropGroupIsSame ? (!dropIsLastOfOtherGroup) : dropIsLastOfSameGroup;
+            bool isDragWithinGroup = isDragdropGroupSame ? (!isDropLastOfOtherGroup) : isDropLastOfSameGroup;
 
-            if (dragIsWithinGroup)
+            if (isDragWithinGroup)
             {
-                UpdateParametersForSameGroupReordering(dataContext, dragBenchmarkDetails, dropBenchmarkDetails, dropIsLastOfSameGroup);
+                UpdateParametersForSameGroupReordering(dataContext, dragBenchmarkDetails, dropBenchmarkDetails, isDropLastOfSameGroup);
             }
             else
             {
-                UpdateParametersForDiffGroupReordering(dataContext, dragBenchmarkDetails, dropBenchmarkDetails, dropIsLastOfOtherGroup);
+                UpdateParametersForDiffGroupReordering(dataContext, dragBenchmarkDetails, dropBenchmarkDetails, isDropLastOfOtherGroup);
             }
         }
 
@@ -274,15 +239,16 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            RadExportOptionsInfo.Add(new RadExportOptions()
+            List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>();
+            radExportOptionsInfo.Add(new RadExportOptions()
             {
                 ElementName = this.txtHeader.Text,
                 Element = this.radGridSnapshot,
                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
             });
 
-            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
+            ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " 
+                + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
             childExportOptions.Show();
         }
 
@@ -303,25 +269,25 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private void SetGridHeaders()
         {
-            //Entity Description
+            //entity description
             this.radGridSnapshot.Columns[0].Header = "Description";
-            //Entity Return Type
+            //entity return Type
             this.radGridSnapshot.Columns[1].Header = "Return";
-            //Market Performance for Last Working Date
+            //market performance for last working date
             this.radGridSnapshot.Columns[2].Header = DateTime.Today.AddDays(-1).ToString("d");
-            //Market Performance for Week to Date
+            //market performance for week to date
             this.radGridSnapshot.Columns[3].Header = "WTD";
-            //Market Performance for Month to Date
+            //market performance for month to date
             this.radGridSnapshot.Columns[4].Header = "MTD";
-            //Market Performance for Quarter to Date
+            //market performance for quarter to date
             this.radGridSnapshot.Columns[5].Header = "QTD";
-            //Market Performance for Year to Date
+            //market performance for year to date
             this.radGridSnapshot.Columns[6].Header = "YTD";
-            //Market Performance for Last Year
+            //market performance for last year
             this.radGridSnapshot.Columns[7].Header = DateTime.Today.AddYears(-1).Year.ToString();
-            //Market Performance for Second Last Year
+            //market performance for second last year
             this.radGridSnapshot.Columns[8].Header = DateTime.Today.AddYears(-2).Year.ToString();
-            //Market Performance for Third Last Year
+            //market performance for third last year
             this.radGridSnapshot.Columns[9].Header = DateTime.Today.AddYears(-3).Year.ToString();
         }
 
@@ -407,16 +373,16 @@ namespace GreenField.Gadgets.Views
         /// <param name="dataContext">List of MorningSnapshotData binded to the grid</param>
         /// <param name="dragBenchmarkDetails">Preference details of the dragged Item</param>
         /// <param name="dropBenchmarkDetails">Preference details of the next to drop location</param>
-        /// <param name="dropIsLastOfSameGroup">True if the drop location is last within the drag item group</param>
+        /// <param name="isDropLastOfSameGroup">True if the drop location is last within the drag item group</param>
         private void UpdateParametersForSameGroupReordering(List<MarketSnapshotPerformanceData> dataContext,
-            MarketSnapshotPreference dragBenchmarkDetails, MarketSnapshotPreference dropBenchmarkDetails, bool dropIsLastOfSameGroup)
+            MarketSnapshotPreference dragBenchmarkDetails, MarketSnapshotPreference dropBenchmarkDetails, bool isDropLastOfSameGroup)
         {
-            //Dropped at Group end with the next group empty
+            //dropped at group end with the next group empty
             if (dropBenchmarkDetails.EntityOrder == null)
                 dropBenchmarkDetails.EntityOrder = GetEntityCountInGroup(dataContext, dragBenchmarkDetails.GroupPreferenceID) + 1;
 
-            //Dropped at Group end within the same group
-            if (dropIsLastOfSameGroup)
+            //dropped at group end within the same group
+            if (isDropLastOfSameGroup)
             {
                 if (dragBenchmarkDetails.GroupPreferenceID != dropBenchmarkDetails.GroupPreferenceID)
                 {
@@ -424,40 +390,40 @@ namespace GreenField.Gadgets.Views
                 }
             }
 
-            //Check drop flow - top ot bottom or vice versa
-            bool dropLocationExceedsDragLocation = dropBenchmarkDetails.EntityOrder > dragBenchmarkDetails.EntityOrder;
+            //check drop flow - top ot bottom or vice versa
+            bool isDropLocationExceedingDragLocation = dropBenchmarkDetails.EntityOrder > dragBenchmarkDetails.EntityOrder;
 
             foreach (MarketSnapshotPerformanceData record in dataContext)
             {
-                //No consideration of records in other groups
+                //no consideration of records in other groups
                 if (record.MarketSnapshotPreferenceInfo.GroupPreferenceID != dragBenchmarkDetails.GroupPreferenceID)
                 {
                     continue;
                 }
 
-                //Check if the record is between drag and drop location
-                bool recordIsBetweenDragDropLocation = dropLocationExceedsDragLocation
+                //check if the record is between drag and drop location
+                bool isRecordBetweenDragDropLocation = isDropLocationExceedingDragLocation
                     ? record.MarketSnapshotPreferenceInfo.EntityOrder > dragBenchmarkDetails.EntityOrder
                         && record.MarketSnapshotPreferenceInfo.EntityOrder < dropBenchmarkDetails.EntityOrder
                     : record.MarketSnapshotPreferenceInfo.EntityOrder < dragBenchmarkDetails.EntityOrder
                         && record.MarketSnapshotPreferenceInfo.EntityOrder >= dropBenchmarkDetails.EntityOrder;
 
-                //Shift record order between drag and drop location based on drop flow
-                if (recordIsBetweenDragDropLocation)
+                //shift record order between drag and drop location based on drop flow
+                if (isRecordBetweenDragDropLocation)
                 {
-                    record.MarketSnapshotPreferenceInfo.EntityOrder = dropLocationExceedsDragLocation
+                    record.MarketSnapshotPreferenceInfo.EntityOrder = isDropLocationExceedingDragLocation
                         ? record.MarketSnapshotPreferenceInfo.EntityOrder - 1
                         : record.MarketSnapshotPreferenceInfo.EntityOrder + 1;
                     continue;
                 }
 
-                //Check if the record is the drag element
-                bool recordIsDragLocation = record.MarketSnapshotPreferenceInfo.EntityOrder == dragBenchmarkDetails.EntityOrder;
+                //check if the record is the drag element
+                bool isRecordDragLocation = record.MarketSnapshotPreferenceInfo.EntityOrder == dragBenchmarkDetails.EntityOrder;
 
-                //Change record order if the record element is the drag element
-                if (recordIsDragLocation)
+                //change record order if the record element is the drag element
+                if (isRecordDragLocation)
                 {
-                    record.MarketSnapshotPreferenceInfo.EntityOrder = dropLocationExceedsDragLocation
+                    record.MarketSnapshotPreferenceInfo.EntityOrder = isDropLocationExceedingDragLocation
                         ? dropBenchmarkDetails.EntityOrder - 1
                         : dropBenchmarkDetails.EntityOrder;
                 }
@@ -470,82 +436,74 @@ namespace GreenField.Gadgets.Views
         /// <param name="dataContext">List of MorningSnapshotData binded to the grid</param>
         /// <param name="dragBenchmarkDetails">Preference details of the dragged Item</param>
         /// <param name="dropBenchmarkDetails">Preference details of the next to drop location</param>
-        /// <param name="dropIsLastOfOtherGroup">true if the drop is done at location last of drop location group</param>
+        /// <param name="isDropLastOfOtherGroup">true if the drop is done at location last of drop location group</param>
         private void UpdateParametersForDiffGroupReordering(List<MarketSnapshotPerformanceData> dataContext,
-            MarketSnapshotPreference dragBenchmarkDetails, MarketSnapshotPreference dropBenchmarkDetails, bool dropIsLastOfOtherGroup)
+            MarketSnapshotPreference dragBenchmarkDetails, MarketSnapshotPreference dropBenchmarkDetails, bool isDropLastOfOtherGroup)
         {
-            bool dropLocationExceedsDragLocation = dropIsLastOfOtherGroup
+            bool isDropLocationExceedingDragLocation = isDropLastOfOtherGroup
                 ? dropBenchmarkDetails.GroupPreferenceID - 1 > dragBenchmarkDetails.GroupPreferenceID
                 : dropBenchmarkDetails.GroupPreferenceID > dragBenchmarkDetails.GroupPreferenceID;
 
-            //True if insertion is done after an element and False if it's done  before the element
-            bool dropPositionIsAfter = DragDropPosition.Value == DropPosition.After;
+            //true if insertion is done after an element and false if it's done  before the element
+            bool isDropPositionAfter = DragDropPosition.Value == DropPosition.After;
 
             foreach (MarketSnapshotPerformanceData record in dataContext)
             {
-                bool dragGroupRecordIsShifted = record.MarketSnapshotPreferenceInfo.EntityOrder > dragBenchmarkDetails.EntityOrder
+                bool isDragGroupRecordShifted = record.MarketSnapshotPreferenceInfo.EntityOrder > dragBenchmarkDetails.EntityOrder
                         && record.MarketSnapshotPreferenceInfo.GroupPreferenceID == dragBenchmarkDetails.GroupPreferenceID;
 
-                if (dragGroupRecordIsShifted)
+                if (isDragGroupRecordShifted)
                 {
                     record.MarketSnapshotPreferenceInfo.EntityOrder--;
                     continue;
                 }
 
-                bool dropGroupRecordIsShifted = record.MarketSnapshotPreferenceInfo.EntityOrder > dropBenchmarkDetails.EntityOrder
+                bool isDropGroupRecordShifted = record.MarketSnapshotPreferenceInfo.EntityOrder > dropBenchmarkDetails.EntityOrder
                         && record.MarketSnapshotPreferenceInfo.GroupPreferenceID == dropBenchmarkDetails.GroupPreferenceID;
 
-
-                if (dropGroupRecordIsShifted && !dropIsLastOfOtherGroup)
+                if (isDropGroupRecordShifted && !isDropLastOfOtherGroup)
                 {
                     record.MarketSnapshotPreferenceInfo.EntityOrder++;
                     continue;
                 }
 
-
-                bool recordIsDragLocation = record.MarketSnapshotPreferenceInfo.EntityOrder == dragBenchmarkDetails.EntityOrder
+                bool isRecordDragLocation = record.MarketSnapshotPreferenceInfo.EntityOrder == dragBenchmarkDetails.EntityOrder
                     && record.MarketSnapshotPreferenceInfo.GroupPreferenceID == dragBenchmarkDetails.GroupPreferenceID;
 
-                if (recordIsDragLocation)
+                if (isRecordDragLocation)
                 {
-                    record.MarketSnapshotPreferenceInfo.EntityOrder = dropIsLastOfOtherGroup
+                    record.MarketSnapshotPreferenceInfo.EntityOrder = isDropLastOfOtherGroup
                         ? GetEntityCountInGroup(dataContext, GetLastGroupPreferenceId(dataContext, dropBenchmarkDetails.GroupPreferenceID)) + 1
                         : dropBenchmarkDetails.EntityOrder;
-                    record.MarketSnapshotPreferenceInfo.GroupName = dropIsLastOfOtherGroup
+                    record.MarketSnapshotPreferenceInfo.GroupName = isDropLastOfOtherGroup
                     ? GetLastGroupName(dataContext, dropBenchmarkDetails.GroupPreferenceID)
                     : dropBenchmarkDetails.GroupName;
-                    record.MarketSnapshotPreferenceInfo.GroupPreferenceID = dropIsLastOfOtherGroup
+                    record.MarketSnapshotPreferenceInfo.GroupPreferenceID = isDropLastOfOtherGroup
                     ? GetLastGroupPreferenceId(dataContext, dropBenchmarkDetails.GroupPreferenceID)
                     : dropBenchmarkDetails.GroupPreferenceID;
                     continue;
                 }
 
-                bool recordIsDropLocation = record.MarketSnapshotPreferenceInfo.EntityOrder == dropBenchmarkDetails.EntityOrder
+                bool isRecordDropLocation = record.MarketSnapshotPreferenceInfo.EntityOrder == dropBenchmarkDetails.EntityOrder
                     && record.MarketSnapshotPreferenceInfo.GroupPreferenceID == dropBenchmarkDetails.GroupPreferenceID;
 
-                if (recordIsDropLocation && !dropIsLastOfOtherGroup)
+                if (isRecordDropLocation && !isDropLastOfOtherGroup)
                 {
                     record.MarketSnapshotPreferenceInfo.EntityOrder++;
                     continue;
                 }
-
-
-
-                //else if (recordIsDragLocation)
-                //{
-                //    record.MarketSnapshotPreferenceInfo.BenchmarkOrder = dropLocationExceedsDragLocation
-                //        ? dropBenchmarkDetails.BenchmarkOrder - 1
-                //        : dropBenchmarkDetails.BenchmarkOrder;
-                //}
             }
         }
         #endregion
 
         #region Event Unsubscribe
+        /// <summary>
+        /// Dispose objects from memory
+        /// </summary>
         public override void Dispose()
         {
-            this._dataContextSource.Dispose();
-            this._dataContextSource = null;
+            this.DataContextSource.Dispose();
+            this.DataContextSource = null;
             this.DataContext = null;
         }
         #endregion

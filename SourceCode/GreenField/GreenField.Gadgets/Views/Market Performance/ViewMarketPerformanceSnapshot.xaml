@@ -1,4 +1,5 @@
-﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewMarketPerformanceSnapshot"
+﻿<helpers:ViewBaseUserControl 
+    x:Class="GreenField.Gadgets.Views.ViewMarketPerformanceSnapshot"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,6 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+
                 <ResourceDictionary>
                     <helpers:DataContextProxy x:Key="DataContextProxy"/>
                     <helpers:DraggedItemTemplateConverter x:Key="DraggedItemTemplateConverter"/>
@@ -34,13 +36,13 @@
                         <Setter Property="BorderBrush" Value="#9F1D21"/>
                         <Setter Property="BorderThickness" Value="1"/>
                         <Setter Property="Foreground" Value="White"/>
-                    </Style>                    
+                    </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator   Style="{StaticResource BusyIndicatorStyle}" x:Name="biSnapshot" BusyContent="{Binding BusyIndicatorContent}" 
+    <telerik:RadBusyIndicator Style="{StaticResource BusyIndicatorStyle}" x:Name="biSnapshot" BusyContent="{Binding BusyIndicatorContent}" 
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
         <Grid x:Name="LayoutRoot">
             <Grid>
@@ -52,52 +54,58 @@
                 <!--gadget header-->
                 <Grid Grid.Row="0">
                     <TextBlock Text="{Binding MorningSnapshotHeader}" HorizontalAlignment="Center" x:Name="txtHeader"
-                       VerticalAlignment="Center" FontSize="11" FontWeight="Bold"/>
+                               VerticalAlignment="Center" FontSize="11" FontWeight="Bold"/>
                     <telerik:RadButton Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15" IsEnabled="True" Margin="1"
-                                               Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export">
+                                       Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export">
                         <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
                     </telerik:RadButton>
                 </Grid>
 
                 <!--grid containing benchmark data-->
                 <telerik:RadGridView Name="radGridSnapshot" IsReadOnly="true" AlternationCount="2"
-                                 ShowGroupPanel="False" Grid.Row="1" CanUserFreezeColumns="False" RowIndicatorVisibility="Collapsed"
-                                 AutoGenerateColumns="False" CanUserDeleteRows="True" SelectionMode="Single" CanUserInsertRows="true"                                  
-                                 AutoExpandGroups="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                 telerikDragDrop:RadDragAndDropManager.AllowDrop="True" telerikDragDrop:RadDragAndDropManager.AllowDrag="True"
-                                 ItemsSource="{Binding MarketSnapshotPerformanceInfo}" IsFilteringAllowed="False" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                 SelectedItem="{Binding SelectedMarketSnapshotPerformanceInfo, Mode=TwoWay}" CanUserReorderColumns="False" CanUserResizeColumns="False"
-                                     RowLoaded="radGridSnapshot_RowLoaded" ElementExporting="radGridSnapshot_ElementExporting"                                  
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
-                                         RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" EnableRowVirtualization="False"
+                                     ShowGroupPanel="False" Grid.Row="1" CanUserFreezeColumns="False" RowIndicatorVisibility="Collapsed"
+                                     AutoGenerateColumns="False" CanUserDeleteRows="True" SelectionMode="Single" CanUserInsertRows="true"                                  
+                                     AutoExpandGroups="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                     telerikDragDrop:RadDragAndDropManager.AllowDrop="True" telerikDragDrop:RadDragAndDropManager.AllowDrag="True"
+                                     ItemsSource="{Binding MarketSnapshotPerformanceInfo}" IsFilteringAllowed="False" 
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     SelectedItem="{Binding SelectedMarketSnapshotPerformanceInfo, Mode=TwoWay}" CanUserReorderColumns="False" 
+                                     CanUserResizeColumns="False" ElementExporting="radGridSnapshot_ElementExporting"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}" EnableRowVirtualization="False"
                                      AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}" GridLinesVisibility="None">
                     <!--context menu on the grid-->
                     <telerik:RadContextMenu.ContextMenu>
-                        <telerik:RadContextMenu x:Name="cmSnapshot" telerik:StyleManager.Theme="Metro" Opened="RadContextMenu_Opened" FontSize="7" FontFamily="Arial">
+                        <telerik:RadContextMenu x:Name="cmSnapshot" telerik:StyleManager.Theme="Metro" Opened="RadContextMenu_Opened"
+                                                Style="{StaticResource RadContextMenuStyle}">
                             <telerik:RadContextMenu.Items>
-                                <telerik:RadMenuItem x:Name="miAddGroup" Height="25" VerticalContentAlignment="Center" Header="Add Group" FontWeight="Bold" Command="{Binding AddEntityGroupCommand}">
+                                <telerik:RadMenuItem x:Name="miAddGroup" Height="25" VerticalContentAlignment="Center" Header="Add Group" 
+                                                     FontWeight="Bold" Command="{Binding AddEntityGroupCommand}">
                                     <telerik:RadMenuItem.IconTemplate>
                                         <DataTemplate>
                                             <Image Source="/GreenField.Gadgets;component/Images/AddGroup.png" Stretch="Fill"/>
                                         </DataTemplate>
                                     </telerik:RadMenuItem.IconTemplate>
                                 </telerik:RadMenuItem>
-                                <telerik:RadMenuItem x:Name="miRemoveGroup" Height="25" VerticalContentAlignment="Center" Header="Remove Group" FontWeight="Bold" Command="{Binding RemoveEntityGroupCommand}">
+                                <telerik:RadMenuItem x:Name="miRemoveGroup" Height="25" VerticalContentAlignment="Center" Header="Remove Group" 
+                                                     FontWeight="Bold" Command="{Binding RemoveEntityGroupCommand}">
                                     <telerik:RadMenuItem.IconTemplate>
                                         <DataTemplate>
                                             <Image Source="/GreenField.Gadgets;component/Images/RemoveGroup.png" Stretch="Fill"/>
                                         </DataTemplate>
                                     </telerik:RadMenuItem.IconTemplate>
                                 </telerik:RadMenuItem>
-                                <telerik:RadMenuItem x:Name="miAddEntity" Height="25" VerticalContentAlignment="Center" Header="Add Entity to Group" FontWeight="Bold" Command="{Binding AddEntityToGroupCommand}">
+                                <telerik:RadMenuItem x:Name="miAddEntity" Height="25" VerticalContentAlignment="Center" Header="Add Entity to Group" 
+                                                     FontWeight="Bold" Command="{Binding AddEntityToGroupCommand}">
                                     <telerik:RadMenuItem.IconTemplate>
                                         <DataTemplate>
                                             <Image Source="/GreenField.Gadgets;component/Images/AddEntity.png" Stretch="Fill"/>
                                         </DataTemplate>
                                     </telerik:RadMenuItem.IconTemplate>
                                 </telerik:RadMenuItem>
-                                <telerik:RadMenuItem x:Name="miRemoveEntity" Height="25" VerticalContentAlignment="Center" Header="Remove Entity from Group" FontWeight="Bold" Command="{Binding RemoveEntityFromGroupCommand}">
+                                <telerik:RadMenuItem x:Name="miRemoveEntity" Height="25" VerticalContentAlignment="Center" Header="Remove Entity from Group" 
+                                                     FontWeight="Bold" Command="{Binding RemoveEntityFromGroupCommand}">
                                     <telerik:RadMenuItem.IconTemplate>
                                         <DataTemplate>
                                             <Image Source="/GreenField.Gadgets;component/Images/RemoveEntity.png" Stretch="Fill"/>
@@ -107,11 +115,12 @@
                             </telerik:RadContextMenu.Items>
                         </telerik:RadContextMenu>
                     </telerik:RadContextMenu.ContextMenu>
+                    <!--DataColumns-->
                     <telerik:RadGridView.Columns>
                         <!--Entity Description Column-->
                         <telerik:GridViewDataColumn Width="Auto" IsReadOnly="true" TextAlignment="Left" HeaderTextAlignment="Left"
-                                                IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}">
+                                                    IsSortable="False"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}">
                             <telerik:GridViewDataColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -123,33 +132,33 @@
                         </telerik:GridViewDataColumn>
                         <!--Entity Return Type Column-->
                         <telerik:GridViewDataColumn Width="Auto" IsReadOnly="true" TextAlignment="Left" HeaderTextAlignment="Left"
-                                                DataMemberBinding="{Binding MarketSnapshotPreferenceInfo.EntityReturnType}" IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    DataMemberBinding="{Binding MarketSnapshotPreferenceInfo.EntityReturnType}" IsSortable="False"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <!--Entity Performance Return Columns-->
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding DateToDateReturn, StringFormat=\{0:n2\}}"
-                                                Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding WeekToDateReturn, StringFormat=\{0:n2\}}"
-                                                Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding MonthToDateReturn, StringFormat=\{0:n2\}}"
-                                                Width="*" IsReadOnly="True" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    Width="*" IsReadOnly="True" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding QuarterToDateReturn, StringFormat=\{0:n2\}}"
-                                                Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding YearToDateReturn, StringFormat=\{0:n2\}}"
-                                                Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding LastYearReturn, StringFormat=\{0:n2\}}" 
-                                                Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding SecondLastYearReturn, StringFormat=\{0:n2\}}"  
-                                                Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding ThirdLastYearReturn, StringFormat=\{0:n2\}}"
-                                                Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                     </telerik:RadGridView.Columns>
 
                     <!--enabling the grid to group by "GroupName"-->
