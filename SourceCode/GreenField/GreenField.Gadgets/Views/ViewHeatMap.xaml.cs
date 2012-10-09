@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using Microsoft.Practices.Prism.Events;
 using Telerik.Windows.Controls.Map;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
@@ -17,8 +19,6 @@ using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.DataContracts;
 using GreenField.Common.Helper;
-using Microsoft.Practices.Prism.Events;
-using System.ComponentModel;
 
 namespace GreenField.Gadgets.Views
 {
@@ -27,7 +27,7 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewHeatMap : ViewBaseUserControl
     {
-       #region Fields
+        #region Fields
         /// <summary>
         /// Constant String for country performance
         /// </summary>
@@ -39,121 +39,131 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Private Collection of type Heat Map Data
         /// </summary>
-        private List<HeatMapData> _heatMapInfo;
+        private List<HeatMapData> heatMapInfo;
         /// <summary>
         /// Private Collection of type Map Shape
         /// </summary>
-        private List<MapShape> _shapes = new List<MapShape>();
-        public MapShape mapShape;
-        private IEventAggregator _eventAggregator;
-        #endregion     
-
-       #region Constructor
-       /// <summary>
-       /// Constructor
+        private List<MapShape> shapes = new List<MapShape>();
+        /// <summary>
+        /// Map shape
         /// </summary>
-       /// <param name="dataContextSource">ViewModelHeatMap as Data context for this View</param>
-       public ViewHeatMap(ViewModelHeatMap dataContextSource)
-       {
-           InitializeComponent();
-           this.DataContext = dataContextSource;
-           _eventAggregator = (this.DataContext as ViewModelHeatMap)._eventAggregator;
-           this.DataContextHeatMap = dataContextSource;
-           dataContextSource.RetrieveHeatMapDataCompletedEvent += new RetrieveHeatMapDataCompleteEventHandler(dataContextSource_RetrieveHeatMapDataCompletedEvent);
-           dataContextSource.heatMapDataLoadedEvent +=
-           new DataRetrievalProgressIndicatorEventHandler(dataContextSource_heatMapDataLoadedEvent);
-       }
-       #endregion
+        public MapShape mapShape;
+        /// <summary>
+        /// Event Aggregator 
+        /// </summary>
+        private IEventAggregator eventAggregator;
+        #endregion
 
-       #region Properties
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">ViewModelHeatMap as Data context for this View</param>
+        public ViewHeatMap(ViewModelHeatMap dataContextSource)
+        {
+            InitializeComponent();
+            this.DataContext = dataContextSource;
+            eventAggregator = (this.DataContext as ViewModelHeatMap).eventAggregator;
+            this.DataContextHeatMap = dataContextSource;
+            dataContextSource.RetrieveHeatMapDataCompletedEvent += new RetrieveHeatMapDataCompleteEventHandler(dataContextSource_RetrieveHeatMapDataCompletedEvent);
+            dataContextSource.HeatMapDataLoadedEvent +=
+            new DataRetrievalProgressIndicatorEventHandler(dataContextSource_heatMapDataLoadedEvent);
+        }
+        #endregion
 
-       /// <summary>
-       /// Property of the type of View Model for this view
-       /// </summary>
-       private ViewModelHeatMap _dataContextHeatMap;
-       public ViewModelHeatMap DataContextHeatMap
-       {
-           get { return _dataContextHeatMap; }
-           set { _dataContextHeatMap = value; }
-       }
+        #region Properties
+        /// <summary>
+        /// Property of the type of View Model for this view
+        /// </summary>
+        private ViewModelHeatMap dataContextHeatMap;
+        public ViewModelHeatMap DataContextHeatMap
+        {
+            get { return dataContextHeatMap; }
+            set { dataContextHeatMap = value; }
+        }
+        /// <summary>
+        /// True is gadget is currently on display
+        /// </summary>
+        private bool isActive;
+        public override bool IsActive
+        {
+            get { return isActive; }
+            set
+            {
+                isActive = value;
+                if (DataContextHeatMap != null)
+                    DataContextHeatMap.IsActive = isActive;
+            }
+        }
+        /// <summary>
+        /// Selector Payload from Dashboard
+        /// </summary>
+        private DashboardGadgetPayload selectorPayload;
+        public DashboardGadgetPayload SelectorPayload
+        {
+            get
+            {
+                if (selectorPayload == null)
+                    selectorPayload = new DashboardGadgetPayload();
+                return selectorPayload;
+            }
+            set { selectorPayload = value; }
+        }
+        #endregion
 
-       /// <summary>
-       /// True is gadget is currently on display
-       /// </summary>
-       private bool _isActive;
-       public override bool IsActive
-       {
-           get { return _isActive; }
-           set
-           {
-               _isActive = value;
-               if (DataContextHeatMap != null)
-                   DataContextHeatMap.IsActive = _isActive;
-           }
-       }
-
-       private DashboardGadgetPayload _selectorPayload;
-       public DashboardGadgetPayload SelectorPayload
-       {
-           get
-           {
-               if (_selectorPayload == null)
-                   _selectorPayload = new DashboardGadgetPayload();
-               return _selectorPayload;
-           }
-           set
-           {
-               _selectorPayload = value;
-           }
-       }
-       #endregion
-
-       #region Private Methods
-
-       /// <summary>
+        #region Private Methods
+        /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
         /// <param name="e"></param>
-         private void dataContextSource_RetrieveHeatMapDataCompletedEvent(Common.RetrieveHeatMapDataCompleteEventArgs e)
+        private void dataContextSource_RetrieveHeatMapDataCompletedEvent(Common.RetrieveHeatMapDataCompleteEventArgs e)
         {
-            _heatMapInfo = e.HeatMapInfo;
+            heatMapInfo = e.HeatMapInfo;
 
-            if (_heatMapInfo != null)
+            if (heatMapInfo != null)
             {
-                foreach (MapShape _shape in _shapes)
+                foreach (MapShape shape in shapes)
                 {
-                    SetAdditionalData(_shape);
+                    SetAdditionalData(shape);
                 }
-            }            
+            }
         }
         /// <summary>
         /// Adding Colour to Each Shape
         /// </summary>
-        /// <param name="_shape">Shape</param>
+        /// <param name="shape">Shape</param>
         /// <param name="countryRecord">Country record of type heat map data</param>
-         private void AddColorizerToInformationLayer(MapShape _shape, HeatMapData countryRecord)
-         {
-             if ((int)(countryRecord.CountryPerformance) == 3)
-                 _shape.Fill = new SolidColorBrush(Colors.Green);
-             else
-                 if ((int)(countryRecord.CountryPerformance) == 1)
-                     _shape.Fill = new SolidColorBrush(Colors.Red);
-                 else
-                     if ((int)(countryRecord.CountryPerformance) == 2)
-                         _shape.Fill = new SolidColorBrush(Colors.Gray);
-                     else
-                         if ((int)(countryRecord.CountryPerformance) == 0)
-                             _shape.Fill = new SolidColorBrush(Colors.White);                     
-         }
+        private void AddColorizerToInformationLayer(MapShape shape, HeatMapData countryRecord)
+        {
+            if ((int)(countryRecord.CountryPerformance) == 3)
+            {
+                shape.Fill = new SolidColorBrush(Colors.Green);
+            }
+            else
+                if ((int)(countryRecord.CountryPerformance) == 1)
+                {
+                    shape.Fill = new SolidColorBrush(Colors.Red);
+                }
+                else
+                    if ((int)(countryRecord.CountryPerformance) == 2)
+                    {
+                        shape.Fill = new SolidColorBrush(Colors.Gray);
+                    }
+                    else
+                        if ((int)(countryRecord.CountryPerformance) == 0)
+                        {
+                            shape.Fill = new SolidColorBrush(Colors.White);
+                        }
+        }
 
-         /// <summary>
-         /// Adding default Colour to  Shape with no values
-         /// </summary>
-         /// <param name="_shape">Shape</param>         
-         private void AddTransparentColorizerToInformationLayer(MapShape _shape)
-         {
-             _shape.Fill = new SolidColorBrush(Colors.Transparent);             
-         }
+        /// <summary>
+        /// Adding default Colour to  Shape with no values
+        /// </summary>
+        /// <param name="shape">Shape</param>         
+        private void AddTransparentColorizerToInformationLayer(MapShape shape)
+        {
+            shape.Fill = new SolidColorBrush(Colors.Transparent);
+        }
 
         /// <summary>
         /// Completed event for Map Preview
@@ -170,24 +180,21 @@ namespace GreenField.Gadgets.Views
                     toolTip.Content = new ExtendedDataWraper() { Data = shape.ExtendedData };
                     toolTip.ContentTemplate = this.Resources["CustomToolTipDataTemplate"] as DataTemplate;
                     ToolTipService.SetToolTip(shape, toolTip);
-                    _shapes.Add(shape);
+                    shapes.Add(shape);
                     shape.MouseLeftButtonUp += new MouseButtonEventHandler(shape_MouseLeftButtonUp);
                     this.SetAdditionalData(shape);
                 }
             }
-
-            _heatMapInfo = ((ViewModelHeatMap)this.DataContext).HeatMapInfo;
+            heatMapInfo = ((ViewModelHeatMap)this.DataContext).HeatMapInfo;
         }
+
         /// <summary>
         /// Registers Properties for Heat Map
         /// </summary>
         /// <param name="shape">Map Shape</param>
         private void SetAdditionalData(MapShape shape)
-        {
-            //ExtendedDataWraper propertyName = new ExtendedDataWraper();
-            //propertyName.Data = shape.ExtendedData;
+        {            
             ExtendedData data = shape.ExtendedData;
-
             if (data != null)
             {
                 if (!data.PropertySet.ContainsKey(COUNTRY_PERFORMANCE_FIELD))
@@ -198,11 +205,11 @@ namespace GreenField.Gadgets.Views
                 {
                     data.PropertySet.RegisterProperty(COUNTRY_YTD_FIELD, "CountryYTD", typeof(Decimal), Convert.ToDecimal(0));
                 }
-               
-                if (_heatMapInfo != null)
+
+                if (heatMapInfo != null)
                 {
                     string countryID = (string)shape.ExtendedData.GetValue("ISO_2DIGIT");
-                    HeatMapData countryRecord = _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault();
+                    HeatMapData countryRecord = heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault();
 
                     if (countryRecord != null)
                     {
@@ -217,11 +224,11 @@ namespace GreenField.Gadgets.Views
                         AddTransparentColorizerToInformationLayer(shape);
                     }
                 }
-            }            
+            }
         }
-       #endregion
+        #endregion
 
-       #region Event Handlers
+        #region Event Handlers
 
         /// <summary>
         /// Data Retrieval Indicator
@@ -238,31 +245,35 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorMap.IsBusy = false;
             }
         }
+        /// <summary>
+        /// Mouse Button up event binded with the view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void shape_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             MapShape shape = sender as MapShape;
             if (shape == null)
+            {
                 return;
-
+            }
             string country = (string)shape.ExtendedData.GetValue("ISO_2DIGIT");
             SelectorPayload.HeatMapCountryData = country;
-            _eventAggregator.GetEvent<HeatMapClickEvent>().Publish(SelectorPayload.HeatMapCountryData);
+            eventAggregator.GetEvent<HeatMapClickEvent>().Publish(SelectorPayload.HeatMapCountryData);
         }
         #endregion
 
-       #region RemoveEvents
+        #region RemoveEvents
         /// <summary>
         /// Disposing events
         /// </summary>
         public override void Dispose()
         {
-            this.DataContextHeatMap.heatMapDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_heatMapDataLoadedEvent);
+            this.DataContextHeatMap.HeatMapDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_heatMapDataLoadedEvent);
             this.DataContextHeatMap.Dispose();
             this.DataContextHeatMap = null;
             this.DataContext = null;
         }
         #endregion
-
-        
-    }   
+    }
 }
