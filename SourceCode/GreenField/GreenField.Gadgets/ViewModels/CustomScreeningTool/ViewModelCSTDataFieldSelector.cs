@@ -1517,7 +1517,7 @@ namespace GreenField.Gadgets.ViewModels
             return saveAsXml;
         }
         /// <summary>
-        /// method to check if existing user preference contains non existing data points
+        /// Method to check if existing user preference contains non existing data points
         /// </summary>
         /// <param name="availableScreeningIds"></param>
         /// <param name="screeningIdentifier"></param>

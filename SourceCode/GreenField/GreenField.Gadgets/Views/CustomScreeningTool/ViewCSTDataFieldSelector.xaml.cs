@@ -66,79 +66,43 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         /// <summary>
-        /// ReorderBehavior Reordered Event Handler - Rebinds Datacontext post reordering
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">ReorderedEventArgs</param>
-        private void ReorderBehavior_Reordered(object sender, ReorderedEventArgs e)
-        {
-            //Update MarketSnapshotPreferenceInfo after reordering
-            //DataContextViewModelCSTDataFieldSelector.SelectedFieldsDataList = DataContextViewModelCSTDataFieldSelector.SelectedFieldsDataList
-            //    .Select(record => record.SelectedFieldsDataList)
-            //    .ToList();
-
-            #region Client cache implementation
-            //if (_dataContextSource.PopulatedMarketPerformanceSnapshotInfo != null)
-            //{
-            //    PopulatedMarketSnapshotPerformanceData selectedPopulatedMarketPerformanceSnapshotInfo = _dataContextSource.PopulatedMarketPerformanceSnapshotInfo
-            //                        .Where(record => record.MarketSnapshotSelectionInfo == _dataContextSource.SelectedMarketSnapshotSelectionInfo).FirstOrDefault();
-
-            //    if (selectedPopulatedMarketPerformanceSnapshotInfo != null)
-            //    {
-            //        _dataContextSource.PopulatedMarketPerformanceSnapshotInfo
-            //            .Where(record => record.MarketSnapshotSelectionInfo == _dataContextSource.SelectedMarketSnapshotSelectionInfo)
-            //            .FirstOrDefault()
-            //            .MarketPerformanceSnapshotInfo = _dataContextSource.MarketPerformanceSnapshotInfo.ToList();
-            //    }
-            //}
-            #endregion
-
-            //this.radGridSnapshot.Rebind();
-            //_dataContextSource.TestEntityOrdering();
-
-        }
-
-        /// <summary>
         /// ReorderBehavior Reordering Event Handler - Adjusts Entity Order and GroupPreferenceId of entities after reordering
         /// </summary>
         /// <param name="sender">Sender</param>
         /// <param name="e">ReorderingEventArgs</param>
         private void ReorderBehavior_Reordering(object sender, ReorderingEventArgs e)
         {
-            //If there are no dragged Items reordering is redundant
+            // if there are no dragged Items reordering is redundant
             if (e.DraggedItems.Count().Equals(0))
                 return;
 
             #region Get Dragged Element
-            //Dragged Element
+            // dragged Element
             CSTUserPreferenceInfo draggedElement = e.DraggedItems.FirstOrDefault() as CSTUserPreferenceInfo;
 
-            //Null Exception Handling
+            // null Exception Handling
             if (draggedElement == null)
                 return;
             #endregion
 
             #region Get Data Context
-            //Collection of CSTUserPreferenceInfo binded to the grid
+            // collection of CSTUserPreferenceInfo binded to the grid
             List<CSTUserPreferenceInfo> dataContext = (e.SourceGrid.ItemsSource as ObservableCollection<CSTUserPreferenceInfo>).ToList();
 
-            //Null Exception Handling
+            // null Exception Handling
             if (dataContext == null)
                 return;
             #endregion
 
             #region Get Drag Drop Details
-            //Drag Drop Indexes
+            // drag Drop Indexes
             int dragIndex = dataContext.IndexOf(draggedElement);
             int dropIndex = e.DropIndex;
 
-            //True if insertion is done after an element and False if it's done  before the element
+            // true if insertion is done after an element and False if it's done  before the element
             bool dropPositionIsAfter = DragDropPosition.Value == DropPosition.After;
 
-            //dataContext.ElementAt(dropIndex).DataPointsOrder = dropPositionIsAfter ? dataContext.ElementAt(dragIndex).DataPointsOrder + (dropIndex - dragIndex)
-            //                                                                       : dataContext.ElementAt(dragIndex).DataPointsOrder - (dragIndex - dropIndex);
-
-            //Check if the drop Index exceed the Count of List - item dropped after the last element
+            // check if the drop Index exceed the Count of List - item dropped after the last element
             bool dropIndexExceedsCount = dropIndex >= dataContext.Count;
             #endregion
 
@@ -169,6 +133,7 @@ namespace GreenField.Gadgets.Views
             };
             #endregion
 
+            // update the data points order of list
             UpdateParametersForSameGroupReordering(dataContext, dragUserPreferenceInfo, dropUserPreferenceInfo, dropIndexExceedsCount);            
         }
 
@@ -181,28 +146,31 @@ namespace GreenField.Gadgets.Views
         private void UpdateParametersForSameGroupReordering(List<CSTUserPreferenceInfo> dataContext,
             CSTUserPreferenceInfo dragUserPreferenceInfo, CSTUserPreferenceInfo dropUserPreferenceInfo, bool dropIndexExceedsCount)
         {
-            ////Dropped at end
-            //if (dropIndexExceedsCount)
-            //{
-            //    if (dragUserPreferenceInfo.DataPointsOrder != dropUserPreferenceInfo.DataPointsOrder)
-            //    {
-            //        dropUserPreferenceInfo.DataPointsOrder = dataContext.Count + 1;
-            //    }
-            //}
-
             //Check drop flow - top ot bottom or vice versa
             bool dropLocationExceedsDragLocation = dropUserPreferenceInfo.DataPointsOrder > dragUserPreferenceInfo.DataPointsOrder;
 
             foreach (CSTUserPreferenceInfo record in dataContext)
             {
-                //Check if the record is between drag and drop location
-                bool recordIsBetweenDragDropLocation = dropLocationExceedsDragLocation
-                    ? record.DataPointsOrder > dragUserPreferenceInfo.DataPointsOrder
-                        && record.DataPointsOrder < dropUserPreferenceInfo.DataPointsOrder
-                    : record.DataPointsOrder < dragUserPreferenceInfo.DataPointsOrder
-                        && record.DataPointsOrder >= dropUserPreferenceInfo.DataPointsOrder;
+                // check if the record is between drag and drop location
+                bool recordIsBetweenDragDropLocation;
+                if (dropIndexExceedsCount)
+                {
+                    recordIsBetweenDragDropLocation = dropLocationExceedsDragLocation
+                        ? record.DataPointsOrder > dragUserPreferenceInfo.DataPointsOrder
+                            && record.DataPointsOrder <= dropUserPreferenceInfo.DataPointsOrder
+                        : record.DataPointsOrder < dragUserPreferenceInfo.DataPointsOrder
+                            && record.DataPointsOrder >= dropUserPreferenceInfo.DataPointsOrder;
+                }
+                else
+                {
+                    recordIsBetweenDragDropLocation = dropLocationExceedsDragLocation
+                        ? record.DataPointsOrder > dragUserPreferenceInfo.DataPointsOrder
+                            && record.DataPointsOrder < dropUserPreferenceInfo.DataPointsOrder
+                        : record.DataPointsOrder < dragUserPreferenceInfo.DataPointsOrder
+                            && record.DataPointsOrder >= dropUserPreferenceInfo.DataPointsOrder;
+                }
 
-                //Shift record order between drag and drop location based on drop flow
+                // shift record order between drag and drop location based on drop flow
                 if (recordIsBetweenDragDropLocation)
                 {
                     record.DataPointsOrder = dropLocationExceedsDragLocation
@@ -211,15 +179,22 @@ namespace GreenField.Gadgets.Views
                     continue;
                 }
 
-                //Check if the record is the drag element
+                // check if the record is the drag element
                 bool recordIsDragLocation = record.DataPointsOrder == dragUserPreferenceInfo.DataPointsOrder;
 
-                //Change record order if the record element is the drag element
+                // change record order if the record element is the drag element
                 if (recordIsDragLocation)
                 {
-                    record.DataPointsOrder = dropLocationExceedsDragLocation
-                        ? dropUserPreferenceInfo.DataPointsOrder - 1
-                        : dropUserPreferenceInfo.DataPointsOrder;
+                    if (dropIndexExceedsCount)
+                    {
+                        record.DataPointsOrder = dropUserPreferenceInfo.DataPointsOrder;
+                    }
+                    else
+                    {
+                        record.DataPointsOrder = dropLocationExceedsDragLocation
+                            ? dropUserPreferenceInfo.DataPointsOrder - 1
+                            : dropUserPreferenceInfo.DataPointsOrder;
+                    }
                 }
             }
         }
