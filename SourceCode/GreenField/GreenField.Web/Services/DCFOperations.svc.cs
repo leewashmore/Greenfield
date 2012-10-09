@@ -539,6 +539,38 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Service method to Delete Existing fair value records for a Security
+        /// </summary>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <returns>Result of the Operation</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public bool DeleteFairValues(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
+                if (data == null)
+                {
+                    return false;
+                }
+                int? securityId = data.SECURITY_ID;
+                if (securityId == null)
+                {
+                    return false;
+                }
+                entity.DeleteDCFFairValueData(Convert.ToString(securityId));
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
 
         #endregion
 

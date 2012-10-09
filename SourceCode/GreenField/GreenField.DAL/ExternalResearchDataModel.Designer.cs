@@ -3297,6 +3297,25 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction("InsertDCFFairValue", sECURITY_IDParameter, vALUE_TYPEParameter, fV_MEASUREParameter, fV_BUYParameter, fV_SELLParameter, cURRENT_MEASURE_VALUEParameter, uPSIDEParameter, uPDATEDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sECURITY_ID">No Metadata Documentation available.</param>
+        public int DeleteDCFFairValueData(global::System.String sECURITY_ID)
+        {
+            ObjectParameter sECURITY_IDParameter;
+            if (sECURITY_ID != null)
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", sECURITY_ID);
+            }
+            else
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("DeleteDCFFairValueData", sECURITY_IDParameter);
+        }
 
         #endregion
     }

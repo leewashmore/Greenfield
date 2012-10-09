@@ -1080,10 +1080,11 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         private void InsertFairValuesCommandMethod(object param)
         {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                StoreEPSValue();
-                StoreBVPSValue();
+                DeleteExistingFairValues();
             }
             catch (Exception ex)
             {
@@ -1419,6 +1420,36 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            Logging.LogEndMethod(logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Delete Existing DCF Fair value data from the table for selected Security
+        /// </summary>
+        /// <param name="result">Result of the Operation</param>
+        public void DeleteDCFFairValueCompleted(bool result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                if (result != false)
+                {
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    StoreEPSValue();
+                    StoreBVPSValue();
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    Prompt.ShowDialog("There was some problem storing the DCF data");
                 }
             }
             catch (Exception ex)
@@ -2159,6 +2190,24 @@ namespace GreenField.Gadgets.ViewModels
                         dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PE", 187, 0, FV_Sell, nCurrentPE, upside, DateTime.Now, StoreBVPSFairValueCallbackMethod);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Delete Existing Fair Values Data
+        /// </summary>
+        private void DeleteExistingFairValues()
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                dbInteractivity.DeleteDCFFairValue(EntitySelectionData, DeleteDCFFairValueCompleted);
             }
             catch (Exception ex)
             {

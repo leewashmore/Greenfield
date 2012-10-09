@@ -30,8 +30,9 @@ namespace GreenField.Web.Helpers
             get
             {
                 if (null == dimensionEntity)
+                {
                     dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
-
+                }
                 return dimensionEntity;
             }
         }

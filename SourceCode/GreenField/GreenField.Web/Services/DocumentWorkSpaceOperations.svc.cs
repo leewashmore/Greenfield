@@ -19,6 +19,9 @@ using GreenField.Web.ListsDefinitions;
 
 namespace GreenField.Web.Services
 {
+    /// <summary>
+    /// Document Module Services
+    /// </summary>
     [ServiceContract]
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
@@ -121,8 +124,7 @@ namespace GreenField.Web.Services
                 return _copyService;
             }
         }
-
-
+        
         /// <summary>
         /// Instance of ListsWebService
         /// </summary>

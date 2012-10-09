@@ -570,6 +570,9 @@
           <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
+        <Function Name="DeleteDCFFairValueData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="Get_Consensus_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
@@ -1256,6 +1259,9 @@
             <Parameter Name="CURRENT_MEASURE_VALUE" Mode="In" Type="Decimal" />
             <Parameter Name="UPSIDE" Mode="In" Type="Decimal" />
             <Parameter Name="UPDATED" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteDCFFairValueData">
+            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -2635,6 +2641,7 @@
 					<FunctionImportMapping FunctionImportName="SetFairValue" FunctionName="ExternalResearchModel.Store.SetFairValue" />
           <FunctionImportMapping FunctionImportName="GetDCFFairValue" FunctionName="ExternalResearchModel.Store.GetDCFFairValue" />
           <FunctionImportMapping FunctionImportName="InsertDCFFairValue" FunctionName="ExternalResearchModel.Store.InsertDCFFairValue" />
+          <FunctionImportMapping FunctionImportName="DeleteDCFFairValueData" FunctionName="ExternalResearchModel.Store.DeleteDCFFairValueData" />
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />

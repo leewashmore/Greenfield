@@ -19,6 +19,7 @@ using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.UserSession;
+using GreenField.ServiceCaller.Helper;
 
 namespace GreenField.ServiceCaller
 {
@@ -151,7 +152,7 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.Helper.ServiceFault>)
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
@@ -1587,7 +1588,7 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(null);
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), 
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(),
                     SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
@@ -2066,7 +2067,7 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
-        
+
         #endregion
 
         #endregion
@@ -2617,7 +2618,7 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
-                
+
         #endregion
 
         /// <summary>
@@ -4552,6 +4553,56 @@ namespace GreenField.ServiceCaller
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
+        /// <summary>
+        /// Delete FairValues for DCF
+        /// </summary>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <param name="callback">Result of the Operation</param>
+        public void DeleteDCFFairValue(EntitySelectionData entitySelectionData, Action<bool> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DCFOperationsClient client = new DCFOperationsClient();
+            client.DeleteFairValuesAsync(entitySelectionData);
+            client.DeleteFairValuesCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result);
+                        }
+                        else
+                        {
+                            callback(false);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                    {
+                        callback(false);
+                    }
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                    {
+                        callback(false);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };

@@ -587,6 +587,12 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         System.IAsyncResult BeginInsertFairValues(GreenField.DataContracts.EntitySelectionData entitySelectionData, string valueType, System.Nullable<int> fvMeasure, System.Nullable<decimal> fvbuy, System.Nullable<decimal> fvSell, System.Nullable<decimal> currentMeasureValue, System.Nullable<decimal> upside, System.Nullable<System.DateTime> updated, System.AsyncCallback callback, object asyncState);
         
         bool EndInsertFairValues(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DCFOperations/DeleteFairValues", ReplyAction="http://tempuri.org/DCFOperations/DeleteFairValuesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/DeleteFairValuesServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginDeleteFairValues(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
+        
+        bool EndDeleteFairValues(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -766,6 +772,25 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class DeleteFairValuesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public DeleteFairValuesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class DCFOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.DCFDefinitions.DCFOperations>, GreenField.ServiceCaller.DCFDefinitions.DCFOperations {
         
         private BeginOperationDelegate onBeginRetrieveDCFAnalysisDataDelegate;
@@ -821,6 +846,12 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         private EndOperationDelegate onEndInsertFairValuesDelegate;
         
         private System.Threading.SendOrPostCallback onInsertFairValuesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginDeleteFairValuesDelegate;
+        
+        private EndOperationDelegate onEndDeleteFairValuesDelegate;
+        
+        private System.Threading.SendOrPostCallback onDeleteFairValuesCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -892,6 +923,8 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         public event System.EventHandler<RetrieveFairValueCompletedEventArgs> RetrieveFairValueCompleted;
         
         public event System.EventHandler<InsertFairValuesCompletedEventArgs> InsertFairValuesCompleted;
+        
+        public event System.EventHandler<DeleteFairValuesCompletedEventArgs> DeleteFairValuesCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -1325,6 +1358,52 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
                         updated}, this.onEndInsertFairValuesDelegate, this.onInsertFairValuesCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DCFDefinitions.DCFOperations.BeginDeleteFairValues(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginDeleteFairValues(entitySelectionData, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndDeleteFairValues(System.IAsyncResult result) {
+            return base.Channel.EndDeleteFairValues(result);
+        }
+        
+        private System.IAsyncResult OnBeginDeleteFairValues(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            return ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).BeginDeleteFairValues(entitySelectionData, callback, asyncState);
+        }
+        
+        private object[] OnEndDeleteFairValues(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndDeleteFairValues(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnDeleteFairValuesCompleted(object state) {
+            if ((this.DeleteFairValuesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.DeleteFairValuesCompleted(this, new DeleteFairValuesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void DeleteFairValuesAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData) {
+            this.DeleteFairValuesAsync(entitySelectionData, null);
+        }
+        
+        public void DeleteFairValuesAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, object userState) {
+            if ((this.onBeginDeleteFairValuesDelegate == null)) {
+                this.onBeginDeleteFairValuesDelegate = new BeginOperationDelegate(this.OnBeginDeleteFairValues);
+            }
+            if ((this.onEndDeleteFairValuesDelegate == null)) {
+                this.onEndDeleteFairValuesDelegate = new EndOperationDelegate(this.OnEndDeleteFairValues);
+            }
+            if ((this.onDeleteFairValuesCompletedDelegate == null)) {
+                this.onDeleteFairValuesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDeleteFairValuesCompleted);
+            }
+            base.InvokeAsync(this.onBeginDeleteFairValuesDelegate, new object[] {
+                        entitySelectionData}, this.onEndDeleteFairValuesDelegate, this.onDeleteFairValuesCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1522,6 +1601,19 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
             public bool EndInsertFairValues(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("InsertFairValues", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginDeleteFairValues(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = entitySelectionData;
+                System.IAsyncResult _result = base.BeginInvoke("DeleteFairValues", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndDeleteFairValues(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("DeleteFairValues", _args, result)));
                 return _result;
             }
         }

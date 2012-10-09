@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBInteractivity.cs" />
+    <Compile Include="Helper\ServiceFault.cs" />
     <Compile Include="IDBInteractivity.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IManageDashboard.cs" />

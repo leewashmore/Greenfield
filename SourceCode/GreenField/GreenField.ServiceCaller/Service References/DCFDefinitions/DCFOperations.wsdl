@@ -92,6 +92,15 @@
   <wsdl:message name="DCFOperations_InsertFairValues_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DCFOperations_DeleteFairValues_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFairValues" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_DeleteFairValues_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFairValuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_DeleteFairValues_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="DCFOperations">
     <wsdl:operation name="RetrieveDCFAnalysisData">
       <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveDCFAnalysisData" message="tns:DCFOperations_RetrieveDCFAnalysisData_InputMessage" />
@@ -137,6 +146,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/InsertFairValues" message="tns:DCFOperations_InsertFairValues_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/InsertFairValuesResponse" message="tns:DCFOperations_InsertFairValues_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/InsertFairValuesServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_InsertFairValues_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFairValues">
+      <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/DeleteFairValues" message="tns:DCFOperations_DeleteFairValues_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/DeleteFairValuesResponse" message="tns:DCFOperations_DeleteFairValues_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/DeleteFairValuesServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_DeleteFairValues_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DCFOperations" type="tns:DCFOperations">
@@ -239,6 +253,18 @@
     </wsdl:operation>
     <wsdl:operation name="InsertFairValues">
       <soap:operation soapAction="http://tempuri.org/DCFOperations/InsertFairValues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFairValues">
+      <soap:operation soapAction="http://tempuri.org/DCFOperations/DeleteFairValues" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
