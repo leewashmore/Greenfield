@@ -247,76 +247,78 @@ namespace GreenField.Gadgets.Views
 
             foreach (RelativePerformanceSectorData sectorData in e.RelativePerformanceSectorInfo)
             {
-                Telerik.Windows.Controls.GridViewDataColumn dataColumn = new Telerik.Windows.Controls.GridViewDataColumn();
-                dataColumn.Header = sectorData.SectorName;
-                dataColumn.UniqueName = sectorData.SectorName;
-                dataColumn.DataMemberBinding = new System.Windows.Data.Binding("RelativePerformanceCountrySpecificInfo[" + cIndex + "]");
+                    Telerik.Windows.Controls.GridViewDataColumn dataColumn = new Telerik.Windows.Controls.GridViewDataColumn();
+                    dataColumn.Header = sectorData.SectorName;
+                    dataColumn.UniqueName = sectorData.SectorName;
+                    dataColumn.DataMemberBinding = new System.Windows.Data.Binding("RelativePerformanceCountrySpecificInfo[" + cIndex + "]");
 
-                StringBuilder CellTemp = new StringBuilder();
-                CellTemp.Append("<DataTemplate");
-                CellTemp.Append(" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'");
-                CellTemp.Append(" xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'");
+                    StringBuilder CellTemp = new StringBuilder();
+                    CellTemp.Append("<DataTemplate");
+                    CellTemp.Append(" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'");
+                    CellTemp.Append(" xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'");
 
-                //Be sure to replace "YourNamespace" and "YourAssembly" with your app's 
-                //actual namespace and assembly here
-                //      Changed the following block to use converter and publish in Basis Points - Lane - 2012-09-26
-                CellTemp.Append(" xmlns:lanes='clr-namespace:GreenField.Gadgets.Helpers;assembly=GreenField.Gadgets'");
-                CellTemp.Append(" xmlns:local='clr-namespace:GreenField.Gadgets.Views;assembly=GreenField.Gadgets'>");
-                CellTemp.Append("<StackPanel Orientation='Horizontal'>");
-                CellTemp.Append("<TextBlock>");
-                CellTemp.Append("   <TextBlock.Text>");
-                CellTemp.Append("       <Binding Path='RelativePerformanceCountrySpecificInfo[" + cIndex + "].Alpha'>");
-                CellTemp.Append("           <Binding.Converter>");
-                CellTemp.Append("               <lanes:BasisPointsConverter/>");
-                CellTemp.Append("           </Binding.Converter>");
-                CellTemp.Append("       </Binding>");
-                CellTemp.Append("   </TextBlock.Text>");
-                CellTemp.Append("</TextBlock>");
-                CellTemp.Append("</StackPanel>");
-                CellTemp.Append("</DataTemplate>");
-                
-                dataColumn.CellTemplate = XamlReader.Load(CellTemp.ToString()) as DataTemplate;
+                    //Be sure to replace "YourNamespace" and "YourAssembly" with your app's 
+                    //actual namespace and assembly here
+                    //      Changed the following block to use converter and publish in Basis Points - Lane - 2012-09-26
+                    CellTemp.Append(" xmlns:lanes='clr-namespace:GreenField.Gadgets.Helpers;assembly=GreenField.Gadgets'");
+                    CellTemp.Append(" xmlns:local='clr-namespace:GreenField.Gadgets.Views;assembly=GreenField.Gadgets'>");
+                    CellTemp.Append("<StackPanel Orientation='Horizontal'>");
+                    CellTemp.Append("<TextBlock>");
+                    CellTemp.Append("   <TextBlock.Text>");
+                    CellTemp.Append("       <Binding Path='RelativePerformanceCountrySpecificInfo[" + cIndex + "].Alpha'>");
+                    CellTemp.Append("           <Binding.Converter>");
+                    CellTemp.Append("               <lanes:BasisPointsConverter/>");
+                    CellTemp.Append("           </Binding.Converter>");
+                    CellTemp.Append("       </Binding>");
+                    CellTemp.Append("   </TextBlock.Text>");
+                    CellTemp.Append("</TextBlock>");
+                    CellTemp.Append("</StackPanel>");
+                    CellTemp.Append("</DataTemplate>");
 
-                decimal? aggregateSectorAlphaValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.Alpha == null ? 0 : t.Alpha);
-                string aggregateSectorAlpha = aggregateSectorAlphaValue == null ? String.Empty : Decimal.Parse(aggregateSectorAlphaValue.ToString()).ToString();
-                decimal? aggregateSectorActiviePositionValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.ActivePosition == null ? 0 : t.ActivePosition);
-                string aggregateSectorActiviePosition = aggregateSectorActiviePositionValue == null ? String.Empty : (Decimal.Parse(aggregateSectorActiviePositionValue.ToString())).ToString();
+                    dataColumn.CellTemplate = XamlReader.Load(CellTemp.ToString()) as DataTemplate;
 
-                var aggregateAlphaSumFunction = new AggregateFunction<RelativePerformanceData, string>
-                {
-                    //AggregationExpression = Models => string.Format("{0} ({1}%)", aggregateSectorAlpha, aggregateSectorActiviePosition),
-                    AggregationExpression = Models => aggregateSectorAlpha,
-                    FunctionName = sectorData.SectorId.ToString()
-                };
+                    decimal? aggregateSectorAlphaValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex))
+                                                                                  .Sum(t => t.Alpha == null ? 0 : t.Alpha);
+                    string aggregateSectorAlpha = aggregateSectorAlphaValue == null ? String.Empty : Decimal.Parse(aggregateSectorAlphaValue.ToString()).ToString();
+                    decimal? aggregateSectorActiviePositionValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex))
+                                                                                            .Sum(t => t.ActivePosition == null ? 0 : t.ActivePosition);
+                    string aggregateSectorActiviePosition = aggregateSectorActiviePositionValue == null ? String.Empty
+                                                                                             : (Decimal.Parse(aggregateSectorActiviePositionValue.ToString())).ToString();
 
-                dataColumn.FooterTextAlignment = TextAlignment.Right;
-                dataColumn.Width = GridViewLength.Auto;
-                dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
+                    var aggregateAlphaSumFunction = new AggregateFunction<RelativePerformanceData, string>
+                    {
+                        AggregationExpression = Models => aggregateSectorAlpha,
+                        FunctionName = sectorData.SectorId.ToString()
+                    };
 
-                TextBlock spFunctions = new TextBlock()
-                {
-                    Text = aggregateSectorActiviePosition.ToString(),
-                    Tag = sectorData.SectorId,
-                    TextAlignment = TextAlignment.Right,
-                    FontSize = 9
-                };
+                    dataColumn.FooterTextAlignment = TextAlignment.Right;
+                    dataColumn.Width = GridViewLength.Auto;
+                    dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
 
-                TextBlock footerText = new TextBlock()
-                {   
-                    Text = (Convert.ToDecimal(aggregateSectorAlpha) * 10000).ToString("n0"), //Needs to be displayed in basis points - Lane - 2012-09-25
-                    Tag = sectorData.SectorId,
-                    TextAlignment = TextAlignment.Right,
-                    FontSize = 9
-                };
+                    TextBlock spFunctions = new TextBlock()
+                    {
+                        Text = aggregateSectorActiviePosition.ToString(),
+                        Tag = sectorData.SectorId,
+                        TextAlignment = TextAlignment.Right,
+                        FontSize = 9
+                    };
+
+                    TextBlock footerText = new TextBlock()
+                    {
+                        Text = (Convert.ToDecimal(aggregateSectorAlpha) * 10000).ToString("n0"), //Needs to be displayed in basis points - Lane - 2012-09-25
+                        Tag = sectorData.SectorId,
+                        TextAlignment = TextAlignment.Right,
+                        FontSize = 9
+                    };
 
 
-                ToolTipService.SetToolTip(footerText, spFunctions);
-                dataColumn.Footer = footerText;
+                    ToolTipService.SetToolTip(footerText, spFunctions);
+                    dataColumn.Footer = footerText;
 
-                dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCellClickable"] as Style;
-                dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;
-                dataColumn.CellStyle = this.Resources["GridViewCellStyle"] as Style;
-                dgRelativePerformance.Columns.Insert(++cIndex, dataColumn);
+                    dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCellClickable"] as Style;
+                    dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;
+                    dataColumn.CellStyle = this.Resources["GridViewCellStyle"] as Style;
+                    dgRelativePerformance.Columns.Insert(++cIndex, dataColumn);
             }
 
             RelativePerformanceInfo = e.RelativePerformanceInfo;

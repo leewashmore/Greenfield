@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Practices.Prism.ViewModel;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
-using GreenField.DataContracts;
-using GreenField.Common;
 using System.Collections.Generic;
+using System.Windows;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -27,11 +19,10 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// MEF Singletons
         /// </summary>
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
-        private EntitySelectionData _entitySelectionData;
-
+        private IEventAggregator eventAggregator;
+        private IDBInteractivity dbInteractivity;
+        private ILoggerFacade logger;
+        private EntitySelectionData entitySelectionData;
         #endregion
 
         #region Constructor
@@ -40,46 +31,37 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public ViewModelCompositeFund(DashboardGadgetParam param)
         {
-            _logger = param.LoggerFacade;
-            _dbInteractivity = param.DBInteractivity;
-            _eventAggregator = param.EventAggregator;
+            logger = param.LoggerFacade;
+            dbInteractivity = param.DBInteractivity;
+            eventAggregator = param.EventAggregator;
             PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
 
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
             }
-           
-            //if (_entitySelectionData != null)
-            //{
-            //    HandleSecurityReferenceSetEvent(_entitySelectionData);
-            //}
         } 
         #endregion
 
         #region Properties
-
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get
-            {
-                return _isActive;
-            }
+            get{ return isActive; }
             set
             {
-                if (_isActive != value)
+                if (isActive != value)
                 {
-                    _isActive = value;
-                    if (_entitySelectionData != null && PortfolioSelectionData != null && IsActive)
+                    isActive = value;
+                    if (entitySelectionData != null && PortfolioSelectionData != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving Data based on selected security and portfolio");
-                        _dbInteractivity.RetrieveCompositeFundData(_entitySelectionData, PortfolioSelectionData, RetrieveCompositeFundDataCallBackMethod);
+                        dbInteractivity.RetrieveCompositeFundData(entitySelectionData, PortfolioSelectionData, RetrieveCompositeFundDataCallBackMethod);
                     }
                 }
             }
@@ -88,82 +70,97 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// DashboardGadgetPayLoad field
         /// </summary>
-        private PortfolioSelectionData _portfolioSelectionData;
+        private PortfolioSelectionData portfolioSelectionInfo;
         public PortfolioSelectionData PortfolioSelectionData
         {
-            get { return _portfolioSelectionData; }
+            get { return portfolioSelectionInfo; }
             set
             {
-                if (_portfolioSelectionData != value)
+                if (portfolioSelectionInfo != value)
                 {
-                    _portfolioSelectionData = value;
+                    portfolioSelectionInfo = value;
                     RaisePropertyChanged(() => PortfolioSelectionData);
                 }
             }
         }
 
         #region Busy Indicator
-        private bool _busyIndicatorIsBusy;
+        /// <summary>
+        /// if busy indicator is busy or not
+        /// </summary>
+        private bool busyIndicatorIsBusy;
         public bool BusyIndicatorIsBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return busyIndicatorIsBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
+                busyIndicatorIsBusy = value;
                 RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
             }
         }
 
-        private string _busyIndicatorContent;
+        /// <summary>
+        /// content to show below busy indicator
+        /// </summary>
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
         #endregion
 
-        private List<CompositeFundData> _compositeFundInfo;
+        /// <summary>
+        /// contain result set obtained from web service
+        /// </summary>
+        private List<CompositeFundData> compositeFundInfo;
         public List<CompositeFundData> CompositeFundInfo
         {
-            get { return _compositeFundInfo; }
+            get { return compositeFundInfo; }
             set
             {
-                if (_compositeFundInfo != value)
+                if (compositeFundInfo != value)
                 {
-                    _compositeFundInfo = value;
+                    compositeFundInfo = value;
                     RaisePropertyChanged(() => CompositeFundInfo);
                 }
             }
         }
 
-        private CompositeFundData _compositeDisplayData;
+        /// <summary>
+        /// create display data
+        /// </summary>
+        private CompositeFundData compositeDisplayData;
         public CompositeFundData CompositeDisplayData
         {
-            get { return _compositeDisplayData; }
+            get { return compositeDisplayData; }
             set 
             {
-                if (_compositeDisplayData != value)
+                if (compositeDisplayData != value)
                 {
-                    _compositeDisplayData = value;
+                    compositeDisplayData = value;
                     RaisePropertyChanged(() => CompositeDisplayData);
                     BusyIndicatorNotification();
                 }
             }
         }
 
-        private bool _displayIssuerIsChecked = false;
+        /// <summary>
+        /// contains value for chackbox
+        /// </summary>
+        private bool displayIssuerIsChecked = false;
         public bool DisplayIssuerIsChecked
         {
-            get { return _displayIssuerIsChecked; }
+            get { return displayIssuerIsChecked; }
             set 
             {
-                if (_displayIssuerIsChecked != value)
+                if (displayIssuerIsChecked != value)
                 {
-                    _displayIssuerIsChecked = value;
+                    displayIssuerIsChecked = value;
                     RaisePropertyChanged(() => DisplayIssuerIsChecked);
                     if (CompositeFundInfo != null && CompositeFundInfo.Count > 0)
                     {
@@ -172,9 +169,7 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
             }
-        }
-        
-
+        }      
         #endregion
 
         #region Event Handlers
@@ -185,30 +180,30 @@ namespace GreenField.Gadgets.ViewModels
         public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (portfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, portfolioSelectionData, 1);
                     PortfolioSelectionData = portfolioSelectionData;
-                    if (_entitySelectionData != null && PortfolioSelectionData != null && IsActive)
+                    if (entitySelectionData != null && PortfolioSelectionData != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving Data based on selected security and portfolio");
-                        _dbInteractivity.RetrieveCompositeFundData(_entitySelectionData, PortfolioSelectionData, RetrieveCompositeFundDataCallBackMethod);
+                        dbInteractivity.RetrieveCompositeFundData(entitySelectionData, PortfolioSelectionData, RetrieveCompositeFundDataCallBackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -218,33 +213,32 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSetEvent(EntitySelectionData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    _entitySelectionData = result;
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    entitySelectionData = result;
 
-                    if (_entitySelectionData != null && PortfolioSelectionData != null && IsActive)
+                    if (entitySelectionData != null && PortfolioSelectionData != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving Data based on selected security and portfolio");
-                        _dbInteractivity.RetrieveCompositeFundData(_entitySelectionData, PortfolioSelectionData, RetrieveCompositeFundDataCallBackMethod);
+                        dbInteractivity.RetrieveCompositeFundData(entitySelectionData, PortfolioSelectionData, RetrieveCompositeFundDataCallBackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
-
         #endregion
 
         #region CallBack Methods
@@ -255,7 +249,7 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveCompositeFundDataCallBackMethod(List<CompositeFundData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
@@ -265,7 +259,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
                 BusyIndicatorNotification();
             }
@@ -273,14 +267,19 @@ namespace GreenField.Gadgets.ViewModels
             {
                 BusyIndicatorNotification();
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
 
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
         #region Helper Method
+        /// <summary>
+        /// show data according to issuer view checkbox
+        /// </summary>
+        /// <param name="record"></param>
+        /// <param name="issuerViewChecked"></param>
         public void CreateDisplayData(List<CompositeFundData> record,bool issuerViewChecked)
         {
             if (record != null && record.Count > 0)
@@ -289,7 +288,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     CompositeDisplayData = record[1];
                 }
-
                 else
                 {
                     CompositeDisplayData = record[0];
@@ -302,10 +300,15 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSetEvent);
+            eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSetEvent);
         }
 
+        /// <summary>
+        /// set busy indicator status
+        /// </summary>
+        /// <param name="showBusyIndicator"></param>
+        /// <param name="message"></param>
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
@@ -313,6 +316,5 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorIsBusy = showBusyIndicator;
         }
         #endregion
-
     }
 }

@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.ServiceModel.Activation;
-using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
-using GreenField.Web.Helpers.Service_Faults;
+using System.Linq;
 using System.Resources;
-using GreenField.DataContracts.DataContracts;
-using GreenField.Web.Helpers;
-using GreenField.DataContracts;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using System.Text;
 using GreenField.DAL;
-using System.Data;
-using System.Data.Objects.SqlClient;
+using GreenField.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
+using GreenField.Web.Helpers;
+using GreenField.Web.Helpers.Service_Faults;
 
 namespace GreenField.Web.Services
 {
@@ -674,13 +670,12 @@ namespace GreenField.Web.Services
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                { throw new Exception("Services are not available"); }
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 ExternalResearchEntities externalEntity = new ExternalResearchEntities();
 
                 List<CompositeFundData> result = new List<CompositeFundData>();
-
                 List<PORTFOLIO_SECURITY_TARGETS> portfolioSecurityTargetsData = new List<PORTFOLIO_SECURITY_TARGETS>();
                 List<GF_BENCHMARK_HOLDINGS> benchmarkData = new List<GF_BENCHMARK_HOLDINGS>();
                 List<GF_PORTFOLIO_HOLDINGS> portfolioHoldingsData = new List<GF_PORTFOLIO_HOLDINGS>();
@@ -733,7 +728,6 @@ namespace GreenField.Web.Services
                         benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benchmarkId
                                                                                                 && record.PORTFOLIO_DATE == lastBusinessDateBenchmark).ToList();
                         List<string> countryInBenchmarkData = benchmarkData.Select(a => a.ISO_COUNTRY_CODE).Distinct().ToList();
-
                         foreach (string item in countryInBenchmarkData)
                         {
                             if (item != null)
@@ -1038,18 +1032,28 @@ namespace GreenField.Web.Services
                 {
                     case "PORTFOLIO_HOLDINGS":
                         {
-                            GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                            GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE)
+                                                                                                                .FirstOrDefault();
                             if (lastBusinessRecord != null)
+                            {
                                 if (lastBusinessRecord.PORTFOLIO_DATE != null)
-                                    lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+                                { 
+                                    lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE); 
+                                }
+                            }
                         }
                         break;
                     case "BENCHMARK_HOLDINGS":
                         {
-                            GF_BENCHMARK_HOLDINGS lastBusinessRecord = entity.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                            GF_BENCHMARK_HOLDINGS lastBusinessRecord = entity.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE)
+                                                                                                                .FirstOrDefault();
                             if (lastBusinessRecord != null)
+                            {
                                 if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                                {
                                     lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+                                }
+                            }
                         }
                         break;
                     default:

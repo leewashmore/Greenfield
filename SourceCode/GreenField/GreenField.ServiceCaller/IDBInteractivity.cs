@@ -150,16 +150,58 @@ namespace GreenField.ServiceCaller
 
         void RetrieveFilterSelectionData(PortfolioSelectionData selectedPortfolio, DateTime? effectiveDate, Action<List<FilterSelectionData>> callback);
 
+        /// <summary>
+        /// service call to retrieve relative performance gadget data 
+        /// </summary>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="period"></param>
+        /// <param name="callback"></param>
         void RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, Action<List<RelativePerformanceData>> callback);
 
+        /// <summary>
+        /// service call to retrieve relative performance sector data list
+        /// </summary>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="period"></param>
+        /// <param name="callback"></param>
         void RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceSectorData>> callback);
 
+        /// <summary>
+        /// service call to retrieve relative performance security data 
+        /// </summary>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="period"></param>
+        /// <param name="callback"></param>
         void RetrieveRelativePerformanceSecurityData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceSecurityData>> callback, string countryID = null, string sectorID = null);
 
+        /// <summary>
+        /// service call to retrieve relative performance country active position data 
+        /// </summary>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="period"></param>
+        /// <param name="callback"></param>
         void RetrieveRelativePerformanceCountryActivePositionData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null);
 
+        /// <summary>
+        /// service call to retrieve relative performance sector active position data 
+        /// </summary>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="period"></param>
+        /// <param name="callback"></param>
         void RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null);
 
+        /// <summary>
+        /// service call to retrieve relative performance security active position data 
+        /// </summary>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="period"></param>
+        /// <param name="callback"></param>
         void RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null);
 
         void RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, String country, Action<List<PerformanceGraphData>> callback);
@@ -288,6 +330,12 @@ namespace GreenField.ServiceCaller
         #region Internal Research
         void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData, Action<List<ConsensusEstimatesSummaryData>> callback);
 
+        /// <summary>
+        /// service call for composite fund gadget
+        /// </summary>
+        /// <param name="entityIdentifiers">EntitySelectionData</param>
+        /// <param name="portfolio">PortfolioSelectionData</param>
+        /// <param name="callback"></param>
         void RetrieveCompositeFundData(EntitySelectionData entityIdentifiers, PortfolioSelectionData portfolio, Action<List<CompositeFundData>> callback);
         #endregion
 

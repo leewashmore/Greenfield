@@ -1,4 +1,5 @@
-﻿<helpers:ViewBaseUserControl xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"  x:Class="GreenField.Gadgets.Views.ViewRelativePerformance"
+﻿<helpers:ViewBaseUserControl xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+                             x:Class="GreenField.Gadgets.Views.ViewRelativePerformance"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,7 +14,8 @@
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
                 <ResourceDictionary>
                     <ControlTemplate x:Key="GridViewFooterCellTemplate" TargetType="telerik:GridViewFooterCell">
-                        <Border x:Name="PART_FooterCellBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" MouseLeftButtonDown="FooterCellBorder_MouseLeftButtonDown" >
+                        <Border x:Name="PART_FooterCellBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" MouseLeftButtonDown="FooterCellBorder_MouseLeftButtonDown" >
                             <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
                                   Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
@@ -33,11 +35,9 @@
                     </Style>
                     <!--GridViewHeaderCellStyle for dynamically created columns -->
                     <ControlTemplate x:Key="GridViewHeaderCellTemplate" TargetType="telerik:GridViewHeaderCell">
-                        <!--<Border MouseLeftButtonDown="CustomHeaderCellBorder_MouseLeftButtonDown">-->
                         <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" 
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        <!--</Border>-->
                     </ControlTemplate>
                     <Style TargetType="telerik:GridViewHeaderCell" x:Key="GridViewHeaderCellClickable">
                         <Setter Property="Template" Value="{StaticResource GridViewHeaderCellTemplate}"/>
@@ -66,10 +66,10 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}" DisplayAfter="0" 
+                              IsBusy="{Binding BusyIndicatorStatus}">
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
-                <!--<RowDefinition Height="Auto"/>-->
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="0"/>
@@ -84,7 +84,6 @@
                     </telerik:RadButton>
                     <telerik:RadButton x:Name="btnExportPDF" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Margin="2,0,0,0" ToolTipService.ToolTip="Export to Pdf" Click="btnExportToPdf_Click">
-                        <!-->-->
                         <Image Source="../Images/PDF.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
                     <telerik:RadButton x:Name="btnPrint" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -164,12 +163,12 @@
                                 <telerik:SumFunction x:Name="AggregateCountryAlphaSumFunction" SourceField="AggregateCountryAlpha"/>
                             </telerik:GridViewDataColumn.AggregateFunctions>
                             <telerik:GridViewDataColumn.Footer>
-                                <!--<TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue, Converter={StaticResource basisPointsConverter}}" TextAlignment="Right"/>-->
                                 <telerik:AggregateResultsList ItemsSource="{Binding}" VerticalAlignment="Center">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue, Converter={StaticResource basisPointsConverter}}" 
+                                                <TextBlock VerticalAlignment="Center"
+                                                           Text="{Binding FormattedValue, Converter={StaticResource basisPointsConverter}}" 
                                                            TextAlignment="Right"/>
                                             </StackPanel>
                                         </DataTemplate>

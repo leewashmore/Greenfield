@@ -1,50 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.Helpers;
+﻿using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// class for view for ConsensusEstimatesDetails
+    /// </summary>
     public partial class ViewCompositeFund : ViewBaseUserControl
     {
         #region Properties
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelCompositeFund _dataContextCompositeFund;
+        private ViewModelCompositeFund dataContextCompositeFund;
         public ViewModelCompositeFund DataContextCompositeFund
         {
-            get { return _dataContextCompositeFund; }
-            set { _dataContextCompositeFund = value; }
+            get { return dataContextCompositeFund; }
+            set { dataContextCompositeFund = value; }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextCompositeFund != null) //DataContext instance
-                    DataContextCompositeFund.IsActive = _isActive;
+                isActive = value;
+                if (DataContextCompositeFund != null)
+                { DataContextCompositeFund.IsActive = isActive; }
             }
         }
-
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewCompositeFund(ViewModelCompositeFund dataContextSource)
         {
             InitializeComponent();

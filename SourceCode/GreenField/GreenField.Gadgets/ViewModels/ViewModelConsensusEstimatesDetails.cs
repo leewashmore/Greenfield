@@ -365,6 +365,9 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Busy Indicator
+        /// <summary>
+        /// if busy indicator is busy or not
+        /// </summary>
         private bool busyIndicatorIsBusy;
         public bool BusyIndicatorIsBusy
         {
@@ -376,6 +379,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// content to show below busy indicator
+        /// </summary>
         private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
