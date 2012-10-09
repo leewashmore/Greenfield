@@ -177,22 +177,22 @@ namespace GreenField.Web.Helpers
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
                 case "1Y":
-                    startDate = GetFirstDayOfCurrentYear(selectedDate);
+                    startDate = GetSameDayOfLastYear(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
                 case "3Y":
-                    startDate = GetFirstDayOfCurrentYear(selectedDate);
+                    startDate = GetSameDayOfPreviousThirdYear(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
                 case "5Y":
-                    startDate = GetFirstDayOfCurrentYear(selectedDate);
+                    startDate = GetSameDayOfPreviousFifthYear(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
                 case "10Y":
-                    startDate = GetFirstDayOfCurrentYear(selectedDate);
+                    startDate = GetSameDayOfPreviousTenthYear(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
