@@ -210,6 +210,7 @@ namespace GreenField.Gadgets.ViewModels
             Boolean dataValidation = ICPresentationOverviewInfo.SecurityBuyRange != null
                 && ICPresentationOverviewInfo.SecurityPFVMeasure != String.Empty
                 && ICPresentationOverviewInfo.SecuritySellRange != null
+                && ICPresentationOverviewInfo.FVCalc != null
                 && ICPresentationOverviewInfo.SecurityRecommendation != null
                 && ICPresentationOverviewInfo.SecurityRecommendation != String.Empty
                 && ICPresentationOverviewInfo.YTDRet_Absolute != null

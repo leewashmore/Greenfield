@@ -130,7 +130,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </Grid>    
+            </Grid>
             
             <Grid Grid.Row="2" Margin="0,5,0,0">
                 <Grid.RowDefinitions>
@@ -262,8 +262,8 @@
                                     </Grid>
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                         <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
-                                                           Command="{Binding DeleteAttachedFileCommand}" 
-                                                           CommandParameter="{Binding}" IsEnabled="False"
+                                                           Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
+                                                           CommandParameter="{Binding}"
                                                            Style="{StaticResource RadButtonStyle}"/>
                                     </Grid>
                                 </StackPanel>
@@ -298,8 +298,8 @@
                                     </Grid>
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                         <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
-                                                           Command="{Binding DeleteAttachedFileCommand}" 
-                                                           CommandParameter="{Binding}" IsEnabled="False"
+                                                           Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
+                                                           CommandParameter="{Binding}"
                                                            Style="{StaticResource RadButtonStyle}"/>
                                     </Grid>
                                 </StackPanel>

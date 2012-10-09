@@ -423,9 +423,9 @@ namespace GreenField.Web.Services
 
                 //Manual inputs
                 presentationOverviewData.PortfolioId = portfolio.PortfolioId;
-                presentationOverviewData.YTDRet_Absolute = "0.0000%";
-                presentationOverviewData.YTDRet_RELtoLOC = "0.0000%";
-                presentationOverviewData.YTDRet_RELtoEM = "0.0000%";
+                presentationOverviewData.YTDRet_Absolute = "0.00%";
+                presentationOverviewData.YTDRet_RELtoLOC = "0.00%";
+                presentationOverviewData.YTDRet_RELtoEM = "0.00%";
 
                 #region GF_SECURITY_BASEVIEW info
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
@@ -442,7 +442,7 @@ namespace GreenField.Web.Services
                 if (securityData.CLOSING_PRICE != null)
                     presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
 
-                presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : securityData.CLOSING_PRICE.ToString())
+                presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : String.Format("{0:n2}", securityData.CLOSING_PRICE))
                     + " " + (securityData.TRADING_CURRENCY == null ? "" : securityData.TRADING_CURRENCY.ToString());
                 #endregion
 
@@ -482,7 +482,7 @@ namespace GreenField.Web.Services
                 {
                     presentationOverviewData.CurrentHoldings = "YES";
                     if (sumDirtyValuePC != 0)
-                        presentationOverviewData.PercentEMIF = String.Format("{0:n4}%", ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100));
+                        presentationOverviewData.PercentEMIF = String.Format("{0:n2}%", ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100));
                     tempNAV = ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100);
                 }
                 else
@@ -503,14 +503,14 @@ namespace GreenField.Web.Services
 
                 if (benchmarkData != null)
                 {
-                    presentationOverviewData.SecurityBMWeight = String.Format("{0:n4}%", benchmarkData.BENCHMARK_WEIGHT);
+                    presentationOverviewData.SecurityBMWeight = String.Format("{0:n2}%", benchmarkData.BENCHMARK_WEIGHT);
                     tempNAV = (tempNAV - benchmarkData.BENCHMARK_WEIGHT);
-                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
+                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n2}%", tempNAV);
                 }
                 else
                 {
                     presentationOverviewData.SecurityBMWeight = "0%";
-                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
+                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n2}%", tempNAV);
                 }
                 #endregion
 
@@ -535,9 +535,9 @@ namespace GreenField.Web.Services
                         //presentationOverviewData.CommitteeSellRange = Convert.ToSingle(fairValueRecord.FV_SELL);                        
 
                         presentationOverviewData.SecurityBuySellvsCrnt = securityData.TRADING_CURRENCY + " " +
-                            String.Format("{0:n4}", fairValueRecord.FV_BUY) +
+                            String.Format("{0:n2}", fairValueRecord.FV_BUY) +
                             "- " + securityData.TRADING_CURRENCY + " " +
-                            String.Format("{0:n4}", fairValueRecord.FV_SELL);
+                            String.Format("{0:n2}", fairValueRecord.FV_SELL);
 
                         Decimal upperLimit = fairValueRecord.FV_BUY >= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
                         Decimal lowerLimit = fairValueRecord.FV_BUY <= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
@@ -560,9 +560,9 @@ namespace GreenField.Web.Services
                         if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
                         {
                             presentationOverviewData.FVCalc = dataMasterRecord.DATA_DESC + " " + securityData.TRADING_CURRENCY + " " +
-                                String.Format("{0:n4}", ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)) +
+                                String.Format("{0:n2}", ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)) +
                                 "- " + securityData.TRADING_CURRENCY + " " +
-                                String.Format("{0:n4}", ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE));
+                                String.Format("{0:n2}", ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE));
                         }
 
                         String securityID = securityData.SECURITY_ID.ToString();
@@ -1976,7 +1976,7 @@ namespace GreenField.Web.Services
                 PdfPCell recommendationValueCell = new PdfPCell(new Phrase(distinctPresentationFinalizeDetails.First().SecurityRecommendation, PDFFontStyle.STYLE_3));
                 AddTextCell(icdecisionValueTable, recommendationValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
 
-                String buySellPresented = String.Format("{0} {1:n4}-{2:n4}", distinctPresentationFinalizeDetails.First().SecurityPFVMeasure
+                String buySellPresented = String.Format("{0} {1:n2}-{2:n2}", distinctPresentationFinalizeDetails.First().SecurityPFVMeasure
                     , distinctPresentationFinalizeDetails.First().SecurityBuyRange, distinctPresentationFinalizeDetails.First().SecuritySellRange);
 
                 PdfPCell presentedBuySellRangeValueCell = new PdfPCell(new Phrase(buySellPresented, PDFFontStyle.STYLE_3));
@@ -1985,7 +1985,7 @@ namespace GreenField.Web.Services
                 PdfPCell decisionValueCell = new PdfPCell(new Phrase(distinctPresentationFinalizeDetails.First().CommitteeRecommendation, PDFFontStyle.STYLE_3));
                 AddTextCell(icdecisionValueTable, decisionValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT_TOP_BOTTOM);
 
-                String buySellCommittee = String.Format("{0} {1:n4}-{2:n4}", distinctPresentationFinalizeDetails.First().CommitteePFVMeasure
+                String buySellCommittee = String.Format("{0} {1:n2}-{2:n2}", distinctPresentationFinalizeDetails.First().CommitteePFVMeasure
                     , distinctPresentationFinalizeDetails.First().CommitteeBuyRange, distinctPresentationFinalizeDetails.First().CommitteeSellRange);
 
                 PdfPCell committeeBuySellRangeValueCell = new PdfPCell(new Phrase(buySellCommittee, PDFFontStyle.STYLE_3));
@@ -2028,8 +2028,14 @@ namespace GreenField.Web.Services
 
                 doc.Add(votingTable);
 
-                foreach (MeetingMinutesReportData voterDetails in distinctPresentationFinalizeDetails)
+                List<String> distinctVoterPresentationFinalizeDetails = distinctPresentationFinalizeDetails
+                    .Select(record => record.Name).ToList().Distinct().ToList();
+
+                foreach (String voterName in distinctVoterPresentationFinalizeDetails)
                 {
+                    MeetingMinutesReportData voterDetails = distinctPresentationFinalizeDetails
+                        .Where(record => record.Name == voterName).FirstOrDefault();
+
                     if (voterDetails.VoteType == null)
                         continue;
 

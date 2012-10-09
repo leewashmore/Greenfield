@@ -33,7 +33,7 @@ namespace GreenField.Gadgets.ViewModels
     {
         #region Fields
         private IRegionManager _regionManager;
-       
+
         /// <summary>
         /// Event Aggregator
         /// </summary>
@@ -77,11 +77,11 @@ namespace GreenField.Gadgets.ViewModels
                     Initialize();
                 }
             }
-        } 
+        }
         #endregion
 
         #region UserInfo
-        List<MembershipUserInfo> UserInfo { get; set; } 
+        List<MembershipUserInfo> UserInfo { get; set; }
         #endregion
 
         #region Attendance Data
@@ -192,7 +192,7 @@ namespace GreenField.Gadgets.ViewModels
                 _closedForVotingMeetingMinuteDistinctAttendanceInfo = value;
                 RaisePropertyChanged(() => this.ClosedForVotingMeetingMinuteDistinctAttendanceInfo);
             }
-        } 
+        }
         #endregion
 
         #region Upload Document
@@ -232,7 +232,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedUploadDocumentInfo);
             }
         }
-        
+
         /// <summary>
         /// Stores fileName of the browsed file
         /// </summary>
@@ -273,7 +273,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _selectedMeetingDocumentationInfo = value;
-                RaisePropertyChanged(() => this.SelectedMeetingDocumentationInfo);                
+                RaisePropertyChanged(() => this.SelectedMeetingDocumentationInfo);
             }
         }
         #endregion
@@ -335,7 +335,7 @@ namespace GreenField.Gadgets.ViewModels
         public ICommand UploadCommand
         {
             get { return new DelegateCommand<object>(UploadCommandMethod, UploadCommandValidationMethod); }
-        }        
+        }
 
         public ICommand SaveCommand
         {
@@ -361,7 +361,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-        
+
 
         #region Busy Indicator Notification
         /// <summary>
@@ -391,7 +391,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion 
+        #endregion
         #endregion
 
         #region CallBack Methods
@@ -431,7 +431,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
             }
-            
+
         }
 
         private void GetAllUsersCallbackMethod(List<MembershipUserInfo> result)
@@ -571,22 +571,9 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (result != true)
+                if (result == true)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    Initialize();
-
-                    UploadFileData = null;
-                    DeleteFileData = null;
-                    UploadFileStreamData = null;
-                    SelectedMeetingDocumentationInfo = null;
-                    SelectedUploadFileName = null;
-
-                    if (_dbInteractivity != null)
-                    {
-                        BusyIndicatorNotification(true, "Retrieving Attached document details for the selected meeting...");
-                        _dbInteractivity.RetrieveMeetingAttachedFileDetails(SelectedClosedForVotingMeetingInfo.MeetingID, RetrieveMeetingAttachedFileDetailsCallbackMethod);
-                    }
                 }
                 else
                 {
@@ -600,9 +587,12 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }        
-        
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                Initialize();
+            }
+        }
 
         private void UpdateMeetingMinuteDetailsCallbackMethod(Boolean? result)
         {
@@ -615,7 +605,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     if (result == true)
                     {
-                        Prompt.ShowDialog("Meeting minutes for the selected meeting has been successfully saved");                        
+                        Prompt.ShowDialog("Meeting minutes for the selected meeting has been successfully saved");
                     }
                 }
                 else
@@ -635,7 +625,7 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification();
             }
         }
-        
+
         private void SetMeetingPresentationStatusCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -699,7 +689,7 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification();
             }
         }
-        #endregion              
+        #endregion
 
         #region ICommand Methods
         private Boolean AddAttendeeCommandValidationMethod(object param)
@@ -713,7 +703,7 @@ namespace GreenField.Gadgets.ViewModels
 
             ChildViewPresentationMeetingMinutesAddAttendee cVPresentationMeetingMinutesAddAttendee =
                 new ChildViewPresentationMeetingMinutesAddAttendee(validUsers);
-            
+
             cVPresentationMeetingMinutesAddAttendee.Show();
             cVPresentationMeetingMinutesAddAttendee.Unloaded += (se, e) =>
             {
@@ -763,6 +753,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (result == MessageBoxResult.OK)
                     {
+                        BusyIndicatorNotification(true, "Deleting selected document...");
                         _dbInteractivity.UpdateMeetingAttachedFileStreamData(GreenField.UserSession.SessionManager.SESSION.UserName
                             , SelectedClosedForVotingMeetingInfo.MeetingID, DeleteFileData, true, UpdateMeetingAttachedFileStreamDataCallbackMethod);
                     }
@@ -789,7 +780,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 _dbInteractivity.UploadDocument(UploadFileData.Name, UploadFileStreamData, deleteUrl, UploadDocumentCallbackMethod);
             }
-        }        
+        }
 
         private void SaveCommandMethod(object param)
         {
@@ -828,7 +819,7 @@ namespace GreenField.Gadgets.ViewModels
             });
 
 
-        } 
+        }
         #endregion
 
         #region Helper Methods
@@ -875,7 +866,7 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorContent = message;
 
             BusyIndicatorIsBusy = showBusyIndicator;
-        } 
-        #endregion        
+        }
+        #endregion
     }
 }

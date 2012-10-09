@@ -44,9 +44,9 @@ namespace GreenField.Gadgets.Views
                     DataContextViewModelICPresentationNew.IsActive = _isActive;
                 if (value)
                 {
-                    this.txtbYTDAbsolute.Text = "0.0000";
-                    this.txtbYTDReltoLoc.Text = "0.0000";
-                    this.txtbYTDReltoEM.Text = "0.0000";
+                    this.txtbYTDAbsolute.Text = "0.00";
+                    this.txtbYTDReltoLoc.Text = "0.00";
+                    this.txtbYTDReltoEM.Text = "0.00";
                 }
             }
         }
@@ -90,6 +90,8 @@ namespace GreenField.Gadgets.Views
                 this.txtbYTDAbsolute.Text = _valueYTDAbs.ToString();
                 return;
             }
+            valueYTDAbs = Convert.ToDecimal((int)(valueYTDAbs * Convert.ToDecimal(100))) / Convert.ToDecimal(100);
+            this.txtbYTDAbsolute.Text = valueYTDAbs.ToString();
             _valueYTDAbs = valueYTDAbs;
 
             Decimal valueYTDReltoLoc;
@@ -98,6 +100,8 @@ namespace GreenField.Gadgets.Views
                 this.txtbYTDReltoLoc.Text = _valueYTDReltoLoc.ToString();
                 return;
             }
+            valueYTDReltoLoc = Convert.ToDecimal((int)(valueYTDReltoLoc * Convert.ToDecimal(100))) / Convert.ToDecimal(100);
+            this.txtbYTDReltoLoc.Text = valueYTDReltoLoc.ToString();
             _valueYTDReltoLoc = valueYTDReltoLoc;
 
             Decimal valueYTDReltoEM;
@@ -106,6 +110,8 @@ namespace GreenField.Gadgets.Views
                 this.txtbYTDReltoEM.Text = _valueYTDReltoEM.ToString();
                 return;
             }
+            valueYTDReltoEM = Convert.ToDecimal((int)(valueYTDReltoEM * Convert.ToDecimal(100))) / Convert.ToDecimal(100);
+            this.txtbYTDReltoEM.Text = valueYTDReltoEM.ToString();
             _valueYTDReltoEM = valueYTDReltoEM;
 
             DataContextViewModelICPresentationNew.RaiseICPresentationOverviewInfoChanged(_valueYTDAbs, _valueYTDReltoLoc, _valueYTDReltoEM);

@@ -816,7 +816,7 @@ namespace ICPSystemAlert
                 if (securityData.CLOSING_PRICE != null)
                     presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
 
-                presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : securityData.CLOSING_PRICE.ToString())
+                presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : String.Format("{0:n2}", securityData.CLOSING_PRICE))
                     + " " + (securityData.TRADING_CURRENCY == null ? "" : securityData.TRADING_CURRENCY.ToString());
                 #endregion
 
@@ -856,7 +856,7 @@ namespace ICPSystemAlert
                 {
                     presentationOverviewData.CurrentHoldings = "YES";
                     if (sumDirtyValuePC != 0)
-                        presentationOverviewData.PercentEMIF = String.Format("{0:n4}%", ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100));
+                        presentationOverviewData.PercentEMIF = String.Format("{0:n2}%", ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100));
                     tempNAV = ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100);
                 }
                 else
@@ -877,14 +877,14 @@ namespace ICPSystemAlert
 
                 if (benchmarkData != null)
                 {
-                    presentationOverviewData.SecurityBMWeight = String.Format("{0:n4}%", benchmarkData.BENCHMARK_WEIGHT);
+                    presentationOverviewData.SecurityBMWeight = String.Format("{0:n2}%", benchmarkData.BENCHMARK_WEIGHT);
                     tempNAV = (tempNAV - benchmarkData.BENCHMARK_WEIGHT);
-                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
+                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n2}%", tempNAV);
                 }
                 else
                 {
                     presentationOverviewData.SecurityBMWeight = "0%";
-                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
+                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n2}%", tempNAV);
                 }
                 #endregion
 
@@ -905,9 +905,9 @@ namespace ICPSystemAlert
                         presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
                         presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
                         presentationOverviewData.SecurityBuySellvsCrnt = securityData.TRADING_CURRENCY + " " +
-                            String.Format("{0:n4}", fairValueRecord.FV_BUY) +
+                            String.Format("{0:n2}", fairValueRecord.FV_BUY) +
                             "- " + securityData.TRADING_CURRENCY + " " +
-                            String.Format("{0:n4}", fairValueRecord.FV_SELL);
+                            String.Format("{0:n2}", fairValueRecord.FV_SELL);
 
                         Decimal upperLimit = fairValueRecord.FV_BUY >= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
                         Decimal lowerLimit = fairValueRecord.FV_BUY <= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
@@ -925,9 +925,9 @@ namespace ICPSystemAlert
                         if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
                         {
                             presentationOverviewData.FVCalc = dataMasterRecord.DATA_DESC + " " + securityData.TRADING_CURRENCY + " " +
-                                String.Format("{0:n4}", ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)) +
+                                String.Format("{0:n2}", ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)) +
                                 "- " + securityData.TRADING_CURRENCY + " " +
-                                String.Format("{0:n4}", ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE));
+                                String.Format("{0:n2}", ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE));
                         }
 
                         String securityID = securityData.SECURITY_ID.ToString();
