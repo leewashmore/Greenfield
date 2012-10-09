@@ -31,7 +31,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextPerformanceGrid = dataContextSource;
-            dataContextSource.performanceGridDataLoadedEvent +=
+            dataContextSource.PerformanceGridDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGridDataLoadedEvent);
         }
         #endregion
@@ -45,17 +45,12 @@ namespace GreenField.Gadgets.Views
         {
             if (e.ShowBusy)
             {
-
                 this.busyIndicatorGrid.IsBusy = true;
             }
             else
             {
                 this.busyIndicatorGrid.IsBusy = false;
             }
-        }
-        private void dgPerformance_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            
         }
 
         /// <summary>
@@ -69,11 +64,11 @@ namespace GreenField.Gadgets.Views
             {
                 if (this.dgPerformance.Visibility == Visibility.Visible)
                 {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                     {
                           new RadExportOptions() { ElementName = "Performance Grid", Element = this.dgPerformance, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                     };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRID);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRID);
                     childExportOptions.Show();
                 }
             }
@@ -83,52 +78,57 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Styles added to Export
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgPerformanceGrid_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e);
         }
-
         #endregion
 
         #region Properties
         /// <summary>
         /// Data Context Property
         /// </summary>
-        private ViewModelPerformanceGrid _dataContextPerformanceGrid;
+        private ViewModelPerformanceGrid dataContextPerformanceGrid;
         public ViewModelPerformanceGrid DataContextPerformanceGrid
         {
-            get { return _dataContextPerformanceGrid; }
-            set { _dataContextPerformanceGrid = value; }
+            get { return dataContextPerformanceGrid; }
+            set { dataContextPerformanceGrid = value; }
         }
 
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (this.DataContext != null)
-                    ((ViewModelPerformanceGrid)DataContext).IsActive = _isActive;
+                {
+                    ((ViewModelPerformanceGrid)DataContext).IsActive = isActive;
+                }
             }
         }
         #endregion
 
         #region RemoveEvents
-
+        /// <summary>
+        /// Disposes Events
+        /// </summary>
         public override void Dispose()
         {
-            this.DataContextPerformanceGrid.performanceGridDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGridDataLoadedEvent);
+            this.DataContextPerformanceGrid.PerformanceGridDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGridDataLoadedEvent);
             this.DataContextPerformanceGrid.Dispose();
             this.DataContextPerformanceGrid = null;
             this.DataContext = null;
         }
-
         #endregion
-
-       
     }
 }

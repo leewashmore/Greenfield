@@ -2280,29 +2280,34 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<PerformanceGridData> RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String Country)
+        public List<PerformanceGridData> RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String country)
         {
             List<PerformanceGridData> result = new List<PerformanceGridData>();
             if (portfolioSelectionData == null || effectiveDate == null)
+            {
                 return result;
+            }
             //checking if the service is down
             bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
             if (!isServiceUp)
+            {
                 throw new Exception();
-            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData;
-            //List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
-            if (Country == "NoFiltering")
+            }
+            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData;           
+            if (country == "NoFiltering")
             {
                 performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
             }
             else
             {
-                performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.AGG_LVL_1 == Country).FirstOrDefault();
+                performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.AGG_LVL_1 == country).FirstOrDefault();
             }
             if (performanceData == null)
+            {
                 return result;
-
+            }
+            
             #region  Inception check
             System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
             dateInfo.ShortDatePattern = "dd/MM/yyyy";
@@ -2313,7 +2318,6 @@ namespace GreenField.Web.Services
                 performanceData.POR_TOP_RC_TWR_MTD = null;
                 performanceData.BM1_TOP_RC_TWR_MTD = null;
             }
-
             bool isValidQTD = InceptionDateChecker.ValidateInceptionDate("QTD", portfolioInceptionDate, effectiveDate);
             if (!isValidQTD)
             {
@@ -2345,7 +2349,6 @@ namespace GreenField.Web.Services
             {
                 benchmarkID = null;
             }
-
             try
             {
                 {
@@ -2376,7 +2379,6 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-
         }
 
         /// <summary>
