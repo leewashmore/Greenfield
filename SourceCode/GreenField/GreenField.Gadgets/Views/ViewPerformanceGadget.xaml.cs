@@ -27,8 +27,8 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private static class ExportTypes
         {
-            public const string PERFORMANCE_GADGET_CHART = "Performance Gadget Chart";
-            public const string PERFORMANCE_GADGET_DATA = "Performance Gadget Data";
+            public const string PerformanceGadgetChart = "Performance Gadget Chart";
+            public const string PerformanceGadgetData = "Performance Gadget Data";
         }
         #endregion 
 
@@ -36,28 +36,29 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (this.DataContext != null)
-                    ((ViewModelPerformanceGadget)this.DataContext).IsActive = _isActive;
+                {
+                    ((ViewModelPerformanceGadget)this.DataContext).IsActive = isActive;
+                }
             }
         }
+
         /// <summary>
         /// Data Context Property
         /// </summary>
-        private ViewModelPerformanceGadget _dataContextPerformanceGadget;
+        private ViewModelPerformanceGadget dataContextPerformanceGadget;
         public ViewModelPerformanceGadget DataContextPerformanceGadget
         {
-            get { return _dataContextPerformanceGadget; }
-            set { _dataContextPerformanceGadget = value; }
-        }
-
-        
+            get { return dataContextPerformanceGadget; }
+            set { dataContextPerformanceGadget = value; }
+        }        
         #endregion
 
         #region Constructor
@@ -70,7 +71,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextPerformanceGadget = dataContextSource;
-            dataContextSource.performanceGraphDataLoadedEvent +=
+            dataContextSource.PerformanceGraphDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGraphDataLoadedEvent);
             dataContextSource.ChartArea = this.chPerformanceGadget.DefaultView.ChartArea;
             this.chPerformanceGadget.DataBound += dataContextSource.ChartDataBound;
@@ -90,7 +91,9 @@ namespace GreenField.Gadgets.Views
         private void btnFlip_Click(object sender, RoutedEventArgs e)
         {
             if (this.grdRadGridView.Visibility == Visibility.Visible)
+            {
                 Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
+            }
             else
                 Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
         }
@@ -106,13 +109,13 @@ namespace GreenField.Gadgets.Views
             {
                 if (this.grdRadChart.Visibility == Visibility.Visible)
                 {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {
-                  
-                    new RadExportOptions() { ElementName = ExportTypes.PERFORMANCE_GADGET_CHART, Element = this.chPerformanceGadget, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
-                    
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
+                {                  
+                    new RadExportOptions() { ElementName = ExportTypes.PerformanceGadgetChart, Element = this.chPerformanceGadget, ExportFilterOption = 
+                        RadExportFilterOption.RADCHART_EXPORT_FILTER },                   
+            
                 };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRAPH);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRAPH);
                     childExportOptions.Show();
                 }
                 else
@@ -121,7 +124,8 @@ namespace GreenField.Gadgets.Views
                     {
                         List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                            new RadExportOptions() { ElementName = ExportTypes.PERFORMANCE_GADGET_DATA, Element = this.dgPerformanceGadget, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                            new RadExportOptions() { ElementName = ExportTypes.PerformanceGadgetData, Element = this.dgPerformanceGadget, ExportFilterOption = 
+                                RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                         };
                         ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRAPH);
                         childExportOptions.Show();
@@ -152,11 +156,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        private void dgPerformanceGadget_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            //GroupedGridRowLoadedHandler.Implement(e);
-        }
-
+       /// <summary>
+       ///Styles added to Export 
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void dgPerformanceGraph_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e);
@@ -164,15 +168,16 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region RemoveEvents
-
+        /// <summary>
+        /// Disposes events
+        /// </summary>
         public override void Dispose()
         {
-            this.DataContextPerformanceGadget.performanceGraphDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGraphDataLoadedEvent);
+            this.DataContextPerformanceGadget.PerformanceGraphDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGraphDataLoadedEvent);
             this.DataContextPerformanceGadget.Dispose();
             this.DataContextPerformanceGadget = null;
             this.DataContext = null;
         }
-
         #endregion
     }
 }

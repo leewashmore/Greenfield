@@ -1203,8 +1203,8 @@ namespace GreenField.Web.Services
             {
                 List<RelativePerformanceSectorData> result = new List<RelativePerformanceSectorData>();
                 if (portfolioSelectionData == null || effectiveDate == null)
-                { 
-                    return result; 
+                {
+                    return result;
                 }
 
                 //checking if the service is down
@@ -1701,7 +1701,7 @@ namespace GreenField.Web.Services
         /// <returns>List of RetrieveRelativePerformanceSecurityData objects</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(PortfolioSelectionData portfolioSelectionData, 
+        public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(PortfolioSelectionData portfolioSelectionData,
             DateTime effectiveDate, string period, string countryID = null, string sectorID = null)
         {
             try
@@ -1765,7 +1765,7 @@ namespace GreenField.Web.Services
         /// <param name="country"></param>
         /// <param name="sector"></param>
         /// <returns>GF_PERF_DAILY_ATTRIBUTION Collection</returns>
-        private List<GF_PERF_DAILY_ATTRIBUTION> RetrieveRelativePerformanceDailyData(PortfolioSelectionData portfolioSelectionData, 
+        private List<GF_PERF_DAILY_ATTRIBUTION> RetrieveRelativePerformanceDailyData(PortfolioSelectionData portfolioSelectionData,
             DateTime effectiveDate, string country = null, string sector = null)
         {
             DimensionEntitiesService.Entities entity = DimensionEntity;
@@ -2294,7 +2294,7 @@ namespace GreenField.Web.Services
             {
                 throw new Exception();
             }
-            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData;           
+            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData;
             if (country == "NoFiltering")
             {
                 performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
@@ -2307,7 +2307,7 @@ namespace GreenField.Web.Services
             {
                 return result;
             }
-            
+
             #region  Inception check
             System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
             dateInfo.ShortDatePattern = "dd/MM/yyyy";
@@ -2389,19 +2389,20 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<PerformanceGraphData> RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, String Country)
+        public List<PerformanceGraphData> RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, String country)
         {
             List<PerformanceGraphData> result = new List<PerformanceGraphData>();
             PerformanceGraphData entry = new PerformanceGraphData();
             if (fundSelectionData == null || effectiveDate == null)
+            {
                 return result;
+            }
             //checking if the service is down
             bool isServiceUp;
             EqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
             String benchmarkID;
             List<GF_PORTFOLIO_HOLDINGS> holdingsData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).ToList();
-
             if (holdingsData != null && holdingsData.Count != 0)
             {
                 benchmarkID = holdingsData.FirstOrDefault().BENCHMARK_ID;
@@ -2411,8 +2412,9 @@ namespace GreenField.Web.Services
                 benchmarkID = null;
             }
             if (!isServiceUp)
-
+            {
                 throw new Exception();
+            }
             try
             {
                 switch (period)
@@ -2420,18 +2422,22 @@ namespace GreenField.Web.Services
                     case "1D":
                         #region When Period Selected is "1D"
                         List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1D;
-                        if (Country == "NoFiltering")
+                        if (country == "NoFiltering")
                         {
-                            attributionDatafor1D = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();
+                            attributionDatafor1D = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate &&
+                                t.NODE_NAME == "Country").ToList();
                             attributionDatafor1D = attributionDatafor1D.Distinct(customComparer).ToList();
                         }
                         else
                         {
-                            attributionDatafor1D = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.AGG_LVL_1 == Country).ToList();
+                            attributionDatafor1D = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate &&
+                                t.AGG_LVL_1 == country).ToList();
                             attributionDatafor1D = attributionDatafor1D.Distinct(customComparer).ToList();
                         }
                         if (attributionDatafor1D.Count == 0 || attributionDatafor1D == null)
+                        {
                             return result;
+                        }
                         entry = new PerformanceGraphData();
                         entry.PortfolioID = fundSelectionData.PortfolioId;
                         entry.BenchmarkID = benchmarkID;
@@ -2458,10 +2464,9 @@ namespace GreenField.Web.Services
                             listOfEffectiveDates1W.Add(newDate);
                         }
                         List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1W = new List<GF_PERF_DAILY_ATTRIBUTION>();
-                        FetchDataPerformanceGraph(Country, attributionDatafor1W, ref result, benchmarkID, fundSelectionData, listOfEffectiveDates1W,"1W");
+                        FetchDataPerformanceGraph(country, attributionDatafor1W, ref result, benchmarkID, fundSelectionData, listOfEffectiveDates1W, "1W");
                         break;
                         #endregion
-
                     case "MTD":
                         #region When Period Selected is "MTD"
                         DateTime now = effectiveDate;
@@ -2475,8 +2480,7 @@ namespace GreenField.Web.Services
                             listOfEffectiveDatesMTD.Add(newDate);
                         }
                         List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforMTD = new List<GF_PERF_DAILY_ATTRIBUTION>();
-                        FetchDataPerformanceGraph(Country, attributionDataforMTD, ref result, benchmarkID, fundSelectionData, listOfEffectiveDatesMTD,"MTD");
-
+                        FetchDataPerformanceGraph(country, attributionDataforMTD, ref result, benchmarkID, fundSelectionData, listOfEffectiveDatesMTD, "MTD");
                         break;
                         #endregion
                     case "QTD":
@@ -2484,7 +2488,6 @@ namespace GreenField.Web.Services
                         int tQtr = (effectiveDate.Month - 1) / 3;
                         int differenceInMonths = 0;
                         DateTime lastDayOfQuarter = new DateTime(effectiveDate.Year, (tQtr * 3) + 1, 1).AddDays(-1);
-
                         List<DateTime> listOfEffectiveDatesQTD = new List<DateTime>();
                         listOfEffectiveDatesQTD.Add(lastDayOfQuarter);
                         if (lastDayOfQuarter.Month == 12)
@@ -2517,9 +2520,7 @@ namespace GreenField.Web.Services
                                     listOfEffectiveDatesQTD.Add(newDate);
                                 }
                                 break;
-
                             case 3:
-
                                 int previous2Month = effectiveDate.Month - 2;
                                 for (int i = 1; i <= DateTime.DaysInMonth(effectiveDate.Year, previous2Month); i++)
                                 {
@@ -2540,11 +2541,9 @@ namespace GreenField.Web.Services
                                 break;
                             default:
                                 break;
-
                         }
                         List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforQTD = new List<GF_PERF_DAILY_ATTRIBUTION>();
-                        FetchDataPerformanceGraph(Country, attributionDataforQTD, ref result, benchmarkID, fundSelectionData, listOfEffectiveDatesQTD,"QTD");
-
+                        FetchDataPerformanceGraph(country, attributionDataforQTD, ref result, benchmarkID, fundSelectionData, listOfEffectiveDatesQTD, "QTD");
                         break;
                         #endregion
 
@@ -2560,9 +2559,11 @@ namespace GreenField.Web.Services
                             listOfEffectiveDatesYTD.Add(newDate);
                         }
                         if (!listOfEffectiveDatesYTD.Contains(effectiveDate))
+                        {
                             listOfEffectiveDatesYTD.Add(effectiveDate);
+                        }
                         List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforYTD = new List<GF_PERF_DAILY_ATTRIBUTION>();
-                        FetchDataPerformanceGraphforMTDVaules(Country, attributionDataforYTD, ref result, benchmarkID, fundSelectionData, listOfEffectiveDatesYTD,"YTD");
+                        FetchDataPerformanceGraphforMTDVaules(country, attributionDataforYTD, ref result, benchmarkID, fundSelectionData, listOfEffectiveDatesYTD, "YTD");
                         break;
                         #endregion
 
@@ -2574,19 +2575,18 @@ namespace GreenField.Web.Services
                         List<DateTime> listOfEffectiveDates1YMTD = new List<DateTime>();
                         List<DateTime> endingStubDates = new List<DateTime>();
 
-                        // Partial Period Returns for starting stub
+                        // partial period returns for starting stub
                         DateTime nextMonthEnd = new DateTime(previousYearDate.Year, noOfMonth, DateTime.DaysInMonth(previousYearDate.Year, noOfMonth));
                         for (int i = previousYearDate.Day; i <= nextMonthEnd.Day; i++)
                         {
                             DateTime newDate = new DateTime(previousYearDate.Year, nextMonthEnd.Month, i);
                             startingStubDates.Add(newDate);
                         }
-
                         List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y = new List<GF_PERF_DAILY_ATTRIBUTION>();
                         List<Decimal?> portfolioReturns = new List<decimal?>();
                         List<Decimal?> benchmarkReturns = new List<decimal?>();
-
-                        FetchDataPerformanceGraph1YValues(Country, attributionDatafor1Y, ref result, benchmarkID, fundSelectionData, startingStubDates, portfolioReturns, benchmarkReturns,"1Y");
+                        FetchDataPerformanceGraph1YValues(country, attributionDatafor1Y, ref result, benchmarkID, fundSelectionData, startingStubDates, portfolioReturns,
+                            benchmarkReturns, "1Y");
 
                         //MTD for month ends between beginning stub and ending stub
                         for (int i = nextMonthEnd.Month + 1; i <= 12; i++)
@@ -2599,32 +2599,27 @@ namespace GreenField.Web.Services
                             DateTime newDate = new DateTime(effectiveDate.Year, i, DateTime.DaysInMonth(effectiveDate.Year, i));
                             listOfEffectiveDates1YMTD.Add(newDate);
                         }
-
-                        FetchDataPerformanceGraphforMTDVaules(Country, attributionDatafor1Y, ref result, benchmarkID, fundSelectionData, listOfEffectiveDates1YMTD,"1Y");
+                        FetchDataPerformanceGraphforMTDVaules(country, attributionDatafor1Y, ref result, benchmarkID, fundSelectionData, listOfEffectiveDates1YMTD, "1Y");
 
                         // Partial Period Returns for ending stub
 
                         List<Decimal?> eportfolioReturns = new List<decimal?>();
                         List<Decimal?> ebenchmarkReturns = new List<decimal?>();
-
                         for (int i = 1; i <= effectiveDate.Day; i++)
                         {
                             DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
                             endingStubDates.Add(newDate);
                         }
-
-                        FetchDataPerformanceGraph1YValues(Country, attributionDatafor1Y, ref result, benchmarkID, fundSelectionData, endingStubDates, eportfolioReturns, ebenchmarkReturns,"1Y");
-
+                        FetchDataPerformanceGraph1YValues(country, attributionDatafor1Y, ref result, benchmarkID, fundSelectionData, endingStubDates, eportfolioReturns,
+                            ebenchmarkReturns, "1Y");
                         break;
-                        default:
+                    default:
                         List<PerformanceGraphData> resultForDefault = new List<PerformanceGraphData>();
                         break;
                         #endregion
                 }
-
                 return result;
             }
-
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
@@ -2634,30 +2629,39 @@ namespace GreenField.Web.Services
         }
 
         #region Private Methods for Performance Graph
-        private void FetchDataPerformanceGraph(String Country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData, ref List<PerformanceGraphData> result, String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> listOfEffectiveDates,String period)
+        /// <summary>
+        /// Fetch data for MTD,QTD
+        /// </summary>
+        /// <param name="country"></param>
+        /// <param name="attributionData"></param>
+        /// <param name="result"></param>
+        /// <param name="benchmarkID"></param>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="listOfEffectiveDates"></param>
+        /// <param name="period"></param>
+        private void FetchDataPerformanceGraph(String country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData, ref List<PerformanceGraphData> result,
+            String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> listOfEffectiveDates, String period)
         {
             EqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
 
             foreach (DateTime d in listOfEffectiveDates)
             {
-                
                 Decimal? sumPerformanceWeight = 0;
                 Decimal? sumBenchmarkWeight = 0;
-                if (Country == "NoFiltering")
+                if (country == "NoFiltering")
                 {
-                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country").ToList();
+                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country")
+                        .ToList();
                     attributionData = attributionData.Distinct(customComparer).ToList();
-
                 }
                 else
                 {
-                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
+                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == country)
+                        .ToList();
                     attributionData = attributionData.Distinct(customComparer).ToList();
                 }
-
                 if (attributionData.Count == 0 || attributionData == null)
                     continue;
-
                 #region Inception Check
                 if (period != "1W" && period != "1D")
                 {
@@ -2686,26 +2690,40 @@ namespace GreenField.Web.Services
             }
         }
 
-
-        private void FetchDataPerformanceGraphforMTDVaules(String Country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData, ref List<PerformanceGraphData> result, String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> listOfEffectiveDates,String period)
+        /// <summary>
+        /// Fetch data for YTD
+        /// </summary>
+        /// <param name="country"></param>
+        /// <param name="attributionData"></param>
+        /// <param name="result"></param>
+        /// <param name="benchmarkID"></param>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="listOfEffectiveDates"></param>
+        /// <param name="period"></param>
+        private void FetchDataPerformanceGraphforMTDVaules(String country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData, ref List<PerformanceGraphData> result,
+            String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> listOfEffectiveDates, String period)
         {
             EqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
             foreach (DateTime d in listOfEffectiveDates)
             {
                 Decimal? sumPerformanceWeight = 0;
                 Decimal? sumBenchmarkWeight = 0;
-                if (Country == "NoFiltering")
+                if (country == "NoFiltering")
                 {
-                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country").ToList();
+                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country")
+                        .ToList();
                     attributionData = attributionData.Distinct(customComparer).ToList();
                 }
                 else
                 {
-                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
+                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == country)
+                        .ToList();
                     attributionData = attributionData.Distinct(customComparer).ToList();
                 }
                 if (attributionData.Count == 0 || attributionData == null)
+                {
                     continue;
+                }
                 #region Inception Check
                 if (period != "1W" && period != "1D")
                 {
@@ -2734,24 +2752,40 @@ namespace GreenField.Web.Services
             }
         }
 
-
-        private void FetchDataPerformanceGraph1YValues(String Country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y, ref List<PerformanceGraphData> result, String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> StubDates, List<Decimal?> eportfolioReturns, List<Decimal?> ebenchmarkReturns, String period)
+        /// <summary>
+        /// Fetch Data for 1Y values
+        /// </summary>
+        /// <param name="country"></param>
+        /// <param name="attributionDatafor1Y"></param>
+        /// <param name="result"></param>
+        /// <param name="benchmarkID"></param>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="StubDates"></param>
+        /// <param name="eportfolioReturns"></param>
+        /// <param name="ebenchmarkReturns"></param>
+        /// <param name="period"></param>
+        private void FetchDataPerformanceGraph1YValues(String country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y, ref List<PerformanceGraphData> result,
+            String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> StubDates, List<Decimal?> eportfolioReturns, List<Decimal?> ebenchmarkReturns, String period)
         {
             EqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
             foreach (DateTime d in StubDates)
             {
-                if (Country == "NoFiltering")
+                if (country == "NoFiltering")
                 {
-                    attributionDatafor1Y = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country").ToList();
+                    attributionDatafor1Y = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country")
+                        .ToList();
                     attributionDatafor1Y = attributionDatafor1Y.Distinct(customComparer).ToList();
                 }
                 else
                 {
-                    attributionDatafor1Y = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
+                    attributionDatafor1Y = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == country)
+                        .ToList();
                     attributionDatafor1Y = attributionDatafor1Y.Distinct(customComparer).ToList();
                 }
                 if (attributionDatafor1Y.Count == 0 || attributionDatafor1Y == null)
+                {
                     continue;
+                }
                 #region Inception Check
                 if (period != "1W" && period != "1D")
                 {

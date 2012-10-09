@@ -8,19 +8,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.Common;
-using GreenField.Gadgets.Helpers;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using System.Collections.Generic;
 using Microsoft.Practices.Prism.Commands;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
+using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -29,39 +29,41 @@ namespace GreenField.Gadgets.ViewModels
     /// </summary>
     public class ViewModelPerformanceGadget : NotificationObject
     {
-
         #region PrivateMembers
-
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
+        private ILoggerFacade logger;
 
         /// <summary>
         /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private PortfolioSelectionData _PortfolioSelectionData;
+        private PortfolioSelectionData portfolioSelectionData;
 
         /// <summary>
         /// Stores Effective Date selected by the user
         /// </summary>
-        private DateTime? _effectiveDate;
+        private DateTime? effectiveDate;
 
-        public String _selectedPeriod;
+        /// <summary>
+        /// Selected Period
+        /// </summary>
+        public String selectedPeriod;
 
-        private String _country;
-            
-
+        /// <summary>
+        /// Country selected from the heat map
+        /// </summary>
+        private String country;  
         #endregion
 
         #region Constructor
@@ -72,49 +74,51 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param">MEF Eventaggrigator instance</param>
         public ViewModelPerformanceGadget(DashboardGadgetParam param)
         {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-            _country = param.DashboardGadgetPayload.HeatMapCountryData;
-            _selectedPeriod = param.DashboardGadgetPayload.PeriodSelectionData;
-
-            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod !=null && IsActive)
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
+            portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            country = param.DashboardGadgetPayload.HeatMapCountryData;
+            selectedPeriod = param.DashboardGadgetPayload.PeriodSelectionData;
+            if (effectiveDate != null && portfolioSelectionData != null && selectedPeriod !=null && IsActive)
             {            
-                _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod,"NoFiltering", RetrievePerformanceGraphDataCallBackMethod);
+                dbInteractivity.RetrievePerformanceGraphData(portfolioSelectionData, Convert.ToDateTime(effectiveDate),selectedPeriod,"NoFiltering",
+                    RetrievePerformanceGraphDataCallBackMethod);
             }
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet, false);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);
-                _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
-                _eventAggregator.GetEvent<HeatMapClickEvent>().Subscribe(HandleCountrySelectionDataSet, false);
-            }   
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet, false);
+                eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);
+                eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
+                eventAggregator.GetEvent<HeatMapClickEvent>().Subscribe(HandleCountrySelectionDataSet, false);
+            } 
         }
 
         #endregion
 
         #region Properties
-        #region UI Fields
 
+        #region UI Fields
         /// <summary>
         /// Collection binded to the Comparison chart - consists of unrealized gain loss,closing price and Closing date for the primary entity
         /// </summary>
-        private RangeObservableCollection<PerformanceGraphData> _plottedSeries;
+        private RangeObservableCollection<PerformanceGraphData> plottedSeries;
         public RangeObservableCollection<PerformanceGraphData> PlottedSeries
         {
             get
             {
-                if (_plottedSeries == null)
-                    _plottedSeries = new RangeObservableCollection<PerformanceGraphData>();
-                return _plottedSeries;
+                if (plottedSeries == null)
+                {
+                    plottedSeries = new RangeObservableCollection<PerformanceGraphData>();
+                }
+                return plottedSeries;
             }
             set
             {
-                if (_plottedSeries != value)
+                if (plottedSeries != value)
                 {
-                    _plottedSeries = value;
+                    plottedSeries = value;
                     RaisePropertyChanged(() => this.PlottedSeries);
                 }
             }
@@ -123,20 +127,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Collection that defines the chart area
         /// </summary>
-        private ChartArea _chartArea;
+        private ChartArea chartArea;
         public ChartArea ChartArea
         {
             get
             {
-                return this._chartArea;
+                return this.chartArea;
             }
             set
             {
-                this._chartArea = value;
+                this.chartArea = value;
             }
         }
 
-        private bool _isActive;
+        private bool isActive;
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -144,61 +148,58 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                _isActive = value;
-                if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && _isActive)
+                isActive = value;
+                if (portfolioSelectionData != null && effectiveDate != null && selectedPeriod != null && isActive)
                 {
-                    if (_country != null)
+                    if (country != null)
                     {
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, _country);
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate), selectedPeriod, country);
                     }
                     else
                     {
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, "NoFiltering");
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate), selectedPeriod, "NoFiltering");
                     }
                 }
             }
         }
-
         #endregion
 
         #region ICommand
-
         /// <summary>
         /// ICommand property for Zoom in button
         /// </summary>
-        ICommand _zoomInCommand;
+        ICommand zoomInCommand;
         public ICommand ZoomInCommand
         {
             get
             {
-                if (_zoomInCommand == null)
+                if (zoomInCommand == null)
                 {
-                    _zoomInCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomIn, CanZoomIn);
+                    zoomInCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomIn, CanZoomIn);
                 }
-                return _zoomInCommand;
+                return zoomInCommand;
             }
         }
 
         /// <summary>
         /// ICommand property for Zoom out button
         /// </summary>
-        ICommand _zoomOutCommand;
+        ICommand zoomOutCommand;
         public ICommand ZoomOutCommand
         {
             get
             {
-                if (_zoomOutCommand == null)
+                if (zoomOutCommand == null)
                 {
-                    _zoomOutCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomOut, CanZoomOut);
+                    zoomOutCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomOut, CanZoomOut);
                 }
-                return _zoomOutCommand;
+                return zoomOutCommand;
             }
         }
-
         #endregion        
 
         #endregion
@@ -207,75 +208,72 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event for the notification of Data Load Completion
         /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler performanceGraphDataLoadedEvent;
+        public event DataRetrievalProgressIndicatorEventHandler PerformanceGraphDataLoadedEvent;
         #endregion
 
         #region Event Handlers
         /// <summary>
         /// Assigns UI Field Properties based on Fund reference
         /// </summary>
-        /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData Class</param>
-        public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        /// <param name="portSelectionData">Object of PortfolioSelectionData Class</param>
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData portSelectionData)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (PortfolioSelectionData != null)
+                if (portSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
-                    _PortfolioSelectionData = PortfolioSelectionData;
-                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null && IsActive)
+                    Logging.LogMethodParameter(logger, methodNamespace, portSelectionData, 1);
+                    portfolioSelectionData = portSelectionData;
+                    if (portSelectionData != null && effectiveDate != null && selectedPeriod!=null && IsActive)
                     {                        
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, "NoFiltering");
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate), selectedPeriod, "NoFiltering");
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
         /// Assigns UI Field Properties based on Effective Date
         /// </summary>
-        /// <param name="effectiveDate">Effective Date selected by the user</param>
-        public void HandleEffectiveDateSet(DateTime effectiveDate)
+        /// <param name="effectDate">Effective Date selected by the user</param>
+        public void HandleEffectiveDateSet(DateTime effectDate)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (effectiveDate != null)
+                if (effectDate != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
-                    _effectiveDate = effectiveDate;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && IsActive)
-                    {                        
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, "NoFiltering");
+                    Logging.LogMethodParameter(logger, methodNamespace, effectDate, 1);
+                    effectiveDate = effectDate;
+                    if (portfolioSelectionData != null && effectiveDate != null && selectedPeriod != null && IsActive)
+                    {
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate), selectedPeriod, "NoFiltering");
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
-
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         /// <summary>
         /// Assigns UI Field Properties based on Period
@@ -283,74 +281,76 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="selectedPeriodType">Period selected by the user</param>
         public void HandlePeriodReferenceSet(String selectedPeriodType)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (selectedPeriodType != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
-                    _selectedPeriod = selectedPeriodType;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && IsActive)
+                    Logging.LogMethodParameter(logger, methodNamespace, selectedPeriodType, 1);
+                    selectedPeriod = selectedPeriodType;
+                    if (portfolioSelectionData != null && effectiveDate != null && selectedPeriod != null && IsActive)
                     {                        
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, "NoFiltering");
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate), selectedPeriod, "NoFiltering");
                     }
-
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
-
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         /// <summary>
         /// Assigns UI Field Properties based on Country
         /// </summary>
-        /// <param name="country">Country Selected by the user from the heat Map</param>
-        public void HandleCountrySelectionDataSet(String country)
+        /// <param name="cou">Country Selected by the user from the heat Map</param>
+        public void HandleCountrySelectionDataSet(String cou)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (country != null)
+                if (cou != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, country, 1);
-                    _country = country;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _country != null && IsActive)
-                    {                        
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, country);
+                    Logging.LogMethodParameter(logger, methodNamespace, cou, 1);
+                    country = cou;
+                    if (portfolioSelectionData != null && effectiveDate != null && country != null && IsActive)
+                    {
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate), selectedPeriod, country);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
-
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
-        private void BeginWebServiceCall(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate, String selectedPeriodType
+        /// <summary>
+        /// Calling Web service through dbInteractivity
+        /// </summary>
+        /// <param name="portfolioSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="selectedPeriodType"></param>
+        /// <param name="country"></param>
+        private void BeginWebServiceCall(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String selectedPeriodType
             , String country)
         {
-            if (null != performanceGraphDataLoadedEvent)
-                performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-            _dbInteractivity.RetrievePerformanceGraphData(PortfolioSelectionData, effectiveDate, selectedPeriodType, country, RetrievePerformanceGraphDataCallBackMethod);
+            if (null != PerformanceGraphDataLoadedEvent)
+                PerformanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+            dbInteractivity.RetrievePerformanceGraphData(portfolioSelectionData, effectiveDate, selectedPeriodType, country, RetrievePerformanceGraphDataCallBackMethod);
         }
 
         #endregion
@@ -371,8 +371,8 @@ namespace GreenField.Gadgets.ViewModels
 
             this.ChartArea.ZoomScrollSettingsX.ResumeNotifications();
 
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -383,8 +383,9 @@ namespace GreenField.Gadgets.ViewModels
         public bool CanZoomIn(object parameter)
         {
             if (this.ChartArea == null)
+            {
                 return false;
-
+            }
             return this.ChartArea.ZoomScrollSettingsX.Range > this.ChartArea.ZoomScrollSettingsX.MinZoomRange;
         }
 
@@ -400,7 +401,9 @@ namespace GreenField.Gadgets.ViewModels
             double newRange = Math.Min(1, this.ChartArea.ZoomScrollSettingsX.Range) * 2;
 
             if (zoomCenter + (newRange / 2) > 1)
+            {
                 zoomCenter = 1 - (newRange / 2);
+            }
             else if (zoomCenter - (newRange / 2) < 0)
                 zoomCenter = newRange / 2;
 
@@ -409,8 +412,8 @@ namespace GreenField.Gadgets.ViewModels
 
             this.ChartArea.ZoomScrollSettingsX.ResumeNotifications();
 
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -421,8 +424,9 @@ namespace GreenField.Gadgets.ViewModels
         public bool CanZoomOut(object parameter)
         {
             if (this.ChartArea == null)
+            {
                 return false;
-
+            }
             return this.ChartArea.ZoomScrollSettingsX.Range < 1d;
         }
         #endregion
@@ -435,31 +439,31 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrievePerformanceGraphDataCallBackMethod(List<PerformanceGraphData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     PlottedSeries.Clear();
-                    PlottedSeries.AddRange(result);                   
-                        if (null != performanceGraphDataLoadedEvent)
-                            performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    PlottedSeries.AddRange(result);
+                    if (null != PerformanceGraphDataLoadedEvent)
+                    {
+                        PerformanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    }
                 }
                 else
-                {
-                    
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                {                    
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    PerformanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
-
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -469,10 +473,9 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="e"></param>
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
         {
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
-        }      
-
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
+        }
         #endregion
 
         #region EventUnSubscribe
@@ -481,14 +484,11 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
-            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
-            _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
-            _eventAggregator.GetEvent<HeatMapClickEvent>().Unsubscribe(HandleCountrySelectionDataSet);
+            eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+            eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
+            eventAggregator.GetEvent<HeatMapClickEvent>().Unsubscribe(HandleCountrySelectionDataSet);
         }
-
         #endregion
-
-
     }
 }
