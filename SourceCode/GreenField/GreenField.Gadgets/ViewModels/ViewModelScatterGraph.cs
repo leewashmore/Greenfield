@@ -94,9 +94,9 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _issueRatioComparisonInfo = value;
                 RaisePropertyChanged(() => this.IssueRatioComparisonInfo);
-                MissingSecurityDataNotificationVisibility = value != null 
-                    ? (value.Count == 1 ? Visibility.Visible : Visibility.Collapsed) 
-                    : Visibility.Collapsed;
+                MissingSecurityDataNotificationVisibility = value != null
+                    ? (value.Count == 1 ? Visibility.Collapsed : Visibility.Visible)
+                    : Visibility.Visible;
             }
         }
 
@@ -221,7 +221,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _selectedContext = value;
                     RaisePropertyChanged(() => this.SelectedContext);
-                    if (_dbInteractivity != null && IsActive)
+                    if (_dbInteractivity != null && IssuerReferenceInfo != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving ratio security reference data...");
                         _dbInteractivity.RetrieveRatioSecurityReferenceData(value, IssuerReferenceInfo

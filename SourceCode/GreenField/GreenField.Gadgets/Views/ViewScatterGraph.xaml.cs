@@ -121,7 +121,7 @@ namespace GreenField.Gadgets.Views
         {
             if (DataContextSource.RatioComparisonInfo != null)
             {
-                this.chScatter.DefaultView.ChartArea.Annotations.Clear();
+                this.chaScatter.Annotations.Clear();
 
                 if (DataContextSource.RatioComparisonInfo.Count() != 0)
                 {

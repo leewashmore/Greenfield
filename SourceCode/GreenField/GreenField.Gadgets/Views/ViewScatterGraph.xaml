@@ -193,11 +193,8 @@
                     </Grid>
                     <!--Chart-->
                     <Grid>
-                        <TextBlock Text="*Missing Data for Security Selected" Margin="5" Opacity="0.3" VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Left" Visibility="{Binding MissingSecurityDataNotificationVisibility}"
-                                   Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadChart x:Name="chScatter" telerik:StyleManager.Theme="Metro" FontSize="7" FontFamily="Arial" UseDefaultLayout="False"
-                                          Visibility="Visible" ItemsSource="{Binding RatioComparisonInfo, Mode=TwoWay}" Background="Transparent"
+                                          Visibility="Visible" ItemsSource="{Binding RatioComparisonInfo, Mode=TwoWay}" Background="White"
                                           IsHitTestVisible="True" Loaded="chScatter_Loaded" DataBound="chScatter_DataBound">
                             <telerik:RadChart.SamplingSettings>
                                 <telerik:SamplingSettings SamplingThreshold="0"/>
@@ -209,11 +206,6 @@
                                 <SolidColorBrush Color="#213671"/>
                                 <!--Color for selected data points-->
                                 <SolidColorBrush Color="#9F1D21"/>
-                                <!--<SolidColorBrush Color="#A7362C"/>
-                                <SolidColorBrush Color="#BE715C"/>
-                                <SolidColorBrush Color="#DAAE9E"/>
-                                <SolidColorBrush Color="#FFFFFF"/>
-                                <SolidColorBrush Color="#000000"/>-->
                             </telerik:RadChart.PaletteBrushes>
                             <!--Default View Settings-->
                             <telerik:ChartArea x:Name="chaScatter" SmartLabelsEnabled="True" LegendName="chPricingLegend" 
@@ -221,44 +213,18 @@
                                                telerik:StyleManager.Theme="Metro" ItemToolTipOpening="ChartArea_ItemToolTipOpening"
                                                ItemOverlapPercent="0" ItemWidthPercent="100" Margin="1">
                                 <telerik:ChartArea.AxisX>
-                                    <telerik:AxisX AutoRange="True" LayoutMode="Normal" IsZeroBased="False" PlotAreaAxisVisibility="Collapsed"
+                                    <telerik:AxisX AutoRange="True" LayoutMode="Normal" IsZeroBased="True" PlotAreaAxisVisibility="Collapsed"
                                                                Step="5" MajorGridLinesVisibility="Collapsed" LabelStep="2" MinorGridLinesVisibility="Collapsed"
                                                                AxisLabelsVisibility="Visible"/>
                                     <!--DefaultLabelFormat="d"/>-->
                                 </telerik:ChartArea.AxisX>
                                 <telerik:ChartArea.AxisY>
-                                    <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible"
-                                                               AutoRange="True" IsZeroBased="False" ExtendDirection="None" PlotAreaAxisVisibility="Collapsed"
+                                    <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible" Step="5"
+                                                               AutoRange="True" IsZeroBased="True" ExtendDirection="None" PlotAreaAxisVisibility="Collapsed"
                                                                MajorGridLinesVisibility="Collapsed" MinorGridLinesVisibility="Collapsed"/>
                                 </telerik:ChartArea.AxisY>
                             </telerik:ChartArea>
-                            <!--<telerik:RadChart.DefaultView>
-                                <telerik:ChartDefaultView>
-                                    <telerik:ChartDefaultView.ChartArea>
-                                        <telerik:ChartArea  SmartLabelsEnabled="True" LegendName="chPricingLegend" 
-                                                            EnableAnimations="False" NoDataString="No Data Available"
-                                                            telerik:StyleManager.Theme="Metro" ItemToolTipOpening="ChartArea_ItemToolTipOpening"
-                                                            ItemOverlapPercent="0" ItemWidthPercent="100" Margin="1">
-                                            <telerik:ChartArea.AxisX>
-                                                <telerik:AxisX AutoRange="True" LayoutMode="Normal" IsZeroBased="False" PlotAreaAxisVisibility="Collapsed"
-                                                               Step="5" MajorGridLinesVisibility="Collapsed" LabelStep="2" MinorGridLinesVisibility="Collapsed"
-                                                               AxisLabelsVisibility="Visible"/>
-                                            </telerik:ChartArea.AxisX>
-                                            <telerik:ChartArea.AxisY>
-                                                <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible"
-                                                               AutoRange="True" IsZeroBased="False" ExtendDirection="None" PlotAreaAxisVisibility="Collapsed"
-                                                               MajorGridLinesVisibility="Collapsed" MinorGridLinesVisibility="Collapsed"/>
-                                            </telerik:ChartArea.AxisY>
-                                        </telerik:ChartArea>
-                                    </telerik:ChartDefaultView.ChartArea>-->
-                            <!--<telerik:ChartDefaultView.ChartLegend>
-                                        <telerik:ChartLegend UseAutoGeneratedItems="False"
-                                                             Header="" ItemsPanelOrientation="Horizontal" x:Name="chScatterLegend" 
-                                                             Style="{StaticResource ChartLegendStyle}" 
-                                                             LegendItemStyle="{StaticResource ChartLegendItemStyle}" />
-                                    </telerik:ChartDefaultView.ChartLegend>
-                                </telerik:ChartDefaultView>
-                            </telerik:RadChart.DefaultView>-->
+
                             <!--Series Mapping Settings-->
                             <telerik:RadChart.SeriesMappings>
                                 <telerik:SeriesMapping ChartAreaName="chaScatter">
@@ -277,8 +243,13 @@
                                     <telerik:ItemMapping FieldName="VALUATION" DataPointMember="XValue" />
                                 </telerik:SeriesMapping>
                             </telerik:RadChart.SeriesMappings>
-                        </telerik:RadChart>                        
+                        </telerik:RadChart>
                     </Grid>
+
+                    <TextBlock Text="*Missing Data for Security Selected" Grid.Row="1"
+                                   Margin="5" Opacity="0.3" VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Left" Visibility="{Binding MissingSecurityDataNotificationVisibility}"
+                                   Style="{StaticResource TextBlockStyle}"/>
                 </Grid>
             </Grid>
         </Grid>
