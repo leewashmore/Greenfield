@@ -1604,8 +1604,14 @@ namespace ICPSystemAlert
 
                     doc.Add(votingTable);
 
-                    foreach (PresentationFinalizeDetails voterDetails in distinctPresentationFinalizeDetails)
+                    List<String> distinctVoterPresentationFinalizeDetails = distinctPresentationFinalizeDetails
+                    .Select(record => record.Name).ToList().Distinct().ToList();
+
+                    foreach (String voterName in distinctVoterPresentationFinalizeDetails)
                     {
+                        PresentationFinalizeDetails voterDetails = distinctPresentationFinalizeDetails
+                            .Where(record => record.Name == voterName).FirstOrDefault();
+
                         if (voterDetails.VoteType == null)
                             continue;
 
