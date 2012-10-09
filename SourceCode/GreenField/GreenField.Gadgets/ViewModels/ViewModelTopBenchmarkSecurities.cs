@@ -8,14 +8,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.ServiceCaller;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Common;
-using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.DataContracts;
 
@@ -27,52 +27,26 @@ namespace GreenField.Gadgets.ViewModels
     public class ViewModelTopBenchmarkSecurities : NotificationObject
     {
         #region PrivateMembers
-
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
-
+        private IEventAggregator eventAggregator;
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
-
+        private IDBInteractivity dbInteractivity;
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
-
+        private ILoggerFacade logger;
         /// <summary>
         /// private member object of the PortfolioSelectionData class for storing Benchmark Selection Data
         /// </summary>
-        private PortfolioSelectionData _portfolioSelectionData;
-
+        private PortfolioSelectionData portfolioSelectionData;
         /// <summary>
         /// Contains the effective date
         /// </summary>
-        private DateTime? _effectiveDate;
-
-        private bool _isActive;
-        /// <summary>
-        /// IsActive is true when parent control is displayed on UI
-        /// </summary>
-        public bool IsActive
-        {
-            get
-            {
-                return _isActive;
-            }
-            set
-            {
-                _isActive = value;
-                if (_effectiveDate != null && _portfolioSelectionData != null && _isActive)
-                {
-                    BeginWebServiceCall(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate));
-                }
-            }
-        }
-
+        private DateTime? effectiveDate;
         #endregion
 
         #region Constructor
@@ -83,29 +57,44 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param">MEF Eventaggrigator instance</param>
         public ViewModelTopBenchmarkSecurities(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-
-            _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-
-            if (_eventAggregator != null)
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+                eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
-
-            if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
+            if (effectiveDate != null && portfolioSelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopSecuritiesDataCallbackMethod);
-            }
-           // _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_benchmarkSelectionData, _effectiveDate, RetrieveTopBenchmarkSecuritiesDataCallbackMethod);
-            
+                dbInteractivity.RetrieveTopBenchmarkSecuritiesData(portfolioSelectionData, Convert.ToDateTime(effectiveDate), RetrieveTopSecuritiesDataCallbackMethod);
+            }     
         }
         #endregion
 
         #region Properties
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return isActive;
+            }
+            set
+            {
+                isActive = value;
+                if (effectiveDate != null && portfolioSelectionData != null && isActive)
+                {
+                    BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate));
+                }
+            }
+        }
+
         /// <summary>
         /// Collection containing Top Ten Benchmark Securities binded to grid 
         /// </summary>
@@ -118,8 +107,42 @@ namespace GreenField.Gadgets.ViewModels
                 _topBenchmarkSecuritiesInfo = value;
                 RaisePropertyChanged(() => this.TopBenchmarkSecuritiesInfo);
             }
+        }               
+        #endregion
+
+        #region Callback Methods
+        /// <summary>
+        /// Plots the result in the grid after getting the resulting collection
+        /// </summary>
+        /// <param name="result">Contains the Top Ten Benchmark Securities Data</param>
+        public void RetrieveTopSecuritiesDataCallbackMethod(List<TopBenchmarkSecuritiesData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    TopBenchmarkSecuritiesInfo = new ObservableCollection<TopBenchmarkSecuritiesData>(result);
+                    if (null != topTenBenchmarkSecuritiesDataLoadedEvent)
+                    {
+                        topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            Logging.LogEndMethod(logger, methodNamespace);
         }
-               
         #endregion
 
         #region Events
@@ -130,123 +153,96 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handlers
-
         /// <summary>
         /// Assigns UI Field Properties based on Effective Date
         /// </summary>
-        /// <param name="effectiveDate"></param>
-        public void HandleEffectiveDateSet(DateTime effectiveDate)
+        /// <param name="effDate"></param>
+        public void HandleEffectiveDateSet(DateTime effDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (effectiveDate != null)
+                if (effDate != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
-                    _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
+                    Logging.LogMethodParameter(logger, methodNamespace, effDate, 1);
+                    effectiveDate = effDate;
+                    if (effDate != null && portfolioSelectionData != null && IsActive)
                     {
-                        BeginWebServiceCall(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate));
+                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effDate));
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
         /// Assigns UI Field Properties based on Benchmark reference
         /// </summary>
         /// <param name="benchmarkSelectionData">Object of BenchmarkSelectionData Class containg Benchmark data</param>
-        public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData portSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (portfolioSelectionData != null)
+                if (portSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
-                    _portfolioSelectionData = portfolioSelectionData;
-                    if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
+                    Logging.LogMethodParameter(logger, methodNamespace, portSelectionData, 1);
+                    portfolioSelectionData = portSelectionData;
+                    if (effectiveDate != null && portSelectionData != null && IsActive)
                     {
-                        BeginWebServiceCall(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate));
+                        BeginWebServiceCall(portSelectionData, Convert.ToDateTime(effectiveDate));
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
-
-        private void BeginWebServiceCall(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
-        {
-            if (_effectiveDate != null && _portfolioSelectionData != null)
-            {
-                if (null != topTenBenchmarkSecuritiesDataLoadedEvent)
-                    topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(portfolioSelectionData, effectiveDate, RetrieveTopSecuritiesDataCallbackMethod);
-            }
-        }
-
-        #endregion       
-
-        #region Callback Methods
 
         /// <summary>
-        /// Plots the result in the grid after getting the resulting collection
+        /// Makes calls to the web service through dbInteractivity
         /// </summary>
-        /// <param name="result">Contains the Top Ten Benchmark Securities Data</param>
-        public void RetrieveTopSecuritiesDataCallbackMethod(List<TopBenchmarkSecuritiesData> result)
+        /// <param name="portfolioSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        private void BeginWebServiceCall(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
+            if (effectiveDate != null && portfolioSelectionData != null)
             {
-                if (result != null)
+                if (null != topTenBenchmarkSecuritiesDataLoadedEvent)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    TopBenchmarkSecuritiesInfo = new ObservableCollection<TopBenchmarkSecuritiesData>(result);
-                    if (null != topTenBenchmarkSecuritiesDataLoadedEvent)
-                        topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                 }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                }
+                dbInteractivity.RetrieveTopBenchmarkSecuritiesData(portfolioSelectionData, effectiveDate, RetrieveTopSecuritiesDataCallbackMethod);
             }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }        
-#endregion
+        }
+        #endregion               
 
         #region EventsUnsubscribe     
-
+        /// <summary>
+        /// Dispose Events
+        /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
-            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+            eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
         }
         
         #endregion       

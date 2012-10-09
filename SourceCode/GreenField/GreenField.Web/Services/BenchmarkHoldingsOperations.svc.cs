@@ -2349,25 +2349,20 @@ namespace GreenField.Web.Services
             List<TopBenchmarkSecuritiesData> result = new List<TopBenchmarkSecuritiesData>();
             if (portfolioSelectionData == null || effectiveDate == null)
                 return result;
-
             //checking if the service is down
             bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
             if (!isServiceUp)
-
+            {
                 throw new Exception();
-
+            }
             List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> topTenBenchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.BM1_RC_WGT_EOD != null && t.BM1_RC_WGT_EOD > 0).OrderByDescending(t => t.BM1_RC_WGT_EOD).ToList();
-
             IEqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
-
             topTenBenchmarkData = topTenBenchmarkData.Distinct(customComparer).Take(10).ToList();
-
-
             if (topTenBenchmarkData.Count == 0 || topTenBenchmarkData == null)
+            {
                 return result;
-
+            }
             try
             {
                 for (int i = 0; i < topTenBenchmarkData.Count; i++)
@@ -2382,18 +2377,14 @@ namespace GreenField.Web.Services
                     entry.YTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_YTD) * 100;
                     result.Add(entry);
                 }
-
-                //result = result.Distinct().Take(10).ToList();
                 return result;
             }
-
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-
         }
 
         #region Heat Map Operation Contract
