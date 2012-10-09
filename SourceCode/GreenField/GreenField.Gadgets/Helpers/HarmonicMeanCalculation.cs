@@ -43,7 +43,7 @@ namespace GreenField.Gadgets.Helpers
                        
             Decimal totalweight = 0;
             Decimal totalharmonic = 0;
-            Decimal amount = 0
+            Decimal amount = 0;
            
             List<MyDataRow> sourceData = source.Cast<MyDataRow>().ToList();
             List<string> marketCapList = new List<string>();
