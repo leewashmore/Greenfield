@@ -113,11 +113,15 @@ namespace GreenField.Web.Helpers
                 //arguement null exception
                 if (dimensionTransactionData == null || securityExtensionData == null)
                 {
-                    throw new InvalidOperationException();
+                    return new List<ChartExtensionData>();
                 }
                 if (dimensionTransactionData.Count == 0)
                 {
                     return securityExtensionData;
+                }
+                if (securityExtensionData.Count == 0)
+                {
+                    return new List<ChartExtensionData>();
                 }
                 decimal sumBuyTransactions;
                 decimal sumSellTransactions;
