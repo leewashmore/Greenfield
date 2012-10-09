@@ -43,6 +43,7 @@ namespace GreenField.Gadgets.Helpers
                        
             Decimal totalweight = 0;
             Decimal totalharmonic = 0;
+            Decimal amount = 0
            
             List<MyDataRow> sourceData = source.Cast<MyDataRow>().ToList();
             List<string> marketCapList = new List<string>();
@@ -84,7 +85,11 @@ namespace GreenField.Gadgets.Helpers
                         Decimal measureValue = 0;
                         measureValue = decimal.TryParse(numericvalues[i], out measureValue) ? measureValue : 1;
 
-                        Decimal amount = 1 / Convert.ToDecimal(measureValue);
+                        if (measureValue != 0)
+                        {
+                            amount = 1 / Convert.ToDecimal(measureValue);
+                        }
+                        
                         Decimal inverseAmount = weight * amount;
                         totalharmonic = totalharmonic + inverseAmount;
                     }
