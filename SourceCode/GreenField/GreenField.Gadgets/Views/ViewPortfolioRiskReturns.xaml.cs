@@ -31,7 +31,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextRiskReturn = dataContextSource;
-            dataContextSource.portfolioRiskReturnDataLoadedEvent +=
+            dataContextSource.PortfolioRiskReturnDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_portfolioRiskReturnDataLoadedEvent);
         }
         #endregion
@@ -53,10 +53,6 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        private void dgPortfolioRiskReturn_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-           
-        }
         /// <summary>
         /// Method to catch Click Event of Export to Excel
         /// </summary>
@@ -68,11 +64,11 @@ namespace GreenField.Gadgets.Views
             {
                 if (this.dgPortfolioRiskReturn.Visibility == Visibility.Visible)
                 {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                     {
                         new RadExportOptions() { ElementName = "Portfolio Risk Return", Element = this.dgPortfolioRiskReturn, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                     };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RISK_RETURN);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RISK_RETURN);
                     childExportOptions.Show();
                 }
             }
@@ -82,6 +78,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Styles added to Export to excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgRiskReturnGrid_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e);
@@ -92,27 +93,26 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of the type of View Model for this view
         /// </summary>
-        private ViewModelPortfolioRiskReturns _dataContextRiskReturn;
+        private ViewModelPortfolioRiskReturns dataContextRiskReturn;
         public ViewModelPortfolioRiskReturns DataContextRiskReturn
         {
-            get { return _dataContextRiskReturn; }
-            set { _dataContextRiskReturn = value; }
+            get { return dataContextRiskReturn; }
+            set { dataContextRiskReturn = value; }
         }
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextRiskReturn != null)
-                    DataContextRiskReturn.IsActive = _isActive;
+                    DataContextRiskReturn.IsActive = isActive;
             }
         }
-
         #endregion
 
         #region RemoveEvents
@@ -121,12 +121,12 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         public override void Dispose()
         {
-            this.DataContextRiskReturn.portfolioRiskReturnDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_portfolioRiskReturnDataLoadedEvent);
+            this.DataContextRiskReturn.PortfolioRiskReturnDataLoadedEvent -= 
+                new DataRetrievalProgressIndicatorEventHandler(dataContextSource_portfolioRiskReturnDataLoadedEvent);
             this.DataContextRiskReturn.Dispose();
             this.DataContextRiskReturn = null;
             this.DataContext = null;
         }
         #endregion
-
     }
 }

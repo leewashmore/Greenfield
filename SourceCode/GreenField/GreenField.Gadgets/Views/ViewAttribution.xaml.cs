@@ -3,29 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using Telerik.Windows.Controls;
 using System.IO;
+using System.Collections;
+using System.Windows.Controls;
+using System.Windows.Printing;
 using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Documents.FormatProviders.Pdf;
 using Telerik.Windows.Data;
-using System.Collections;
-using GreenField.DataContracts;
-
-#if !SILVERLIGHT
-using Microsoft.Win32;
-#else
-using System.Windows.Controls;
-using System.Windows.Printing;
-using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Documents.UI;
 using Telerik.Windows.Controls.GridView;
+using Telerik.Windows.Controls;
+using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
-using Telerik.Windows.Documents.UI;
 using GreenField.ServiceCaller;
-#endif
-
-
 
 namespace GreenField.Gadgets.Views
 {
@@ -44,8 +37,8 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextAttribution = dataContextSource;
-            dataContextSource.attributionDataLoadedEvent +=
-        new DataRetrievalProgressIndicatorEventHandler(dataContextSource_attributionDataLoadedEvent);
+            dataContextSource.AttributionDataLoadedEvent +=
+            new DataRetrievalProgressIndicatorEventHandler(dataContextSource_attributionDataLoadedEvent);
         }
         #endregion
 
@@ -53,28 +46,29 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of the type of View Model for this view
         /// </summary>
-        private ViewModelAttribution _dataContextAttribution;
+        private ViewModelAttribution dataContextAttribution;
         public ViewModelAttribution DataContextAttribution
         {
-            get { return _dataContextAttribution; }
-            set { _dataContextAttribution = value; }
+            get { return dataContextAttribution; }
+            set { dataContextAttribution = value; }
         }
 
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextAttribution != null)
-                    DataContextAttribution.IsActive = _isActive;
+                {
+                    DataContextAttribution.IsActive = isActive;
+                }
             }
         }
-
         #endregion
 
         #region EventHandler
@@ -102,7 +96,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         public override void Dispose()
         {
-            this.DataContextAttribution.attributionDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_attributionDataLoadedEvent);
+            this.DataContextAttribution.AttributionDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_attributionDataLoadedEvent);
             this.DataContextAttribution.Dispose();
             this.DataContextAttribution = null;
             this.DataContext = null;
@@ -111,16 +105,10 @@ namespace GreenField.Gadgets.Views
 
         #region Private Methods
         /// <summary>
-        /// When row gets loaded
+        /// Styles added to Export
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dgAttribution_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-           
-        }
-
-
         private void dgAttribution_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e);
@@ -128,14 +116,14 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region ExportToExcel/PDF/Print
-       
+
         #region ExcelExport
         /// <summary>
         /// Static class storing string types
         /// </summary>
         private static class ExportTypes
         {
-            public const string PERFORMANCE_ATTRIBUTION_UI = "Performance Attribution";
+            public const string PerformanceAttributionUI = "Performance Attribution";
         }
 
         /// <summary>
@@ -149,13 +137,11 @@ namespace GreenField.Gadgets.Views
             {
                 if (this.dgAttribution.Visibility == Visibility.Visible)
                 {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {
-                  
-                      new RadExportOptions() { ElementName = "Performance Attribution", Element = this.dgAttribution, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
-                    
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
+                {                  
+                      new RadExportOptions() { ElementName = "Performance Attribution", Element = this.dgAttribution, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },                    
                 };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_ATTRIBUTION);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_ATTRIBUTION);
                     childExportOptions.Show();
                 }
             }
@@ -164,8 +150,7 @@ namespace GreenField.Gadgets.Views
                 Prompt.ShowDialog(ex.Message);
             }
         }
-
-#endregion
+        #endregion
 
         #region HelperMethods
         /// <summary>
@@ -188,7 +173,6 @@ namespace GreenField.Gadgets.Views
         private void btnExportPDF_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-
             try
             {
                 PDFExporter.btnExportPDF_Click(this.dgAttribution);
@@ -210,14 +194,12 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-   
             try
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
                     RichTextBox.Document = PDFExporter.Print(dgAttribution, 6);
                 }));
-
                 this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
                 RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
             }
@@ -226,7 +208,7 @@ namespace GreenField.Gadgets.Views
                 Prompt.ShowDialog(ex.Message);
             }
         }
-             #endregion
-     #endregion
+        #endregion
+        #endregion
     }
 }
