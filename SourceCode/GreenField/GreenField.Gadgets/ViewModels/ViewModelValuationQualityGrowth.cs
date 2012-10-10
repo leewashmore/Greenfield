@@ -1,66 +1,53 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Common;
 using GreenField.DataContracts;
-using Microsoft.Practices.Prism.Logging;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using System.Collections.Generic;
 using GreenField.DataContracts.DataContracts;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelValuationQualityGrowth : NotificationObject
-    
+    public class ViewModelValuationQualityGrowth : NotificationObject    
     {
         #region PrivateMembers
-
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
+        private ILoggerFacade logger;
 
         /// <summary>
         /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private PortfolioSelectionData _PortfolioSelectionData;
+        private PortfolioSelectionData portfolioSelectionData;
 
         /// <summary>
         /// Stores Effective Date selected by the user
         /// </summary>
-        private DateTime? _effectiveDate;
+        private DateTime? effectiveDate;
 
         /// <summary>
         /// Private member containing the Key Value Pair
         /// </summary>
-        private FilterSelectionData _holdingDataFilter;
+        private FilterSelectionData holdingDataFilter;
 
         /// <summary>
         /// Private member to store info about look thru enabled or not
         /// </summary>
-        private bool _lookThruEnabled;
-
-
+        private bool lookThruEnabled;
         #endregion
 
         #region Constructor
@@ -71,59 +58,63 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param">MEF Eventaggrigator instance</param>
         public ViewModelValuationQualityGrowth(DashboardGadgetParam param)
         {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-            _holdingDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
-            _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
-          
-            if (_eventAggregator != null)
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
+            portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            holdingDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
+            lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;          
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
-                _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
-                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
+                eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
+                eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
             }
-
-            if (_effectiveDate != null && _PortfolioSelectionData != null  && _holdingDataFilter != null && IsActive)
+            if (effectiveDate != null && portfolioSelectionData != null  && holdingDataFilter != null && IsActive)
             {
-                _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, holdingDataFilter.Filtertype, 
+                    holdingDataFilter.FilterValues, lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
             }
-
-            if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+            if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null && IsActive)
             {
-                _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
-            }
- 
+                dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, "Show Everything", " ", 
+                    lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+            } 
         }
+        #endregion
 
-        private bool _isActive;
+        #region Properties
+        private bool isActive;
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
         public bool IsActive
         {
             get
-            {
-                return _isActive;
-            }
+            { return isActive; }
             set
             {
-                _isActive = value;
-                if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+                isActive = value;
+                if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && IsActive)
                 {
-                    if (null != valuationQualityGrowthDataLoadedEvent)
-                        valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                    if (null != ValuationQualityGrowthDataLoadedEvent)
+                    {
+                        ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+                    dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, holdingDataFilter.Filtertype, 
+                        holdingDataFilter.FilterValues, lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                 }
 
-                if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null && IsActive)
                 {
-                    if (null != valuationQualityGrowthDataLoadedEvent)
-                        valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                    if (null != ValuationQualityGrowthDataLoadedEvent)
+                    {
+                        ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+                    dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, "Show Everything", " ", lookThruEnabled, 
+                        RetrieveValuationQualityGrowthCallbackMethod);
                 }
             }
         }
@@ -131,135 +122,146 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Consists of whole Portfolio Data
         /// </summary>
-        private List<ValuationQualityGrowthData> _valuationQualityGrowthInfo;
+        private List<ValuationQualityGrowthData> valuationQualityGrowthInfo;
         public List<ValuationQualityGrowthData> ValuationQualityGrowthInfo
         {
             get
-            {
-                return _valuationQualityGrowthInfo;
-            }
+            { return valuationQualityGrowthInfo; }
             set
             {
-                _valuationQualityGrowthInfo = value;
+                valuationQualityGrowthInfo = value;
                 RaisePropertyChanged(() => this.ValuationQualityGrowthInfo);
             }
         }
+        #endregion
 
+        #region Callback methods
+        /// <summary>
+        /// Callback method for this gadget
+        /// </summary>
+        /// <param name="result"></param>
         public void RetrieveValuationQualityGrowthCallbackMethod(List<ValuationQualityGrowthData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null && result.Count > 0)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     ValuationQualityGrowthInfo = result;
-                    if (null != valuationQualityGrowthDataLoadedEvent)
-                        valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    if (null != ValuationQualityGrowthDataLoadedEvent)
+                    {
+                        ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    }
                 }
                 else
                 {
                     ValuationQualityGrowthInfo = result;
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
 
             catch (Exception ex)
             {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", 
+                    MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
-
-
         #endregion
 
         #region Event Handlers
         /// <summary>
         /// Assigns UI Field Properties based on Fund reference
         /// </summary>
-        /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData Class containing Fund data</param>
-        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        /// <param name="portSelectionData">Object of PortfolioSelectionData Class containing Fund data</param>
+        public void HandleFundReferenceSet(PortfolioSelectionData portSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (PortfolioSelectionData != null)
+                if (portSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
-                    _PortfolioSelectionData = PortfolioSelectionData;                   
+                    Logging.LogMethodParameter(logger, methodNamespace, portSelectionData, 1);
+                    portfolioSelectionData = portSelectionData;                   
 
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+                    if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && IsActive)
                     {
-                        if (null != valuationQualityGrowthDataLoadedEvent)
-                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                        if (null != ValuationQualityGrowthDataLoadedEvent)
+                        {
+                            ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
+                        dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, holdingDataFilter.Filtertype, 
+                            holdingDataFilter.FilterValues, lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                     }
-
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                    if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null && IsActive)
                     {
-                        if (null != valuationQualityGrowthDataLoadedEvent)
-                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                        if (null != ValuationQualityGrowthDataLoadedEvent)
+                        {
+                            ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
+                        dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, "Show Everything", " ", 
+                            lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
         /// Assigns UI Field Properties based on Effective Date
         /// </summary>
-        /// <param name="effectiveDate"></param>
-        public void HandleEffectiveDateSet(DateTime effectiveDate)
+        /// <param name="effectDate"></param>
+        public void HandleEffectiveDateSet(DateTime effectDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (effectiveDate != null)
+                if (effectDate != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
-                    _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+                    Logging.LogMethodParameter(logger, methodNamespace, effectDate, 1);
+                    effectiveDate = effectDate;
+                    if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && IsActive)
                     {
-                        if (null != valuationQualityGrowthDataLoadedEvent)
-                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                        if (null != ValuationQualityGrowthDataLoadedEvent)
+                            ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, holdingDataFilter.Filtertype, 
+                            holdingDataFilter.FilterValues, lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                     }
 
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                    if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null && IsActive)
                     {
-                        if (null != valuationQualityGrowthDataLoadedEvent)
-                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                        if (null != ValuationQualityGrowthDataLoadedEvent)
+                            ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, "Show Everything", " ", 
+                            lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -269,38 +271,43 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleFilterReferenceSetEvent(FilterSelectionData filterSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (filterSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, filterSelectionData, 1);
-                    _holdingDataFilter = filterSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+                    Logging.LogMethodParameter(logger, methodNamespace, filterSelectionData, 1);
+                    holdingDataFilter = filterSelectionData;
+                    if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && IsActive)
                     {
-                        if (null != valuationQualityGrowthDataLoadedEvent)
-                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                        if (null != ValuationQualityGrowthDataLoadedEvent)
+                        {
+                            ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
+                        dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, holdingDataFilter.Filtertype, 
+                            holdingDataFilter.FilterValues, lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                     }
-
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                    if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null && IsActive)
                     {
-                        if (null != valuationQualityGrowthDataLoadedEvent)
-                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                        if (null != ValuationQualityGrowthDataLoadedEvent)
+                        {
+                            ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
+                        dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, "Show Everything", " ", 
+                            lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -310,34 +317,37 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleLookThruReferenceSetEvent(bool enableLookThru)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
+                Logging.LogMethodParameter(logger, methodNamespace, enableLookThru, 1);
+                lookThruEnabled = enableLookThru;
 
-                Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
-                _lookThruEnabled = enableLookThru;
-
-                if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+                if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter != null && IsActive)
                 {
-                    if (null != valuationQualityGrowthDataLoadedEvent)
-                        valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                    if (null != ValuationQualityGrowthDataLoadedEvent)
+                    {
+                        ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+                    dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, holdingDataFilter.Filtertype, 
+                        holdingDataFilter.FilterValues, lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                 }
-
-                if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                if (effectiveDate != null && portfolioSelectionData != null && holdingDataFilter == null && IsActive)
                 {
-                    if (null != valuationQualityGrowthDataLoadedEvent)
-                        valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                    if (null != ValuationQualityGrowthDataLoadedEvent)
+                    {
+                        ValuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+                    dbInteractivity.RetrieveValuationGrowthData(portfolioSelectionData, effectiveDate, "Show Everything", " ", lookThruEnabled, 
+                        RetrieveValuationQualityGrowthCallbackMethod);
                 }
-
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -345,7 +355,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event for the notification of Data Load Completion
         /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler valuationQualityGrowthDataLoadedEvent;
+        public event DataRetrievalProgressIndicatorEventHandler ValuationQualityGrowthDataLoadedEvent;
         #endregion
 
         #region EventUnSubscribe
@@ -354,14 +364,11 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
-            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
-            _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Unsubscribe(HandleFilterReferenceSetEvent);
-            _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
-
+            eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
+            eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Unsubscribe(HandleFilterReferenceSetEvent);
+            eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
         }
-
         #endregion
-
     }
 }

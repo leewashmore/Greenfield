@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
-using GreenField.Common;
 using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
@@ -28,35 +20,41 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextViewQualityGrowth = dataContextSource;
-            dataContextSource.valuationQualityGrowthDataLoadedEvent +=
+            dataContextSource.ValuationQualityGrowthDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_valuationQualityGrowthDataLoadedEvent);
         }
+         #endregion
 
+          #region Properties
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextViewQualityGrowth != null)
-                    DataContextViewQualityGrowth.IsActive = _isActive;
+                {
+                    DataContextViewQualityGrowth.IsActive = isActive;
+                }
             }
         }
 
         /// <summary>
         /// Property of the type of View Model for this view
         /// </summary>
-        private ViewModelValuationQualityGrowth _dataContextViewQualityGrowth;
+        private ViewModelValuationQualityGrowth dataContextViewQualityGrowth;
         public ViewModelValuationQualityGrowth DataContextViewQualityGrowth
         {
-            get { return _dataContextViewQualityGrowth; }
-            set { _dataContextViewQualityGrowth = value; }
+            get { return dataContextViewQualityGrowth; }
+            set { dataContextViewQualityGrowth = value; }
         }
+        #endregion
 
+          #region Events
         /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
@@ -65,7 +63,6 @@ namespace GreenField.Gadgets.Views
         {
             if (e.ShowBusy)
             {
-
                 this.busyIndicatorGrid.IsBusy = true;
             }
             else
@@ -85,11 +82,13 @@ namespace GreenField.Gadgets.Views
             {
                 if (this.dgValuation.Visibility == Visibility.Visible)
                 {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                     {
-                          new RadExportOptions() { ElementName = "Valuation,Quality and Growth", Element = this.dgValuation, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                          new RadExportOptions() { ElementName = "Valuation,Quality and Growth", Element = this.dgValuation, 
+                              ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                     };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + 
+                        GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES);
                     childExportOptions.Show();
                 }
             }
@@ -99,16 +98,15 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Styles added to export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgValuationGrid_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e);
         }
-
         #endregion
-
-        private void ViewBaseUserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
