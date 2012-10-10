@@ -5250,12 +5250,16 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #region Custom Screening Tool
-
+        /// <summary>
+        /// Service call for retrieving custom controls selection list depending upon parameter which contains name of the control
+        /// </summary>
+        /// <param name="parameter">string</param>
+        /// <param name="callback"></param>
         public void RetrieveCustomControlsList(string parameter, Action<List<string>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
+                                                                                                                                                    : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
             client.RetrieveCustomControlsListAsync(parameter);
             client.RetrieveCustomControlsListCompleted += (se, e) =>
@@ -5280,24 +5284,36 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                        ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
-        public void RetrieveSecurityData(PortfolioSelectionData portfolio, EntitySelectionData benchmark, String region, String country, String sector, String industry,
-                                        List<CSTUserPreferenceInfo> userPreference, Action<List<CustomScreeningSecurityData>> callback)
+        /// <summary>
+        /// Service call for retrieving security data based on selected data points
+        /// </summary>
+        /// <param name="portfolio">PortfolioSelectionData</param>
+        /// <param name="benchmark">EntitySelectionData</param>
+        /// <param name="region">String</param>
+        /// <param name="country">String</param>
+        /// <param name="sector">String</param>
+        /// <param name="industry">String</param>
+        /// <param name="userPreference">String</param>
+        /// <param name="callback"></param>
+        public void RetrieveSecurityData(PortfolioSelectionData portfolio, EntitySelectionData benchmark, String region, String country, String sector, 
+            String industry, List<CSTUserPreferenceInfo> userPreference, Action<List<CustomScreeningSecurityData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
+                                                                                                                                            : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
             client.RetrieveSecurityDataAsync(portfolio, benchmark, region, country, sector, industry, userPreference);
             client.RetrieveSecurityDataCompleted += (se, e) =>
@@ -5322,23 +5338,28 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                                ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
+        /// <summary>
+        /// Service call for retrieving Security Reference Tab Data Points List
+        /// </summary>
+        /// <param name="callback"></param>
         public void RetrieveSecurityReferenceTabDataPoints(Action<List<CustomSelectionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+                                                                                                                                : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
             client.RetrieveSecurityReferenceTabDataPointsAsync();
             client.RetrieveSecurityReferenceTabDataPointsCompleted += (se, e) =>
@@ -5363,23 +5384,28 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null
+                                                                                                        ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
+        /// <summary>
+        /// Service call for retrieving Period Financials Tab Data Points List
+        /// </summary>
+        /// <param name="callback"></param>
         public void RetrievePeriodFinancialsTabDataPoints(Action<List<CustomSelectionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+                                                                                                                                        : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
             client.RetrievePeriodFinancialsTabDataPointsAsync();
             client.RetrievePeriodFinancialsTabDataPointsCompleted += (se, e) =>
@@ -5404,23 +5430,28 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null
+                                                                                                            ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
+        /// <summary>
+        /// Service call for retrieving Current Financials Tab Data Points List
+        /// </summary>
+        /// <param name="callback"></param>
         public void RetrieveCurrentFinancialsTabDataPoints(Action<List<CustomSelectionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+                                                                                                                                : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
             client.RetrieveCurrentFinancialsTabDataPointsAsync();
             client.RetrieveCurrentFinancialsTabDataPointsCompleted += (se, e) =>
@@ -5445,23 +5476,28 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                            ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
+        /// <summary>
+        /// Service call for retrieving Fair Value Tab Data Points List
+        /// </summary>
+        /// <param name="callback"></param>
         public void RetrieveFairValueTabDataPoints(Action<List<CustomSelectionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
+                                                                                                                            : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
             client.RetrieveFairValueTabDataPointsAsync();
             client.RetrieveFairValueTabDataPointsCompleted += (se, e) =>
@@ -5486,23 +5522,30 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                                   ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
+        /// <summary>
+        /// Service call to save user preferred Data Points List
+        /// </summary>
+        /// <param name="userPreference"></param>
+        /// <param name="username"></param>
+        /// <param name="callback"></param>
         public void SaveUserDataPointsPreference(string userPreference, string username, Action<Boolean?> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+                                                                                                                                            : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
             client.SaveUserDataPointsPreferenceAsync(userPreference, username);
             client.SaveUserDataPointsPreferenceCompleted += (se, e) =>
@@ -5520,23 +5563,29 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                            ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
+        /// <summary>
+        /// Service call to retrieve stored user preference for custom screening data
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="callback"></param>
         public void GetCustomScreeningUserPreferences(string username, Action<List<CSTUserPreferenceInfo>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
+                                                                                                                                        : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
             client.GetCustomScreeningUserPreferencesAsync(username);
             client.GetCustomScreeningUserPreferencesCompleted += (se, e) =>
@@ -5561,23 +5610,34 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                            ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
-        public void UpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility, Action<Boolean?> callback)
+        /// <summary>
+        /// Service call to update user preferred Data Points List
+        /// </summary>
+        /// <param name="userPreference"></param>
+        /// <param name="username"></param>
+        /// <param name="existingListname"></param>
+        /// <param name="newListname"></param>
+        /// <param name="accessibility"></param>
+        /// <param name="callback"></param>
+        public void UpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility,
+            Action<Boolean?> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+                                                                                                                                        : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
             client.UpdateUserDataPointsPreferenceAsync(userPreference, username, existingListname, newListname, accessibility);
             client.UpdateUserDataPointsPreferenceCompleted += (se, e) =>
@@ -5595,23 +5655,28 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null
+                                                                                                            ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
+        /// <summary>
+        /// Service call for retrieving Fair Value Tab Source List
+        /// </summary>
+        /// <param name="callback"></param>
         public void RetrieveFairValueTabSource(Action<List<string>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
+                                                                                                                                            : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
             client.RetrieveFairValueTabSourceAsync();
             client.RetrieveFairValueTabSourceCompleted += (se, e) =>
@@ -5636,15 +5701,16 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null
+                                                                                                                ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
         #endregion

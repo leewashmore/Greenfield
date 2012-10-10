@@ -455,26 +455,79 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #region Custom Screening Tool
-
+        /// <summary>
+        /// Service call for retrieving custom controls selection list depending upon parameter which contains name of the control
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         void RetrieveCustomControlsList(string parameter, Action<List<string>> callback);
 
+        /// <summary>
+        /// Service call for retrieving Security Reference Tab Data Points List
+        /// </summary>
+        /// <returns></returns>
         void RetrieveSecurityReferenceTabDataPoints(Action<List<CustomSelectionData>> callback);
 
+        /// <summary>
+        /// Service call for retrieving Period Financials Tab Data Points List
+        /// </summary>
+        /// <returns></returns>
         void RetrievePeriodFinancialsTabDataPoints(Action<List<CustomSelectionData>> callback);
 
+        /// <summary>
+        /// Service call for retrieving Current Financials Tab Data Points List
+        /// </summary>
+        /// <returns></returns>
         void RetrieveCurrentFinancialsTabDataPoints(Action<List<CustomSelectionData>> callback);
 
+        /// <summary>
+        /// Service call for retrieving Fair Value Tab Data Points List
+        /// </summary>
+        /// <returns></returns>
         void RetrieveFairValueTabDataPoints(Action<List<CustomSelectionData>> callback);
 
+        /// <summary>
+        /// Service call for retrieving security data based on selected data points
+        /// </summary>
+        /// <param name="portfolio"></param>
+        /// <param name="benchmark"></param>
+        /// <param name="region"></param>
+        /// <param name="country"></param>
+        /// <param name="sector"></param>
+        /// <param name="industry"></param>
+        /// <returns></returns>
         void RetrieveSecurityData(PortfolioSelectionData portfolio, EntitySelectionData benchmark, String region, String country, String sector, String industry,
                                         List<CSTUserPreferenceInfo> userPreference, Action<List<CustomScreeningSecurityData>> callback);
 
+        /// <summary>
+        /// Service call to save user preferred Data Points List
+        /// </summary>
+        /// <returns></returns>
         void SaveUserDataPointsPreference(string userPreference, string username, Action<Boolean?> callback);
 
+        /// <summary>
+        /// Service call to retrieve stored user preference for custom screening data
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         void GetCustomScreeningUserPreferences(string username, Action<List<CSTUserPreferenceInfo>> callback);
 
-        void UpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility, Action<Boolean?> callback);
+        /// <summary>
+        /// Service call to update user preferred Data Points List
+        /// </summary>
+        /// <param name="userPreference"></param>
+        /// <param name="username"></param>
+        /// <param name="existingListname"></param>
+        /// <param name="newListname"></param>
+        /// <param name="accessibility"></param>
+        /// <param name="callback"></param>
+        void UpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility,
+            Action<Boolean?> callback);
 
+        /// <summary>
+        /// Service call for retrieving Fair Value Tab Source List
+        /// </summary>
+        /// <param name="callback"></param>
         void RetrieveFairValueTabSource(Action<List<string>> callback);
         #endregion
 
