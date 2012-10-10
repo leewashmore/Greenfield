@@ -10,15 +10,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Common;
 using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.ViewModel;
 
 namespace GreenField.Gadgets.ViewModels
 {

@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
+using Microsoft.Practices.Prism.Logging;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
@@ -18,7 +19,6 @@ using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.UserSession;
-using Microsoft.Practices.Prism.Logging;
 
 namespace GreenField.ServiceCaller
 {
@@ -213,13 +213,13 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// Service Caller Method for Closing Price Chart
         /// </summary>
-        /// <param name="entityIdentifiers"></param>
-        /// <param name="startDateTime"></param>
-        /// <param name="endDateTime"></param>
-        /// <param name="totalReturnCheck"></param>
-        /// <param name="frequencyInterval"></param>
-        /// <param name="chartEntityTypes"></param>
-        /// <param name="callback"></param>
+        /// <param name="entityIdentifiers">List of Securities</param>
+        /// <param name="startDateTime">Start Date</param>
+        /// <param name="endDateTime">Chart End Date</param>
+        /// <param name="totalReturnCheck">Total Return :True/False</param>
+        /// <param name="frequencyInterval">Frequency Interval</param>
+        /// <param name="chartEntityTypes">Type of entities added to Chart</param>
+        /// <param name="callback">Collection of PricingReferenceData</param>
         public void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime,
             bool totalReturnCheck, string frequencyInterval, Action<List<PricingReferenceData>> callback)
         {
@@ -249,13 +249,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(),
                     SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -360,6 +364,7 @@ namespace GreenField.ServiceCaller
         }
 
         #region Slice 2
+
         public void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -439,13 +444,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -1197,13 +1206,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -1243,13 +1256,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -1289,13 +1306,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(),
                     SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -1531,13 +1552,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(),
                     SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -1579,13 +1604,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(),
                     SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -1644,7 +1673,7 @@ namespace GreenField.ServiceCaller
                                                                                 Action<List<RelativePerformanceData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                                     : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveRelativePerformanceDataAsync(portfolioSelectionData, effectiveDate, period);
@@ -1682,7 +1711,6 @@ namespace GreenField.ServiceCaller
                                                                                                             ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
-
         /// <summary>
         /// service call to retrieve relative performance sector data list
         /// </summary>
@@ -1690,11 +1718,11 @@ namespace GreenField.ServiceCaller
         /// <param name="effectiveDate"></param>
         /// <param name="period"></param>
         /// <param name="callback"></param>
-        public void RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, 
+        public void RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,
                                                                                                     Action<List<RelativePerformanceSectorData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                             : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveRelativePerformanceSectorDataAsync(fundSelectionData, effectiveDate);
@@ -1728,7 +1756,7 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                     { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null
                                                                                                             ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
@@ -1794,7 +1822,7 @@ namespace GreenField.ServiceCaller
             Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                                     : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveRelativePerformanceCountryActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
@@ -1828,7 +1856,7 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                     { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null
                                                                                                                     ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
@@ -1840,7 +1868,7 @@ namespace GreenField.ServiceCaller
         /// <param name="effectiveDate"></param>
         /// <param name="period"></param>
         /// <param name="callback"></param>
-        public void RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, 
+        public void RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period,
             Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -1878,7 +1906,7 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                     { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null
                                                                                                                 ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
@@ -1894,7 +1922,7 @@ namespace GreenField.ServiceCaller
             Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                             : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveRelativePerformanceSecurityActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
@@ -2518,13 +2546,17 @@ namespace GreenField.ServiceCaller
                         e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -2563,13 +2595,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
             };
         }
@@ -2607,13 +2643,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
             };
         }
@@ -4195,13 +4235,17 @@ namespace GreenField.ServiceCaller
                       = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -4234,13 +4278,17 @@ namespace GreenField.ServiceCaller
                       = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -4273,13 +4321,17 @@ namespace GreenField.ServiceCaller
                       = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -4312,13 +4364,17 @@ namespace GreenField.ServiceCaller
                       = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -4351,13 +4407,17 @@ namespace GreenField.ServiceCaller
                       = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -4397,13 +4457,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -4444,13 +4508,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -4498,13 +4566,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(false);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(false);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -4545,13 +4617,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -5473,13 +5549,17 @@ namespace GreenField.ServiceCaller
                       = e.Error as FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
@@ -5512,13 +5592,17 @@ namespace GreenField.ServiceCaller
                       = e.Error as FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(),
                     SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");

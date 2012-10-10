@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using GreenField.DAL;
-using System.ServiceModel.Activation;
-using GreenField.Web.Services;
 using System.Collections.ObjectModel;
-using GreenField.DataContracts;
-using GreenField.Web.Helpers;
 using System.Data.Objects;
-using GreenField.Web.Helpers.Service_Faults;
+using System.Linq;
 using System.Resources;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using GreenField.DAL;
+using GreenField.Web.Helpers;
+using GreenField.Web.Helpers.Service_Faults;
 
 namespace GreenField.Web.Services
 {

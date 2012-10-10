@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Windows;
-using Microsoft.Practices.Prism.ViewModel;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
+using System.Linq;
+using System.Windows.Data;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using Microsoft.Practices.Prism.ViewModel;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
-using System.Linq;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using System.Windows.Data;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -211,7 +211,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
-                
+
         #region SecurityComboBox
         /// <summary>
         /// Grouped Collection View for Auto-Complete Box
@@ -364,7 +364,7 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.UploadWorkbook);
             }
         }
-        
+
         #endregion
 
         #region EventHandlers

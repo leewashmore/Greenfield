@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using GreenField.Common;
-using GreenField.DataContracts;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
