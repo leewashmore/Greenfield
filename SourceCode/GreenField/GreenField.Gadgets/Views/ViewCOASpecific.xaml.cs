@@ -9,22 +9,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Telerik.Windows.Controls.GridView;
+using Telerik.Windows.Controls;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using GreenField.Gadgets.Models;
-using Telerik.Windows.Controls.GridView;
-using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewCOASpecific : ViewBaseUserControl
     {
+        #region Constructor
         public ViewCOASpecific(ViewModelCOASpecific dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-
             //Update column headers and visibility
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(0, 3, 4, 6, false);
             PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, new PeriodColumnUpdateEventArg()
@@ -33,11 +33,7 @@ namespace GreenField.Gadgets.Views
                 PeriodRecord = periodRecord,
                 PeriodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord),
                 PeriodIsYearly = true                
-            }, false);
-
-            dataContextSource.coaSpecificDataLoadedEvent +=
-          new DataRetrievalProgressIndicatorEventHandler(dataContextSource_coaSpecificDataLoadedEvent);
-
+            }, false);           
             //Event Subcription - PeriodColumnUpdateEvent
             PeriodColumns.PeriodColumnUpdate += new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
             this.grdRadChart.Visibility = Visibility.Collapsed;
@@ -49,27 +45,26 @@ namespace GreenField.Gadgets.Views
             this.txtGadgetName.Visibility = Visibility.Collapsed;
             this.cbGadgetName.Visibility = Visibility.Collapsed;
             ApplyChartStyles();
-
-        }       
+        }
+        #endregion
 
         #region Properties
         /// <summary>
         /// True if gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (this.DataContext != null)
-                    ((ViewModelCOASpecific)this.DataContext).IsActive = _isActive;
+                {
+                    ((ViewModelCOASpecific)this.DataContext).IsActive = isActive;
+                }
             }
         }
-
-
-
 
         /// <summary>
         /// View model class object
@@ -107,16 +102,23 @@ namespace GreenField.Gadgets.Views
             });
         }
         #endregion
+
         #region Export
 
+        /// <summary>
+        /// Export to excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {            
             if (this.grdRadChart.Visibility == Visibility.Visible)
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", Element = this.chCOASpecific, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
+                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", 
+                    Element = this.chCOASpecific, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + 
+                    GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
                 childExportOptions.Show();
             }
             else
@@ -124,42 +126,27 @@ namespace GreenField.Gadgets.Views
                 if (this.grdRadGridView.Visibility == Visibility.Visible)
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", Element = this.dgCOASpecific, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", 
+                        Element = this.dgCOASpecific, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + 
+                        GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
                     childExportOptions.Show();
                 }
             }
         }
 
+        /// <summary>
+        /// Syles added to Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgCOASpecific_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 8 });
         }
         #endregion
-        #endregion
 
-        /// <summary>
-        /// PeriodColumnUpdateEvent Event Handler - Updates column information and enables export button first time data is received
-        /// </summary>
-        /// <param name="e">PeriodColumnUpdateEventArg</param>
-        void PeriodColumns_PeriodColumnUpdate(PeriodColumnUpdateEventArg e)
-        {
-            if (e.PeriodColumnNamespace == typeof(ViewModelCOASpecific).FullName && IsActive)
-            {
-                PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, e, isQuarterImplemented: false);
-            }
-        }
-
-        #region Event Unsubscribe
-        public override void Dispose()
-        {
-            PeriodColumns.PeriodColumnUpdate -= new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
-
-            (this.DataContext as ViewModelCOASpecific).Dispose();
-            this.DataContext = null;
-        }
-        #endregion
-
+        #region Flip
         /// <summary>
         /// Flipping between Grid & Chart
         /// Using the method FlipItem in class Flipper.cs
@@ -173,8 +160,9 @@ namespace GreenField.Gadgets.Views
                 Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
             }
             else
-            Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
-
+            {
+                Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
+            }
             if (this.grdRadGridView.Visibility == Visibility.Visible)
             {
                 this.txtADD.Visibility = Visibility.Visible;
@@ -184,7 +172,6 @@ namespace GreenField.Gadgets.Views
                 this.txtGadgetName.Visibility = Visibility.Visible;
                 this.cbGadgetName.Visibility = Visibility.Visible;
             }
-
             else
             {
                 this.txtADD.Visibility = Visibility.Collapsed;
@@ -193,35 +180,38 @@ namespace GreenField.Gadgets.Views
                 this.itemDel.Visibility = Visibility.Collapsed;
                 this.txtGadgetName.Visibility = Visibility.Collapsed;
                 this.cbGadgetName.Visibility = Visibility.Collapsed;
-            
             }
-            
-            
-
         }
+        #endregion
 
-     
-
+        #region Period Colum Update
         /// <summary>
-        /// Data Retrieval Indicator
+        /// PeriodColumnUpdateEvent Event Handler - Updates column information and enables export button first time data is received
         /// </summary>
-        /// <param name="e"></param>
-        void dataContextSource_coaSpecificDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        /// <param name="e">PeriodColumnUpdateEventArg</param>
+        void PeriodColumns_PeriodColumnUpdate(PeriodColumnUpdateEventArg e)
         {
-            //if (e.ShowBusy)
-            //{
-            //    this.busyIndicatorChart.IsBusy = true;
-            //    this.busyIndicatorGrid.IsBusy = true;
-            //}
-            //else
-            //{
-            //    this.busyIndicatorChart.IsBusy = false;
-            //    this.busyIndicatorGrid.IsBusy = false;
-            //}
+            if (e.PeriodColumnNamespace == typeof(ViewModelCOASpecific).FullName && IsActive)
+            {
+                PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, e, isQuarterImplemented: false);
+            }
         }
+        #endregion
+        #endregion
+
+        #region Event Unsubscribe
+        /// <summary>
+        /// Dispose Events
+        /// </summary>
+        public override void Dispose()
+        {
+            PeriodColumns.PeriodColumnUpdate -= new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
+            (this.DataContext as ViewModelCOASpecific).Dispose();
+            this.DataContext = null;
+        }
+        #endregion        
 
         #region Styling
-
         /// <summary>
         /// Formatting the chart
         /// </summary>
@@ -234,15 +224,15 @@ namespace GreenField.Gadgets.Views
             this.chCOASpecific.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;            
         }
 
-       
+        /// <summary>
+       /// Row Loaded
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void dgCOASpecific_RowLoaded(object sender, RowLoadedEventArgs e)
         {
             PeriodColumns.RowDataCustomizationforCOASpecificGadget(e);
-        }
-       
+        }       
         #endregion
-
-
-
     }
 }

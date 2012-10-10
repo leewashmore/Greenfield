@@ -375,7 +375,7 @@ namespace GreenField.Web.Services
         /// <returns>list of FinstatDetailData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<FinstatDetailData> RetrieveFinstatData(string issuerId, string securityId, FinancialStatementDataSource dataSource, 
+        public List<FinstatDetailData> RetrieveFinstatData(string issuerId, string securityId, FinancialStatementDataSource dataSource,
             FinancialStatementFiscalType fiscalType, String currency, Int32 yearRangeStart)
         {
             try
@@ -467,10 +467,10 @@ namespace GreenField.Web.Services
 
                         if (year1 != 0 && year2 != 0 && year3 != 0 && year1 != null && year2 != null && year3 != null)
                         {
-                            temp.HarmonicFirst = Convert.ToDecimal((1 / (year1 + year2 + year3)) * data[i].MULTIPLIER); 
+                            temp.HarmonicFirst = Convert.ToDecimal((1 / (year1 + year2 + year3)) * data[i].MULTIPLIER);
                         }
                         if (year4 != 0 && year5 != 0 && year6 != 0 && year4 != null && year5 != null && year6 != null)
-                        { 
+                        {
                             temp.HarmonicSecond = Convert.ToDecimal((1 / (year4 + year5 + year6)) * data[i].MULTIPLIER);
                         }
                     }
@@ -556,7 +556,7 @@ namespace GreenField.Web.Services
                     {
                         tempData.BoldFont = "N";
                         tempData.Description = item.DATA_ID == 11 ? "Consensus Net Income" :
-                                             item.DATA_ID == 166 ? "Consensus P/E" : item.DATA_ID == 164 ? "Consensus P/BV" : item.DATA_ID == 19 ? "Consensus ROE": "";
+                                             item.DATA_ID == 166 ? "Consensus P/E" : item.DATA_ID == 164 ? "Consensus P/BV" : item.DATA_ID == 19 ? "Consensus ROE" : "";
                     }
                     else if (item.VALUE == "step3")
                     {
@@ -1046,14 +1046,17 @@ namespace GreenField.Web.Services
         /// <returns>Returns data in the list of type ConsensusEstimatesSummaryData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> RetrieveConsensusEstimatesSummaryData(EntitySelectionData entityIdentifier)
+        public List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> RetrieveConsensusEstimatesSummaryData
+            (EntitySelectionData entityIdentifier)
         {
             try
             {
-                List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();
+                List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new
+                    List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 research.CommandTimeout = 5000;
-                result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
+                result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>
+                    ("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
                 return result;
             }
             catch (Exception ex)
@@ -2070,6 +2073,5 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
     }
 }

@@ -8,40 +8,38 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Common;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using System.Collections.Generic;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    #region View Model for this gadget
     public class ViewModelConsensusEstimateSummary : NotificationObject
     {
         #region Fields
-
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
-
+        private ILoggerFacade logger;
         /// <summary>
         /// private member object of the EntitySelectionData class for storing Entity Selection Data
         /// </summary>
-        private EntitySelectionData _entitySelectionData;    
-
+        private EntitySelectionData entitySelectionData;    
         #endregion
 
         #region Constructor
@@ -51,18 +49,18 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param">DashBoardGadgetParam</param>
         public ViewModelConsensusEstimateSummary(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            if (_entitySelectionData !=null && IsActive)
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            if (entitySelectionData !=null && IsActive)
             {
-                _dbInteractivity.RetrieveConsensusEstimatesSummaryData(_entitySelectionData, RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);
+                dbInteractivity.RetrieveConsensusEstimatesSummaryData(entitySelectionData, 
+                    RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);
             }
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet,false);
-               
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet,false);               
             } 
         }
         #endregion
@@ -90,24 +88,26 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                if (_isActive != value)
+                if (isActive != value)
                 {
-                    _isActive = value;
-                    if (_entitySelectionData != null && _isActive)
+                    isActive = value;
+                    if (entitySelectionData != null && isActive)
                     {
-                        if (null != consensusEstimatesSummaryDataLoadedEvent)
-                            consensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveConsensusEstimatesSummaryData(_entitySelectionData, RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);
-                        
+                        if (null != ConsensusEstimatesSummaryDataLoadedEvent)
+                        {
+                            ConsensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
+                        dbInteractivity.RetrieveConsensusEstimatesSummaryData(entitySelectionData, 
+                            RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);                       
                     }
                 }
             }
@@ -116,10 +116,13 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Events
         /// <summary>
+        /// Event for the notification of Data Load Completion for Busy Indicator
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler ConsensusEstimatesSummaryDataLoadedEvent;
+
+        /// <summary>
         /// Event for the notification of Data Load Completion
         /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler consensusEstimatesSummaryDataLoadedEvent;
-
         public event RetrieveConsensusEstimatesSummaryCompleteEventHandler RetrieveConsensusEstimatesSummaryDataCompletedEvent;
         #endregion
 
@@ -128,32 +131,34 @@ namespace GreenField.Gadgets.ViewModels
         /// Assigns UI Field Properties based on Security reference
         /// </summary>
         /// <param name="securityReferenceData">entitySelectionData</param>
-        public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
+        public void HandleSecurityReferenceSet(EntitySelectionData entSelectionData)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (entitySelectionData != null && IsActive)
+                if (entSelectionData != null && IsActive)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    _entitySelectionData = entitySelectionData;
-                    if (null != consensusEstimatesSummaryDataLoadedEvent)
-                        consensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    _dbInteractivity.RetrieveConsensusEstimatesSummaryData(_entitySelectionData, RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);
+                    Logging.LogMethodParameter(logger, methodNamespace, entSelectionData, 1);
+                    entitySelectionData = entSelectionData;
+                    if (null != ConsensusEstimatesSummaryDataLoadedEvent)
+                    {
+                        ConsensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+                    dbInteractivity.RetrieveConsensusEstimatesSummaryData(entitySelectionData, 
+                        RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -166,31 +171,32 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveConsensusEstimatesSummaryDataDataCallbackMethod(List<ConsensusEstimatesSummaryData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null && result.Count > 0)
                 {
-
                     ConsensusSummaryInfo = result;
-                    if (null != consensusEstimatesSummaryDataLoadedEvent)
-                        consensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                    RetrieveConsensusEstimatesSummaryDataCompletedEvent(new RetrieveConsensusSummaryCompletedEventsArgs { ConsensusInfo  = result});
-                   
+                    if (null != ConsensusEstimatesSummaryDataLoadedEvent)
+                    {
+                        ConsensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    }
+                    RetrieveConsensusEstimatesSummaryDataCompletedEvent(new RetrieveConsensusSummaryCompletedEventsArgs 
+                    { ConsensusInfo  = result});                   
                 }
                 else
                 {
                     ConsensusSummaryInfo = result;                  
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    consensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    ConsensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -200,10 +206,9 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
         }
         #endregion
-
-
     }
+    #endregion
 }

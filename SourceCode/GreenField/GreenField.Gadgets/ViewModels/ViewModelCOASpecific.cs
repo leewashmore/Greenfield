@@ -8,20 +8,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.Commands;
 using GreenField.Common;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using System.Collections.ObjectModel;
 using GreenField.DataContracts;
-using System.Collections.Generic;
 using GreenField.DataContracts.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
-using System.Linq;
-using Microsoft.Practices.Prism.Commands;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -51,32 +51,19 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _eventAggregator = param.EventAggregator;
             EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
-
             PeriodColumns.PeriodColumnNavigate += new PeriodColumnNavigationEvent(PeriodColumns_PeriodColumnNavigate);
-
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
             }
-
             if (EntitySelectionInfo != null)
             {
                 HandleSecurityReferenceSetEvent(EntitySelectionInfo);
             }
         }
-
-        void PeriodColumns_PeriodColumnNavigate(PeriodColumnNavigationEventArg e)
-        {
-            if (e.PeriodColumnNamespace == GetType().FullName)           
-            {               
-                Iterator = e.PeriodColumnNavigationDirection == NavigationDirection.LEFT ? Iterator - 1 : Iterator + 1;
-                SetCOASpecificDisplayInfo();
-            }
-        }
         #endregion
 
         #region Properties
-
         #region Period Information
         /// <summary>
         /// Iteration Count
@@ -86,16 +73,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Period Record storing period information based on iteration
         /// </summary>
-        private PeriodRecord _periodRecord;
+        private PeriodRecord periodRecord;
         public PeriodRecord PeriodRecord
         {
             get
             {
-                if (_periodRecord == null)
-                    _periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
-                return _periodRecord;
+                if (periodRecord == null)
+                {
+                    periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2,
+                    netColumnCount: 5);
+                }
+                return periodRecord;
             }
-            set { _periodRecord = value; }
+            set { periodRecord = value; }
         }
         #endregion
 
@@ -103,19 +93,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                if (_isActive != value)
+                if (isActive != value)
                 {
-                    _isActive = value;
-                    if ((EntitySelectionInfo != null) && _isActive)
+                    isActive = value;
+                    if ((EntitySelectionInfo != null) && isActive)
                     {
                         RaisePropertyChanged(() => this.EntitySelectionInfo);
                         BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
@@ -130,23 +120,23 @@ namespace GreenField.Gadgets.ViewModels
 
         /// <summary>
         /// Stores Issuer related data
-        /// </summary>
-        /// 
-        private IssuerReferenceData _issuerReferenceInfo;
+        /// </summary>      
+        private IssuerReferenceData issuerReferenceInfo;
         public IssuerReferenceData IssuerReferenceInfo
         {
-            get { return _issuerReferenceInfo; }
+            get { return issuerReferenceInfo; }
             set
             {
-                if (_issuerReferenceInfo != value)
+                if (issuerReferenceInfo != value)
                 {
-                    _issuerReferenceInfo = value;
+                    issuerReferenceInfo = value;
                     if (value != null)
                     {
                         CurrencyInfo = new ObservableCollection<String> { IssuerReferenceInfo.CurrencyCode };
                         if (IssuerReferenceInfo.CurrencyCode != "USD")
+                        {
                             CurrencyInfo.Add("USD");
-
+                        }
                         SelectedCurrency = "USD";
                     }
                 }
@@ -158,15 +148,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores Reported issuer domicile currency and "USD"
         /// </summary>
-        private ObservableCollection<String> _currencyInfo = new ObservableCollection<string> { "USD" };
+        private ObservableCollection<String> currencyInfo = new ObservableCollection<string> { "USD" };
         public ObservableCollection<String> CurrencyInfo
         {
-            get { return _currencyInfo; }
+            get { return currencyInfo; }
             set
             {
-                if (_currencyInfo != value)
+                if (currencyInfo != value)
                 {
-                    _currencyInfo = value;
+                    currencyInfo = value;
                     RaisePropertyChanged(() => this.CurrencyInfo);
                 }
             }
@@ -175,53 +165,63 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected currency
         /// </summary>
-        private String _selectedCurrency = "USD";
+        private String selectedCurrency = "USD";
         public String SelectedCurrency
         {
-            get { return _selectedCurrency; }
+            get { return selectedCurrency; }
             set
             {
-                _selectedCurrency = value;
+                selectedCurrency = value;
                 RaisePropertyChanged(() => this.SelectedCurrency);
                 RetrieveCOASpecificData();
-
             }
         }
         #endregion
 
         #region Security Information
-        private EntitySelectionData _entitySelectionInfo;
+        /// <summary>
+        /// List to store entity information
+        /// </summary>
+        private EntitySelectionData entitySelectionInfo;
         public EntitySelectionData EntitySelectionInfo
         {
-            get { return _entitySelectionInfo; }
+            get { return entitySelectionInfo; }
             set
             {
-                _entitySelectionInfo = value;
+                entitySelectionInfo = value;
                 if (IsActive)
+                {
                     RaisePropertyChanged(() => this.EntitySelectionInfo);
+                }
             }
         }
         #endregion
 
         #region Busy Indicator
-        private bool _busyIndicatorIsBusy;
+        /// <summary>
+        /// Busy Indicator status property
+        /// </summary>
+        private bool busyIndicatorIsBusy;
         public bool BusyIndicatorIsBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return busyIndicatorIsBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
+                busyIndicatorIsBusy = value;
                 RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
             }
         }
 
-        private string _busyIndicatorContent;
+        /// <summary>
+        /// Content of busy indicator
+        /// </summary>
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
@@ -287,8 +287,9 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region COASpecificData List
-
-
+        /// <summary>
+        /// List that stores the names of the gadget
+        /// </summary>
         private List<String> coaSpecificGadgetNameInfo;
         public List<String> COASpecificGadgetNameInfo
         {
@@ -304,6 +305,9 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
+        /// <summary>
+        /// Selected Gadget Name
+        /// </summary>
         private String selectedCOASpecificGadgetNameInfo;
         public String SelectedCOASpecificGadgetNameInfo
         {
@@ -313,14 +317,17 @@ namespace GreenField.Gadgets.ViewModels
                 if (selectedCOASpecificGadgetNameInfo != value)
                 {
                     selectedCOASpecificGadgetNameInfo = value;
-                    COASpecificFilteredInfo = new ObservableCollection<COASpecificData>(COASpecificInfo.Where(t => t.GroupDescription == value && t.PeriodYear != 2300));
+                    COASpecificFilteredInfo = new ObservableCollection<COASpecificData>
+                        (COASpecificInfo.Where(t => t.GroupDescription == value && t.PeriodYear != 2300));
                     AddToComboBoxSeries.Clear();
                     RaisePropertyChanged(() => this.SelectedCOASpecificGadgetNameInfo);
                 }
             }
         }
 
-
+        /// <summary>
+        /// List storing whole COA data 
+        /// </summary>
         private List<COASpecificData> coaSpecificInfo;
         public List<COASpecificData> COASpecificInfo
         {
@@ -331,14 +338,16 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     coaSpecificInfo = value;
                     COASpecificGadgetNameInfo = value.Select(t => t.GroupDescription).Distinct().ToList();
-                    SelectedCOASpecificGadgetNameInfo = value.Select(t => t.GroupDescription).FirstOrDefault();                   
+                    SelectedCOASpecificGadgetNameInfo = value.Select(t => t.GroupDescription).FirstOrDefault();
                     RaisePropertyChanged(() => this.COASpecificInfo);
                     SetCOASpecificDisplayInfo();
                 }
             }
-
         }
 
+        /// <summary>
+        /// List that stores the filtered COA specific Information
+        /// </summary>
         private ObservableCollection<COASpecificData> coaSpecificFilterdInfo = new ObservableCollection<COASpecificData>();
         public ObservableCollection<COASpecificData> COASpecificFilteredInfo
         {
@@ -365,6 +374,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// List containing all series under combo box add to chart
+        /// </summary>
         private ObservableCollection<GadgetWithPeriodColumns> comparisonSeries = new ObservableCollection<GadgetWithPeriodColumns>();
         public ObservableCollection<GadgetWithPeriodColumns> ComparisonSeries
         {
@@ -376,6 +388,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// List containing all series in the  combo box add to chart
+        /// </summary>
         private ObservableCollection<String> addToComboBoxSeries = new ObservableCollection<String>();
         public ObservableCollection<String> AddToComboBoxSeries
         {
@@ -412,7 +427,9 @@ namespace GreenField.Gadgets.ViewModels
             get
             {
                 if (_periodColumnHeader == null)
+                {
                     _periodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
+                }
                 return _periodColumnHeader;
             }
             set
@@ -451,6 +468,7 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Selected Series
         /// <summary>
         /// Stores selected Series From Combo Box
         /// </summary>
@@ -464,11 +482,14 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedSeriesCB);
             }
         }
-
+        #endregion
         #endregion
 
         #region CallbackMethods
-
+        /// <summary>
+        /// Retrieve COA Specific data callback method
+        /// </summary>
+        /// <param name="result">list of type COASpecificData</param>
         void RetrieveCOASpecificDataCallbackMethod(List<COASpecificData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -477,11 +498,11 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    COASpecificInfo = result;                    
+                    COASpecificInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);              
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
                 BusyIndicatorNotification();
             }
@@ -510,7 +531,8 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + " (" + EntitySelectionInfo.ShortName + " : " + EntitySelectionInfo.InstrumentID + ")");
+                    Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + " (" + EntitySelectionInfo.ShortName +
+                        " : " + EntitySelectionInfo.InstrumentID + ")");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
             }
@@ -525,7 +547,6 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handlers
-
         public void HandleSecurityReferenceSetEvent(EntitySelectionData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -554,34 +575,48 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-
         #endregion
 
         #region Helper Methods
-
+        /// <summary>
+        /// Disposes Events
+        /// </summary>
         public void Dispose()
         {
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSetEvent);
         }
 
+        /// <summary>
+        /// Notifies the busy Indicator
+        /// </summary>
+        /// <param name="showBusyIndicator"></param>
+        /// <param name="message"></param>
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
+            }
             BusyIndicatorIsBusy = showBusyIndicator;
         }
 
+        /// <summary>
+        /// Retrieves COA Specific data
+        /// </summary>
         private void RetrieveCOASpecificData()
         {
             if (IssuerReferenceInfo != null)
             {
                 COASpecificInfo = new List<COASpecificData>();
                 BusyIndicatorNotification(true, "Retrieving Data based on selected security");
-                _dbInteractivity.RetrieveCOASpecificData(IssuerReferenceInfo.IssuerId, IssuerReferenceInfo.SecurityId, SelectedDataSource, SelectedFiscalType, SelectedCurrency, RetrieveCOASpecificDataCallbackMethod);
-               
+                _dbInteractivity.RetrieveCOASpecificData(IssuerReferenceInfo.IssuerId, IssuerReferenceInfo.SecurityId,
+                    SelectedDataSource, SelectedFiscalType, SelectedCurrency, RetrieveCOASpecificDataCallbackMethod);
             }
         }
 
+        /// <summary>
+        /// Sets COA Specific Display Info on the grid
+        /// </summary>
         public void SetCOASpecificDisplayInfo()
         {
             BusyIndicatorNotification(true, "Updating information based on selected preference");
@@ -592,10 +627,21 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorNotification();
         }
 
+        /// <summary>
+        /// Navigates between various periods
+        /// </summary>
+        /// <param name="e"></param>
+        void PeriodColumns_PeriodColumnNavigate(PeriodColumnNavigationEventArg e)
+        {
+            if (e.PeriodColumnNamespace == GetType().FullName)
+            {
+                Iterator = e.PeriodColumnNavigationDirection == NavigationDirection.LEFT ? Iterator - 1 : Iterator + 1;
+                SetCOASpecificDisplayInfo();
+            }
+        }
         #endregion
 
         #region ICommand Methods
-
         /// <summary>
         /// Delete Series from Chart
         /// </summary>
@@ -612,7 +658,6 @@ namespace GreenField.Gadgets.ViewModels
                 }
             ComparisonSeries.Remove(a);
             AddToComboBoxSeries.Add(a.GadgetDesc);
-
         }
 
         /// <summary>
@@ -622,7 +667,6 @@ namespace GreenField.Gadgets.ViewModels
         private void AddCommandMethod(object param)
         {
             GadgetWithPeriodColumns entry = new GadgetWithPeriodColumns();
-
             if (SelectedSeriesCB != null)
             {
                 entry.GridId = null;
@@ -633,11 +677,16 @@ namespace GreenField.Gadgets.ViewModels
                 ComparisonSeries.Add(entry);
             }
             List<COASpecificData> addItem = new List<COASpecificData>();
-
             if (selectedCOASpecificGadgetNameInfo == null)
-                addItem = (COASpecificInfo.Where(t => t.GroupDescription == defaultGadgetDesc && t.Description == SelectedSeriesCB && t.PeriodYear != 2300)).ToList();
+            {
+                addItem = (COASpecificInfo.Where(t => t.GroupDescription == defaultGadgetDesc && t.Description == SelectedSeriesCB &&
+                    t.PeriodYear != 2300)).ToList();
+            }
             else
-                addItem = (COASpecificInfo.Where(t => t.GroupDescription == selectedCOASpecificGadgetNameInfo && t.Description == SelectedSeriesCB && t.PeriodYear != 2300)).ToList();
+            {
+                addItem = (COASpecificInfo.Where(t => t.GroupDescription == selectedCOASpecificGadgetNameInfo && t.Description ==
+                      SelectedSeriesCB && t.PeriodYear != 2300)).ToList();
+            }
             if (addItem != null)
                 foreach (COASpecificData r in addItem)
                 {
@@ -651,7 +700,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event for the notification of Data Load Completion
         /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler coaSpecificDataLoadedEvent;
+        public event DataRetrievalProgressIndicatorEventHandler CoaSpecificDataLoadedEvent;
         #endregion
     }
 }

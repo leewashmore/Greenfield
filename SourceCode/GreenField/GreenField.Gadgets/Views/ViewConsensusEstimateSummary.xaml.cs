@@ -27,9 +27,10 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextConsensusEstimatesSummary = dataContextSource;
-            dataContextSource.consensusEstimatesSummaryDataLoadedEvent +=
+            dataContextSource.ConsensusEstimatesSummaryDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_consensusEstimatesSummaryDataLoadedEvent);
-            dataContextSource.RetrieveConsensusEstimatesSummaryDataCompletedEvent += new RetrieveConsensusEstimatesSummaryCompleteEventHandler(dataContextSource_RetrieveConsensusEstimatesSummaryDataCompletedEvent);
+            dataContextSource.RetrieveConsensusEstimatesSummaryDataCompletedEvent += new 
+                RetrieveConsensusEstimatesSummaryCompleteEventHandler(dataContextSource_RetrieveConsensusEstimatesSummaryDataCompletedEvent);
             int currentYear = DateTime.Today.Year;
             this.dgConsensusEstimatesSummary.Columns[0].Header = "Net Income (Millions)";
             this.dgConsensusEstimatesSummary.Columns[1].Header = (currentYear - 1).ToString();
@@ -37,34 +38,34 @@ namespace GreenField.Gadgets.Views
             this.dgConsensusEstimatesSummary.Columns[3].Header = (currentYear + 1).ToString();
             this.dgConsensusEstimatesSummary.Columns[4].Header = (currentYear + 2).ToString();
             this.dgConsensusEstimatesSummary.Columns[5].Header = (currentYear + 3).ToString();
-        }
-
-        
+        }        
         #endregion
 
         #region Properties
         /// <summary>
         /// Data Context Property
         /// </summary>
-        private ViewModelConsensusEstimateSummary _dataContextConsensusEstimatesSummary;
+        private ViewModelConsensusEstimateSummary dataContextConsensusEstimatesSummary;
         public ViewModelConsensusEstimateSummary DataContextConsensusEstimatesSummary
         {
-            get { return _dataContextConsensusEstimatesSummary; }
-            set { _dataContextConsensusEstimatesSummary = value; }
+            get { return dataContextConsensusEstimatesSummary; }
+            set { dataContextConsensusEstimatesSummary = value; }
         }
 
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (this.DataContext != null)
-                    ((ViewModelConsensusEstimateSummary)this.DataContext).IsActive = _isActive;
+                {
+                    ((ViewModelConsensusEstimateSummary)this.DataContext).IsActive = isActive;
+                }
             }
         }
         #endregion
@@ -83,29 +84,19 @@ namespace GreenField.Gadgets.Views
             else
             {             
                 this.busyIndicatorGrid.IsBusy = false;
-            }
-
-           
+            }           
         }
 
-        void dataContextSource_RetrieveConsensusestimatesSummaryDataCompletedEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-            {
-                this.busyIndicatorGrid.IsBusy = true;
-            }
-            else
-            {
-                this.busyIndicatorGrid.IsBusy = false;
-            }
-
-           
-        }
-
+        /// <summary>
+        /// Data Completion Event
+        /// </summary>
+        /// <param name="e"></param>
         void dataContextSource_RetrieveConsensusEstimatesSummaryDataCompletedEvent(RetrieveConsensusSummaryCompletedEventsArgs e)
         {
-            if(e.ConsensusInfo != null)
-            this.dgConsensusEstimatesSummary.Columns[0].Header = "Net Income in " + e.ConsensusInfo[0].currency + " (Millions)";
+            if (e.ConsensusInfo != null)
+            {
+                this.dgConsensusEstimatesSummary.Columns[0].Header = "Net Income in " + e.ConsensusInfo[0].currency + " (Millions)";
+            }
         }
         #endregion
 
@@ -115,7 +106,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         public override void Dispose()
         {
-            this.DataContextConsensusEstimatesSummary.consensusEstimatesSummaryDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_consensusEstimatesSummaryDataLoadedEvent);
+            this.DataContextConsensusEstimatesSummary.ConsensusEstimatesSummaryDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_consensusEstimatesSummaryDataLoadedEvent);
             this.DataContextConsensusEstimatesSummary.Dispose();
             this.DataContextConsensusEstimatesSummary = null;
             this.DataContext = null;
