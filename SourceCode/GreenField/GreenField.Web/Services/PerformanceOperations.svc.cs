@@ -2387,7 +2387,8 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<PerformanceGraphData> RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, String country)
+        public List<PerformanceGraphData> RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, 
+            String period, String country)
         {
             List<PerformanceGraphData> result = new List<PerformanceGraphData>();
             PerformanceGraphData entry = new PerformanceGraphData();
@@ -2599,7 +2600,7 @@ namespace GreenField.Web.Services
                         }
                         FetchDataPerformanceGraphforMTDVaules(country, attributionDatafor1Y, ref result, benchmarkID, fundSelectionData, listOfEffectiveDates1YMTD, "1Y");
 
-                        // Partial Period Returns for ending stub
+                        // partial period returns for ending stub
 
                         List<Decimal?> eportfolioReturns = new List<decimal?>();
                         List<Decimal?> ebenchmarkReturns = new List<decimal?>();
