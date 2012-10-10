@@ -1,41 +1,33 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.Common;
-using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
-using GreenField.ServiceCaller.PerformanceDefinitions;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// class for model for RelativePerformanceSecurityActivePosition
+    /// </summary>
     public class ViewModelRelativePerformanceSecurityActivePosition : NotificationObject
     {
         #region Fields
         //MEF Singletons
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
+        private IEventAggregator eventAggregator;
+        private IDBInteractivity dbInteractivity;
+        private ILoggerFacade logger;
 
         //Selection Data
-       PortfolioSelectionData _PortfolioSelectionData;
+       PortfolioSelectionData portfolioSelectionDataInfo;
 
-       //To check that grid is not re populated for same values when Excess Contribution is clicked
-       RelativePerformanceGridCellData checkValue = new RelativePerformanceGridCellData();
+        //to check that grid is not re populated for same values when Excess Contribution is clicked
+        RelativePerformanceGridCellData checkValue = new RelativePerformanceGridCellData();
         #endregion
 
         #region Constructor
@@ -45,47 +37,52 @@ namespace GreenField.Gadgets.ViewModels
        /// <param name="param">DashboardGadgetParam</param>
         public ViewModelRelativePerformanceSecurityActivePosition(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
 
-           _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+           portfolioSelectionDataInfo = param.DashboardGadgetPayload.PortfolioSelectionData;
            EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
            Period = param.DashboardGadgetPayload.PeriodSelectionData;
 
-           if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
+           if (EffectiveDate != null && portfolioSelectionDataInfo != null && Period != null && IsActive)
            {
-               _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period,RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
+               dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),
+                   periodInfo, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
               BusyIndicatorStatus = true;
            }            
             
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
-                _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
-                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Subscribe(HandleRelativePerformanceGridClickEvent);
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+                eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
+                eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Subscribe(HandleRelativePerformanceGridClickEvent);
             }
         }
         #endregion
 
         #region Properties
         #region UI Fields
-
-        private List<RelativePerformanceActivePositionData> _relativePerformanceActivePositionOrigInfo;
+        /// <summary>
+        /// data received from view
+        /// </summary>
+        private List<RelativePerformanceActivePositionData> relativePerformanceActivePositionOrigInfo;
         public List<RelativePerformanceActivePositionData> RelativePerformanceActivePositionOrigInfo
         {
             get
             {
-                if (_relativePerformanceActivePositionOrigInfo == null)
-                    _relativePerformanceActivePositionOrigInfo = new List<RelativePerformanceActivePositionData>();
-                return _relativePerformanceActivePositionOrigInfo;
+                if (relativePerformanceActivePositionOrigInfo == null)
+                {
+                    relativePerformanceActivePositionOrigInfo = new List<RelativePerformanceActivePositionData>();
+                }
+                return relativePerformanceActivePositionOrigInfo;
             }
             set
             {
-                if (_relativePerformanceActivePositionOrigInfo != value)
+                if (relativePerformanceActivePositionOrigInfo != value)
                 {
-                    _relativePerformanceActivePositionOrigInfo = value;
+                    relativePerformanceActivePositionOrigInfo = value;
                     UpdateRelativePerformanceActivePositionInfo(value, Convert.ToBoolean(DisplayIssuerIsChecked));
                 }
             }
@@ -94,53 +91,57 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Contains data to be displayed in the gadget
         /// </summary>
-        private ObservableCollection<RelativePerformanceActivePositionData> _relativePerformanceActivePositionInfo;
+        private ObservableCollection<RelativePerformanceActivePositionData> relativePerformanceActivePositionInfo;
         public ObservableCollection<RelativePerformanceActivePositionData> RelativePerformanceActivePositionInfo
         {
             get
             {
-                if (_relativePerformanceActivePositionInfo == null)
-                    _relativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>();
-                return _relativePerformanceActivePositionInfo; 
+                if (relativePerformanceActivePositionInfo == null)
+                {
+                    relativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>();
+                }
+                return relativePerformanceActivePositionInfo; 
             }
             set
             {
-                if (_relativePerformanceActivePositionInfo != value)
+                if (relativePerformanceActivePositionInfo != value)
                 {
-                    _relativePerformanceActivePositionInfo = value;
+                    relativePerformanceActivePositionInfo = value;
                     RaisePropertyChanged(() => this.RelativePerformanceActivePositionInfo);
                 }
             }
         }
 
-        private bool? _displayIssuerIsChecked = false;
+        /// <summary>
+        /// contains value for display issuer checkbox
+        /// </summary>
+        private bool? displayIssuerIsChecked = false;
         public bool? DisplayIssuerIsChecked
         {
-            get { return _displayIssuerIsChecked; }
+            get { return displayIssuerIsChecked; }
             set
             {
-                if (_displayIssuerIsChecked != value)
+                if (displayIssuerIsChecked != value)
                 {
-                    _displayIssuerIsChecked = value;
+                    displayIssuerIsChecked = value;
                     RaisePropertyChanged(() => this.DisplayIssuerIsChecked);
                     UpdateRelativePerformanceActivePositionInfo(RelativePerformanceActivePositionOrigInfo, Convert.ToBoolean(value));
                 }
             }
-        }
-        
+        }        
 
         /// <summary>
         /// Effective date selected
         /// </summary>
-        private DateTime? _effectiveDate;
+        private DateTime? effectiveDateInfo;
         public DateTime? EffectiveDate
         {
-            get { return _effectiveDate; }
+            get { return effectiveDateInfo; }
             set
             {
-                if (_effectiveDate != value)
+                if (effectiveDateInfo != value)
                 {
-                    _effectiveDate = value;
+                    effectiveDateInfo = value;
                     RaisePropertyChanged(() => EffectiveDate);
                 }
             }
@@ -149,15 +150,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Period selected
         /// </summary>
-        private string _period;
+        private string periodInfo;
         public string Period
         {
-            get { return _period; }
+            get { return periodInfo; }
             set
             {
-                if (_period != value)
+                if (periodInfo != value)
                 {
-                    _period = value;
+                    periodInfo = value;
                     RaisePropertyChanged(() => Period);
                 }
             }
@@ -166,15 +167,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// property to contain status value for busy indicator of the gadget
         /// </summary>
-        private bool _busyIndicatorStatus;
+        private bool busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
-            get { return _busyIndicatorStatus; }
+            get { return busyIndicatorStatus; }
             set
             {
-                if (_busyIndicatorStatus != value)
+                if (busyIndicatorStatus != value)
                 {
-                    _busyIndicatorStatus = value;
+                    busyIndicatorStatus = value;
                     RaisePropertyChanged(() => BusyIndicatorStatus);
                 }
             }
@@ -183,21 +184,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get
-            {
-                return _isActive;
-            }
+            get{ return isActive; }
             set
             {
-                if (_isActive != value)
+                if (isActive != value)
                 {
-                    _isActive = value;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null && _isActive)
+                    isActive = value;
+                    if (EffectiveDate != null && portfolioSelectionDataInfo != null && Period != null && isActive)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
+                        dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo), 
+                            periodInfo, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -215,31 +214,32 @@ namespace GreenField.Gadgets.ViewModels
         public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (portfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
-                    _PortfolioSelectionData = portfolioSelectionData;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
+                    Logging.LogMethodParameter(logger, methodNamespace, portfolioSelectionData, 1);
+                    portfolioSelectionDataInfo = portfolioSelectionData;
+                    if (EffectiveDate != null && portfolioSelectionDataInfo != null && Period != null && IsActive)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
+                        dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo), 
+                            periodInfo, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -249,30 +249,31 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (effectiveDate != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
+                    if (EffectiveDate != null && portfolioSelectionDataInfo != null && Period != null && IsActive)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
+                        dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),
+                            periodInfo, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -282,30 +283,31 @@ namespace GreenField.Gadgets.ViewModels
         public void HandlePeriodReferenceSet(string period)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (period != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, period, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, period, 1);
                     Period = period;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
+                    if (EffectiveDate != null && portfolioSelectionDataInfo != null && Period != null && IsActive)
                     {
-                       _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
+                       dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),
+                           periodInfo, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
                        BusyIndicatorStatus = true;
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -315,7 +317,7 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleRelativePerformanceGridClickEvent(RelativePerformanceGridCellData filter)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (filter != null)
@@ -323,25 +325,26 @@ namespace GreenField.Gadgets.ViewModels
                     if (checkValue.CountryID != filter.CountryID || checkValue.SectorID != filter.SectorID)
                     {
                         checkValue = filter;
-                        Logging.LogMethodParameter(_logger, methodNamespace, filter, 1);
-                        if (_effectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
+                        Logging.LogMethodParameter(logger, methodNamespace, filter, 1);
+                        if (effectiveDateInfo != null && portfolioSelectionDataInfo != null && Period != null && IsActive)
                         {
-                            _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
+                            dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),
+                                periodInfo, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
                             BusyIndicatorStatus = true;
                         }
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -353,32 +356,38 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod(List<RelativePerformanceActivePositionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     RelativePerformanceActivePositionOrigInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }               
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
                 BusyIndicatorStatus = false;
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
+        #region Helper Method
+        /// <summary>
+        /// update display data based on diaplsy issuer checkbox
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="issuerFilter"></param>
         private void UpdateRelativePerformanceActivePositionInfo(List<RelativePerformanceActivePositionData> value, bool issuerFilter = false)
         {
             if (issuerFilter)
@@ -410,28 +419,13 @@ namespace GreenField.Gadgets.ViewModels
 
                     RelativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>(groupedData);
                 }
-
             }
             else
             {
-                //List<RelativePerformanceActivePositionData> unGroupedData = new List<RelativePerformanceActivePositionData>();
-
-                //foreach (RelativePerformanceActivePositionData item in value)
-                //{
-                //    unGroupedData.Add(new RelativePerformanceActivePositionData()
-                //    {
-                //        Entity = item.Entity,
-                //        EntityGroup = item.EntityGroup,
-                //        MarketValue = item.MarketValue,
-                //        FundWeight = item.FundWeight,
-                //        BenchmarkWeight = item.BenchmarkWeight,
-                //        ActivePosition = item.ActivePosition
-                //    });
-                //}
-
                 RelativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>(value);
             }
-        }
+        } 
+        #endregion
 
         #region Dispose Method
         /// <summary>
@@ -439,10 +433,10 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
-            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
-            _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
-            _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Unsubscribe(HandleRelativePerformanceGridClickEvent);
+            eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+            eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
+            eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Unsubscribe(HandleRelativePerformanceGridClickEvent);
         }
         #endregion
     }

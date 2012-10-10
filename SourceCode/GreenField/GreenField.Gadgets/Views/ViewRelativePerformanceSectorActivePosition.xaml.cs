@@ -1,45 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+﻿using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
-using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// View for RelativePerformanceSectorActivePosition class
+    /// </summary>
     public partial class ViewRelativePerformanceSectorActivePosition : ViewBaseUserControl
     {
         #region Properties
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelRelativePerformanceSectorActivePosition _dataContextRelativePerformanceSectorActivePosition;
+        private ViewModelRelativePerformanceSectorActivePosition dataContextRelativePerformanceSectorActivePosition;
         public ViewModelRelativePerformanceSectorActivePosition DataContextRelativePerformanceSectorActivePosition
         {
-            get { return _dataContextRelativePerformanceSectorActivePosition; }
-            set { _dataContextRelativePerformanceSectorActivePosition = value; }
+            get { return dataContextRelativePerformanceSectorActivePosition; }
+            set { dataContextRelativePerformanceSectorActivePosition = value; }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextRelativePerformanceSectorActivePosition != null) //DataContext instance
-                    DataContextRelativePerformanceSectorActivePosition.IsActive = _isActive;
+                isActive = value;
+                if (DataContextRelativePerformanceSectorActivePosition != null)
+                {
+                    DataContextRelativePerformanceSectorActivePosition.IsActive = isActive;
+                }
             }
         }
 
@@ -69,10 +62,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        private void dgRelativePerformance_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            //GroupedGridRowLoadedHandler.Implement(e);
-        }
     }
 }

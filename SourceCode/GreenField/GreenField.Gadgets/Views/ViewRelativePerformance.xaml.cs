@@ -1,47 +1,40 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Common;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Windows.Markup;
-using System.Text;
-using Telerik.Windows.Data;
-using Telerik.Windows.Controls.GridView;
-using GreenField.Gadgets.Helpers;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
+using System.Windows.Media;
 using Microsoft.Practices.Prism.Events;
 using Telerik.Windows.Controls;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
-using GreenField.ServiceCaller.PerformanceDefinitions;
-using Telerik.Windows.Documents.Model;
+using Telerik.Windows.Controls.GridView;
+using Telerik.Windows.Data;
 using Telerik.Windows.Documents.FormatProviders.Pdf;
-using System.IO;
-using System.Collections;
+using Telerik.Windows.Documents.Model;
+using GreenField.Common;
 using GreenField.DataContracts;
-using System.Windows.Data;
-using System.Windows.Printing;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// View for RelativePerformance class
+    /// </summary>
     public partial class ViewRelativePerformance : ViewBaseUserControl
     {
         #region Fields
         //Gadget Data
-        private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
+        private List<RelativePerformanceSectorData> relativePerformanceSectorInfo;
 
         //MEF Singletons
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
+        private IEventAggregator eventAggregator;
+        private IDBInteractivity dbInteractivity;
 
         //private details
         Canvas canvas;
@@ -52,15 +45,17 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextRelativePerformance != null) //DataContext instance
-                    DataContextRelativePerformance.IsActive = _isActive;
+                isActive = value;
+                if (DataContextRelativePerformance != null)
+                {
+                    DataContextRelativePerformance.IsActive = isActive;
+                }
             }
         }
         #endregion
@@ -76,7 +71,6 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             dataContextSource.RelativePerformanceGridBuildEvent += new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
             this.DataContextRelativePerformance = dataContextSource;
-
             this.AddHandler(GridViewHeaderCell.MouseLeftButtonDownEvent, new MouseButtonEventHandler(MouseDownOnHeaderCell), true);
         }
         #endregion
@@ -85,28 +79,26 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelRelativePerformance _dataContextRelativePerformance;
+        private ViewModelRelativePerformance dataContextRelativePerformance;
         public ViewModelRelativePerformance DataContextRelativePerformance
         {
-            get { return _dataContextRelativePerformance; }
-            set { _dataContextRelativePerformance = value; }
+            get { return dataContextRelativePerformance; }
+            set { dataContextRelativePerformance = value; }
         }
 
         /// <summary>
         /// contains data to be displayed in the grid
         /// </summary>
-        private List<RelativePerformanceData> _relativePerformanceInfo;
+        private List<RelativePerformanceData> relativePerformanceInfo;
         public List<RelativePerformanceData> RelativePerformanceInfo
         {
-            get { return _relativePerformanceInfo; }
+            get { return relativePerformanceInfo; }
             set
             {
-                _relativePerformanceInfo = value;
+                relativePerformanceInfo = value;
                 this.dgRelativePerformance.ItemsSource = value;
-
             }
         }
-
         #endregion
 
         #region Event Handlers
@@ -121,30 +113,29 @@ namespace GreenField.Gadgets.Views
             //GroupedGridRowLoadedHandler.Implement(e);
 
             if (e.Row is GridViewHeaderRow)
-                return;
+            { return; }
 
             if (e.Row.Cells[0] is GridViewFooterCell)
-                return;
+            { return; }
 
             foreach (GridViewCell cell in e.Row.Cells)
             {
-                //Null Check
+                //null check
                 if (cell.Value == null)
-                    continue;
+                { continue; }
 
-                //No toolTip service for CountryId Column
+                //no tooltip service for CountryId column
                 if (cell.Column.DisplayIndex == 0)
-                    continue;
+                { continue; }
 
-                //No toolTip service for Totals Column
+                //no tooltip service for Totals column
                 if (cell.Column.DisplayIndex == this.dgRelativePerformance.Columns.Count - 1)
-                    continue;
+                { continue; }
 
-                //No toolTip service for Blank cells
+                //no toolTip service for blank cells
                 if ((cell.Value as RelativePerformanceCountrySpecificData).Alpha == null)
-                    continue;
+                { continue; }
 
-                //decimal? activePosition = (cell.ParentRow.DataContext as RelativePerformanceData).AggregateCountryActivePosition;
                 decimal? activePosition = (cell.Value as RelativePerformanceCountrySpecificData).ActivePosition;
 
                 ToolTip toolTip = new ToolTip()
@@ -156,6 +147,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// catch click on header cells
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void MouseDownOnHeaderCell(object sender, MouseEventArgs args)
         {
             if (dgRelativePerformance.Items.Count != 0)
@@ -165,16 +161,17 @@ namespace GreenField.Gadgets.Views
                 {
                     GridViewFooterCell footerTotalClicked = ((FrameworkElement)args.OriginalSource).ParentOfType<GridViewFooterCell>();
                     if (footerTotalClicked == null)
+                    {
                         return;
+                    }
 
                     if ((args.OriginalSource as TextBlock).Text == "Total")
                     {
-                        _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+                        eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
                         {
                             CountryID = null,
                             SectorID = null,
                         });
-
                         this.dgRelativePerformance.SelectedItems.Clear();
                     }
                 }
@@ -182,12 +179,11 @@ namespace GreenField.Gadgets.Views
                 {
                     if (cellClicked.Column.UniqueName == "Total")
                     {
-                        _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+                        eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
                         {
                             CountryID = null,
                             SectorID = null,
                         });
-
                         this.dgRelativePerformance.SelectedItems.Clear();
                     }
                 }
@@ -201,43 +197,55 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgRelativePerformance_SelectedCellsChanged(object sender, GridViewSelectedCellsChangedEventArgs e)
         {
-            //Ignore involuntary selection event
+            //ignore involuntary selection event
             if (e.AddedCells.Count == 0)
+            {
                 return;
+            }
 
             int selectedColumnIndex = e.AddedCells[0].Column.DisplayIndex;
 
             //when cells on Column ID column, toggled grid is displayed
             if (selectedColumnIndex == 0)
-                return;
-
-            //Ignore null cells
-            if (selectedColumnIndex != this.dgRelativePerformance.Columns.Count - 1)
             {
-                if (((e.AddedCells[0].Item as RelativePerformanceData).RelativePerformanceCountrySpecificInfo[selectedColumnIndex - 1] as RelativePerformanceCountrySpecificData).Alpha == null)
-                    return;
+                return;
             }
 
-            //Catching cells clicked in sector columns
+            //ignore null cells
+            if (selectedColumnIndex != this.dgRelativePerformance.Columns.Count - 1)
+            {
+                if (((e.AddedCells[0].Item as RelativePerformanceData).RelativePerformanceCountrySpecificInfo[selectedColumnIndex - 1]
+                    as RelativePerformanceCountrySpecificData).Alpha == null)
+                {
+                    return; 
+                }
+            }
+
+            //catching cells clicked in sector columns
             string countryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryId;
             string sectorID = null;
             if (selectedColumnIndex != this.dgRelativePerformance.Columns.Count - 1)
             {
-                sectorID = ((e.AddedCells[0].Item as RelativePerformanceData).RelativePerformanceCountrySpecificInfo[e.AddedCells[0].Column.DisplayIndex - 1] as RelativePerformanceCountrySpecificData).SectorId;
+                sectorID = ((e.AddedCells[0].Item as RelativePerformanceData).RelativePerformanceCountrySpecificInfo[e.AddedCells[0].Column.DisplayIndex - 1] 
+                    as RelativePerformanceCountrySpecificData).SectorId;
             }
 
-            _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+            eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
             {
                 CountryID = countryID,
                 SectorID = sectorID,
             });
         }
 
+        /// <summary>
+        /// building grid for the gadget
+        /// </summary>
+        /// <param name="e"></param>
         void DataContextSource_RelativePerformanceGridBuildEvent(RelativePerformanceGridBuildEventArgs e)
         {
-            _relativePerformanceSectorInfo = e.RelativePerformanceSectorInfo;
+            relativePerformanceSectorInfo = e.RelativePerformanceSectorInfo;
 
-            //Clear grid of previous sector info
+            //clear grid of previous sector info
             for (int columnIndex = 1; columnIndex < this.dgRelativePerformance.Columns.Count - 1; )
             {
                 this.dgRelativePerformance.Columns.RemoveAt(columnIndex);
@@ -283,7 +291,7 @@ namespace GreenField.Gadgets.Views
                     decimal? aggregateSectorActiviePositionValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex))
                                                                                             .Sum(t => t.ActivePosition == null ? 0 : t.ActivePosition);
                     string aggregateSectorActiviePosition = aggregateSectorActiviePositionValue == null ? String.Empty
-                                                                                             : (Decimal.Parse(aggregateSectorActiviePositionValue.ToString())).ToString();
+                                                                                         : (Decimal.Parse(aggregateSectorActiviePositionValue.ToString())).ToString();
 
                     var aggregateAlphaSumFunction = new AggregateFunction<RelativePerformanceData, string>
                     {
@@ -311,10 +319,8 @@ namespace GreenField.Gadgets.Views
                         FontSize = 9
                     };
 
-
                     ToolTipService.SetToolTip(footerText, spFunctions);
                     dataColumn.Footer = footerText;
-
                     dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCellClickable"] as Style;
                     dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;
                     dataColumn.CellStyle = this.Resources["GridViewCellStyle"] as Style;
@@ -323,22 +329,25 @@ namespace GreenField.Gadgets.Views
 
             RelativePerformanceInfo = e.RelativePerformanceInfo;
 
-            _dbInteractivity = (this.DataContext as ViewModelRelativePerformance)._dbInteractivity;
-            _eventAggregator = (this.DataContext as ViewModelRelativePerformance)._eventAggregator;
+            dbInteractivity = (this.DataContext as ViewModelRelativePerformance).dbInteractivity;
+            eventAggregator = (this.DataContext as ViewModelRelativePerformance).eventAggregator;
 
-
-            //Design Grid for Sector Specific Top Alpha Security Grid
-            //#######################################################
+            //design grid for sector specific top alpha security grid
 
             if (this.dpTopActivePositionSecurity.Children != null)
+            {
                 this.dpTopActivePositionSecurity.Children.Clear();
+            }
 
             if (e.RelativePerformanceSectorInfo != null)
             {
-                ScrollViewer svc = new ScrollViewer() { HorizontalScrollBarVisibility = ScrollBarVisibility.Auto, VerticalScrollBarVisibility = ScrollBarVisibility.Hidden };
+                ScrollViewer svc = new ScrollViewer() 
+                { 
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                    VerticalScrollBarVisibility = ScrollBarVisibility.Hidden
+                };
 
                 Grid grd = new Grid() { ShowGridLines = false, UseLayoutRounding = true };
-
                 grd.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                 grd.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                 grd.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -403,12 +412,15 @@ namespace GreenField.Gadgets.Views
                 svc.Content = grd;
                 this.dpTopActivePositionSecurity.Children.Add(svc);
             }
-
         }
-
         #endregion
 
         #region Export To Excel Methods
+        /// <summary>
+        /// catches export to excel button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             ChildExportOptions childExportOptions = new ChildExportOptions
@@ -425,6 +437,11 @@ namespace GreenField.Gadgets.Views
             childExportOptions.Show();
         }
 
+        /// <summary>
+        /// handles element exporting for grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgRelativePerformance_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, () =>
@@ -460,8 +477,21 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region Helper Methods
+        #region Helper Methods/Class
+        /// <summary>
+        /// class to contain security name and alpha
+        /// </summary>
+        private class SecurityDetail
+        {
+            public String SecurityName { get; set; }
+            public String SecurityAlpha { get; set; }
+        }
 
+        /// <summary>
+        /// return number of rows in the grid
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         public int GetMaxRows(RelativePerformanceToggledSectorGridBuildEventArgs e)
         {
             int counter = 0;
@@ -469,17 +499,24 @@ namespace GreenField.Gadgets.Views
             {
                 List<string> s1 = e.RelativePerformanceSecurityInfo.Where(t => t.SecurityCountryId == countryName).Select(t => t.SecurityName).ToList();
                 if (counter < s1.Count())
-                    counter = s1.Count();
+                { 
+                    counter = s1.Count(); 
+                }
             }
             return counter;
         }
 
+        /// <summary>
+        /// click on footer cell
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FooterCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.OriginalSource is TextBlock)
             {
                 string sectorID = ((e.OriginalSource as TextBlock).Tag).ToString();
-                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+                eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
                 {
                     SectorID = sectorID
                 });
@@ -532,18 +569,11 @@ namespace GreenField.Gadgets.Views
             RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
         }
 
-        ///// <summary>
-        ///// Printing the Grid
-        ///// </summary>
-        ///// <param name="grid"></param>
-        ///// <param name="fontSize"></param>
-        ///// <returns></returns>
-        //public static RadDocument Print(RadGridView grid, int fontSize = 8)
-        //{
-        //    int fontSizePDF = fontSize;
-        //    RadDocument document =  CreateDocument(grid);
-        //}
-
+        /// <summary>
+        /// method for pdf exporting
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <returns></returns>
         private RadDocument CreateDocument(RadGridView grid)
         {
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
@@ -604,10 +634,16 @@ namespace GreenField.Gadgets.Views
                 }
                 table.Rows.Add(footerRow);
             }
-
             return document;
         }
 
+        /// <summary>
+        /// method for adding rows to exported pdf
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="items"></param>
+        /// <param name="columns"></param>
+        /// <param name="grid"></param>
         private void AddDataRows(Table table, IList items, IList<GridViewBoundColumnBase> columns, RadGridView grid)
         {
             for (int i = 0; i < items.Count; i++)
@@ -652,6 +688,13 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// adding group rows to exported pdf
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="group"></param>
+        /// <param name="columns"></param>
+        /// <param name="grid"></param>
         private void AddGroupRow(Table table, QueryableCollectionViewGroup group, IList<GridViewBoundColumnBase> columns, RadGridView grid)
         {
             TableRow row = new TableRow();
@@ -696,6 +739,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// adding cell value to exported pdf
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="value"></param>
         private void AddCellValue(TableCell cell, string value)
         {
             if (value != null)
@@ -712,6 +760,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// returns group level
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
         private int GetGroupLevel(IGroup group)
         {
             int level = 0;
@@ -723,13 +776,6 @@ namespace GreenField.Gadgets.Views
             }
             return level;
         }
-
-        #endregion
-
-        #region Printing the DataGrid
-
-
-
         #endregion
 
         #region Dispose Method
@@ -739,16 +785,11 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextRelativePerformance.Dispose();
-            this.DataContextRelativePerformance.RelativePerformanceGridBuildEvent -= new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
+            this.DataContextRelativePerformance.RelativePerformanceGridBuildEvent -= 
+                new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
             this.DataContextRelativePerformance = null;
             this.DataContext = null;
         }
         #endregion
-
-        private class SecurityDetail
-        {
-            public String SecurityName { get; set; }
-            public String SecurityAlpha { get; set; }
-        }
     }
 }

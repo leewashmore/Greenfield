@@ -1,51 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+﻿using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
-using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// View model for ViewContributorDetractor class
+    /// </summary>
     public partial class ViewRelativePerformanceCountryActivePosition : ViewBaseUserControl
     {
         #region Properties
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelRelativePerformanceCountryActivePosition _dataContextRelativePerformanceCountryActivePosition;
+        private ViewModelRelativePerformanceCountryActivePosition dataContextRelativePerformanceCountryActivePosition;
         public ViewModelRelativePerformanceCountryActivePosition DataContextRelativePerformanceCountryActivePosition
         {
-            get { return _dataContextRelativePerformanceCountryActivePosition; }
-            set { _dataContextRelativePerformanceCountryActivePosition = value; }
+            get { return dataContextRelativePerformanceCountryActivePosition; }
+            set { dataContextRelativePerformanceCountryActivePosition = value; }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextRelativePerformanceCountryActivePosition != null) //DataContext instance
-                    DataContextRelativePerformanceCountryActivePosition.IsActive = _isActive;
+                isActive = value;
+                if (DataContextRelativePerformanceCountryActivePosition != null) 
+                {
+                    DataContextRelativePerformanceCountryActivePosition.IsActive = isActive;
+                }
             }
         }
 
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewRelativePerformanceCountryActivePosition(ViewModelRelativePerformanceCountryActivePosition dataContextSource)
         {
             InitializeComponent();
@@ -65,10 +62,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        //private void dgRelativePerformance_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        //{
-        //    //GroupedGridRowLoadedHandler.Implement(e);
-        //}
     }
 }

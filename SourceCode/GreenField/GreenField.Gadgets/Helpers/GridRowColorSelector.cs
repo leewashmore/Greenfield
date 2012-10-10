@@ -1,20 +1,12 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Telerik.Windows.Controls;
-using GreenField.Gadgets.ViewModels;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// class to format cell content font depending upon value for market value
+    /// </summary>
     public class GridRowColorSelector : StyleSelector
     {
         public override Style SelectStyle(object item, DependencyObject container)
@@ -30,7 +22,14 @@ namespace GreenField.Gadgets.Helpers
             return null;
         }
 
+        /// <summary>
+        /// property returned depending upon market value
+        /// </summary>
         public Style PositionHeld { get; set; }
+
+        /// <summary>
+        /// property returned depending upon market value
+        /// </summary>
         public Style PositionNotHeld { get; set; }
     }
 }

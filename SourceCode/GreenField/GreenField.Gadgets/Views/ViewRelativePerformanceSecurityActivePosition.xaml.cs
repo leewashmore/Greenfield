@@ -12,31 +12,37 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelRelativePerformanceSecurityActivePosition _dataContextRelativePerformanceSecurityActivePosition;
+        private ViewModelRelativePerformanceSecurityActivePosition dataContextRelativePerformanceSecurityActivePosition;
         public ViewModelRelativePerformanceSecurityActivePosition DataContextRelativePerformanceSecurityActivePosition
         {
-            get { return _dataContextRelativePerformanceSecurityActivePosition; }
-            set { _dataContextRelativePerformanceSecurityActivePosition = value; }
+            get { return dataContextRelativePerformanceSecurityActivePosition; }
+            set { dataContextRelativePerformanceSecurityActivePosition = value; }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextRelativePerformanceSecurityActivePosition != null) //DataContext instance
-                    DataContextRelativePerformanceSecurityActivePosition.IsActive = _isActive;
+                isActive = value;
+                if (DataContextRelativePerformanceSecurityActivePosition != null)
+                {
+                    DataContextRelativePerformanceSecurityActivePosition.IsActive = isActive;
+                }
             }
         }
 
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewRelativePerformanceSecurityActivePosition(ViewModelRelativePerformanceSecurityActivePosition dataContextSource)
         {
             InitializeComponent();
@@ -56,10 +62,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        private void dgRelativePerformance_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            //GroupedGridRowLoadedHandler.Implement(e);
-        }
     }
 }

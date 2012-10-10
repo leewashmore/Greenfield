@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+﻿using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
-using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// View for ContributorDetractor class
+    /// </summary>
     public partial class ViewContributorDetractor : ViewBaseUserControl
     {
         #region Properties
@@ -38,13 +29,19 @@ namespace GreenField.Gadgets.Views
             set
             {
                 _isActive = value;
-                if (DataContextContributorDetractor != null) //DataContext instance
+                if (DataContextContributorDetractor != null)
+                {
                     DataContextContributorDetractor.IsActive = _isActive;
+                }
             }
         }
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewContributorDetractor(ViewModelContributorDetractor dataContextSource)
         {
             InitializeComponent();
@@ -64,10 +61,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        private void dgContributorDetractor_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            //GroupedGridRowLoadedHandler.Implement(e);
-        }
     }
 }
