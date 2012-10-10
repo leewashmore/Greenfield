@@ -30,8 +30,9 @@ namespace GreenField.Web.Services
             get
             {
                 if (null == dimensionEntity)
+                {
                     dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
-
+                }
                 return dimensionEntity;
             }
         }
@@ -55,19 +56,17 @@ namespace GreenField.Web.Services
         {
             try
             {
-                //bool isServiceUp;
-                //isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
-                //if (!isServiceUp)
-                //    throw new Exception();
-
-                List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();
-                //MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                if (!isServiceUp)
+                {
+                    throw new Exception();
+                }
+                List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();              
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                ResearchEntities research = new ResearchEntities();
-                //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
-                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveCTYSUMMARYDataReportPerCountry @country={0}", countryNameVal).ToList();
-                
+                ResearchEntities research = new ResearchEntities();              
+                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>
+                    ("exec RetrieveCTYSUMMARYDataReportPerCountry @country={0}", countryNameVal).ToList();                
                 return result;
             }
             catch (Exception ex)
@@ -119,8 +118,7 @@ namespace GreenField.Web.Services
                 entry.CountryNames = countryData[i].COUNTRY_NAME;
                 result.Add(entry);
             }
-            return result;
-        
+            return result;        
         }
         /// <summary>
         /// Retrives Data for MacroDatabaseKeyAnnualReportDataEMSummary
@@ -134,21 +132,20 @@ namespace GreenField.Web.Services
         {
             try
             {
-                //bool isServiceUp;
-                //isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
-                //if (!isServiceUp)
-                //    throw new Exception();
-
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                if (!isServiceUp)
+                {
+                    throw new Exception();
+                }
                 List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();
-                List<MacroDatabaseKeyAnnualReportData> finalResult = new List<MacroDatabaseKeyAnnualReportData>();
-                //MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
+                List<MacroDatabaseKeyAnnualReportData> finalResult = new List<MacroDatabaseKeyAnnualReportData>();            
                 DimensionEntitiesService.Entities entity = DimensionEntity;              
-                ResearchEntities research = new ResearchEntities();
-                //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
+                ResearchEntities research = new ResearchEntities();            
                 foreach (String c in countryValues)
                 {
-                    result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveEMSummaryDataReportPerCountry @country={0}", c).ToList();
+                    result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>
+                        ("exec RetrieveEMSummaryDataReportPerCountry @country={0}", c).ToList();
                     if (result != null && result.Count != 0)
                     {
                         foreach (MacroDatabaseKeyAnnualReportData r in result)
@@ -158,8 +155,9 @@ namespace GreenField.Web.Services
                     }
                 }
                 if (finalResult.Count == 0 || finalResult == null)
+                {
                     return finalResult;
-
+                }
                 return finalResult;
             }
             catch (Exception ex)

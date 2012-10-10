@@ -8,42 +8,42 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
-using GreenField.ServiceCaller;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Common;
 using GreenField.ServiceCaller.ModelFXDefinitions;
-using System.Collections.Generic;
 using GreenField.DataContracts;
 using GreenField.Gadgets.Models;
-using Microsoft.Practices.Prism.Commands;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelMacroDBKeyAnnualReportEMSummary : NotificationObject
-    {
-        
+    {        
         #region Fields
-
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
-
+        private IDBInteractivity dbInteractivity;
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
-
-        private String _countryCode;
-
-        private List<String> _countryNames;
-
+        private ILoggerFacade logger;
+        /// <summary>
+        /// Country code of the country selected
+        /// </summary>
+        private String countryCode;
+        /// <summary>
+        /// Country Names 
+        /// </summary>
+        private List<String> countryNames;
         #endregion
 
         #region Constructor
@@ -53,36 +53,36 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param">DashBoardGadgetParam</param>
         public ViewModelMacroDBKeyAnnualReportEMSummary(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _countryNames = param.DashboardGadgetPayload.RegionFXData;
-            _countryCode = param.DashboardGadgetPayload.CountrySelectionData;
-
-            if ( _countryNames!=null)
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            countryNames = param.DashboardGadgetPayload.RegionFXData;
+            countryCode = param.DashboardGadgetPayload.CountrySelectionData;
+            if ( countryNames!=null)
             {
-                _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode,_countryNames, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
+                dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(countryCode,countryNames, 
+                    RetrieveMacroEconomicDataEMSummaryCallbackMethod);
             }
-
-            if (_eventAggregator != null)
-            {
-                //_eventAggregator.GetEvent<CountrySelectionSetEvent>().Subscribe(HandleCountryReferenceSetEvent);
-                _eventAggregator.GetEvent<RegionFXEvent>().Subscribe(HandleRegionCountryReferenceSetEvent);
-            }
-            
+            if (eventAggregator != null)
+            {             
+                eventAggregator.GetEvent<RegionFXEvent>().Subscribe(HandleRegionCountryReferenceSetEvent);
+            }            
         }
         #endregion
 
         #region Events
         /// <summary>
+        /// Event for the notification of Data Load Completion for resetting busy Indicator's status
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler MacroDBKeyAnnualReportEMSummaryDataLoadedEvent;
+
+        /// <summary>
         /// Event for the notification of Data Load Completion
         /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler macroDBKeyAnnualReportEMSummaryDataLoadedEvent;
         public event RetrieveMacroCountrySummaryDataCompleteEventHandler RetrieveMacroEMSummaryDataCompletedEvent;   
         #endregion
 
         #region Properties
-
         #region UI
         /// <summary>
         /// Stores the complete Macro Country data
@@ -91,10 +91,7 @@ namespace GreenField.Gadgets.ViewModels
         public List<MacroDatabaseKeyAnnualReportData> MacroCountryData
         {
             get
-            {
-                
-                return macroCountryData;
-            }
+            { return macroCountryData; }
             set
             {
                 macroCountryData = value;
@@ -102,6 +99,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.MacroCountryData);
             }
         }
+
         /// <summary>
         /// Stores the Five Year data binded to the grid
         /// </summary>
@@ -109,10 +107,7 @@ namespace GreenField.Gadgets.ViewModels
         public List<FiveYearDataModels> FiveYearMacroCountryData
         {
             get
-            {
-
-                return fiveYearMacroCountryData;
-            }
+            { return fiveYearMacroCountryData; }
             set
             {
                 fiveYearMacroCountryData = value;
@@ -123,17 +118,14 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores the value of the current year
         /// </summary>
-        private int _currentYear = System.DateTime.Now.Year;
+        private int currentYear = System.DateTime.Now.Year;
         public int CurrentYear
         {
             get
-            {
-                return _currentYear;
-            }
-
+            {  return currentYear; }
             set
             {
-                _currentYear = value;
+                currentYear = value;
                 AddDataToFiveYearModels(value);
                 RetrieveMacroEMSummaryDataCompletedEvent(new RetrieveMacroCountrySummaryDataCompleteEventArgs() { MacroInfo = MacroCountryData });
                 RaisePropertyChanged(() => this.CurrentYear);
@@ -143,23 +135,24 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
             get
-            {
-                return _isActive;
-            }
+            { return isActive; }
             set
             {
-                if (_isActive != value)
+                if (isActive != value)
                 {
-                    _isActive = value;
-                    if (_countryNames != null && IsActive)
+                    isActive = value;
+                    if (countryNames != null && IsActive)
                     {
-                        if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
-                            macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode, _countryNames, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
+                        if (null != MacroDBKeyAnnualReportEMSummaryDataLoadedEvent)
+                        {
+                            MacroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
+                        dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(countryCode, countryNames, 
+                            RetrieveMacroEconomicDataEMSummaryCallbackMethod);
                     }
                 }
             }
@@ -216,7 +209,6 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
         #endregion
-
         #endregion
 
         #region Callback Methods
@@ -227,21 +219,24 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveMacroEconomicDataEMSummaryCallbackMethod(List<MacroDatabaseKeyAnnualReportData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-
+            Logging.LogBeginMethod(logger, methodNamespace);
             if (result != null && result.Count > 0)
             {
-                Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                 MacroCountryData = result;
-                if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
-                    macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                if (null != MacroDBKeyAnnualReportEMSummaryDataLoadedEvent)
+                {
+                    MacroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
                 RetrieveMacroEMSummaryDataCompletedEvent(new RetrieveMacroCountrySummaryDataCompleteEventArgs() { MacroInfo = result });
             }
             else
             {
-                Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
-                    macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                if (null != MacroDBKeyAnnualReportEMSummaryDataLoadedEvent)
+                {
+                    MacroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
             }
         }   
         #endregion  
@@ -253,34 +248,35 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="countryValues">The country Values for a selected region</param>
         public void HandleRegionCountryReferenceSetEvent(List<String> countryValues)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (countryValues != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, countryValues, 1);
-                    _countryNames = countryValues;
-
-                    if (_countryNames != null && IsActive )
+                    Logging.LogMethodParameter(logger, methodNamespace, countryValues, 1);
+                    countryNames = countryValues;
+                    if (countryNames != null && IsActive )
                     {
-                        if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
-                            macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode, _countryNames, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
+                        if (null != MacroDBKeyAnnualReportEMSummaryDataLoadedEvent)
+                        {
+                            MacroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
+                        dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(countryCode, countryNames, 
+                            RetrieveMacroEconomicDataEMSummaryCallbackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -298,9 +294,13 @@ namespace GreenField.Gadgets.ViewModels
         {
             var theProperty = m.GetType().GetProperty(propertyName);
             if (theProperty == null)
+            {
                 throw new ArgumentException("object does not have an " + propertyName + " property", "m");
+            }
             if (theProperty.PropertyType.FullName != typeof(T).FullName)
+            {
                 throw new ArgumentException("object has an Id property, but it is not of type " + typeof(T).FullName, "m");
+            }
             return (T)theProperty.GetValue(m, null);
         }
         /// <summary>
@@ -310,10 +310,14 @@ namespace GreenField.Gadgets.ViewModels
         public void AddDataToFiveYearModels(int CurrentYear)
         {
             if (FiveYearMacroCountryData != null)
+            {
                 FiveYearMacroCountryData.Clear();
+            }
             List<FiveYearDataModels> result = new List<FiveYearDataModels>();
             if (CurrentYear >= 2024 || CurrentYear <= 1989)
+            {
                 return;
+            }
             for (int i = 0; i < macroCountryData.Count; i++)
             {
                 MacroDatabaseKeyAnnualReportData m = new MacroDatabaseKeyAnnualReportData();
@@ -330,27 +334,35 @@ namespace GreenField.Gadgets.ViewModels
                 entry.YearFour = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear));
                 entry.YearFive = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 1));
                 entry.YearSix = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 2));
-                Decimal? Value1 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 4));
-                Decimal? Value2 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 3));
-                Decimal? Value3 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 2));
-                Decimal? Value4 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 1));
-                Decimal? Value5 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear));
-                if (Value1 == null)
-                    Value1 = 0;
-                if (Value2 == null)
-                    Value2 = 0;
-                if (Value3 == null)
-                    Value3 = 0;
-                if (Value4 == null)
-                    Value4 = 0;
-                if (Value5 == null)
-                    Value5 = 0;
-                entry.FiveYearAvg = (Value1 + Value2 + Value3 + Value4 + Value5) / 5;
+                Decimal? value1 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 4));
+                Decimal? value2 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 3));
+                Decimal? value3 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 2));
+                Decimal? value4 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 1));
+                Decimal? value5 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear));
+                if (value1 == null)
+                {
+                    value1 = 0;
+                }
+                if (value2 == null)
+                {
+                    value2 = 0;
+                }
+                if (value3 == null)
+                {
+                    value3 = 0;
+                }
+                if (value4 == null)
+                {
+                    value4 = 0;
+                }
+                if (value5 == null)
+                {
+                    value5 = 0;
+                }
+                entry.FiveYearAvg = (value1 + value2 + value3 + value4 + value5) / 5;
                 result.Add(entry);
             }
-            FiveYearMacroCountryData = result;
-
-        }
+            FiveYearMacroCountryData = result;        }
         #endregion
 
         #region EventUnSubscribe
@@ -359,7 +371,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<RegionFXEvent>().Unsubscribe(HandleRegionCountryReferenceSetEvent);
+            eventAggregator.GetEvent<RegionFXEvent>().Unsubscribe(HandleRegionCountryReferenceSetEvent);
         }
 
         #endregion

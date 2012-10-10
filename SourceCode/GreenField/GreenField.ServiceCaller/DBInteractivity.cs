@@ -2189,11 +2189,16 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// Calls the web service and gets the MacroDatabaseKeyAnnualReportData
+        /// </summary>
+        /// <param name="countryName"></param>
+        /// <param name="callback"></param>
         public void RetrieveMacroDatabaseKeyAnnualReportData(string countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
+                SessionManager.SESSION.UserName : "Unspecified");
             ModelFXOperationsClient client = new ModelFXOperationsClient();
             client.RetrieveMacroDatabaseKeyAnnualReportDataAsync(countryName);
             client.RetrieveMacroDatabaseKeyAnnualReportDataCompleted += (se, e) =>
@@ -2218,24 +2223,35 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
+                    SessionManager.SESSION.UserName : "Unspecified");
             };
-
         }
 
-        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(String countryName, List<String> countryValues, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
+        /// <summary>
+        /// Calls the web service and gets the MacroDatabaseKeyAnnualReportDataEMSummary Data
+        /// </summary>
+        /// <param name="countryName"></param>
+        /// <param name="countryValues"></param>
+        /// <param name="callback"></param>
+        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(String countryName, List<String> countryValues, 
+            Action<List<MacroDatabaseKeyAnnualReportData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
+                SessionManager.SESSION.UserName : "Unspecified");
             ModelFXOperationsClient client = new ModelFXOperationsClient();
             client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(countryName, countryValues);
             client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompleted += (se, e) =>
@@ -2260,15 +2276,20 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
+                    SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
@@ -2313,11 +2334,15 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// Retrieves list of regions
+        /// </summary>
+        /// <param name="callback"></param>
         public void RetrieveRegionSelectionData(Action<List<RegionSelectionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
+                SessionManager.SESSION.UserName : "Unspecified");
             ModelFXOperationsClient client = new ModelFXOperationsClient();
             client.RetrieveRegionSelectionDataAsync();
             client.RetrieveRegionSelectionDataCompleted += (se, e) =>
@@ -2342,15 +2367,20 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
+                    SessionManager.SESSION.UserName : "Unspecified");
             };
         }
         #endregion
