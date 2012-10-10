@@ -12,20 +12,31 @@ namespace BenchmarkNodeFinancials
     class Program
     {
         #region Fields
-        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private static DimensionServiceReference.Entities _dimensionEntity;
+        /// <summary>
+        /// log4net required for logging
+        /// </summary>
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        /// <summary>
+        /// DimensionServiceReference.Entities object for connection to the views
+        /// </summary>
+        private static DimensionServiceReference.Entities dimensionEntity;
         #endregion
 
         static void Main(string[] args)
         {
             try
             {
-                _dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+                dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
                 DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
-                GF_BENCHMARK_HOLDINGS lastBusinessRecord = _dimensionEntity.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                GF_BENCHMARK_HOLDINGS lastBusinessRecord = dimensionEntity.GF_BENCHMARK_HOLDINGS.
+                    OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
                 if (lastBusinessRecord != null)
+                {
                     if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                    {
                         lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+                    }
+                }
                 if (args.Length == 1)
                 {
                     bool isDatetime = IsDateTime(args[0]);
@@ -48,18 +59,23 @@ namespace BenchmarkNodeFinancials
                         return;
                     }
 
-                _log.Debug("Application initiated on " + lastBusinessDate);
+                log.Debug("Application initiated on " + lastBusinessDate);
                 BenchmarkNodeFinancial bnf = new BenchmarkNodeFinancial();
                 bnf.RetrieveData(lastBusinessDate);
-                _log.Debug("Application completed successfully on " + lastBusinessDate);
+                log.Debug("Application completed successfully on " + lastBusinessDate);
             }
         
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
         }
 
+        /// <summary>
+        /// To check if the entered date is in correct format
+        /// </summary>
+        /// <param name="txtDate"></param>
+        /// <returns></returns>
         public static bool IsDateTime(string txtDate) 
         {
             DateTime tempDate; 

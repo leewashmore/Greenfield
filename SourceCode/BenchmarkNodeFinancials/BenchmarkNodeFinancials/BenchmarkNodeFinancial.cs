@@ -1,39 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 using BenchmarkNodeFinancials.DimensionServiceReference;
-using System.Configuration;
-using System.Reflection;
-using System.IO;
 
 namespace BenchmarkNodeFinancials
 {
     class BenchmarkNodeFinancial
     {
         #region Fields
-        private static AIMSDataEntity _entity;
-        private static DimensionServiceReference.Entities _dimensionEntity;
-        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        /// <summary>
+        ///AIMSDataEntity object for connection to the database
+        /// </summary>
+        private static AIMSDataEntity entity;
+        /// <summary>
+        /// DimensionServiceReference.Entities object for connection to the views
+        /// </summary>
+        private static DimensionServiceReference.Entities dimensionEntity;
+        /// <summary>
+        /// log4net required for logging
+        /// </summary>
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
+        #region Methods
+        /// <summary>
+        /// Retrieve data for Market data gadget
+        /// </summary>
+        /// <param name="lastBusinessDate">last business date available in the view </param>
         public void RetrieveData(DateTime lastBusinessDate)
         {
             try
             {
-             
-                _dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+                dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
                 List<String> benchmarkIds = new List<string>();
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
                 if (!isServiceUp)
+                {
                     throw new Exception("Services are not available");
-
-                _entity = new AIMSDataEntity();
-
+                }
+                entity = new AIMSDataEntity();
                 bool exists = File.Exists(@"BenchmarkIDs.xml");
                 if (exists)
                 {
@@ -42,14 +53,12 @@ namespace BenchmarkNodeFinancials
                         .Select(a => a.Value)
                         .ToList();
                 }
-
                 foreach (String benId in benchmarkIds)
                 {
-                     //  _log.Debug(args[0]);
                     List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
-                                        dataBenchmarkHoldings = _dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
-                                                                                 && record.PORTFOLIO_DATE == lastBusinessDate
-                                                                                  && record.BENCHMARK_WEIGHT > 0).ToList();
+                    dataBenchmarkHoldings = dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
+                                                             && record.PORTFOLIO_DATE == lastBusinessDate
+                                                              && record.BENCHMARK_WEIGHT > 0).ToList();
 
                     var benchData = dataBenchmarkHoldings != null ? (from p in dataBenchmarkHoldings
                                                                      select new
@@ -66,42 +75,46 @@ namespace BenchmarkNodeFinancials
 
                     List<String> asecShortNames = benchData != null ? (from p in benchData
                                                                        select p.AsecShortName).ToList() : null;
-                    //Retrieve security Id's              
+                    //retrieve security Id's              
                     List<SecurityData> securityData = RetrieveSecurityIds(asecShortNames);
                     List<String> distinctSecurityId = securityData.Select(record => record.SecurityId).ToList();
                     List<String> distinctIssuerId = securityData.Select(record => record.IssuerId).ToList();
 
-                    String _securityIds = StringBuilder(distinctSecurityId); //"'2295'"; 
-                    String _issuerIds = StringBuilder(distinctIssuerId); //"'117567','223340'";            
+                    String _securityIds = StringBuilder(distinctSecurityId);
+                    String _issuerIds = StringBuilder(distinctIssuerId);     
 
                     List<PeriodFinancialForwardRatios> periodFinancialData = new List<PeriodFinancialForwardRatios>();
-                    periodFinancialData = _entity.usp_GetDataForBenchmarkNodefinancials(_issuerIds, _securityIds).ToList();
+                    periodFinancialData = entity.usp_GetDataForBenchmarkNodefinancials(_issuerIds, _securityIds).ToList();
 
                     List<BenchmarkNodeFinancialsData> forwardRatioData = new List<BenchmarkNodeFinancialsData>();
                     forwardRatioData = FillBenchmarkNodeFinancials(periodFinancialData, securityData, dataBenchmarkHoldings, benId);
 
                     List<PeriodFinancialPeriodRatios> periodFinancialDataPeriodRatios = new List<PeriodFinancialPeriodRatios>();
-                    periodFinancialDataPeriodRatios = _entity.usp_GetDataForBenchNodefinPeriodYear(_issuerIds, _securityIds).ToList();
+                    periodFinancialDataPeriodRatios = entity.usp_GetDataForBenchNodefinPeriodYear(_issuerIds, _securityIds).ToList();
 
                     List<BenchmarkNodeFinancialsData> bothRatiosData = new List<BenchmarkNodeFinancialsData>();
-                    bothRatiosData = FillBenchmarkNodeFinancialsPeriodData(periodFinancialDataPeriodRatios, securityData, dataBenchmarkHoldings, benId, forwardRatioData);
+                    bothRatiosData = FillBenchmarkNodeFinancialsPeriodData(periodFinancialDataPeriodRatios, securityData, dataBenchmarkHoldings, 
+                        benId, forwardRatioData);
 
-                    //Grouping the data and calculating the Harmonic mean for insertion into the Benchmark_Node_Financials Table
-
+                    //grouping the data and calculating the harmonic mean for insertion into the Benchmark_Node_Financials table
                     List<GroupedBenchmarkNodeData> groupedFinalData = new List<GroupedBenchmarkNodeData>();
                     groupedFinalData = GroupBenchmarkData(bothRatiosData);
 
-                    //Creation of an Xml for inserting data into the Benchmark_Node_Financials Table
-                    CreateXMLInsertData(groupedFinalData, _entity, benId);
-                   
+                    //creation of an Xml for inserting data into the Benchmark_Node_Financials table
+                    CreateXMLInsertData(groupedFinalData, entity, benId);
                 }
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
         }
 
+        /// <summary>
+        /// Retrieve security Id's according to asecShortNames from GF_SECURITY_BASEVIEW
+        /// </summary>
+        /// <param name="asecShortNames"></param>
+        /// <returns></returns>
         private List<SecurityData> RetrieveSecurityIds(List<String> asecShortNames)
         {
             List<SecurityData> secData = new List<SecurityData>();
@@ -109,7 +122,8 @@ namespace BenchmarkNodeFinancials
             {
                 foreach (String asec in asecShortNames)
                 {
-                    GF_SECURITY_BASEVIEW item = (_dimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_SHORT_NAME == asec).FirstOrDefault());
+                    GF_SECURITY_BASEVIEW item = (dimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_SHORT_NAME == asec).
+                        FirstOrDefault());
                     if (item != null)
                     {
                         secData.Add(new SecurityData()
@@ -124,11 +138,16 @@ namespace BenchmarkNodeFinancials
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
             return secData;
         }
 
+        /// <summary>
+        /// String builder that adds ' between Id's
+        /// </summary>
+        /// <param name="param">String of Id's</param>
+        /// <returns></returns>
         private string StringBuilder(List<String> param)
         {
             StringBuilder var = new StringBuilder();
@@ -139,11 +158,18 @@ namespace BenchmarkNodeFinancials
                 var.Append(",'" + item + "'");
             }
             var = check == 0 ? var.Remove(0, 1) : null;
-
             string result = var == null ? null : var.ToString();
             return result;
         }
 
+        /// <summary>
+        /// Fills Benchmark Node finacial data for forward ratios
+        /// </summary>
+        /// <param name="periodFinancialData">Forward ratios data returned form the stored procedure</param>
+        /// <param name="securityData">Security data from GF_SECURITY_BASEVIEW</param>
+        /// <param name="dataBenchmarkHoldings">data from benchmark holdings view</param>
+        /// <param name="benId">benchmark Id</param>
+        /// <returns></returns>
         private List<BenchmarkNodeFinancialsData> FillBenchmarkNodeFinancials(List<PeriodFinancialForwardRatios> periodFinancialData, List<SecurityData> securityData, List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings, String benId)
         {
             List<BenchmarkNodeFinancialsData> forwardRatioData = new List<BenchmarkNodeFinancialsData>();
@@ -153,9 +179,10 @@ namespace BenchmarkNodeFinancials
                 {
                     foreach (int dataId in periodFinancialData.Select(t => t.DataID).Distinct())
                     {
-                        List<String> dinstinctIssuerIds = periodFinancialData.Where(t => t.DataID == dataId).Select(t => t.IssuerID).Distinct().ToList();
-                        List<String> dinstinctSecurityIds = periodFinancialData.Where(t => t.DataID == dataId).Select(t => t.SecurityID).Distinct().ToList();
-
+                        List<String> dinstinctIssuerIds = periodFinancialData.Where(t => t.DataID == dataId)
+                            .Select(t => t.IssuerID).Distinct().ToList();
+                        List<String> dinstinctSecurityIds = periodFinancialData.Where(t => t.DataID == dataId)
+                            .Select(t => t.SecurityID).Distinct().ToList();
                         foreach (String s in dinstinctIssuerIds)
                         {
                             foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings.Where(t => t.ISSUER_ID == s).ToList())
@@ -174,17 +201,19 @@ namespace BenchmarkNodeFinancials
                                 obj.PeriodType = "C";
                                 obj.PeriodYear = 0;
                                 obj.Currency = "USD";
-                                obj.Amount = periodFinancialData.Where(t => t.IssuerID == s && t.DataID == dataId).Select(t => t.Amount).FirstOrDefault();
+                                obj.Amount = periodFinancialData.Where(t => t.IssuerID == s && t.DataID == dataId)
+                                    .Select(t => t.Amount).FirstOrDefault();
                                 obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
                                 obj.BenWeight = row.BENCHMARK_WEIGHT;
                                 obj.TypeNode = "Forw";
                                 forwardRatioData.Add(obj);
                             }
                         }
-
                         foreach (String s in dinstinctSecurityIds)
                         {
-                            foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings.Where(t => t.ASEC_SEC_SHORT_NAME == (securityData.Where(p => p.SecurityId == s).Select(p => p.AsecShortName).FirstOrDefault())).ToList())
+                            foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings
+                                .Where(t => t.ASEC_SEC_SHORT_NAME == (securityData.Where(p => p.SecurityId == s).Select(p => p.AsecShortName)
+                                    .FirstOrDefault())).ToList())
                             {
                                 BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
                                 obj.BenchmarkName = benId;
@@ -200,7 +229,8 @@ namespace BenchmarkNodeFinancials
                                 obj.PeriodType = "C";
                                 obj.PeriodYear = 0;
                                 obj.Currency = "USD";
-                                obj.Amount = periodFinancialData.Where(t => t.SecurityID == s && t.DataID == dataId).Select(t => t.Amount).FirstOrDefault();
+                                obj.Amount = periodFinancialData.Where(t => t.SecurityID == s && t.DataID == dataId)
+                                    .Select(t => t.Amount).FirstOrDefault();
                                 obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
                                 obj.BenWeight = row.BENCHMARK_WEIGHT;
                                 obj.TypeNode = "Forw";
@@ -212,12 +242,23 @@ namespace BenchmarkNodeFinancials
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
             return forwardRatioData;
-        }
+        }      
 
-        private List<BenchmarkNodeFinancialsData> FillBenchmarkNodeFinancialsPeriodData(List<PeriodFinancialPeriodRatios> periodFinancialRatioData, List<SecurityData> securityData, List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings, String benId, List<BenchmarkNodeFinancialsData> periodRatiosData)
+        /// <summary>
+        /// Fills Benchmark Node finacial data for Period ratios
+        /// </summary>
+        /// <param name="periodFinancialRatioData">Period ratios data returned form the stored procedure</param>
+        /// <param name="securityData">Security data from GF_SECURITY_BASEVIEW</param>
+        /// <param name="dataBenchmarkHoldings">data from benchmark holdings view</param>
+        /// <param name="benId">benchmark Id</param>
+        /// <param name="periodRatiosData"></param>
+        /// <returns></returns>
+        private List<BenchmarkNodeFinancialsData> FillBenchmarkNodeFinancialsPeriodData(List<PeriodFinancialPeriodRatios> periodFinancialRatioData, 
+            List<SecurityData> securityData, List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings, String benId,
+            List<BenchmarkNodeFinancialsData> periodRatiosData)
         {
             try
             {
@@ -227,8 +268,10 @@ namespace BenchmarkNodeFinancials
                     {
                         foreach (int perYear in periodFinancialRatioData.Where(t => t.DataID == dataId).Select(t => t.PeriodYear).Distinct())
                         {
-                            List<String> dinstinctIssuerIds = periodFinancialRatioData.Where(t => t.DataID == dataId && t.PeriodYear == perYear).Select(t => t.IssuerID).Distinct().ToList();
-                            List<String> dinstinctSecurityIds = periodFinancialRatioData.Where(t => t.DataID == dataId && t.PeriodYear == perYear).Select(t => t.SecurityID).Distinct().ToList();
+                            List<String> dinstinctIssuerIds = periodFinancialRatioData.Where(t => t.DataID == dataId && t.PeriodYear == perYear)
+                                .Select(t => t.IssuerID).Distinct().ToList();
+                            List<String> dinstinctSecurityIds = periodFinancialRatioData.Where(t => t.DataID == dataId && t.PeriodYear == perYear)
+                                .Select(t => t.SecurityID).Distinct().ToList();
 
                             foreach (String s in dinstinctIssuerIds)
                             {
@@ -248,7 +291,8 @@ namespace BenchmarkNodeFinancials
                                     obj.PeriodType = "A";
                                     obj.PeriodYear = perYear;
                                     obj.Currency = "USD";
-                                    obj.Amount = periodFinancialRatioData.Where(t => t.IssuerID == s && t.DataID == dataId && t.PeriodYear == perYear).Select(t => t.Amount).FirstOrDefault();
+                                    obj.Amount = periodFinancialRatioData.Where(t => t.IssuerID == s && t.DataID == dataId && 
+                                        t.PeriodYear == perYear).Select(t => t.Amount).FirstOrDefault();
                                     obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
                                     obj.BenWeight = row.BENCHMARK_WEIGHT;
                                     obj.TypeNode = "Per";
@@ -258,7 +302,9 @@ namespace BenchmarkNodeFinancials
 
                             foreach (String s in dinstinctSecurityIds)
                             {
-                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings.Where(t => t.ASEC_SEC_SHORT_NAME == (securityData.Where(p => p.SecurityId == s).Select(p => p.AsecShortName).FirstOrDefault())).ToList())
+                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings
+                                    .Where(t => t.ASEC_SEC_SHORT_NAME == (securityData.Where(p => p.SecurityId == s).Select(p => p.AsecShortName)
+                                        .FirstOrDefault())).ToList())
                                 {
                                     BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
                                     obj.BenchmarkName = benId;
@@ -274,7 +320,8 @@ namespace BenchmarkNodeFinancials
                                     obj.PeriodType = "A";
                                     obj.PeriodYear = perYear;
                                     obj.Currency = "USD";
-                                    obj.Amount = periodFinancialRatioData.Where(t => t.SecurityID == s && t.DataID == dataId && t.PeriodYear == perYear).Select(t => t.Amount).FirstOrDefault();
+                                    obj.Amount = periodFinancialRatioData.Where(t => t.SecurityID == s && t.DataID == dataId && 
+                                        t.PeriodYear == perYear).Select(t => t.Amount).FirstOrDefault();
                                     obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
                                     obj.BenWeight = row.BENCHMARK_WEIGHT;
                                     obj.TypeNode = "Per";
@@ -287,11 +334,16 @@ namespace BenchmarkNodeFinancials
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
             return periodRatiosData;
         }
 
+        /// <summary>
+        /// Grouping the data returned from the Benchmark hodings
+        /// </summary>
+        /// <param name="bothRatiosData">data combined for both ratios into this list</param>
+        /// <returns></returns>
         private List<GroupedBenchmarkNodeData> GroupBenchmarkData(List<BenchmarkNodeFinancialsData> bothRatiosData)
         {
             List<GroupedBenchmarkNodeData> groupedForData = new List<GroupedBenchmarkNodeData>();
@@ -304,12 +356,14 @@ namespace BenchmarkNodeFinancials
                         foreach (int perYear in bothRatiosData.Where(t => t.DataId == d).Select(t => t.PeriodYear).Distinct().ToList())
                         {
                             #region Grouping by Region
-                            //Group by region 
-                            foreach (String reg in bothRatiosData.Where(t => t.DataId == d && t.PeriodYear == perYear).Select(t => t.Region).Distinct().ToList())
+                            //group by region 
+                            foreach (String reg in bothRatiosData.Where(t => t.DataId == d && t.PeriodYear == perYear).
+                                Select(t => t.Region).Distinct().ToList())
                             {
                                 GroupedBenchmarkNodeData obj = new GroupedBenchmarkNodeData();
                                 List<BenchmarkNodeFinancialsData> specificRegionData = new List<BenchmarkNodeFinancialsData>();
-                                specificRegionData = bothRatiosData.Where(t => t.DataId == d && t.Region == reg && t.PeriodYear == perYear).ToList();
+                                specificRegionData = bothRatiosData.Where(t => t.DataId == d && t.Region == reg && t.PeriodYear == perYear).
+                                    ToList();
                                 obj.NodeName1 = "Region";
                                 obj.NodeID1 = reg;
                                 obj.NodeName2 = String.Empty;
@@ -324,12 +378,14 @@ namespace BenchmarkNodeFinancials
                                 obj.Amount = harmonicMean;
                                 groupedForData.Add(obj);
 
-                                //Group by Region and Sector
-                                foreach (String sec in bothRatiosData.Where(t => t.DataId == d && t.Region == reg && t.PeriodYear == perYear).Select(t => t.Sector).Distinct().ToList())
+                                //group by region and sector
+                                foreach (String sec in bothRatiosData.Where(t => t.DataId == d && t.Region == reg && t.PeriodYear == perYear).
+                                    Select(t => t.Sector).Distinct().ToList())
                                 {
                                     GroupedBenchmarkNodeData objInner = new GroupedBenchmarkNodeData();
                                     List<BenchmarkNodeFinancialsData> specificRegionSectorData = new List<BenchmarkNodeFinancialsData>();
-                                    specificRegionSectorData = bothRatiosData.Where(t => t.DataId == d && t.Region == reg && t.Sector == sec && t.PeriodYear == perYear).ToList();
+                                    specificRegionSectorData = bothRatiosData.Where(t => t.DataId == d && t.Region == reg && t.Sector == sec && 
+                                        t.PeriodYear == perYear).ToList();
                                     objInner.NodeName1 = "Region";
                                     objInner.NodeID1 = reg;
                                     objInner.NodeName2 = "Sector";
@@ -345,12 +401,14 @@ namespace BenchmarkNodeFinancials
                                     groupedForData.Add(objInner);
                                 }
 
-                                //Group by Region and Industry
-                                foreach (String indus in bothRatiosData.Where(t => t.DataId == d && t.Region == reg && t.PeriodYear == perYear).Select(t => t.industry).Distinct().ToList())
+                                //group by region and industry
+                                foreach (String indus in bothRatiosData.Where(t => t.DataId == d && t.Region == reg && t.PeriodYear == perYear).
+                                    Select(t => t.industry).Distinct().ToList())
                                 {
                                     GroupedBenchmarkNodeData objInner = new GroupedBenchmarkNodeData();
                                     List<BenchmarkNodeFinancialsData> specificRegionIndusData = new List<BenchmarkNodeFinancialsData>();
-                                    specificRegionIndusData = bothRatiosData.Where(t => t.DataId == d && t.Region == reg && t.industry == indus && t.PeriodYear == perYear).ToList();
+                                    specificRegionIndusData = bothRatiosData.Where(t => t.DataId == d && t.Region == reg && t.industry == indus && 
+                                        t.PeriodYear == perYear).ToList();
                                     objInner.NodeName1 = "Region";
                                     objInner.NodeID1 = reg;
                                     objInner.NodeName2 = "Industry";
@@ -369,12 +427,14 @@ namespace BenchmarkNodeFinancials
                             #endregion
 
                             #region Grouping by Country
-                            //Group by Country 
-                            foreach (String cou in bothRatiosData.Where(t => t.DataId == d && t.PeriodYear == perYear).Select(t => t.Country).Distinct().ToList())
+                            //group by country 
+                            foreach (String cou in bothRatiosData.Where(t => t.DataId == d && t.PeriodYear == perYear).Select(t => t.Country)
+                                .Distinct().ToList())
                             {
                                 GroupedBenchmarkNodeData obj = new GroupedBenchmarkNodeData();
                                 List<BenchmarkNodeFinancialsData> specificCountryData = new List<BenchmarkNodeFinancialsData>();
-                                specificCountryData = bothRatiosData.Where(t => t.DataId == d && t.Country == cou && t.PeriodYear == perYear).ToList();
+                                specificCountryData = bothRatiosData.Where(t => t.DataId == d && t.Country == cou && t.PeriodYear == perYear)
+                                    .ToList();
                                 obj.NodeName1 = "Country";
                                 obj.NodeID1 = cou;
                                 obj.NodeName2 = String.Empty;
@@ -389,12 +449,14 @@ namespace BenchmarkNodeFinancials
                                 obj.Amount = harmonicMean;
                                 groupedForData.Add(obj);
 
-                                //Group by Country and Sector
-                                foreach (String sec in bothRatiosData.Where(t => t.DataId == d && t.Country == cou && t.PeriodYear == perYear).Select(t => t.Sector).Distinct().ToList())
+                                //group by country and sector
+                                foreach (String sec in bothRatiosData.Where(t => t.DataId == d && t.Country == cou && t.PeriodYear == perYear)
+                                    .Select(t => t.Sector).Distinct().ToList())
                                 {
                                     GroupedBenchmarkNodeData objInner = new GroupedBenchmarkNodeData();
                                     List<BenchmarkNodeFinancialsData> specificCountrySectorData = new List<BenchmarkNodeFinancialsData>();
-                                    specificCountrySectorData = bothRatiosData.Where(t => t.DataId == d && t.Country == cou && t.Sector == sec && t.PeriodYear == perYear).ToList();
+                                    specificCountrySectorData = bothRatiosData.Where(t => t.DataId == d && t.Country == cou && t.Sector == sec && 
+                                        t.PeriodYear == perYear).ToList();
                                     objInner.NodeName1 = "Country";
                                     objInner.NodeID1 = cou;
                                     objInner.NodeName2 = "Sector";
@@ -410,12 +472,14 @@ namespace BenchmarkNodeFinancials
                                     groupedForData.Add(objInner);
                                 }
 
-                                //Group by Country and Industry
-                                foreach (String indus in bothRatiosData.Where(t => t.DataId == d && t.Country == cou && t.PeriodYear == perYear).Select(t => t.industry).Distinct().ToList())
+                                //group by country and industry
+                                foreach (String indus in bothRatiosData.Where(t => t.DataId == d && t.Country == cou && t.PeriodYear == perYear)
+                                    .Select(t => t.industry).Distinct().ToList())
                                 {
                                     GroupedBenchmarkNodeData objInner = new GroupedBenchmarkNodeData();
                                     List<BenchmarkNodeFinancialsData> specificCountryIndusData = new List<BenchmarkNodeFinancialsData>();
-                                    specificCountryIndusData = bothRatiosData.Where(t => t.DataId == d && t.Country == cou && t.industry == indus && t.PeriodYear == perYear).ToList();
+                                    specificCountryIndusData = bothRatiosData.Where(t => t.DataId == d && t.Country == cou && t.industry == indus 
+                                        && t.PeriodYear == perYear).ToList();
                                     objInner.NodeName1 = "Country";
                                     objInner.NodeID1 = cou;
                                     objInner.NodeName2 = "Industry";
@@ -433,12 +497,14 @@ namespace BenchmarkNodeFinancials
                             }
                             #endregion
 
-                            #region Grouping by Sector
-                            foreach (String sec in bothRatiosData.Where(t => t.DataId == d && t.PeriodYear == perYear).Select(t => t.Sector).Distinct().ToList())
+                            #region grouping by sector
+                            foreach (String sec in bothRatiosData.Where(t => t.DataId == d && t.PeriodYear == perYear)
+                                .Select(t => t.Sector).Distinct().ToList())
                             {
                                 GroupedBenchmarkNodeData objInner = new GroupedBenchmarkNodeData();
                                 List<BenchmarkNodeFinancialsData> specificSectorData = new List<BenchmarkNodeFinancialsData>();
-                                specificSectorData = bothRatiosData.Where(t => t.DataId == d && t.Sector == sec && t.PeriodYear == perYear).ToList();
+                                specificSectorData = bothRatiosData.Where(t => t.DataId == d && t.Sector == sec && t.PeriodYear == perYear)
+                                    .ToList();
                                 objInner.NodeName1 = "Sector";
                                 objInner.NodeID1 = sec;
                                 objInner.NodeName2 = String.Empty;
@@ -455,12 +521,14 @@ namespace BenchmarkNodeFinancials
                             }
                             #endregion
 
-                            #region Grouping by Industry
-                            foreach (String indus in bothRatiosData.Where(t => t.DataId == d && t.PeriodYear == perYear).Select(t => t.industry).Distinct().ToList())
+                            #region grouping by industry
+                            foreach (String indus in bothRatiosData.Where(t => t.DataId == d && t.PeriodYear == perYear).
+                                Select(t => t.industry).Distinct().ToList())
                             {
                                 GroupedBenchmarkNodeData objInner = new GroupedBenchmarkNodeData();
                                 List<BenchmarkNodeFinancialsData> specificIndustryData = new List<BenchmarkNodeFinancialsData>();
-                                specificIndustryData = bothRatiosData.Where(t => t.DataId == d && t.industry == indus && t.PeriodYear == perYear).ToList();
+                                specificIndustryData = bothRatiosData.Where(t => t.DataId == d && t.industry == indus && t.PeriodYear == perYear)
+                                    .ToList();
                                 objInner.NodeName1 = "Industry";
                                 objInner.NodeID1 = indus;
                                 objInner.NodeName2 = String.Empty;
@@ -483,11 +551,16 @@ namespace BenchmarkNodeFinancials
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
             return groupedForData;
         }
 
+        /// <summary>
+        /// Calculates harmonic mean
+        /// </summary>
+        /// <param name="filteredList">filtered list according to various groups formed</param>
+        /// <returns></returns>
         private Decimal CalculateHarmonicMeanBenchmark(List<BenchmarkNodeFinancialsData> filteredList)
         {
             Decimal? initialSumBenchmarkWeight = 0;
@@ -525,26 +598,40 @@ namespace BenchmarkNodeFinancials
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
             return Convert.ToDecimal(harmonicMean);
         }
 
-        private void CreateXMLInsertData(List<GroupedBenchmarkNodeData> groupedFinalData, AIMSDataEntity _entity,String benId)
+        /// <summary>
+        /// Creates XML fri=om data for insertion into the database
+        /// </summary>
+        /// <param name="groupedFinalData"></param>
+        /// <param name="entity"></param>
+        /// <param name="benId"></param>
+        private void CreateXMLInsertData(List<GroupedBenchmarkNodeData> groupedFinalData, AIMSDataEntity entity, String benId)
         {
             try
-            {                
+            {
                 XDocument doc = GetEntityXml<GroupedBenchmarkNodeData>(groupedFinalData);
-                _entity.InsertIntoBenchmarkNodeFinancials(doc.ToString());
-                _log.Debug(String.Format("Insertion Completed for Benchmark {0}. Number of rows: {1}", benId,groupedFinalData.Count));
+                entity.InsertIntoBenchmarkNodeFinancials(doc.ToString());
+                log.Debug(String.Format("Insertion Completed for Benchmark {0}. Number of rows: {1}", benId, groupedFinalData.Count));
             }
             catch (Exception ex)
             {
-                _log.Debug("Insertion failed for Benchmark : " + benId);
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Debug("Insertion failed for Benchmark : " + benId);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
         }
 
+        /// <summary>
+        /// Generic ethod for the creation of xml
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameters"></param>
+        /// <param name="xmlDoc">xml doc</param>
+        /// <param name="strictlyInclusiveProperties"></param>
+        /// <returns></returns>
         private XDocument GetEntityXml<T>(List<T> parameters, XDocument xmlDoc = null, List<String> strictlyInclusiveProperties = null)
         {
             XElement root;
@@ -569,7 +656,9 @@ namespace BenchmarkNodeFinancials
                         if (strictlyInclusiveProperties != null)
                         {
                             if (!strictlyInclusiveProperties.Contains(prop.Name))
+                            {
                                 continue;
+                            }
                         }
                         if (prop.GetValue(item, null) != null)
                         {
@@ -585,5 +674,6 @@ namespace BenchmarkNodeFinancials
             }
             return xmlDoc;
         }
+        #endregion
     }
 }
