@@ -3606,7 +3606,6 @@ namespace GreenField.App.ViewModel
                 }
                 else
                 {
-                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
             }
@@ -3635,36 +3634,11 @@ namespace GreenField.App.ViewModel
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-
-                    //FundReference = new CollectionViewSource();
-                    //FundReferenceData = new ObservableCollection<PortfolioSelectionData>(result);
-                    //FundReferenceSource = new ObservableCollection<GroupSelectionData>();
-
-                    //foreach (PortfolioSelectionData item in FundReferenceData)
-                    //{
-                    //    FundReferenceSource.Add(new GroupSelectionData()
-                    //    {
-                    //        Category = item.Category,
-                    //        Header = item.Name,
-                    //        Detail = item.Name
-                    //    });
-                    //}
-                    //FundReference.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
-                    //FundReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
-                    //{
-                    //    PropertyName = "Category",
-                    //    Direction = System.ComponentModel.ListSortDirection.Ascending
-                    //});
-                    //FundReference.Source = FundReferenceSource;
-
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);                  
                     PortfolioSelectionInfo = result.OrderBy(o => o.PortfolioId).ToList();
-                    //SelectionData.PortfolioSelectionData = result.OrderBy(o => o.PortfolioId).ToList();
-
                 }
                 else
                 {
-                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
                 if (ShellDataLoadEvent != null)

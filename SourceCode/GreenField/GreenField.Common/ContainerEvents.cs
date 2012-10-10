@@ -80,6 +80,8 @@ namespace GreenField.Common
 
     public class DCFTerminalValuepresent : CompositePresentationEvent<decimal> { }
 
+    public class DCFFairValueSetEvent : CompositePresentationEvent<bool> { }
+
     public class DashboardTileViewItemInfo
     {
         public string DashboardTileHeader { get; set; }

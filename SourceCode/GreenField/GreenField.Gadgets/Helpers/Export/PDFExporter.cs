@@ -119,7 +119,6 @@ namespace GreenField.Gadgets.Helpers
             }
         }
 
-
         #endregion
 
         #region Print
@@ -158,7 +157,10 @@ namespace GreenField.Gadgets.Helpers
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
                                                      orderby c.DisplayIndex
                                                      select c).ToList();
-
+            foreach (GridViewBoundColumnBase item in columns)
+            {
+                item.TextWrapping = TextWrapping.NoWrap;
+            }
 
             Table table = new Table();
             RadDocument document = new RadDocument();
@@ -209,7 +211,10 @@ namespace GreenField.Gadgets.Helpers
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
                                                      orderby c.DisplayIndex
                                                      select c).ToList();
-
+            foreach (GridViewBoundColumnBase item in columns)
+            {
+                item.TextWrapping = TextWrapping.NoWrap;
+            }
             Table table = new Table();
             fontSizePDF = fontSize;
 
@@ -230,7 +235,7 @@ namespace GreenField.Gadgets.Helpers
                 if (grid.GroupDescriptors.Count() > 0)
                 {
                     TableCell indentCell = new TableCell();
-                    indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 20);
+                    indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 30);
                     indentCell.Background = Colors.Gray;
                     headerRow.Cells.Add(indentCell);
                 }
@@ -278,11 +283,15 @@ namespace GreenField.Gadgets.Helpers
                 if (grid.GroupDescriptors.Count() > 0)
                 {
                     TableCell indentCell = new TableCell();
-                    indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 20);
+                    indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 30);
                     indentCell.Background = Colors.White;
                     row.Cells.Add(indentCell);
                 }
 
+                foreach (GridViewBoundColumnBase item in columns)
+                {
+                    item.TextWrapping = TextWrapping.NoWrap;
+                }
                 for (int j = 0; j < columns.Count(); j++)
                 {
                     TableCell cell = new TableCell();
@@ -290,7 +299,6 @@ namespace GreenField.Gadgets.Helpers
                     object value = columns[j].GetValueForItem(items[i]);
 
                     AddCellValue(cell, value != null ? value.ToString() : string.Empty);
-
                     cell.PreferredWidth = new TableWidthUnit((float)columns[j].ActualWidth);
                     cell.Background = Colors.White;
 
@@ -412,11 +420,11 @@ namespace GreenField.Gadgets.Helpers
                 headerRow.Cells.Add(cell);
                 contentTbl.Rows.Add(headerRow);
             }
-            
+
             contentRow.Cells.Add(contentCell);
             contentTbl.Rows.Add(contentRow);
             return contentTbl;
-        }   
+        }
 
         #endregion
 

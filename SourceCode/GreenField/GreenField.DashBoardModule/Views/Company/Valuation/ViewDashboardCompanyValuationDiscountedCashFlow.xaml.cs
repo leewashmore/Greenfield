@@ -1,30 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.Common.Helper;
-using Telerik.Windows.Controls;
-using System.Reflection;
-using GreenField.DashboardModule.Helpers;
-using GreenField.Common;
-using GreenField.DashBoardModule.Helpers;
-using GreenField.Gadgets.Views;
-using GreenField.Gadgets.ViewModels;
 using Microsoft.Practices.Prism.Regions;
-using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Controls;
 using Telerik.Windows.Documents.Model;
-using System.Windows.Media.Imaging;
+using GreenField.Common;
+using GreenField.Common.Helper;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Views;
+using GreenField.ServiceCaller;
 
 namespace GreenField.DashboardModule.Views
 {
@@ -32,115 +23,133 @@ namespace GreenField.DashboardModule.Views
     public partial class ViewDashboardCompanyValuationDiscountedCashFlow : UserControl, INavigationAware
     {
         #region Fields
-        private IEventAggregator _eventAggregator;
-        private ILoggerFacade _logger;
-        private IDBInteractivity _dBInteractivity;
+        private IEventAggregator eventAggregator;
+        private ILoggerFacade logger;
+        private IDBInteractivity dBInteractivity;
 
-        private List<string> _EPS_BVPS;
+        private List<string> EPS_BVPSp;
         public List<string> EPS_BVPS
         {
             get
             {
-                if (_EPS_BVPS == null)
+                if (EPS_BVPSp == null)
                 {
-                    _EPS_BVPS = new List<string>();
+                    EPS_BVPSp = new List<string>();
                 }
-                return _EPS_BVPS;
+                return EPS_BVPSp;
             }
-            set { _EPS_BVPS = value; }
+            set { EPS_BVPSp = value; }
         }
 
         /// <summary>
         /// Collection of Tables to create DCF PDF Report
         /// </summary>
-        private List<Table> _dcfReport;
+        private List<Table> dcfReport;
         public List<Table> DCFReport
         {
             get
             {
-                if (_dcfReport == null)
+                if (dcfReport == null)
                 {
-                    _dcfReport = new List<Table>();
+                    dcfReport = new List<Table>();
                 }
-                return _dcfReport;
+                return dcfReport;
             }
             set
             {
-                _dcfReport = value;
+                dcfReport = value;
             }
         }
 
         /// <summary>
         /// Selected Security
         /// </summary>
-        private string _securityName;
+        private string securityName;
         public string SecurityName
         {
-            get { return _securityName; }
-            set { _securityName = value; }
+            get { return securityName; }
+            set { securityName = value; }
         }
 
         /// <summary>
         /// Country of the Selected Security
         /// </summary>
-        private string _countryName;
+        private string countryName;
         public string CountryName
         {
-            get { return _countryName; }
-            set { _countryName = value; }
+            get { return countryName; }
+            set { countryName = value; }
         }
 
         /// <summary>
         /// DCF-Report Created BY
         /// </summary>
-        private string _createdBy;
+        private string createdBy;
         public string CreatedBy
         {
-            get { return _createdBy; }
-            set { _createdBy = value; }
+            get { return createdBy; }
+            set { createdBy = value; }
         }
 
         /// <summary>
         /// Creation Date
         /// </summary>
-        private string _creationDate;
+        private string creationDate;
         public string CreationDate
         {
-            get { return _creationDate; }
-            set { _creationDate = value; }
+            get { return creationDate; }
+            set { creationDate = value; }
         }
 
+        /// <summary>
+        /// Final Report
+        /// </summary>
+        private RadDocument finalReport;
+        public RadDocument FinalReport
+        {
+            get
+            {
+                if (finalReport == null)
+                {
+                    finalReport = new RadDocument();
+                }
+                return finalReport;
+            }
+            set { finalReport = value; }
+        }
 
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="eventAggregator"></param>
+        /// <param name="dbInteractivity"></param>
         [ImportingConstructor]
-        public ViewDashboardCompanyValuationDiscountedCashFlow(ILoggerFacade logger, IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity)
+        public ViewDashboardCompanyValuationDiscountedCashFlow(ILoggerFacade logger, IEventAggregator eventAggregator, IDBInteractivity dbInteractivity)
         {
             InitializeComponent();
 
-            _eventAggregator = eventAggregator;
-            _logger = logger;
-            _dBInteractivity = dbInteractivity;
+            this.eventAggregator = eventAggregator;
+            this.logger = logger;
+            this.dBInteractivity = dbInteractivity;
 
-            _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-
-            //this.tbHeader.Text = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW;
-
+            eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
         {
-            //if (this.cctrDashboardContent.Content != null)
-            //    return;
             if (this.rtvDashboard.Items.Count > 0)
+            {
                 return;
+            }
             DashboardGadgetParam param = new DashboardGadgetParam()
             {
                 DashboardGadgetPayload = payload,
-                DBInteractivity = _dBInteractivity,
-                EventAggregator = _eventAggregator,
-                LoggerFacade = _logger
+                DBInteractivity = dBInteractivity,
+                EventAggregator = eventAggregator,
+                LoggerFacade = logger
             };
 
             ViewModelDCF _viewModel = new ViewModelDCF(param);
@@ -247,7 +256,9 @@ namespace GreenField.DashboardModule.Views
             {
                 ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
                 if (control != null)
+                {
                     control.IsActive = value;
+                }
             }
         }
 
@@ -291,19 +302,6 @@ namespace GreenField.DashboardModule.Views
             }
         }
 
-        private RadDocument _finalReport;
-        public RadDocument FinalReport
-        {
-            get
-            {
-                if (_finalReport == null)
-                    _finalReport = new RadDocument();
-                return _finalReport;
-            }
-            set { _finalReport = value; }
-        }
-
-
         /// <summary>
         /// Method to Merge Multiple RadDocuments
         /// </summary>
@@ -317,6 +315,11 @@ namespace GreenField.DashboardModule.Views
             return mergedDocument;
         }
 
+        /// <summary>
+        /// Returns name of the gadget according to the order
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
         private string ReturnGadgetName(int order)
         {
             if (EPS_BVPS.Count == 0)
@@ -387,8 +390,8 @@ namespace GreenField.DashboardModule.Views
             headerRow.Cells.AddAfter(countryCell, createdByCell);
             headerRow.Cells.AddAfter(createdByCell, createdOn);
             headerTable.Rows.Add(headerRow);
-            
-            
+
+
             Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
             Table documentTable = new Table();
             List<Table> tablesToAddToPage = new List<Table>();
@@ -429,7 +432,6 @@ namespace GreenField.DashboardModule.Views
                         cellEmptyParagraph.Blocks.Add(p1);
                         row.Cells.Add(cellEmptyParagraph);
                         documentTable.Rows.Add(row);
-
                     }
                     else
                     {
@@ -446,10 +448,15 @@ namespace GreenField.DashboardModule.Views
             return documentTable;
         }
 
+        /// <summary>
+        /// Creates table Row when only one table is in the Row
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="columnSpan"></param>
+        /// <returns></returns>
         private TableRow GetTableRowForSingleTable(Table table, int columnSpan)
         {
             TableRow row = new TableRow();
-
             TableCell cell1 = new TableCell();
             cell1.ColumnSpan = columnSpan;
             cell1.Blocks.Add(table);
@@ -483,6 +490,26 @@ namespace GreenField.DashboardModule.Views
             cellEmptyParagraph.Blocks.Add(p1);
 
             return emptyRow;
+        }
+
+        /// <summary>
+        /// Fair Value Store Off
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFairValue_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (eventAggregator != null)
+                {
+                    eventAggregator.GetEvent<DCFFairValueSetEvent>().Publish(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.LogException(logger, ex);
+            }
         }
     }
 }

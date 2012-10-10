@@ -5,7 +5,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
-using Microsoft.Practices.Prism.Logging;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
@@ -19,7 +18,7 @@ using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.UserSession;
-using GreenField.ServiceCaller.Helper;
+using Microsoft.Practices.Prism.Logging;
 
 namespace GreenField.ServiceCaller
 {
@@ -152,7 +151,7 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.Helper.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;

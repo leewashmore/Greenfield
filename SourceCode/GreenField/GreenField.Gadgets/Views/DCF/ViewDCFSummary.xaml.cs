@@ -293,5 +293,17 @@ namespace GreenField.Gadgets.Views
         }
         
         #endregion
+
+        #region Unsubscribe Events
+
+        /// <summary>
+        /// Unsubscribe Events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextSource.Dispose();
+        }
+
+        #endregion
     }
 }

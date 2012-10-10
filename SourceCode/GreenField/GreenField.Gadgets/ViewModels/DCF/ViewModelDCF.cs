@@ -4,6 +4,10 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
 using Greenfield.Gadgets.Helpers;
 using Greenfield.Gadgets.Models;
 using GreenField.Common;
@@ -12,10 +16,6 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.DCFDefinitions;
-using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.ViewModel;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -53,6 +53,7 @@ namespace GreenField.Gadgets.ViewModels
             if (eventAggregator != null)
             {
                 eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
+                eventAggregator.GetEvent<DCFFairValueSetEvent>().Subscribe(HandleFairValueSetEvent);
             }
             if (EntitySelectionData != null)
             {
@@ -1055,45 +1056,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #region ICommand
-
-        /// <summary>
-        /// Insert Fair Values
-        /// </summary>
-        public ICommand InsertFairValues
-        {
-            get
-            {
-                return new DelegateCommand<object>(InsertFairValuesCommandMethod);
-            }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region ICommandMethods
-
-        /// <summary>
-        /// Insert Fair Values in Table
-        /// </summary>
-        /// <param name="param"></param>
-        private void InsertFairValuesCommandMethod(object param)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(logger, methodNamespace);
-            try
-            {
-                DeleteExistingFairValues();
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(logger, ex);
-            }
-        }
-
-        #endregion
+        #endregion       
 
         #region EventHandlers
 
@@ -1127,6 +1090,33 @@ namespace GreenField.Gadgets.ViewModels
                             BusyIndicatorNotification(true, "Fetching Data for Selected Security");
                         }
                     }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Event Handler to subscribed event 'SecurityReferenceSet'
+        /// </summary>
+        /// <param name="securityReferenceData">SecurityReferenceData</param>
+        public void HandleFairValueSetEvent(bool isTrue)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                //argument null exception
+                if (isTrue)
+                {
+                    DeleteExistingFairValues();
                 }
                 else
                 {
@@ -1868,13 +1858,14 @@ namespace GreenField.Gadgets.ViewModels
                 RangeObservableCollection<SensitivityData> dataL = new RangeObservableCollection<SensitivityData>();
                 dataL.AddRange(SensitivityDisplayData.ToList());
                 List<SensitivityData> dataEPS = ListUtils.GetDeepCopy<SensitivityData>(SensitivityValues.ToList());
+                List<SensitivityData> dataBVPS = ListUtils.GetDeepCopy<SensitivityData>(SensitivityValues.ToList());
                 if (FWDEPS != 0)
                 {
                     GenerateSensitivityEPSData(dataEPS);
                 }
                 if (FWDBVPS != 0)
                 {
-                    GenerateSensitivityBVPSData(dataEPS);
+                    GenerateSensitivityBVPSData(dataBVPS);
                 }
             }
             catch (Exception ex)
@@ -2217,6 +2208,23 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
+        #endregion
+
+        #region EventUnsubscribe
+
+        /// <summary>
+        /// Unsubscribe Events
+        /// </summary>
+        public void Dispose()
+        {
+            if (eventAggregator!=null)
+            {
+                eventAggregator.GetEvent<DCFFairValueSetEvent>().Unsubscribe(HandleFairValueSetEvent);
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSetEvent); 
+            }
+        }
+
 
         #endregion
     }

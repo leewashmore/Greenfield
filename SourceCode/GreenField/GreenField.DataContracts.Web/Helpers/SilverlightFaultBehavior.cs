@@ -4,16 +4,27 @@ using System.ServiceModel.Configuration;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 
-namespace GreenField.DataContracts
+namespace GreenField.DataContracts.Web
 {
+    /// <summary>
+    /// Silverlight fault Behaviour: Transferring Exceptions from Server to Client
+    /// </summary>
     public class SilverlightFaultBehavior : BehaviorExtensionElement, IEndpointBehavior
     {
+        /// <summary>
+        /// Applying Dispatch Behaviour
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="endpointDispatcher"></param>
         public void ApplyDispatchBehavior(ServiceEndpoint endpoint, EndpointDispatcher endpointDispatcher)
         {
             SilverlightFaultMessageInspector inspector = new SilverlightFaultMessageInspector();
             endpointDispatcher.DispatchRuntime.MessageInspectors.Add(inspector);
         }
 
+        /// <summary>
+        /// Fault Message Inspector
+        /// </summary>
         public class SilverlightFaultMessageInspector : IDispatchMessageInspector
         {
             public void BeforeSendReply(ref Message reply, object correlationState)

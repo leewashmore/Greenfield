@@ -189,9 +189,6 @@
 
                 </Grid>
             </Grid>
-            <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button x:Name="btnSubmit" Command="{Binding InsertFairValues,Mode=OneWay}" Content="Submit"  />
-            </Grid>
             <telerik:RadRichTextBox Grid.Row="3" x:Name="RichTextBox" />
         </Grid>
     </telerik:RadBusyIndicator>
