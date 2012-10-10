@@ -1,66 +1,62 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.ViewModel;
-using GreenField.ServiceCaller.MeetingDefinitions;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Commands;
-using GreenField.Gadgets.Models;
-using Microsoft.Practices.Prism.Regions;
-using GreenField.Common;
-using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.ServiceLocation;
-using GreenField.Gadgets.Helpers;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
 using GreenField.DataContracts;
+using GreenField.Gadgets.Models;
+using GreenField.Gadgets.Views;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.MeetingDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View Model class for ViewPresentations
+    /// </summary>
     public class ViewModelPresentations : NotificationObject
     {
         #region Fields
-        private IRegionManager _regionManager;
-       // private ManageMeetings _manageMeetings;
         /// <summary>
-        /// Event Aggregator
+        /// RegionManager MEF instance
         /// </summary>
-        private IEventAggregator _eventAggregator;
-
+        private IRegionManager regionManager;
+       
         /// <summary>
-        /// Instance of Service Caller Class
+        /// Event Aggregator MEF instance
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
-        /// Instance of LoggerFacade
+        /// Service Caller MEF instance
         /// </summary>
-        private ILoggerFacade _logger;
+        private IDBInteractivity dbInteractivity;
 
-        private Boolean _sendChangeDateNotification = false;
-        private DateTime? _originalPresentationDate = null;
-        private DateTime? _updatedPresentationDate = null;
-        #endregion
+        /// <summary>
+        /// Logging MEF instance
+        /// </summary>
+        private ILoggerFacade logger;
 
-        #region Constructor
-        public ViewModelPresentations(DashboardGadgetParam param)
-        {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _regionManager = param.RegionManager;
-        }
+        /// <summary>
+        /// Stores user preference of sending alert on change date
+        /// </summary>
+        private Boolean isChangeDateAlertSelected = false;
+
+        /// <summary>
+        /// Stores original presentation date received from change date window
+        /// </summary>
+        private DateTime? originalPresentationDate = null;
+
+        /// <summary>
+        /// Stores updated presentation date received from change date window
+        /// </summary>
+        private DateTime? updatedPresentationDate = null;
         #endregion
 
         #region Properties
@@ -68,166 +64,223 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (value)
                 {
                     Initialize();
                 }
             }
-        } 
+        }
         #endregion
 
         #region Busy Indicator Notification
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
         /// </summary>
-        private bool _busyIndicatorIsBusy = false;
-        public bool BusyIndicatorIsBusy
+        private bool isbusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return isbusyIndicatorBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
-                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+                isbusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
             }
         }
 
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion        
+        #endregion
 
         #region Binded
-        private List<ICPresentationOverviewData> _iCPresentationOverviewInfo;
+        /// <summary>
+        /// Stores presentation overview data
+        /// </summary>
+        private List<ICPresentationOverviewData> iCPresentationOverviewInfo;
         public List<ICPresentationOverviewData> ICPresentationOverviewInfo
         {
-            get { return _iCPresentationOverviewInfo; }
+            get { return iCPresentationOverviewInfo; }
             set
             {
-                _iCPresentationOverviewInfo = value;
+                iCPresentationOverviewInfo = value;
                 RaisePropertyChanged(() => this.ICPresentationOverviewInfo);
             }
         }
 
-        private ICPresentationOverviewData _selectedPresentationOverviewInfo;
+        /// <summary>
+        /// Stores selected presentation overview data
+        /// </summary>
+        private ICPresentationOverviewData selectedPresentationOverviewInfo;
         public ICPresentationOverviewData SelectedPresentationOverviewInfo
         {
-            get { return _selectedPresentationOverviewInfo; }
+            get { return selectedPresentationOverviewInfo; }
             set
             {
-                _selectedPresentationOverviewInfo = value;
+                selectedPresentationOverviewInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
                 ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, value);
                 SelectionRaisePropertyChanged();
             }
         }
 
-        private List<MeetingInfo> _meetingInfoDates;
+        /// <summary>
+        /// Stores applicable future meeting dates
+        /// </summary>
+        private List<MeetingInfo> meetingInfoDates;
         public List<MeetingInfo> MeetingInfoDates
         {
-            get { return _meetingInfoDates; }
+            get { return meetingInfoDates; }
             set
             {
                 if (value != null)
                 {
-                    _meetingInfoDates = value;
+                    meetingInfoDates = value;
                     RaisePropertyChanged(() => this.MeetingInfoDates);
                     RaisePropertyChanged(() => this.NewCommand);
                 }
             }
         }
 
-        private MeetingInfo _selectedMeetingInfoDate;
+        /// <summary>
+        /// Stores selected meeting date
+        /// </summary>
+        private MeetingInfo selectedMeetingInfoDate;
         public MeetingInfo SelectedMeetingInfoDate
         {
-            get { return _selectedMeetingInfoDate; }
+            get { return selectedMeetingInfoDate; }
             set
             {
-                _selectedMeetingInfoDate = value;
+                selectedMeetingInfoDate = value;
                 RaisePropertyChanged(() => this.SelectedMeetingInfoDate);
                 RaisePropertyChanged(() => this.NewCommand);
 
                 if (value != null)
-                {                    
+                {
                     ICNavigation.Update(ICNavigationInfo.MeetingInfo, value);
                 }
             }
-        }         
+        }
         #endregion
 
         #region ICommand Properties
+        /// <summary>
+        /// Change date command
+        /// </summary>
         public ICommand ChangeDateCommand
         {
             get { return new DelegateCommand<object>(ChangeDateCommandMethod, ChangeDateCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// Decision entry command
+        /// </summary>
         public ICommand DecisionEntryCommand
         {
             get { return new DelegateCommand<object>(DecisionEntryCommandMethod, DecisionEntryCommandValidationMethod); }
         }
-     
+
+        /// <summary>
+        /// Upload command
+        /// </summary>
         public ICommand UploadCommand
         {
             get { return new DelegateCommand<object>(UploadCommandMethod, UploadCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// Edit command
+        /// </summary>
         public ICommand EditCommand
         {
             get { return new DelegateCommand<object>(EditCommandMethod, EditCommandValidationMethod); }
         }
-      
+
+        /// <summary>
+        /// Withdraw command
+        /// </summary>
         public ICommand WithdrawCommand
         {
             get { return new DelegateCommand<object>(WithdrawCommandMethod, WithdrawCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// View command
+        /// </summary>
         public ICommand ViewCommand
         {
             get { return new DelegateCommand<object>(ViewCommandMethod, ViewCommandValidationMethod); }
-        }    
+        }
 
+        /// <summary>
+        /// New command
+        /// </summary>
         public ICommand NewCommand
         {
             get { return new DelegateCommand<object>(NewCommandMethod, NewCommandValidationMethod); }
         }
-        #endregion        
-
+        #endregion
         #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashboardGadgetParam</param>
+        public ViewModelPresentations(DashboardGadgetParam param)
+        {
+            this.dbInteractivity = param.DBInteractivity;
+            this.logger = param.LoggerFacade;
+            this.eventAggregator = param.EventAggregator;
+            this.regionManager = param.RegionManager;
+        }
+        #endregion        
+
         #region ICommand Methods
+        #region Change Date
+        /// <summary>
+        /// ChangeDateCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
         private bool ChangeDateCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null
                 || SelectedPresentationOverviewInfo == null)
+            {
                 return false;
-
+            }
             return (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
                 || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
                 && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN
                 && SelectedPresentationOverviewInfo.StatusType != StatusType.FINAL;
         }
 
+        /// <summary>
+        /// ChangeDateCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void ChangeDateCommandMethod(object param)
         {
             List<DateTime> proposedMeetingDates = MeetingInfoDates.Select(record => record.MeetingDateTime.ToLocalTime().Date).ToList();
 
-            if (! UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
+            if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
             {
                 proposedMeetingDates = proposedMeetingDates.OrderBy(record => record).ToList();
                 for (int index = 0; index < proposedMeetingDates.Count; index++)
@@ -243,7 +296,6 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
             }
-
             ChildViewPresentationDateChangeEdit childViewPresentationDateChangeEdit = new ChildViewPresentationDateChangeEdit(proposedMeetingDates
                 , SelectedPresentationOverviewInfo.MeetingDateTime);
             childViewPresentationDateChangeEdit.Show();
@@ -254,272 +306,328 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (childViewPresentationDateChangeEdit.SelectedPresentationDateTime.Date
                         == Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).Date)
+                    {
                         return;
-
+                    }
                     Prompt.ShowDialog("Confirm presentation DateTime from " +
                         Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).ToLocalTime().ToString("MM-dd-yyyy h:mm tt") +
                         " to " + childViewPresentationDateChangeEdit.SelectedPresentationDateTime
-                            .Add(Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).TimeOfDay).ToLocalTime().ToString("MM-dd-yyyy h:mm tt"),
+                            .Add(Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).TimeOfDay).ToLocalTime()
+                            .ToString("MM-dd-yyyy h:mm tt"),
                         "Change Presentation Date", MessageBoxButton.OKCancel, (result) =>
                     {
                         if (result == MessageBoxResult.OK)
                         {
                             MeetingInfo meetingInfo = MeetingInfoDates
-                                .Where(record => record.MeetingDateTime.ToLocalTime().Date == childViewPresentationDateChangeEdit.SelectedPresentationDateTime.Date)
+                                .Where(record => record.MeetingDateTime.ToLocalTime().Date == 
+                                    childViewPresentationDateChangeEdit.SelectedPresentationDateTime.Date)
                                 .FirstOrDefault();
 
-                            if (_dbInteractivity != null)
+                            if (dbInteractivity != null)
                             {
-                                _sendChangeDateNotification = childViewPresentationDateChangeEdit.AlertNotification;
-                                _originalPresentationDate = Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime);
-                                _updatedPresentationDate = childViewPresentationDateChangeEdit.SelectedPresentationDateTime
+                                isChangeDateAlertSelected = childViewPresentationDateChangeEdit.AlertNotification;
+                                originalPresentationDate = Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime);
+                                updatedPresentationDate = childViewPresentationDateChangeEdit.SelectedPresentationDateTime
                                     .Add(Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).TimeOfDay);
 
                                 BusyIndicatorNotification(true, "Updating Presentation date for the selected presentation...");
-                                _dbInteractivity.UpdateMeetingPresentationDate(UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo.PresentationID
+                                dbInteractivity.UpdateMeetingPresentationDate(UserSession.SessionManager.SESSION.UserName
+                                    , SelectedPresentationOverviewInfo.PresentationID
                                     , meetingInfo, UpdateMeetingPresentationDateCallbackMethod);
-                            }                            
+                            }
                         }
                     });
-
-
                 }
             };
         }        
+        #endregion 
 
+        #region Decision Entry
+        /// <summary>
+        /// DecisionEntryCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
         private bool DecisionEntryCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null
                 || SelectedPresentationOverviewInfo == null)
+            {
                 return false;
+            }
             return UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
                 && SelectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING;
         }
 
+        /// <summary>
+        /// DecisionEntryCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void DecisionEntryCommandMethod(object param)
         {
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteeDecisionEntry");
-        }
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteeDecisionEntry");
+        } 
+        #endregion
 
+        #region Upload
+        /// <summary>
+        /// UploadCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
         private bool UploadCommandValidationMethod(object param)
         {
-            if (UserSession.SessionManager.SESSION == null 
+            if (UserSession.SessionManager.SESSION == null
                 || SelectedPresentationOverviewInfo == null)
+            {
                 return false;
-
-            bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
-            bool statusValidation = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS;
-            return userRoleValidation && statusValidation;
+            }
+            bool isUserRoleValidated = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
+            bool isStatusValided = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS;
+            return isUserRoleValidated && isStatusValided;
         }
 
+        /// <summary>
+        /// UploadCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void UploadCommandMethod(object param)
         {
             ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Upload);
-            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeEditPresentations", UriKind.Relative));
-        }
+            eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeEditPresentations", UriKind.Relative));
+        } 
+        #endregion
 
+        #region Edit
+        /// <summary>
+        /// EditCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
         private bool EditCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null
                 || SelectedPresentationOverviewInfo == null)
+            {
                 return false;
-
-            bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter
+            }
+            bool isUserRoleValidated = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter
                 && !(UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN));
-            bool statusValidation = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
+            bool isStatusValided = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
                 || SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING;
 
-            return userRoleValidation && statusValidation;
+            return isUserRoleValidated && isStatusValided;
         }
 
+        /// <summary>
+        /// EditCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void EditCommandMethod(object param)
         {
             ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Edit);
-            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeEditPresentations", UriKind.Relative));
-        }
+            eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeEditPresentations", UriKind.Relative));
+        } 
+        #endregion
 
+        #region Withdraw
+        /// <summary>
+        /// WithdrawCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
         private bool WithdrawCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null
                 || SelectedPresentationOverviewInfo == null)
+            {
                 return false;
-
-            bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
-            bool statusValidation = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
+            }
+            bool isUserRoleValidated = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
+            bool isStatusValided = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
                 || SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING;
 
-            return userRoleValidation && statusValidation;
+            return isUserRoleValidated && isStatusValided;
         }
 
+        /// <summary>
+        /// WithdrawCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void WithdrawCommandMethod(object param)
         {
             Prompt.ShowDialog("Please confirm withdrawal of selected presentation", "Confirmation", MessageBoxButton.OKCancel, (result) =>
             {
                 if (result == MessageBoxResult.OK)
                 {
-                    if (_dbInteractivity != null)
+                    if (dbInteractivity != null)
                     {
-                        _dbInteractivity.SetICPPresentationStatus(UserSession.SessionManager.SESSION.UserName,
+                        dbInteractivity.SetICPPresentationStatus(UserSession.SessionManager.SESSION.UserName,
                                    SelectedPresentationOverviewInfo.PresentationID, StatusType.WITHDRAWN, SetICPPresentationStatusCallbackMethod);
-                    } 
+                    }
                 }
             });
-            
-        }   
+        }    
+        #endregion
 
+        #region View
+        /// <summary>
+        /// ViewCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
         private bool ViewCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null
                 || SelectedPresentationOverviewInfo == null)
+            {
                 return false;
-
+            }
             return SelectedPresentationOverviewInfo.StatusType != StatusType.IN_PROGRESS
                 && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN;
         }
 
+        /// <summary>
+        /// ViewCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void ViewCommandMethod(object param)
         {
             bool userRoleValidation = UserSession.SessionManager.SESSION.Roles.Contains("IC_MEMBER_VOTING");
 
             if (userRoleValidation && SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING)
+            {
                 ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Vote);
+            }
             else
+            {
                 ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.View);
-                        
-            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE);
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeVote", UriKind.Relative));
-        }
+            }
+            eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE);
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeVote", UriKind.Relative));
+        } 
+        #endregion
 
+        #region New
+        /// <summary>
+        /// NewCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         private bool NewCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null)
+            {
                 return false;
-
+            }
             return SelectedMeetingInfoDate != null && (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN));
         }
 
+        /// <summary>
+        /// NewCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void NewCommandMethod(object param)
         {
             ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Create);
-            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_NEW_PRESENTATION);
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeNew", UriKind.Relative));
-        }
+            eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_NEW_PRESENTATION);
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeNew", UriKind.Relative));
+        } 
+        #endregion
         #endregion
         
-        #region Helper Methods
-
-        public void Initialize()
-        {
-            SelectedMeetingInfoDate = null;
-            SelectionRaisePropertyChanged();
-            if (_dbInteractivity != null && IsActive)
-            {
-                BusyIndicatorNotification(true, "Retrieving Presentation Overview Information...");
-                _dbInteractivity.RetrievePresentationOverviewData(RetrievePresentationOverviewDataCallbackMethod);
-            }
-        }
-        
-        private void SelectionRaisePropertyChanged()
-        {
-            RaisePropertyChanged(() => this.EditCommand);
-            RaisePropertyChanged(() => this.UploadCommand);
-            RaisePropertyChanged(() => this.NewCommand);
-            RaisePropertyChanged(() => this.WithdrawCommand);
-            RaisePropertyChanged(() => this.ViewCommand);
-            RaisePropertyChanged(() => this.ChangeDateCommand);
-            RaisePropertyChanged(() => this.DecisionEntryCommand);
-        }
-
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
-        {
-            if (message != null)
-                BusyIndicatorContent = message;
-
-            BusyIndicatorIsBusy = showBusyIndicator;
-        }
-
-        #endregion
-
         #region CallBack Methods
+        /// <summary>
+        /// RetrievePresentationOverviewData callback method
+        /// </summary>
+        /// <param name="result">List of ICPresentationOverviewData</param>
         private void RetrievePresentationOverviewDataCallbackMethod(List<ICPresentationOverviewData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     ICPresentationOverviewInfo = result;
-                    if (_dbInteractivity != null)
+                    if (dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving available meeting dates...");
-                        _dbInteractivity.GetAvailablePresentationDates(GetAvailablePresentationDatesCallbackMethod); 
+                        dbInteractivity.GetAvailablePresentationDates(GetAvailablePresentationDatesCallbackMethod); 
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 //BusyIndicatorNotification();
             }            
         }
 
+        /// <summary>
+        /// GetAvailablePresentationDates callback method
+        /// </summary>
+        /// <param name="result">List of MeetingInfo</param>
         private void GetAvailablePresentationDatesCallbackMethod(List<MeetingInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     MeetingInfoDates = result;
                     SelectedMeetingInfoDate = result.OrderBy(record => record.MeetingDateTime).FirstOrDefault();                    
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);                    
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);                
+                Logging.LogException(logger, ex);                
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// UpdateMeetingPresentationDate callback method
+        /// </summary>
+        /// <param name="result">True/False/Null</param>
         private void UpdateMeetingPresentationDateCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result == true)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null && _sendChangeDateNotification)
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    if (SelectedPresentationOverviewInfo != null && dbInteractivity != null && isChangeDateAlertSelected)
                     {
                         BusyIndicatorNotification(true, "Retrieving presentation associated users...");
-                        _dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod, true);
+                        dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod, true);
                     }
                     else
                     {
@@ -529,7 +637,7 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Prompt.ShowDialog("An Error ocurred while updating presentation date");
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                     Initialize();
                 }
@@ -537,25 +645,29 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
                 Initialize();
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);                
+                Logging.LogEndMethod(logger, methodNamespace);                
             }
         }
 
+        /// <summary>
+        /// SetICPPresentationStatus callback method
+        /// </summary>
+        /// <param name="result">True/False/Null</param>
         private void SetICPPresentationStatusCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     if (result == true)
                     {
                         Prompt.ShowDialog("Presentation was successfully withdrawn");
@@ -565,37 +677,41 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Prompt.ShowDialog("An Error ocurred while updating presentation date");
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
             }
         }
 
+        /// <summary>
+        /// RetrievePresentationVoterData callback method
+        /// </summary>
+        /// <param name="result">List of VoterInfo</param>
         private void RetrievePresentationVoterDataCallbackMethod(List<VoterInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
 
                     List<String> userNames = result.Where(record => record.PostMeetingFlag == false).Select(record => record.Name).ToList();
-                    if (_dbInteractivity != null)
+                    if (dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving user credentials...");
-                        _dbInteractivity.GetUsersByNames(userNames, GetUsersByNamesCallbackMethod);
+                        dbInteractivity.GetUsersByNames(userNames, GetUsersByNamesCallbackMethod);
                     }
                     else
                     {
@@ -604,7 +720,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                     Initialize();
                 }
@@ -612,25 +728,29 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
                 Initialize();
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);                
+                Logging.LogEndMethod(logger, methodNamespace);                
             }
         }
 
+        /// <summary>
+        /// GetUsersByNames callback method
+        /// </summary>
+        /// <param name="result">List of MembershipUserInfo</param>
         private void GetUsersByNamesCallbackMethod(List<MembershipUserInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
 
                     MembershipUserInfo presenterCredentials = result.Where(record => record.UserName.ToLower() 
                         == SelectedPresentationOverviewInfo.Presenter.ToLower()).FirstOrDefault();
@@ -645,13 +765,14 @@ namespace GreenField.Gadgets.ViewModels
                     String messageSubject = "Presentation Date Change Notification – " + SelectedPresentationOverviewInfo.SecurityName;
                     String messageBody = "The Investment Committee Admin has changed the presentation date for "
                         + SelectedPresentationOverviewInfo.SecurityName + " from "
-                        + Convert.ToDateTime(_originalPresentationDate).ToString("MMMM dd, yyyy") + " UTC to "
-                        + Convert.ToDateTime(_updatedPresentationDate).ToString("MMMM dd, yyyy") + " UTC*. Please contact the Investment Committee Admin with any questions or concerns.";
+                        + Convert.ToDateTime(originalPresentationDate).ToString("MMMM dd, yyyy") + " UTC to "
+                        + Convert.ToDateTime(updatedPresentationDate).ToString("MMMM dd, yyyy") 
+                        + " UTC*. Please contact the Investment Committee Admin with any questions or concerns.";
 
-                    if (_dbInteractivity != null)
+                    if (dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Processing alert notification...");
-                        _dbInteractivity.SetMessageInfo(emailtTo, emailCc, messageSubject, messageBody, null
+                        dbInteractivity.SetMessageInfo(emailtTo, emailCc, messageSubject, messageBody, null
                             , UserSession.SessionManager.SESSION.UserName, SetMessageInfoCallbackMethod);                        
                     }
                     else
@@ -661,7 +782,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                     Initialize();
                 }
@@ -669,42 +790,90 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
                 Initialize();
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
             }
         }
 
+        /// <summary>
+        /// SetMessageInfo callback method
+        /// </summary>
+        /// <param name="result">True/False/Null</param>
         private void SetMessageInfoCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result == true)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);                    
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);                    
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);                    
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);                
+                Logging.LogException(logger, ex);                
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
                 Initialize();
             }
+        }
+        #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Initialize view
+        /// </summary>
+        public void Initialize()
+        {
+            SelectedMeetingInfoDate = null;
+            SelectionRaisePropertyChanged();
+            if (dbInteractivity != null && IsActive)
+            {
+                BusyIndicatorNotification(true, "Retrieving Presentation Overview Information...");
+                dbInteractivity.RetrievePresentationOverviewData(RetrievePresentationOverviewDataCallbackMethod);
+            }
+        }
+
+        /// <summary>
+        /// Revalidates execution commands
+        /// </summary>
+        private void SelectionRaisePropertyChanged()
+        {
+            RaisePropertyChanged(() => this.EditCommand);
+            RaisePropertyChanged(() => this.UploadCommand);
+            RaisePropertyChanged(() => this.NewCommand);
+            RaisePropertyChanged(() => this.WithdrawCommand);
+            RaisePropertyChanged(() => this.ViewCommand);
+            RaisePropertyChanged(() => this.ChangeDateCommand);
+            RaisePropertyChanged(() => this.DecisionEntryCommand);
+        }
+        
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
+        /// <param name="message">Content message for indicator; default null</param>
+        private void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
+        {
+            if (message != null)
+            {
+                BusyIndicatorContent = message;
+            }
+            IsBusyIndicatorBusy = isBusyIndicatorVisible;
         }
         #endregion
 
@@ -716,7 +885,6 @@ namespace GreenField.Gadgets.ViewModels
         {
            
         }
-
         #endregion           
     }
 }

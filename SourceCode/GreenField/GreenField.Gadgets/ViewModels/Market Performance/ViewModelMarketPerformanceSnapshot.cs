@@ -187,14 +187,14 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
         /// </summary>
-        private bool busyIndicatorIsBusy = false;
-        public bool BusyIndicatorIsBusy
+        private bool isBusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
         {
-            get { return busyIndicatorIsBusy; }
+            get { return isBusyIndicatorBusy; }
             set
             {
-                busyIndicatorIsBusy = value;
-                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+                isBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
             }
         }
 
@@ -211,7 +211,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion
+        #endregion      
 
         #region Gadget Active Check
         /// <summary>
@@ -220,10 +220,7 @@ namespace GreenField.Gadgets.ViewModels
         private bool isActive;
         public bool IsActive
         {
-            get
-            {
-                return isActive;
-            }
+            get { return isActive; }
             set
             {
                 if (isActive != value)
@@ -263,14 +260,12 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification(true, "Retrieving Entity Selection Data ...");
                 RetrieveEntitySelectionDataCallbackMethod(SelectionData.EntitySelectionData);
             }
-
             //Subscribe to MarketPerformanceSnapshotNameReferenceSetEvent to receive snapshot selection from shell
             if (eventAggregator != null)
             {
                 eventAggregator.GetEvent<MarketPerformanceSnapshotReferenceSetEvent>().Subscribe(HandleMarketPerformanceSnapshotNameReferenceSetEvent);
                 eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>().Subscribe(HandleMarketPerformanceSnapshotActionEvent);
             }
-
             //RetrieveMarketSnapshotPreference Service Call
             if (SelectedMarketSnapshotSelectionInfo != null)
             {
@@ -344,7 +339,6 @@ namespace GreenField.Gadgets.ViewModels
                     Prompt.ShowDialog("Entity Selection data is being retrieved");
                     return;
                 }
-
                 //get all group names present in the snapshot
                 List<string> snapshotGroupNames = new List<string>();
                 if (MarketSnapshotPerformanceInfo != null)
@@ -352,7 +346,6 @@ namespace GreenField.Gadgets.ViewModels
                     snapshotGroupNames = MarketSnapshotPerformanceInfo
                         .Select(i => i.MarketSnapshotPreferenceInfo.GroupName).Distinct().ToList();
                 }
-
                 ChildViewInsertEntity childViewModelInsertEntity
                     = new ChildViewInsertEntity(EntitySelectionInfo, DbInteractivity, logger, groupNames: snapshotGroupNames);
                 childViewModelInsertEntity.Show();
@@ -385,7 +378,6 @@ namespace GreenField.Gadgets.ViewModels
                                         return;
                                     }
                                 }
-
                                 insertedMarketSnapshotPreference.GroupPreferenceID = GetLastGroupPreferenceId() + 1;
                                 insertedMarketSnapshotPreference.EntityOrder = 1;
 
@@ -443,12 +435,10 @@ namespace GreenField.Gadgets.ViewModels
                             {
                                 MarketSnapshotPerformanceInfo.Remove(entry);
                             }
-
                             MarketSnapshotPreferenceInfo = MarketSnapshotPerformanceInfo
                                 .Select(record => record.MarketSnapshotPreferenceInfo)
                                 .ToList();
                         }
-
                         BusyIndicatorNotification();
                     }
                 });
@@ -483,7 +473,6 @@ namespace GreenField.Gadgets.ViewModels
                     Prompt.ShowDialog("Entity Selection data is being retrieved");
                     return;
                 }
-
                 ChildViewInsertEntity childViewModelInsertEntity
                     = new ChildViewInsertEntity(EntitySelectionInfo, DbInteractivity, logger, SelectedMarketSnapshotPerformanceInfo.MarketSnapshotPreferenceInfo.GroupName);
                 childViewModelInsertEntity.Show();
@@ -517,7 +506,6 @@ namespace GreenField.Gadgets.ViewModels
                                         return;
                                     }
                                 }
-
                                 insertedMarketSnapshotPreference.GroupName = SelectedMarketSnapshotPerformanceInfo.MarketSnapshotPreferenceInfo.GroupName;
                                 insertedMarketSnapshotPreference.GroupPreferenceID = SelectedMarketSnapshotPerformanceInfo.MarketSnapshotPreferenceInfo.GroupPreferenceID;                                
                                 insertedMarketSnapshotPreference.EntityOrder = SelectedMarketSnapshotPerformanceInfo.MarketSnapshotPreferenceInfo.EntityOrder;
@@ -561,44 +549,43 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 Prompt.ShowDialog("Remove Entity - '" + SelectedMarketSnapshotPerformanceInfo.MarketSnapshotPreferenceInfo.EntityName + "'?", "Remove Entity", MessageBoxButton.OKCancel, (result) =>
+                {
+                    if (result == MessageBoxResult.OK)
                     {
-                        if (result == MessageBoxResult.OK)
+                        try
                         {
-                            try
+                            BusyIndicatorNotification(true, "Removing selected entity from the snapshot");
+                            if (MarketSnapshotPreferenceInfo != null)
                             {
-                                BusyIndicatorNotification(true, "Removing selected entity from the snapshot");
-                                if (MarketSnapshotPreferenceInfo != null)
+                                //Rearrange Entity Order
+                                foreach (MarketSnapshotPreference entity in MarketSnapshotPreferenceInfo)
                                 {
-                                    //Rearrange Entity Order
-                                    foreach (MarketSnapshotPreference entity in MarketSnapshotPreferenceInfo)
-                                    {
-                                        if (entity.GroupPreferenceID != SelectedMarketSnapshotPerformanceInfo.MarketSnapshotPreferenceInfo.GroupPreferenceID)
-                                            continue;
-                                        if (entity.EntityOrder < SelectedMarketSnapshotPerformanceInfo.MarketSnapshotPreferenceInfo.EntityOrder)
-                                            continue;
-                                        entity.EntityOrder--;
-                                    }
-
-                                    //Remove Entity from the snapshot
-                                    MarketSnapshotPerformanceInfo.Remove(SelectedMarketSnapshotPerformanceInfo);
-
-                                    //Reorder MarketSnapshotPreferenceInfo
-                                    MarketSnapshotPreferenceInfo = MarketSnapshotPerformanceInfo
-                                            .Select(record => record.MarketSnapshotPreferenceInfo)
-                                            .ToList();
+                                    if (entity.GroupPreferenceID != SelectedMarketSnapshotPerformanceInfo.MarketSnapshotPreferenceInfo.GroupPreferenceID)
+                                        continue;
+                                    if (entity.EntityOrder < SelectedMarketSnapshotPerformanceInfo.MarketSnapshotPreferenceInfo.EntityOrder)
+                                        continue;
+                                    entity.EntityOrder--;
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                Logging.LogException(logger, ex);
-                            }
-                            finally
-                            {
-                                BusyIndicatorNotification();
+                                //Remove Entity from the snapshot
+                                MarketSnapshotPerformanceInfo.Remove(SelectedMarketSnapshotPerformanceInfo);
+
+                                //Reorder MarketSnapshotPreferenceInfo
+                                MarketSnapshotPreferenceInfo = MarketSnapshotPerformanceInfo
+                                        .Select(record => record.MarketSnapshotPreferenceInfo)
+                                        .ToList();
                             }
                         }
-                    });
+                        catch (Exception ex)
+                        {
+                            Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                            Logging.LogException(logger, ex);
+                        }
+                        finally
+                        {
+                            BusyIndicatorNotification();
+                        }
+                    }
+                });
             }
             catch (Exception ex)
             {
@@ -897,7 +884,6 @@ namespace GreenField.Gadgets.ViewModels
                         }
                     }
                 }
-
                 (sender as ChildViewInsertSnapshot).Unloaded -= new RoutedEventHandler(childViewInsertSnapshot_Unloaded_SaveAs);
             }
             catch (Exception ex)
@@ -979,7 +965,6 @@ namespace GreenField.Gadgets.ViewModels
                         }
                     }
                 }
-
                 (sender as ChildViewInsertSnapshot).Unloaded -= new RoutedEventHandler(childViewInsertSnapshot_Unloaded_Add);
             }
             catch (Exception ex)
@@ -995,7 +980,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Callback Methods
         /// <summary>
-        /// Callback method for RetrieveMarketSnapshotPreference Service call - Gets user's Snapshot preference for the selected Snapshot
+        /// Callback method for RetrieveMarketSnapshotPreference Service call - Gets user's Snapshot preference for the selected Snapshot. 
         /// Updates MarketSnapshotPreferenceOriginalInfo and MarketSnapshotPreferenceInfo
         /// </summary>
         /// <param name="result">List of MarketSnapshotPreference objects</param>
@@ -1093,7 +1078,6 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             MarketSnapshotPreferenceInfo = new List<MarketSnapshotPreference>();
                         }
-
                         if (MarketSnapshotPreferenceInfo.Where(record =>
                             record.GroupPreferenceID == insertedMarketSnapshotPerformanceData.MarketSnapshotPreferenceInfo.GroupPreferenceID).Count() > 0)
                         {
@@ -1106,7 +1090,6 @@ namespace GreenField.Gadgets.ViewModels
                                 entity.EntityOrder++;
                             }
                         }
-
                         MarketSnapshotPreferenceInfo.Add(insertedMarketSnapshotPerformanceData.MarketSnapshotPreferenceInfo);
 
                         //Reorder MarketSnapshotPreferenceInfo by GroupPreferenceID and then by EntityOrder
@@ -1471,7 +1454,6 @@ namespace GreenField.Gadgets.ViewModels
                         crtGroupInfo.Add(preference.GroupName);
                     }
                 }
-
                 if (MarketSnapshotPreferenceOriginalInfo
                     .Where(record => record.EntityPreferenceId == preference.EntityPreferenceId)
                     .Count().Equals(0))
@@ -1479,7 +1461,6 @@ namespace GreenField.Gadgets.ViewModels
                     crtPreferenceInfo.Add(preference);
                     continue;
                 }
-
                 if (MarketSnapshotPreferenceOriginalInfo
                     .Where(record => record.EntityPreferenceId == preference.EntityPreferenceId
                         && record.EntityOrder == preference.EntityOrder
@@ -1504,7 +1485,6 @@ namespace GreenField.Gadgets.ViewModels
                         }
                         continue;
                     }
-
                     if (MarketSnapshotPreferenceInfo
                         .Where(record => record.EntityPreferenceId == preference.EntityPreferenceId)
                         .Count().Equals(0))
@@ -1513,7 +1493,6 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
             }
-
             createPreferenceInfo = crtPreferenceInfo;
             updatePreferenceInfo = updPreferenceInfo;
             deletePreferenceInfo = delPreferenceInfo;
@@ -1526,12 +1505,13 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         /// <param name="showBusyIndicator">True to display indicator; default false</param>
         /// <param name="message">Content message for indicator; default null</param>
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        public void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
-
-            BusyIndicatorIsBusy = showBusyIndicator;
+            }
+            IsBusyIndicatorBusy = isBusyIndicatorVisible;
         }
 
         /// <summary>
@@ -1553,10 +1533,8 @@ namespace GreenField.Gadgets.ViewModels
                     GroupName = preference.GroupName,
                     GroupPreferenceID = preference.GroupPreferenceID
                 };
-
                 result.Add(pref);
             }
-
             return result;
         }
 
@@ -1591,7 +1569,6 @@ namespace GreenField.Gadgets.ViewModels
                         createGroup = new XElement("CreateGroup", new XAttribute("GroupName", preference.GroupName));
                         insertedGroupName = preference.GroupName;
                     }
-
                     XElement createGroupEntity = new XElement("CreateGroupEntity");
                     if (preference.EntityName != null)
                         createGroupEntity.Add(new XAttribute("EntityName", preference.EntityName.ToString()));
@@ -1612,7 +1589,6 @@ namespace GreenField.Gadgets.ViewModels
 
                     createGroup.Add(createGroupEntity);
                 }
-
                 root.Add(createGroup);
 
                 XDocument doc = new XDocument(
@@ -1626,7 +1602,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog(ex.Message);
             }
-
             return saveAsXml;
         }
 
@@ -1671,10 +1646,8 @@ namespace GreenField.Gadgets.ViewModels
                             createGroup.Add(createGroupEntity);
                         }
                     }
-
                     root.Add(createGroup);
                 }
-
                 foreach (MarketSnapshotPreference preference in createPreferenceInfo)
                 {
                     if (!createGroupInfo.Contains(preference.GroupName))
@@ -1699,7 +1672,6 @@ namespace GreenField.Gadgets.ViewModels
                         root.Add(createEntity);
                     }
                 }
-
                 foreach (int groupPreferenceId in deleteGroupInfo)
                 {
                     XElement deleteGroup = new XElement("DeleteGroup",
@@ -1707,7 +1679,6 @@ namespace GreenField.Gadgets.ViewModels
 
                     root.Add(deleteGroup);
                 }
-
                 foreach (MarketSnapshotPreference preference in deletePreferenceInfo)
                 {
                     XElement deleteEntity = new XElement("DeleteEntity",
@@ -1715,7 +1686,6 @@ namespace GreenField.Gadgets.ViewModels
 
                     root.Add(deleteEntity);
                 }
-
                 foreach (MarketSnapshotPreference preference in updatePreferenceInfo)
                 {
                     XElement updateEntity = new XElement("UpdateEntity",
@@ -1725,7 +1695,6 @@ namespace GreenField.Gadgets.ViewModels
 
                     root.Add(updateEntity);
                 }
-
                 XDocument doc = new XDocument(
                     new XDeclaration("1.0", "utf-8", "yes"),
                     new XComment("Market performance snapshot save preference details"),
@@ -1733,12 +1702,10 @@ namespace GreenField.Gadgets.ViewModels
 
                 saveXml = doc.ToString();
             }
-
             catch (Exception ex)
             {
                 Prompt.ShowDialog(ex.Message);
             }
-
             return saveXml;
         }
 

@@ -1,31 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.Common;
-using GreenField.Gadgets.ViewModels;
-using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.DataContracts;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ChildViewInsertEntity
+    /// </summary>
     public partial class ChildViewInsertEntity : ChildWindow
     {
         #region Fields
-        List<string> _groupNames;
-        IDBInteractivity _dBInteractivity;
-        ILoggerFacade _logger;
+        /// <summary>
+        /// Stores group names present on the selected benchmark
+        /// </summary>
+        List<String> groupNames;
+
+        /// <summary>
+        /// Service caller MEF singleton
+        /// </summary>
+        IDBInteractivity dBInteractivity;
+
+        /// <summary>
+        /// Logging MEF singleton
+        /// </summary>
+        ILoggerFacade logger;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Stores inserted market snapshot preference
+        /// </summary>
+        public MarketSnapshotPreference InsertedMarketSnapshotPreference { get; set; }
         #endregion
 
         #region Constructor
@@ -34,27 +46,23 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="result">List of EntitySelectionData objects</param>
         /// <param name="groupName">GroupName where entity is being inserted</param>
-        /// <param name="groupNames">GroupNames already inserted in the snapsot</param>
-        public ChildViewInsertEntity(List<EntitySelectionData> result, IDBInteractivity dBInteractivity, ILoggerFacade logger, string groupName = null, List<string> groupNames = null)
+        /// <param name="groupNames">GroupNames already inserted in the snapshot</param>
+        public ChildViewInsertEntity(List<EntitySelectionData> result, IDBInteractivity dBInteractivity
+            , ILoggerFacade logger, string groupName = null, List<string> groupNames = null)
         {
             InitializeComponent();
-            _dBInteractivity = dBInteractivity;
-            _logger = logger;
+            this.dBInteractivity = dBInteractivity;
+            this.logger = logger;
             if (groupName != null)
             {
                 this.txtGroupName.Text = groupName;
                 this.txtGroupName.IsEnabled = false;
             }
-
-            this._groupNames = groupNames;
-            this.DataContext = new ChildViewModelInsertEntity(result, _dBInteractivity, _logger);
-            this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
+            this.groupNames = groupNames;
+            this.DataContext = new ChildViewModelInsertEntity(result, dBInteractivity, logger);
+            this.btnOK.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
         } 
-        #endregion
-
-        #region Properties
-        public MarketSnapshotPreference InsertedMarketSnapshotPreference { get; set; } 
-        #endregion
+        #endregion        
 
         #region Event Handlers
         /// <summary>
@@ -66,9 +74,9 @@ namespace GreenField.Gadgets.Views
         {
             InsertedMarketSnapshotPreference = (this.DataContext as ChildViewModelInsertEntity).SelectedMarketSnapshotPreference;
             InsertedMarketSnapshotPreference.GroupName = this.txtGroupName.Text;
-            if (_groupNames != null)
+            if (groupNames != null)
             {
-                if (_groupNames.Contains(InsertedMarketSnapshotPreference.GroupName))
+                if (groupNames.Contains(InsertedMarketSnapshotPreference.GroupName))
                 {
                     this.txtMessage.Text = "*Group name '" + InsertedMarketSnapshotPreference.GroupName
                         + "' is already present in this snapshot. Please input a different group name";
@@ -77,7 +85,6 @@ namespace GreenField.Gadgets.Views
                 }
             }
             this.DialogResult = true;
-
         }
 
         /// <summary>
@@ -98,7 +105,7 @@ namespace GreenField.Gadgets.Views
         private void txtGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.txtMessage.Visibility = System.Windows.Visibility.Collapsed;
-            this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
+            this.btnOK.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
         }
 
         /// <summary>
@@ -108,14 +115,9 @@ namespace GreenField.Gadgets.Views
         /// <param name="e">SelectionChangedEventArgs</param>
         private void cmbEntitySelection_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
-        }        
+            this.btnOK.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
+        }                
         #endregion
-
-        private void cmbBenchmarkFilterSelection_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
 

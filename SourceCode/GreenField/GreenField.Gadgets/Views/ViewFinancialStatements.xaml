@@ -173,7 +173,7 @@
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
                                      CanUserResizeColumns="False" EnableColumnVirtualization="False" EnableRowVirtualization="False"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" GridLinesVisibility="None"
                                      RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="dgFinancialReport_ElementExporting"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                      RowLoaded="dgFinancialReport_RowLoaded">
@@ -208,7 +208,7 @@
                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="RealTime"
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                     CanUserResizeColumns="False"                                     
+                                     CanUserResizeColumns="False" GridLinesVisibility="None"                                    
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" EnableColumnVirtualization="False" EnableRowVirtualization="False"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="dgFinancialReportExt_ElementExporting"

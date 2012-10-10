@@ -12,6 +12,9 @@ using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ViewMarketPerformanceSnapshot
+    /// </summary>
     public partial class ViewMarketPerformanceSnapshot : ViewBaseUserControl
     {
         #region Properties
@@ -66,13 +69,15 @@ namespace GreenField.Gadgets.Views
         private void RadContextMenu_Opened(object sender, RoutedEventArgs e)
         {
             if (sender == null || e == null)
+            {
                 return;
-
+            }
             RadContextMenu menu = (RadContextMenu)sender;
 
             if (menu == null)
+            {
                 return;
-
+            }
             GridViewRow row = menu.GetClickedElement<GridViewRow>();
             GridViewGroupRow groupRow = menu.GetClickedElement<GridViewGroupRow>();
             GridViewHeaderRow headerRow = menu.GetClickedElement<GridViewHeaderRow>();
@@ -108,10 +113,8 @@ namespace GreenField.Gadgets.Views
                     }
                     itemCount++;
                 }
-
                 return;
             }
-
             if (headerRow != null)
             {
                 (menu.Items[0] as RadMenuItem).IsEnabled = true;
@@ -120,7 +123,6 @@ namespace GreenField.Gadgets.Views
                 (menu.Items[3] as RadMenuItem).IsEnabled = false;
                 return;
             }
-
             menu.IsOpen = false;
         }
 
@@ -246,7 +248,6 @@ namespace GreenField.Gadgets.Views
                 Element = this.radGridSnapshot,
                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
             });
-
             ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " 
                 + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
             childExportOptions.Show();
@@ -329,7 +330,6 @@ namespace GreenField.Gadgets.Views
                     return lastGroupPreferenceId;
                 }
             }
-
             return lastGroupPreferenceId;
         }
 
@@ -363,7 +363,6 @@ namespace GreenField.Gadgets.Views
                     return lastGroupName;
                 }
             }
-
             return lastGroupName;
         }
 
@@ -379,8 +378,9 @@ namespace GreenField.Gadgets.Views
         {
             //dropped at group end with the next group empty
             if (dropBenchmarkDetails.EntityOrder == null)
+            {
                 dropBenchmarkDetails.EntityOrder = GetEntityCountInGroup(dataContext, dragBenchmarkDetails.GroupPreferenceID) + 1;
-
+            }
             //dropped at group end within the same group
             if (isDropLastOfSameGroup)
             {
@@ -400,7 +400,6 @@ namespace GreenField.Gadgets.Views
                 {
                     continue;
                 }
-
                 //check if the record is between drag and drop location
                 bool isRecordBetweenDragDropLocation = isDropLocationExceedingDragLocation
                     ? record.MarketSnapshotPreferenceInfo.EntityOrder > dragBenchmarkDetails.EntityOrder
@@ -416,7 +415,6 @@ namespace GreenField.Gadgets.Views
                         : record.MarketSnapshotPreferenceInfo.EntityOrder + 1;
                     continue;
                 }
-
                 //check if the record is the drag element
                 bool isRecordDragLocation = record.MarketSnapshotPreferenceInfo.EntityOrder == dragBenchmarkDetails.EntityOrder;
 
@@ -457,7 +455,6 @@ namespace GreenField.Gadgets.Views
                     record.MarketSnapshotPreferenceInfo.EntityOrder--;
                     continue;
                 }
-
                 bool isDropGroupRecordShifted = record.MarketSnapshotPreferenceInfo.EntityOrder > dropBenchmarkDetails.EntityOrder
                         && record.MarketSnapshotPreferenceInfo.GroupPreferenceID == dropBenchmarkDetails.GroupPreferenceID;
 
@@ -466,7 +463,6 @@ namespace GreenField.Gadgets.Views
                     record.MarketSnapshotPreferenceInfo.EntityOrder++;
                     continue;
                 }
-
                 bool isRecordDragLocation = record.MarketSnapshotPreferenceInfo.EntityOrder == dragBenchmarkDetails.EntityOrder
                     && record.MarketSnapshotPreferenceInfo.GroupPreferenceID == dragBenchmarkDetails.GroupPreferenceID;
 
@@ -483,7 +479,6 @@ namespace GreenField.Gadgets.Views
                     : dropBenchmarkDetails.GroupPreferenceID;
                     continue;
                 }
-
                 bool isRecordDropLocation = record.MarketSnapshotPreferenceInfo.EntityOrder == dropBenchmarkDetails.EntityOrder
                     && record.MarketSnapshotPreferenceInfo.GroupPreferenceID == dropBenchmarkDetails.GroupPreferenceID;
 

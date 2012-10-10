@@ -1,44 +1,32 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using System.Collections.ObjectModel;
-using GreenField.Common;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
-using System.ComponentModel;
-using GreenField.ServiceCaller.PerformanceDefinitions;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View Model for ChildViewInsertEntity
+    /// </summary>
     public class ChildViewModelInsertEntity : NotificationObject
     {
-        IDBInteractivity _dBInteractivity;
-        ILoggerFacade _logger;
-
-        #region Constructor
+        #region Fields
         /// <summary>
-        /// Constructor
+        /// Service Caller MEF singleton
         /// </summary>
-        /// <param name="result">List of EntitySelectionData object</param>
-        public ChildViewModelInsertEntity(List<EntitySelectionData> result, IDBInteractivity dBInteractivity, ILoggerFacade logger)
-        {
-            EntitySelectionInfoSource = result;
-            _dBInteractivity = dBInteractivity;
-            _logger = logger;
-        }
+        IDBInteractivity dBInteractivity;
+
+        /// <summary>
+        /// Logging MEF Singleton
+        /// </summary>
+        ILoggerFacade logger; 
         #endregion
 
         #region Properties
@@ -46,25 +34,27 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// DataSource for the Grouped Collection View
         /// </summary>
-        private List<EntitySelectionData> _entitySelectionInfoSource;
+        private List<EntitySelectionData> entitySelectionInfoSource;
         public List<EntitySelectionData> EntitySelectionInfoSource
         {
-            get { return _entitySelectionInfoSource; }
+            get { return entitySelectionInfoSource; }
             set
             {
-                _entitySelectionInfoSource = value;
+                entitySelectionInfoSource = value;
                 EntitySelectionInfo = value.Where(record => record.Type == EntityType.SECURITY).ToList();
             }
         }
 
-
-        private List<EntitySelectionData> _entitySelectionInfo;
+        /// <summary>
+        /// Stores entity selection data for entity type - security
+        /// </summary>
+        private List<EntitySelectionData> entitySelectionInfo;
         public List<EntitySelectionData> EntitySelectionInfo
         {
-            get { return _entitySelectionInfo; }
+            get { return entitySelectionInfo; }
             set
             {
-                _entitySelectionInfo = value;
+                entitySelectionInfo = value;
                 RaisePropertyChanged(() => this.EntitySelectionInfo);
                 if (value != null)
                 {
@@ -81,13 +71,16 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private List<EntitySelectionData> _entityFilterSelectionInfo;
+        /// <summary>
+        /// Filtered entities based on text search
+        /// </summary>
+        private List<EntitySelectionData> entityFilterSelectionInfo;
         public List<EntitySelectionData> EntityFilterSelectionInfo
         {
-            get { return _entityFilterSelectionInfo; }
+            get { return entityFilterSelectionInfo; }
             set
             {
-                _entityFilterSelectionInfo = value;
+                entityFilterSelectionInfo = value;
                 RaisePropertyChanged(() => this.EntityFilterSelectionInfo);
             }
         }
@@ -95,13 +88,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Grouped Collection View for Auto-Complete Box
         /// </summary>
-        private CollectionViewSource _entitySelectionGroupInfo;
+        private CollectionViewSource entitySelectionGroupInfo;
         public CollectionViewSource EntitySelectionGroupInfo
         {
-            get { return _entitySelectionGroupInfo; }
+            get { return entitySelectionGroupInfo; }
             set
             {
-                _entitySelectionGroupInfo = value;
+                entitySelectionGroupInfo = value;
                 RaisePropertyChanged(() => this.EntitySelectionGroupInfo);
             }
         }
@@ -109,15 +102,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Entered Text in the Auto-Complete Box - filters EntitySelectionGroupInfo
         /// </summary>
-        private string _entitySelectionEnteredText = String.Empty;
+        private string entitySelectionEnteredText = String.Empty;
         public string EntitySelectionEnteredText
         {
-            get { return _entitySelectionEnteredText; }
+            get { return entitySelectionEnteredText; }
             set
             {
-                _entitySelectionEnteredText = value;
+                entitySelectionEnteredText = value;
                 RaisePropertyChanged(() => this.EntitySelectionEnteredText);
-                
+
                 if (EntitySelectionInfo != null)
                 {
                     if (value != String.Empty && value != null)
@@ -136,13 +129,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Entity - Return Type Selector visibility depends on Type of entity
         /// </summary>
-        private EntitySelectionData _selectedEntity = new EntitySelectionData();
+        private EntitySelectionData selectedEntity = new EntitySelectionData();
         public EntitySelectionData SelectedEntity
         {
-            get { return _selectedEntity; }
+            get { return selectedEntity; }
             set
             {
-                _selectedEntity = value;
+                selectedEntity = value;
                 this.RaisePropertyChanged(() => this.SelectedEntity);
                 if (value != null)
                 {
@@ -158,7 +151,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         ReturnTypeSelectionVisibility = Visibility.Collapsed;
                         BenchmarkFilterVisibility = Visibility.Visible;
-                        SelectedMarketSnapshotPreference.EntityReturnType = null;                        
+                        SelectedMarketSnapshotPreference.EntityReturnType = null;
                     }
                     else
                     {
@@ -172,7 +165,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     SelectedMarketSnapshotPreference.EntityName = value.LongName;
                     SelectedMarketSnapshotPreference.EntityType = value.Type;
-                    SelectedMarketSnapshotPreference.EntityId = value.InstrumentID;                    
+                    SelectedMarketSnapshotPreference.EntityId = value.InstrumentID;
                 }
             }
         }
@@ -182,14 +175,14 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// SecurityToggle IsChecked
         /// </summary>
-        private bool? _securityToggleChecked = true;
-        public bool? SecurityToggleChecked
+        private bool? isSecurityToggleChecked = true;
+        public bool? IsSecurityToggleChecked
         {
-            get { return _securityToggleChecked; }
+            get { return isSecurityToggleChecked; }
             set
             {
-                _securityToggleChecked = value;
-                RaisePropertyChanged(() => this.SecurityToggleChecked);
+                isSecurityToggleChecked = value;
+                RaisePropertyChanged(() => this.IsSecurityToggleChecked);
                 if (value == true)
                 {
                     EntitySelectionInfo = EntitySelectionInfoSource
@@ -205,14 +198,14 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// BenchmarkToggle IsChecked
         /// </summary>
-        private bool? _benchmarkToggleChecked = false;
-        public bool? BenchmarkToggleChecked
+        private bool? isBenchmarkToggleChecked = false;
+        public bool? IsBenchmarkToggleChecked
         {
-            get { return _benchmarkToggleChecked; }
+            get { return isBenchmarkToggleChecked; }
             set
             {
-                _benchmarkToggleChecked = value;
-                RaisePropertyChanged(() => this.BenchmarkToggleChecked);
+                isBenchmarkToggleChecked = value;
+                RaisePropertyChanged(() => this.IsBenchmarkToggleChecked);
                 if (value == true)
                 {
                     EntitySelectionInfo = EntitySelectionInfoSource
@@ -226,16 +219,16 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// BenchmarkToggle IsChecked
+        /// IndexToggle IsChecked
         /// </summary>
-        private bool? _indexToggleChecked = false;
-        public bool? IndexToggleChecked
+        private bool? isIndexToggleChecked = false;
+        public bool? IsIndexToggleChecked
         {
-            get { return _indexToggleChecked; }
+            get { return isIndexToggleChecked; }
             set
             {
-                _indexToggleChecked = value;
-                RaisePropertyChanged(() => this.IndexToggleChecked);
+                isIndexToggleChecked = value;
+                RaisePropertyChanged(() => this.IsIndexToggleChecked);
                 if (value == true)
                 {
                     EntitySelectionInfo = EntitySelectionInfoSource
@@ -251,14 +244,14 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// CommodityToggle IsChecked
         /// </summary>
-        private bool? _commodityToggleChecked = false;
-        public bool? CommodityToggleChecked
+        private bool? isCommodityToggleChecked = false;
+        public bool? IsCommodityToggleChecked
         {
-            get { return _commodityToggleChecked; }
+            get { return isCommodityToggleChecked; }
             set
             {
-                _commodityToggleChecked = value;
-                RaisePropertyChanged(() => this.CommodityToggleChecked);
+                isCommodityToggleChecked = value;
+                RaisePropertyChanged(() => this.IsCommodityToggleChecked);
                 if (value == true)
                 {
                     EntitySelectionInfo = EntitySelectionInfoSource
@@ -269,20 +262,21 @@ namespace GreenField.Gadgets.ViewModels
                     ReturnTypeSelectionVisibility = Visibility.Collapsed;
                 }
             }
-        } 
+        }
         #endregion
 
+        #region Benchmark Filter
         /// <summary>
         /// Checked State of None Benchmark Node RadioButton
         /// </summary>
-        private bool? _noneBenchmarkFilterChecked = true;
-        public bool? NoneBenchmarkFilterChecked
+        private bool? isNoneBenchmarkFilterChecked = true;
+        public bool? IsNoneBenchmarkFilterChecked
         {
-            get { return _noneBenchmarkFilterChecked; }
+            get { return isNoneBenchmarkFilterChecked; }
             set
             {
-                _noneBenchmarkFilterChecked = value;
-                RaisePropertyChanged(() => this.NoneBenchmarkFilterChecked);
+                isNoneBenchmarkFilterChecked = value;
+                RaisePropertyChanged(() => this.IsNoneBenchmarkFilterChecked);
                 if (value == true)
                 {
                     SelectedMarketSnapshotPreference.EntityNodeType = EntityNodeType.NONE;
@@ -298,14 +292,14 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Checked State of Country Benchmark Node RadioButton
         /// </summary>
-        private bool? _countryBenchmarkFilterChecked = false;
-        public bool? CountryBenchmarkFilterChecked
+        private bool? isCountryBenchmarkFilterChecked = false;
+        public bool? IsCountryBenchmarkFilterChecked
         {
-            get { return _countryBenchmarkFilterChecked; }
+            get { return isCountryBenchmarkFilterChecked; }
             set
             {
-                _countryBenchmarkFilterChecked = value;
-                RaisePropertyChanged(() => this.CountryBenchmarkFilterChecked);
+                isCountryBenchmarkFilterChecked = value;
+                RaisePropertyChanged(() => this.IsCountryBenchmarkFilterChecked);
                 if (value == true)
                 {
                     SelectedMarketSnapshotPreference.EntityNodeType = EntityNodeType.COUNTRY;
@@ -314,10 +308,10 @@ namespace GreenField.Gadgets.ViewModels
                     BenchmarkFilterSelectionInfo = null;
                     BenchmarkFilterValueVisibility = Visibility.Visible;
                     BenchmarkFilterEmptyText = "Populating Country Node Data based on selected benchmark ...";
-                    if (_dBInteractivity != null)
+                    if (dBInteractivity != null)
                     {
-                        BenchmarkFilterCallInactive = false;
-                        _dBInteractivity.RetrieveBenchmarkFilterSelectionData(SelectedEntity.ShortName, SelectedEntity.LongName
+                        IsBenchmarkFilterCallInactive = false;
+                        dBInteractivity.RetrieveBenchmarkFilterSelectionData(SelectedEntity.ShortName, SelectedEntity.LongName
                             , "Country", RetrieveBenchmarkFilterSelectionDataCallbackMethod);
                     }
                 }
@@ -327,14 +321,14 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Checked State of Sector Benchmark Node RadioButton
         /// </summary>
-        private bool? _sectorBenchmarkFilterChecked = false;
-        public bool? SectorBenchmarkFilterChecked
+        private bool? isSectorBenchmarkFilterChecked = false;
+        public bool? IsSectorBenchmarkFilterChecked
         {
-            get { return _sectorBenchmarkFilterChecked; }
+            get { return isSectorBenchmarkFilterChecked; }
             set
             {
-                _sectorBenchmarkFilterChecked = value;
-                RaisePropertyChanged(() => this.SectorBenchmarkFilterChecked);
+                isSectorBenchmarkFilterChecked = value;
+                RaisePropertyChanged(() => this.IsSectorBenchmarkFilterChecked);
                 if (value == true)
                 {
                     SelectedMarketSnapshotPreference.EntityNodeType = EntityNodeType.SECTOR;
@@ -343,34 +337,40 @@ namespace GreenField.Gadgets.ViewModels
                     BenchmarkFilterSelectionInfo = null;
                     BenchmarkFilterValueVisibility = Visibility.Visible;
                     BenchmarkFilterEmptyText = "Populating Sector Node Data based on selected benchmark ...";
-                    if (_dBInteractivity != null)
+                    if (dBInteractivity != null)
                     {
-                        BenchmarkFilterCallInactive = false;
-                        _dBInteractivity.RetrieveBenchmarkFilterSelectionData(SelectedEntity.ShortName, SelectedEntity.LongName
+                        IsBenchmarkFilterCallInactive = false;
+                        dBInteractivity.RetrieveBenchmarkFilterSelectionData(SelectedEntity.ShortName, SelectedEntity.LongName
                             , "Sector", RetrieveBenchmarkFilterSelectionDataCallbackMethod);
                     }
                 }
             }
         }
 
-        private List<BenchmarkFilterSelectionData> _benchmarkFilterSelectionInfo;
+        /// <summary>
+        /// Stores benchmark filter selection information
+        /// </summary>
+        private List<BenchmarkFilterSelectionData> benchmarkFilterSelectionInfo;
         public List<BenchmarkFilterSelectionData> BenchmarkFilterSelectionInfo
         {
-            get { return _benchmarkFilterSelectionInfo; }
+            get { return benchmarkFilterSelectionInfo; }
             set
             {
-                _benchmarkFilterSelectionInfo = value;
-                RaisePropertyChanged(() => this.BenchmarkFilterSelectionInfo);                
+                benchmarkFilterSelectionInfo = value;
+                RaisePropertyChanged(() => this.BenchmarkFilterSelectionInfo);
             }
         }
 
-        private BenchmarkFilterSelectionData _selectedBenchmarkFilter;
+        /// <summary>
+        /// Stores selected benchmark filter selection information
+        /// </summary>
+        private BenchmarkFilterSelectionData selectedBenchmarkFilter;
         public BenchmarkFilterSelectionData SelectedBenchmarkFilter
         {
-            get { return _selectedBenchmarkFilter; }
+            get { return selectedBenchmarkFilter; }
             set
             {
-                _selectedBenchmarkFilter = value;
+                selectedBenchmarkFilter = value;
                 this.RaisePropertyChanged(() => this.SelectedBenchmarkFilter);
                 if (value == null)
                 {
@@ -380,68 +380,81 @@ namespace GreenField.Gadgets.ViewModels
                 }
 
                 SelectedMarketSnapshotPreference.EntityNodeValueCode = value.FilterCode;
-                SelectedMarketSnapshotPreference.EntityNodeValueName = value.FilterName; 
+                SelectedMarketSnapshotPreference.EntityNodeValueName = value.FilterName;
             }
         }
 
-        private Visibility _benchmarkFilterVisibility = Visibility.Collapsed;
+        /// <summary>
+        /// Stores visibility of benchmark filter
+        /// </summary>
+        private Visibility benchmarkFilterVisibility = Visibility.Collapsed;
         public Visibility BenchmarkFilterVisibility
         {
-            get { return _benchmarkFilterVisibility; }
+            get { return benchmarkFilterVisibility; }
             set
             {
-                _benchmarkFilterVisibility = value;
+                benchmarkFilterVisibility = value;
                 RaisePropertyChanged(() => this.BenchmarkFilterVisibility);
             }
         }
 
-        private Visibility _benchmarkFilterValueVisibility = Visibility.Collapsed;
+        /// <summary>
+        /// Stores visibility of benchmark filter value
+        /// </summary>
+        private Visibility benchmarkFilterValueVisibility = Visibility.Collapsed;
         public Visibility BenchmarkFilterValueVisibility
         {
-            get { return _benchmarkFilterValueVisibility; }
+            get { return benchmarkFilterValueVisibility; }
             set
             {
-                _benchmarkFilterValueVisibility = value;
+                benchmarkFilterValueVisibility = value;
                 RaisePropertyChanged(() => this.BenchmarkFilterValueVisibility);
             }
         }
 
-        private String _benchmarkFilterEmptyText;
+        /// <summary>
+        /// Stores benchmark filter empty text
+        /// </summary>
+        private String benchmarkFilterEmptyText;
         public String BenchmarkFilterEmptyText
         {
-            get { return _benchmarkFilterEmptyText; }
+            get { return benchmarkFilterEmptyText; }
             set
             {
-                _benchmarkFilterEmptyText = value;
+                benchmarkFilterEmptyText = value;
                 RaisePropertyChanged(() => this.BenchmarkFilterEmptyText);
             }
         }
 
-        private bool _benchmarkFilterCallInactive = true;
-        public bool BenchmarkFilterCallInactive
+        /// <summary>
+        /// Stores benchmark filter activity
+        /// </summary>
+        private bool isBenchmarkFilterCallInactive = true;
+        public bool IsBenchmarkFilterCallInactive
         {
-            get { return _benchmarkFilterCallInactive; }
+            get { return isBenchmarkFilterCallInactive; }
             set
             {
-                _benchmarkFilterCallInactive = value;
-                RaisePropertyChanged(() => this.BenchmarkFilterCallInactive);
+                isBenchmarkFilterCallInactive = value;
+                RaisePropertyChanged(() => this.IsBenchmarkFilterCallInactive);
             }
-        }        
-        
+        } 
+        #endregion
+
         #region Return Type Selection
         /// <summary>
         /// Checked State of Total Return RadioButton
         /// </summary>
-        private bool? _totalReturnTypeChecked = true;
-        public bool? TotalReturnTypeChecked
+        private bool? isTotalReturnTypeChecked = true;
+        public bool? IsTotalReturnTypeChecked
         {
-            get { return _totalReturnTypeChecked; }
+            get { return isTotalReturnTypeChecked; }
             set
             {
-                if (_totalReturnTypeChecked != value)
+                if (isTotalReturnTypeChecked != value)
                 {
-                    _totalReturnTypeChecked = value;
-                    RaisePropertyChanged(() => this.TotalReturnTypeChecked);
+                    isTotalReturnTypeChecked = value;
+                    RaisePropertyChanged(() => this.IsTotalReturnTypeChecked);
                     if (value == true)
                     {
                         SelectedMarketSnapshotPreference.EntityReturnType = EntityReturnType.TotalReturnType;
@@ -453,15 +466,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Checked State of Price Return RadioButton
         /// </summary>
-        private bool? _priceReturnTypeChecked = false;
-        public bool? PriceReturnTypeChecked
+        private bool? isPriceReturnTypeChecked = false;
+        public bool? IsPriceReturnTypeChecked
         {
-            get { return _priceReturnTypeChecked; }
+            get { return isPriceReturnTypeChecked; }
             set
             {
-                if (_priceReturnTypeChecked != value)
+                if (isPriceReturnTypeChecked != value)
                 {
-                    _priceReturnTypeChecked = value;
+                    isPriceReturnTypeChecked = value;
                     if (value == true)
                     {
                         SelectedMarketSnapshotPreference.EntityReturnType = EntityReturnType.PriceReturnType;
@@ -473,13 +486,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Visibility State of the Return Type Selection StackPanel
         /// </summary>
-        private Visibility _returnTypeSelectionVisibility = Visibility.Collapsed;
+        private Visibility returnTypeSelectionVisibility = Visibility.Collapsed;
         public Visibility ReturnTypeSelectionVisibility
         {
-            get { return _returnTypeSelectionVisibility; }
+            get { return returnTypeSelectionVisibility; }
             set
             {
-                _returnTypeSelectionVisibility = value;
+                returnTypeSelectionVisibility = value;
                 RaisePropertyChanged(() => this.ReturnTypeSelectionVisibility);
             }
         }
@@ -489,22 +502,34 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Entity constructed into MarketSnapshotPreference object
         /// </summary>
-        private MarketSnapshotPreference _selectedMarketSnapshotPreference;
+        private MarketSnapshotPreference selectedMarketSnapshotPreference;
         public MarketSnapshotPreference SelectedMarketSnapshotPreference
         {
             get
             {
-                if (_selectedMarketSnapshotPreference == null)
+                if (selectedMarketSnapshotPreference == null)
                 {
-                    _selectedMarketSnapshotPreference = new MarketSnapshotPreference() { EntityReturnType = EntityReturnType.TotalReturnType };
+                    selectedMarketSnapshotPreference = new MarketSnapshotPreference() { EntityReturnType = EntityReturnType.TotalReturnType };
                 }
-                return _selectedMarketSnapshotPreference;
+                return selectedMarketSnapshotPreference;
             }
-            set { _selectedMarketSnapshotPreference = value; }
+            set { selectedMarketSnapshotPreference = value; }
         }
         #endregion
-
         #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="result">List of EntitySelectionData object</param>
+        public ChildViewModelInsertEntity(List<EntitySelectionData> result, IDBInteractivity dBInteractivity, ILoggerFacade logger)
+        {
+            EntitySelectionInfoSource = result;
+            this.dBInteractivity = dBInteractivity;
+            this.logger = logger;
+        }
+        #endregion        
 
         #region Callback Method
         /// <summary>
@@ -514,32 +539,30 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveBenchmarkFilterSelectionDataCallbackMethod(List<BenchmarkFilterSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     BenchmarkFilterSelectionInfo = result;
                     BenchmarkFilterEmptyText = "Select value ...";
                     if (result.Count > 0)
                         SelectedBenchmarkFilter = BenchmarkFilterSelectionInfo[0];
-                    BenchmarkFilterCallInactive = true;
+                    IsBenchmarkFilterCallInactive = true;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         } 
-        #endregion
-
-        
+        #endregion        
     }
 }

@@ -1,24 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-//using Ashmore.Emm.GreenField.ICP.Meeting.Module.ViewModels;
+﻿using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
-using System.ComponentModel.Composition;
-using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// code behind for ViewPresentations
+    /// </summary>
     public partial class ViewPresentations : ViewBaseUserControl
-    {    
-        
+    {   
         #region Properties
         /// <summary>
         /// property to set data context
@@ -30,20 +19,20 @@ namespace GreenField.Gadgets.Views
             set { _dataContextViewModelPresentations = value; }
         }
 
-
-
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextViewModelPresentations != null) //DataContext instance
-                    DataContextViewModelPresentations.IsActive = _isActive;
+                isActive = value;
+                if (DataContextViewModelPresentations != null)
+                {
+                    DataContextViewModelPresentations.IsActive = isActive;
+                }
             }
         }
         #endregion
@@ -72,12 +61,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        private void dgICPPresentationsList_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-
-        }
-
-        
     }
 }

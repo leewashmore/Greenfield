@@ -54,8 +54,10 @@ namespace GreenField.Gadgets.Views
             set
             {
                 _isActive = value;
-                if (DataContextSource != null) //DataContext instance
+                if (DataContextSource != null)
+                {
                     DataContextSource.IsActive = _isActive;
+                }
             }
         }
 
