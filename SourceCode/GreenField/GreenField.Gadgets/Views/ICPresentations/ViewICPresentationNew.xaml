@@ -41,7 +41,8 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock FontWeight="Bold" Text="{Binding ICPresentationOverviewInfo.SecurityName}" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock FontWeight="Bold" Style="{StaticResource TextBlockStyle}"> (</TextBlock>
-                    <TextBlock FontWeight="Bold" FontStyle="Italic" Text="{Binding ICPresentationOverviewInfo.SecurityTicker}" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock FontWeight="Bold" FontStyle="Italic" Text="{Binding ICPresentationOverviewInfo.SecurityTicker}" 
+                               Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock FontWeight="Bold" Style="{StaticResource TextBlockStyle}">)</TextBlock>                    
                 </StackPanel>
             </Grid>
@@ -221,7 +222,7 @@
             </Grid>
             <Grid Grid.Row="4" Margin="0,2,0,2">
                 <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
-                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6"/>
+                                   HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6"/>
             </Grid>
             <!-- Security Details -->
             <Grid Grid.Row="5">

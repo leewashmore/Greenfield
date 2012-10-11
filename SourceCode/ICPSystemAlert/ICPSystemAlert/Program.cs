@@ -904,10 +904,15 @@ namespace ICPSystemAlert
                         presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
                         presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
                         presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
-                        presentationOverviewData.SecurityBuySellvsCrnt = securityData.TRADING_CURRENCY + " " +
-                            String.Format("{0:n2}", fairValueRecord.FV_BUY) +
-                            "- " + securityData.TRADING_CURRENCY + " " +
-                            String.Format("{0:n2}", fairValueRecord.FV_SELL);
+                        presentationOverviewData.FVCalc = String.Format("{0} {1:n2} - {2:n2}",
+                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL);
+                        if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
+                        {
+                            presentationOverviewData.SecurityBuySellvsCrnt = String.Format("{0} {1:n2} - {0} {2:n2}",
+                                securityData.TRADING_CURRENCY,
+                                ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE),
+                                ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE));
+                        }
 
                         Decimal upperLimit = fairValueRecord.FV_BUY >= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
                         Decimal lowerLimit = fairValueRecord.FV_BUY <= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
@@ -921,15 +926,6 @@ namespace ICPSystemAlert
                             presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= lowerLimit
                                 ? "Buy" : "Watch";
                         }
-
-                        if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
-                        {
-                            presentationOverviewData.FVCalc = dataMasterRecord.DATA_DESC + " " + securityData.TRADING_CURRENCY + " " +
-                                String.Format("{0:n2}", ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)) +
-                                "- " + securityData.TRADING_CURRENCY + " " +
-                                String.Format("{0:n2}", ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE));
-                        }
-
                         String securityID = securityData.SECURITY_ID.ToString();
 
                         PERIOD_FINANCIALS periodFinancialRecord = _externalEntities.PERIOD_FINANCIALS
@@ -942,12 +938,9 @@ namespace ICPSystemAlert
                         {
                             presentationOverviewData.SecurityMarketCapitalization = Convert.ToSingle(periodFinancialRecord.AMOUNT);
                         }
-
                     }
                 }
                 #endregion
-
-
 
                 return presentationOverviewData;
             }

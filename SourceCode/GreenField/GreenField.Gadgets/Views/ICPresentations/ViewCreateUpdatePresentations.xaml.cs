@@ -1,52 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
-using GreenField.ServiceCaller;
-using System.IO;
-using GreenField.ServiceCaller.MeetingDefinitions;
 using GreenField.Common;
 using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller.MeetingDefinitions;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ViewCreateUpdatePresentations
+    /// </summary>
     public partial class ViewCreateUpdatePresentations : ViewBaseUserControl
     {        
         #region Properties
         /// <summary>
-        /// property to set data context
+        /// Property to set data context
         /// </summary>
-        private ViewModelCreateUpdatePresentations _dataContextViewModelCreateUpdatePresentations;
+        private ViewModelCreateUpdatePresentations dataContextViewModelCreateUpdatePresentations;
         public ViewModelCreateUpdatePresentations DataContextViewModelCreateUpdatePresentations
         {
-            get { return _dataContextViewModelCreateUpdatePresentations; }
-            set { _dataContextViewModelCreateUpdatePresentations = value; }
+            get { return dataContextViewModelCreateUpdatePresentations; }
+            set { dataContextViewModelCreateUpdatePresentations = value; }
         }
 
-
-
         /// <summary>
-        /// property to set IsActive variable of View Model
+        /// Property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextViewModelCreateUpdatePresentations != null) //DataContext instance
-                    DataContextViewModelCreateUpdatePresentations.IsActive = _isActive;
+                isActive = value;
+                if (DataContextViewModelCreateUpdatePresentations != null)
+                {
+                    DataContextViewModelCreateUpdatePresentations.IsActive = isActive;
+                }
             }
         }
         #endregion        
@@ -55,7 +49,7 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="dataContextSource"></param>
+        /// <param name="dataContextSource">ViewModelCreateUpdatePresentations</param>
         public ViewCreateUpdatePresentations(ViewModelCreateUpdatePresentations dataContextSource)
         {
             InitializeComponent();
@@ -64,18 +58,12 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region Dispose Method
+        #region Event Handlers
         /// <summary>
-        /// method to dispose all running events
+        /// btnBrowse Click event handler
         /// </summary>
-        public override void Dispose()
-        {
-            this.DataContextViewModelCreateUpdatePresentations.Dispose();
-            this.DataContextViewModelCreateUpdatePresentations = null;
-            this.DataContext = null;
-        }
-        #endregion
-
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
             String filter = "All Files (*.*)|*.*";
@@ -91,27 +79,24 @@ namespace GreenField.Gadgets.Views
             {
                 filter = "PDF (*.pdf)|*.pdf";
             }
-
-            
-            OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false, Filter = filter };            
+            OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false, Filter = filter };
             if (dialog.ShowDialog() == true)
             {
                 if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.POWERPOINT_PRESENTATION)
                 {
-                    if (dialog.File.Extension !=".pptx")
+                    if (dialog.File.Extension != ".pptx")
                         return;
                 }
                 else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
                 {
                     if (dialog.File.Extension != ".pdf" && dialog.File.Extension != ".jpeg" && dialog.File.Extension != ".jpg")
-                        return;                    
+                        return;
                 }
                 else
                 {
                     if (dialog.File.Extension != ".pdf")
-                        return;                    
+                        return;
                 }
-
                 DataContextViewModelCreateUpdatePresentations.BusyIndicatorNotification(true, "Reading file...");
 
                 Boolean uploadFileExists = DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT
@@ -125,7 +110,7 @@ namespace GreenField.Gadgets.Views
 
                     if (uploadDocumentInfo != null)
                     {
-                        DataContextViewModelCreateUpdatePresentations.UploadFileData = uploadDocumentInfo;                        
+                        DataContextViewModelCreateUpdatePresentations.UploadFileData = uploadDocumentInfo;
                     }
                 }
                 else
@@ -140,7 +125,6 @@ namespace GreenField.Gadgets.Views
                     };
                     DataContextViewModelCreateUpdatePresentations.UploadFileData = presentationAttachedFileData;
                 }
-
                 FileStream fileStream = dialog.File.OpenRead();
                 DataContextViewModelCreateUpdatePresentations.UploadFileStreamData = ReadFully(fileStream);
 
@@ -150,6 +134,27 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// btnPreview Click event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPreview_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog() { Filter = "PDF (*.pdf) |*.pdf" };
+            if (dialog.ShowDialog() == true)
+            {
+                DataContextViewModelCreateUpdatePresentations.DownloadStream = dialog.OpenFile();
+            }
+        } 
+        #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Reads stream and returns byte array
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private Byte[] ReadFully(Stream input)
         {
             Byte[] buffer = new byte[16 * 1024];
@@ -163,17 +168,19 @@ namespace GreenField.Gadgets.Views
                 }
                 return ms.ToArray();
             }
-        }
+        } 
+        #endregion
 
-        private void btnPreview_Click(object sender, RoutedEventArgs e)
+        #region Dispose Method
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
+        public override void Dispose()
         {
-            SaveFileDialog dialog = new SaveFileDialog() { Filter = "PDF (*.pdf) |*.pdf" };
-            if (dialog.ShowDialog() == true)
-            {
-                DataContextViewModelCreateUpdatePresentations.DownloadStream = dialog.OpenFile();
-            }
+            this.DataContextViewModelCreateUpdatePresentations.Dispose();
+            this.DataContextViewModelCreateUpdatePresentations = null;
+            this.DataContext = null;
         }
-
-        
+        #endregion
     }
 }

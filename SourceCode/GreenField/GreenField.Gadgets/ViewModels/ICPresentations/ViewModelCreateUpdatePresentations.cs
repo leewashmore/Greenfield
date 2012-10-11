@@ -1,57 +1,54 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Practices.Prism.ViewModel;
-using Microsoft.Practices.Prism.Commands;
-using System.Collections.ObjectModel;
-using System.Text;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml.Serialization;
-using Microsoft.Practices.Prism.Regions;
-using System.ComponentModel.Composition;
-using GreenField.ServiceCaller;
-using GreenField.Gadgets.Models;
-using GreenField.Common;
-using GreenField.ServiceCaller.MeetingDefinitions;
-using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
-using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.DataContracts;
-
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
+using GreenField.Gadgets.Models;
+using GreenField.Gadgets.Views;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.MeetingDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View Model for ViewCreateUpdatePresentations
+    /// </summary>
     public class ViewModelCreateUpdatePresentations : NotificationObject
     {
-
         #region Fields
-        public IRegionManager _regionManager { private get; set; }
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;        
+        /// <summary>
+        /// Region Manager MEF instance
+        /// </summary>
+        private IRegionManager regionManager;
+
+        /// <summary>
+        /// Event Aggregator MEF instance
+        /// </summary>
+        private IEventAggregator eventAggregator;
+
+        /// <summary>
+        /// Service caller instance
+        /// </summary>
+        private IDBInteractivity dbInteractivity;
+
+        /// <summary>
+        /// Logging MEF instance
+        /// </summary>
+        private ILoggerFacade logger;        
         #endregion
 
-        #region Constructor
-        public ViewModelCreateUpdatePresentations(DashboardGadgetParam param)
-        {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _regionManager = param.RegionManager;
-        }
-
-        #endregion       
-        
         #region Properties
+        #region IsActive
+        /// <summary>
+        /// IsActive implementation
+        /// </summary>
         private bool _isActive;
         public bool IsActive
         {
@@ -64,20 +61,21 @@ namespace GreenField.Gadgets.ViewModels
                     Initialize();
                 }
             }
-        }
+        } 
+        #endregion
 
-        #region Upload Document Type
+        #region Upload/Delete Document
         /// <summary>
         /// Stores the list of upload document type
         /// </summary>
-        private List<String> _uploadDocumentInfo;
+        private List<String> uploadDocumentInfo;
         public List<String> UploadDocumentInfo
         {
             get
             {
-                if (_uploadDocumentInfo == null)
+                if (uploadDocumentInfo == null)
                 {
-                    _uploadDocumentInfo = new List<string> 
+                    uploadDocumentInfo = new List<string> 
                     {
                         UploadDocumentType.POWERPOINT_PRESENTATION, 
                         UploadDocumentType.FINSTAT_REPORT, 
@@ -86,42 +84,41 @@ namespace GreenField.Gadgets.ViewModels
                         UploadDocumentType.ADDITIONAL_ATTACHMENT 
                     };
                 }
-                return _uploadDocumentInfo;
+                return uploadDocumentInfo;
             }
         }
 
         /// <summary>
         /// Stores selected upload document type
         /// </summary>
-        private String _selectedUploadDocumentInfo = UploadDocumentType.POWERPOINT_PRESENTATION;
+        private String selectedUploadDocumentInfo = UploadDocumentType.POWERPOINT_PRESENTATION;
         public String SelectedUploadDocumentInfo
         {
-            get { return _selectedUploadDocumentInfo; }
+            get { return selectedUploadDocumentInfo; }
             set
             {
-                _selectedUploadDocumentInfo = value;
+                selectedUploadDocumentInfo = value;
                 UploadFileData = null;
                 UploadFileStreamData = null;
                 SelectedUploadFileName = null;
                 RaisePropertyChanged(() => this.SelectedUploadDocumentInfo);
             }
-        } 
-        #endregion
+        }        
 
         /// <summary>
         /// Stores fileName of the browsed file
         /// </summary>
-        private String _selectedUploadFileName;
+        private String selectedUploadFileName;
         public String SelectedUploadFileName
         {
-            get { return _selectedUploadFileName; }
+            get { return selectedUploadFileName; }
             set
             {
-                _selectedUploadFileName = value;                
+                selectedUploadFileName = value;
                 RaisePropertyChanged(() => this.SelectedUploadFileName);
                 RaisePropertyChanged(() => this.UploadCommand);
             }
-        }        
+        }
 
         /// <summary>
         /// Stores Filemaster object for the upload file
@@ -138,53 +135,56 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public Byte[] UploadFileStreamData { get; set; }
 
-        private Stream _downloadStream;
+        /// <summary>
+        /// Download file stream
+        /// </summary>
+        private Stream downloadStream;
         public Stream DownloadStream
         {
-            get { return _downloadStream; }
+            get { return downloadStream; }
             set
             {
-                _downloadStream = value;
-                if (value != null && _dbInteractivity != null)
+                downloadStream = value;
+                if (value != null && dbInteractivity != null)
                 {
                     BusyIndicatorNotification(true, "Downloading generated IC Packet...");
-                    _dbInteractivity.GenerateICPacketReport(SelectedPresentationOverviewInfo.PresentationID, GenerateICPacketReportCallbackMethod);
+                    dbInteractivity.GenerateICPacketReport(SelectedPresentationOverviewInfo.PresentationID, GenerateICPacketReportCallbackMethod);
                 }
             }
         }
-        
-        
+        #endregion
 
+        #region Presentation and related documentation details
         /// <summary>
         /// Stores information concerning selected presentation
         /// </summary>
-        private ICPresentationOverviewData _selectedPresentationOverviewInfo;
+        private ICPresentationOverviewData selectedPresentationOverviewInfo;
         public ICPresentationOverviewData SelectedPresentationOverviewInfo
         {
-            get { return _selectedPresentationOverviewInfo; }
+            get { return selectedPresentationOverviewInfo; }
             set
             {
-                _selectedPresentationOverviewInfo = value;
+                selectedPresentationOverviewInfo = value;
             }
         }
 
         /// <summary>
         /// Stores documentation information concerning the selected presentation
         /// </summary>
-        private List<FileMaster> _selectedPresentationDocumentationInfo;
+        private List<FileMaster> selectedPresentationDocumentationInfo;
         public List<FileMaster> SelectedPresentationDocumentationInfo
         {
-            get { return _selectedPresentationDocumentationInfo; }
+            get { return selectedPresentationDocumentationInfo; }
             set
             {
-                _selectedPresentationDocumentationInfo = value;
+                selectedPresentationDocumentationInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationDocumentationInfo);
                 RaisePropertyChanged(() => this.SubmitCommand);
             }
-        }
+        } 
+        #endregion
 
         #region ICommand
-
         /// <summary>
         /// DeleteAttachedFile ICommand
         /// </summary>
@@ -198,9 +198,12 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public ICommand UploadCommand
         {
-            get { return new DelegateCommand<object>(UploadCommandMethod, UploadCommandMethodValidationMethod); }
+            get { return new DelegateCommand<object>(UploadCommandMethod, UploadCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// Submit Command
+        /// </summary>
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
@@ -211,57 +214,80 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
         /// </summary>
-        private bool _busyIndicatorIsBusy = false;
-        public bool BusyIndicatorIsBusy
+        private bool isBusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return isBusyIndicatorBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
-                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+                isBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
             }
         }
 
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
         #endregion
-
         #endregion       
 
-        #region ICommand Methods
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashboardGadgetParam</param>
+        public ViewModelCreateUpdatePresentations(DashboardGadgetParam param)
+        {
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
+            regionManager = param.RegionManager;
+        }
+        #endregion               
 
+        #region ICommand Methods
+        /// <summary>
+        /// DeleteAttachedFileCommand execution Method
+        /// </summary>
+        /// <param name="param"></param>
         private void DeleteAttachedFileCommandMethod(object param)
         {
             if (param is FileMaster)
             {
                 DeleteFileData = param as FileMaster;
-                Prompt.ShowDialog(messageText: "This action will permanently delete attachment from system. Do you wish to continue?", buttonType: MessageBoxButton.OKCancel, messageBoxResult: (result) =>
+                Prompt.ShowDialog(messageText: "This action will permanently delete attachment from system. Do you wish to continue?"
+                    , buttonType: MessageBoxButton.OKCancel, messageBoxResult: (result) =>
                 {
                     if (result == MessageBoxResult.OK)
                     {
-                        if (_dbInteractivity != null)
+                        if (dbInteractivity != null)
                         {
                             BusyIndicatorNotification(true, "Deleting document...");
-                            _dbInteractivity.UpdatePresentationAttachedFileStreamData(UserSession.SessionManager.SESSION.UserName
-                                , SelectedPresentationOverviewInfo.PresentationID, DeleteFileData, true, UpdatePresentationAttachedFileStreamDataCallbackMethod);
+                            dbInteractivity.UpdatePresentationAttachedFileStreamData(UserSession.SessionManager.SESSION.UserName
+                                , SelectedPresentationOverviewInfo.PresentationID, DeleteFileData, true
+                                , UpdatePresentationAttachedFileStreamDataCallbackMethod);
                         }                       
                     }
                 });     
             }
         }
 
-        private Boolean UploadCommandMethodValidationMethod(object param)
+        /// <summary>
+        /// UploadCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
+        private Boolean UploadCommandValidationMethod(object param)
         {
             return UploadFileStreamData != null && UploadFileData != null;
         }
@@ -272,7 +298,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         private void UploadCommandMethod(object param)
         {
-            if (_dbInteractivity != null)
+            if (dbInteractivity != null)
             {
                 BusyIndicatorNotification(true, "Uploading document");
                 String deleteUrl = String.Empty;
@@ -282,11 +308,16 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     deleteUrl = overwriteFileMaster.Location;
                 }
-                _dbInteractivity.UploadDocument(UploadFileData.Name, UploadFileStreamData
+                dbInteractivity.UploadDocument(UploadFileData.Name, UploadFileStreamData
                     , deleteUrl, UploadDocumentCallbackMethod);
             }
         }
 
+        /// <summary>
+        /// SubmitCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
         private Boolean SubmitCommandValidationMethod(object param)
         {
             if (SelectedPresentationDocumentationInfo == null)
@@ -297,25 +328,30 @@ namespace GreenField.Gadgets.ViewModels
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.DCF_MODEL).Count() == 1;
         }
 
+        /// <summary>
+        /// SubmitCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void SubmitCommandMethod(object param)
         {
             if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING
                 && SelectedPresentationOverviewInfo.MeetingDateTime > DateTime.UtcNow)
             {
-                Prompt.ShowDialog("Please ensure that all changes have been made before submitting meeting presentation for voting", "", MessageBoxButton.OKCancel, (result) =>
+                Prompt.ShowDialog("Please ensure that all changes have been made before submitting meeting presentation for voting", ""
+                    , MessageBoxButton.OKCancel, (result) =>
                 {
                     if (result == MessageBoxResult.OK)
                     {
                         SelectedPresentationOverviewInfo.StatusType = StatusType.READY_FOR_VOTING;
-                        //update details
 
-                        if (_dbInteractivity != null)
+                        //update details
+                        if (dbInteractivity != null)
                         {
                             BusyIndicatorNotification(true, "Updating selected presentation to status 'Ready for Voting'...");
-                            _dbInteractivity.SetICPPresentationStatus(GreenField.UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo.PresentationID,
+                            dbInteractivity.SetICPPresentationStatus(GreenField.UserSession.SessionManager.SESSION.UserName
+                                , SelectedPresentationOverviewInfo.PresentationID,
                                     StatusType.READY_FOR_VOTING, SetICPPresentationStatusCallbackMethod);
                         }
-
                     }
                 });
             }
@@ -327,64 +363,18 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (dialog.DialogResult == true)
                     {
-                        if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
+                        if (SelectedPresentationOverviewInfo != null && dbInteractivity != null)
                         {
                             BusyIndicatorNotification(true, "Resubmitting presentation...");
-                            _dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
+                            dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
                                 SelectedPresentationOverviewInfo, dialog.AlertNotification,
                                 ReSubmitPresentationCallbackMethod);
                         }
                     }
                 };
             }
-
-
         }
-        #endregion
-
-        #region Helper Methods
-        public void RetrievePresentationAttachedDetails()
-        {
-            if (_dbInteractivity != null)
-            {
-                BusyIndicatorNotification(true, "Retrieving presentation attached file details...");
-                _dbInteractivity.RetrievePresentationAttachedFileDetails(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationAttachedDetailsCallback); 
-            }
-
-        }
-
-        public void Initialize()
-        {
-            UploadFileData = null;
-            UploadFileStreamData = null;
-            SelectedUploadFileName = null;
-            ICPresentationOverviewData presentationInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
-            if (presentationInfo != null)
-            {
-                SelectedPresentationOverviewInfo = presentationInfo;
-                if (_dbInteractivity != null)
-                {
-                    BusyIndicatorNotification(true, "Retrieving updated upload documentation...");
-                    _dbInteractivity.RetrievePresentationAttachedFileDetails(SelectedPresentationOverviewInfo.PresentationID, 
-                        RetrievePresentationAttachedDetailsCallback);
-                }
-            }            
-        }
-
-        /// <summary>
-        /// Display/Hide Busy Indicator
-        /// </summary>
-        /// <param name="showBusyIndicator">True to display indicator; default false</param>
-        /// <param name="message">Content message for indicator; default null</param>
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
-        {
-            if (message != null)
-                BusyIndicatorContent = message;
-
-            BusyIndicatorIsBusy = showBusyIndicator;
-        }
-
-        #endregion
+        #endregion        
 
         #region Callback Methods
         /// <summary>
@@ -394,27 +384,27 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrievePresentationAttachedDetailsCallback(List<FileMaster> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     SelectedPresentationDocumentationInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
@@ -426,41 +416,41 @@ namespace GreenField.Gadgets.ViewModels
         private void UploadDocumentCallbackMethod(String result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     if (result != String.Empty)
                     {
                         UploadFileData.Location = result;
-                        if (_dbInteractivity != null)
+                        if (dbInteractivity != null)
                         {
                             if (SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT)
                             {
                                 UploadFileData.Name = SelectedUploadFileName;
                             }
-
                             BusyIndicatorNotification(true, "Uploading document");
-                            _dbInteractivity.UpdatePresentationAttachedFileStreamData(UserSession.SessionManager.SESSION.UserName
-                                , SelectedPresentationOverviewInfo.PresentationID, UploadFileData, false, UpdatePresentationAttachedFileStreamDataCallbackMethod);
+                            dbInteractivity.UpdatePresentationAttachedFileStreamData(UserSession.SessionManager.SESSION.UserName
+                                , SelectedPresentationOverviewInfo.PresentationID, UploadFileData, false
+                                , UpdatePresentationAttachedFileStreamDataCallbackMethod);
                         }
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -470,27 +460,27 @@ namespace GreenField.Gadgets.ViewModels
         private void UpdatePresentationAttachedFileStreamDataCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result == true)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     Initialize();
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -500,206 +490,83 @@ namespace GreenField.Gadgets.ViewModels
         private void SetICPPresentationStatusCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result == true)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    if (SelectedPresentationOverviewInfo != null && dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Resubmitting presentation...");
-                        _dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
+                        dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
                             SelectedPresentationOverviewInfo, false, ReSubmitPresentationCallbackMethod);
                     }
-
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
 
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
-        private void UpdatePresentationAttachedFileStreamDataDeleteAttachedFileCallbackMethod(Boolean? result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result == true)
-                {
-                    Initialize();
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        //private void RetrievePresentationVoterDataCallbackMethod(List<VoterInfo> result)
-        //{
-        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-        //    Logging.LogBeginMethod(_logger, methodNamespace);
-        //    try
-        //    {
-        //        if (result != null)
-        //        {
-        //            Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-
-        //            List<String> userNames = result.Where(record => record.PostMeetingFlag == false).Select(record => record.Name).ToList();
-        //            if (_dbInteractivity != null)
-        //            {
-        //                BusyIndicatorNotification(true, "Retrieving user credentials...");
-        //                _dbInteractivity.GetUsersByNames(userNames, GetUsersByNamesCallbackMethod);
-        //            }
-        //            else
-        //            {
-        //                _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-        //                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-        //            BusyIndicatorNotification();
-        //            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-        //            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-        //        Logging.LogException(_logger, ex);
-        //        BusyIndicatorNotification();
-        //        _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-        //        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-        //    }
-        //    finally
-        //    {
-        //        Logging.LogEndMethod(_logger, methodNamespace);
-        //    }
-        //}
-
-        //private void GetUsersByNamesCallbackMethod(List<MembershipUserInfo> result)
-        //{
-        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-        //    Logging.LogBeginMethod(_logger, methodNamespace);
-        //    try
-        //    {
-        //        if (result != null)
-        //        {
-        //            Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-
-        //            MembershipUserInfo presenterCredentials = result.Where(record => record.UserName.ToLower()
-        //                == SelectedPresentationOverviewInfo.Presenter.ToLower()).FirstOrDefault();
-        //            if (presenterCredentials == null)
-        //                throw new Exception("Presenter credentials could not be retrieved. Alert notification was not successful.");
-
-        //            String emailtTo = presenterCredentials.Email;
-
-        //            String emailCc = String.Join("|", result.Where(record => record.UserName.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower())
-        //                .Select(record => record.Email).ToArray());
-
-        //            String messageSubject = "Investment Committee Presentation Edit Notification – " + 
-        //                Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingClosedDateTime).ToString("MMMM dd, yyyy");
-        //            String messageBody = "The attached presentation scheduled for the Investment Committee Meeting dated "
-        //                + Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingClosedDateTime).ToString("MMMM dd, yyyy")
-        //                + " UTC has been edited since its original submission.  Voting members, please enter AIMS to modify your comments and pre-meeting votes, if necessary.";
-
-        //            //message ic packet attachment pending
-        //            if (_dbInteractivity != null)
-        //            {
-        //                BusyIndicatorNotification(true, "Processing alert notification...");
-        //                _dbInteractivity.SetMessageInfo(emailtTo, emailCc, messageSubject, messageBody, null
-        //                    , UserSession.SessionManager.SESSION.UserName, SetMessageInfoCallbackMethod);
-        //            }
-        //            else
-        //            {
-        //                _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-        //                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-        //            BusyIndicatorNotification();
-        //            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-        //            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-        //        Logging.LogException(_logger, ex);
-        //        BusyIndicatorNotification();
-        //        _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-        //        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-        //    }
-        //    finally
-        //    {
-        //        Logging.LogEndMethod(_logger, methodNamespace);
-        //    }
-        //}
-
+        /// <summary>
+        /// ReSubmitPresentation callback method
+        /// </summary>
+        /// <param name="result">True/False/Null</param>
         private void ReSubmitPresentationCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result == true)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
-                _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
             }
         }
 
+        /// <summary>
+        /// GenerateICPacketReport callback method
+        /// </summary>
+        /// <param name="result">IC Packet file byte stream</param>
         private void GenerateICPacketReportCallbackMethod(Byte[] result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     DownloadStream.Write(result, 0, result.Length);
                     DownloadStream.Close();
                     DownloadStream = null;
@@ -707,31 +574,76 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Prompt.ShowDialog("An Error ocurred while downloading the preview report from server.");
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
         #endregion                
 
-        #region EventUnSubscribe
+        #region Helper Methods
+        /// <summary>
+        /// Calls RetrievePresentationAttachedFileDetails to fetch updated document data
+        /// </summary>
+        public void RetrievePresentationAttachedDetails()
+        {
+            if (dbInteractivity != null)
+            {
+                BusyIndicatorNotification(true, "Retrieving presentation attached file details...");
+                dbInteractivity.RetrievePresentationAttachedFileDetails(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationAttachedDetailsCallback);
+            }
+        }
+
+        /// <summary>
+        /// Initializes view
+        /// </summary>
+        public void Initialize()
+        {
+            UploadFileData = null;
+            UploadFileStreamData = null;
+            SelectedUploadFileName = null;
+            ICPresentationOverviewData presentationInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
+            if (presentationInfo != null)
+            {
+                SelectedPresentationOverviewInfo = presentationInfo;
+                if (dbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Retrieving updated upload documentation...");
+                    dbInteractivity.RetrievePresentationAttachedFileDetails(SelectedPresentationOverviewInfo.PresentationID,
+                        RetrievePresentationAttachedDetailsCallback);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
+        /// <param name="message">Content message for indicator; default null</param>
+        public void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
+        {
+            if (message != null)
+            {
+                BusyIndicatorContent = message;
+            }
+            IsBusyIndicatorBusy = isBusyIndicatorVisible;
+        }
+
         /// <summary>
         /// Method that disposes the events
         /// </summary>
         public void Dispose()
         {
-
         }
-
         #endregion
     }
 }

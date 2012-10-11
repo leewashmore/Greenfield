@@ -29,94 +29,121 @@ using System.Reflection;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View Model class for ViewPresentationDecisionEntry
+    /// </summary>
     public class ViewModelPresentationDecisionEntry : NotificationObject
     {
         #region Fields
-        private IRegionManager _regionManager;
+        /// <summary>
+        /// Region Manager
+        /// </summary>
+        private IRegionManager regionManager;
 
         /// <summary>
         /// Event Aggregator
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// Instance of Service Caller Class
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// Instance of LoggerFacade
         /// </summary>
-        private ILoggerFacade _logger;
+        private ILoggerFacade logger;
+        #endregion
 
+        #region Properties
+        #region IsActive
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get
-            {
-                return _isActive;
-            }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (value)
                 {
                     Initialize();
                 }
             }
-        }
-
+        } 
         #endregion
 
-        #region Constructor
-        public ViewModelPresentationDecisionEntry(DashboardGadgetParam param)
-        {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _regionManager = param.RegionManager;
-        }
-        #endregion
+        #region Presentation details
+        /// <summary>
+        /// Stores true if security is held in portfolios
+        /// </summary>
+        public Boolean isSecurityHeld { get; set; }
 
-        #region Properties
-        public List<String> VoteTypeInfo
+        /// <summary>
+        /// Stores presentation overview details
+        /// </summary>
+        private ICPresentationOverviewData selectedPresentationOverviewInfo;
+        public ICPresentationOverviewData SelectedPresentationOverviewInfo
         {
-            get
-            {
-                return new List<string> 
-                { 
-                    VoteType.AGREE,
-                    VoteType.ABSTAIN,
-                    VoteType.MODIFY
-                };
-            }
-        }
-
-        private Boolean _iCDecisionIsEnable;
-        public Boolean ICDecisionIsEnable
-        {
-            get { return _iCDecisionIsEnable; }
+            get { return selectedPresentationOverviewInfo; }
             set
             {
-                _iCDecisionIsEnable = value;
-                RaisePropertyChanged(() => this.ICDecisionIsEnable); 
-            }
-        }
-
-        private Boolean? _acceptWithoutDiscussionIsChecked = true;
-        public Boolean? AcceptWithoutDiscussionIsChecked
-        {
-            get { return _acceptWithoutDiscussionIsChecked; }
-            set
-            {
-                _acceptWithoutDiscussionIsChecked = value;
-                RaisePropertyChanged(() => this.AcceptWithoutDiscussionIsChecked);
                 if (value != null)
                 {
-                    ICDecisionIsEnable = !Convert.ToBoolean(value);
+                    if (value.AcceptWithoutDiscussionFlag == null)
+                    {
+                        value.AcceptWithoutDiscussionFlag = true;
+                        value.CommitteePFVMeasure = value.SecurityPFVMeasure;
+                        value.CommitteeBuyRange = value.SecurityBuyRange;
+                        value.CommitteeSellRange = value.SecuritySellRange;
+                        value.CommitteeRecommendation = value.SecurityRecommendation;
+                    }
+
+                    if (dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Voting information for the selected presentation");
+                        dbInteractivity.RetrievePresentationVoterData(value.PresentationID, RetrievePresentationVoterDataCallbackMethod);
+                    }
+                }
+                selectedPresentationOverviewInfo = value;
+                RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
+                IsAcceptWithoutDiscussionChecked = value.AcceptWithoutDiscussionFlag;
+            }
+        } 
+        #endregion
+
+        #region Interface interacting properties
+        /// <summary>
+        /// Stores true if IC Decision panel is enabled
+        /// </summary>
+        private Boolean _isICDecisionEnable;
+        public Boolean IsICDecisionEnable
+        {
+            get { return _isICDecisionEnable; }
+            set
+            {
+                _isICDecisionEnable = value;
+                RaisePropertyChanged(() => this.IsICDecisionEnable);
+            }
+        }
+
+        /// <summary>
+        /// Stores true if Accept without discussion checkbox is checked
+        /// </summary>
+        private Boolean? _isAcceptWithoutDiscussionChecked = true;
+        public Boolean? IsAcceptWithoutDiscussionChecked
+        {
+            get { return _isAcceptWithoutDiscussionChecked; }
+            set
+            {
+                _isAcceptWithoutDiscussionChecked = value;
+                RaisePropertyChanged(() => this.IsAcceptWithoutDiscussionChecked);
+                if (value != null)
+                {
+                    IsICDecisionEnable = !Convert.ToBoolean(value);
                     SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag = Convert.ToBoolean(value);
 
                     if (Convert.ToBoolean(value))
@@ -128,56 +155,32 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedPresentationOverviewInfo.CommitteeSellRange = SelectedPresentationOverviewInfo.SecuritySellRange;
                         SelectedPresentationOverviewInfo.CommitteeRecommendation = SelectedPresentationOverviewInfo.SecurityRecommendation;
                     }
-                    RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);                     
+                    RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
                 }
             }
-        }        
+        } 
+        #endregion
 
-        private Dictionary<String, Decimal?> _securityPFVMeasureCurrentPrices;
-        public Dictionary<String, Decimal?> SecurityPFVMeasureCurrentPrices
+        #region IC Decision input
+        /// <summary>
+        /// Stores vote type reference
+        /// </summary>
+        public List<String> VoteTypeInfo
         {
             get
             {
-                //if (_securityPFVMeasureCurrentPrices == null)
-                //{
-                //    _securityPFVMeasureCurrentPrices = new Dictionary<string, decimal?>();
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_DIVIDEND_YIELD, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_COUNTRY, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_REVENUE, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_NAV, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_APPRAISAL_VALUE, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV_RELATIVE_TO_COUNTRY, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV_RELATIVE_TO_INDUSTRY, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_CE, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_RELATIVE_TO_COUNTRY, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_RELATIVE_TO_INDUSTRY, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_TO_2_YEAR_EARNINGS_GROWTH, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_TO_3_YEAR_EARNINGS_GROWTH, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_EMBEDDED_VALUE, null);
-                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_REVENUE, null);
-
-                //}
-                return _securityPFVMeasureCurrentPrices;
+                return new List<string> 
+                { 
+                    VoteType.AGREE,
+                    VoteType.ABSTAIN,
+                    VoteType.MODIFY
+                };
             }
-            set
-            {
-                _securityPFVMeasureCurrentPrices = value;
-                if (value != null)
-                {
-                    SelectedPresentationOverviewInfo.CommitteePFVMeasureValue = value[SelectedPresentationOverviewInfo.CommitteePFVMeasure];
-                }
-            }
-        }
+        }                
 
-        Boolean SecurityIsHeld { get; set; }
-                
+        /// <summary>
+        /// Stores PFV Measure type reference 
+        /// </summary>
         public List<String> PFVTypeInfo
         {
             get
@@ -207,37 +210,30 @@ namespace GreenField.Gadgets.ViewModels
                     PFVType.FORWARD_P_REVENUE
                 };
             }
-        }        
-
-        private ICPresentationOverviewData _selectedPresentationOverviewInfo;
-        public ICPresentationOverviewData SelectedPresentationOverviewInfo
-        {
-            get { return _selectedPresentationOverviewInfo; }
-            set
-            {                
-                if (value != null)
-                {
-                    if (value.AcceptWithoutDiscussionFlag == null)
-                    {
-                        value.AcceptWithoutDiscussionFlag = true;
-                        value.CommitteePFVMeasure = value.SecurityPFVMeasure;
-                        value.CommitteeBuyRange = value.SecurityBuyRange;
-                        value.CommitteeSellRange = value.SecuritySellRange;
-                        value.CommitteeRecommendation = value.SecurityRecommendation;
-                    }
-
-                    if (_dbInteractivity != null)
-                    {
-                        BusyIndicatorNotification(true, "Retrieving Voting information for the selected presentation");
-                        _dbInteractivity.RetrievePresentationVoterData(value.PresentationID, RetrievePresentationVoterDataCallbackMethod); 
-                    }
-                }
-                _selectedPresentationOverviewInfo = value;                
-                RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
-                AcceptWithoutDiscussionIsChecked = value.AcceptWithoutDiscussionFlag;
-            }
         }
 
+        /// <summary>
+        /// Stores PFV Measure types as keys with value equal to their current system value
+        /// </summary>
+        private Dictionary<String, Decimal?> _securityPFVMeasureCurrentPrices;
+        public Dictionary<String, Decimal?> SecurityPFVMeasureCurrentPrices
+        {
+            get { return _securityPFVMeasureCurrentPrices; }
+            set
+            {
+                _securityPFVMeasureCurrentPrices = value;
+                if (value != null)
+                {
+                    SelectedPresentationOverviewInfo.CommitteePFVMeasureValue = value[SelectedPresentationOverviewInfo.CommitteePFVMeasure];
+                }
+            }
+        } 
+        #endregion
+
+        #region Voter Information
+        /// <summary>
+        /// Stores presentation voter information
+        /// </summary>
         private List<VoterInfo> _presentationVoterInfo;
         public List<VoterInfo> PresentationVoterInfo
         {
@@ -245,6 +241,9 @@ namespace GreenField.Gadgets.ViewModels
             set { _presentationVoterInfo = value; }
         }
 
+        /// <summary>
+        /// Stores presentation pre-meeting voter information 
+        /// </summary>
         private List<VoterInfo> _presentationPreMeetingVoterInfo;
         public List<VoterInfo> PresentationPreMeetingVoterInfo
         {
@@ -256,6 +255,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Stores presentation post-meeting voter information 
+        /// </summary>
         private List<VoterInfo> _presentationPostMeetingVoterInfo;
         public List<VoterInfo> PresentationPostMeetingVoterInfo
         {
@@ -265,97 +267,121 @@ namespace GreenField.Gadgets.ViewModels
                 _presentationPostMeetingVoterInfo = value;
                 RaisePropertyChanged(() => this.PresentationPostMeetingVoterInfo);
             }
-        }
+        } 
+        #endregion
 
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod); }
-        } 
+        }
         #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashboardGadgetParam</param>
+        public ViewModelPresentationDecisionEntry(DashboardGadgetParam param)
+        {
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
+            regionManager = param.RegionManager;
+        }
+        #endregion        
 
         #region Busy Indicator Notification
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
         /// </summary>
-        private bool _busyIndicatorIsBusy = false;
-        public bool BusyIndicatorIsBusy
+        private bool isBusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return isBusyIndicatorBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
-                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+                isBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
             }
         }
 
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
         #endregion
 
         #region ICommand Methods
+        /// <summary>
+        /// SubmitCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void SubmitCommandMethod(object param)
         {
             if (SecurityPFVMeasureCurrentPrices == null)
             {
-                Prompt.ShowDialog("Decision Entry form could not be submitted owing to unavailability of current P/FV Measure prices for the selected security");
+                Prompt.ShowDialog("Decision Entry form could not be submitted"
+                + " owing to unavailability of current P/FV Measure prices for the selected security");
                 return;
             }
             if (SecurityPFVMeasureCurrentPrices[SelectedPresentationOverviewInfo.CommitteePFVMeasure] == null)
             {
-                Prompt.ShowDialog("Decision Entry form could not be submitted owing to unavailability of current P/FV Measure price for the selected security and P/FV measure in IC Decision section");
+                Prompt.ShowDialog("Decision Entry form could not be submitted owing to unavailability"
+                + " of current P/FV Measure price for the selected security and P/FV measure in IC Decision section");
                 return;
             }
-
             if (SelectedPresentationOverviewInfo.CommitteePFVMeasure == null
                 || SelectedPresentationOverviewInfo.CommitteeBuyRange == null
                 || SelectedPresentationOverviewInfo.CommitteeSellRange == null
                 || SelectedPresentationOverviewInfo.CommitteePFVMeasureValue == null)
             {
-                Prompt.ShowDialog("'Modify' Vote input has not been supplemented with valid P/FV Measure, Buy and Sell Range for one or more voting members");
+                Prompt.ShowDialog("'Modify' Vote input has not been supplemented with valid"
+                + " P/FV Measure, Buy and Sell Range for one or more voting members");
                 return;
             }
-
             foreach (VoterInfo info in PresentationPostMeetingVoterInfo)
             {
                 if (info.VoteType == VoteType.MODIFY)
                 {
                     if (info.VoterPFVMeasure == null || info.VoterBuyRange == null || info.VoterSellRange == null)
                     {
-                        Prompt.ShowDialog("'Modify' Vote input has not been supplemented with valid P/FV Measure, Buy and Sell Range for one or more voting members");
+                        Prompt.ShowDialog("'Modify' Vote input has not been supplemented with valid"
+                        + " P/FV Measure, Buy and Sell Range for one or more voting members");
                         return;
                     }
                 }
             }
-
-            if (_dbInteractivity != null)
+            if (dbInteractivity != null)
             {
-                _dbInteractivity.UpdateDecisionEntryDetails(UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo
+                dbInteractivity.UpdateDecisionEntryDetails(UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo
                     , PresentationPostMeetingVoterInfo, UpdateDecisionEntryDetailsCallbackMethod);
             }
         } 
         #endregion
 
         #region CallBack Methods
+        /// <summary>
+        /// RetrievePresentationVoterData callback method
+        /// </summary>
+        /// <param name="result">List of VoterInfo</param>
         private void RetrievePresentationVoterDataCallbackMethod(List<VoterInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     PresentationVoterInfo = ListUtils.GetDeepCopy<VoterInfo>(result);
                     PresentationPreMeetingVoterInfo = result
                         .Where(record => record.PostMeetingFlag == false && record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower())
@@ -380,91 +406,98 @@ namespace GreenField.Gadgets.ViewModels
                             }
                         }                        
                     }
+                    isSecurityHeld = SelectedPresentationOverviewInfo.CurrentHoldings.ToLower() == "yes";
 
-                    SecurityIsHeld = SelectedPresentationOverviewInfo.CurrentHoldings.ToLower() == "yes";
-
-                    if (_dbInteractivity != null)
+                    if (dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieve current P/FV Measure values related to presented security...");
-                        _dbInteractivity.RetrieveCurrentPFVMeasures(PFVTypeInfo, SelectedPresentationOverviewInfo.SecurityTicker
+                        dbInteractivity.RetrieveCurrentPFVMeasures(PFVTypeInfo, SelectedPresentationOverviewInfo.SecurityTicker
                             , RetrieveCurrentPFVMeasuresCallbackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);                
+                Logging.LogEndMethod(logger, methodNamespace);                
             }
         }
 
+        /// <summary>
+        /// RetrieveCurrentPFVMeasures callback method
+        /// </summary>
+        /// <param name="result">Dictionary od string key and nullable decimal values</param>
         private void RetrieveCurrentPFVMeasuresCallbackMethod(Dictionary<String, Decimal?> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     SecurityPFVMeasureCurrentPrices = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);                    
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// UpdateDecisionEntryDetails callback method
+        /// </summary>
+        /// <param name="result">Nullable Boolean</param>
         private void UpdateDecisionEntryDetailsCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     if (result == true)
                     {
                         Prompt.ShowDialog("Decision Entry successfully completed");
-                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
                     }
                 }
                 else
                 {
                     Prompt.ShowDialog("An Error ocurred while submitting Decision Entry form.");
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
@@ -474,16 +507,23 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Display/Hide Busy Indicator
         /// </summary>
-        /// <param name="showBusyIndicator">True to display indicator; default false</param>
+        /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
         /// <param name="message">Content message for indicator; default null</param>
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        private void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
-
-            BusyIndicatorIsBusy = showBusyIndicator;
+            }
+            IsBusyIndicatorBusy = isBusyIndicatorVisible;
         }
 
+        /// <summary>
+        /// Updates ICDecision Recommendation based on selected PFV Measure, buy and sell range
+        /// </summary>
+        /// <param name="selectedPFVMeasure">PFV Measure</param>
+        /// <param name="buyRange">BuyRange</param>
+        /// <param name="sellRange">Sell Range</param>
         public void UpdateICDecisionRecommendation(String selectedPFVMeasure, Decimal buyRange, Decimal sellRange)
         {
             if (selectedPFVMeasure == null || SecurityPFVMeasureCurrentPrices == null)
@@ -500,11 +540,10 @@ namespace GreenField.Gadgets.ViewModels
             SelectedPresentationOverviewInfo.CommitteeSellRange = Convert.ToSingle(sellRange);
             SelectedPresentationOverviewInfo.CommitteePFVMeasureValue = Convert.ToDecimal(CurrentPFVMeasurePrice);
 
-
             Decimal lowerLimit = buyRange <= sellRange ? buyRange : sellRange;
             Decimal upperLimit = buyRange > sellRange ? buyRange : sellRange;
 
-            if (SecurityIsHeld)
+            if (isSecurityHeld)
             {
                 if (CurrentPFVMeasurePrice <= upperLimit)
                 {
@@ -530,12 +569,15 @@ namespace GreenField.Gadgets.ViewModels
             RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
         }
 
+        /// <summary>
+        /// Initializes view
+        /// </summary>
         public void Initialize()
         {
             PresentationVoterInfo = null;
             PresentationPreMeetingVoterInfo = null;
             PresentationPostMeetingVoterInfo = null;
-            SecurityIsHeld = false;
+            isSecurityHeld = false;
             SecurityPFVMeasureCurrentPrices = null;            
             SelectedPresentationOverviewInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
         }

@@ -82,13 +82,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
@@ -98,14 +98,14 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores presentation overview information received from the overview screen
         /// </summary>
-        private ICPresentationOverviewData _iCPresentationOverviewInfo;
+        private ICPresentationOverviewData iCPresentationOverviewInfo;
         public ICPresentationOverviewData ICPresentationOverviewInfo
         {
             get
             {
-                if (_iCPresentationOverviewInfo == null)
+                if (iCPresentationOverviewInfo == null)
                 {
-                    _iCPresentationOverviewInfo = new ICPresentationOverviewData()
+                    iCPresentationOverviewInfo = new ICPresentationOverviewData()
                     {
                         AcceptWithoutDiscussionFlag = true,
                         StatusType = StatusType.IN_PROGRESS,
@@ -116,11 +116,11 @@ namespace GreenField.Gadgets.ViewModels
                         ModifiedOn = DateTime.UtcNow
                     };
                 }
-                return _iCPresentationOverviewInfo;
+                return iCPresentationOverviewInfo;
             }
             set
             {
-                _iCPresentationOverviewInfo = value;
+                iCPresentationOverviewInfo = value;
                 RaisePropertyChanged(() => this.ICPresentationOverviewInfo);
             }
         }
@@ -128,15 +128,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores entity selected from the toolbox
         /// </summary>
-        private EntitySelectionData _entitySelectionInfo;
+        private EntitySelectionData entitySelectionInfo;
         public EntitySelectionData EntitySelectionInfo
         {
-            get { return _entitySelectionInfo; }
+            get { return entitySelectionInfo; }
             set
             {
-                if (_entitySelectionInfo != value)
+                if (entitySelectionInfo != value)
                 {
-                    _entitySelectionInfo = value;
+                    entitySelectionInfo = value;
                     RaisePropertyChanged(() => EntitySelectionInfo);
                 }
             }
@@ -183,9 +183,8 @@ namespace GreenField.Gadgets.ViewModels
             eventAggregator = param.EventAggregator;
             regionManager = param.RegionManager;
 
-            // _dbInteractivity.GetPresentations(GetPresentationsCallBackMethod);
-            _entitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
-            portfolioSelectionInfo = param.DashboardGadgetPayload.PortfolioSelectionData;
+            EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
+            PortfolioSelectionInfo = param.DashboardGadgetPayload.PortfolioSelectionData;
 
             //Subscription to SecurityReferenceSet event
             if (eventAggregator != null)
@@ -204,7 +203,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <returns>True/False</returns>
         private bool SubmitCommandValidationMethod(object param)
         {
-            Boolean selectionValidation = _entitySelectionInfo != null && portfolioSelectionInfo != null;
+            Boolean selectionValidation = entitySelectionInfo != null && portfolioSelectionInfo != null;
             Boolean dataValidation = ICPresentationOverviewInfo.SecurityBuyRange != null
                 && ICPresentationOverviewInfo.SecurityPFVMeasure != String.Empty
                 && ICPresentationOverviewInfo.SecuritySellRange != null
@@ -303,7 +302,6 @@ namespace GreenField.Gadgets.ViewModels
             }
             
         }
-
         #endregion
 
         #region Event Handler
@@ -320,9 +318,9 @@ namespace GreenField.Gadgets.ViewModels
                 if (entitySelectionData != null)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, entitySelectionData, 1);
-                    _entitySelectionInfo = entitySelectionData;
+                    EntitySelectionInfo = entitySelectionData;
 
-                    if (IsActive && _entitySelectionInfo != null && PortfolioSelectionInfo != null)
+                    if (IsActive && EntitySelectionInfo != null && PortfolioSelectionInfo != null)
                     {
                         RaisePropertyChanged(() => this.SubmitCommand);
                         HandlePortfolioReferenceSet(PortfolioSelectionInfo);
@@ -344,7 +342,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event handler for PortfolioSelection changed Event
         /// </summary>
-        /// <param name="PortfolioSelectionData"></param>
+        /// <param name="PortfolioSelectionData">PortfolioSelectionData</param>
         public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -354,14 +352,15 @@ namespace GreenField.Gadgets.ViewModels
                 if (portfolioSelectionData != null)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, portfolioSelectionData, 1);
-                    portfolioSelectionInfo = portfolioSelectionData;
+                    PortfolioSelectionInfo = portfolioSelectionData;
 
-                    //Argument Null Exception
-                    if (IsActive && _entitySelectionInfo != null && PortfolioSelectionInfo != null)
+                    if (IsActive && entitySelectionInfo != null && PortfolioSelectionInfo != null)
                     {
                         RaisePropertyChanged(() => this.SubmitCommand);
-                        BusyIndicatorNotification(true, "Retrieving security reference data for '" + _entitySelectionInfo.LongName + " (" + _entitySelectionInfo.ShortName + ")'");
-                        dbInteractivity.RetrieveSecurityDetails(_entitySelectionInfo, ICPresentationOverviewInfo, portfolioSelectionInfo, RetrieveSecurityDetailsCallBackMethod);
+                        BusyIndicatorNotification(true, "Retrieving security reference data for '" 
+                            + entitySelectionInfo.LongName + " (" + entitySelectionInfo.ShortName + ")'");
+                        dbInteractivity.RetrieveSecurityDetails(entitySelectionInfo, ICPresentationOverviewInfo
+                            , portfolioSelectionInfo, RetrieveSecurityDetailsCallBackMethod);
                     }
                 }
                 else
@@ -378,14 +377,23 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Helper Methods
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
+        /// <param name="message">Content message for indicator; default null</param>
+        private void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
-
-            IsBusyIndicatorBusy = showBusyIndicator;
+            }
+            IsBusyIndicatorBusy = isBusyIndicatorVisible;
         }
 
+        /// <summary>
+        /// Initializes view
+        /// </summary>
         public void Initialize()
         {
             MeetingInfo meetingInfo = ICNavigation.Fetch(ICNavigationInfo.MeetingInfo) as MeetingInfo;
@@ -411,17 +419,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Updates YTD Ret values in presentation overview based on input values
         /// </summary>
-        /// <param name="valueYTDAbs"></param>
-        /// <param name="valueYTDReltoLoc"></param>
-        /// <param name="valueYTDReltoEM"></param>
+        /// <param name="valueYTDAbs">YTDRet_Absolute</param>
+        /// <param name="valueYTDReltoLoc">YTDRet_RELtoLOC</param>
+        /// <param name="valueYTDReltoEM">YTDRet_RELtoEM</param>
         public void RaiseICPresentationOverviewInfoChanged(Decimal valueYTDAbs, Decimal valueYTDReltoLoc, Decimal valueYTDReltoEM)
         {
             ICPresentationOverviewInfo.YTDRet_Absolute = String.Format("{0:n2}", valueYTDAbs) + "%";
-            ICPresentationOverviewInfo.YTDRet_RELtoEM = String.Format("{0:n2}", valueYTDReltoLoc) + "%";
             ICPresentationOverviewInfo.YTDRet_RELtoLOC = String.Format("{0:n2}", valueYTDReltoEM) + "%";
+            ICPresentationOverviewInfo.YTDRet_RELtoEM = String.Format("{0:n2}", valueYTDReltoLoc) + "%";            
             RaisePropertyChanged(() => this.SubmitCommand);
         }
-
         #endregion
 
         #region EventUnSubscribe

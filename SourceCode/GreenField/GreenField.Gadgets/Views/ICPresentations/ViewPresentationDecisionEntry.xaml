@@ -24,7 +24,7 @@
 
 
     <telerik:RadBusyIndicator x:Name="biDecisionEntry" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
-                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding IsBusyIndicatorBusy}">
         <Grid x:Name="LayoutRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -129,7 +129,7 @@
             <!--Accept Without Discussion Section-->
             <Grid Grid.Row="2" Margin="0,2">
                 <CheckBox x:Name="chkbAcceptWithoutDiscussion" Content="ACCEPT WITHOUT DISCUSSION" IsThreeState="False"
-                      IsChecked="{Binding AcceptWithoutDiscussionIsChecked, Mode=TwoWay}"
+                      IsChecked="{Binding IsAcceptWithoutDiscussionChecked, Mode=TwoWay}"
                       HorizontalAlignment="Left" Style="{StaticResource CheckBoxStyle}" />
                           <!--Checked="chkbAcceptWithoutDiscussion_Checked" Unchecked="chkbAcceptWithoutDiscussion_Unchecked"/>-->
             </Grid>
@@ -178,18 +178,18 @@
                                          HorizontalContentAlignment="Left" EmptyText="Select P/FV"  
                                          Height="{StaticResource DefaultControlMinHeight}"
                                          Style="{StaticResource RadComboBoxStyle}"
-                                         IsEnabled="{Binding ICDecisionIsEnable}"/>
+                                         IsEnabled="{Binding IsICDecisionEnable}"/>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="2">
                         <TextBox x:Name="txtbPFVICDecisionBuy" Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeBuyRange, Mode=TwoWay}"
                              VerticalAlignment="Center" Height="{StaticResource DefaultControlMinHeight}" LostFocus="txtbPFVICDecisionBuy_LostFocus"
                              Style="{StaticResource TextBoxStyle}"
-                             IsEnabled="{Binding ICDecisionIsEnable}"/>
+                             IsEnabled="{Binding IsICDecisionEnable}"/>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="3">
                         <TextBox x:Name="txtbPFVICDecisionSell" Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeSellRange, Mode=TwoWay}" VerticalAlignment="Center"
                              Height="{StaticResource DefaultControlMinHeight}" Style="{StaticResource TextBoxStyle}" LostFocus="txtbPFVICDecisionSell_LostFocus"
-                             IsEnabled="{Binding ICDecisionIsEnable}"/>
+                             IsEnabled="{Binding IsICDecisionEnable}"/>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="4">
                         <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeRangeEffectiveThrough, Converter={StaticResource UTCToLocalDateTimeConverter}, StringFormat='MMMM d, yyyy'}" VerticalAlignment="Center"
