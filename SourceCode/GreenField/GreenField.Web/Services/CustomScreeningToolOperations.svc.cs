@@ -905,7 +905,7 @@ namespace GreenField.Web.Services
                     string regionValue = String.IsNullOrEmpty(region) ? String.Empty : region;
                     string countryValue = String.IsNullOrEmpty(country) ? String.Empty : country;
                     string sectorValue = String.IsNullOrEmpty(sector) ? String.Empty : sector;
-                    string industryValue = String.IsNullOrEmpty(region) ? String.Empty : industry;
+                    string industryValue = String.IsNullOrEmpty(industry) ? String.Empty : industry;
 
                     List<GF_SECURITY_BASEVIEW> securitiesList = new List<GF_SECURITY_BASEVIEW>();
                     securitiesList = (from p in entity.GF_SECURITY_BASEVIEW
