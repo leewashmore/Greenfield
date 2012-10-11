@@ -1,14 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Reflection;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace GreenField.Web.Helpers
 {
+    /// <summary>
+    /// Enum related operations
+    /// </summary>
     public class EnumUtils
     {
+        /// <summary>
+        /// Converts enumeration value to it's description attribute
+        /// </summary>
+        /// <param name="value">enum value</param>
+        /// <returns>description attribute</returns>
         public static string ToString(Enum value)
         {
             FieldInfo fi = value.GetType().GetField(value.ToString());
@@ -23,6 +28,12 @@ namespace GreenField.Web.Helpers
             }
         }
 
+        /// <summary>
+        /// converts a string value to enum matching it's description attribute
+        /// </summary>
+        /// <param name="value">value</param>
+        /// <param name="enumType">enum type</param>
+        /// <returns>enum</returns>
         public static object ToEnum(string value, Type enumType)
         {
             string[] names = Enum.GetNames(enumType);

@@ -1,33 +1,26 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using GreenField.DAL;
-using System.Data;
-using GreenField.DataContracts;
-using System.Data.SqlClient;
-using System.ServiceModel.Activation;
-using GreenField.Web.Helpers;
-using System.Resources;
-using GreenField.Web.Helpers.Service_Faults;
-using System.Collections.ObjectModel;
-using System.Data.Objects;
-using GreenField.Web.Services;
-using System.Linq;
 using System.Configuration;
-using GreenField.Web.DimensionEntitiesService;
-using GreenField.Web.DataContracts;
-using System.Xml.Linq;
-using System.Reflection;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Resources;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using System.Text;
 using System.Web.Security;
-using DocumentFormat.OpenXml.Packaging;
+using System.Xml.Linq;
 using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Presentation;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.Collections;
+using GreenField.DAL;
+using GreenField.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
+using GreenField.Web.Helpers;
+using GreenField.Web.Helpers.Service_Faults;
 
 namespace GreenField.Web.Services
 {
@@ -1242,7 +1235,7 @@ namespace GreenField.Web.Services
 
                 ICPresentation presentationData = PptRead.Fetch(localFile, securityInformation);
                 result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
-                PptRead.GeneratePresentationPdf(result, presentationData);
+                PptRead.Generate(result, presentationData);
             }
             catch (Exception)
             {

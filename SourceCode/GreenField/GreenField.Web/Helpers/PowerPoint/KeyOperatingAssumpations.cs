@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace GreenField.Web.Helpers
 {
+    /// <summary>
+    /// Key operating assumption information in powerpoint presentation file
+    /// </summary>
     public class KeyOperatingAssumpations
     {
+        /// <summary>
+        /// Stores key operating assumption information in powerpoint presentation file
+        /// </summary>
         public List<String> Assumptions { get; set; }
     }
 }

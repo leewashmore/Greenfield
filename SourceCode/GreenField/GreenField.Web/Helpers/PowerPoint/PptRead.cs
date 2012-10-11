@@ -1,22 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Web;
-using System.Reflection;
-using System.ComponentModel;
-using Drawing = DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Presentation;
+using Drawing = DocumentFormat.OpenXml.Drawing;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.IO;
 using iTextSharp.text.pdf.draw;
-
 
 namespace GreenField.Web.Helpers
 {
+    /// <summary>
+    /// exposes methods to fetch and generate pdf from powerpoint presentation file
+    /// </summary>
     public static class PptRead
     {
+        #region Public methods
+        /// <summary>
+        /// Fetch data from powerpoint presentation file
+        /// </summary>
+        /// <param name="location">local presentation file location</param>
+        /// <param name="securityInformation">security information</param>
+        /// <returns>ICPresentation object</returns>
         public static ICPresentation Fetch(String location, SecurityInformation securityInformation)
         {
             ICPresentation result = null;
@@ -29,7 +35,7 @@ namespace GreenField.Web.Helpers
 
                 string relId = (slideIds[0] as SlideId).RelationshipId;
 
-                // Get the slide part from the relationship ID.
+                //get the slide part from the relationship ID.
                 SlidePart slide = (SlidePart)presentatioPart.GetPartById(relId);
 
                 List<String> companyOverview = GetCompanyOverview(slide);
@@ -41,7 +47,7 @@ namespace GreenField.Web.Helpers
                 };
 
                 string relId1 = (slideIds[1] as SlideId).RelationshipId;
-                // Get the slide part from the relationship ID.
+                //get the slide part from the relationship ID.
                 SlidePart slide1 = (SlidePart)presentatioPart.GetPartById(relId1);
 
                 List<String> investmentThesis = GetInvestmentThesis(slide1);
@@ -50,7 +56,7 @@ namespace GreenField.Web.Helpers
                 result.InvestmentThesisInstance.HighlightedRisks = GetInvestmentRisk(slide1);
 
                 string relId2 = (slideIds[2] as SlideId).RelationshipId;
-                // Get the slide part from the relationship ID.
+                //get the slide part from the relationship ID.
                 SlidePart slide2 = (SlidePart)presentatioPart.GetPartById(relId2);
 
                 List<String> keyOperatingAssumpations = GetKeyOperatingAssumpations(slide2);
@@ -58,7 +64,7 @@ namespace GreenField.Web.Helpers
                     new KeyOperatingAssumpations { Assumptions = keyOperatingAssumpations };
 
                 string relId3 = (slideIds[3] as SlideId).RelationshipId;
-                // Get the slide part from the relationship ID.
+                //get the slide part from the relationship ID.
                 SlidePart slide3 = (SlidePart)presentatioPart.GetPartById(relId3);
 
                 Dictionary<int, List<String>> vqg = GetVQG(slide3);
@@ -80,7 +86,7 @@ namespace GreenField.Web.Helpers
                 }
 
                 string relId4 = (slideIds[4] as SlideId).RelationshipId;
-                // Get the slide part from the relationship ID.
+                //get the slide part from the relationship ID.
                 SlidePart slide4 = (SlidePart)presentatioPart.GetPartById(relId4);
 
                 Dictionary<int, List<String>> swotAnalysis = GetSWOTAnalysis(slide4);
@@ -103,14 +109,18 @@ namespace GreenField.Web.Helpers
                     {
                         result.SWOTAnalysisInstance.Threat = kvp.Value;
                     }
-
-                }                
+                }
             }
 
             return result;
         }
 
-        public static void GeneratePresentationPdf(string outFile, ICPresentation presentation)
+        /// <summary>
+        /// Generates pdf conversion of the powerpoint presentation file
+        /// </summary>
+        /// <param name="outFile">output local location of pfd file</param>
+        /// <param name="presentation">ICPresentation object</param>
+        public static void Generate(string outFile, ICPresentation presentation)
         {
             float listItemSpacing = 15F;
             string strLogoPath = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\AshmoreEMMLogo.png";
@@ -125,7 +135,6 @@ namespace GreenField.Web.Helpers
 
             doc.Open();
             Rectangle page = doc.PageSize;
-
 
             #region CompanyOverviewInstance
             #region Header
@@ -262,9 +271,6 @@ namespace GreenField.Web.Helpers
             coiCompanyOverViewTable.AddCell(coiCompanyOverviewCell);
             doc.Add(coiCompanyOverViewTable);
             #endregion
-
-            //doc.Add(new LineSeparator() { Offset = -10 });
-
             #endregion
 
             #region InvestmentThesisInstance
@@ -303,7 +309,6 @@ namespace GreenField.Web.Helpers
                 {
                     item.SpacingBefore = listItemSpacing;
                 }
-
                 if (presentation.InvestmentThesisInstance.ThesisPoints.IndexOf(thesisPoint) !=
                     presentation.InvestmentThesisInstance.ThesisPoints.Count - 1)
                 {
@@ -341,7 +346,6 @@ namespace GreenField.Web.Helpers
                 {
                     item.SpacingAfter = 5F;
                 }
-
                 itiRiskList.Add(item);
             }
 
@@ -355,8 +359,6 @@ namespace GreenField.Web.Helpers
 
             doc.Add(itiRiskTable);
             #endregion
-
-            //doc.Add(new LineSeparator() { Offset = -10 });
             #endregion
 
             #region KeyOperatingAssumpationsInstance
@@ -393,7 +395,6 @@ namespace GreenField.Web.Helpers
                 {
                     item.SpacingBefore = listItemSpacing;
                 }
-
                 if (presentation.KeyOperatingAssumpationsInstance.Assumptions.IndexOf(assumption) !=
                     presentation.KeyOperatingAssumpationsInstance.Assumptions.Count - 1)
                 {
@@ -403,8 +404,6 @@ namespace GreenField.Web.Helpers
             }
             doc.Add(koaiInvestmentThesisContentList);
             #endregion
-
-            //doc.Add(new LineSeparator() { Offset = -10 });
             #endregion
 
             #region VQGInstance
@@ -454,7 +453,6 @@ namespace GreenField.Web.Helpers
                 {
                     item.SpacingBefore = listItemSpacing;
                 }
-
                 if (presentation.VQGInstance.Value.IndexOf(value) !=
                     presentation.VQGInstance.Value.Count - 1)
                 {
@@ -498,7 +496,6 @@ namespace GreenField.Web.Helpers
                 {
                     item.SpacingBefore = listItemSpacing;
                 }
-
                 if (presentation.VQGInstance.Growth.IndexOf(value) !=
                     presentation.VQGInstance.Growth.Count - 1)
                 {
@@ -542,7 +539,6 @@ namespace GreenField.Web.Helpers
                 {
                     item.SpacingBefore = listItemSpacing;
                 }
-
                 if (presentation.VQGInstance.Quality.IndexOf(value) !=
                     presentation.VQGInstance.Quality.Count - 1)
                 {
@@ -556,8 +552,6 @@ namespace GreenField.Web.Helpers
             doc.Add(vqgiQualityTable);
             #endregion
             #endregion
-
-            //doc.Add(new LineSeparator() { Offset = -10 });
             #endregion
 
             #region SWOTAnalysisInstance
@@ -609,7 +603,6 @@ namespace GreenField.Web.Helpers
                 {
                     item.SpacingBefore = listItemSpacing;
                 }
-
                 if (presentation.SWOTAnalysisInstance.Strength.IndexOf(value) !=
                     presentation.SWOTAnalysisInstance.Strength.Count - 1)
                 {
@@ -636,7 +629,6 @@ namespace GreenField.Web.Helpers
                 {
                     item.SpacingBefore = listItemSpacing;
                 }
-
                 if (presentation.SWOTAnalysisInstance.Weakness.IndexOf(value) !=
                     presentation.SWOTAnalysisInstance.Weakness.Count - 1)
                 {
@@ -671,7 +663,6 @@ namespace GreenField.Web.Helpers
                 {
                     item.SpacingBefore = listItemSpacing;
                 }
-
                 if (presentation.SWOTAnalysisInstance.Opportunity.IndexOf(value) !=
                     presentation.SWOTAnalysisInstance.Opportunity.Count - 1)
                 {
@@ -697,7 +688,6 @@ namespace GreenField.Web.Helpers
                 {
                     item.SpacingBefore = listItemSpacing;
                 }
-
                 if (presentation.SWOTAnalysisInstance.Threat.IndexOf(value) !=
                     presentation.SWOTAnalysisInstance.Threat.Count - 1)
                 {
@@ -710,13 +700,18 @@ namespace GreenField.Web.Helpers
 
             doc.Add(saiValueTable);
             #endregion
-
-            //doc.Add(new LineSeparator() { Offset = -10 });
             #endregion
 
             doc.Close();
-        }
+        } 
+        #endregion
 
+        #region Private methods
+        /// <summary>
+        /// Get company overview data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
         private static List<String> GetCompanyOverview(SlidePart slidePart)
         {
             List<String> items = new List<string>();
@@ -739,6 +734,11 @@ namespace GreenField.Web.Helpers
             return items;
         }
 
+        /// <summary>
+        /// Get investment thesis data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
         private static List<String> GetInvestmentThesis(SlidePart slidePart)
         {
             List<String> items = new List<string>();
@@ -780,6 +780,11 @@ namespace GreenField.Web.Helpers
             return items;
         }
 
+        /// <summary>
+        /// Get investment risk data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
         private static List<String> GetInvestmentRisk(SlidePart slidePart)
         {
             List<String> risks = new List<string>();
@@ -815,6 +820,11 @@ namespace GreenField.Web.Helpers
             return risks;
         }
 
+        /// <summary>
+        /// Get key operating assumptions data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
         private static List<String> GetKeyOperatingAssumpations(SlidePart slidePart)
         {
             List<String> items = new List<String>();
@@ -857,6 +867,11 @@ namespace GreenField.Web.Helpers
             return items;
         }
 
+        /// <summary>
+        /// Get value, quality and growth data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>key Value pair dictionary data</returns>
         private static Dictionary<int, List<String>> GetVQG(SlidePart slidePart)
         {
             Dictionary<int, List<String>> result = new Dictionary<int, List<string>>();
@@ -904,6 +919,11 @@ namespace GreenField.Web.Helpers
             return result;
         }
 
+        /// <summary>
+        /// Get strength, weakness, opportunity and threat data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>key Value pair dictionary data</returns>
         private static Dictionary<int, List<String>> GetSWOTAnalysis(SlidePart slidePart)
         {
             Dictionary<int, List<String>> result = new Dictionary<int, List<string>>();
@@ -953,15 +973,23 @@ namespace GreenField.Web.Helpers
             return result;
         }
 
-        private static void AddTextCell(PdfPTable table, PdfPCell cell, int HorizontalAlignment = Element.ALIGN_LEFT, int VerticalAlignment = Element.ALIGN_MIDDLE, int Border = 0)
+        /// <summary>
+        /// Adds PdfPCell to PdfPTable with custom properties
+        /// </summary>
+        /// <param name="table">PdfPTable</param>
+        /// <param name="cell">PdfPCell</param>
+        /// <param name="horizontalAlignment">HorizontalAlignment</param>
+        /// <param name="verticalAlignment">VerticalAlignment</param>
+        /// <param name="Border">Border</param>
+        private static void AddTextCell(PdfPTable table, PdfPCell cell, int horizontalAlignment = Element.ALIGN_LEFT
+            , int verticalAlignment = Element.ALIGN_MIDDLE, int border = 0)
         {
-            //cell.Colspan = Colspan;
-            cell.HorizontalAlignment = HorizontalAlignment; //0=Left, 1=Centre, 2=Right
-            cell.VerticalAlignment = VerticalAlignment;
-            cell.Border = Border;
+            cell.HorizontalAlignment = horizontalAlignment;
+            cell.VerticalAlignment = verticalAlignment;
+            cell.Border = border;
             cell.BorderWidth = 1;
-            //cell.Rowspan = Rowspan;
             table.AddCell(cell);
-        }
+        } 
+        #endregion
     }
 }

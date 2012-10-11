@@ -151,7 +151,6 @@
     <Compile Include="DataContracts\ExcelModelUpload.cs" />
     <Compile Include="DataContracts\IssuerReferenceData.cs" />
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
-    <Compile Include="DataContracts\MeetingAttachedFileStreamData.cs" />
     <Compile Include="DataContracts\PopulatedMarketPerformanceSnapshotData.cs" />
     <Compile Include="Helpers\PowerPoint\PdfFooter.cs" />
     <Compile Include="Helpers\PowerPoint\CompanyOverview.cs" />

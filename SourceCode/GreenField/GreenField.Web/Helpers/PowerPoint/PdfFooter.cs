@@ -1,73 +1,104 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using iTextSharp.text.pdf;
 using iTextSharp.text;
-using iTextSharp.text.pdf.draw;
+using iTextSharp.text.pdf;
 
 namespace GreenField.Web.Helpers
 {
+    /// <summary>
+    /// Marks footer information in pdf file
+    /// </summary>
     public class PdfFooter : PdfPageEventHelper
     {
-        // This is the contentbyte object of the writer
+        #region Fields
+        /// <summary>
+        /// contentbyte object of the writer
+        /// </summary>
         PdfContentByte cb;
 
-        // we will put the final number of pages in a template
+        /// <summary>
+        /// final number of pages in a template
+        /// </summary>
         PdfTemplate template;
 
-        // this is the BaseFont we are going to use for the header / footer
+        /// <summary>
+        /// BaseFont we are going to use for the header / footer
+        /// </summary>
         BaseFont bf = null;
 
-        // This keeps track of the creation time
-        DateTime PrintTime = DateTime.Now;
+        /// <summary>
+        /// keeps track of the creation time
+        /// </summary>
+        DateTime PrintTime = DateTime.UtcNow; 
+        #endregion
 
         #region Properties
-        private string _Title;
+        /// <summary>
+        /// Stores page title
+        /// </summary>
+        private string title;
         public string Title
         {
-            get { return _Title; }
-            set { _Title = value; }
+            get { return title; }
+            set { title = value; }
         }
 
-        private String _FooterDate;
+        /// <summary>
+        /// Stores date in the footer cell
+        /// </summary>
+        private String footerDate;
         public String FooterDate
         {
-            get { return _FooterDate; }
-            set { _FooterDate = value; }
+            get { return footerDate; }
+            set { footerDate = value; }
         }
 
-
-        private string _HeaderLeft;
+        /// <summary>
+        /// Stores header on the left side
+        /// </summary>
+        private string headerLeft;
         public string HeaderLeft
         {
-            get { return _HeaderLeft; }
-            set { _HeaderLeft = value; }
+            get { return headerLeft; }
+            set { headerLeft = value; }
         }
 
-        private string _HeaderRight;
+        /// <summary>
+        /// Stores header on the right side
+        /// </summary>
+        private string headerRight;
         public string HeaderRight
         {
-            get { return _HeaderRight; }
-            set { _HeaderRight = value; }
+            get { return headerRight; }
+            set { headerRight = value; }
         }
 
-        private Font _HeaderFont;
+        /// <summary>
+        /// Stores header font
+        /// </summary>
+        private Font headerFont;
         public Font HeaderFont
         {
-            get { return _HeaderFont; }
-            set { _HeaderFont = value; }
+            get { return headerFont; }
+            set { headerFont = value; }
         }
 
-        private Font _FooterFont;
+        /// <summary>
+        /// Stores footer font
+        /// </summary>
+        private Font footerFont;
         public Font FooterFont
         {
-            get { return _FooterFont; }
-            set { _FooterFont = value; }
+            get { return footerFont; }
+            set { footerFont = value; }
         }
         #endregion
 
-        // we override the onOpenDocument method
+        #region Override Methods
+        /// <summary>
+        /// override the onOpenDocument method
+        /// </summary>
+        /// <param name="writer">PdfWriter</param>
+        /// <param name="document">Document</param>
         public override void OnOpenDocument(PdfWriter writer, Document document)
         {
             try
@@ -77,14 +108,19 @@ namespace GreenField.Web.Helpers
                 cb = writer.DirectContent;
                 template = cb.CreateTemplate(50, 50);
             }
-            catch (DocumentException de)
+            catch (DocumentException)
             {
             }
-            catch (System.IO.IOException ioe)
+            catch (System.IO.IOException)
             {
             }
         }
 
+        /// <summary>
+        /// override the OnStartPage method
+        /// </summary>
+        /// <param name="writer">PdfWriter</param>
+        /// <param name="document">Document</param>
         public override void OnStartPage(PdfWriter writer, Document document)
         {
             base.OnStartPage(writer, document);
@@ -126,6 +162,11 @@ namespace GreenField.Web.Helpers
             }
         }
 
+        /// <summary>
+        /// override the OnEndPage method
+        /// </summary>
+        /// <param name="writer">PdfWriter</param>
+        /// <param name="document">Document</param>
         public override void OnEndPage(PdfWriter writer, Document document)
         {
             base.OnEndPage(writer, document);
@@ -149,7 +190,7 @@ namespace GreenField.Web.Helpers
             cb.BeginText();
             cb.SetFontAndSize(bf, 8);
             cb.ShowTextAligned(PdfContentByte.ALIGN_RIGHT,
-                FooterDate,//PrintTime.ToUniversalTime().ToString(),
+                FooterDate,
                 pageSize.GetRight(40),
                 pageSize.GetBottom(30), 0);
             cb.EndText();
@@ -159,6 +200,11 @@ namespace GreenField.Web.Helpers
             cb.Stroke();
         }
 
+        /// <summary>
+        /// override the OnCloseDocument method
+        /// </summary>
+        /// <param name="writer">PdfWriter</param>
+        /// <param name="document">Document</param>
         public override void OnCloseDocument(PdfWriter writer, Document document)
         {
             base.OnCloseDocument(writer, document);
@@ -168,11 +214,7 @@ namespace GreenField.Web.Helpers
             template.SetTextMatrix(0, 0);
             template.ShowText("" + (writer.PageNumber - 1));
             template.EndText();
-        }
-
-
-
-
-
+        } 
+        #endregion
     }
 }

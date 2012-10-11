@@ -7,29 +7,23 @@ using GreenField.DataContracts;
 
 namespace GreenField.Web.Helpers
 {
+    /// <summary>
+    /// Logging server side exceptions
+    /// </summary>
     public static class ExceptionTrace
     {
         #region Fields
         /// <summary>
         /// Logging Service Instance
         /// </summary>
-        private static GreenField.Logging.LoggingOperations _loggingOperations = new Logging.LoggingOperations();
+        private static GreenField.Logging.LoggingOperations loggingOperations = new Logging.LoggingOperations();
         #endregion
 
-        private static string StackTraceToString(Exception exception)
-        {
-            StringBuilder sb = new StringBuilder(256);
-            var frames = new System.Diagnostics.StackTrace(exception).GetFrames();
-            /* Ignore current StackTraceToString method...*/
-            for (int i = 0; i < frames.Length; i++)
-            {
-                var currFrame = frames[i];
-                var method = currFrame.GetMethod();
-                sb.Append(string.Format("{0}|{1} || ", method.ReflectedType != null ? method.ReflectedType.FullName : string.Empty, method.Name));
-            }
-            return sb.ToString();
-        }
-
+        #region Public Methods
+        /// <summary>
+        /// logs server side exceptions
+        /// </summary>
+        /// <param name="ex"></param>
         public static void LogException(Exception ex)
         {
             if (ex == null)
@@ -44,12 +38,34 @@ namespace GreenField.Web.Helpers
             if (userName == null)
                 throw new InvalidOperationException();
 
-            _loggingOperations.LogToFile("|User[(" + userName.Replace(Environment.NewLine, " ")
+            loggingOperations.LogToFile("|User[(" + userName.Replace(Environment.NewLine, " ")
                 + ")]|Type[(Exception"
-                + ")]|Message[(" + ex.Message.Replace(Environment.NewLine, " ") 
+                + ")]|Message[(" + ex.Message.Replace(Environment.NewLine, " ")
                 + ")]|StackTrace[(" + StackTraceToString(ex)
                 + ")]", "Exception", "Medium");
-            
-        }
+
+        }  
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// designs string output for exception's stack trace
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        private static string StackTraceToString(Exception exception)
+        {
+            StringBuilder sb = new StringBuilder(256);
+            var frames = new System.Diagnostics.StackTrace(exception).GetFrames();
+            //ignore current StackTraceToString method
+            for (int i = 0; i < frames.Length; i++)
+            {
+                var currFrame = frames[i];
+                var method = currFrame.GetMethod();
+                sb.Append(string.Format("{0}|{1} || ", method.ReflectedType != null ? method.ReflectedType.FullName : string.Empty, method.Name));
+            }
+            return sb.ToString();
+        }        
+        #endregion
     }
 }

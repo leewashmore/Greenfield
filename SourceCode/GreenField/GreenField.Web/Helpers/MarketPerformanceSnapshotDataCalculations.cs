@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using GreenField.Web.DataContracts;
-using GreenField.DAL;
-using GreenField.Web.DimensionEntitiesService;
 using System.Reflection;
+using GreenField.DAL;
+using GreenField.Web.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
 
 namespace GreenField.Web.Helpers
 {
+    /// <summary>
+    /// Calculations concerning Market Performance Snapshot Gadget
+    /// </summary>
     public static class MarketPerformanceSnapshotDataCalculations
     {
+        /// <summary>
+        /// Gets performance data for a specific snapshot preference where entity type is benchmark
+        /// </summary>
+        /// <param name="entity">Dimension service entity instance</param>
+        /// <param name="preference">MarketSnapshotPreference object</param>
+        /// <returns>MarketSnapshotPerformanceData</returns>
         public static MarketSnapshotPerformanceData GetBenchmarkPerformanceData(Entities entity, MarketSnapshotPreference preference)
         {
             MarketSnapshotPerformanceData result = new MarketSnapshotPerformanceData();
@@ -32,11 +40,16 @@ namespace GreenField.Web.Helpers
                 GF_PERF_DAILY_ATTRIBUTION benchmarkRecord = lastRecord != null ? GetMinInceptionDateRecord<GF_PERF_DAILY_ATTRIBUTION>(benchmarkRecords
                     .Where(record => record.TO_DATE == lastRecord.TO_DATE).ToList()) : null;
 
-                result.DateToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null ? benchmarkRecord.BM1_TOP_RC_TWR_1D * Convert.ToDecimal(100) : benchmarkRecord.BM1_RC_TWR_1D * Convert.ToDecimal(100)) : null;
-                result.WeekToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null ? benchmarkRecord.BM1_TOP_RC_TWR_1W * Convert.ToDecimal(100) : benchmarkRecord.BM1_RC_TWR_1W * Convert.ToDecimal(100)) : null;
-                result.MonthToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null ? benchmarkRecord.BM1_TOP_RC_TWR_MTD * Convert.ToDecimal(100) : benchmarkRecord.BM1_RC_TWR_MTD * Convert.ToDecimal(100)) : null;
-                result.QuarterToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null ? benchmarkRecord.BM1_TOP_RC_TWR_QTD * Convert.ToDecimal(100) : benchmarkRecord.BM1_RC_TWR_QTD * Convert.ToDecimal(100)) : null;
-                result.YearToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null ? benchmarkRecord.BM1_TOP_RC_TWR_YTD * Convert.ToDecimal(100) : benchmarkRecord.BM1_RC_TWR_YTD * Convert.ToDecimal(100)) : null;
+                result.DateToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null 
+                    ? benchmarkRecord.BM1_TOP_RC_TWR_1D * Convert.ToDecimal(100) : benchmarkRecord.BM1_RC_TWR_1D * Convert.ToDecimal(100)) : null;
+                result.WeekToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null 
+                    ? benchmarkRecord.BM1_TOP_RC_TWR_1W * Convert.ToDecimal(100) : benchmarkRecord.BM1_RC_TWR_1W * Convert.ToDecimal(100)) : null;
+                result.MonthToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null 
+                    ? benchmarkRecord.BM1_TOP_RC_TWR_MTD * Convert.ToDecimal(100) : benchmarkRecord.BM1_RC_TWR_MTD * Convert.ToDecimal(100)) : null;
+                result.QuarterToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null 
+                    ? benchmarkRecord.BM1_TOP_RC_TWR_QTD * Convert.ToDecimal(100) : benchmarkRecord.BM1_RC_TWR_QTD * Convert.ToDecimal(100)) : null;
+                result.YearToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null 
+                    ? benchmarkRecord.BM1_TOP_RC_TWR_YTD * Convert.ToDecimal(100) : benchmarkRecord.BM1_RC_TWR_YTD * Convert.ToDecimal(100)) : null;
 
                 if (preference.EntityNodeType == null)
                 {
@@ -49,8 +62,8 @@ namespace GreenField.Web.Helpers
                                     && g.POR_INCEPTION_DATE != null)
                                 .ToList());
 
-
-                    result.LastYearReturn = preference.EntityNodeType == null ? (benchmarkLastYearRecord != null ? benchmarkLastYearRecord.BM1_RC_TWR_YTD * Convert.ToDecimal(100) : null) : null;
+                    result.LastYearReturn = preference.EntityNodeType == null ? (benchmarkLastYearRecord != null 
+                        ? benchmarkLastYearRecord.BM1_RC_TWR_YTD * Convert.ToDecimal(100) : null) : null;
 
                     GF_PERF_TOPLEVELYEAR benchmarkSecondLastYearRecord = GetMinInceptionDateRecord<GF_PERF_TOPLEVELYEAR>(entity.GF_PERF_TOPLEVELYEAR
                         .Where(g => g.CURRENCY.ToUpper() == "USD"
@@ -61,7 +74,8 @@ namespace GreenField.Web.Helpers
                             && g.POR_INCEPTION_DATE != null)
                         .ToList());
 
-                    result.SecondLastYearReturn = preference.EntityNodeType == null ? (benchmarkSecondLastYearRecord != null ? benchmarkSecondLastYearRecord.BM1_RC_TWR_YTD * Convert.ToDecimal(100) : null) : null;
+                    result.SecondLastYearReturn = preference.EntityNodeType == null ? (benchmarkSecondLastYearRecord != null 
+                        ? benchmarkSecondLastYearRecord.BM1_RC_TWR_YTD * Convert.ToDecimal(100) : null) : null;
 
                     GF_PERF_TOPLEVELYEAR benchmarkThirdLastYearRecord = GetMinInceptionDateRecord<GF_PERF_TOPLEVELYEAR>(entity.GF_PERF_TOPLEVELYEAR
                         .Where(g => g.CURRENCY.ToUpper() == "USD"
@@ -72,7 +86,8 @@ namespace GreenField.Web.Helpers
                             && g.POR_INCEPTION_DATE != null)
                         .ToList());
 
-                    result.ThirdLastYearReturn = preference.EntityNodeType == null ? (benchmarkThirdLastYearRecord != null ? benchmarkThirdLastYearRecord.BM1_RC_TWR_YTD * Convert.ToDecimal(100) : null) : null; 
+                    result.ThirdLastYearReturn = preference.EntityNodeType == null ? (benchmarkThirdLastYearRecord != null 
+                        ? benchmarkThirdLastYearRecord.BM1_RC_TWR_YTD * Convert.ToDecimal(100) : null) : null; 
                 }
             }
             catch (Exception)
@@ -83,6 +98,12 @@ namespace GreenField.Web.Helpers
             return result;
         }
 
+        /// <summary>
+        /// Gets performance data for a specific snapshot preference where entity type is security, index or commodity
+        /// </summary>
+        /// <param name="entity">Dimension service entity instance</param>
+        /// <param name="preference">MarketSnapshotPreference object</param>
+        /// <returns>MarketSnapshotPerformanceData</returns>
         public static MarketSnapshotPerformanceData GetSecurityCommodityIndexPerformanceData(Entities entity, MarketSnapshotPreference preference)
         {
             MarketSnapshotPerformanceData result = new MarketSnapshotPerformanceData();
@@ -118,13 +139,21 @@ namespace GreenField.Web.Helpers
                     ? lastDateToDateRecord.DAILY_PRICE_RETURN != null ? lastDateToDateRecord.DAILY_PRICE_RETURN : 0
                     : lastDateToDateRecord.DAILY_GROSS_RETURN != null ? lastDateToDateRecord.DAILY_GROSS_RETURN : 0) : null;
 
-                result.WeekToDateReturn = GetReturn(entity, preference, lastBusinessDateTime.AddDays(-6) > firstRecordDateTime ? lastBusinessDateTime.AddDays(-6) : firstRecordDateTime, lastBusinessDateTime);
-                result.MonthToDateReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1) > firstRecordDateTime ? new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1) : firstRecordDateTime, lastBusinessDateTime);
-                result.QuarterToDateReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year, (DateTime.Today.Month - (DateTime.Today.Month % 3) + 1), 1) > firstRecordDateTime ? new DateTime(DateTime.Today.Year, (DateTime.Today.Month - (DateTime.Today.Month % 3) + 1), 1) : firstRecordDateTime, lastBusinessDateTime);
-                result.YearToDateReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year, 1, 1) > firstRecordDateTime ? new DateTime(DateTime.Today.Year, 1, 1) : firstRecordDateTime, lastBusinessDateTime);
-                result.LastYearReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year - 1, 1, 1) > firstRecordDateTime ? new DateTime(DateTime.Today.Year - 1, 1, 1) : firstRecordDateTime, new DateTime(DateTime.Today.Year - 1, 12, 31));
-                result.SecondLastYearReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year - 2, 1, 1) > firstRecordDateTime ? new DateTime(DateTime.Today.Year - 2, 1, 1) : firstRecordDateTime, new DateTime(DateTime.Today.Year - 2, 12, 31));
-                result.ThirdLastYearReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year - 3, 1, 1) > firstRecordDateTime ? new DateTime(DateTime.Today.Year - 3, 1, 1) : firstRecordDateTime, new DateTime(DateTime.Today.Year - 3, 12, 31));
+                result.WeekToDateReturn = GetReturn(entity, preference, lastBusinessDateTime.AddDays(-6) > firstRecordDateTime 
+                    ? lastBusinessDateTime.AddDays(-6) : firstRecordDateTime, lastBusinessDateTime);
+                result.MonthToDateReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1) > firstRecordDateTime 
+                    ? new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1) : firstRecordDateTime, lastBusinessDateTime);
+                result.QuarterToDateReturn = GetReturn(entity, preference
+                    , new DateTime(DateTime.Today.Year, (DateTime.Today.Month - (DateTime.Today.Month % 3) + 1), 1) > firstRecordDateTime 
+                    ? new DateTime(DateTime.Today.Year, (DateTime.Today.Month - (DateTime.Today.Month % 3) + 1), 1) : firstRecordDateTime, lastBusinessDateTime);
+                result.YearToDateReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year, 1, 1) > firstRecordDateTime 
+                    ? new DateTime(DateTime.Today.Year, 1, 1) : firstRecordDateTime, lastBusinessDateTime);
+                result.LastYearReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year - 1, 1, 1) > firstRecordDateTime 
+                    ? new DateTime(DateTime.Today.Year - 1, 1, 1) : firstRecordDateTime, new DateTime(DateTime.Today.Year - 1, 12, 31));
+                result.SecondLastYearReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year - 2, 1, 1) > firstRecordDateTime 
+                    ? new DateTime(DateTime.Today.Year - 2, 1, 1) : firstRecordDateTime, new DateTime(DateTime.Today.Year - 2, 12, 31));
+                result.ThirdLastYearReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year - 3, 1, 1) > firstRecordDateTime 
+                    ? new DateTime(DateTime.Today.Year - 3, 1, 1) : firstRecordDateTime, new DateTime(DateTime.Today.Year - 3, 12, 31));
             }
             catch (Exception)
             {
@@ -133,6 +162,14 @@ namespace GreenField.Web.Helpers
             return result;
         }
 
+        /// <summary>
+        /// Gets return value for a preference between two specific dates
+        /// </summary>
+        /// <param name="entity">dimension service instance</param>
+        /// <param name="preference">MarketSnapshotPreference object</param>
+        /// <param name="fromDate">start date</param>
+        /// <param name="toDate">end date</param>
+        /// <returns>security return value</returns>
         private static Decimal? GetReturn(Entities entity, MarketSnapshotPreference preference, DateTime fromDate, DateTime toDate)
         {
             try
