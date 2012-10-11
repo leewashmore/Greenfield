@@ -902,46 +902,65 @@ namespace GreenField.Web.Services
                 }
                 else
                 {
-                    if (region != null)
+                    string regionValue = String.IsNullOrEmpty(region) ? String.Empty : region;
+                    string countryValue = String.IsNullOrEmpty(country) ? String.Empty : country;
+                    string sectorValue = String.IsNullOrEmpty(sector) ? String.Empty : sector;
+                    string industryValue = String.IsNullOrEmpty(region) ? String.Empty : industry;
+
+                    List<GF_SECURITY_BASEVIEW> securitiesList = new List<GF_SECURITY_BASEVIEW>();
+                    securitiesList = (from p in entity.GF_SECURITY_BASEVIEW
+                                      where p.ASEC_SEC_COUNTRY_ZONE_NAME.Contains(regionValue)
+                                      && p.ASEC_SEC_COUNTRY_NAME.Contains(countryValue)
+                                      && p.GICS_SECTOR_NAME.Contains(sectorValue)
+                                      && p.GICS_INDUSTRY_NAME.Contains(industryValue)
+                                      select p).ToList();
+                    
+                    if (securitiesList != null)
                     {
-                        List<GF_SECURITY_BASEVIEW> securitiesInRegion = new List<GF_SECURITY_BASEVIEW>();
-                        securitiesInRegion = entity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_COUNTRY_ZONE_NAME == region).ToList();
-                        if (securitiesInRegion != null)
-                        {
-                            securitiesInRegion = securitiesInRegion.Distinct().ToList();
-                            securitiesFromCustomControls.AddRange(securitiesInRegion);
-                        }
+                        securitiesList = securitiesList.Distinct().ToList();
+                        securitiesFromCustomControls.AddRange(securitiesList);
                     }
-                    if (country != null)
-                    {
-                        List<GF_SECURITY_BASEVIEW> securitiesInCountry = new List<GF_SECURITY_BASEVIEW>();
-                        securitiesInCountry = entity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_COUNTRY_NAME == country).ToList();
-                        if (securitiesInCountry != null)
-                        {
-                            securitiesInCountry = securitiesInCountry.Distinct().ToList();
-                            securitiesFromCustomControls.AddRange(securitiesInCountry);
-                        }
-                    }
-                    if (sector != null)
-                    {
-                        List<GF_SECURITY_BASEVIEW> securitiesInSector = new List<GF_SECURITY_BASEVIEW>();
-                        securitiesInSector = entity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_SECTOR_NAME == sector).ToList();
-                        if (securitiesInSector != null)
-                        {
-                            securitiesInSector = securitiesInSector.Distinct().ToList();
-                            securitiesFromCustomControls.AddRange(securitiesInSector);
-                        }
-                    }
-                    if (industry != null)
-                    {
-                        List<GF_SECURITY_BASEVIEW> securitiesInIndustry = new List<GF_SECURITY_BASEVIEW>();
-                        securitiesInIndustry = entity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_INDUSTRY_NAME == industry).ToList();
-                        if (securitiesInIndustry != null)
-                        {
-                            securitiesInIndustry = securitiesInIndustry.Distinct().ToList();
-                            securitiesFromCustomControls.AddRange(securitiesInIndustry);
-                        }
-                    }
+
+                    //if (region != null)
+                    //{
+                    //    List<GF_SECURITY_BASEVIEW> securitiesInRegion = new List<GF_SECURITY_BASEVIEW>();
+                    //    securitiesInRegion = entity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_COUNTRY_ZONE_NAME == region).ToList();
+                    //    if (securitiesInRegion != null)
+                    //    {
+                    //        securitiesInRegion = securitiesInRegion.Distinct().ToList();
+                    //        securitiesFromCustomControls.AddRange(securitiesInRegion);
+                    //    }
+                    //}
+                    //if (country != null)
+                    //{
+                    //    List<GF_SECURITY_BASEVIEW> securitiesInCountry = new List<GF_SECURITY_BASEVIEW>();
+                    //    securitiesInCountry = entity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_COUNTRY_NAME == country).ToList();
+                    //    if (securitiesInCountry != null)
+                    //    {
+                    //        securitiesInCountry = securitiesInCountry.Distinct().ToList();
+                    //        securitiesFromCustomControls.AddRange(securitiesInCountry);
+                    //    }
+                    //}
+                    //if (sector != null)
+                    //{
+                    //    List<GF_SECURITY_BASEVIEW> securitiesInSector = new List<GF_SECURITY_BASEVIEW>();
+                    //    securitiesInSector = entity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_SECTOR_NAME == sector).ToList();
+                    //    if (securitiesInSector != null)
+                    //    {
+                    //        securitiesInSector = securitiesInSector.Distinct().ToList();
+                    //        securitiesFromCustomControls.AddRange(securitiesInSector);
+                    //    }
+                    //}
+                    //if (industry != null)
+                    //{
+                    //    List<GF_SECURITY_BASEVIEW> securitiesInIndustry = new List<GF_SECURITY_BASEVIEW>();
+                    //    securitiesInIndustry = entity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_INDUSTRY_NAME == industry).ToList();
+                    //    if (securitiesInIndustry != null)
+                    //    {
+                    //        securitiesInIndustry = securitiesInIndustry.Distinct().ToList();
+                    //        securitiesFromCustomControls.AddRange(securitiesInIndustry);
+                    //    }
+                    //}
                 }
                 if (securitiesFromCustomControls == null)
                 {
