@@ -919,48 +919,7 @@ namespace GreenField.Web.Services
                     {
                         securitiesList = securitiesList.Distinct().ToList();
                         securitiesFromCustomControls.AddRange(securitiesList);
-                    }
-
-                    //if (region != null)
-                    //{
-                    //    List<GF_SECURITY_BASEVIEW> securitiesInRegion = new List<GF_SECURITY_BASEVIEW>();
-                    //    securitiesInRegion = entity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_COUNTRY_ZONE_NAME == region).ToList();
-                    //    if (securitiesInRegion != null)
-                    //    {
-                    //        securitiesInRegion = securitiesInRegion.Distinct().ToList();
-                    //        securitiesFromCustomControls.AddRange(securitiesInRegion);
-                    //    }
-                    //}
-                    //if (country != null)
-                    //{
-                    //    List<GF_SECURITY_BASEVIEW> securitiesInCountry = new List<GF_SECURITY_BASEVIEW>();
-                    //    securitiesInCountry = entity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_COUNTRY_NAME == country).ToList();
-                    //    if (securitiesInCountry != null)
-                    //    {
-                    //        securitiesInCountry = securitiesInCountry.Distinct().ToList();
-                    //        securitiesFromCustomControls.AddRange(securitiesInCountry);
-                    //    }
-                    //}
-                    //if (sector != null)
-                    //{
-                    //    List<GF_SECURITY_BASEVIEW> securitiesInSector = new List<GF_SECURITY_BASEVIEW>();
-                    //    securitiesInSector = entity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_SECTOR_NAME == sector).ToList();
-                    //    if (securitiesInSector != null)
-                    //    {
-                    //        securitiesInSector = securitiesInSector.Distinct().ToList();
-                    //        securitiesFromCustomControls.AddRange(securitiesInSector);
-                    //    }
-                    //}
-                    //if (industry != null)
-                    //{
-                    //    List<GF_SECURITY_BASEVIEW> securitiesInIndustry = new List<GF_SECURITY_BASEVIEW>();
-                    //    securitiesInIndustry = entity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_INDUSTRY_NAME == industry).ToList();
-                    //    if (securitiesInIndustry != null)
-                    //    {
-                    //        securitiesInIndustry = securitiesInIndustry.Distinct().ToList();
-                    //        securitiesFromCustomControls.AddRange(securitiesInIndustry);
-                    //    }
-                    //}
+                    }                    
                 }
                 if (securitiesFromCustomControls == null)
                 {
