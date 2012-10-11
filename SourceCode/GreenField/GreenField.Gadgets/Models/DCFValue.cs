@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Greenfield.Gadgets.Models
 {
+    /// <summary>
+    /// Result Set of DCFSP calculator
+    /// </summary>
     public class DCFValue
     {
         public decimal DCFValuePerShare { get; set; }

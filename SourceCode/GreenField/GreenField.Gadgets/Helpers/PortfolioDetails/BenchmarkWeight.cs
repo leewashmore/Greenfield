@@ -12,8 +12,14 @@ using Telerik.Windows.Data;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Aggregate Function
+    /// </summary>
     public class BenchmarkWeightFunction : EnumerableSelectorAggregateFunction
     {
+        /// <summary>
+        /// Method Name
+        /// </summary>
         protected override string AggregateMethodName
         {
             get
@@ -22,6 +28,9 @@ namespace GreenField.Gadgets.Helpers
             }
         }
 
+        /// <summary>
+        /// Extension Method Type
+        /// </summary>
         protected override Type ExtensionMethodsType
         {
             get

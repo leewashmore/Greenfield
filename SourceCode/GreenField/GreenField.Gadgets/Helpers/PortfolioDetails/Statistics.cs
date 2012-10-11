@@ -15,6 +15,13 @@ namespace GreenField.Gadgets.Helpers
 {
     public class Statistics
     {
+        /// <summary>
+        /// Calculating Group Weights
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="selector"></param>
+        /// <returns></returns>
         public static decimal GroupPortfolioWeight<TSource>(IEnumerable<TSource> source, Func<TSource, decimal?> selector)
         {
             int itemCount = source.Count();

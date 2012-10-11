@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Net;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Telerik.Windows.Documents.Model;
-using Telerik.Windows.Controls;
-using Telerik.Windows.Documents.FormatProviders.Pdf;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using Telerik.Windows.Data;
-using System.Collections;
 using System.Windows.Media.Imaging;
-using Telerik.Windows.Media.Imaging;
-using Microsoft.Practices.Prism.Logging;
 using GreenField.Common;
 using GreenField.ServiceCaller;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Data;
+using Telerik.Windows.Documents.FormatProviders.Pdf;
+using Telerik.Windows.Documents.Model;
+using Telerik.Windows.Media.Imaging;
 
 
 namespace GreenField.Gadgets.Helpers
@@ -160,6 +153,7 @@ namespace GreenField.Gadgets.Helpers
             foreach (GridViewBoundColumnBase item in columns)
             {
                 item.TextWrapping = TextWrapping.NoWrap;
+                item.Width = GridViewLength.Auto;
             }
 
             Table table = new Table();
@@ -206,6 +200,13 @@ namespace GreenField.Gadgets.Helpers
             return document;
         }
 
+        /// <summary>
+        /// Create Table
+        /// </summary>
+        /// <param name="grid">DataGrid</param>
+        /// <param name="fontSize">FontSize</param>
+        /// <param name="header">Header</param>
+        /// <returns>Table</returns>
         public static Table CreateTable(RadGridView grid, int fontSize, string header = "")
         {
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
@@ -214,6 +215,7 @@ namespace GreenField.Gadgets.Helpers
             foreach (GridViewBoundColumnBase item in columns)
             {
                 item.TextWrapping = TextWrapping.NoWrap;
+                item.Width = GridViewLength.Auto;
             }
             Table table = new Table();
             fontSizePDF = fontSize;
@@ -291,6 +293,7 @@ namespace GreenField.Gadgets.Helpers
                 foreach (GridViewBoundColumnBase item in columns)
                 {
                     item.TextWrapping = TextWrapping.NoWrap;
+                    item.Width = GridViewLength.Auto;
                 }
                 for (int j = 0; j < columns.Count(); j++)
                 {

@@ -15,8 +15,14 @@ using System.Collections.Generic;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Class to calculate Amount in Consensus Gadgets
+    /// </summary>
     public class ConsensusValuationAmount : EnumerableSelectorAggregateFunction
     {
+        /// <summary>
+        /// Method name
+        /// </summary>
         protected override string AggregateMethodName
         {
             get
@@ -25,6 +31,9 @@ namespace GreenField.Gadgets.Helpers
             }
         }
 
+        /// <summary>
+        /// Extension Method type
+        /// </summary>
         protected override Type ExtensionMethodsType
         {
             get
@@ -34,8 +43,19 @@ namespace GreenField.Gadgets.Helpers
         }
     }
 
+    /// <summary>
+    /// Consensus Valuation Amount
+    /// </summary>
     public class ConsensusValuationData
     {
+        /// <summary>
+        /// Grouping Aggregate Calculator
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="selector"></param>
+        /// <returns></returns>
         public static Decimal? ConsensusValuationAmountMethod<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
             decimal? returnVal = null;

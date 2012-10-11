@@ -11,6 +11,9 @@ using System.Windows.Shapes;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Class to Flip between objects
+    /// </summary>
     public class Flipper
     {
         public enum Direction { LeftToRight, RightToLeft }

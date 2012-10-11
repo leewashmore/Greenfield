@@ -31,9 +31,7 @@ namespace GreenField.Web.Helpers
                     case ("Weekly"):
                         {
                             #region CalculateWeeksBetweenDates
-
                             int totalWeeks = timeSpan.Days / 7;
-
                             #endregion
 
                             #region calculating LastDayOfAllWeeks
@@ -77,8 +75,7 @@ namespace GreenField.Web.Helpers
                             }
 
                             int totalMonthsLeft = totalMonths - monthsLeftInCurrentYear - 12 * (totalYear - 1);
-
-                            if (totalMonthsLeft > 0)
+                                                        if (totalMonthsLeft > 0)
                             {
                                 for (int i = 0; i < 1; i++)
                                 {
@@ -202,11 +199,17 @@ namespace GreenField.Web.Helpers
         private static int GetQuarter(int nMonth)
         {
             if (nMonth <= 3)
+            {
                 return 1;
+            }
             if (nMonth <= 6)
+            {
                 return 2;
+            }
             if (nMonth <= 9)
+            {
                 return 3;
+            }
             return 4;
         }
 
@@ -218,9 +221,13 @@ namespace GreenField.Web.Helpers
         private static int GetHalfYearly(int nMonth)
         {
             if (nMonth <= 7)
+            {
                 return 1;
+            }
             else if (nMonth <= 12)
+            {
                 return 2;
+            }
             return 0;
         }
 
@@ -232,7 +239,6 @@ namespace GreenField.Web.Helpers
         /// <param name="EndDates">A list of datetime that stores the enddates.</param>
         private static void GetEndDatesForEachWeek(DateTime endDay, int totalWeeks, ref List<DateTime> EndDates)
         {
-
             for (int i = 0; i <= totalWeeks; i++)
             {
                 DateTime lastDaysAllWeek = endDay.AddDays(7 * i);
@@ -248,7 +254,6 @@ namespace GreenField.Web.Helpers
         /// <param name="EndDates">A list of datetime that stores the enddates.</param>
         private static void GetEndDatesForEachQuarter(DateTime lastDate, DateTime chartEndDate, ref List<DateTime> EndDates)
         {
-
             while (lastDate <= chartEndDate)
             {
                 EndDates.Add(lastDate);
@@ -265,7 +270,6 @@ namespace GreenField.Web.Helpers
                     lastDate = new DateTime(year, 12, 31);
                 }
             }
-
         }
 
         /// <summary>
@@ -291,7 +295,6 @@ namespace GreenField.Web.Helpers
         /// <param name="EndDates">A list of datetime that stores the enddates.</param>
         private static void GetEndDatesForEachYear(DateTime lastDate, DateTime chartEndDate, ref List<DateTime> EndDates)
         {
-
             while (lastDate <= chartEndDate)
             {
                 EndDates.Add(lastDate);

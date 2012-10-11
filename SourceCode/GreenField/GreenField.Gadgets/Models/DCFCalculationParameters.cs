@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Greenfield.Gadgets.Models
 {
+    /// <summary>
+    /// DCF Calculation Parameters required to calculate DCF ValuePer Share & TGR
+    /// </summary>
     public class DCFCalculationParameters
     {
         public decimal CostOfEquity { get; set; }
