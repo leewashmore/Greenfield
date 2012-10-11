@@ -49,6 +49,7 @@ namespace GreenField.Web.Helpers
                 benchmarkResult.BenchmarkWeight = item.BENCHMARK_WEIGHT;
                 benchmarkResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
                 benchmarkResult.Type = "BENCHMARK";
+                benchmarkResult.IssuerId = item.ISSUER_ID;
                 result.Add(benchmarkResult);
             }
             return result;
@@ -132,6 +133,7 @@ namespace GreenField.Web.Helpers
                             Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
                             Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
                 portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
+                portfolioResult.IssuerId = item.ISSUER_ID;
                 result.Add(portfolioResult);
             }
             return result;
@@ -178,6 +180,7 @@ namespace GreenField.Web.Helpers
                             Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
                             Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
                 portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
+                portfolioResult.IssuerId = item.ISSUER_ID;
                 result.Add(portfolioResult);
             }
             return result;

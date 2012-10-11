@@ -171,6 +171,52 @@
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Market Cap" UniqueName="Market Cap" DataMemberBinding="{Binding MarketCap, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Forward P/E" UniqueName="Forward P/E" DataMemberBinding="{Binding ForwardPE, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Forward P/BV" UniqueName="Forward P/BV" DataMemberBinding="{Binding ForwardPBV, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Forward EB/EBITDA" UniqueName="Forward EB/EBITDA" DataMemberBinding="{Binding ForwardEB_EBITDA, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Revenue Growth Current Year" UniqueName="Revenue Growth Current Year" 
+                                                        DataMemberBinding="{Binding RevenueGrowthCurrentYear, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Revenue Growth Next Year" UniqueName="Revenue Growth Next Year" 
+                                                        DataMemberBinding="{Binding RevenueGrowthNextYear, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Net Income Growth Current Year" UniqueName="Net Income Growth Current Year" 
+                                                        DataMemberBinding="{Binding NetIncomeGrowthCurrentYear, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="ROE" UniqueName="ROE" 
+                                                        DataMemberBinding="{Binding ROE, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Net Debt Equity" UniqueName="Net Debt Equity" 
+                                                        DataMemberBinding="{Binding NetDebtEquity, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Freecash Flow Margin" UniqueName="Freecash Flow Margin" 
+                                                        DataMemberBinding="{Binding FreecashFlowMargin, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
                 </telerik:RadBusyIndicator>

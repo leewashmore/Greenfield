@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
-using System.Windows.Media;
-using System.IO;
-using System.Collections;
-using System.Windows.Printing;
 #if !SILVERLIGHT
 using Microsoft.Win32;
 #else
 using System.Windows.Controls;
 #endif
 using Telerik.Windows.Controls.GridView;
-using Telerik.Windows.Documents.UI;
 using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Controls;
-using Telerik.Windows.Documents.FormatProviders.Pdf;
 using Telerik.Windows.Data;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller;
 using GreenField.Common;
 using GreenField.Gadgets.ViewModels;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
@@ -333,6 +325,18 @@ namespace GreenField.Gadgets.Views
                     data.SecurityType = item.SecurityType;
                     data.SubIndustryName = item.SubIndustryName;
                     data.Ticker = item.Ticker;
+                    data.MarketCap = item.MarketCap;
+                    data.Upside = item.Upside;
+                    data.ForwardPE = item.ForwardPE;
+                    data.ForwardPBV = item.ForwardPBV;
+                    data.ForwardEB_EBITDA = item.ForwardEB_EBITDA;
+                    data.RevenueGrowthCurrentYear = item.RevenueGrowthCurrentYear;
+                    data.RevenueGrowthNextYear = item.RevenueGrowthNextYear;
+                    data.NetIncomeGrowthCurrentYear = item.NetIncomeGrowthCurrentYear;
+                    data.NetIncomeGrowthNextYear = item.NetIncomeGrowthNextYear;
+                    data.ROE = item.ROE;
+                    data.NetDebtEquity = item.NetDebtEquity;
+                    data.FreecashFlowMargin = item.FreecashFlowMargin;
                     collection.Add(data);
                 }
                 DataContextPortfolioDetails.GroupedFilteredPortfolioDetailsData = collection;

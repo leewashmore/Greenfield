@@ -87,5 +87,49 @@ namespace GreenField.DataContracts
         [DataMember]
         public string Type { get; set; }
 
+        [DataMember]
+        public string SecurityId { get; set; }
+
+        [DataMember]
+        public decimal? MarketCap { get; set; }
+
+        [DataMember]
+        public decimal? Upside { get; set; }
+
+        [DataMember]
+        public decimal? ForwardPE { get; set; }
+
+        [DataMember]
+        public decimal? ForwardPBV { get; set; }
+
+        [DataMember]
+        public decimal? ForwardEB_EBITDA { get; set; }
+
+        [DataMember]
+        public decimal? RevenueGrowthCurrentYear { get; set; }
+
+        [DataMember]
+        public decimal? RevenueGrowthNextYear { get; set; }
+
+        [DataMember]
+        public decimal? NetIncomeGrowthCurrentYear { get; set; }
+
+        [DataMember]
+        public decimal? NetIncomeGrowthNextYear { get; set; }
+
+        [DataMember]
+        public decimal? ROE { get; set; }
+
+        [DataMember]
+        public decimal? NetDebtEquity { get; set; }
+
+        [DataMember]
+        public decimal? FreecashFlowMargin { get; set; }
+
+        [DataMember]
+        public string IssuerId { get; set; }
+
+        [DataMember]
+        public decimal? FairValue { get; set; }
     }
 }

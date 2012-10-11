@@ -704,6 +704,10 @@
         <Function Name="GetNewICPresentationSecurityData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetPortfolioDetailsExternalData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="issuerIds" Type="varchar(max)" Mode="In" />
+          <Parameter Name="securityIds" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
@@ -1261,7 +1265,11 @@
             <Parameter Name="UPDATED" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="DeleteDCFFairValueData">
-            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetPortfolioDetailsExternalData" ReturnType="Collection(ExternalResearchModel.PortfolioDetailsExternalData)">
+            <Parameter Name="issuerIds" Mode="In" Type="String" />
+            <Parameter Name="securityIds" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -1896,6 +1904,16 @@
 					<Property Type="DateTime" Name="RootSourceDate" Nullable="true" />
 					<Property Type="String" Name="CalculationDiagram" Nullable="true" />
 				</ComplexType>
+        <ComplexType Name="PortfolioDetailsExternalData">
+          <Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="DataSource" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="PeriodType" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="DataId" Nullable="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="PeriodYear" Nullable="true" />
+        </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -2642,6 +2660,20 @@
           <FunctionImportMapping FunctionImportName="GetDCFFairValue" FunctionName="ExternalResearchModel.Store.GetDCFFairValue" />
           <FunctionImportMapping FunctionImportName="InsertDCFFairValue" FunctionName="ExternalResearchModel.Store.InsertDCFFairValue" />
           <FunctionImportMapping FunctionImportName="DeleteDCFFairValueData" FunctionName="ExternalResearchModel.Store.DeleteDCFFairValueData" />
+          <FunctionImportMapping FunctionImportName="GetPortfolioDetailsExternalData" FunctionName="ExternalResearchModel.Store.GetPortfolioDetailsExternalData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.PortfolioDetailsExternalData">
+                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />

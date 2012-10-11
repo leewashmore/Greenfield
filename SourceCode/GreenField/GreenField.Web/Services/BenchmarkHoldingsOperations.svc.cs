@@ -11,6 +11,8 @@ using GreenField.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
+using System.Text;
+using GreenField.DAL;
 
 namespace GreenField.Web.Services
 {
@@ -1093,13 +1095,16 @@ namespace GreenField.Web.Services
 
                     #endregion
                 }
+
+                result = RetrieveExternalResearchData(result);
+
                 return result;
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                return null;
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -1135,13 +1140,13 @@ namespace GreenField.Web.Services
                     if (excludeCash)
                     {
                         dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.
-                                                            Where(a => (a.PORTFOLIO_ID.ToUpper().Trim() == portfolioSelectionData.PortfolioId.ToUpper().Trim()) 
+                                                            Where(a => (a.PORTFOLIO_ID.ToUpper().Trim() == portfolioSelectionData.PortfolioId.ToUpper().Trim())
                                                                 && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).ToList();
                     }
                     else
                     {
                         dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.
-                                                            Where(a => (a.PORTFOLIO_ID.ToUpper().Trim() == portfolioSelectionData.PortfolioId.ToUpper().Trim()) 
+                                                            Where(a => (a.PORTFOLIO_ID.ToUpper().Trim() == portfolioSelectionData.PortfolioId.ToUpper().Trim())
                                                                 && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
                     }
 
@@ -1173,7 +1178,7 @@ namespace GreenField.Web.Services
                     if (excludeCash)
                     {
                         dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.
-                                                Where(a => (a.PORTFOLIO_ID == portfolioSelectionData.PortfolioId) && (a.PORTFOLIO_DATE == effectiveDate.Date) 
+                                                Where(a => (a.PORTFOLIO_ID == portfolioSelectionData.PortfolioId) && (a.PORTFOLIO_DATE == effectiveDate.Date)
                                                     && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).ToList();
                     }
                     else
@@ -1209,6 +1214,97 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+        #region HelperMethods
+
+        /// <summary>
+        /// Method to retrieve External Research Data for Portfolio Details
+        /// </summary>
+        /// <param name="portfolioDetailsData">Collection of PortfolioDetailsData</param>
+        /// <returns>Collection of PortfolioDetailsData</returns>
+        private List<PortfolioDetailsData> RetrieveExternalResearchData(List<PortfolioDetailsData> portfolioDetailsData)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                List<string> securityNames = portfolioDetailsData.Select(a => a.IssueName).ToList();
+                List<PortfolioDetailsExternalData> externalData = new List<PortfolioDetailsExternalData>();
+                int check = 1;
+                StringBuilder securityIDPortfolio = new StringBuilder();
+                StringBuilder issuerIDPortfolio = new StringBuilder();
+
+                foreach (String issueName in securityNames)
+                {
+                    GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
+                    if (securityDetails != null)
+                    {
+                        check = 0;
+                        securityIDPortfolio.Append(",'" + securityDetails.SECURITY_ID + "'");
+                        issuerIDPortfolio.Append(",'" + securityDetails.ISSUER_ID + "'");
+                        if (portfolioDetailsData.Where(a => a.IssueName == issueName).FirstOrDefault() != null)
+                        {
+                            portfolioDetailsData.Where(a => a.IssueName == issueName).FirstOrDefault().SecurityId = Convert.ToString(securityDetails.SECURITY_ID);
+                        }
+                    }
+                }
+                issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
+                securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
+                string _issuerIDPortfolio = issuerIDPortfolio == null ? null : issuerIDPortfolio.ToString();
+                string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();
+
+                entity.GetPortfolioDetailsExternalData(_issuerIDPortfolio, _securityIDPortfolio).ToList();
+
+                foreach (PortfolioDetailsData item in portfolioDetailsData)
+                {
+                    item.MarketCap = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 185).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 185).FirstOrDefault().Amount;
+
+                    item.ForwardPE = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 187).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 187).FirstOrDefault().Amount;
+
+                    item.ForwardPBV = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 188).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 188).FirstOrDefault().Amount;
+
+                    item.ForwardEB_EBITDA = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 198).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 198).FirstOrDefault().Amount;
+
+                    item.RevenueGrowthCurrentYear = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == DateTime.Today.Year).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == DateTime.Today.Year).FirstOrDefault().Amount;
+
+                    item.RevenueGrowthNextYear = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault() ==
+                        null ? null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault().Amount;
+
+                    item.NetIncomeGrowthCurrentYear = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year)).
+                        FirstOrDefault() == null ? null :
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount;
+
+                    item.NetIncomeGrowthNextYear = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).
+                        FirstOrDefault() == null ? null :
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault().Amount;
+
+                    item.ROE = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 133 && a.PeriodYear == (DateTime.Today.Year)).
+                        FirstOrDefault() == null ? null :
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 133 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount;
+
+                    item.NetDebtEquity = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).
+                        FirstOrDefault() == null ? null :
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount;
+
+                    item.FreecashFlowMargin = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 146 && a.PeriodYear == (DateTime.Today.Year)).
+                        FirstOrDefault() == null ? null :
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 146 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount;
+                }
+                return portfolioDetailsData;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -2564,17 +2660,17 @@ namespace GreenField.Web.Services
             switch (nodeName)
             {
                 case "Country":
-                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && 
+                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate &&
                         t.NODE_NAME == "Country").ToList();
                     attributionData = attributionData.Distinct(customComparer).ToList();
                     break;
                 case "Sector":
-                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && 
+                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate &&
                         t.NODE_NAME == "GICS Level 1").ToList();
                     attributionData = attributionData.Distinct(customComparer).ToList();
                     break;
                 case "Security":
-                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && 
+                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate &&
                         t.NODE_NAME == "Security ID" && t.SEC_INV_THEME == "EQUITY").ToList();
                     attributionData = attributionData.Distinct(customComparer).ToList();
                     break;
@@ -2664,7 +2760,7 @@ namespace GreenField.Web.Services
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
             if (!isServiceUp)
-                throw new Exception();         
+                throw new Exception();
             List<DimensionEntitiesService.GF_PERF_TOPLEVELSTATS> riskReturnData = (from p in DimensionEntity.GF_PERF_TOPLEVELSTATS
                                                                                    where p.PORTFOLIO == portfolioSelectionData.PortfolioId
                                                                                    && p.TO_DATE == effectiveDate.Date
@@ -3020,6 +3116,6 @@ namespace GreenField.Web.Services
             return tempList;
         }
         #endregion
-
+        
     }
 }
