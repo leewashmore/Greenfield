@@ -124,6 +124,7 @@
     <Compile Include="Helpers\DataItem.cs" />
     <Compile Include="Helpers\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
+    <Compile Include="Helpers\RegionDataItem.cs" />
     <Compile Include="Helpers\ToolBoxSelecter.cs" />
     <Compile Include="Models\SecuritySelectionData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

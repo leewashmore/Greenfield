@@ -527,19 +527,19 @@ namespace GreenField.App.ViewModel
 
         #region Region Selector
 
-        private CollectionViewSource _regionItems;
-        public CollectionViewSource RegionItems
+        private ObservableCollection<RegionDataItem> regionItems;
+        public ObservableCollection<RegionDataItem> RegionItems
         {
             get
             {
-                return _regionItems;
+                return regionItems;
             }
             set
             {
-                _regionItems = value;
+                regionItems = value;
                 RaisePropertyChanged(() => this.RegionItems);
             }
-        }
+        }        
 
         private List<GreenField.DataContracts.RegionSelectionData> _regionTypeInfo;
         public List<GreenField.DataContracts.RegionSelectionData> RegionTypeInfo
@@ -560,17 +560,20 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        private List<String> _regionCountryNames;
+        private List<String> regionCountryNames;
         public List<String> RegionCountryNames
         {
             get
             {
-                return _regionCountryNames;
-
+                if (regionCountryNames == null)
+                {
+                    regionCountryNames = new List<string>();
+                }
+                return regionCountryNames;
             }
             set
             {
-                _regionCountryNames = value;
+                regionCountryNames = value;
                 RaisePropertyChanged(() => this.RegionCountryNames);
                 _eventAggregator.GetEvent<RegionFXEvent>().Publish(value);
 
@@ -1387,15 +1390,7 @@ namespace GreenField.App.ViewModel
             {
                 return new DelegateCommand<object>(AttributionCommandMethod);
             }
-        }
-
-        public ICommand HeatMapCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(HeatMapCommandMethod);
-            }
-        }
+        }        
 
         public ICommand PortfolioDetailsCommand
         {
@@ -1764,6 +1759,17 @@ namespace GreenField.App.ViewModel
             get
             {
                 return new DelegateCommand<object>(MarketSnapshotRemoveCommandMethod, MarketSnapshotRemoveCommandValidationMethod);
+            }
+        }
+
+        /// <summary>
+        /// ICommand for Retrive Region EM Data Button 
+        /// </summary>
+        public ICommand RetrieveRegionDataCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(RetrieveRegionDataCommandMethod);
             }
         }
         #endregion
@@ -3541,28 +3547,7 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        private void HeatMapCommandMethod(object param)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                //_eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
-                //        (new DashboardTileViewItemInfo
-                //        {
-                //            DashboardTileHeader = GadgetNames.PERFORMANCE_HEAT_MAP,
-                //            DashboardTileObject = new ViewHeatMap(new ViewModelHeatMap(GetDashboardGadgetParam()))
-                //        });
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
+        }      
 
         private void AttributionCommandMethod(object param)
         {
@@ -3576,6 +3561,38 @@ namespace GreenField.App.ViewModel
                             DashboardTileHeader = GadgetNames.PERFORMANCE_ATTRIBUTION,
                             DashboardTileObject = new ViewAttribution(new ViewModelAttribution(GetDashboardGadgetParam()))
                         });
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void RetrieveRegionDataCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                List<String> selectedCountries = new List<String>();
+
+                foreach (RegionDataItem item in RegionItems)
+                {
+                    List<RegionDataItem> children = item.SubCategories.ToList();
+
+                    foreach (RegionDataItem child in children)
+                    {
+                        if (child.IsChecked != null && (bool)child.IsChecked)
+                        {
+                            selectedCountries.Add(child.Name);
+                        }
+                    }
+
+                }
+
+                RegionCountryNames = selectedCountries;
             }
             catch (Exception ex)
             {
@@ -3910,36 +3927,36 @@ namespace GreenField.App.ViewModel
         {
             if (items != null)
             {
-                List<DataItem> regionList = new List<DataItem>();
-                foreach (GreenField.DataContracts.RegionSelectionData item in items)
+                RegionItems = new ObservableCollection<RegionDataItem>();
+
+                List<String> regions = (from p in items
+                                        select p.Region).Distinct().ToList();
+
+                foreach (string region in regions)
                 {
-                    DataItem region = new DataItem { Text = item.Country, DisplayText = item.CountryNames, Category = item.Region, IsSelected = false };
-                    region.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(region_PropertyChanged);
-                    regionList.Add(region);
-                }
+                    RegionDataItem regionItem = new RegionDataItem(null);
+                    regionItem.Name = region;
+                    regionItem.DisplayName = region;                    
 
-                CollectionViewSource regionColl = new CollectionViewSource();
-                regionColl.Source = new List<DataItem>(regionList);
-                regionColl.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
+                    List<RegionSelectionData> selectedCountries = (from p in items
+                                                                   where p.Region == region
+                                                                   select p).ToList();
 
-                RegionItems = regionColl;
+                    foreach (RegionSelectionData item in selectedCountries)
+                    {
+                        RegionDataItem country = new RegionDataItem(regionItem)
+                        {
+                            Name = item.Country,
+                            DisplayName = item.CountryNames                            
+                        };                       
+
+                        regionItem.SubCategories.Add(country);
+                    }
+
+                    RegionItems.Add(regionItem);
+                }              
             }
-        }
-
-        void region_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            int itemsCount = (this.RegionItems.Source as List<DataItem>).Count;
-            List<String> selectedCountries = new List<String>();
-            for (int i = 0; i < itemsCount; i++)
-            {
-                DataItem item = (this.RegionItems.Source as List<DataItem>)[i];
-                if (item.IsSelected)
-                {
-                    selectedCountries.Add(item.Text);
-                }
-            }
-            RegionCountryNames = selectedCountries;
-        }
+        }       
         #endregion
 
     }

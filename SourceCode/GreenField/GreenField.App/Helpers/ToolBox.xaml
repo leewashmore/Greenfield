@@ -501,17 +501,27 @@
                 <Grid Margin="5,0,0,0" Visibility="{Binding RegionFXSelectorVisibility}" Grid.Column="12">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto"
-                                    Style="{StaticResource TextBlockStyle}" FontWeight="Bold" />
-                        <telerik:RadComboBox x:Name="cbRegionFXSelector"
-                                             Style="{StaticResource RadComboBoxStyle}"
-                                             Width="150"      
-                                             Margin="5,0,0,0"
-                                             IsEditable="True"                                       
-                                             ItemsSource="{Binding RegionItems.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
-                                             EmptyText="Select Country"
-                                             telerik:TextSearch.TextPath="DisplayPath"                                                                   
-                                             ItemContainerStyleSelector="{StaticResource ItemStyleSelector}">
-                        </telerik:RadComboBox>
+                                    Style="{StaticResource TextBlockStyle}" FontWeight="Bold" />                       
+                        <telerik:RadDropDownButton HorizontalContentAlignment="Left" DropDownWidth="200" Width="150" 
+                                                   Margin="5,0,0,0" Style="{StaticResource RadDropDownButtonStyle}">
+                            <telerik:RadDropDownButton.DropDownContent>
+                                <telerik:RadTreeView Margin="5"
+                             ItemsSource="{Binding RegionItems}"
+                             Padding="5">
+                                    <telerik:RadTreeView.ItemTemplate>
+                                        <telerik:HierarchicalDataTemplate ItemsSource="{Binding SubCategories}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" telerik:StyleManager.Theme="Office_Black" />
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}" />
+                                            </StackPanel>
+                                        </telerik:HierarchicalDataTemplate>
+                                    </telerik:RadTreeView.ItemTemplate>
+                                </telerik:RadTreeView>
+                            </telerik:RadDropDownButton.DropDownContent>
+                        </telerik:RadDropDownButton>
+                        <telerik:RadButton Name="btnRetrieveRegionData" VerticalAlignment="Center" HorizontalAlignment="Left" Width="60"  Height="20"
+                                               Margin="2,0,2,0" Content="Retrieve" Command="{Binding RetrieveRegionDataCommand}"
+                                               Style="{StaticResource RadButtonStyle}"/>                        
                     </StackPanel>
                 </Grid>
                 <Grid Margin="5,0,0,0" Visibility="{Binding LookThruSelectorVisibility}" Grid.Column="13">
