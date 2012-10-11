@@ -102,7 +102,7 @@ namespace GreenField.Gadgets.Views
         }
         private void dgQuarterlyResults_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
-            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
+            RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
         }
 
         #endregion

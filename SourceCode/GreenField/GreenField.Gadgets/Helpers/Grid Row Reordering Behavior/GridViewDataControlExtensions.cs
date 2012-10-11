@@ -1,21 +1,20 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+﻿using System.Linq;
 using Telerik.Windows.Controls;
-using System.Linq;
 using Telerik.Windows.Controls.GridView;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Extention to row reordering behavior - retrival of RadRowItem
+    /// </summary>
     public static class GridViewDataControlExtensions
     {
+        /// <summary>
+        /// Returns RadRowItem by recursively searching in BaseItemsControl
+        /// </summary>
+        /// <param name="itemsControl">BaseItemsControl</param>
+        /// <param name="dataItem">Data Item</param>
+        /// <returns>RadRowItem</returns>
         internal static RadRowItem GetContainerFromItemRecursive(this BaseItemsControl itemsControl, object dataItem)
         {
             RadRowItem container = null;
@@ -36,6 +35,13 @@ namespace GreenField.Gadgets.Helpers
             }
             return container;
         }
+
+        /// <summary>
+        /// Returns RadRowItem by recursively searching in GridViewDataControl
+        /// </summary>
+        /// <param name="dataControl">GridViewDataControl</param>
+        /// <param name="item">Data Item</param>
+        /// <returns>RadRowItem</returns>
         internal static RadRowItem GetContainerFromDataItem(this GridViewDataControl dataControl, object item)
         {
             if (item == null || dataControl == null)

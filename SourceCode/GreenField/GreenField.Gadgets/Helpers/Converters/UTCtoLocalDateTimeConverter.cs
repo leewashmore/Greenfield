@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using System.Windows.Data;
-using System.Collections.Generic;
-using GreenField.ServiceCaller.MeetingDefinitions;
-using GreenField.Common;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Converts DateTime value from kind UTC to kind Local and vice versa
+    /// </summary>
     public class UTCToLocalDateTimeConverter : IValueConverter
     {
+        /// <summary>
+        /// Converts DateTime value to kind Local
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value is DateTime?)
@@ -34,6 +33,14 @@ namespace GreenField.Gadgets.Helpers
             return value;
         }
 
+        /// <summary>
+        /// Converts DateTime value to kind UTC
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value is DateTime?)

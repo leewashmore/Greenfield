@@ -1,20 +1,19 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// List Utility features
+    /// </summary>
     public static class ListUtils
     {
+        /// <summary>
+        /// Creation of deep copy of a single dimension list
+        /// </summary>
+        /// <typeparam name="T">generic type</typeparam>
+        /// <param name="list">input list</param>
+        /// <returns>deep copy list</returns>
         public static List<T> GetDeepCopy<T>(List<T> list) where T: new()
         {
             List<T> result = new List<T>();
@@ -30,10 +29,8 @@ namespace GreenField.Gadgets.Helpers
                         prop.SetValue(resultNode, value, null); 
                     }
                 }
-
                 result.Add(resultNode);
             }
-
             return result;
         }
     }

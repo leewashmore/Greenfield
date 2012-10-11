@@ -154,7 +154,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgPortfolioDetails_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
-            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
+            RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
         }
         #endregion
 

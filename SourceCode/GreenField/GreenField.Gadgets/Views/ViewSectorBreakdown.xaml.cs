@@ -118,7 +118,7 @@ namespace GreenField.Gadgets.Views
 
         private void dgSectorBreakdown_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
-            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: true, aggregatedColumnIndex: new List<int> { 1, 2, 3 });
+            RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: true, aggregatedColumnIndex: new List<int> { 1, 2, 3 });
         }
         #endregion
 

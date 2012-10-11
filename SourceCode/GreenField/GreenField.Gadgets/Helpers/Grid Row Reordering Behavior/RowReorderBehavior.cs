@@ -1,37 +1,38 @@
 ﻿using System;
-using System.Net;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using System.Windows.Interactivity;
-using Telerik.Windows.Controls;
-using Telerik.Windows.Data;
-using Telerik.Windows.Controls.GridView;
-using Telerik.Windows.Controls.DragDrop;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections;
-using System.Globalization;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.ServiceCaller.PerformanceDefinitions;
-using GreenField.DataContracts;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.DragDrop;
+using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Controls.TreeView;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Drag Drop Position
+    /// </summary>
     public static class DragDropPosition
     {
+        /// <summary>
+        /// Drop Position
+        /// </summary>
         public static DropPosition Value;
     }
 
+    /// <summary>
+    /// Row Reorder Behavior
+    /// </summary>
     public class RowReorderBehavior : Behavior<RadGridView>
     {
+        #region Fields
         private const string DropPositionFeedbackElementName = "DragBetweenItemsFeedback";
         private TreeViewDragCue dragCue;
         private object currentDropItem;
@@ -40,19 +41,22 @@ namespace GreenField.Gadgets.Helpers
         private Grid dropPositionFeedbackPresenterHost;
         private GridViewScrollViewer scrollViewer;
         private Point previousScrollAdjustPosition;
-        private DispatcherTimer scrollViewerScrollTimer = new DispatcherTimer()
-        {
-            Interval = TimeSpan.FromSeconds(0.02)
-        };
+        private DispatcherTimer scrollViewerScrollTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.02) }; 
+        #endregion
 
+        #region Events
         public event EventHandler<BeginningDragEventArgs> BeginningDrag;
         public event EventHandler<DragStartedEventArgs> DragStarted;
         public event EventHandler<ReorderingEventArgs> Reordering;
-        public event EventHandler<ReorderedEventArgs> Reordered;
+        public event EventHandler<ReorderedEventArgs> Reordered; 
+        #endregion
 
-
+        #region Dependency Properties
+        #region DragCueStyleProperty
         public static readonly DependencyProperty DragCueStyleProperty =
-           DependencyProperty.Register("DragCueStyle", typeof(Style), typeof(RowReorderBehavior), new PropertyMetadata(null, new PropertyChangedCallback(OnDragCueStylePropertyChanged)));
+           DependencyProperty.Register("DragCueStyle", typeof(Style), typeof(RowReorderBehavior)
+           , new PropertyMetadata(null, new PropertyChangedCallback(OnDragCueStylePropertyChanged)));
+
         public Style DragCueStyle
         {
             get
@@ -64,13 +68,16 @@ namespace GreenField.Gadgets.Helpers
                 SetValue(DragCueStyleProperty, value);
             }
         }
+
         private static void OnDragCueStylePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             RowReorderBehavior rowReorder = (RowReorderBehavior)sender;
             if (rowReorder.dragCue != null)
                 rowReorder.dragCue.Style = rowReorder.DragCueStyle;
-        }
+        } 
+        #endregion
 
+        #region DragCueActionContentTemplateProperty
         public DataTemplate DragCueActionContentTemplate
         {
             get
@@ -82,15 +89,20 @@ namespace GreenField.Gadgets.Helpers
                 SetValue(DragCueActionContentTemplateProperty, value);
             }
         }
+
         public static readonly DependencyProperty DragCueActionContentTemplateProperty =
-            DependencyProperty.Register("DragCueActionContentTemplate", typeof(DataTemplate), typeof(RowReorderBehavior), new PropertyMetadata(null, new PropertyChangedCallback(OnDragCueActionContentTemplatePropertyChanged)));
+            DependencyProperty.Register("DragCueActionContentTemplate", typeof(DataTemplate), typeof(RowReorderBehavior)
+            , new PropertyMetadata(null, new PropertyChangedCallback(OnDragCueActionContentTemplatePropertyChanged)));
+
         private static void OnDragCueActionContentTemplatePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             RowReorderBehavior rowReorder = (RowReorderBehavior)sender;
             if (rowReorder.dragCue != null)
                 rowReorder.dragCue.DragActionContentTemplate = rowReorder.DragCueActionContentTemplate;
-        }
+        } 
+        #endregion
 
+        #region DragCueTooltipContentTemplateProperty
         public DataTemplate DragCueTooltipContentTemplate
         {
             get
@@ -102,15 +114,20 @@ namespace GreenField.Gadgets.Helpers
                 SetValue(DragCueTooltipContentTemplateProperty, value);
             }
         }
+
         public static readonly DependencyProperty DragCueTooltipContentTemplateProperty =
-            DependencyProperty.Register("DragCueTooltipContentTemplate", typeof(DataTemplate), typeof(RowReorderBehavior), new PropertyMetadata(null, new PropertyChangedCallback(OnDragCueTooltipContentTemplatePropertyChanged)));
+            DependencyProperty.Register("DragCueTooltipContentTemplate", typeof(DataTemplate)
+            , typeof(RowReorderBehavior), new PropertyMetadata(null, new PropertyChangedCallback(OnDragCueTooltipContentTemplatePropertyChanged)));
+
         private static void OnDragCueTooltipContentTemplatePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             RowReorderBehavior rowReorder = (RowReorderBehavior)sender;
             if (rowReorder.dragCue != null)
                 rowReorder.dragCue.DragTooltipContentTemplate = rowReorder.DragCueTooltipContentTemplate;
-        }
+        } 
+        #endregion
 
+        #region DragCueItemTemplateProperty
         public DataTemplate DragCueItemTemplate
         {
             get
@@ -122,28 +139,35 @@ namespace GreenField.Gadgets.Helpers
                 SetValue(DragCueItemTemplateProperty, value);
             }
         }
+
         public static readonly DependencyProperty DragCueItemTemplateProperty =
-            DependencyProperty.Register("DragCueItemTemplate", typeof(DataTemplate), typeof(RowReorderBehavior), new PropertyMetadata(null, new PropertyChangedCallback(DragCueItemTemplatePropertyChanged)));
+            DependencyProperty.Register("DragCueItemTemplate", typeof(DataTemplate), typeof(RowReorderBehavior)
+            , new PropertyMetadata(null, new PropertyChangedCallback(DragCueItemTemplatePropertyChanged)));
+
         private static void DragCueItemTemplatePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             RowReorderBehavior rowReorder = (RowReorderBehavior)sender;
             if (rowReorder.dragCue != null)
                 rowReorder.dragCue.ItemTemplate = rowReorder.DragCueItemTemplate;
-        }
+        } 
+        #endregion        
+
+        #region PreserveSelectionOrderWhenReorderingProperty
+        public static readonly DependencyProperty PreserveSelectionOrderWhenReorderingProperty =
+            DependencyProperty.Register("PreserveSelectionOrderWhenReordering", typeof(bool), typeof(RowReorderBehavior), new PropertyMetadata(false));
 
         public bool PreserveSelectionOrderWhenReordering
         {
-            get
-            {
-                return (bool)GetValue(PreserveSelectionOrderWhenReorderingProperty);
-            }
-            set
-            {
-                SetValue(PreserveSelectionOrderWhenReorderingProperty, value);
-            }
-        }
-        public static readonly DependencyProperty PreserveSelectionOrderWhenReorderingProperty =
-            DependencyProperty.Register("PreserveSelectionOrderWhenReordering", typeof(bool), typeof(RowReorderBehavior), new PropertyMetadata(false));
+            get { return (bool)GetValue(PreserveSelectionOrderWhenReorderingProperty); }
+            set { SetValue(PreserveSelectionOrderWhenReorderingProperty, value); }
+        } 
+        #endregion
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public RowReorderBehavior()
         {
             this.dropPositionFeedbackPresenter = new ContentPresenter();
@@ -151,8 +175,33 @@ namespace GreenField.Gadgets.Helpers
             this.dropPositionFeedbackPresenter.HorizontalAlignment = HorizontalAlignment.Left;
             this.dropPositionFeedbackPresenter.VerticalAlignment = VerticalAlignment.Top;
             this.dropPositionFeedbackPresenter.RenderTransformOrigin = new Point(0.5, 0.5);
+        } 
+        #endregion
+
+        #region Handlers for custom events
+        /// <summary>
+        /// Invoking BeginningDrag Event if specified
+        /// </summary>
+        /// <param name="args"></param>
+        protected virtual void OnBeginningDrag(BeginningDragEventArgs args)
+        {
+            if (this.BeginningDrag != null)
+                this.BeginningDrag(this, args);
         }
 
+        /// <summary>
+        /// Invoking DragStarted Event if specified
+        /// </summary>
+        /// <param name="args"></param>
+        protected virtual void OnDragStarted(DragStartedEventArgs args)
+        {
+            if (this.DragStarted != null)
+                this.DragStarted(this, args);
+        }
+
+        /// <summary>
+        /// OnAttached method override
+        /// </summary>
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -162,6 +211,9 @@ namespace GreenField.Gadgets.Helpers
             this.SubscribeToDragDropEvents();
         }
 
+        /// <summary>
+        /// OnDetaching method override
+        /// </summary>
         protected override void OnDetaching()
         {
             base.OnDetaching();
@@ -169,8 +221,26 @@ namespace GreenField.Gadgets.Helpers
             this.AssociatedObject.SetValue(RadDragAndDropManager.AllowDropProperty, false);
             this.UnsubscribeFromDragDropEvents();
             this.DetachDropPositionFeedback();
+        }         
+
+        protected void OnReordered(ReorderedEventArgs args)
+        {
+            if (this.Reordered != null)
+                this.Reordered(this, args);
         }
 
+        /// <summary>
+        /// Invoking Reordering Event if specified
+        /// </summary>
+        /// <param name="args">ReorderingEventArgs object</param>
+        protected void OnReordering(ReorderingEventArgs args)
+        {
+            if (this.Reordering != null)
+                this.Reordering(this, args);
+        }
+        #endregion
+
+        #region RadGridView Event Handlers
         /// <summary>
         /// Event Handler for AssociatedObject.DataLoaded Event
         /// Initialize the content for the scroll line that moves with drag
@@ -204,6 +274,18 @@ namespace GreenField.Gadgets.Helpers
             this.InitializeRowDragAndDrop(row);
         }
 
+        /// <summary>
+        /// Event Handler for ScrollViewer.ScrollChanged Event
+        /// </summary>
+        /// <param name="sender">ScrollViewer object</param>
+        /// <param name="e">ScrollChangedEventArgs object</param>
+        void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            this.HideDropPositionFeedbackPresenter();
+        } 
+        #endregion
+
+        #region Helper Methods
         /// <summary>
         /// Get the ContentPresenter dropPositionFeedbackPresenter
         /// </summary>
@@ -264,16 +346,6 @@ namespace GreenField.Gadgets.Helpers
         }
 
         /// <summary>
-        /// Event Handler for ScrollViewer.ScrollChanged Event
-        /// </summary>
-        /// <param name="sender">ScrollViewer object</param>
-        /// <param name="e">ScrollChangedEventArgs object</param>
-        void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            this.HideDropPositionFeedbackPresenter();
-        }
-
-        /// <summary>
         /// Event Handler for ScrollViewer.Tick Event
         /// Adjusts the position of the ScrollViewer GridViewScrollViewer based on dragging status
         /// </summary>
@@ -293,6 +365,7 @@ namespace GreenField.Gadgets.Helpers
                 scrollViewerScrollTimer.Stop();
             }
         }
+
         /// <summary>
         /// Adjust the position of the scroll line
         /// </summary>
@@ -335,6 +408,10 @@ namespace GreenField.Gadgets.Helpers
             };
         }
 
+        /// <summary>
+        /// Initialize row drag and drop
+        /// </summary>
+        /// <param name="row">GridViewRow</param>
         private void InitializeRowDragAndDrop(GridViewRow row)
         {
             if (row == null)
@@ -347,6 +424,12 @@ namespace GreenField.Gadgets.Helpers
             RadDragAndDropManager.AddDropInfoHandler(row, OnGridViewRowDropInfo);
         }
 
+        #region RadDragAndDropManager event handlers
+        /// <summary>
+        /// Invoked on GridViewRow drop query
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnGridViewRowDropQuery(object sender, DragDropQueryEventArgs e)
         {
             this.AssociatedObject.ReleaseMouseCapture();
@@ -365,6 +448,48 @@ namespace GreenField.Gadgets.Helpers
             }
             e.Handled = true;
         }
+
+        /// <summary>
+        /// Invoked on GridViewRow drop information
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnGridViewRowDropInfo(object sender, DragDropEventArgs e)
+        {
+            this.AssociatedObject.ReleaseMouseCapture();
+            var senderRow = (GridViewRow)sender;
+            var gridView = senderRow.GridViewDataControl;
+            IEnumerable<object> draggedItems = e.Options.Payload as IEnumerable<object>;
+            TreeViewDragCue cue = e.Options.DragCue as TreeViewDragCue;
+            if (e.Options.Status == DragStatus.DropPossible)
+            {
+                var currentRow = this.AssociatedObject.GetContainerFromDataItem((this.currentDropItem)) as GridViewRow;
+                this.UpdateDragCueContent(cue,
+                    currentDropItem,
+                    String.Format("Move {0}: ", Enum.GetName(typeof(DropPosition), this.currentDropPosition)).ToLower(CultureInfo.InvariantCulture));
+                this.ShowDropPositionFeedbackPresenter(gridView, currentRow, this.currentDropPosition);
+                cue.IsDropPossible = true;
+            }
+            else if (e.Options.Status == DragStatus.DropImpossible)
+            {
+                this.HideDropPositionFeedbackPresenter();
+                this.ClearDragCueContent(cue);
+                cue.IsDropPossible = false;
+            }
+            else if (e.Options.Status == DragStatus.DropComplete)
+            {
+                this.HideDropPositionFeedbackPresenter();
+                var dropIndex = gridView.Items.IndexOf(this.currentDropItem);
+                if (currentDropPosition == DropPosition.After)
+                    dropIndex++;
+                ReorderingEventArgs reorderingArgs = new ReorderingEventArgs(gridView, draggedItems, dropIndex);
+                this.OnReordering(reorderingArgs);
+                this.TryReorderRows(reorderingArgs);
+                this.OnReordered(new ReorderedEventArgs(gridView, draggedItems));
+            }
+            e.Handled = true;
+        } 
+        #endregion
 
         /// <summary>
         /// Gets teh DropPosition from propertyName point
@@ -392,20 +517,18 @@ namespace GreenField.Gadgets.Helpers
             return DropPosition.Inside;
         }
 
-
+        /// <summary>
+        /// Detach Drop Position Feedback
+        /// </summary>
         private void DetachDropPositionFeedback()
         {
             if (this.IsDropPositionFeedbackAvailable())
                 this.dropPositionFeedbackPresenterHost.Children.Remove(this.dropPositionFeedbackPresenter);
         }
 
-
-        //protected override void OnChanged()
-        //{
-        //    base.OnChanged();
-        //}
-
-
+        /// <summary>
+        /// Subscribe to DragDrop events
+        /// </summary>
         private void SubscribeToDragDropEvents()
         {
             RadDragAndDropManager.AddDropQueryHandler(this.AssociatedObject, OnDropQuery);
@@ -413,6 +536,10 @@ namespace GreenField.Gadgets.Helpers
             RadDragAndDropManager.AddDragQueryHandler(this.AssociatedObject, OnDragQuery);
             RadDragAndDropManager.AddDragInfoHandler(this.AssociatedObject, OnDragInfo);
         }
+
+        /// <summary>
+        /// Unsubscribe from DragDrop events
+        /// </summary>
         private void UnsubscribeFromDragDropEvents()
         {
             RadDragAndDropManager.RemoveDropQueryHandler(this.AssociatedObject, OnDropQuery);
@@ -421,9 +548,12 @@ namespace GreenField.Gadgets.Helpers
             RadDragAndDropManager.RemoveDragInfoHandler(this.AssociatedObject, OnDragInfo);
         }
 
-
-
-
+        /// <summary>
+        /// Add dragged items
+        /// </summary>
+        /// <param name="sourceList">source items</param>
+        /// <param name="draggedItems">dragged items</param>
+        /// <param name="currentDropIndex">current drop position</param>
         private void AddDraggedItems(IList sourceList, IEnumerable<object> draggedItems, int currentDropIndex)
         {
             for (int i = 0; i < draggedItems.Count(); i++)
@@ -432,13 +562,11 @@ namespace GreenField.Gadgets.Helpers
             }
         }
 
-        protected void OnReordered(ReorderedEventArgs args)
-        {
-            if (this.Reordered != null)
-                this.Reordered(this, args);
-        }
-
-
+        /// <summary>
+        /// On DragQuery
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDragQuery(object sender, DragDropQueryEventArgs e)
         {
             //Limit Drag Behavior to GridViewRow
@@ -461,6 +589,12 @@ namespace GreenField.Gadgets.Helpers
             e.QueryResult = this.InitiateDrag(gridView, e);
             e.Handled = true;
         }
+
+        /// <summary>
+        /// On DragInfo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDragInfo(object sender, DragDropEventArgs e)
         {
             //Limit Drag Behavior to GridViewRow
@@ -490,6 +624,12 @@ namespace GreenField.Gadgets.Helpers
             }
             e.Handled = true;
         }
+
+        /// <summary>
+        /// On DropQuery
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDropQuery(object sender, DragDropQueryEventArgs e)
         {
             //Limit Drop Behavior to GridViewRow
@@ -502,6 +642,12 @@ namespace GreenField.Gadgets.Helpers
             e.Handled = true;
             // CHECK IF THE SOURCE COLLECTION CAN BE MODIFIED
         }
+
+        /// <summary>
+        /// On DropInfo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDropInfo(object sender, DragDropEventArgs e)
         {
             //Limit Drop Behavior to GridViewRow
@@ -592,26 +738,6 @@ namespace GreenField.Gadgets.Helpers
         }
 
         /// <summary>
-        /// Invoking BeginningDrag Event if specified
-        /// </summary>
-        /// <param name="args"></param>
-        protected virtual void OnBeginningDrag(BeginningDragEventArgs args)
-        {
-            if (this.BeginningDrag != null)
-                this.BeginningDrag(this, args);
-        }
-
-        /// <summary>
-        /// Invoking DragStarted Event if specified
-        /// </summary>
-        /// <param name="args"></param>
-        protected virtual void OnDragStarted(DragStartedEventArgs args)
-        {
-            if (this.DragStarted != null)
-                this.DragStarted(this, args);
-        }
-
-        /// <summary>
         /// Create the Drag Cue for the Drag operation received as dependency property
         /// </summary>
         /// <returns>TreeViewDragCue object</returns>
@@ -643,16 +769,6 @@ namespace GreenField.Gadgets.Helpers
             cue.ItemTemplate = this.DragCueItemTemplate;
             cue.DragTooltipContent = tooltipContent;
             cue.DragActionContent = actionContent;
-        }
-
-        /// <summary>
-        /// Invoking Reordering Event if specified
-        /// </summary>
-        /// <param name="args">ReorderingEventArgs object</param>
-        protected void OnReordering(ReorderingEventArgs args)
-        {
-            if (this.Reordering != null)
-                this.Reordering(this, args);
         }
 
         /// <summary>
@@ -704,16 +820,25 @@ namespace GreenField.Gadgets.Helpers
             }
             return newDropIndex;
         }
-        //   scrollViewerScrollTimer.Tick += new EventHandler(OnScrollViewerScrollTimerCompleted);
 
-
+        /// <summary>
+        /// Checks if darag drop points are near
+        /// </summary>
+        /// <param name="currentPoint">drag point</param>
+        /// <param name="mouseClickPoint">drop point</param>
+        /// <param name="threshold">threshhold for drag drop</param>
+        /// <returns>v</returns>
         private static bool ArePointsNear(Point currentPoint, Point mouseClickPoint, double threshold)
         {
             return Math.Abs(currentPoint.X - mouseClickPoint.X) < threshold
                 && Math.Abs(currentPoint.Y - mouseClickPoint.Y) < threshold;
         }
 
-
+        /// <summary>
+        /// Checks if drag point is in scrollable area
+        /// </summary>
+        /// <param name="currentPoint">drag point</param>
+        /// <returns>True/False</returns>
         private bool IsInScrollableArea(Point currentPoint)
         {
             if (this.scrollViewer == null)
@@ -723,52 +848,25 @@ namespace GreenField.Gadgets.Helpers
             return
                 stuff.Y <= 20 ||
                 stuff.Y >= size.Height - 20;
-        }
+        }        
 
-
-        private void OnGridViewRowDropInfo(object sender, DragDropEventArgs e)
-        {
-            this.AssociatedObject.ReleaseMouseCapture();
-            var senderRow = (GridViewRow)sender;
-            var gridView = senderRow.GridViewDataControl;
-            IEnumerable<object> draggedItems = e.Options.Payload as IEnumerable<object>;
-            TreeViewDragCue cue = e.Options.DragCue as TreeViewDragCue;
-            if (e.Options.Status == DragStatus.DropPossible)
-            {
-                var currentRow = this.AssociatedObject.GetContainerFromDataItem((this.currentDropItem)) as GridViewRow;
-                //if(currentRow == null)
-                // cancel drag
-                this.UpdateDragCueContent(cue,
-                    currentDropItem,
-                    String.Format("Move {0}: ", Enum.GetName(typeof(DropPosition), this.currentDropPosition)).ToLower(CultureInfo.InvariantCulture));
-                this.ShowDropPositionFeedbackPresenter(gridView, currentRow, this.currentDropPosition);
-                cue.IsDropPossible = true;
-            }
-            else if (e.Options.Status == DragStatus.DropImpossible)
-            {
-                this.HideDropPositionFeedbackPresenter();
-                this.ClearDragCueContent(cue);
-                cue.IsDropPossible = false;
-            }
-            else if (e.Options.Status == DragStatus.DropComplete)
-            {
-                this.HideDropPositionFeedbackPresenter();
-                var dropIndex = gridView.Items.IndexOf(this.currentDropItem);
-                if (currentDropPosition == DropPosition.After)
-                    dropIndex++;
-                ReorderingEventArgs reorderingArgs = new ReorderingEventArgs(gridView, draggedItems, dropIndex);
-                this.OnReordering(reorderingArgs);
-                this.TryReorderRows(reorderingArgs);
-                this.OnReordered(new ReorderedEventArgs(gridView, draggedItems));
-            }
-            e.Handled = true;
-        }
+        /// <summary>
+        /// Checks if Drop Position Feedback is Available
+        /// </summary>
+        /// <returns>True/False</returns>
         private bool IsDropPositionFeedbackAvailable()
         {
             return
                 this.dropPositionFeedbackPresenterHost != null &&
                 this.dropPositionFeedbackPresenter != null;
         }
+
+        /// <summary>
+        /// Show Drop Position Feedback Presenter
+        /// </summary>
+        /// <param name="gridView">GridViewDataControl</param>
+        /// <param name="row">GridViewRow</param>
+        /// <param name="lastRowDropPosition">DropPosition</param>
         private void ShowDropPositionFeedbackPresenter(GridViewDataControl gridView, GridViewRow row, DropPosition lastRowDropPosition)
         {
             if (!this.IsDropPositionFeedbackAvailable())
@@ -782,6 +880,12 @@ namespace GreenField.Gadgets.Helpers
             };
         }
 
+        /// <summary>
+        /// Get Drop Position Feedback Offset
+        /// </summary>
+        /// <param name="row">GridViewRow</param>
+        /// <param name="dropPosition">DropPosition</param>
+        /// <returns>Drop Position Feedback Offset</returns>
         private double GetDropPositionFeedbackOffset(GridViewRow row, DropPosition dropPosition)
         {
             var yOffset = row.TransformToVisual(this.dropPositionFeedbackPresenterHost).Transform(new Point(0, 0)).Y;
@@ -791,17 +895,17 @@ namespace GreenField.Gadgets.Helpers
             return yOffset;
         }
 
-
-
-
-
-
+        /// <summary>
+        /// Clear Drag Cue Content
+        /// </summary>
+        /// <param name="cue">TreeViewDragCue</param>
         private void ClearDragCueContent(TreeViewDragCue cue)
         {
             cue.DragTooltipContentTemplate = null;
             cue.DragActionContentTemplate = null;
             cue.DragTooltipContent = null;
             cue.DragActionContent = null;
-        }
+        } 
+        #endregion
     }
 }

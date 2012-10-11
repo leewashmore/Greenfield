@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.Models;
 using Telerik.Windows.Controls;
-using System.Collections.Generic;
-using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using System.Linq;
-using GreenField.Common;
-using GreenField.DataContracts;
-using System.Reflection;
 using Telerik.Windows.Controls.GridView;
-
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Period Column Navigation Implementation
+    /// </summary>
     public static class PeriodColumns
     {
         #region Events
@@ -301,7 +294,7 @@ namespace GreenField.Gadgets.Helpers
             {
                 List<String> distinctPeriodDataDescriptors = uniqueByGroupDesc
                     ? data.Where(record => (String)record.GetType().GetProperty("GroupDescription").GetValue(record, null) == gDesc)
-                        .Select(record => (String)record.GetType().GetProperty("Description").GetValue(record, null)).Distinct().ToList() 
+                        .Select(record => (String)record.GetType().GetProperty("Description").GetValue(record, null)).Distinct().ToList()
                     : data.Select(record => (String)record.GetType().GetProperty("Description").GetValue(record, null)).Distinct().ToList();
 
                 foreach (String dataDesc in distinctPeriodDataDescriptors)
@@ -674,7 +667,7 @@ namespace GreenField.Gadgets.Helpers
                         QUARTER_SIX = quarterSixData == null ? null : GetFormattedValue(quarterSixData.GetType().GetProperty("Amount").GetValue(quarterSixData, null), dataDecimal, dataPercentage),
                         QUARTER_SEVEN = quarterSevenData == null ? null : GetFormattedValue(quarterSevenData.GetType().GetProperty("Amount").GetValue(quarterSevenData, null), dataDecimal, dataPercentage),
                     });
-                } 
+                }
             }
 
         FINISH:
@@ -864,7 +857,6 @@ namespace GreenField.Gadgets.Helpers
                 }
             }
         }
-
         #endregion
 
         #region Private Methods
@@ -878,7 +870,7 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="periodYear">PeriodYear column value</param>
         /// <param name="periodType">PeriodType column value</param>
         /// <returns>Generic Type record matching criterion or null</returns>
-        private static T GetPeriodData<T>(List<T> data, string description, string periodYear, string periodType,String groupDescription, bool uniqueByGroupDesc = false)
+        private static T GetPeriodData<T>(List<T> data, string description, string periodYear, string periodType, String groupDescription, bool uniqueByGroupDesc = false)
         {
             T yearData = uniqueByGroupDesc
                 ? data.Where(record =>
@@ -910,7 +902,7 @@ namespace GreenField.Gadgets.Helpers
             try
             {
                 PropertyInfo[] propertyInfo = data.GetType().GetProperties();
-                if(propertyInfo.Any(record => record.Name == groupItem.GroupPropertyName))
+                if (propertyInfo.Any(record => record.Name == groupItem.GroupPropertyName))
                 {
                     object groupdata = data.GetType().GetProperty(groupItem.GroupPropertyName).GetValue(data, null);
 
@@ -935,7 +927,7 @@ namespace GreenField.Gadgets.Helpers
                     }
                 }
 
-                return null;               
+                return null;
             }
             catch (Exception)
             {
@@ -1046,14 +1038,13 @@ namespace GreenField.Gadgets.Helpers
             return result;
         }
 
-
-         //<summary>
-         //Create tooltip content from property name factor - assumed that data source and data source
-         //date property names are tightly linked with column binded property name
-         //</summary>
-         //<param name="data">PeriodColumnDisplayData</param>
-         //<param name="columnBindedPropertyName">Name of the property binded to the cell column</param>
-         //<returns>tool tip content</returns>
+        //<summary>
+        //Create tooltip content from property name factor - assumed that data source and data source
+        //date property names are tightly linked with column binded property name
+        //</summary>
+        //<param name="data">PeriodColumnDisplayData</param>
+        //<param name="columnBindedPropertyName">Name of the property binded to the cell column</param>
+        //<returns>tool tip content</returns>
         private static String GetToolTipContentForCOASpecificGadget(PeriodColumnDisplayData data, String columnBindedPropertyName)
         {
             String result = null;

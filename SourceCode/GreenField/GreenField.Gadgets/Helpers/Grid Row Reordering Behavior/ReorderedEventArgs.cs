@@ -1,30 +1,37 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Telerik.Windows.Controls.GridView;
 using System.Collections.Generic;
+using Telerik.Windows.Controls.GridView;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Custom Event Arguments for Row Reordering Behavior
+    /// </summary>
     public class ReorderedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Source RadGridView
+        /// </summary>
         public GridViewDataControl SourceGrid
         {
             get;
             private set;
         }
+
+        /// <summary>
+        /// Dragged items
+        /// </summary>
         public IEnumerable<object> DraggedItems
         {
             get;
             private set;
         }
+
+        /// <summary>
+        /// ReorderedEventArgs
+        /// </summary>
+        /// <param name="sourceGrid">Source RadGridView</param>
+        /// <param name="draggedItems">Dragged items</param>
         public ReorderedEventArgs(GridViewDataControl sourceGrid, IEnumerable<object> draggedItems)
             : base()
         {
