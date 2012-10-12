@@ -452,22 +452,11 @@ namespace GreenField.Gadgets.Views
                 if (e.Value is RelativePerformanceData)
                 {
                     RelativePerformanceData value = e.Value as RelativePerformanceData;
-                    //int columnIndex = (e.Context as GridViewDataColumn).DisplayIndex;
-                    //if (columnIndex == 0)
-                    //{
-                    //    return value.CountryId;
-                    //}
-                    //else if (columnIndex == this.dgRelativePerformance.Columns.Count - 1)  //Could this be why the Totals column does not export to the xls - Lane
-                    //{
-                    //    string result = value.AggregateCountryAlpha.ToString();
-                    //    return result;
-                    //}
-
                     if (value != null)
                     {
                         decimal totalValue = value.AggregateCountryAlpha.HasValue? 
-                            ((Decimal)value.AggregateCountryAlpha * 10000):0;
-                        countryTotal = totalValue.ToString("n0");               
+                            value.AggregateCountryAlpha.Value:0;
+                        countryTotal = GetValueInBasisPoints(totalValue.ToString());               
                     }
 
                     return value;
@@ -483,7 +472,7 @@ namespace GreenField.Gadgets.Views
                         decimal totalValue = 0M;
 
                         result = Decimal.TryParse(value.Alpha.ToString(), out totalValue) ?
-                            (totalValue * 10000).ToString("n0") : String.Empty;                                             
+                            GetValueInBasisPoints(totalValue.ToString()) : String.Empty;                                             
                     }
                     return result;
                 }
@@ -505,7 +494,7 @@ namespace GreenField.Gadgets.Views
                     decimal totalValue = 0M;
 
                     string value = Decimal.TryParse(e.Value.ToString(), out totalValue) ?
-                        (totalValue * 10000).ToString("n0") : "Total";
+                        GetValueInBasisPoints(totalValue.ToString()) : "Total";
 
                     return value;
                 }
@@ -559,6 +548,18 @@ namespace GreenField.Gadgets.Views
                     SectorID = sectorID
                 });
             }
+        }
+
+        /// <summary>
+        /// Convert values to basis points
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private string GetValueInBasisPoints(string value)
+        {
+            decimal decimalVal = Convert.ToDecimal(value) * 10000;
+            
+            return decimalVal.ToString("n0");
         }
 
         #endregion
