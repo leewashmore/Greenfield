@@ -13,6 +13,7 @@
 
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
+            <helpers:PercentageValueConverter x:Key="ConvertPercentageValue"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -176,7 +177,7 @@
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Upside" UniqueName="Upside" DataMemberBinding="{Binding Upside}" 
-                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Forward P/E" UniqueName="Forward P/E" DataMemberBinding="{Binding ForwardPE}" 
@@ -192,27 +193,27 @@
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Revenue Growth Current Year" UniqueName="Revenue Growth Current Year" 
-                                                        DataMemberBinding="{Binding RevenueGrowthCurrentYear}" 
-                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}%"
+                                                        DataMemberBinding="{Binding RevenueGrowthCurrentYear,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Revenue Growth Next Year" UniqueName="Revenue Growth Next Year" 
-                                                        DataMemberBinding="{Binding RevenueGrowthNextYear}" 
-                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}%"
+                                                        DataMemberBinding="{Binding RevenueGrowthNextYear,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Net Income Growth Current Year" UniqueName="Net Income Growth Current Year" 
-                                                        DataMemberBinding="{Binding NetIncomeGrowthCurrentYear}" DataFormatString="{}{0:n1}%"
+                                                        DataMemberBinding="{Binding NetIncomeGrowthCurrentYear,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Net Income Growth Next Year" UniqueName="Net Income Growth Next Year" 
-                                                        DataMemberBinding="{Binding NetIncomeGrowthNextYear}" DataFormatString="{}{0:n1}%"
+                                                        DataMemberBinding="{Binding NetIncomeGrowthNextYear,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="ROE" UniqueName="ROE" 
-                                                        DataMemberBinding="{Binding ROE}" DataFormatString="{}{0:n1}%"
+                                                        DataMemberBinding="{Binding ROE,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -222,8 +223,8 @@
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Freecash Flow Margin" UniqueName="Freecash Flow Margin" 
-                                                        DataMemberBinding="{Binding FreecashFlowMargin}" 
-                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}%"
+                                                        DataMemberBinding="{Binding FreecashFlowMargin,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                         </telerik:RadGridView.Columns>
