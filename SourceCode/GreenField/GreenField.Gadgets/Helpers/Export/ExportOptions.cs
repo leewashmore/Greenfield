@@ -530,6 +530,22 @@ namespace GreenField.Gadgets.Helpers
                 }
             }
 
+            if (exportElement.Element == ExportElement.Row)
+            {
+                if (cellValueConverter != null)
+                {
+                    exportElement.Value = cellValueConverter();
+                }
+            }
+
+            if (exportElement.Element == ExportElement.FooterCell)
+            {
+                if (cellValueConverter != null)
+                {
+                    exportElement.Value = cellValueConverter();
+                }
+            }
+
             else if (exportElement.Element == ExportElement.GroupFooterCell)
             {
                 GridViewDataColumn column = exportElement.Context as GridViewDataColumn;
