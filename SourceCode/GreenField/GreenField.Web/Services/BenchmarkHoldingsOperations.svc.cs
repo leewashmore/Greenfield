@@ -5,13 +5,13 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Resources;
+using System.Text;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using GreenField.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
-using System.Text;
 using GreenField.DAL;
 
 namespace GreenField.Web.Services
@@ -1226,6 +1226,8 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<SecurityBaseviewData> securityData = new List<SecurityBaseviewData>();
+                securityData = RetrieveSecurityReferenceData();
                 ExternalResearchEntities entity = new ExternalResearchEntities();
                 List<string> securityNames = portfolioDetailsData.Select(a => a.IssueName).ToList();
                 List<PortfolioDetailsExternalData> externalData = new List<PortfolioDetailsExternalData>();
@@ -1235,15 +1237,15 @@ namespace GreenField.Web.Services
 
                 foreach (String issueName in securityNames)
                 {
-                    GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
+                    SecurityBaseviewData securityDetails = securityData.Where(record => record.IssueName == issueName).FirstOrDefault();
                     if (securityDetails != null)
                     {
                         check = 0;
-                        securityIDPortfolio.Append(",'" + securityDetails.SECURITY_ID + "'");
-                        issuerIDPortfolio.Append(",'" + securityDetails.ISSUER_ID + "'");
+                        securityIDPortfolio.Append(",'" + securityDetails.SecurityId + "'");
+                        issuerIDPortfolio.Append(",'" + securityDetails.IssuerId + "'");
                         if (portfolioDetailsData.Where(a => a.IssueName == issueName).FirstOrDefault() != null)
                         {
-                            portfolioDetailsData.Where(a => a.IssueName == issueName).FirstOrDefault().SecurityId = Convert.ToString(securityDetails.SECURITY_ID);
+                            portfolioDetailsData.Where(a => a.IssueName == issueName).FirstOrDefault().SecurityId = Convert.ToString(securityDetails.SecurityId);
                         }
                     }
                 }
@@ -1252,7 +1254,7 @@ namespace GreenField.Web.Services
                 string _issuerIDPortfolio = issuerIDPortfolio == null ? null : issuerIDPortfolio.ToString();
                 string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();
 
-                entity.GetPortfolioDetailsExternalData(_issuerIDPortfolio, _securityIDPortfolio).ToList();
+                externalData = entity.GetPortfolioDetailsExternalData(_issuerIDPortfolio, _securityIDPortfolio).ToList();
 
                 foreach (PortfolioDetailsData item in portfolioDetailsData)
                 {
@@ -1295,6 +1297,48 @@ namespace GreenField.Web.Services
                         externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 146 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount;
                 }
                 return portfolioDetailsData;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Method to Retrieve all securities from GF_SECURITY_BASEVIEW
+        /// </summary>
+        /// <returns>List of SecurityBaseviewData</returns>
+        private List<SecurityBaseviewData> RetrieveSecurityReferenceData()
+        {
+            try
+            {
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<DimensionEntitiesService.GF_SECURITY_BASEVIEW> data = entity.GF_SECURITY_BASEVIEW.ToList();
+
+                List<SecurityBaseviewData> result = new List<SecurityBaseviewData>();
+                foreach (DimensionEntitiesService.GF_SECURITY_BASEVIEW record in data)
+                {
+                    result.Add(new SecurityBaseviewData()
+                    {
+                        IssueName = record.ISSUE_NAME,
+                        Ticker = record.TICKER,
+                        Country = record.ISO_COUNTRY_CODE,
+                        Sector = record.GICS_SECTOR_NAME,
+                        Industry = record.GICS_INDUSTRY_NAME,
+                        SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
+                        PrimaryAnalyst = record.ASHMOREEMM_PRIMARY_ANALYST,
+                        Currency = record.TRADING_CURRENCY,
+                        FiscalYearend = record.FISCAL_YEAR_END,
+                        Website = record.WEBSITE,
+                        Description = record.BLOOMBERG_DESCRIPTION,
+                        SecurityId = record.SECURITY_ID,
+                        IssuerId = record.ISSUER_ID
+                    });
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -3116,6 +3160,6 @@ namespace GreenField.Web.Services
             return tempList;
         }
         #endregion
-        
+
     }
 }

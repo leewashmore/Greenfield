@@ -208,6 +208,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\SectorBreakdownData.cs">
       <Link>DataContracts\SectorBreakdownData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\SecurityBaseviewData.cs">
+      <Link>DataContracts\SecurityBaseviewData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\SecurityInformation.cs">
       <Link>DataContracts\SecurityInformation.cs</Link>
     </Compile>

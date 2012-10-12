@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
+using X14 = DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using GreenField.DAL;
 using GreenField.Web.DataContracts;
-using X14 = DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace GreenField.Web.ExcelModel
 {

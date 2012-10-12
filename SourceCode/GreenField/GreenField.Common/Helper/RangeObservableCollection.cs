@@ -5,6 +5,10 @@ using System.Collections.Generic;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Custom Collection based on ObservableCollection
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class RangeObservableCollection<T> : ObservableCollection<T>
     {
         /// <summary>
@@ -30,6 +34,9 @@ namespace GreenField.Gadgets.Helpers
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public RangeObservableCollection()
         {
 
@@ -44,7 +51,9 @@ namespace GreenField.Gadgets.Helpers
             try
             {
                 if (!_disableNotifications)
+                {
                     base.OnCollectionChanged(e);
+                }
             }
             catch (Exception)
             {

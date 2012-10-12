@@ -76,6 +76,7 @@
     <Compile Include="DataContracts\DCFTerminalValueCalculationsData.cs" />
     <Compile Include="DataContracts\FairValueCompositionSummaryData.cs" />
     <Compile Include="DataContracts\FreeCashFlowsData.cs" />
+    <Compile Include="DataContracts\SecurityBaseviewData.cs" />
     <Compile Include="DataContracts\SecurityInformation.cs" />
     <Compile Include="DataContracts\DocumentData.cs" />
     <Compile Include="DataContracts\CountrySelectionData.cs" />
