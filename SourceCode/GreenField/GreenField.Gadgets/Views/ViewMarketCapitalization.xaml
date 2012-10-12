@@ -9,7 +9,7 @@
 
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
-            <helpers:PercentageValConverterFourDec x:Key="ConverterPercValFourDecPlace"/>
+            <helpers:PercentageValConverterTwoDec x:Key="ConverterPercValTwoDecPlace"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -74,10 +74,10 @@
             <TextBlock Text="{Binding MarketCapitalizationInfo.LargeRange, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
         </StackPanel>
             <Border  Grid.Row="3" Grid.Column="1">
-                <TextBlock  Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMegaRange, Mode=TwoWay,Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock  Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMegaRange, Mode=TwoWay,Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <Border  Grid.Row="3" Grid.Column="2" >
-                <TextBlock  Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMegaRange, Mode=TwoWay, Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock  Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMegaRange, Mode=TwoWay, Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <!--Large Bucket-->
@@ -88,10 +88,10 @@
                 <TextBlock Text="{Binding MarketCapitalizationInfo.LargeRange}" Margin="2,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </StackPanel>
             <Border Background="#f3f6fc" Grid.Row="4" Grid.Column="1">
-                <TextBlock  Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumLargeRange, Mode=TwoWay,Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock  Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumLargeRange, Mode=TwoWay,Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <Border Background="#f3f6fc" Grid.Row="4" Grid.Column="2">
-                <TextBlock Grid.Row="4" Grid.Column="2" Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumLargeRange, Mode=TwoWay, Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock Grid.Row="4" Grid.Column="2" Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumLargeRange, Mode=TwoWay, Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
         <!--Medium Bucket-->
             <StackPanel Grid.Row="5" Grid.Column="0"  Orientation="Horizontal" >
@@ -101,10 +101,10 @@
                 <TextBlock Text="{Binding MarketCapitalizationInfo.MediumRange, Mode=TwoWay}" Margin="2,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
         </StackPanel>
             <Border  Grid.Row="5" Grid.Column="1">
-                <TextBlock Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMediumRange, Mode=TwoWay, Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMediumRange, Mode=TwoWay, Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <Border  Grid.Row="5" Grid.Column="2">
-                <TextBlock Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMediumRange, Mode=TwoWay, Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMediumRange, Mode=TwoWay, Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
         <!--Small Bucket-->
             <StackPanel Grid.Row="6" Grid.Column="0"  Orientation="Horizontal" Background="#f3f6fc">
@@ -114,10 +114,10 @@
                 <TextBlock Text="{Binding MarketCapitalizationInfo.SmallRange}" Margin="2,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </StackPanel>
             <Border Background="#f3f6fc" Grid.Row="6" Grid.Column="1">
-                <TextBlock  Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumSmallRange, Mode=TwoWay, Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock  Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumSmallRange, Mode=TwoWay, Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <Border Background="#f3f6fc" Grid.Row="6" Grid.Column="2">
-                <TextBlock Grid.Row="6" Grid.Column="2" Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumSmallRange, Mode=TwoWay, Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock Grid.Row="6" Grid.Column="2" Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumSmallRange, Mode=TwoWay, Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
         <!--Micro Bucket-->
             <StackPanel Grid.Row="7" Grid.Column="0" Margin="2,0,0,0" Orientation="Horizontal" >
@@ -126,22 +126,20 @@
             <TextBlock Text="{Binding MarketCapitalizationInfo.MicroRange, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
         </StackPanel>
             <Border  Grid.Row="7" Grid.Column="1">
-                <TextBlock  Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMicroRange, Mode=TwoWay,Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock  Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMicroRange, Mode=TwoWay,Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <Border   Grid.Row="7" Grid.Column="2">
-                <TextBlock Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMicroRange, Mode=TwoWay,Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMicroRange, Mode=TwoWay,Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
         <!--Undefined Bucket-->
             <StackPanel Grid.Row="8" Grid.Column="0"  Orientation="Horizontal" Background="#f3f6fc">
                 <TextBlock Text="Undefined" Margin="2,0,0,0"   HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-            <!--<TextBlock Text=" &lt; " HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
-            <!--<TextBlock Text="{Binding MarketCapitalizationInfo.UndefinedRange}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />-->
-        </StackPanel>
+            </StackPanel>
             <Border Background="#f3f6fc" Grid.Row="8" Grid.Column="1">
-                <TextBlock Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumUndefinedRange, Mode=TwoWay,Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumUndefinedRange, Mode=TwoWay,Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <Border Background="#f3f6fc" Grid.Row="8" Grid.Column="2">
-                <TextBlock Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumUndefinedRange, Mode=TwoWay, Converter={StaticResource ConverterPercValFourDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock Margin="2,0,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumUndefinedRange, Mode=TwoWay, Converter={StaticResource ConverterPercValTwoDecPlace}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
         </Grid>
     </telerik:RadBusyIndicator>

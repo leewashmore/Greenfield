@@ -2713,7 +2713,6 @@ namespace GreenField.Web.Services
 
         #region Attribution and Risk return
 
-
         /// <summary>
         /// Retrieves Attribution Data for a particular composite/fund and Effective Date
         /// Filtering data based on fund name

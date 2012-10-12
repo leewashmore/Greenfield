@@ -124,8 +124,9 @@ namespace GreenField.Gadgets.ViewModels
             {
                 selectedPeriod = value;
                 RaisePropertyChanged(() => this.SelectedPeriod);
-                if (AttributionDataInfo != null)
+                if (AttributionDataInfo != null && AttributionDataInfo.Count > 0)
                 {
+                    bool isValidData;
                     switch (value)
                     {
                         case "1D":
@@ -196,32 +197,40 @@ namespace GreenField.Gadgets.ViewModels
                             break;
                         case "MTD":
                             List<PeriodAttributeData> resultMtd = new List<PeriodAttributeData>();
-                            for (int i = 0; i < AttributionDataInfo.Count; i++)
+                            isValidData = InceptionDateCheck(selectedPeriod, Convert.ToDateTime(AttributionDataInfo[0].EffectiveDate), AttributionDataInfo);
+                            if (!isValidData)
                             {
-                                if (AttributionDataInfo[i].PorRcAvgWgtMtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtMtd == 0)
-                                {
-                                    continue;
-                                }
-                                if (AttributionDataInfo[i].PorRcAvgWgtMtd == null)
-                                {
-                                    AttributionDataInfo[i].PorRcAvgWgtMtd = 0;
-                                }
-                                if (AttributionDataInfo[i].Bm1RcAvgWgtMtd == null)
-                                {
-                                    AttributionDataInfo[i].Bm1RcAvgWgtMtd = 0;
-                                }
-                                PeriodAttributeData entry = new PeriodAttributeData();
-                                entry.Country = AttributionDataInfo[i].Country;
-                                entry.CountryName = AttributionDataInfo[i].CountryName;
-                                entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtMtd;
-                                entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtMtd;
-                                entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnMtd;
-                                entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnMtd;
-                                entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocMtd;
-                                entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecMtd;
-                                resultMtd.Add(entry);
+                                PeriodAttributionInfo = new List<PeriodAttributeData>();
                             }
-                            PeriodAttributionInfo = resultMtd;
+                            else
+                            {
+                                for (int i = 0; i < AttributionDataInfo.Count; i++)
+                                {
+                                    if (AttributionDataInfo[i].PorRcAvgWgtMtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtMtd == 0)
+                                    {
+                                        continue;
+                                    }
+                                    if (AttributionDataInfo[i].PorRcAvgWgtMtd == null)
+                                    {
+                                        AttributionDataInfo[i].PorRcAvgWgtMtd = 0;
+                                    }
+                                    if (AttributionDataInfo[i].Bm1RcAvgWgtMtd == null)
+                                    {
+                                        AttributionDataInfo[i].Bm1RcAvgWgtMtd = 0;
+                                    }
+                                    PeriodAttributeData entry = new PeriodAttributeData();
+                                    entry.Country = AttributionDataInfo[i].Country;
+                                    entry.CountryName = AttributionDataInfo[i].CountryName;
+                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtMtd;
+                                    entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtMtd;
+                                    entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnMtd;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnMtd;
+                                    entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocMtd;
+                                    entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecMtd;
+                                    resultMtd.Add(entry);
+                                }
+                                PeriodAttributionInfo = resultMtd;
+                            }
                             if (null != AttributionDataLoadedEvent)
                             {
                                 AttributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
@@ -229,32 +238,40 @@ namespace GreenField.Gadgets.ViewModels
                             break;
                         case "QTD":
                             List<PeriodAttributeData> resultQtd = new List<PeriodAttributeData>();
-                            for (int i = 0; i < AttributionDataInfo.Count; i++)
+                            isValidData = InceptionDateCheck(selectedPeriod, Convert.ToDateTime(AttributionDataInfo[0].EffectiveDate), AttributionDataInfo);
+                            if (!isValidData)
                             {
-                                if (AttributionDataInfo[i].PorRcAvgWgtQtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtQtd == 0)
-                                {
-                                    continue;
-                                }
-                                if (AttributionDataInfo[i].PorRcAvgWgtQtd == null)
-                                {
-                                    AttributionDataInfo[i].PorRcAvgWgtQtd = 0;
-                                }
-                                if (AttributionDataInfo[i].Bm1RcAvgWgtQtd == null)
-                                {
-                                    AttributionDataInfo[i].Bm1RcAvgWgtQtd = 0;
-                                }
-                                PeriodAttributeData entry = new PeriodAttributeData();
-                                entry.Country = AttributionDataInfo[i].Country;
-                                entry.CountryName = AttributionDataInfo[i].CountryName;
-                                entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtQtd;
-                                entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtQtd;
-                                entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnQtd;
-                                entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnQtd;
-                                entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocQtd;
-                                entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecQtd;
-                                resultQtd.Add(entry);
+                                PeriodAttributionInfo = new List<PeriodAttributeData>();
                             }
-                            PeriodAttributionInfo = resultQtd;
+                            else
+                            {
+                                for (int i = 0; i < AttributionDataInfo.Count; i++)
+                                {
+                                    if (AttributionDataInfo[i].PorRcAvgWgtQtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtQtd == 0)
+                                    {
+                                        continue;
+                                    }
+                                    if (AttributionDataInfo[i].PorRcAvgWgtQtd == null)
+                                    {
+                                        AttributionDataInfo[i].PorRcAvgWgtQtd = 0;
+                                    }
+                                    if (AttributionDataInfo[i].Bm1RcAvgWgtQtd == null)
+                                    {
+                                        AttributionDataInfo[i].Bm1RcAvgWgtQtd = 0;
+                                    }
+                                    PeriodAttributeData entry = new PeriodAttributeData();
+                                    entry.Country = AttributionDataInfo[i].Country;
+                                    entry.CountryName = AttributionDataInfo[i].CountryName;
+                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtQtd;
+                                    entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtQtd;
+                                    entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnQtd;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnQtd;
+                                    entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocQtd;
+                                    entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecQtd;
+                                    resultQtd.Add(entry);
+                                }
+                                PeriodAttributionInfo = resultQtd;
+                            }
                             if (null != AttributionDataLoadedEvent)
                             {
                                 AttributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
@@ -262,32 +279,40 @@ namespace GreenField.Gadgets.ViewModels
                             break;
                         case "YTD":
                             List<PeriodAttributeData> resultYTD = new List<PeriodAttributeData>();
-                            for (int i = 0; i < AttributionDataInfo.Count; i++)
+                            isValidData = InceptionDateCheck(selectedPeriod, Convert.ToDateTime(AttributionDataInfo[0].EffectiveDate), AttributionDataInfo);
+                            if (!isValidData)
                             {
-                                if (AttributionDataInfo[i].PorRcAvgWgtYtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtYtd == 0)
-                                {
-                                    continue;
-                                }
-                                if (AttributionDataInfo[i].PorRcAvgWgtYtd == null)
-                                {
-                                    AttributionDataInfo[i].PorRcAvgWgtYtd = 0;
-                                }
-                                if (AttributionDataInfo[i].Bm1RcAvgWgtYtd == null)
-                                {
-                                    AttributionDataInfo[i].Bm1RcAvgWgtYtd = 0;
-                                }
-                                PeriodAttributeData entry = new PeriodAttributeData();
-                                entry.Country = AttributionDataInfo[i].Country;
-                                entry.CountryName = AttributionDataInfo[i].CountryName;
-                                entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtYtd;
-                                entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtYtd;
-                                entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnYtd;
-                                entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnYtd;
-                                entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocYtd;
-                                entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecYtd;
-                                resultYTD.Add(entry);
+                                PeriodAttributionInfo = new List<PeriodAttributeData>();
                             }
-                            PeriodAttributionInfo = resultYTD;
+                            else
+                            {
+                                for (int i = 0; i < AttributionDataInfo.Count; i++)
+                                {
+                                    if (AttributionDataInfo[i].PorRcAvgWgtYtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtYtd == 0)
+                                    {
+                                        continue;
+                                    }
+                                    if (AttributionDataInfo[i].PorRcAvgWgtYtd == null)
+                                    {
+                                        AttributionDataInfo[i].PorRcAvgWgtYtd = 0;
+                                    }
+                                    if (AttributionDataInfo[i].Bm1RcAvgWgtYtd == null)
+                                    {
+                                        AttributionDataInfo[i].Bm1RcAvgWgtYtd = 0;
+                                    }
+                                    PeriodAttributeData entry = new PeriodAttributeData();
+                                    entry.Country = AttributionDataInfo[i].Country;
+                                    entry.CountryName = AttributionDataInfo[i].CountryName;
+                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtYtd;
+                                    entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtYtd;
+                                    entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnYtd;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnYtd;
+                                    entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocYtd;
+                                    entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecYtd;
+                                    resultYTD.Add(entry);
+                                }
+                                PeriodAttributionInfo = resultYTD;
+                            }
                             if (null != AttributionDataLoadedEvent)
                             {
                                 AttributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
@@ -295,32 +320,40 @@ namespace GreenField.Gadgets.ViewModels
                             break;
                         case "1Y":
                             List<PeriodAttributeData> result1Y = new List<PeriodAttributeData>();
-                            for (int i = 0; i < AttributionDataInfo.Count; i++)
+                            isValidData = InceptionDateCheck(selectedPeriod, Convert.ToDateTime(AttributionDataInfo[0].EffectiveDate), AttributionDataInfo);
+                            if (!isValidData)
                             {
-                                if (AttributionDataInfo[i].PorRcAvgWgt1y == 0 && AttributionDataInfo[i].Bm1RcAvgWgt1y == 0)
-                                {
-                                    continue;
-                                }
-                                if (AttributionDataInfo[i].PorRcAvgWgt1y == null)
-                                {
-                                    AttributionDataInfo[i].PorRcAvgWgt1y = 0;
-                                }
-                                if (AttributionDataInfo[i].Bm1RcAvgWgt1y == null)
-                                {
-                                    AttributionDataInfo[i].Bm1RcAvgWgt1y = 0;
-                                }
-                                PeriodAttributeData entry = new PeriodAttributeData();
-                                entry.Country = AttributionDataInfo[i].Country;
-                                entry.CountryName = AttributionDataInfo[i].CountryName;
-                                entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt1y;
-                                entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt1y;
-                                entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn1y;
-                                entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn1y;
-                                entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1y;
-                                entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1y;
-                                result1Y.Add(entry);
+                                PeriodAttributionInfo = new List<PeriodAttributeData>();
                             }
-                            PeriodAttributionInfo = result1Y;
+                            else
+                            {
+                                for (int i = 0; i < AttributionDataInfo.Count; i++)
+                                {
+                                    if (AttributionDataInfo[i].PorRcAvgWgt1y == 0 && AttributionDataInfo[i].Bm1RcAvgWgt1y == 0)
+                                    {
+                                        continue;
+                                    }
+                                    if (AttributionDataInfo[i].PorRcAvgWgt1y == null)
+                                    {
+                                        AttributionDataInfo[i].PorRcAvgWgt1y = 0;
+                                    }
+                                    if (AttributionDataInfo[i].Bm1RcAvgWgt1y == null)
+                                    {
+                                        AttributionDataInfo[i].Bm1RcAvgWgt1y = 0;
+                                    }
+                                    PeriodAttributeData entry = new PeriodAttributeData();
+                                    entry.Country = AttributionDataInfo[i].Country;
+                                    entry.CountryName = AttributionDataInfo[i].CountryName;
+                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt1y;
+                                    entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt1y;
+                                    entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn1y;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn1y;
+                                    entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1y;
+                                    entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1y;
+                                    result1Y.Add(entry);
+                                }
+                                PeriodAttributionInfo = result1Y;
+                            }
                             if (null != AttributionDataLoadedEvent)
                             {
                                 AttributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
@@ -338,6 +371,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
         /// <summary>
         /// Collection binded to the Attribution Grid
         /// </summary>
@@ -560,29 +594,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null && result.Count > 0)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
-                    //implementing portfolio inception Check  
-                    System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
-                    dateInfo.ShortDatePattern = "dd/MM/yyyy";
-                    DateTime portfolioInceptionDate = Convert.ToDateTime(result[0].PorInceptionDate, dateInfo);
-                    if (selectedPeriod != "1D" && selectedPeriod != "1W")
-                    {
-                        bool isValid = InceptionDateChecker.ValidateInceptionDate(selectedPeriod, portfolioInceptionDate, Convert.ToDateTime(result[0].EffectiveDate));
-                        if (!isValid)
-                        {
-                            AttributionDataInfo = new List<AttributionData>();
-                            SelectedPeriod = selectedPeriod;
-                        }
-                        else
-                        {
-                            AttributionDataInfo = result;
-                            SelectedPeriod = selectedPeriod;
-                        }
-                    }
-                    else
-                    {
-                        AttributionDataInfo = result;
-                        SelectedPeriod = selectedPeriod;
-                    }
+                    AttributionDataInfo = result;
+                    SelectedPeriod = selectedPeriod;
                     if (null != AttributionDataLoadedEvent)
                     {
                         AttributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
@@ -590,7 +603,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    AttributionDataInfo = result;
+                    AttributionDataInfo = new List<AttributionData>();
                     SelectedPeriod = selectedPeriod;
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     if (null != AttributionDataLoadedEvent)
@@ -605,6 +618,26 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(logger, methodNamespace);
         }
+        #endregion
+
+        #region HelperMethod
+        /// <summary>
+        /// method to check inception date
+        /// </summary>
+        /// <param name="period"></param>
+        /// <param name="selectedDate"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public bool InceptionDateCheck(string period, DateTime selectedDate, List<AttributionData> data)
+        {
+            System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
+            dateInfo.ShortDatePattern = "dd/MM/yyyy";
+            DateTime portfolioInceptionDate = Convert.ToDateTime(data[0].PorInceptionDate, dateInfo);
+            bool isValid = false;
+            isValid = InceptionDateChecker.ValidateInceptionDate(selectedPeriod, portfolioInceptionDate, Convert.ToDateTime(data[0].EffectiveDate));
+            return isValid;
+        }
+
         #endregion
 
         #region EventUnSubscribe

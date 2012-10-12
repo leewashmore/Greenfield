@@ -340,6 +340,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
+                    BusyIndicatorStatus = false;
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
@@ -371,6 +372,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
+                    BusyIndicatorStatus = false;
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }                
             }

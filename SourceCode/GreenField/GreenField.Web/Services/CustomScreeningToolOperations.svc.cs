@@ -926,7 +926,6 @@ namespace GreenField.Web.Services
                     return securityList;
                 }
 
-                securitiesFromCustomControls = securitiesFromCustomControls.Distinct().ToList();
                 foreach (GF_SECURITY_BASEVIEW item in securitiesFromCustomControls)
                 {
                     securityList.Add(new CustomScreeningSecurityData()
