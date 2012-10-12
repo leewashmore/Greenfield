@@ -84,10 +84,6 @@ namespace GreenField.Web.Services
                 .FirstOrDefault();
                 string issuerID = issuerId;
                 string currency = countryDetails.CURRENCY_CODE;
-                if (issuerID == null)
-                {
-                    return new ExcelModelData();
-                }
                 if (currency != null)
                 {
                     resultReuters = RetrieveFinancialData(issuerID, currency);
@@ -110,6 +106,10 @@ namespace GreenField.Web.Services
                     }
                 }
                 resultReuters = resultReuters.Where(a => a.PeriodYear != 2300).ToList();
+                if (resultReuters == null || resultReuters.Count == 0)
+                {
+                    throw new Exception("No Data Returned from server");
+                }
                 dataPointsExcelUpload = RetrieveModelUploadDataPoints(issuerID);
                 commodities = entity.RetrieveCommodityForecasts().ToList();
                 ExcelModelData excelModelData = new ExcelModelData();
@@ -123,7 +123,7 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                ExceptionTrace.LogException(ex);
+                //ExceptionTrace.LogException(ex);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
