@@ -42,6 +42,9 @@ namespace GreenField.Gadgets.Views
         RadGridView grid;
         double offsetY;
 
+        //total rows data
+        private string countryTotal;
+
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
@@ -449,16 +452,25 @@ namespace GreenField.Gadgets.Views
                 if (e.Value is RelativePerformanceData)
                 {
                     RelativePerformanceData value = e.Value as RelativePerformanceData;
-                    int columnIndex = (e.Context as GridViewDataColumn).DisplayIndex;
-                    if (columnIndex == 0)
+                    //int columnIndex = (e.Context as GridViewDataColumn).DisplayIndex;
+                    //if (columnIndex == 0)
+                    //{
+                    //    return value.CountryId;
+                    //}
+                    //else if (columnIndex == this.dgRelativePerformance.Columns.Count - 1)  //Could this be why the Totals column does not export to the xls - Lane
+                    //{
+                    //    string result = value.AggregateCountryAlpha.ToString();
+                    //    return result;
+                    //}
+
+                    if (value != null)
                     {
-                        return value.CountryId;
+                        decimal totalValue = value.AggregateCountryAlpha.HasValue? 
+                            ((Decimal)value.AggregateCountryAlpha * 10000):0;
+                        countryTotal = totalValue.ToString("n0");               
                     }
-                    else if (columnIndex == this.dgRelativePerformance.Columns.Count - 1)  //Could this be why the Totals column does not export to the xls - Lane
-                    {
-                        string result = value.AggregateCountryAlpha.ToString();
-                        return result;
-                    }
+
+                    return value;
                 }
 
                 if (e.Value is RelativePerformanceCountrySpecificData)
@@ -468,10 +480,36 @@ namespace GreenField.Gadgets.Views
                     string result = String.Empty;
                     if (value.Alpha != null)
                     {
-                        result = value.Alpha.ToString();
+                        decimal totalValue = 0M;
+
+                        result = Decimal.TryParse(value.Alpha.ToString(), out totalValue) ?
+                            (totalValue * 10000).ToString("n0") : String.Empty;                                             
                     }
                     return result;
                 }
+
+                if (e.Value == null)
+                {
+                    GridViewDataColumn column = (e.Context as GridViewDataColumn);
+                    if (column != null)
+                    {
+                        if ((!String.IsNullOrEmpty(column.Header.ToString()) && String.Equals(column.Header.ToString(), "Total", StringComparison.CurrentCultureIgnoreCase)))
+                        {
+                            return countryTotal;
+                        }
+                    }
+                }
+
+                if (e.Element == ExportElement.FooterCell)
+                {
+                    decimal totalValue = 0M;
+
+                    string value = Decimal.TryParse(e.Value.ToString(), out totalValue) ?
+                        (totalValue * 10000).ToString("n0") : "Total";
+
+                    return value;
+                }
+
                 return e.Value;
             });
         }
