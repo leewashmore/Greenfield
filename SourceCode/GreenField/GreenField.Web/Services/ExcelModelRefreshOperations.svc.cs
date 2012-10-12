@@ -56,7 +56,7 @@ namespace GreenField.Web.Services
         /// <returns>object of type ExcelModelData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public ExcelModelData RetrieveStatementData(EntitySelectionData selectedSecurity)
+        public ExcelModelData RetrieveStatementData(string issuerId)
         {
             List<FinancialStatementDataModels> resultReuters = new List<FinancialStatementDataModels>();
             List<FinancialStatementData> resultStatement = new List<FinancialStatementData>();
@@ -68,23 +68,21 @@ namespace GreenField.Web.Services
             try
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-                if (selectedSecurity == null)
+                if (issuerId == null)
                 {
-                    return new ExcelModelData();
+                    throw new Exception("Issuer Id is not Valid");
                 }
                 GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
-                    .Where(record => record.ASEC_SEC_SHORT_NAME == selectedSecurity.InstrumentID &&
-                        record.ISSUE_NAME == selectedSecurity.LongName &&
-                        record.TICKER == selectedSecurity.ShortName).FirstOrDefault();
+                    .Where(record => record.ISSUER_ID == issuerId).FirstOrDefault();
                 if (securityDetails == null)
                 {
-                    return new ExcelModelData();
+                    throw new Exception("Issuer Id is not Valid");
                 }
                 External_Country_Master countryDetails = entity.External_Country_Master
                 .Where(record => record.COUNTRY_CODE == securityDetails.ISO_COUNTRY_CODE &&
                  record.COUNTRY_NAME == securityDetails.ASEC_SEC_COUNTRY_NAME)
                 .FirstOrDefault();
-                string issuerID = securityDetails.ISSUER_ID;
+                string issuerID = issuerId;
                 string currency = countryDetails.CURRENCY_CODE;
                 if (issuerID == null)
                 {
