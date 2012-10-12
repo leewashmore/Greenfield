@@ -369,6 +369,14 @@ namespace GreenField.Gadgets.ViewModels
                             break;
                     }
                 }
+                else
+                {
+                    PeriodAttributionInfo = new List<PeriodAttributeData>();
+                    if (null != AttributionDataLoadedEvent)
+                    {
+                        AttributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    }
+                }
             }
         }
 
