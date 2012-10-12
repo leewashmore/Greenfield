@@ -708,6 +708,9 @@
           <Parameter Name="issuerIds" Type="varchar(max)" Mode="In" />
           <Parameter Name="securityIds" Type="varchar(max)" Mode="In" />
         </Function>
+        <Function Name="GetPortfolioDetailsFairValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SECURITY_IDS" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
@@ -1270,6 +1273,9 @@
           <FunctionImport Name="GetPortfolioDetailsExternalData" ReturnType="Collection(ExternalResearchModel.PortfolioDetailsExternalData)">
             <Parameter Name="issuerIds" Mode="In" Type="String" />
             <Parameter Name="securityIds" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetPortfolioDetailsFairValue" EntitySet="FAIR_VALUE" ReturnType="Collection(ExternalResearchModel.FAIR_VALUE)">
+          <Parameter Name="SECURITY_IDS" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -2674,6 +2680,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPortfolioDetailsFairValue" FunctionName="ExternalResearchModel.Store.GetPortfolioDetailsFairValue" />
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />

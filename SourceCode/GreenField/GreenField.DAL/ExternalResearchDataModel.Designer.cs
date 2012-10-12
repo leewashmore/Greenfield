@@ -3346,6 +3346,44 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<PortfolioDetailsExternalData>("GetPortfolioDetailsExternalData", issuerIdsParameter, securityIdsParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sECURITY_IDS">No Metadata Documentation available.</param>
+        public ObjectResult<FAIR_VALUE> GetPortfolioDetailsFairValue(global::System.String sECURITY_IDS)
+        {
+            ObjectParameter sECURITY_IDSParameter;
+            if (sECURITY_IDS != null)
+            {
+                sECURITY_IDSParameter = new ObjectParameter("SECURITY_IDS", sECURITY_IDS);
+            }
+            else
+            {
+                sECURITY_IDSParameter = new ObjectParameter("SECURITY_IDS", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FAIR_VALUE>("GetPortfolioDetailsFairValue", sECURITY_IDSParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="sECURITY_IDS">No Metadata Documentation available.</param>
+        public ObjectResult<FAIR_VALUE> GetPortfolioDetailsFairValue(global::System.String sECURITY_IDS, MergeOption mergeOption)
+        {
+            ObjectParameter sECURITY_IDSParameter;
+            if (sECURITY_IDS != null)
+            {
+                sECURITY_IDSParameter = new ObjectParameter("SECURITY_IDS", sECURITY_IDS);
+            }
+            else
+            {
+                sECURITY_IDSParameter = new ObjectParameter("SECURITY_IDS", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FAIR_VALUE>("GetPortfolioDetailsFairValue", mergeOption, sECURITY_IDSParameter);
+        }
 
         #endregion
     }

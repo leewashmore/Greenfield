@@ -99,7 +99,11 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextPortfolioDetails = dataContextSource;
             this.dgPortfolioDetails.GroupPanelStyle = this.Resources["GridViewGroupPanelStyle"] as Style;
-
+            this.dgPortfolioDetails.Columns[20].Header = "Revenue Growth " + DateTime.Today.Year.ToString();
+            this.dgPortfolioDetails.Columns[21].Header = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
+            this.dgPortfolioDetails.Columns[20].Header = "Net Income Growth " + DateTime.Today.Year.ToString();
+            this.dgPortfolioDetails.Columns[20].Header = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
+            ChangeHeaders();
         }
 
         #endregion
@@ -393,6 +397,22 @@ namespace GreenField.Gadgets.Views
         {
             gridDataSource = this.dgPortfolioDetails.ItemsSource as RangeObservableCollection<PortfolioDetailsData>;
             this.dgPortfolioDetails.Items.EditItem(gridDataSource);
+        }
+
+        /// <summary>
+        /// Change the Headers of the Grid According to Year
+        /// </summary>
+        private void ChangeHeaders()
+        {
+            this.dgPortfolioDetails.Columns[20].Header = "Revenue Growth " + DateTime.Today.Year.ToString();
+            this.dgPortfolioDetails.Columns[21].Header = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
+            this.dgPortfolioDetails.Columns[22].Header = "Net Income Growth " + DateTime.Today.Year.ToString();
+            this.dgPortfolioDetails.Columns[23].Header = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
+
+            this.dgPortfolioDetails.Columns[20].UniqueName = "Revenue Growth " + DateTime.Today.Year.ToString();
+            this.dgPortfolioDetails.Columns[21].UniqueName = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
+            this.dgPortfolioDetails.Columns[22].UniqueName = "Net Income Growth " + DateTime.Today.Year.ToString();
+            this.dgPortfolioDetails.Columns[23].UniqueName = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
         }
 
         #endregion

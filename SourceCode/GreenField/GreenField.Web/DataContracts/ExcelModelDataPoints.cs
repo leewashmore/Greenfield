@@ -8,48 +8,69 @@ namespace GreenField.Web.DataContracts
     /// </summary>
     public class ExcelModelData
     {
-        private ModelReferenceDataPoints _modelReferenceData;
+        private ModelReferenceDataPoints modelReferenceData;
         public ModelReferenceDataPoints ModelReferenceData
         {
-            get { return _modelReferenceData; }
-            set { _modelReferenceData = value; }
+            get { return modelReferenceData; }
+            set { modelReferenceData = value; }
         }
 
         /// <summary>
         /// ModelUpload DataPoints
         /// </summary>
-        private List<DataPointsModelUploadData> _modelUploadDataPoints;
+        private List<DataPointsModelUploadData> modelUploadDataPoints;
         public List<DataPointsModelUploadData> ModelUploadDataPoints
         {
             get
             {
-                return _modelUploadDataPoints;
+                return modelUploadDataPoints;
             }
             set
             {
-                _modelUploadDataPoints = value;
+                modelUploadDataPoints = value;
             }
         }
 
         /// <summary>
         /// List of Available Currencies
         /// </summary>
-        private List<string> _currencies;
+        private List<string> currencies;
         public List<string> Currencies
         {
-            get { return _currencies; }
-            set { _currencies = value; }
+            get { return currencies; }
+            set { currencies = value; }
         }
 
         /// <summary>
         /// List of Commodities
         /// </summary>
-        private List<string> _commodities;
+        private List<string> commodities;
         public List<string> Commodities
         {
-            get { return _commodities; }
-            set { _commodities = value; }
+            get { return commodities; }
+            set { commodities = value; }
         }
+
+        /// <summary>
+        /// Reuters Data
+        /// </summary>
+        private List<FinancialStatementDataModels> reutersData;
+        public List<FinancialStatementDataModels> ReutersData
+        {
+            get { return reutersData; }
+            set { reutersData = value; }
+        }
+
+        /// <summary>
+        /// Currency for Reuters Sheet
+        /// </summary>
+        private string currencyReuters;   
+        public string CurrencyReuters
+        {
+            get { return currencyReuters; }
+            set { currencyReuters = value; }
+        }
+        
     }
 
     /// <summary>
@@ -60,102 +81,102 @@ namespace GreenField.Web.DataContracts
         /// <summary>
         /// IssuerId
         /// </summary>
-        private string _issuerId;
+        private string issuerId;
         public string IssuerId
         {
             get
             {
-                return _issuerId;
+                return issuerId;
             }
             set
             {
-                _issuerId = value;
+                issuerId = value;
             }
         }
 
         /// <summary>
         /// Issue name
         /// </summary>
-        private string _issuerName;
+        private string issuerName;
         public string IssuerName
         {
-            get { return _issuerName; }
-            set { _issuerName = value; }
+            get { return issuerName; }
+            set { issuerName = value; }
         }
 
         /// <summary>
         /// COA type
         /// </summary>
-        private string _COATypes;
+        private string COATypesp;
         public string COATypes
         {
-            get { return _COATypes; }
-            set { _COATypes = value; }
+            get { return COATypesp; }
+            set { COATypesp = value; }
         }
 
         /// <summary>
         /// List of Currencies
         /// </summary>
-        private List<string> _currencies;
+        private List<string> currencies;
         public List<string> Currencies
         {
             get
             {
-                if (_currencies == null)
-                    _currencies = new List<string>();
-                return _currencies;
+                if (currencies == null)
+                    currencies = new List<string>();
+                return currencies;
             }
-            set { _currencies = value; }
+            set { currencies = value; }
         }
 
         /// <summary>
         /// Units: units/millions/thousands/billions
         /// </summary>
-        private List<string> _units;
+        private List<string> units;
         public List<string> Units
         {
-            get { return _units; }
-            set { _units = value; }
+            get { return units; }
+            set { units = value; }
         }
 
         /// <summary>
         /// Q1-Override
         /// </summary>
-        private object _Q1Override;
+        private object Q1Overridep;
         public object Q1Override
         {
-            get { return _Q1Override; }
-            set { _Q1Override = value; }
+            get { return Q1Overridep; }
+            set { Q1Overridep = value; }
         }
 
         /// <summary>
         /// Q2-Override
         /// </summary>
-        private object _Q2Override;
+        private object Q2Overridep;
         public object Q2Override
         {
-            get { return _Q2Override; }
-            set { _Q2Override = value; }
+            get { return Q2Overridep; }
+            set { Q2Overridep = value; }
         }
 
         /// <summary>
         /// Q3-Override
         /// </summary>
-        private object _Q3Override;
+        private object Q3Overridep;
         public object Q3Override
         {
-            get { return _Q3Override; }
-            set { _Q3Override = value; }
+            get { return Q3Overridep; }
+            set { Q3Overridep = value; }
         }
 
         /// <summary>
         /// Q4-Override
         /// </summary>
-        private object _Q4Override;
+        private object Q4Overridep;
         public object Q4Override
         {
-            get { return _Q4Override; }
-            set { _Q4Override = value; }
+            get { return Q4Overridep; }
+            set { Q4Overridep = value; }
         }
 
     }

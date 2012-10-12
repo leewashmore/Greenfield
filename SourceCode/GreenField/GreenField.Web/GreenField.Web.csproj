@@ -99,6 +99,7 @@
     </None>
     <Content Include="Services\AlertOperations.svc" />
     <Content Include="Services\DCFOperations.svc" />
+    <Content Include="Services\ExcelModelRefreshOperations.svc" />
     <Content Include="Services\ExternalResearchOperations.svc" />
     <Content Include="Services\FairValueOperations.svc" />
     <Content Include="Services\MeetingOperations.svc" />
@@ -207,6 +208,9 @@
     </Compile>
     <Compile Include="Services\DCFOperations.svc.cs">
       <DependentUpon>DCFOperations.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ExcelModelRefreshOperations.svc.cs">
+      <DependentUpon>ExcelModelRefreshOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\ExternalResearchOperations.svc.cs">
       <DependentUpon>ExternalResearchOperations.svc</DependentUpon>
