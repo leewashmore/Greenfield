@@ -1,28 +1,21 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
-using GreenField.Common;
-using GreenField.DataContracts;
-using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
+using GreenField.DataContracts;
 using GreenField.Gadgets.Views.Documents;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
     /// <summary>
-    /// Class that provides the interaction of the view model with the Service caller and the View.
+    /// View Model for ViewDocuments
     /// </summary>
     public class ViewModelDocuments : NotificationObject
     {
@@ -30,133 +23,126 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
+        private ILoggerFacade logger;
 
-        private ChildViewDocumentsUpload _uploadWindow;
-
-        
+        /// <summary>
+        /// ChildViewDocumentsUpload instance
+        /// </summary>
+        private ChildViewDocumentsUpload uploadWindow;        
         #endregion       
 
-        #region Constructor
-        public ViewModelDocuments(DashboardGadgetParam param)
-        {
-            _eventAggregator = param.EventAggregator;
-            DbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-        }
+        #region Properties
+        #region Events
+        public event ConstructDocumentSearchResultEventHandler ConstructDocumentSearchResultEvent;  
         #endregion
 
-        void _uploadWindow_Unloaded(object sender, RoutedEventArgs e)
-        {
-            if (_uploadWindow.DialogResult == true)
-            {
-                if (DbInteractivity != null)
-                {
-                    BusyIndicatorNotification(true, "Uploading Document...");
-                    DbInteractivity.UploadDocument(_uploadWindow.UploadFileName, _uploadWindow.UploadFileByteStream,
-                        String.Empty, UploadDocumentCallbackMethod);
-                }
-            }
-        }        
-
-        #region Properties
         #region Busy Indicator Notification
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
         /// </summary>
-        private bool _busyIndicatorIsBusy = false;
-        public bool BusyIndicatorIsBusy
+        private bool isBusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return isBusyIndicatorBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
-                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+                isBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
             }
         }
 
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
         #endregion
 
+        #region Service caller
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
-        public IDBInteractivity DbInteractivity { get; set; }
+        public IDBInteractivity DbInteractivity { get; set; } 
+        #endregion
 
         #region Is Active Implementation
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get
-            {
-                return _isActive;
-            }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (value)
                 {
                     if (DbInteractivity != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving document meta-tag information...");
-                        DbInteractivity.GetDocumentsMetaTags(GetDocumentsMetaTagsCallBack);
-                    }                    
+                        DbInteractivity.GetDocumentsMetaTags(GetDocumentsMetaTagsCallBackMethod);
+                    }
                 }
             }
         }
         #endregion
 
         #region Documents Data
-        private List<DocumentCategoricalData> _documentCategoricalInfo;
+        /// <summary>
+        /// Stores document categorical data returned from search query
+        /// </summary>
+        private List<DocumentCategoricalData> documentCategoricalInfo;
         public List<DocumentCategoricalData> DocumentCategoricalInfo
         {
-            get { return _documentCategoricalInfo; }
+            get { return documentCategoricalInfo; }
             set
             {
-                if (_documentCategoricalInfo != value)
+                if (documentCategoricalInfo != value)
                 {
-                    _documentCategoricalInfo = value;
+                    documentCategoricalInfo = value;
                     ConstructDocumentSearchResultEvent(value);
                 }
             }
         }
         #endregion
 
+        #region Reference data
+        /// <summary>
+        /// Stores reference company information
+        /// </summary>
         public List<String> CompanyInfo { get; set; }
 
-        public List<MembershipUserInfo> UserInfo { get; set; }
+        /// <summary>
+        /// Stores reference user information
+        /// </summary>
+        public List<MembershipUserInfo> UserInfo { get; set; } 
+        #endregion
 
         #region Auto Complete Search Box
         /// <summary>
         /// Stores the list of metatags 
         /// </summary>
-        private List<string> _searchStringInfo;
+        private List<string> searchStringInfo;
         public List<string> SearchStringInfo
         {
-            get { return _searchStringInfo; }
+            get { return searchStringInfo; }
             set
             {
-                _searchStringInfo = value;
+                searchStringInfo = value;
                 RaisePropertyChanged(() => this.SearchStringInfo);
             }
         }
@@ -164,18 +150,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores the list of metatags 
         /// </summary>
-        private List<string> _metaTagsInfo;
+        private List<string> metaTagsInfo;
         public List<string> MetaTagsInfo
         {
             get
             {
-                if (_metaTagsInfo == null)
-                    _metaTagsInfo = new List<string>();
-                return _metaTagsInfo;
+                if (metaTagsInfo == null)
+                {
+                    metaTagsInfo = new List<string>();
+                }
+                return metaTagsInfo;
             }
             set
             {
-                _metaTagsInfo = value;
+                metaTagsInfo = value;
                 RaisePropertyChanged(() => this.MetaTagsInfo);
                 SearchStringInfo = value;
             }
@@ -184,46 +172,96 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores search text entered by user - Refines SearchStringInfo based on the text entered
         /// </summary>
-        private string _securitySearchText;
+        private string securitySearchText;
         public string SearchStringText
         {
-            get { return _securitySearchText; }
+            get { return securitySearchText; }
             set
             {
-                _securitySearchText = value;
+                securitySearchText = value;
                 RaisePropertyChanged(() => this.SearchStringText);
                 if (value != null)
                 {
                     if (value != String.Empty && SearchStringInfo != null)
+                    {
                         SearchStringInfo = MetaTagsInfo
                                     .Where(record => record.ToLower().Contains(value.ToLower()))
                                     .ToList();
+                    }
                     else
+                    {
                         SearchStringInfo = MetaTagsInfo;
+                    }
                 }
             }
         }
         #endregion
 
         #region ICommands
+        /// <summary>
+        /// Document Search Command
+        /// </summary>
         public ICommand DocumentSearchCommand
         {
             get { return new DelegateCommand<object>(DocumentSearchCommandMethod); }
         }
 
+        /// <summary>
+        /// Document Upload Command
+        /// </summary>
         public ICommand DocumentUploadCommand
         {
             get { return new DelegateCommand<object>(DocumentUploadCommandMethod); }
         }
 
+        /// <summary>
+        /// Document Edit Delete Command
+        /// </summary>
         public ICommand DocumentEditDeleteCommand
         {
             get { return new DelegateCommand<object>(DocumentEditDeleteCommandMethod); }
         }
-        #endregion 
+        #endregion
         #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashboardGadgetParam</param>
+        public ViewModelDocuments(DashboardGadgetParam param)
+        {
+            this.eventAggregator = param.EventAggregator;
+            this.DbInteractivity = param.DBInteractivity;
+            this.logger = param.LoggerFacade;
+        }
+        #endregion
+
+        #region Event Handlers
+        /// <summary>
+        /// uploadWindow Unloaded EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RoutedEventArgs</param>
+        void uploadWindow_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (uploadWindow.DialogResult == true)
+            {
+                if (DbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Uploading Document...");
+                    DbInteractivity.UploadDocument(uploadWindow.UploadFileName, uploadWindow.UploadFileByteStream,
+                        String.Empty, UploadDocumentCallbackMethod);
+                }
+            }
+        }         
+        #endregion        
+
         #region ICommand Methods
+        /// <summary>
+        /// DocumentSearchCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void DocumentSearchCommandMethod(object param)
         {
             if (SearchStringText != null && DbInteractivity != null)
@@ -233,19 +271,26 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// DocumentUploadCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void DocumentUploadCommandMethod(object param)
         {
-            if (_uploadWindow == null)
+            if (uploadWindow == null)
             {
-                _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger, CompanyInfo, UserInfo);
+                uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, logger, CompanyInfo, UserInfo);
             }
-            _uploadWindow.Initialize();
-            _uploadWindow.Show();
+            uploadWindow.Show();
         }
 
+        /// <summary>
+        /// DocumentEditDeleteCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void DocumentEditDeleteCommandMethod(object param)
         {
-            ChildViewDocumentsEditDelete editDeleteWindow = new ChildViewDocumentsEditDelete(DbInteractivity, _logger, CompanyInfo);
+            ChildViewDocumentsEditDelete editDeleteWindow = new ChildViewDocumentsEditDelete(DbInteractivity, logger, CompanyInfo);
             editDeleteWindow.Show();
             editDeleteWindow.Unloaded += (se, e) =>
             {
@@ -259,58 +304,66 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Callback Methods
+        /// <summary>
+        /// UploadDocument Callback Method
+        /// </summary>
+        /// <param name="result">usl of uploaded document</param>
         private void UploadDocumentCallbackMethod(String result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null && result != String.Empty)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     if (DbInteractivity != null)
                     {
-                        DbInteractivity.SetUploadFileInfo(UserSession.SessionManager.SESSION.UserName, _uploadWindow.UploadFileName
-                            , result, _uploadWindow.UploadFileCompanyInfo, null, null
-                            , EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(_uploadWindow.UploadFileType)
-                            , _uploadWindow.UploadFileTags, _uploadWindow.UploadFileNotes, SetUploadFileInfoCallbackMethod);
+                        DbInteractivity.SetUploadFileInfo(UserSession.SessionManager.SESSION.UserName, uploadWindow.UploadFileName
+                            , result, uploadWindow.UploadFileCompanyInfo, null, null
+                            , EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(uploadWindow.UploadFileType)
+                            , uploadWindow.UploadFileTags, uploadWindow.UploadFileNotes, SetUploadFileInfoCallbackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
+        /// <summary>
+        /// SetUploadFileInfo Callback Method
+        /// </summary>
+        /// <param name="result">True if successful</param>
         private void SetUploadFileInfoCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (_uploadWindow.UserAlertEmails != null && _uploadWindow.UserAlertEmails.Count != 0)
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    if (uploadWindow.UserAlertEmails != null && uploadWindow.UserAlertEmails.Count != 0)
                     {
                         BusyIndicatorNotification(true, "Updation messaging queue...");
-                        String emailTo = String.Join("|", _uploadWindow.UserAlertEmails.ToArray());
+                        String emailTo = String.Join("|", uploadWindow.UserAlertEmails.ToArray());
                         String emailSubject = "Document Upload Alert";
                         String emailMessageBody = "Document upload notification. Please find the details below:\n"
-                            + "Name - " + _uploadWindow.UploadFileName + "\n"
-                            + "Company - " + _uploadWindow.UploadFileCompanyInfo + "\n"
-                            + "Type - " + EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(_uploadWindow.UploadFileType) + "\n"
-                            + "Tags - " + _uploadWindow.UploadFileTags + "\n"
-                            + "Notes - " + _uploadWindow.UploadFileNotes;
+                            + "Name - " + uploadWindow.UploadFileName + "\n"
+                            + "Company - " + uploadWindow.UploadFileCompanyInfo + "\n"
+                            + "Type - " + EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(uploadWindow.UploadFileType) + "\n"
+                            + "Tags - " + uploadWindow.UploadFileTags + "\n"
+                            + "Notes - " + uploadWindow.UploadFileNotes;
 
                         DbInteractivity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, null
                             , UserSession.SessionManager.SESSION.UserName, SetMessageInfoCallbackMethod);
@@ -327,55 +380,63 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
+        /// <summary>
+        /// SetMessageInfo Callback Method for comments
+        /// </summary>
+        /// <param name="result">True if successful</param>
         public void SetMessageInfoCallbackMethod_Comment(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// SetMessageInfo Callback Method
+        /// </summary>
+        /// <param name="result">True if successful</param>
         private void SetMessageInfoCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     if (SearchStringText != null && DbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving Search Results...");
@@ -388,56 +449,64 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
+        /// <summary>
+        /// RetrieveDocumentsData Callback Method
+        /// </summary>
+        /// <param name="result">DocumentCategoricalData</param>
         private void RetrieveDocumentsDataCallbackMethod(List<DocumentCategoricalData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     DocumentCategoricalInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }         
 
-        private void GetDocumentsMetaTagsCallBack(List<string> result)
+        /// <summary>
+        /// GetDocumentsMetaTags CallBackMethod
+        /// </summary>
+        /// <param name="result">Metatags</param>
+        private void GetDocumentsMetaTagsCallBackMethod(List<string> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     MetaTagsInfo = result;
                     if (DbInteractivity != null && (CompanyInfo == null || UserInfo == null))
                     {
@@ -446,41 +515,45 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     else
                     {
-                        if (_uploadWindow == null)
+                        if (uploadWindow == null)
                         {
-                            _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger, CompanyInfo, UserInfo);
-                            _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);
+                            uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, logger, CompanyInfo, UserInfo);
+                            uploadWindow.Unloaded += new RoutedEventHandler(uploadWindow_Unloaded);
                             BusyIndicatorNotification();
                         }
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);                
+                Logging.LogEndMethod(logger, methodNamespace);                
             }
         }
 
+        /// <summary>
+        /// RetrieveCompanyData Callback Method
+        /// </summary>
+        /// <param name="result">list of issuers</param>
         private void RetrieveCompanyDataCallbackMethod(List<String> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     CompanyInfo = result;
                     if (DbInteractivity != null && UserInfo == null)
                     {
@@ -489,74 +562,82 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     else
                     {
-                        if (_uploadWindow == null)
+                        if (uploadWindow == null)
                         {
-                            _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger, CompanyInfo, UserInfo);
-                            _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);
+                            uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, logger, CompanyInfo, UserInfo);
+                            uploadWindow.Unloaded += new RoutedEventHandler(uploadWindow_Unloaded);
                             BusyIndicatorNotification();
                         }
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);                
+                Logging.LogEndMethod(logger, methodNamespace);                
             }
         }
 
+        /// <summary>
+        /// GetAllUsers Callback Method
+        /// </summary>
+        /// <param name="result">MembershipUserInfo</param>
         private void GetAllUsersCallbackMethod(List<MembershipUserInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     UserInfo = result;
-                    if (_uploadWindow == null)
+                    if (uploadWindow == null)
                     {
-                        _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger, CompanyInfo, UserInfo);
-                        _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);                        
+                        uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, logger, CompanyInfo, UserInfo);
+                        uploadWindow.Unloaded += new RoutedEventHandler(uploadWindow_Unloaded);                        
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// SetDocumentComment Callback Method
+        /// </summary>
+        /// <param name="result">True if successful</param>
         public void SetDocumentCommentCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result == true)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     if (SearchStringText != null && DbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Updating Search Results...");
@@ -565,26 +646,33 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+
+        #region Helper Methods
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
+        /// <param name="message">Content message for indicator; default null</param>
+        public void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
-
-            BusyIndicatorIsBusy = showBusyIndicator;
+            }
+            IsBusyIndicatorBusy = isBusyIndicatorVisible;
         }
-
-        public event ConstructDocumentSearchResultEventHandler ConstructDocumentSearchResultEvent;  
+        #endregion        
 
         #region EventUnSubscribe
         /// <summary>
@@ -592,9 +680,8 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _uploadWindow.Unloaded -= new RoutedEventHandler(_uploadWindow_Unloaded);
+            uploadWindow.Unloaded -= new RoutedEventHandler(uploadWindow_Unloaded);
         }
-
         #endregion   
     }
 }

@@ -197,7 +197,6 @@
     <Compile Include="ViewModels\ICPresentations\ViewModelICPresentationNew.cs" />
     <Compile Include="ViewModels\Documents\ViewModelDocuments.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelCreateUpdatePresentations.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelMeetings.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentations.cs" />
     <Compile Include="ViewModels\ViewModelCOASpecific.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelValuations.cs" />
@@ -314,9 +313,6 @@
     </Compile>
     <Compile Include="Views\ICPresentations\ViewSummaryReport.xaml.cs">
       <DependentUpon>ViewSummaryReport.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ICPresentations\ViewPreMeetingVoteReport.xaml.cs">
-      <DependentUpon>ViewPreMeetingVoteReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ICPresentations\ViewPresentationVote.xaml.cs">
       <DependentUpon>ViewPresentationVote.xaml</DependentUpon>
@@ -591,10 +587,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ICPresentations\ViewSummaryReport.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ICPresentations\ViewPreMeetingVoteReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

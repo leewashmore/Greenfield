@@ -1192,8 +1192,8 @@ namespace GreenField.Web.Services
         /// <summary>
         /// downloads .pptx file from sharepoint and converts it to local pdf file
         /// </summary>
-        /// <param name="powerpointStreamedData"></param>
-        /// <param name="presentationInfo"></param>
+        /// <param name="powerpointStreamedData">PowerpointStreamData</param>
+        /// <param name="presentationInfo">PresentationInfo</param>
         /// <returns></returns>
         private String ConvertPowerpointPresentationTpPdf(FileMaster powerpointStreamedData, PresentationInfo presentationInfo)
         {

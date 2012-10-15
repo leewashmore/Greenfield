@@ -1,83 +1,72 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.ViewModel;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Commands;
-using GreenField.Gadgets.Models;
-using Microsoft.Practices.Prism.Regions;
-using GreenField.Common;
-using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.ServiceLocation;
-using GreenField.Gadgets.Helpers;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
+using GreenField.Gadgets.Models;
+using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.MeetingDefinitions;
-using System.IO;
-using System.Reflection;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View Model for ViewPresentationVote
+    /// </summary>
     public class ViewModelPresentationVote : NotificationObject
     {
         #region Fields
-        private IRegionManager _regionManager;
+        /// <summary>
+        /// Region Manager
+        /// </summary>
+        private IRegionManager regionManager;
 
         /// <summary>
         /// Event Aggregator
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// Instance of Service Caller Class
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// Instance of LoggerFacade
         /// </summary>
-        private ILoggerFacade _logger;
-        #endregion
-
-        #region Constructor
-        public ViewModelPresentationVote(DashboardGadgetParam param)
-        {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _regionManager = param.RegionManager;
-        }
+        private ILoggerFacade logger;
         #endregion
 
         #region Properties
+        #region IsActive
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (value)
                 {
                     Initialize();
                 }
             }
-        }
+        } 
+        #endregion
 
+        #region Voting Screen
+        /// <summary>
+        /// Stores reference data for vote types
+        /// </summary>
         public List<String> VoteTypeInfo
         {
             get
@@ -91,6 +80,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Stores reference data for pfv measure types
+        /// </summary>
         public List<String> PFVTypeInfo
         {
             get
@@ -122,250 +114,314 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private ICPresentationOverviewData _selectedPresentationOverviewInfo;
+        /// <summary>
+        /// Stores overview information for the selected presentation
+        /// </summary>
+        private ICPresentationOverviewData selectedPresentationOverviewInfo;
         public ICPresentationOverviewData SelectedPresentationOverviewInfo
         {
-            get { return _selectedPresentationOverviewInfo; }
+            get { return selectedPresentationOverviewInfo; }
             set
             {
-                _selectedPresentationOverviewInfo = value;
+                selectedPresentationOverviewInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
-                if (value != null && _dbInteractivity != null)
+                if (value != null && dbInteractivity != null)
                 {
                     BusyIndicatorNotification(true, "Retrieving documentation related to selected presentation");
-                    _dbInteractivity.RetrievePresentationAttachedFileDetails(value.PresentationID
+                    dbInteractivity.RetrievePresentationAttachedFileDetails(value.PresentationID
                         , RetrievePresentationAttachedFileDetailsCallbackMethod);
                 }
             }
         }
 
-        private List<VoterInfo> _presentationMeetingVoterInfo;
+        /// <summary>
+        /// Stores voter information for presenter and all voting members
+        /// </summary>
+        private List<VoterInfo> presentationMeetingVoterInfo;
         public List<VoterInfo> PresentationMeetingVoterInfo
         {
-            get { return _presentationMeetingVoterInfo; }
+            get { return presentationMeetingVoterInfo; }
             set
             {
-                _presentationMeetingVoterInfo = value;
+                presentationMeetingVoterInfo = value;
                 RaisePropertyChanged(() => this.PresentationMeetingVoterInfo);
             }
         }
 
-        private List<VoterInfo> _presentationPreMeetingVoterInfo;
+        /// <summary>
+        /// Stores pre-meeting voting information for presenter and all voting members
+        /// </summary>
+        private List<VoterInfo> presentationPreMeetingVoterInfo;
         public List<VoterInfo> PresentationPreMeetingVoterInfo
         {
-            get { return _presentationPreMeetingVoterInfo; }
+            get { return presentationPreMeetingVoterInfo; }
             set
             {
-                _presentationPreMeetingVoterInfo = value;
+                presentationPreMeetingVoterInfo = value;
                 RaisePropertyChanged(() => this.PresentationPreMeetingVoterInfo);
             }
         }
 
-        private VoterInfo _selectedPresentationPreMeetingVoterInfo;
+        /// <summary>
+        /// Stores pre-meeting voting information for selected voting member
+        /// </summary>
+        private VoterInfo selectedPresentationPreMeetingVoterInfo;
         public VoterInfo SelectedPresentationPreMeetingVoterInfo
         {
-            get { return _selectedPresentationPreMeetingVoterInfo; }
+            get { return selectedPresentationPreMeetingVoterInfo; }
             set
             {
-                _selectedPresentationPreMeetingVoterInfo = value;
+                selectedPresentationPreMeetingVoterInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationPreMeetingVoterInfo);
                 if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
-                    VoteIsEnabled = value != null;                
+                    IsVoteEnabled = value != null;
             }
         }
 
-        private List<CommentInfo> _selectedPresentationCommentInfo;
+        /// <summary>
+        /// Stores commenting information for selected presentation
+        /// </summary>
+        private List<CommentInfo> selectedPresentationCommentInfo;
         public List<CommentInfo> SelectedPresentationCommentInfo
         {
-            get { return _selectedPresentationCommentInfo; }
+            get { return selectedPresentationCommentInfo; }
             set
             {
-                _selectedPresentationCommentInfo = value;
+                selectedPresentationCommentInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationCommentInfo);
             }
         }
 
-        private FileMaster _selectedPresentationPowerpointDocument;
+        /// <summary>
+        /// Stores file information on presentation's powerpoint document
+        /// </summary>
+        private FileMaster selectedPresentationPowerpointDocument;
         public FileMaster SelectedPresentationPowerpointDocument
         {
-            get { return _selectedPresentationPowerpointDocument; }
+            get { return selectedPresentationPowerpointDocument; }
             set
             {
-                _selectedPresentationPowerpointDocument = value;
+                selectedPresentationPowerpointDocument = value;
                 RaisePropertyChanged(() => this.SelectedPresentationPowerpointDocument);
             }
         }
 
-        private FileMaster _selectedPresentationICPacketDocument;
+        /// <summary>
+        /// Stores file information on presentation's ic packet document
+        /// </summary>
+        private FileMaster selectedPresentationICPacketDocument;
         public FileMaster SelectedPresentationICPacketDocument
         {
-            get { return _selectedPresentationICPacketDocument; }
+            get { return selectedPresentationICPacketDocument; }
             set
             {
-                _selectedPresentationICPacketDocument = value;
+                selectedPresentationICPacketDocument = value;
                 RaisePropertyChanged(() => this.SelectedPresentationICPacketDocument);
             }
         }
 
-        private Boolean _blogIsEnabled = true;
-        public Boolean BlogIsEnabled
+        /// <summary>
+        /// True if blogging section is enabled
+        /// </summary>
+        private Boolean isBlogEnabled = true;
+        public Boolean IsBlogEnabled
         {
-            get { return _blogIsEnabled; }
+            get { return isBlogEnabled; }
             set
             {
-                _blogIsEnabled = value;
-                RaisePropertyChanged(() => this.BlogIsEnabled);
+                isBlogEnabled = value;
+                RaisePropertyChanged(() => this.IsBlogEnabled);
             }
         }
 
-        private String _uploadCommentInfo;
+        /// <summary>
+        /// Stores upload comment information
+        /// </summary>
+        private String uploadCommentInfo;
         public String UploadCommentInfo
         {
-            get { return _uploadCommentInfo; }
+            get { return uploadCommentInfo; }
             set
             {
-                _uploadCommentInfo = value;
+                uploadCommentInfo = value;
                 RaisePropertyChanged(() => this.UploadCommentInfo);
                 RaisePropertyChanged(() => this.AddCommentCommand);
             }
         }
 
-        private Boolean _voterIsEnabled = true;
-        public Boolean VoterIsEnabled
+        /// <summary>
+        /// Stores true if voter selection section is enabled
+        /// </summary>
+        private Boolean isVoterEnabled = true;
+        public Boolean IsVoterEnabled
         {
-            get { return _voterIsEnabled; }
+            get { return isVoterEnabled; }
             set
             {
-                _voterIsEnabled = value;
-                RaisePropertyChanged(() => this.VoterIsEnabled);
+                isVoterEnabled = value;
+                RaisePropertyChanged(() => this.IsVoterEnabled);
             }
         }
 
-        private Boolean _voteIsEnabled = true;
-        public Boolean VoteIsEnabled
+        /// <summary>
+        /// Stores true if vote section is enabled
+        /// </summary>
+        private Boolean isVoteEnabled = true;
+        public Boolean IsVoteEnabled
         {
-            get { return _voteIsEnabled; }
+            get { return isVoteEnabled; }
             set
             {
-                _voteIsEnabled = value;
-                RaisePropertyChanged(() => this.VoteIsEnabled);
+                isVoteEnabled = value;
+                RaisePropertyChanged(() => this.IsVoteEnabled);
             }
         }
 
+        /// <summary>
+        /// Stores visibility of preview report button
+        /// </summary>
+        private Visibility previewReportVisibility = Visibility.Collapsed;
+        public Visibility PreviewReportVisibility
+        {
+            get { return previewReportVisibility; }
+            set
+            {
+                previewReportVisibility = value;
+                RaisePropertyChanged(() => this.PreviewReportVisibility);
+            }
+        }
+
+        /// <summary>
+        /// Stores download stream for the pre meeting voting report preview
+        /// </summary>
+        private Stream downloadStream;
+        public Stream DownloadStream
+        {
+            get { return downloadStream; }
+            set
+            {
+                downloadStream = value;
+                if (value != null && dbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Downloading generated pre-meeting voting report...");
+                    dbInteractivity.GeneratePreMeetingVotingReport(SelectedPresentationOverviewInfo.PresentationID
+                        , GeneratePreMeetingVotingReportCallbackMethod);
+                }
+            }
+        } 
+        #endregion
+
+        #region ICommand
+        /// <summary>
+        /// Submit Command
+        /// </summary>
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// Add Comment Command
+        /// </summary>
         public ICommand AddCommentCommand
         {
             get { return new DelegateCommand<object>(AddCommentCommandMethod, AddCommentCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// Refresh Comment Command
+        /// </summary>
         public ICommand RefreshCommentCommand
         {
             get { return new DelegateCommand<object>(RefreshCommentCommandMethod); }
-        }
-
-        private Visibility _previewReportVisibility = Visibility.Collapsed;
-        public Visibility PreviewReportVisibility
-        {
-            get { return _previewReportVisibility; }
-            set
-            {
-                _previewReportVisibility = value;
-                RaisePropertyChanged(() => this.PreviewReportVisibility);
-            }
-        }
-        
-
-        private Stream _downloadStream;
-        public Stream DownloadStream
-        {
-            get { return _downloadStream; }
-            set
-            {
-                _downloadStream = value;
-                if (value != null && _dbInteractivity != null)
-                {
-                    BusyIndicatorNotification(true, "Downloading generated pre-meeting voting report...");
-                    _dbInteractivity.GeneratePreMeetingVotingReport(SelectedPresentationOverviewInfo.PresentationID, GeneratePreMeetingVotingReportCallbackMethod);
-                }
-            }
-        }
+        }                
+        #endregion
 
         #region Busy Indicator Notification
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
         /// </summary>
-        private bool _busyIndicatorIsBusy = false;
-        public bool BusyIndicatorIsBusy
+        private bool isBusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return isBusyIndicatorBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
-                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+                isBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
             }
         }
 
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
         #endregion
         #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashboardGadgetParam</param>
+        public ViewModelPresentationVote(DashboardGadgetParam param)
+        {
+            this.dbInteractivity = param.DBInteractivity;
+            this.logger = param.LoggerFacade;
+            this.eventAggregator = param.EventAggregator;
+            this.regionManager = param.RegionManager;
+        }
+        #endregion        
+
         #region ICommand Methods
+        #region SubmitCommand
+        /// <summary>
+        /// SubmitCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
         private bool SubmitCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null
                 || SelectedPresentationOverviewInfo == null
                 || PresentationPreMeetingVoterInfo == null)
+            {
                 return false;
+            }
             if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING)
             {
                 if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
+                {
                     return false;
+                }
             }
             else
             {
                 if (!(PresentationPreMeetingVoterInfo.Any(record => record.Name.ToLower() == UserSession.SessionManager.SESSION.UserName.ToLower()) ||
                     (SelectedPresentationOverviewInfo.Presenter.ToLower() == UserSession.SessionManager.SESSION.UserName.ToLower()) ||
                     UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)))
+                {
                     return false;
+                }
             }
             return true;
         }
 
+        /// <summary>
+        /// SubmitCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void SubmitCommandMethod(object param)
-        {      
-            //Pending implementation of check if the deadline has actually passed for submitting vote while the application was still open
-
-
-
-            //if (UserSession.SessionManager.SESSION == null || PresentationMeetingVoterInfo == null)
-            //    return;
-
-            //if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
-            //{
-            //    if (SelectedPresentationOverviewInfo.MeetingVotingClosedDateTime > DateTime.UtcNow)
-            //    {
-            //        Prompt.ShowDialog("Presentation Voting Deadline has been exceeded. Last submitted voting details have been registered and distributed. " +
-            //        "Please contact Investment Committee Administrator for updating voting details.");
-            //        return;
-            //    }
-            //}
-
+        {
             foreach (VoterInfo info in PresentationMeetingVoterInfo)
             {
                 if (info.VoteType == VoteType.MODIFY)
@@ -376,7 +432,6 @@ namespace GreenField.Gadgets.ViewModels
                         return;
                     }
                 }
-
                 if (info.Name.ToLower() == UserSession.SessionManager.SESSION.UserName && info.PostMeetingFlag == false)
                 {
                     VoterInfo postMeetingVoterInfo = PresentationMeetingVoterInfo
@@ -392,51 +447,73 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
             }
-
-            if (_dbInteractivity != null)
+            if (dbInteractivity != null)
             {
                 BusyIndicatorNotification(true, "Updating Pre-Meeting Voting Information");
-                _dbInteractivity.UpdatePreMeetingVoteDetails(UserSession.SessionManager.SESSION.UserName, PresentationMeetingVoterInfo
+                dbInteractivity.UpdatePreMeetingVoteDetails(UserSession.SessionManager.SESSION.UserName, PresentationMeetingVoterInfo
                     , UpdatePreMeetingVoteDetailsCallbackMethod);
             }
-        }
+        } 
+        #endregion
 
+        #region AddCommentCommand
+        /// <summary>
+        /// AddCommentCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
         private bool AddCommentCommandValidationMethod(object param)
         {
             return UploadCommentInfo != null && UploadCommentInfo != String.Empty;
         }
 
+        /// <summary>
+        /// AddCommentCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void AddCommentCommandMethod(object param)
         {
-            if (_dbInteractivity != null)
+            if (dbInteractivity != null)
             {
                 BusyIndicatorNotification(true, "Retrieving updated blog information related to selected presentation");
-                _dbInteractivity.SetPresentationComments(UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo.PresentationID
+                dbInteractivity.SetPresentationComments(UserSession.SessionManager.SESSION.UserName
+                    , SelectedPresentationOverviewInfo.PresentationID
                     , UploadCommentInfo, SetPresentationCommentsCallbackMethod);
             }
-        }
+        } 
+        #endregion
 
+        #region RefreshComment
+        /// <summary>
+        /// RefreshComment execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void RefreshCommentCommandMethod(object param)
         {
-            if (_dbInteractivity != null)
+            if (dbInteractivity != null)
             {
                 BusyIndicatorNotification(true, "Retrieving updated blog information related to selected presentation");
-                _dbInteractivity.RetrievePresentationComments(SelectedPresentationOverviewInfo.PresentationID
+                dbInteractivity.RetrievePresentationComments(SelectedPresentationOverviewInfo.PresentationID
                     , RetrievePresentationCommentsCallbackMethod);
             }
-        }
+        } 
+        #endregion
         #endregion
 
         #region CallBack Methods
+        /// <summary>
+        /// RetrievePresentationVoterData Callback Method
+        /// </summary>
+        /// <param name="result">List of VoterInfo</param>
         private void RetrievePresentationVoterDataCallbackMethod(List<VoterInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     
                     PresentationMeetingVoterInfo = result;
                     PresentationPreMeetingVoterInfo = result.Where(record => record.PostMeetingFlag == false).OrderBy(record => record.Name).ToList();
@@ -447,220 +524,230 @@ namespace GreenField.Gadgets.ViewModels
                             .Where(record => record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower()).ToList();
                         PresentationPreMeetingVoterInfo = PresentationPreMeetingVoterInfo
                             .Where(record => record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower()).ToList();
-                        VoterIsEnabled = true;
-                        VoteIsEnabled = false;
+                        IsVoterEnabled = true;
+                        IsVoteEnabled = false;
                     }
-                    
-
-
                     if (result.Any(record => record.Name.ToLower() == UserSession.SessionManager.SESSION.UserName))
                     {
                         SelectedPresentationPreMeetingVoterInfo = result
                             .Where(record => record.Name.ToLower() == UserSession.SessionManager.SESSION.UserName).FirstOrDefault();
-                        VoterIsEnabled = false;
+                        IsVoterEnabled = false;
                     }
-
                     if (UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter)
                     {
-                        VoterIsEnabled = false;
-                        VoteIsEnabled = false;
-                    }                    
-
+                        IsVoterEnabled = false;
+                        IsVoteEnabled = false;
+                    }
                     if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) &&
                         !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE) &&
                         !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER))
                     {
-                        VoterIsEnabled = false;
-                        VoteIsEnabled = false;
+                        IsVoterEnabled = false;
+                        IsVoteEnabled = false;
                     }
-
                     if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) &&
                         !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER) &&
                         !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_NON_VOTING_MEMBER) &&
                         !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
                     {
-                        BlogIsEnabled = false;
+                        IsBlogEnabled = false;
                     }
-
                     if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_NON_VOTING_MEMBER))
                     {
                         SelectedPresentationPreMeetingVoterInfo = result
                             .Where(record => record.Name.ToLower() == SelectedPresentationOverviewInfo.Presenter).FirstOrDefault();
                     }
-
                     if (!(UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) ||
                         SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING))
                     {
-                        VoterIsEnabled = false;
-                        VoteIsEnabled = false;
-                        //NotesIsEnabled = false;
-                        BlogIsEnabled = false;
+                        IsVoterEnabled = false;
+                        IsVoteEnabled = false;                        
+                        IsBlogEnabled = false;
                     }
-
                     RaisePropertyChanged(() => this.SubmitCommand);
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);                    
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);                
+                Logging.LogException(logger, ex);                
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// RetrievePresentationAttachedFileDetails Callback Method
+        /// </summary>
+        /// <param name="result">List of FileMaster</param>
         private void RetrievePresentationAttachedFileDetailsCallbackMethod(List<FileMaster> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     SelectedPresentationPowerpointDocument = result
                         .Where(record => record.Category == UploadDocumentType.POWERPOINT_PRESENTATION).FirstOrDefault();
 
                     SelectedPresentationICPacketDocument = result
                         .Where(record => record.Category == UploadDocumentType.IC_PACKET).FirstOrDefault();
 
-                    if (_dbInteractivity != null)
+                    if (dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving updated blog information related to selected presentation");
-                        _dbInteractivity.RetrievePresentationComments(SelectedPresentationOverviewInfo.PresentationID
+                        dbInteractivity.RetrievePresentationComments(SelectedPresentationOverviewInfo.PresentationID
                             , RetrievePresentationCommentsCallbackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
             }
         }
 
+        /// <summary>
+        /// RetrievePresentationComments Callback Method
+        /// </summary>
+        /// <param name="result">List of CommentInfo</param>
         private void RetrievePresentationCommentsCallbackMethod(List<CommentInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     SelectedPresentationCommentInfo = result;
-                    if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
+                    if (SelectedPresentationOverviewInfo != null && dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving Voting information for the selected presentation");
-                        _dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod);
+                        dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
                 BusyIndicatorNotification();
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
             }
         }
 
+        /// <summary>
+        /// SetPresentationComments Callback Method
+        /// </summary>
+        /// <param name="result">List of CommentInfo</param>
         private void SetPresentationCommentsCallbackMethod(List<CommentInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     SelectedPresentationCommentInfo = result;
                     UploadCommentInfo = null;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// UpdatePreMeetingVoteDetails Callback Method
+        /// </summary>
+        /// <param name="result">True if successful</param>
         private void UpdatePreMeetingVoteDetailsCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     if (result == true)
                     {
                         Prompt.ShowDialog("Input submission successfully completed");
-                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
                     }
                 }
                 else
                 {
                     Prompt.ShowDialog("An Error ocurred while submitting input form.");
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// GeneratePreMeetingVotingReport Callback Method
+        /// </summary>
+        /// <param name="result">Preview file byte stream</param>
         private void GeneratePreMeetingVotingReportCallbackMethod(Byte[] result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     DownloadStream.Write(result, 0, result.Length);
                     DownloadStream.Close();
                     DownloadStream = null;
@@ -668,17 +755,17 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Prompt.ShowDialog("An Error ocurred while downloading the preview report from server.");
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
@@ -688,16 +775,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Display/Hide Busy Indicator
         /// </summary>
-        /// <param name="showBusyIndicator">True to display indicator; default false</param>
+        /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
         /// <param name="message">Content message for indicator; default null</param>
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        private void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
-
-            BusyIndicatorIsBusy = showBusyIndicator;
+            }
+            IsBusyIndicatorBusy = isBusyIndicatorVisible;
         }
 
+        /// <summary>
+        /// Initialize view
+        /// </summary>
         public void Initialize()
         {
             if (IsActive)
@@ -708,18 +799,27 @@ namespace GreenField.Gadgets.ViewModels
                 if (UserSession.SessionManager.SESSION != null)
                 {
                     if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
+                    {
                         PreviewReportVisibility = Visibility.Visible;
+                    }
                     else
+                    {
                         PreviewReportVisibility = Visibility.Collapsed;
+                    }
                 }
             }
         }
 
+        /// <summary>
+        /// Raise vote type update
+        /// </summary>
+        /// <param name="vote">vote type</param>
         public void RaiseUpdateVoteType(String vote)
         {
             if (vote == null)
+            {
                 return;
-
+            }
             if (SelectedPresentationPreMeetingVoterInfo != null && SelectedPresentationOverviewInfo != null)
             {
                 if (vote == VoteType.AGREE)
@@ -735,10 +835,12 @@ namespace GreenField.Gadgets.ViewModels
                     SelectedPresentationPreMeetingVoterInfo.VoterSellRange = null;
                 }
             }
-
             RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
         }
 
+        /// <summary>
+        /// Dispose event subscriptions
+        /// </summary>
         public void Dispose()
         {
         }

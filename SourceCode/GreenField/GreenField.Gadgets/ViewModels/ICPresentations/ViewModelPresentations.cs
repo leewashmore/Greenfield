@@ -325,7 +325,7 @@ namespace GreenField.Gadgets.ViewModels
 
                             if (dbInteractivity != null)
                             {
-                                isChangeDateAlertSelected = childViewPresentationDateChangeEdit.AlertNotification;
+                                isChangeDateAlertSelected = childViewPresentationDateChangeEdit.IsAlertNotificationChecked;
                                 originalPresentationDate = Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime);
                                 updatedPresentationDate = childViewPresentationDateChangeEdit.SelectedPresentationDateTime
                                     .Add(Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).TimeOfDay);

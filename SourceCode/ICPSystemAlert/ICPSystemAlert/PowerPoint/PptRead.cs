@@ -1,22 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Web;
-using System.Reflection;
-using System.ComponentModel;
-using Drawing = DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Presentation;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.IO;
 using iTextSharp.text.pdf.draw;
-
+using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace ICPSystemAlert
 {
+    /// <summary>
+    /// exposes methods to fetch and generate pdf from powerpoint presentation file
+    /// </summary>
     public static class PptRead
     {
+        #region Public Methods
+        /// <summary>
+        /// Fetch data from powerpoint presentation file
+        /// </summary>
+        /// <param name="location">local presentation file location</param>
+        /// <param name="securityInformation">security information</param>
+        /// <returns>ICPresentation object</returns>
         public static ICPresentation Fetch(String location, SecurityInformation securityInformation)
         {
             ICPresentation result = null;
@@ -104,13 +110,18 @@ namespace ICPSystemAlert
                         result.SWOTAnalysisInstance.Threat = kvp.Value;
                     }
 
-                }                
+                }
             }
 
             return result;
         }
 
-        public static void GeneratePresentationPdf(string outFile, ICPresentation presentation)
+        /// <summary>
+        /// Generates pdf conversion of the powerpoint presentation file
+        /// </summary>
+        /// <param name="outFile">output local location of pfd file</param>
+        /// <param name="presentation">ICPresentation object</param>
+        public static void Generate(string outFile, ICPresentation presentation)
         {
             float listItemSpacing = 15F;
             string strLogoPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\AshmoreEMMLogo.png";
@@ -125,7 +136,6 @@ namespace ICPSystemAlert
 
             doc.Open();
             Rectangle page = doc.PageSize;
-
 
             #region CompanyOverviewInstance
             #region Header
@@ -262,9 +272,6 @@ namespace ICPSystemAlert
             coiCompanyOverViewTable.AddCell(coiCompanyOverviewCell);
             doc.Add(coiCompanyOverViewTable);
             #endregion
-
-            //doc.Add(new LineSeparator() { Offset = -10 });
-
             #endregion
 
             #region InvestmentThesisInstance
@@ -355,8 +362,6 @@ namespace ICPSystemAlert
 
             doc.Add(itiRiskTable);
             #endregion
-
-            //doc.Add(new LineSeparator() { Offset = -10 });
             #endregion
 
             #region KeyOperatingAssumpationsInstance
@@ -403,8 +408,6 @@ namespace ICPSystemAlert
             }
             doc.Add(koaiInvestmentThesisContentList);
             #endregion
-
-            //doc.Add(new LineSeparator() { Offset = -10 });
             #endregion
 
             #region VQGInstance
@@ -710,13 +713,18 @@ namespace ICPSystemAlert
 
             doc.Add(saiValueTable);
             #endregion
-
-            //doc.Add(new LineSeparator() { Offset = -10 });
             #endregion
 
             doc.Close();
-        }
+        } 
+        #endregion
 
+        #region Private Methods
+        /// <summary>
+        /// Get company overview data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
         private static List<String> GetCompanyOverview(SlidePart slidePart)
         {
             List<String> items = new List<string>();
@@ -739,6 +747,11 @@ namespace ICPSystemAlert
             return items;
         }
 
+        /// <summary>
+        /// Get investment thesis data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
         private static List<String> GetInvestmentThesis(SlidePart slidePart)
         {
             List<String> items = new List<string>();
@@ -780,6 +793,11 @@ namespace ICPSystemAlert
             return items;
         }
 
+        /// <summary>
+        /// Get investment risk data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
         private static List<String> GetInvestmentRisk(SlidePart slidePart)
         {
             List<String> risks = new List<string>();
@@ -815,6 +833,11 @@ namespace ICPSystemAlert
             return risks;
         }
 
+        /// <summary>
+        /// Get key operating assumptions data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
         private static List<String> GetKeyOperatingAssumpations(SlidePart slidePart)
         {
             List<String> items = new List<String>();
@@ -857,6 +880,11 @@ namespace ICPSystemAlert
             return items;
         }
 
+        /// <summary>
+        /// Get value, quality and growth data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>key Value pair dictionary data</returns>
         private static Dictionary<int, List<String>> GetVQG(SlidePart slidePart)
         {
             Dictionary<int, List<String>> result = new Dictionary<int, List<string>>();
@@ -904,6 +932,11 @@ namespace ICPSystemAlert
             return result;
         }
 
+        /// <summary>
+        /// Get strength, weakness, opportunity and threat data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>key Value pair dictionary data</returns>
         private static Dictionary<int, List<String>> GetSWOTAnalysis(SlidePart slidePart)
         {
             Dictionary<int, List<String>> result = new Dictionary<int, List<string>>();
@@ -953,15 +986,23 @@ namespace ICPSystemAlert
             return result;
         }
 
-        private static void AddTextCell(PdfPTable table, PdfPCell cell, int HorizontalAlignment = Element.ALIGN_LEFT, int VerticalAlignment = Element.ALIGN_MIDDLE, int Border = 0)
+        /// <summary>
+        /// Adds PdfPCell to PdfPTable with custom properties
+        /// </summary>
+        /// <param name="table">PdfPTable</param>
+        /// <param name="cell">PdfPCell</param>
+        /// <param name="horizontalAlignment">HorizontalAlignment</param>
+        /// <param name="verticalAlignment">VerticalAlignment</param>
+        /// <param name="Border">Border</param>
+        private static void AddTextCell(PdfPTable table, PdfPCell cell, int horizontalAlignment = Element.ALIGN_LEFT
+            , int verticalAlignment = Element.ALIGN_MIDDLE, int border = 0)
         {
-            //cell.Colspan = Colspan;
-            cell.HorizontalAlignment = HorizontalAlignment; //0=Left, 1=Centre, 2=Right
-            cell.VerticalAlignment = VerticalAlignment;
-            cell.Border = Border;
+            cell.HorizontalAlignment = horizontalAlignment;
+            cell.VerticalAlignment = verticalAlignment;
+            cell.Border = border;
             cell.BorderWidth = 1;
-            //cell.Rowspan = Rowspan;
             table.AddCell(cell);
-        }
+        } 
+        #endregion
     }
 }

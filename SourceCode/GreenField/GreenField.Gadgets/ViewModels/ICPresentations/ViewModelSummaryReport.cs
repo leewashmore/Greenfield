@@ -1,62 +1,43 @@
 ﻿using System;
-using System.Net;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.ViewModel;
-using GreenField.ServiceCaller.MeetingDefinitions;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.Logging;
+using System.Windows;
+using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
-using GreenField.Gadgets.Models;
-using Microsoft.Practices.Prism.Regions;
-using GreenField.Common;
-using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.ServiceLocation;
-using GreenField.Gadgets.Helpers;
-using GreenField.DataContracts;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.MeetingDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View Model for ViewSummaryReport
+    /// </summary>
     public class ViewModelSummaryReport : NotificationObject
     {
         #region Fields
-        private IRegionManager _regionManager;
-       // private ManageMeetings _manageMeetings;
+        /// <summary>
+        /// Region Manager
+        /// </summary>
+        private IRegionManager regionManager;
+       
         /// <summary>
         /// Event Aggregator
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// Instance of Service Caller Class
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// Instance of LoggerFacade
         /// </summary>
-        public ILoggerFacade _logger;        
-        #endregion
-
-        #region Constructor
-        public ViewModelSummaryReport(DashboardGadgetParam param)
-        {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _regionManager = param.RegionManager;
-        }
+        public ILoggerFacade logger;        
         #endregion
 
         #region Properties
@@ -64,171 +45,213 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (value)
                 {
                     Initialize();
                 }
             }
-        } 
+        }
         #endregion
 
         #region Busy Indicator Notification
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
         /// </summary>
-        private bool _busyIndicatorIsBusy = false;
-        public bool BusyIndicatorIsBusy
+        private bool isBusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return isBusyIndicatorBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
-                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+                isBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
             }
         }
 
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion        
+        #endregion
 
         #region Binded
-        private List<SummaryReportData> _summaryReportInfo;
+        /// <summary>
+        /// Stores summary report information
+        /// </summary>
+        private List<SummaryReportData> summaryReportInfo;
         public List<SummaryReportData> SummaryReportInfo
         {
-            get { return _summaryReportInfo; }
+            get { return summaryReportInfo; }
             set
             {
-                _summaryReportInfo = value;
+                summaryReportInfo = value;
                 RaisePropertyChanged(() => this.SummaryReportInfo);
             }
         }
 
-        private DateTime? _selectedStartDate;
+        /// <summary>
+        /// Stores selected report start date
+        /// </summary>
+        private DateTime? selectedStartDate;
         public DateTime? SelectedStartDate
         {
-            get { return _selectedStartDate; }
+            get { return selectedStartDate; }
             set
             {
-                _selectedStartDate = value;
+                selectedStartDate = value;
                 RaisePropertyChanged(() => this.SelectedStartDate);
                 RaisePropertyChanged(() => this.SearchCommand);
             }
         }
 
-        private DateTime? _selectedEndDate;
+        /// <summary>
+        /// Stores selected report end date
+        /// </summary>
+        private DateTime? selectedEndDate;
         public DateTime? SelectedEndDate
         {
-            get { return _selectedEndDate; }
+            get { return selectedEndDate; }
             set
             {
-                _selectedEndDate = value;
+                selectedEndDate = value;
                 RaisePropertyChanged(() => this.SelectedEndDate);
                 RaisePropertyChanged(() => this.SearchCommand);
             }
-        }        
+        }
         #endregion
 
         #region ICommand Properties
+        /// <summary>
+        /// Search Command
+        /// </summary>
         public ICommand SearchCommand
         {
             get { return new DelegateCommand<object>(SearchCommandMethod, SearchCommandValidationMethod); }
-        }        
-        #endregion        
-
+        }
+        #endregion
         #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashboardGadgetParam</param>
+        public ViewModelSummaryReport(DashboardGadgetParam param)
+        {
+            this.dbInteractivity = param.DBInteractivity;
+            this.logger = param.LoggerFacade;
+            this.eventAggregator = param.EventAggregator;
+            this.regionManager = param.RegionManager;
+        }
+        #endregion        
+
         #region ICommand Methods
+        /// <summary>
+        /// SearchCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
         private bool SearchCommandValidationMethod(object param)
         {
             return SelectedStartDate != null && SelectedEndDate != null;
         }
 
+        /// <summary>
+        /// SearchCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
         private void SearchCommandMethod(object param)
         {
             Initialize();
         }        
         #endregion
-        
-        #region Helper Methods
-
-        public void Initialize()
-        {
-            if (_dbInteractivity != null && IsActive && SelectedStartDate != null && SelectedEndDate != null)
-            {
-                BusyIndicatorNotification(true, "Retrieving report details...");
-                _dbInteractivity.RetrieveSummaryReportData(Convert.ToDateTime(SelectedStartDate), Convert.ToDateTime(SelectedEndDate)
-                    , RetrieveSummaryReportDataCallbackMethod);
-            }
-        }       
-        
-
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
-        {
-            if (message != null)
-                BusyIndicatorContent = message;
-
-            BusyIndicatorIsBusy = showBusyIndicator;
-        }
-
-        #endregion
 
         #region CallBack Methods
+        /// <summary>
+        /// RetrieveSummaryReportData Callback Method
+        /// </summary>
+        /// <param name="result">SummaryReportData</param>
         private void RetrieveSummaryReportDataCallbackMethod(List<SummaryReportData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    SummaryReportInfo = result;                    
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    SummaryReportInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
-            }            
+            }
         }
         #endregion
+        
+        #region Helper Methods
+        /// <summary>
+        /// Initializes view
+        /// </summary>
+        public void Initialize()
+        {
+            if (dbInteractivity != null && IsActive && SelectedStartDate != null && SelectedEndDate != null)
+            {
+                BusyIndicatorNotification(true, "Retrieving report details...");
+                dbInteractivity.RetrieveSummaryReportData(Convert.ToDateTime(SelectedStartDate), Convert.ToDateTime(SelectedEndDate)
+                    , RetrieveSummaryReportDataCallbackMethod);
+            }
+        }
+
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
+        /// <param name="message">Content message for indicator; default null</param>
+        private void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
+        {
+            if (message != null)
+            {
+                BusyIndicatorContent = message;
+            }
+            IsBusyIndicatorBusy = isBusyIndicatorVisible;
+        }
+        #endregion        
 
         #region EventUnSubscribe
         /// <summary>
         /// Method that disposes the events
         /// </summary>
         public void Dispose()
-        {
-           
+        {           
         }
-
         #endregion           
     }
 }

@@ -1,30 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ChildViewPresentationDateChangeEdit
+    /// </summary>
     public partial class ChildViewPresentationDateChangeEdit : ChildWindow
     {
+        #region Properties
+        /// <summary>
+        /// Stores selected presentation datetime
+        /// </summary>
+        public DateTime SelectedPresentationDateTime { get; set; }
+
+        /// <summary>
+        /// Stores true if alert notification check box is checked
+        /// </summary>
+        public Boolean IsAlertNotificationChecked { get; set; }
+
+        /// <summary>
+        /// Stores collection of datetimes to be blacked out
+        /// </summary>
+        public ObservableCollection<DateTime> BlackoutDates { get; set; }
+        #endregion        
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="validPresentationDates">Valid presentation datetimes</param>
+        /// <param name="selectedDate">selected datetime</param>
         public ChildViewPresentationDateChangeEdit(List<DateTime> validPresentationDates = null, DateTime? selectedDate = null)
         {
             InitializeComponent();
-            
-            if (validPresentationDates == null)
-                validPresentationDates = new List<DateTime>() { DateTime.Today.AddDays(1), DateTime.Today.AddMonths(3) };
 
+            if (validPresentationDates == null)
+            {
+                validPresentationDates = new List<DateTime>() { DateTime.Today.AddDays(1), DateTime.Today.AddMonths(3) };
+            }
             this.dpPresentationDate.SelectedDate = selectedDate == null ? DateTime.Today : selectedDate;
-            
-            DateTime startDate = validPresentationDates.OrderBy(g=>g).First();
+            DateTime startDate = validPresentationDates.OrderBy(g => g).First();
             DateTime endDate = validPresentationDates.OrderByDescending(g => g).First();
             this.dpPresentationDate.SelectableDateStart = startDate;
             this.dpPresentationDate.SelectableDateEnd = endDate;
@@ -32,7 +52,6 @@ namespace GreenField.Gadgets.Views
             this.dpPresentationDate.AreWeekNumbersVisible = false;
             this.dpPresentationDate.IsTodayHighlighted = false;
             this.dpPresentationDate.FirstDayOfWeek = DayOfWeek.Monday;
-            //this.dpPresentationDate.BlackoutDates = inValidDates.Where(g => ! validPresentationDates.Contains(g));
             this.DataContext = BlackoutDates;
             this.dpPresentationDate.Loaded += (se, e) =>
             {
@@ -49,36 +68,58 @@ namespace GreenField.Gadgets.Views
                 this.dpPresentationDate.BlackoutDates = inValidDates.Where(g => !validPresentationDates.Contains(g));
             };
             BlackoutDates = new ObservableCollection<DateTime>(inValidDates.Where(g => !validPresentationDates.Contains(g)));
-        }
+        } 
+        #endregion
 
-        public DateTime SelectedPresentationDateTime { get; set; }
-        public Boolean AlertNotification { get; set; }
-
-        public ObservableCollection<DateTime> BlackoutDates { get; set; }        
-
+        #region Event Handlers
+        /// <summary>
+        /// OKButton Click EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RoutedEventArgs</param>
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
         }
 
+        /// <summary>
+        /// CancelButton Click EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RoutedEventArgs</param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
         }
 
+        /// <summary>
+        /// dpPresentationDate SelectionChanged EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">SelectionChangedEventArgs</param>
         private void dpPresentationDate_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if(this.dpPresentationDate.SelectedDate == null)
+            if (this.dpPresentationDate.SelectedDate == null)
+            {
                 return;
+            }
             SelectedPresentationDateTime = Convert.ToDateTime(this.dpPresentationDate.SelectedDate);
             this.OKButton.IsEnabled = true;
         }
 
+        /// <summary>
+        /// chkbAlert Checked EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RoutedEventArgs</param>
         private void chkbAlert_Checked(object sender, RoutedEventArgs e)
         {
-            if(this.chkbAlert.IsChecked != null)
-                AlertNotification = Convert.ToBoolean(this.chkbAlert.IsChecked);
-        }
+            if (this.chkbAlert.IsChecked != null)
+            {
+                IsAlertNotificationChecked = Convert.ToBoolean(this.chkbAlert.IsChecked);
+            }
+        } 
+        #endregion
     }
 }
 

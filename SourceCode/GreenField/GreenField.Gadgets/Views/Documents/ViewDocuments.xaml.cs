@@ -1,38 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.DataContracts;
 using Telerik.Windows.Controls;
 using GreenField.Common;
+using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
-using GreenField.UserSession;
+using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Updation data used in controls
+    /// </summary>
     public class UpdationData
     {
+        /// <summary>
+        /// Updation Tag
+        /// </summary>
         public UpdationTags UpdationTag { get; set; }
+
+        /// <summary>
+        /// Updation Information
+        /// </summary>
         public Object UpdationInfo { get; set; }
+        
+        /// <summary>
+        /// Updation Element
+        /// </summary>
         public TextBlock UpdationElement { get; set; }
     }
 
+    /// <summary>
+    /// Comment Updation Data used in controls
+    /// </summary>
     public class CommentUpdationData
     {
+        /// <summary>
+        /// Comment updation information
+        /// </summary>
         public Object CommentUpdationInfo { get; set; }
+        
+        /// <summary>
+        /// Comment updation input textbox
+        /// </summary>
         public TextBox CommentUpdationInput { get; set; }
+
+        /// <summary>
+        /// Comment insertion grid
+        /// </summary>
         public Grid CommentInsertionGrid { get; set; }
+
+        /// <summary>
+        /// Comment alert input
+        /// </summary>
         public RadSplitButton CommentAlertInput { get; set; }
     }
 
+    /// <summary>
+    /// Updation Tags
+    /// </summary>
     public enum UpdationTags
     {
         CATEGORY_NAME,
@@ -40,36 +69,57 @@ namespace GreenField.Gadgets.Views
         COMPANY_NAME
     }
 
+    /// <summary>
+    /// Code behind for ViewDocuments
+    /// </summary>
     public partial class ViewDocuments : ViewBaseUserControl
     {
+        #region Fields
+        /// <summary>
+        /// Stores updation information
+        /// </summary>
         List<UpdationData> updateInfo = new List<UpdationData>();
-        List<DocumentCategoricalData> documentCategoricalInfo = new List<DocumentCategoricalData>();
 
-        private ViewModelDocuments _dataContextViewModelDocuments;
+        /// <summary>
+        /// Stores document categorical information received from event invoker
+        /// </summary>
+        List<DocumentCategoricalData> documentCategoricalInfo = new List<DocumentCategoricalData>(); 
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Stores view model reference
+        /// </summary>
+        private ViewModelDocuments dataContextViewModelDocuments;
         public ViewModelDocuments DataContextViewModelDocuments
         {
-            get { return _dataContextViewModelDocuments; }
-            set { _dataContextViewModelDocuments = value; }
+            get { return dataContextViewModelDocuments; }
+            set { dataContextViewModelDocuments = value; }
         }
-
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextViewModelDocuments != null) //DataContext instance
-                    DataContextViewModelDocuments.IsActive = _isActive;
+                isActive = value;
+                if (DataContextViewModelDocuments != null)
+                {
+                    DataContextViewModelDocuments.IsActive = isActive;
+                }
             }
-        }
-
+        } 
+        #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">ViewModelDocuments</param>
         public ViewDocuments(ViewModelDocuments dataContextSource)
         {
             InitializeComponent();
@@ -77,14 +127,78 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             dataContextSource.ConstructDocumentSearchResultEvent += new ConstructDocumentSearchResultEventHandler(ConstructDocumentSearchResult);
         }
+        #endregion        
 
+        #region Event Handlers
+        /// <summary>
+        /// DocumentsTreeView Selected EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RadRoutedEventArgs</param>
         void DocumentsTreeView_Selected(object sender, Telerik.Windows.RadRoutedEventArgs e)
         {
             this.DocumentsTreeView.SelectedItem = null;
         }
 
+        /// <summary>
+        /// Update comment on documentation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RoutedEventArgs</param>
+        private void DocumentCommentUpdation(object sender, RoutedEventArgs e)
+        {
+            RadButton element = sender as RadButton;
+            if (element != null)
+            {
+                CommentUpdationData commentUpdationData = element.Tag as CommentUpdationData;
+                if (commentUpdationData != null)
+                {
+                    DocumentCategoricalData data = commentUpdationData.CommentUpdationInfo as DocumentCategoricalData;
+                    if (data != null)
+                    {
+                        DocumentCategoricalData selectedDocument = documentCategoricalInfo.Where(record => record == data).FirstOrDefault();
+                        if (selectedDocument != null)
+                        {
+                            if (DataContextViewModelDocuments.DbInteractivity != null)
+                            {
+                                DataContextViewModelDocuments.BusyIndicatorNotification(true, "Updating comment to document...");
+                                DataContextViewModelDocuments.DbInteractivity.SetDocumentComment(UserSession.SessionManager.SESSION.UserName
+                                    , (Int64)selectedDocument.DocumentCatalogData.FileId, commentUpdationData.CommentUpdationInput.Text
+                                    , DataContextViewModelDocuments.SetDocumentCommentCallbackMethod);
+
+                                if ((commentUpdationData.CommentAlertInput.DropDownContent as RadListBox).SelectedItems.Count > 0)
+                                {
+                                    List<String> emailUsers = new List<string>();
+                                    foreach (MembershipUserInfo alertUser in 
+                                        (commentUpdationData.CommentAlertInput.DropDownContent as RadListBox).SelectedItems)
+                                    {
+                                        emailUsers.Add(alertUser.Email);
+                                    }
+
+                                    String emailTo = String.Join("|", emailUsers.ToArray());
+                                    String emailSubject = "Document Comment Updation Alert";
+                                    String emailMessageBody = "Document comment updation notification. Please find the details below:\n"
+                                        + "Document Name - " + selectedDocument.DocumentCatalogData.FileName + "\n"
+                                        + "Company - " + selectedDocument.DocumentCompanyName + "\n"
+                                        + "Type - " + EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(selectedDocument.DocumentCategoryType) + "\n"
+                                        + "Comment - " + commentUpdationData.CommentUpdationInput.Text + "\n"
+                                        + "Comment By - " + UserSession.SessionManager.SESSION.UserName;
+                                    DataContextViewModelDocuments.DbInteractivity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, null
+                                        , UserSession.SessionManager.SESSION.UserName, DataContextViewModelDocuments.SetMessageInfoCallbackMethod_Comment);
+                                }
+                            }                        
+                        }
+                    }
+                }
+            }
+        }
         #endregion
 
+        #region Helper Methods
+        /// <summary>
+        /// Constructs document search result on user interface
+        /// </summary>
+        /// <param name="data">DocumentCategoricalData</param>
         private void ConstructDocumentSearchResult(List<DocumentCategoricalData> data)
         {
             if (data == null)
@@ -126,10 +240,8 @@ namespace GreenField.Gadgets.Views
                             break;
                     }
                 }
-
                 this.DocumentsTreeView.Items.Add(categoryTreeViewItem);
             }
-
             UpdateNotification();
         }
 
@@ -421,6 +533,11 @@ namespace GreenField.Gadgets.Views
 
         }
 
+        /// <summary>
+        /// Inserts Content in the specific treeview node (category) specific to blog type data
+        /// </summary>
+        /// <param name="data">DocumentCategoricalData</param>
+        /// <returns>RadTreeViewItem to be inserted in the category node</returns>
         private RadTreeViewItem InsertTreeViewItem_Blog(DocumentCategoricalData data)
         {
             RadTreeViewItem blogTreeViewItem = new RadTreeViewItem() { HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch };
@@ -587,69 +704,11 @@ namespace GreenField.Gadgets.Views
             #endregion
 
             return blogTreeViewItem;
-        }
+        }        
 
-        private void DocumentCommentUpdation(object sender, RoutedEventArgs e)
-        {
-            RadButton element = sender as RadButton;
-            if (element != null)
-            {
-                CommentUpdationData commentUpdationData = element.Tag as CommentUpdationData;
-                if (commentUpdationData != null)
-                {
-                    DocumentCategoricalData data = commentUpdationData.CommentUpdationInfo as DocumentCategoricalData;
-                    if (data != null)
-                    {
-                        DocumentCategoricalData selectedDocument = documentCategoricalInfo.Where(record => record == data).FirstOrDefault();
-                        if (selectedDocument != null)
-                        {
-
-                            //CommentDetails InsertionCommentDetails = new CommentDetails()
-                            //{
-                            //    Comment = commentUpdationData.CommentUpdationInput.Text,
-                            //    CommentBy = SessionManager.SESSION.UserName,
-                            //    CommentOn = DateTime.Now
-                            //};
-                            //selectedDocument.CommentDetails.Add(InsertionCommentDetails);
-
-                            if (DataContextViewModelDocuments.DbInteractivity != null)
-                            {
-                                DataContextViewModelDocuments.BusyIndicatorNotification(true, "Updating comment to document...");
-                                DataContextViewModelDocuments.DbInteractivity.SetDocumentComment(UserSession.SessionManager.SESSION.UserName
-                                    , (Int64)selectedDocument.DocumentCatalogData.FileId, commentUpdationData.CommentUpdationInput.Text
-                                    , DataContextViewModelDocuments.SetDocumentCommentCallbackMethod);
-
-                                if ((commentUpdationData.CommentAlertInput.DropDownContent as RadListBox).SelectedItems.Count > 0)
-                                {
-                                    List<String> emailUsers = new List<string>();
-                                    foreach (MembershipUserInfo alertUser in (commentUpdationData.CommentAlertInput.DropDownContent as RadListBox).SelectedItems)
-                                    {
-                                        emailUsers.Add(alertUser.Email);
-                                    }
-
-                                    String emailTo = String.Join("|", emailUsers.ToArray());
-                                    String emailSubject = "Document Comment Updation Alert";
-                                    String emailMessageBody = "Document comment updation notification. Please find the details below:\n"
-                                        + "Document Name - " + selectedDocument.DocumentCatalogData.FileName + "\n"
-                                        + "Company - " + selectedDocument.DocumentCompanyName + "\n"
-                                        + "Type - " + EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(selectedDocument.DocumentCategoryType) + "\n"
-                                        + "Comment - " + commentUpdationData.CommentUpdationInput.Text + "\n"
-                                        + "Comment By - " + UserSession.SessionManager.SESSION.UserName;
-                                    DataContextViewModelDocuments.DbInteractivity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, null
-                                        , UserSession.SessionManager.SESSION.UserName, DataContextViewModelDocuments.SetMessageInfoCallbackMethod_Comment);
-                                }
-                            }
-
-
-                            //ConstructDocumentSearchResult(documentCategoricalInfo);
-
-                            //InsertComment_Documents(InsertionCommentDetails, commentUpdationData.CommentInsertionGrid);                            
-                        }
-                    }
-                }
-            }
-        }
-
+        /// <summary>
+        /// Updates data on user interface
+        /// </summary>
         private void UpdateNotification()
         {
             foreach (UpdationData item in updateInfo)
@@ -726,6 +785,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Insert Comment on documents
+        /// </summary>
+        /// <param name="comment">Comment</param>
+        /// <param name="headerExpanderContentGridCommentGrid">Grid</param>
         private void InsertComment_Documents(CommentDetails comment, Grid headerExpanderContentGridCommentGrid)
         {
             if (comment.Comment != null)
@@ -773,8 +837,8 @@ namespace GreenField.Gadgets.Views
                 headerExpanderContentGridCommentGrid.Children.Add(commentByTextBlock);
                 headerExpanderContentGridCommentGrid.Children.Add(commentTextBlock);
             }
-        }
-
+        }        
+        #endregion
 
     }
 }

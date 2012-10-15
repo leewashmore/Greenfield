@@ -1,4 +1,5 @@
-﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewSummaryReport"
+﻿<helpers:ViewBaseUserControl
+    x:Class="GreenField.Gadgets.Views.ViewSummaryReport"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
@@ -21,7 +22,7 @@
     </helpers:ViewBaseUserControl.Resources>
 
     <telerik:RadBusyIndicator BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
-                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding IsBusyIndicatorBusy}">
         <Grid x:Name="LayoutRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -48,18 +49,26 @@
                                        Command="{Binding SearchCommand}"/>                    
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Margin="2,2,2,0">
-                    <telerik:RadButton x:Name="btnExcelExport" BorderBrush="White" Background="White" ToolTipService.ToolTip="Export Results to Excel" Width="18" Height="18"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Style="{StaticResource RadButtonStyle}"
+                    <telerik:RadButton x:Name="btnExcelExport" BorderBrush="White" Background="White" 
+                                       ToolTipService.ToolTip="Export Results to Excel"
+                                       Width="18" Height="18"
+                                       HorizontalAlignment="Right" HorizontalContentAlignment="Center" 
+                                       Style="{StaticResource RadButtonStyle}"
                                        Click="btnExcelExport_Click">
                         <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" />
                     </telerik:RadButton>
-                    <telerik:RadButton x:Name="btnPDFExport" BorderBrush="White" Background="White" ToolTipService.ToolTip="Export Results to PDF" Width="18" Height="18"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Style="{StaticResource RadButtonStyle}"
+                    <telerik:RadButton x:Name="btnPDFExport" BorderBrush="White" Background="White" 
+                                       ToolTipService.ToolTip="Export Results to PDF"
+                                       Width="18" Height="18"
+                                       HorizontalAlignment="Right" HorizontalContentAlignment="Center" 
+                                       Style="{StaticResource RadButtonStyle}"
                                        Click="btnPDFExport_Click">
                         <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
                     </telerik:RadButton>
-                    <telerik:RadButton x:Name="btnPrinterExport" BorderBrush="White" Background="White" ToolTipService.ToolTip="Send Results to a Printer" Width="18" Height="18"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Style="{StaticResource RadButtonStyle}"
+                    <telerik:RadButton x:Name="btnPrinterExport" BorderBrush="White" Background="White" 
+                                       ToolTipService.ToolTip="Send Results to a Printer" Width="18" Height="18"
+                                       HorizontalAlignment="Right" HorizontalContentAlignment="Center" 
+                                       Style="{StaticResource RadButtonStyle}"
                                        Click="btnPrinterExport_Click">
                         <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
                     </telerik:RadButton>                    
@@ -67,32 +76,32 @@
             </Grid>
             <!--Data Grid-->
             <telerik:RadGridView x:Name="dgICPSummaryReport"
-                             ItemsSource="{Binding SummaryReportInfo}"
-                             Grid.Row="1" Margin="0,2"
-                             telerik:StyleManager.Theme="Metro"
-                             CanUserReorderColumns ="False" 
-                             CanUserSelect="True"
-                             CanUserSortColumns="true"
-                             AutoGenerateColumns="False"
-                             CanUserInsertRows="False"
-                             CanUserDeleteRows="False"
-                             ShowGroupFooters="False"
-                             ShowColumnFooters="False"
-                             ShowGroupPanel="False"
-                             UseLayoutRounding="True"
-                             IsReadOnly="True"
-                             RowIndicatorVisibility="Collapsed"
-                             ScrollMode="RealTime"
-                             FontSize="7"
-                             FontFamily="Arial"
-                             AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                             AlternationCount="2" 
-                             EnableRowVirtualization="False"
-                             EnableColumnVirtualization="False"   
+                                 ItemsSource="{Binding SummaryReportInfo}"
+                                 Grid.Row="1" Margin="0,2"
+                                 telerik:StyleManager.Theme="Metro"
+                                 CanUserReorderColumns ="False" 
+                                 CanUserSelect="True"
+                                 CanUserSortColumns="true"
+                                 AutoGenerateColumns="False"
+                                 CanUserInsertRows="False"
+                                 CanUserDeleteRows="False"
+                                 ShowGroupFooters="False"
+                                 ShowColumnFooters="False"
+                                 ShowGroupPanel="False"
+                                 UseLayoutRounding="True"
+                                 IsReadOnly="True"
+                                 RowIndicatorVisibility="Collapsed"
+                                 ScrollMode="RealTime"
+                                 FontSize="7"
+                                 FontFamily="Arial"
+                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                 AlternationCount="2" 
+                                 EnableRowVirtualization="False"
+                                 EnableColumnVirtualization="False"   
                                  ElementExporting="dgICPSummaryReport_ElementExporting"
-                             HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                             SelectedItem="{Binding SelectedPresentationOverviewInfo, Mode=TwoWay}"
-                             RowStyle="{StaticResource GridViewRowStyle}">
+                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                 SelectedItem="{Binding SelectedPresentationOverviewInfo, Mode=TwoWay}"
+                                 RowStyle="{StaticResource GridViewRowStyle}">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn 
                                             Width="Auto"

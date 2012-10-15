@@ -1,54 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-//using Ashmore.Emm.GreenField.ICP.Meeting.Module.ViewModels;
-using GreenField.Gadgets.ViewModels;
-using System.ComponentModel.Composition;
-using GreenField.Gadgets.Helpers;
-using GreenField.Common;
-using GreenField.ServiceCaller;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Documents.Model;
-using GreenField.ServiceCaller.MeetingDefinitions;
+using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ViewSummaryReport
+    /// </summary>
     public partial class ViewSummaryReport : ViewBaseUserControl
     {
-
         #region Properties
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelSummaryReport _dataContextViewModelSummaryReport;
+        private ViewModelSummaryReport dataContextViewModelSummaryReport;
         public ViewModelSummaryReport DataContextViewModelSummaryReport
         {
-            get { return _dataContextViewModelSummaryReport; }
-            set { _dataContextViewModelSummaryReport = value; }
+            get { return dataContextViewModelSummaryReport; }
+            set { dataContextViewModelSummaryReport = value; }
         }
-
-
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextViewModelSummaryReport != null) //DataContext instance
-                    DataContextViewModelSummaryReport.IsActive = _isActive;
+                isActive = value;
+                if (DataContextViewModelSummaryReport != null)
+                {
+                    DataContextViewModelSummaryReport.IsActive = isActive;
+                }
             }
         }
         #endregion
@@ -57,7 +48,7 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="dataContextSource"></param>
+        /// <param name="dataContextSource">ViewModelSummaryReport</param>
         public ViewSummaryReport(ViewModelSummaryReport dataContextSource)
         {
             InitializeComponent();
@@ -66,40 +57,42 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region Dispose Method
+        #region Event Handlers
         /// <summary>
-        /// method to dispose all running events
+        /// dtpStartDate SelectionChanged EventHandler
         /// </summary>
-        public override void Dispose()
-        {
-            this.DataContextViewModelSummaryReport.Dispose();
-            this.DataContextViewModelSummaryReport = null;
-            this.DataContext = null;
-        }
-        #endregion
-
-        
-
+        /// <param name="sender"></param>
+        /// <param name="e">SelectionChangedEventArgs</param>
         private void dtpStartDate_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
             dtpEndDate.SelectableDateStart = dtpStartDate.SelectedDate;
         }
 
+        /// <summary>
+        /// dtpEndDate SelectionChanged EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">SelectionChangedEventArgs</param>
         private void dtpEndDate_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
             dtpStartDate.SelectableDateEnd = dtpEndDate.SelectedDate;
         }
 
+        /// <summary>
+        /// btnExcelExport Click EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RoutedEventArgs</param>
         private void btnExcelExport_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextViewModelSummaryReport._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextViewModelSummaryReport.logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                 {
-                        new RadExportOptions() { ElementName = "Summary Report", Element = this.dgICPSummaryReport
-                            , ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                    new RadExportOptions() { ElementName = "Summary Report", Element = this.dgICPSummaryReport
+                        , ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                 };
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Summary Report");
                 childExportOptions.Show();
@@ -107,14 +100,19 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextViewModelSummaryReport._logger, ex);
+                Logging.LogException(this.DataContextViewModelSummaryReport.logger, ex);
             }
         }
 
+        /// <summary>
+        /// btnPDFExport Click EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RoutedEventArgs</param>
         private void btnPDFExport_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextViewModelSummaryReport._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextViewModelSummaryReport.logger, methodNamespace);
             try
             {
                 PDFExporter.btnExportPDF_Click(this.dgICPSummaryReport, orientation: PageOrientation.Landscape);
@@ -122,14 +120,19 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextViewModelSummaryReport._logger, ex);
+                Logging.LogException(this.DataContextViewModelSummaryReport.logger, ex);
             }
         }
 
+        /// <summary>
+        /// btnPrinterExport Click EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RoutedEventArgs</param>
         private void btnPrinterExport_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextViewModelSummaryReport._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextViewModelSummaryReport.logger, methodNamespace);
             try
             {
                 Dispatcher.BeginInvoke((Action)(() =>
@@ -143,15 +146,31 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextViewModelSummaryReport._logger, ex);
+                Logging.LogException(this.DataContextViewModelSummaryReport.logger, ex);
             }
         }
 
+        /// <summary>
+        /// dgICPSummaryReport ElementExporting EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">GridViewElementExportingEventArgs</param>
         private void dgICPSummaryReport_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e);
+        } 
+        #endregion
+
+        #region Dispose Method
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextViewModelSummaryReport.Dispose();
+            this.DataContextViewModelSummaryReport = null;
+            this.DataContext = null;
         }
-
-
+        #endregion
     }
 }

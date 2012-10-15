@@ -367,7 +367,7 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             BusyIndicatorNotification(true, "Resubmitting presentation...");
                             dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
-                                SelectedPresentationOverviewInfo, dialog.AlertNotification,
+                                SelectedPresentationOverviewInfo, dialog.IsAlertChecked,
                                 ReSubmitPresentationCallbackMethod);
                         }
                     }

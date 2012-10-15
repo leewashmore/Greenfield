@@ -1,31 +1,18 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.ViewModel;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Commands;
-using GreenField.Gadgets.Models;
-using Microsoft.Practices.Prism.Regions;
-using GreenField.Common;
-using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
 using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.Models;
+using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.MeetingDefinitions;
-using System.IO;
-using System.Reflection;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -101,7 +88,6 @@ namespace GreenField.Gadgets.ViewModels
                         value.CommitteeSellRange = value.SecuritySellRange;
                         value.CommitteeRecommendation = value.SecurityRecommendation;
                     }
-
                     if (dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving Voting information for the selected presentation");
@@ -119,13 +105,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores true if IC Decision panel is enabled
         /// </summary>
-        private Boolean _isICDecisionEnable;
+        private Boolean isICDecisionEnable;
         public Boolean IsICDecisionEnable
         {
-            get { return _isICDecisionEnable; }
+            get { return isICDecisionEnable; }
             set
             {
-                _isICDecisionEnable = value;
+                isICDecisionEnable = value;
                 RaisePropertyChanged(() => this.IsICDecisionEnable);
             }
         }
@@ -133,13 +119,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores true if Accept without discussion checkbox is checked
         /// </summary>
-        private Boolean? _isAcceptWithoutDiscussionChecked = true;
+        private Boolean? isAcceptWithoutDiscussionChecked = true;
         public Boolean? IsAcceptWithoutDiscussionChecked
         {
-            get { return _isAcceptWithoutDiscussionChecked; }
+            get { return isAcceptWithoutDiscussionChecked; }
             set
             {
-                _isAcceptWithoutDiscussionChecked = value;
+                isAcceptWithoutDiscussionChecked = value;
                 RaisePropertyChanged(() => this.IsAcceptWithoutDiscussionChecked);
                 if (value != null)
                 {
@@ -215,16 +201,17 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores PFV Measure types as keys with value equal to their current system value
         /// </summary>
-        private Dictionary<String, Decimal?> _securityPFVMeasureCurrentPrices;
+        private Dictionary<String, Decimal?> securityPFVMeasureCurrentPrices;
         public Dictionary<String, Decimal?> SecurityPFVMeasureCurrentPrices
         {
-            get { return _securityPFVMeasureCurrentPrices; }
+            get { return securityPFVMeasureCurrentPrices; }
             set
             {
-                _securityPFVMeasureCurrentPrices = value;
+                securityPFVMeasureCurrentPrices = value;
                 if (value != null)
                 {
-                    SelectedPresentationOverviewInfo.CommitteePFVMeasureValue = value[SelectedPresentationOverviewInfo.CommitteePFVMeasure];
+                    SelectedPresentationOverviewInfo.CommitteePFVMeasureValue = 
+                        value[SelectedPresentationOverviewInfo.CommitteePFVMeasure];
                 }
             }
         } 
@@ -234,23 +221,23 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores presentation voter information
         /// </summary>
-        private List<VoterInfo> _presentationVoterInfo;
+        private List<VoterInfo> presentationVoterInfo;
         public List<VoterInfo> PresentationVoterInfo
         {
-            get { return _presentationVoterInfo; }
-            set { _presentationVoterInfo = value; }
+            get { return presentationVoterInfo; }
+            set { presentationVoterInfo = value; }
         }
 
         /// <summary>
         /// Stores presentation pre-meeting voter information 
         /// </summary>
-        private List<VoterInfo> _presentationPreMeetingVoterInfo;
+        private List<VoterInfo> presentationPreMeetingVoterInfo;
         public List<VoterInfo> PresentationPreMeetingVoterInfo
         {
-            get { return _presentationPreMeetingVoterInfo; }
+            get { return presentationPreMeetingVoterInfo; }
             set
             {
-                _presentationPreMeetingVoterInfo = value;
+                presentationPreMeetingVoterInfo = value;
                 RaisePropertyChanged(() => this.PresentationPreMeetingVoterInfo);
             }
         }
@@ -258,37 +245,24 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores presentation post-meeting voter information 
         /// </summary>
-        private List<VoterInfo> _presentationPostMeetingVoterInfo;
+        private List<VoterInfo> presentationPostMeetingVoterInfo;
         public List<VoterInfo> PresentationPostMeetingVoterInfo
         {
-            get { return _presentationPostMeetingVoterInfo; }
+            get { return presentationPostMeetingVoterInfo; }
             set
             {
-                _presentationPostMeetingVoterInfo = value;
+                presentationPostMeetingVoterInfo = value;
                 RaisePropertyChanged(() => this.PresentationPostMeetingVoterInfo);
             }
         } 
         #endregion
 
+        #region ICommand
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod); }
-        }
+        } 
         #endregion
-
-        #region Constructor
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="param">DashboardGadgetParam</param>
-        public ViewModelPresentationDecisionEntry(DashboardGadgetParam param)
-        {
-            dbInteractivity = param.DBInteractivity;
-            logger = param.LoggerFacade;
-            eventAggregator = param.EventAggregator;
-            regionManager = param.RegionManager;
-        }
-        #endregion        
 
         #region Busy Indicator Notification
         /// <summary>
@@ -319,6 +293,21 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashboardGadgetParam</param>
+        public ViewModelPresentationDecisionEntry(DashboardGadgetParam param)
+        {
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            eventAggregator = param.EventAggregator;
+            regionManager = param.RegionManager;
+        }
+        #endregion                
 
         #region ICommand Methods
         /// <summary>
@@ -527,8 +516,9 @@ namespace GreenField.Gadgets.ViewModels
         public void UpdateICDecisionRecommendation(String selectedPFVMeasure, Decimal buyRange, Decimal sellRange)
         {
             if (selectedPFVMeasure == null || SecurityPFVMeasureCurrentPrices == null)
+            {
                 return;
-
+            }
             Decimal? CurrentPFVMeasurePrice = SecurityPFVMeasureCurrentPrices[selectedPFVMeasure];
 
             if (CurrentPFVMeasurePrice == null)
@@ -565,7 +555,6 @@ namespace GreenField.Gadgets.ViewModels
                     SelectedPresentationOverviewInfo.CommitteeRecommendation = RecommendationType.WATCH;
                 }
             }
-
             RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
         }
 
@@ -582,11 +571,16 @@ namespace GreenField.Gadgets.ViewModels
             SelectedPresentationOverviewInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
         }
 
+        /// <summary>
+        /// Raise final vote type update
+        /// </summary>
+        /// <param name="voterInfo">VoterInfo object</param>
         public void RaiseUpdateFinalVoteType(VoterInfo voterInfo)
         {
             if (voterInfo == null)
+            {
                 return;
-
+            }
             RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
 
             if (voterInfo.VoteType == VoteType.AGREE)
@@ -602,15 +596,18 @@ namespace GreenField.Gadgets.ViewModels
             {
                 VoterInfo origItem = PresentationVoterInfo.Where(record => record.VoterID == voterInfo.VoterID).FirstOrDefault();
                 if (origItem == null)
+                {
                     return;
-
+                }
                 if (origItem.VoteType != VoteType.MODIFY)
+                {
                     return;
-
+                }
                 VoterInfo bindedItem = PresentationPostMeetingVoterInfo.Where(record => record.VoterID == voterInfo.VoterID).FirstOrDefault();
                 if (bindedItem == null)
+                {
                     return;
-
+                }
                 bindedItem.VoterPFVMeasure = origItem.VoterPFVMeasure;
                 bindedItem.VoterBuyRange = origItem.VoterBuyRange;
                 bindedItem.VoterSellRange = origItem.VoterSellRange;
@@ -628,6 +625,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Dispose event subscriptions
+        /// </summary>
         public void Dispose()
         {
         } 

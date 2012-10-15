@@ -1,4 +1,5 @@
-﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewDocuments"
+﻿<helpers:ViewBaseUserControl 
+    x:Class="GreenField.Gadgets.Views.ViewDocuments"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -22,7 +23,7 @@
     </helpers:ViewBaseUserControl.Resources>
 
     <telerik:RadBusyIndicator x:Name="biMeetingMinutes" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
-                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding IsBusyIndicatorBusy}">
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -42,21 +43,21 @@
                                  Style="{StaticResource HyperlinkButtonStyle}"  Foreground="Gray"  FontStyle="Italic"
                                  Command="{Binding DocumentUploadCommand}" />
                 <telerik:RadComboBox x:Name="cbsecuritySelector"
-                                             Grid.Column="2"
-                                             ItemsSource="{Binding SearchStringInfo}"
-                                             Text="{Binding SearchStringText, Mode=TwoWay}"
-                                             EmptyText="Search MetaTag..." 
-                                             Width="150" 
-                                             Margin="2,0,0,0"
-                                             IsEditable="True"
-                                             CanAutocompleteSelectItems="True" 
-                                             CanKeyboardNavigationSelectItems="False" 
-                                             HorizontalAlignment="Left"
-                                             OpenDropDownOnFocus="True"
-                                             StaysOpenOnEdit="True"
-                                             Style="{StaticResource RadComboBoxStyle}"
-                                             TextOptions.TextHintingMode="Fixed"
-                                             IsTextSearchEnabled="False">
+                                     Grid.Column="2"
+                                     ItemsSource="{Binding SearchStringInfo}"
+                                     Text="{Binding SearchStringText, Mode=TwoWay}"
+                                     EmptyText="Search MetaTag..." 
+                                     Width="150" 
+                                     Margin="2,0,0,0"
+                                     IsEditable="True"
+                                     CanAutocompleteSelectItems="True" 
+                                     CanKeyboardNavigationSelectItems="False" 
+                                     HorizontalAlignment="Left"
+                                     OpenDropDownOnFocus="True"
+                                     StaysOpenOnEdit="True"
+                                     Style="{StaticResource RadComboBoxStyle}"
+                                     TextOptions.TextHintingMode="Fixed"
+                                     IsTextSearchEnabled="False">
                     <telerik:RadComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />
@@ -66,7 +67,7 @@
                 <telerik:RadButton Grid.Column="3" Margin="2,0,0,0" Content="Search" Style="{StaticResource RadButtonStyle}"
                                    Command="{Binding DocumentSearchCommand}"/>
             </Grid>
-
+            
             <Grid Grid.Row="1">
                 <telerik:RadTreeView x:Name="DocumentsTreeView" IsEditable="False" SelectionMode="Single"
                                      Margin="0,2,0,0" Selected="DocumentsTreeView_Selected">

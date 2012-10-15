@@ -1,92 +1,194 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Data;
-using System.Text;
-using System.Data.SqlClient;
-
 using System.Configuration;
-using System.Net.Mail;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using System.IO;
-using System.Diagnostics;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Security;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
 using CommandLine;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Presentation;
 using ICPSystemAlert.DocumentCopyReference;
 using ICPSystemAlert.DocumentListsReference;
-using System.Xml;
-using System.Collections;
-using System.Xml.Linq;
-using System.Reflection;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Presentation;
-
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace ICPSystemAlert
 {
+    /// <summary>
+    /// Console execution class
+    /// </summary>
     class Program
     {
         #region Fields
-        private static ICPEntities _entity;
-        private static UserEntities _userEntity;
-        private static ExternalEntities _externalEntities;
+        #region Data Sources
+        /// <summary>
+        /// Stores IC Presentation entity framework instance
+        /// </summary>
+        private static ICPEntities entity;
 
-        private static DimensionServiceReference.Entities _dimensionEntity;
+        /// <summary>
+        /// Stores user entity framework instance
+        /// </summary>
+        private static UserEntities userEntity;
 
-        private static Copy _copyService;
-        private static Lists _listsService;
-        private static String _documentLibrary;
-        private static String _documentServerUrl;
-        private static String _documentServerUserName;
-        private static String _documentServerPassword;
-        private static String _documentServerDomain;
-        private static String _documentCopyServiceUrl;
-        private static String _documentListsServiceUrl;
+        /// <summary>
+        /// Stores AIMS_Data entity framework instance
+        /// </summary>
+        private static ExternalEntities externalEntities;
 
-        private static Int32 _scheduledRunMinutes;
-        private static Int64 _presentationIdentifier;
-        private static Int64 _meetingIdentifier;
+        /// <summary>
+        /// Stores Dimension service instance
+        /// </summary>
+        private static DimensionServiceReference.Entities _dimensionEntity; 
+        #endregion
 
-        private static String _networkWebmasterEmail;
-        private static String _networkCredentialPassword;
-        private static String _networkCredentialUsername;
-        private static String _networkCredentialDomain;
-        private static Int32 _networkConnectionPort;
-        private static String _networkConnectionHost;
-        private static Boolean _sendFilesAsAttachment;
+        #region Sharepoint details
+        /// <summary>
+        /// SharePoint copy service
+        /// </summary>
+        private static Copy copyService;
 
-        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        /// <summary>
+        /// SharePoint List service
+        /// </summary>
+        private static Lists listsService;
+
+        /// <summary>
+        /// SharePoint login copy service url
+        /// </summary>
+        private static String documentCopyServiceUrl;
+
+        /// <summary>
+        /// SharePoint login list service url
+        /// </summary>
+        private static String documentListsServiceUrl; 
+
+        /// <summary>
+        /// SharePoint document library name
+        /// </summary>
+        private static String documentLibrary;
+
+        /// <summary>
+        /// SharePoint server url
+        /// </summary>
+        private static String documentServerUrl;
+
+        /// <summary>
+        /// SharePoint login credential user name
+        /// </summary>
+        private static String documentServerUserName;
+
+        /// <summary>
+        /// SharePoint login credential password
+        /// </summary>
+        private static String documentServerPassword;
+
+        /// <summary>
+        /// SharePoint login credential domain
+        /// </summary>
+        private static String documentServerDomain;        
+        #endregion
+
+        #region Command prompt parameters
+        /// <summary>
+        /// Stores scheduled run minutes returned from command prompt or default
+        /// </summary>
+        private static Int32 scheduledRunMinutes;
+
+        /// <summary>
+        /// Stores presentation id returned from command prompt or default
+        /// </summary>
+        private static Int64 presentationIdentifier;
+
+        /// <summary>
+        /// Stores meeting id returned from command prompt or default
+        /// </summary>
+        private static Int64 meetingIdentifier; 
+        #endregion
+
+        #region Alert Notification
+        /// <summary>
+        /// Alert notification webmaster email
+        /// </summary>
+        private static String networkWebmasterEmail;
+
+        /// <summary>
+        /// Alert notification credential password
+        /// </summary>
+        private static String networkCredentialPassword;
+
+        /// <summary>
+        /// Alert notification credential username
+        /// </summary>
+        private static String networkCredentialUsername;
+
+        /// <summary>
+        /// Alert notification credential domain
+        /// </summary>
+        private static String networkCredentialDomain;
+
+        /// <summary>
+        /// Alert notification connection port
+        /// </summary>
+        private static Int32 networkConnectionPort;
+
+        /// <summary>
+        /// Alert notification connection host
+        /// </summary>
+        private static String networkConnectionHost;
+
+        /// <summary>
+        /// check to have files as attachments
+        /// </summary>
+        private static Boolean isSendFilesAsAttachment; 
+        #endregion
+
+        #region Logging
+        /// <summary>
+        /// logging instance
+        /// </summary>
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType); 
+        #endregion
         #endregion
 
         #region Main Method
+        /// <summary>
+        /// Console application starts execution here.
+        /// </summary>
+        /// <param name="args">Command Prompt Arguments</param>
         static void Main(string[] args)
         {
-            _log.Debug("Application initiated");
+            log.Debug("Application initiated");
 
-            _documentLibrary = ConfigurationManager.AppSettings.Get("DocumentLibrary");
-            _documentServerUrl = ConfigurationManager.AppSettings.Get("DocumentServerUrl");
-            _documentServerUserName = ConfigurationManager.AppSettings.Get("DocumentServerUserName");
-            _documentServerPassword = ConfigurationManager.AppSettings.Get("DocumentServerPassword");
-            _documentServerDomain = ConfigurationManager.AppSettings.Get("DocumentServerDomain");
-            _documentCopyServiceUrl = ConfigurationManager.AppSettings.Get("DocumentCopyServiceUrl");
-            _documentListsServiceUrl = ConfigurationManager.AppSettings.Get("DocumentListsServiceUrl");
+            documentLibrary = ConfigurationManager.AppSettings.Get("DocumentLibrary");
+            documentServerUrl = ConfigurationManager.AppSettings.Get("DocumentServerUrl");
+            documentServerUserName = ConfigurationManager.AppSettings.Get("DocumentServerUserName");
+            documentServerPassword = ConfigurationManager.AppSettings.Get("DocumentServerPassword");
+            documentServerDomain = ConfigurationManager.AppSettings.Get("DocumentServerDomain");
+            documentCopyServiceUrl = ConfigurationManager.AppSettings.Get("DocumentCopyServiceUrl");
+            documentListsServiceUrl = ConfigurationManager.AppSettings.Get("DocumentListsServiceUrl");
 
-            if (_copyService == null)
+            if (copyService == null)
             {
-                _copyService = new Copy();
-                _copyService.Credentials = new NetworkCredential(_documentServerUserName, _documentServerPassword, _documentServerDomain);
-                _copyService.Url = _documentCopyServiceUrl;
+                copyService = new Copy();
+                copyService.Credentials = new NetworkCredential(documentServerUserName, documentServerPassword, documentServerDomain);
+                copyService.Url = documentCopyServiceUrl;
             }
 
-            if (_listsService == null)
+            if (listsService == null)
             {
-                _listsService = new Lists();
-                _listsService.Credentials = new NetworkCredential(_documentServerUserName, _documentServerPassword, _documentServerDomain);
-                _listsService.Url = _documentListsServiceUrl;
+                listsService = new Lists();
+                listsService.Credentials = new NetworkCredential(documentServerUserName, documentServerPassword, documentServerDomain);
+                listsService.Url = documentListsServiceUrl;
             }
 
             if (null == _dimensionEntity)
@@ -94,56 +196,55 @@ namespace ICPSystemAlert
                 _dimensionEntity = new DimensionServiceReference.Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
             }
 
-            _networkWebmasterEmail = ConfigurationManager.AppSettings.Get("NetworkWebmasterEmail");
-            _networkCredentialPassword = ConfigurationManager.AppSettings.Get("NetworkCredentialPassword");
-            _networkCredentialUsername = ConfigurationManager.AppSettings.Get("NetworkCredentialUsername");
-            _networkCredentialDomain = Convert.ToString(ConfigurationManager.AppSettings.Get("NetworkCredentialDomain"));
-            _networkConnectionPort = Convert.ToInt32(ConfigurationManager.AppSettings.Get("NetworkConnectionPort"));
-            _networkConnectionHost = Convert.ToString(ConfigurationManager.AppSettings.Get("NetworkConnectionHost"));
-            _sendFilesAsAttachment = Convert.ToBoolean(ConfigurationManager.AppSettings.Get("SendFileAsAttachment"));
-            _entity = new ICPEntities();
-            _userEntity = new UserEntities();
-            _externalEntities = new ExternalEntities();
+            networkWebmasterEmail = ConfigurationManager.AppSettings.Get("NetworkWebmasterEmail");
+            networkCredentialPassword = ConfigurationManager.AppSettings.Get("NetworkCredentialPassword");
+            networkCredentialUsername = ConfigurationManager.AppSettings.Get("NetworkCredentialUsername");
+            networkCredentialDomain = Convert.ToString(ConfigurationManager.AppSettings.Get("NetworkCredentialDomain"));
+            networkConnectionPort = Convert.ToInt32(ConfigurationManager.AppSettings.Get("NetworkConnectionPort"));
+            networkConnectionHost = Convert.ToString(ConfigurationManager.AppSettings.Get("NetworkConnectionHost"));
+            isSendFilesAsAttachment = Convert.ToBoolean(ConfigurationManager.AppSettings.Get("SendFileAsAttachment"));
+            entity = new ICPEntities();
+            userEntity = new UserEntities();
+            externalEntities = new ExternalEntities();
 
             var options = new Options();
             if (CommandLineParser.Default.ParseArguments(args, options))
             {
-                _scheduledRunMinutes = options.ScheduledRunMinutes;
-                _presentationIdentifier = options.PresentationIdentifier;
-                _meetingIdentifier = options.MeetingIdentifier;
-                _log.Info(String.Format("Scheduled run minutes - {0} min(s)\nPresentation Identifier - {1}\nMeeting Identifier - {2}"
-                    , _scheduledRunMinutes, _presentationIdentifier, _meetingIdentifier));
+                scheduledRunMinutes = options.ScheduledRunMinutes;
+                presentationIdentifier = options.PresentationIdentifier;
+                meetingIdentifier = options.MeetingIdentifier;
+                log.Info(String.Format("Scheduled run minutes - {0} min(s)\nPresentation Identifier - {1}\nMeeting Identifier - {2}"
+                    , scheduledRunMinutes, presentationIdentifier, meetingIdentifier));
 
                 switch (options.ForcedRunParameter)
                 {
                     case 1:
-                        _log.Info("forced run 1");
+                        log.Info("forced run 1");
                         PreVotingReportImplementation();
                         MessagePush();
                         break;
                     case 2:
-                        _log.Info("forced run 2");
+                        log.Info("forced run 2");
                         PreMeetingReportImplementation();
                         MessagePush();
                         break;
                     case 3:
-                        _log.Info("forced run 3");
+                        log.Info("forced run 3");
                         PostMeetingReportImplementation();
                         MessagePush();
                         break;
                     case 4:
-                        _log.Info("forced run 4");
+                        log.Info("forced run 4");
                         MessagePush();
                         break;
                     default:
-                        _log.Info("default run");
+                        log.Info("default run");
                         PreVotingReportImplementation();
                         PreMeetingReportImplementation();
                         PostMeetingReportImplementation();
                         MessagePush();
                         break;
                 }
-
             }
         }
         #endregion
@@ -160,10 +261,10 @@ namespace ICPSystemAlert
             {
                 List<PresentationDeadlineDetails> presentationDeadlineInfo = new List<PresentationDeadlineDetails>();
 
-                if (_presentationIdentifier != 0 || _meetingIdentifier != 0)
-                    presentationDeadlineInfo = _entity.GetPresentationDeadlineNotificationDetails(_presentationIdentifier, _meetingIdentifier).ToList();
+                if (presentationIdentifier != 0 || meetingIdentifier != 0)
+                    presentationDeadlineInfo = entity.GetPresentationDeadlineNotificationDetails(presentationIdentifier, meetingIdentifier).ToList();
                 else
-                    presentationDeadlineInfo = _entity.GetPresentationDeadlineDetails(_scheduledRunMinutes).ToList();
+                    presentationDeadlineInfo = entity.GetPresentationDeadlineDetails(scheduledRunMinutes).ToList();
 
                 List<Int64?> distinctMeetingIds = presentationDeadlineInfo.Select(record => record.MeetingID).ToList().Distinct().ToList();
                 foreach (Int64 meetingId in distinctMeetingIds)
@@ -176,11 +277,11 @@ namespace ICPSystemAlert
                     #region Email To population
                     List<String> voterUserNames = presentationDeadlineInfo.Where(record => record.MeetingID == meetingId)
                         .Select(record => record.Name).ToList().Distinct().ToList();
-                    voterUserNames.AddRange(_userEntity.GetUsersInRoles("GreenField", "IC_ADMIN"));
+                    voterUserNames.AddRange(userEntity.GetUsersInRoles("GreenField", "IC_ADMIN"));
                     List<String> voterEmails = new List<String>();
                     foreach (String item in voterUserNames)
                     {
-                        Membership membership = _userEntity.GetUserByName("GreenField", item, null, false).FirstOrDefault();
+                        Membership membership = userEntity.GetUserByName("GreenField", item, null, false).FirstOrDefault();
                         if (membership != null)
                         {
                             voterEmails.Add(membership.Email);
@@ -215,19 +316,19 @@ namespace ICPSystemAlert
                         if (distinctMeetingPresentationRecord == null)
                             continue;
 
-                        ICPresentationOverviewData presentationOverviewData = _entity.RetrieveICPresentationOverviewDataForId(presentationId).FirstOrDefault();
+                        ICPresentationOverviewData presentationOverviewData = entity.RetrieveICPresentationOverviewDataForId(presentationId).FirstOrDefault();
                         presentationOverviewData = RetrieveUpdatedSecurityDetails(presentationOverviewData);
 
                         XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
                         string xmlScript = xmlDoc.ToString();
 
-                        Int64? result = _entity.UpdatePresentationInfo("System", xmlScript).FirstOrDefault();
+                        Int64? result = entity.UpdatePresentationInfo("System", xmlScript).FirstOrDefault();
                         if (result == null)
                             throw new Exception("Unable to update presentation info object");
 
                         #region Retrieve presentation file or create new one if not exists
                         String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
-                        List<FileMaster> presentationAttachedFiles = _entity.RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID).ToList();
+                        List<FileMaster> presentationAttachedFiles = entity.RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID).ToList();
                         FileMaster presentationPowerPointAttachedFile = null;
                         if (presentationAttachedFiles != null)
                         {
@@ -314,14 +415,14 @@ namespace ICPSystemAlert
                             ModifiedOn = DateTime.UtcNow
                         };
 
-                        Int32? insertedFileMasterRecord = _entity.SetICPresentationAttachedFileInfo("System", presentationOverviewData.PresentationID
+                        Int32? insertedFileMasterRecord = entity.SetICPresentationAttachedFileInfo("System", presentationOverviewData.PresentationID
                             , fileMaster.Name, fileMaster.IssuerName, fileMaster.SecurityName, fileMaster.SecurityTicker, fileMaster.Location
                             , fileMaster.MetaTags, fileMaster.Category, fileMaster.Type, fileMaster.FileID, false).FirstOrDefault();
 
                         if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord == 0)
                         {
                             DeleteDocument(presentationPowerPointAttachedFile.Location);
-                            _entity.DeleteFileMaster(presentationPowerPointAttachedFile.FileID);
+                            entity.DeleteFileMaster(presentationPowerPointAttachedFile.FileID);
                         }
                         #endregion
 
@@ -359,7 +460,7 @@ namespace ICPSystemAlert
                                 ModifiedOn = DateTime.UtcNow
                             };
 
-                            _entity.SetICPresentationAttachedFileInfo("System", presentationOverviewData.PresentationID
+                            entity.SetICPresentationAttachedFileInfo("System", presentationOverviewData.PresentationID
                             , fileMaster_ICPacket.Name, fileMaster_ICPacket.IssuerName, fileMaster_ICPacket.SecurityName, fileMaster_ICPacket.SecurityTicker, fileMaster_ICPacket.Location
                             , fileMaster_ICPacket.MetaTags, fileMaster_ICPacket.Category, fileMaster_ICPacket.Type, fileMaster_ICPacket.FileID, false);
 
@@ -373,15 +474,14 @@ namespace ICPSystemAlert
                     emailAttachments = emailAttachments != null ? emailAttachments.Substring(0, emailAttachments.Length - 1) : null;
                     #endregion
 
-                    _entity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, emailAttachments, "System");
-                    _entity.SetICPMeetingPresentationStatus("System", meetingId, "Ready for Voting");
+                    entity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, emailAttachments, "System");
+                    entity.SetICPMeetingPresentationStatus("System", meetingId, "Ready for Voting");
                 }
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
-
         }
 
         /// <summary>
@@ -400,10 +500,10 @@ namespace ICPSystemAlert
 
                 List<PresentationVotingDeadlineDetails> presentationVotingDeadlineInfo = new List<PresentationVotingDeadlineDetails>();
 
-                if (_presentationIdentifier != 0 || _meetingIdentifier != 0)
-                    presentationVotingDeadlineInfo = _entity.GetPresentationVotingDeadlineNotificationDetails(_presentationIdentifier, _meetingIdentifier).ToList();
+                if (presentationIdentifier != 0 || meetingIdentifier != 0)
+                    presentationVotingDeadlineInfo = entity.GetPresentationVotingDeadlineNotificationDetails(presentationIdentifier, meetingIdentifier).ToList();
                 else
-                    presentationVotingDeadlineInfo = _entity.GetPresentationVotingDeadlineDetails(_scheduledRunMinutes).ToList();
+                    presentationVotingDeadlineInfo = entity.GetPresentationVotingDeadlineDetails(scheduledRunMinutes).ToList();
 
                 List<Int64?> distinctMeetingIds = presentationVotingDeadlineInfo.Select(record => record.MeetingID).ToList().Distinct().ToList();
                 foreach (Int64 meetingId in distinctMeetingIds)
@@ -414,11 +514,11 @@ namespace ICPSystemAlert
                     #region Email To population
                     List<String> voterUserNames = presentationVotingDeadlineInfo.Where(record => record.MeetingID == meetingId)
                         .Select(record => record.Name).ToList().Distinct().ToList();
-                    voterUserNames.AddRange(_userEntity.GetUsersInRoles("GreenField", "IC_ADMIN"));
+                    voterUserNames.AddRange(userEntity.GetUsersInRoles("GreenField", "IC_ADMIN"));
                     List<String> voterEmails = new List<String>();
                     foreach (String item in voterUserNames)
                     {
-                        Membership membership = _userEntity.GetUserByName("GreenField", item, null, false).FirstOrDefault();
+                        Membership membership = userEntity.GetUserByName("GreenField", item, null, false).FirstOrDefault();
                         if (membership != null)
                         {
                             voterEmails.Add(membership.Email);
@@ -478,7 +578,7 @@ namespace ICPSystemAlert
                             String fileName = preMeetingReportOutFile.Substring(preMeetingReportOutFile.LastIndexOf(@"\") + 1);
                             String documentUploadLocation = UploadDocument(fileName, File.ReadAllBytes(preMeetingReportOutFile), String.Empty);
                             File.Delete(preMeetingReportOutFile);
-                            Int32? updateFileMasterResult = _entity.SetICPresentationAttachedFileInfo("System", presentationId, fileName
+                            Int32? updateFileMasterResult = entity.SetICPresentationAttachedFileInfo("System", presentationId, fileName
                                 , issuerName
                                 , distinctMeetingPresentationFileInfo.First().SecurityName
                                 , distinctMeetingPresentationFileInfo.First().SecurityTicker, preMeetingReportOutFile
@@ -495,14 +595,13 @@ namespace ICPSystemAlert
                     emailAttachments = emailAttachments != null ? emailAttachments.Substring(0, emailAttachments.Length - 1) : null;
                     #endregion
 
-                    _entity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, emailAttachments, "System");
-                    _entity.SetICPMeetingPresentationStatus("System", meetingId, "Closed for Voting");
-
+                    entity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, emailAttachments, "System");
+                    entity.SetICPMeetingPresentationStatus("System", meetingId, "Closed for Voting");
                 }
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
         }
 
@@ -516,10 +615,10 @@ namespace ICPSystemAlert
             {
                 List<PresentationFinalizeDetails> presentationFinalizeInfo = new List<PresentationFinalizeDetails>();
 
-                if (_presentationIdentifier != 0 || _meetingIdentifier != 0)
-                    presentationFinalizeInfo = _entity.GetPresentationFinalizeNotificationDetails(_presentationIdentifier, _meetingIdentifier).ToList();
+                if (presentationIdentifier != 0 || meetingIdentifier != 0)
+                    presentationFinalizeInfo = entity.GetPresentationFinalizeNotificationDetails(presentationIdentifier, meetingIdentifier).ToList();
                 else
-                    presentationFinalizeInfo = _entity.GetPresentationFinalizeDetails(_scheduledRunMinutes).ToList();
+                    presentationFinalizeInfo = entity.GetPresentationFinalizeDetails(scheduledRunMinutes).ToList();
 
 
                 List<Int64?> distinctMeetingIds = presentationFinalizeInfo.Select(record => record.MeetingID).ToList().Distinct().ToList();
@@ -534,10 +633,10 @@ namespace ICPSystemAlert
                     List<String> voterEmails = new List<String>();
                     List<String> voterNames = presentationFinalizeInfo.Where(record => record.MeetingID == meetingId)
                         .Select(record => record.Name).ToList().Distinct().ToList();
-                    voterNames.AddRange(_userEntity.GetUsersInRoles("GreenField", "IC_ADMIN"));
+                    voterNames.AddRange(userEntity.GetUsersInRoles("GreenField", "IC_ADMIN"));
                     foreach (String item in voterNames)
                     {
-                        Membership membership = _userEntity.GetUserByName("GreenField", item, null, false).FirstOrDefault();
+                        Membership membership = userEntity.GetUserByName("GreenField", item, null, false).FirstOrDefault();
                         if (membership != null)
                         {
                             voterEmails.Add(membership.Email);
@@ -582,7 +681,7 @@ namespace ICPSystemAlert
                         String securityNames = String.Join(";", presentationFinalizeInfo.Select(record => record.SecurityName).ToList().Distinct().ToArray());
                         String securityTickers = String.Join(";", presentationFinalizeInfo.Select(record => record.SecurityTicker).ToList().Distinct().ToArray());
 
-                        Int32? updateFileMasterResult = _entity.SetICPMeetingAttachedFileInfo("System", meetingId, fileName
+                        Int32? updateFileMasterResult = entity.SetICPMeetingAttachedFileInfo("System", meetingId, fileName
                             , issuerNames
                             , securityNames
                             , securityTickers
@@ -597,15 +696,13 @@ namespace ICPSystemAlert
 
                     #endregion
 
-                    _entity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, emailAttachments, "System");
-
+                    entity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, emailAttachments, "System");
                 }
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
-
         }
 
         /// <summary>
@@ -615,8 +712,6 @@ namespace ICPSystemAlert
         {
             try
             {
-
-
                 ICPEntities entity = new ICPEntities();
                 List<MessageInfo> messageInfos = entity.MessageInfoes.Where(record => record.EmailSent == false).ToList();
 
@@ -627,8 +722,8 @@ namespace ICPSystemAlert
                         List<String> tempLocations = new List<String>();
 
                         MailMessage mm = new MailMessage();
-                        if (_networkWebmasterEmail != "")
-                            mm.From = new MailAddress(_networkWebmasterEmail);
+                        if (networkWebmasterEmail != "")
+                            mm.From = new MailAddress(networkWebmasterEmail);
 
                         if (messageInfo.EmailTo == null)
                             continue;
@@ -653,7 +748,7 @@ namespace ICPSystemAlert
                             String[] emailAttachment = messageInfo.EmailAttachment.Split('|');
                             foreach (String attachment in emailAttachment)
                             {
-                                if (_sendFilesAsAttachment)
+                                if (isSendFilesAsAttachment)
                                 {
                                     Byte[] downloadFile = RetrieveDocument(attachment);
                                     String tempLocation = System.IO.Path.GetTempPath() + @"\" + attachment.Substring(attachment.LastIndexOf(@"/") + 1);
@@ -667,24 +762,22 @@ namespace ICPSystemAlert
                                 }
                             }
                         }
-
-
                         mm.Subject = messageInfo.EmailSubject;
                         mm.Body = messageInfo.EmailMessageBody;
                         mm.IsBodyHtml = false;
 
                         SmtpClient smtpClient = new SmtpClient();
-                        smtpClient.Host = _networkConnectionHost;
-                        smtpClient.Port = _networkConnectionPort;
+                        smtpClient.Host = networkConnectionHost;
+                        smtpClient.Port = networkConnectionPort;
                         smtpClient.UseDefaultCredentials = true;
                         smtpClient.EnableSsl = true;
 
                         NetworkCredential NetworkCred = new NetworkCredential();
-                        if (_networkCredentialUsername != null)
-                            NetworkCred.UserName = _networkCredentialUsername;
-                        NetworkCred.Domain = _networkCredentialDomain;
-                        if (_networkCredentialPassword != "")
-                            NetworkCred.Password = _networkCredentialPassword;
+                        if (networkCredentialUsername != null)
+                            NetworkCred.UserName = networkCredentialUsername;
+                        NetworkCred.Domain = networkCredentialDomain;
+                        if (networkCredentialPassword != "")
+                            NetworkCred.Password = networkCredentialPassword;
                         smtpClient.Credentials = NetworkCred;
 
                         ServicePointManager.ServerCertificateValidationCallback = delegate(object s
@@ -693,30 +786,28 @@ namespace ICPSystemAlert
                         smtpClient.Send(mm);
 
                         Int32? updateResult = entity.UpdateMessageInfo(messageInfo.EmailId, true, "System").FirstOrDefault();
-                        //foreach (String tempLocation in tempLocations)
-                        //{
-                        //    if (File.Exists(tempLocation))
-                        //    {
-                        //        File.Delete(tempLocation);
-                        //    }
-                        //}
                     }
                     catch (Exception ex)
                     {
-                        _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                        log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
                     }
-
-
                 }
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
         }
         #endregion
 
         #region Document Library Methods
+        /// <summary>
+        /// Uplaod Document to SharePoint server
+        /// </summary>
+        /// <param name="fileName">fileName</param>
+        /// <param name="fileByteStream">fileByteStream</param>
+        /// <param name="deleteFileUrl">deleteFileUrl; empty string for no implementation</param>
+        /// <returns>upload file url</returns>
         public static String UploadDocument(String fileName, Byte[] fileByteStream, String deleteFileUrl)
         {
             String resultUrl = String.Empty;
@@ -726,26 +817,29 @@ namespace ICPSystemAlert
                 {
                     DeleteDocument(deleteFileUrl);
                 }
-
-                String[] destinationUrl = { _documentServerUrl + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyyhhmmssffff") + "]" + fileName };
+                String[] destinationUrl = { documentServerUrl + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyyhhmmssffff") + "]" + fileName };
 
                 CopyResult[] cResultArray = { new CopyResult() };
                 FieldInformation[] ffieldInfoArray = { new FieldInformation() };
 
-                UInt32 copyResult = _copyService.CopyIntoItems(destinationUrl[0], destinationUrl, ffieldInfoArray, fileByteStream, out cResultArray);
+                UInt32 copyResult = copyService.CopyIntoItems(destinationUrl[0], destinationUrl, ffieldInfoArray, fileByteStream, out cResultArray);
 
                 if (cResultArray[0].ErrorCode == CopyErrorCode.Success)
                     resultUrl = cResultArray[0].DestinationUrl;
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
-
             return resultUrl;
         }
 
-        public static bool DeleteDocument(String fileName)
+        /// <summary>
+        /// Delete document from SharePoint server
+        /// </summary>
+        /// <param name="url">file url</param>
+        /// <returns>True if successfull</returns>
+        public static bool DeleteDocument(String url)
         {
             bool fileDeleted = false;
             try
@@ -753,7 +847,7 @@ namespace ICPSystemAlert
                 string strBatch = "<Method ID='1' Cmd='Delete'>" +
                     "<Field Name='ID'>3</Field>" +
                     "<Field Name='FileRef'>" +
-                    fileName +
+                    url +
                     "</Field>" +
                     "</Method>";
 
@@ -765,8 +859,7 @@ namespace ICPSystemAlert
                 elBatch.SetAttribute("ViewName", String.Empty);
                 elBatch.InnerXml = strBatch;
 
-                XmlNode ndReturn = _listsService.UpdateListItems(_documentLibrary, elBatch);
-
+                XmlNode ndReturn = listsService.UpdateListItems(documentLibrary, elBatch);
                 if (ndReturn.InnerText.ToLower() == "0x00000000".ToLower())
                 {
                     fileDeleted = true;
@@ -774,31 +867,38 @@ namespace ICPSystemAlert
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
-
             return fileDeleted;
         }
 
-        public static Byte[] RetrieveDocument(String fileName)
+        /// <summary>
+        /// Retrieve document from SharePoint server
+        /// </summary>
+        /// <param name="url">file url</param>
+        /// <returns>file byte stream</returns>
+        public static Byte[] RetrieveDocument(String url)
         {
             Byte[] result = null;
             try
             {
                 FieldInformation[] ffieldInfoArray = { new FieldInformation() };
-                UInt32 retrieveResult = _copyService.GetItem(fileName, out ffieldInfoArray, out result);
-
+                UInt32 retrieveResult = copyService.GetItem(url, out ffieldInfoArray, out result);
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
-
             return result;
         }
         #endregion
 
         #region Helper Method
+        /// <summary>
+        /// Retrieve Updated Security Details
+        /// </summary>
+        /// <param name="presentationOverviewData">ICPresentationOverviewData</param>
+        /// <returns>updated ICPresentationOverviewData</returns>
         private static ICPresentationOverviewData RetrieveUpdatedSecurityDetails(ICPresentationOverviewData presentationOverviewData)
         {
             try
@@ -890,12 +990,12 @@ namespace ICPSystemAlert
 
                 #region FAIR_VALUE Info
                 String securityId = securityData.SECURITY_ID == null ? null : securityData.SECURITY_ID.ToString();
-                FAIR_VALUE fairValueRecord = _externalEntities.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
+                FAIR_VALUE fairValueRecord = externalEntities.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
                             && record.SECURITY_ID == securityId).FirstOrDefault();
 
                 if (fairValueRecord != null)
                 {
-                    DATA_MASTER dataMasterRecord = _externalEntities.DATA_MASTER
+                    DATA_MASTER dataMasterRecord = externalEntities.DATA_MASTER
                         .Where(record => record.DATA_ID == fairValueRecord.FV_MEASURE).FirstOrDefault();
 
                     if (dataMasterRecord != null)
@@ -928,7 +1028,7 @@ namespace ICPSystemAlert
                         }
                         String securityID = securityData.SECURITY_ID.ToString();
 
-                        PERIOD_FINANCIALS periodFinancialRecord = _externalEntities.PERIOD_FINANCIALS
+                        PERIOD_FINANCIALS periodFinancialRecord = externalEntities.PERIOD_FINANCIALS
                             .Where(record => record.SECURITY_ID == securityID
                                 && record.DATA_ID == 185
                                 && record.CURRENCY == "USD"
@@ -946,11 +1046,19 @@ namespace ICPSystemAlert
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
                 return null;
             }
         }
 
+        /// <summary>
+        /// Convert entity class structure to xml
+        /// </summary>
+        /// <typeparam name="T">Generic type</typeparam>
+        /// <param name="parameters">list of entities</param>
+        /// <param name="xmlDoc">XDocument to append to</param>
+        /// <param name="strictlyInclusiveProperties">properties that are only to be included</param>
+        /// <returns>XDocument</returns>
         private static XDocument GetEntityXml<T>(List<T> parameters, XDocument xmlDoc = null, List<String> strictlyInclusiveProperties = null)
         {
             XElement root;
@@ -997,11 +1105,16 @@ namespace ICPSystemAlert
             return xmlDoc;
         }
 
+        /// <summary>
+        /// Generate IC Packe tReport
+        /// </summary>
+        /// <param name="presentationId">presentationId</param>
+        /// <returns>report byte stream</returns>
         public static Byte[] GenerateICPacketReport(Int64 presentationId)
         {
             try
             {
-                List<FileMaster> presentationAttachedFileData = _entity.RetrievePresentationAttachedFileDetails(presentationId).ToList();
+                List<FileMaster> presentationAttachedFileData = entity.RetrievePresentationAttachedFileDetails(presentationId).ToList();
                 presentationAttachedFileData = presentationAttachedFileData
                     .Where(record => record.Type == "IC Presentations"
                         && (record.Category == "Power Point Presentation"
@@ -1009,12 +1122,12 @@ namespace ICPSystemAlert
                             || record.Category == "Investment Context Report"
                             || record.Category == "DCF Model"
                             || record.Category == "Additional Attachment")).ToList();
-                PresentationInfo presentationInfo = _entity.PresentationInfoes.Where(record => record.PresentationID == presentationId).FirstOrDefault();
+                PresentationInfo presentationInfo = entity.PresentationInfoes.Where(record => record.PresentationID == presentationId).FirstOrDefault();
 
-                _log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|PresentationAttachedFileDataIsNullOrEmpty_"
+                log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|PresentationAttachedFileDataIsNullOrEmpty_"
                     + (presentationAttachedFileData == null ? "True" : (presentationAttachedFileData.Count == 0).ToString()));
                 List<String> downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData, presentationInfo);
-                _log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|DownloadedDocumentLocationsIsNullOrEmpty_"
+                log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|DownloadedDocumentLocationsIsNullOrEmpty_"
                      + (downloadedDocumentLocations == null ? "True" : (downloadedDocumentLocations.Count == 0).ToString()));
                 Byte[] result = MergePDFFiles(downloadedDocumentLocations);
 
@@ -1022,11 +1135,17 @@ namespace ICPSystemAlert
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
                 return null;
             }
         }
 
+        /// <summary>
+        /// Get IC Packet Segment Files
+        /// </summary>
+        /// <param name="fileMasterInfo">FileMaster information of files</param>
+        /// <param name="presentationInfo">PresentationInfo</param>
+        /// <returns>List of local urls</returns>
         private static List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo, PresentationInfo presentationInfo)
         {
             List<String> result = new List<String>();
@@ -1038,7 +1157,9 @@ namespace ICPSystemAlert
                 {
                     String uploadLocation = ConvertPowerpointPresentationTpPdf(powerPointFile, presentationInfo);
                     if (uploadLocation != null)
+                    {
                         result.Add(uploadLocation);
+                    }
                 }
 
                 FileMaster finstatFile = fileMasterInfo.Where(record => record.Category == "FinStat Report").FirstOrDefault();
@@ -1046,7 +1167,9 @@ namespace ICPSystemAlert
                 {
                     String convertedPdf = ConvertImagePdfFileToLocalPdf(finstatFile);
                     if (convertedPdf != null)
+                    {
                         result.Add(convertedPdf);
+                    }
                 }
 
                 FileMaster investmentContextFile = fileMasterInfo.Where(record => record.Category == "Investment Context Report").FirstOrDefault();
@@ -1054,7 +1177,9 @@ namespace ICPSystemAlert
                 {
                     String convertedPdf = ConvertImagePdfFileToLocalPdf(investmentContextFile);
                     if (convertedPdf != null)
+                    {
                         result.Add(convertedPdf);
+                    }
                 }
 
                 FileMaster dcfFile = fileMasterInfo.Where(record => record.Category == "DCF Model").FirstOrDefault();
@@ -1062,24 +1187,33 @@ namespace ICPSystemAlert
                 {
                     String convertedPdf = ConvertImagePdfFileToLocalPdf(dcfFile);
                     if (convertedPdf != null)
+                    {
                         result.Add(convertedPdf);
+                    }
                 }
 
                 foreach (FileMaster file in fileMasterInfo.Where(record => record.Category == "Additional Attachment"))
                 {
                     String convertedPdf = ConvertImagePdfFileToLocalPdf(file);
                     if (convertedPdf != null)
+                    {
                         result.Add(convertedPdf);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
 
             return result;
         }
 
+        /// <summary>
+        /// downloads image(jpeg/jpg) and pdf files from sharepoint and converts them to local pdf files
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         private static String ConvertImagePdfFileToLocalPdf(FileMaster file)
         {
             String result = null;
@@ -1087,14 +1221,14 @@ namespace ICPSystemAlert
             {
                 Byte[] fileData = RetrieveDocument(file.Location);
                 if (fileData == null)
+                {
                     return result;
-
+                }
                 if (file.Location.Contains(".pdf"))
                 {
                     result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
                     File.WriteAllBytes(result, fileData);
                 }
-
                 else if (file.Location.Contains(".jpeg") || file.Location.Contains(".jpg"))
                 {
                     String localFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp" +
@@ -1112,12 +1246,18 @@ namespace ICPSystemAlert
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
 
             return result;
         }
 
+        /// <summary>
+        /// downloads .pptx file from sharepoint and converts it to local pdf file
+        /// </summary>
+        /// <param name="powerpointStreamedData">powerpointStreamedData</param>
+        /// <param name="presentationInfo">PresentationInfo</param>
+        /// <returns></returns>
         private static String ConvertPowerpointPresentationTpPdf(FileMaster powerpointStreamedData, PresentationInfo presentationInfo)
         {
             String result = null;
@@ -1156,7 +1296,7 @@ namespace ICPSystemAlert
 
                 ICPresentation presentationData = PptRead.Fetch(localFile, securityInformation);
                 result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
-                PptRead.GeneratePresentationPdf(result, presentationData);
+                PptRead.Generate(result, presentationData);
             }
             catch (Exception)
             {
@@ -1227,11 +1367,17 @@ namespace ICPSystemAlert
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
             return result;
         }
 
+        /// <summary>
+        /// Generates pre meeting report
+        /// </summary>
+        /// <param name="presentationDeadlineInfo">PresentationVotingDeadlineDetails</param>
+        /// <param name="securityDesc">security description</param>
+        /// <returns></returns>
         private static String GeneratePreMeetingReport(List<PresentationVotingDeadlineDetails> presentationDeadlineInfo, String securityDesc)
         {
             try
@@ -1376,23 +1522,23 @@ namespace ICPSystemAlert
                         notes.BackgroundColor = new BaseColor(255, 240, 240);
                     }
                     AddTextCell(contentTableRow, notes, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
-
-
                     doc.Add(contentTableRow);
-
                 }
-
-
                 doc.Close();
                 return reportOutputFile;
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
                 return null;
             }
         }
 
+        /// <summary>
+        /// Generate post meeting voting report for a specific presentation
+        /// </summary>
+        /// <param name="presentationFinalizeInfo">MeetingMinutesReportData object</param>
+        /// <returns>byte stream of the generated report</returns>
         private static String GeneratePostMeetingReport(List<PresentationFinalizeDetails> presentationFinalizeInfo)
         {
             try
@@ -1634,7 +1780,6 @@ namespace ICPSystemAlert
                         AddTextCell(votingValueTable, sellValueCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
 
                         doc.Add(votingValueTable);
-
                     }
 
                     Paragraph notes = new Paragraph();
@@ -1643,36 +1788,39 @@ namespace ICPSystemAlert
                     securityDescriptor.SpacingBefore = 10;
                     doc.Add(notes);
                 }
-
-
-
                 doc.Close();
                 return reportOutputFile;
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
                 return null;
             }
         }
 
-        private static void AddTextCell(PdfPTable table, PdfPCell cell, int HorizontalAlignment = Element.ALIGN_LEFT, int VerticalAlignment = Element.ALIGN_MIDDLE, int Border = 0)
+        /// <summary>
+        /// adds text to cell in pdf generation
+        /// </summary>
+        /// <param name="table">PdfPTable</param>
+        /// <param name="cell">PdfPCell</param>
+        /// <param name="horizontalAlignment">HorizontalAlignment</param>
+        /// <param name="verticalAlignment">VerticalAlignment</param>
+        /// <param name="border">Border type</param>
+        private static void AddTextCell(PdfPTable table, PdfPCell cell, int horizontalAlignment = Element.ALIGN_LEFT
+            , int verticalAlignment = Element.ALIGN_MIDDLE, int border = 0)
         {
-            try
-            {
-                cell.HorizontalAlignment = HorizontalAlignment; //0=Left, 1=Centre, 2=Right
-                cell.VerticalAlignment = VerticalAlignment;
-                cell.Border = Border;
-                cell.BorderWidth = 1;
-                table.AddCell(cell);
-            }
-            catch (Exception ex)
-            {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
-            }
-        }
+            cell.HorizontalAlignment = horizontalAlignment;
+            cell.VerticalAlignment = verticalAlignment;
+            cell.Border = border;
+            cell.BorderWidth = 1;
+            table.AddCell(cell);
+        } 
 
-        // Get the title string of the slide.
+        /// <summary>
+        /// Get the title string of the slide
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <param name="presentationOverviewData">ICPresentationOverviewData</param>
         private static void SetSlideTitle(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
         {
             if (slidePart == null)
@@ -1680,12 +1828,12 @@ namespace ICPSystemAlert
                 throw new ArgumentNullException("presentationDocument");
             }
 
-            // Declare a paragraph separator.
+            //declare a paragraph separator.
             string paragraphSeparator = null;
 
             if (slidePart.Slide != null)
             {
-                // Find all the title shapes.
+                //find all the title shapes.
                 var shapes = from shape in slidePart.Slide.Descendants<Shape>()
                              where IsTitleShape(shape)
                              select shape;
@@ -1694,27 +1842,29 @@ namespace ICPSystemAlert
 
                 foreach (var shape in shapes)
                 {
-                    // Get the text in each paragraph in this shape.
+                    //get the text in each paragraph in this shape.
                     foreach (var paragraph in shape.TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>())
                     {
-                        // Add a line break.
+                        //add a line break.
                         paragraphText.Append(paragraphSeparator);
 
                         foreach (var text in paragraph.Descendants<DocumentFormat.OpenXml.Drawing.Text>())
                         {
                             text.Text = presentationOverviewData.SecurityName + " - " + presentationOverviewData.SecurityRecommendation;
                         }
-
                         paragraphSeparator = "\n";
                     }
                 }
             }
         }
 
-        // Get the title string of the slide.
+        /// <summary>
+        /// Get the title string of the slide
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <param name="presentationOverviewData">ICPresentationOverviewData</param>
         private static void SetSlideContent(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
         {
-            //get Security Information    
             DocumentFormat.OpenXml.Drawing.Table tblSecurityOverview = slidePart.Slide
                 .Descendants<DocumentFormat.OpenXml.Drawing.Table>().FirstOrDefault();
 
@@ -1735,7 +1885,11 @@ namespace ICPSystemAlert
             SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
         }
 
-        // Determines whether the shape is a title shape.
+        /// <summary>
+        /// Determines whether the shape is a title shape
+        /// </summary>
+        /// <param name="shape">Shape</param>
+        /// <returns>True if shape is title</returns>
         private static bool IsTitleShape(Shape shape)
         {
             var placeholderShape = shape.NonVisualShapeProperties.ApplicationNonVisualDrawingProperties.GetFirstChild<PlaceholderShape>();
@@ -1743,13 +1897,11 @@ namespace ICPSystemAlert
             {
                 switch ((PlaceholderValues)placeholderShape.Type)
                 {
-                    // Any title shape.
+                    //any title shape.
                     case PlaceholderValues.Title:
-
-                    // A centered title.
+                    //centered title.
                     case PlaceholderValues.CenteredTitle:
                         return true;
-
                     default:
                         return false;
                 }
@@ -1757,6 +1909,13 @@ namespace ICPSystemAlert
             return false;
         }
 
+        /// <summary>
+        /// Swaps text in a powerpoint table placeholder
+        /// </summary>
+        /// <param name="tbl">Table</param>
+        /// <param name="rowNum">Row number</param>
+        /// <param name="columnNum">Column number</param>
+        /// <param name="value">Replacement value</param>
         private static void SwapPlaceholderText(DocumentFormat.OpenXml.Drawing.Table tbl, int rowNum, int columnNum, string value)
         {
             DocumentFormat.OpenXml.Drawing.TableRow row = tbl.Descendants<DocumentFormat.OpenXml.Drawing.TableRow>().ElementAt(rowNum);
@@ -1767,22 +1926,34 @@ namespace ICPSystemAlert
         #endregion
     }
 
+    /// <summary>
+    /// Command prompt argument options
+    /// </summary>
     public class Options : CommandLineOptionsBase
     {
+        /// <summary>
+        /// Stores minutes at a schedule of which application spans periods (re-execution interval)
+        /// </summary>
         [Option("r", "RunMinutes", Required = false, DefaultValue = 5, HelpText = "minutes at which run is scheduled")]
         public Int32 ScheduledRunMinutes { get; set; }
 
+        /// <summary>
+        /// Stores forced run of a particular functionality
+        /// </summary>
         [Option("f", "ForcedRun", Required = false, DefaultValue = 0, HelpText = "force run of processes\n0 - All\n1 - Pre Voting Report Implementation" +
             "\n2 - Pre Meeting Report Implementation\n3 - Post Meeting Report Implementation\n4 - MessagePush")]
         public Int32 ForcedRunParameter { get; set; }
 
+        /// <summary>
+        /// Stores presentation id for which a particular execution is implemented
+        /// </summary>
         [Option("p", "PresentationIdentifier", Required = false, DefaultValue = 0, HelpText = "Identifier - PresentationID\n0 - N/A")]
         public Int64 PresentationIdentifier { get; set; }
 
+        /// <summary>
+        /// Stores meeting id for which a particular execution is implemented
+        /// </summary>
         [Option("m", "MeetingIdentifier", Required = false, DefaultValue = 0, HelpText = "Identifier - MeetingID\n0 - N/A")]
         public Int64 MeetingIdentifier { get; set; }
     }
 }
-
-
-

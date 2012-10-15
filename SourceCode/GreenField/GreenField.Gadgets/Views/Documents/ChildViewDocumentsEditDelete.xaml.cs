@@ -1,36 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.DataContracts;
-using GreenField.Common;
-using GreenField.ServiceCaller;
-using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using Microsoft.Practices.Prism.Logging;
-using System.IO;
 using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views.Documents
 {
+    /// <summary>
+    /// Code behind for ChildViewDocumentsEditDelete
+    /// </summary>
     public partial class ChildViewDocumentsEditDelete : ChildWindow
     {
-        public ChildViewModelDocumentsEditDelete ChildViewDocumentsEditDeleteDataContext { get; set; }
+        #region Properties
+        /// <summary>
+        /// Stores datacontext instance
+        /// </summary>
+        public ChildViewModelDocumentsEditDelete ChildViewDocumentsEditDeleteDataContext { get; set; } 
+        #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dBInteractivity">IDBInteractivity</param>
+        /// <param name="logger">ILoggerFacade</param>
+        /// <param name="companyInfo">Issuer information</param>
         public ChildViewDocumentsEditDelete(IDBInteractivity dBInteractivity, ILoggerFacade logger, List<String> companyInfo)
         {
-            InitializeComponent();            
+            InitializeComponent();
             ChildViewDocumentsEditDeleteDataContext = new ChildViewModelDocumentsEditDelete(dBInteractivity, logger, companyInfo);
             this.DataContext = ChildViewDocumentsEditDeleteDataContext;
-            
-        }
 
+        } 
+        #endregion
+
+        #region Event Handlers
+        /// <summary>
+        /// btnBrowse Click EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RoutedEventArgs</param>
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -42,6 +54,36 @@ namespace GreenField.Gadgets.Views.Documents
             }
         }
 
+        /// <summary>
+        /// btnCancel Click EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RoutedEventArgs</param>
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.tboxFileName.Text = String.Empty;
+            ChildViewDocumentsEditDeleteDataContext.UploadStream = null;
+        }
+
+        /// <summary>
+        /// cbUserFile SelectionChanged EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">SelectionChangedEventArgs</param>
+        private void cbUserFile_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            this.tboxFileName.Text = String.Empty;
+            ChildViewDocumentsEditDeleteDataContext.UploadStream = null;
+        } 
+        #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Reads stream and returns byte array
+        /// </summary>
+        /// <param name="fileName">fileName</param>
+        /// <param name="fileStream">stream</param>
+        /// <returns>byte array</returns>
         private Byte[] FileToByteArray(String fileName, FileStream fileStream)
         {
             Byte[] buffer = null;
@@ -58,19 +100,7 @@ namespace GreenField.Gadgets.Views.Documents
                 throw;
             }
             return buffer;
-        }
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.tboxFileName.Text = String.Empty;
-            ChildViewDocumentsEditDeleteDataContext.UploadStream = null;
-        }
-
-        private void cbUserFile_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            this.tboxFileName.Text = String.Empty;
-            ChildViewDocumentsEditDeleteDataContext.UploadStream = null;
-        }
+        } 
+        #endregion
     }
 }
-
