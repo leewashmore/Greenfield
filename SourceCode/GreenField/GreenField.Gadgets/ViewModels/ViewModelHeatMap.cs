@@ -216,6 +216,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         HeatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                     }
+                    RetrieveHeatMapDataCompletedEvent(new RetrieveHeatMapDataCompleteEventArgs() { HeatMapInfo = result });
                 }
             }
             catch (Exception ex)
