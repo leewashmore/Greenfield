@@ -58,6 +58,7 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public ExcelModelData RetrieveStatementData(string issuerId)
         {
+            List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
             List<FinancialStatementDataModels> resultReuters = new List<FinancialStatementDataModels>();
             List<FinancialStatementData> resultStatement = new List<FinancialStatementData>();
             List<string> commodities = new List<string>();
@@ -65,6 +66,7 @@ namespace GreenField.Web.Services
             List<DataPointsModelUploadData> dataPointsExcelUpload = new List<DataPointsModelUploadData>();
             ModelReferenceDataPoints dataPointsModelReference = new ModelReferenceDataPoints();
             string currencyReuters = "";
+            string currencyConsensus = string.Empty;
             try
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
@@ -88,6 +90,7 @@ namespace GreenField.Web.Services
                 {
                     resultReuters = RetrieveFinancialData(issuerID, currency);
                     currencyReuters = currency;
+                    currencyConsensus = currency;
                 }
                 if (resultReuters != null)
                 {
@@ -106,6 +109,20 @@ namespace GreenField.Web.Services
                     }
                 }
                 resultReuters = resultReuters.Where(a => a.PeriodYear != 2300).ToList();
+
+                if (resultConsensus == null || resultConsensus.Count == 0)
+                {
+                    if (currency != "USD")
+                    {
+                        resultConsensus = RetrieveModelConsensusData(issuerID, "USD");
+                        currencyConsensus = "USD";
+                    }
+                    else
+                    {
+                        resultConsensus = new List<ModelConsensusEstimatesData>();
+                    }
+                }
+                
                 if (resultReuters == null || resultReuters.Count == 0)
                 {
                     throw new Exception("No Data Returned from server");
@@ -119,6 +136,7 @@ namespace GreenField.Web.Services
                 excelModelData.Commodities = commodities;
                 excelModelData.ReutersData = resultReuters;
                 excelModelData.CurrencyReuters = currencyReuters;
+                excelModelData.ConsensusEstimateData = resultConsensus;
                 return excelModelData;
             }
             catch (Exception ex)
@@ -189,5 +207,82 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="currency"></param>
+        /// <returns></returns>
+        private List<ModelConsensusEstimatesData> RetrieveModelConsensusData(string issuerId, string currency)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
+                List<ModelConsensusEstimatesData> data = new List<ModelConsensusEstimatesData>();
+                List<FinancialStatementType> statementType = new List<FinancialStatementType>() { FinancialStatementType.INCOME_STATEMENT, FinancialStatementType.BALANCE_SHEET, FinancialStatementType.CASH_FLOW_STATEMENT };
+                List<FinancialStatementPeriodType> periodType = new List<FinancialStatementPeriodType>() { FinancialStatementPeriodType.ANNUAL, FinancialStatementPeriodType.QUARTERLY };
+
+                foreach (FinancialStatementPeriodType item in periodType)
+                {
+                    data = entity.GetModelConsensusEstimates(issuerId, "REUTERS", EnumUtils.ToString(item).Substring(0, 1), "FISCAL", currency).ToList();
+                    if (data != null)
+                    {
+                        resultConsensus.AddRange(data);
+                    }
+                }
+                foreach (ModelConsensusEstimatesData item in resultConsensus)
+                {
+                    item.SortOrder = ReturnSortOrder(item.ESTIMATE_ID);
+                }
+                return resultConsensus.OrderBy(a => a.SortOrder).ThenBy(a => a.PERIOD_YEAR).ThenBy(a => a.PERIOD_TYPE).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Return the Sort Order in the grid
+        /// </summary>
+        /// <param name="dataId"></param>
+        /// <returns></returns>
+        private int ReturnSortOrder(int dataId)
+        {
+            switch (dataId)
+            {
+                case 17:
+                    return 0;
+                case 7:
+                    return 1;
+                case 6:
+                    return 2;
+                case 14:
+                    return 3;
+                case 11:
+                    return 4;
+                case 8:
+                    return 5;
+                case 10:
+                    return 6;
+                case 1:
+                    return 7;
+                case 18:
+                    return 8;
+                case 19:
+                    return 9;
+                case 2:
+                    return 10;
+                case 3:
+                    return 11;
+                case 4:
+                    return 12;
+                default:
+                    return 13;
+            }
+        }
     }
 }

@@ -70,7 +70,18 @@ namespace GreenField.Web.DataContracts
             get { return currencyReuters; }
             set { currencyReuters = value; }
         }
+
+        /// <summary>
+        /// Consensus Estimate Data
+        /// </summary>
+        private List<ModelConsensusEstimatesData> consensusEstimateData;
+        public List<ModelConsensusEstimatesData> ConsensusEstimateData
+        {
+            get { return consensusEstimateData; }
+            set { consensusEstimateData = value; }
+        }
         
+
     }
 
     /// <summary>
