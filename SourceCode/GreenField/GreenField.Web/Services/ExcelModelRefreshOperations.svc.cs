@@ -130,6 +130,7 @@ namespace GreenField.Web.Services
                 dataPointsExcelUpload = RetrieveModelUploadDataPoints(issuerID);
                 commodities = entity.RetrieveCommodityForecasts().ToList();
                 ExcelModelData excelModelData = new ExcelModelData();
+                excelModelData.ConsensusEstimateData = new List<ModelConsensusEstimatesData>();
                 excelModelData.ModelReferenceData = dataPointsModelReference;
                 excelModelData.ModelUploadDataPoints = dataPointsExcelUpload;
                 excelModelData.Currencies = entity.RetrieveDistinctFXRates().ToList();
