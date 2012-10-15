@@ -64,7 +64,7 @@ namespace GreenField.Web.DataContracts
         /// <summary>
         /// Currency for Reuters Sheet
         /// </summary>
-        private string currencyReuters;   
+        private string currencyReuters;
         public string CurrencyReuters
         {
             get { return currencyReuters; }
@@ -80,8 +80,6 @@ namespace GreenField.Web.DataContracts
             get { return consensusEstimateData; }
             set { consensusEstimateData = value; }
         }
-        
-
     }
 
     /// <summary>

@@ -141,7 +141,6 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                //ExceptionTrace.LogException(ex);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
@@ -208,11 +207,11 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// 
+        /// Retrieve Consensus Data for the Selected Security
         /// </summary>
-        /// <param name="issuerId"></param>
-        /// <param name="currency"></param>
-        /// <returns></returns>
+        /// <param name="issuerId">Issuer id of the selected security</param>
+        /// <param name="currency">Selected currency</param>
+        /// <returns>List of ModelConsensusEstimatesData</returns>
         private List<ModelConsensusEstimatesData> RetrieveModelConsensusData(string issuerId, string currency)
         {
             try

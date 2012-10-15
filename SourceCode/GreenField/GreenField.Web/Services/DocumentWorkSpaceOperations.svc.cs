@@ -688,11 +688,11 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// 
+        /// Retrieve Statement Data for selected Security
         /// </summary>
-        /// <param name="issuerId"></param>
-        /// <param name="currency"></param>
-        /// <returns></returns>
+        /// <param name="issuerId">Issuer Id of selected security</param>
+        /// <param name="currency">selected currency</param>
+        /// <returns>List of FinancialStatementDataModels</returns>
         private List<FinancialStatementDataModels> RetrieveFinancialData(string issuerId, string currency)
         {
             try
@@ -726,11 +726,11 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// 
+        /// Retrieve Consensus Data for the Selected Security
         /// </summary>
-        /// <param name="issuerId"></param>
-        /// <param name="currency"></param>
-        /// <returns></returns>
+        /// <param name="issuerId">Issuer id of the selected security</param>
+        /// <param name="currency">Selected currency</param>
+        /// <returns>List of ModelConsensusEstimatesData</returns>
         private List<ModelConsensusEstimatesData> RetrieveModelConsensusData(string issuerId, string currency)
         {
             try
