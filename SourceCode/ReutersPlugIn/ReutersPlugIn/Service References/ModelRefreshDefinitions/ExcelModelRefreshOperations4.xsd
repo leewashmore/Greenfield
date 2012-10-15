@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DAL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+  <xs:complexType name="ArrayOfModelConsensusEstimatesData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ModelConsensusEstimatesData" nillable="true" type="tns:ModelConsensusEstimatesData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfModelConsensusEstimatesData" nillable="true" type="tns:ArrayOfModelConsensusEstimatesData" />
+  <xs:complexType name="ModelConsensusEstimatesData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q1:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AMOUNT" type="xs:decimal" />
+          <xs:element minOccurs="0" name="AMOUNT_TYPE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DATA_SOURCE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DATA_SOURCE_DATE" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ESTIMATE_DESC" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ESTIMATE_ID" type="xs:int" />
+          <xs:element minOccurs="0" name="HIGH" type="xs:decimal" />
+          <xs:element minOccurs="0" name="ISSUER_ID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LOW" type="xs:decimal" />
+          <xs:element minOccurs="0" name="NUMBER_OF_ESTIMATES" type="xs:int" />
+          <xs:element minOccurs="0" name="PERIOD_TYPE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PERIOD_YEAR" type="xs:int" />
+          <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SOURCE_CURRENCY" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="STANDARD_DEVIATION" type="xs:decimal" />
+          <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ModelConsensusEstimatesData" nillable="true" type="tns:ModelConsensusEstimatesData" />
+  <xs:complexType name="ArrayOfDataPointsModelUploadData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DataPointsModelUploadData" nillable="true" type="tns:DataPointsModelUploadData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDataPointsModelUploadData" nillable="true" type="tns:ArrayOfDataPointsModelUploadData" />
+  <xs:complexType name="DataPointsModelUploadData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="COA" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CONVERT_FLAG" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DATA_DESCRIPTION" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SORT_ORDER" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DataPointsModelUploadData" nillable="true" type="tns:DataPointsModelUploadData" />
+  <xs:complexType name="ArrayOfFinancialStatementDataModels">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FinancialStatementDataModels" nillable="true" type="tns:FinancialStatementDataModels" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFinancialStatementDataModels" nillable="true" type="tns:ArrayOfFinancialStatementDataModels" />
+  <xs:complexType name="FinancialStatementDataModels">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Amount" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BoldFont" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CalculationDiagram" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DataId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="Decimals" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroupName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsConsensus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PeriodYear" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="RootSource" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RootSourceDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FinancialStatementDataModels" nillable="true" type="tns:FinancialStatementDataModels" />
+</xs:schema>

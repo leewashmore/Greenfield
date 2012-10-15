@@ -1,0 +1,540 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ReutersModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ReutersModelStoreContainer">
+    <EntitySet Name="BENCHMARK_FINANCIALS" EntityType="ReutersModel.Store.BENCHMARK_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="BENCHMARK_FINANCIALS">
+      <DefiningQuery>SELECT 
+      [BENCHMARK_FINANCIALS].[BENCHMARK_ID] AS [BENCHMARK_ID], 
+      [BENCHMARK_FINANCIALS].[BENCHMARK_DATE] AS [BENCHMARK_DATE], 
+      [BENCHMARK_FINANCIALS].[DATA_ID] AS [DATA_ID], 
+      [BENCHMARK_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [BENCHMARK_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [BENCHMARK_FINANCIALS].[CURRENCY] AS [CURRENCY], 
+      [BENCHMARK_FINANCIALS].[AMOUNT] AS [AMOUNT], 
+      [BENCHMARK_FINANCIALS].[UPDATE_DATE] AS [UPDATE_DATE]
+      FROM [dbo].[BENCHMARK_FINANCIALS] AS [BENCHMARK_FINANCIALS]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="BENCHMARK_NODE_FINANCIALS" EntityType="ReutersModel.Store.BENCHMARK_NODE_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="BENCHMARK_NODE_FINANCIALS">
+      <DefiningQuery>SELECT 
+      [BENCHMARK_NODE_FINANCIALS].[BENCHMARK_ID] AS [BENCHMARK_ID], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_NAME1] AS [NODE_NAME1], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_ID1] AS [NODE_ID1], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_NAME2] AS [NODE_NAME2], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_ID2] AS [NODE_ID2], 
+      [BENCHMARK_NODE_FINANCIALS].[DATA_ID] AS [DATA_ID], 
+      [BENCHMARK_NODE_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [BENCHMARK_NODE_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [BENCHMARK_NODE_FINANCIALS].[CURRENCY] AS [CURRENCY], 
+      [BENCHMARK_NODE_FINANCIALS].[AMOUNT] AS [AMOUNT], 
+      [BENCHMARK_NODE_FINANCIALS].[UPDATE_DATE] AS [UPDATE_DATE]
+      FROM [dbo].[BENCHMARK_NODE_FINANCIALS] AS [BENCHMARK_NODE_FINANCIALS]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PORTFOLIO_FINANCIALS" EntityType="ReutersModel.Store.PORTFOLIO_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="PORTFOLIO_FINANCIALS">
+      <DefiningQuery>SELECT 
+      [PORTFOLIO_FINANCIALS].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
+      [PORTFOLIO_FINANCIALS].[PORTFOLIO_DATE] AS [PORTFOLIO_DATE], 
+      [PORTFOLIO_FINANCIALS].[DATA_ID] AS [DATA_ID], 
+      [PORTFOLIO_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [PORTFOLIO_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [PORTFOLIO_FINANCIALS].[CURRENCY] AS [CURRENCY], 
+      [PORTFOLIO_FINANCIALS].[AMOUNT] AS [AMOUNT], 
+      [PORTFOLIO_FINANCIALS].[UPDATE_DATE] AS [UPDATE_DATE]
+      FROM [dbo].[PORTFOLIO_FINANCIALS] AS [PORTFOLIO_FINANCIALS]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tblActual" EntityType="ReutersModel.Store.tblActual" store:Type="Tables" store:Schema="dbo" store:Name="tblActual">
+      <DefiningQuery>SELECT 
+      [tblActual].[XRef] AS [XRef], 
+      [tblActual].[PeriodType] AS [PeriodType], 
+      [tblActual].[EstimateType] AS [EstimateType], 
+      [tblActual].[fYearEnd] AS [fYearEnd], 
+      [tblActual].[fPeriodEnd] AS [fPeriodEnd], 
+      [tblActual].[PeriodEndDate] AS [PeriodEndDate], 
+      [tblActual].[Unit] AS [Unit], 
+      [tblActual].[ActualValue] AS [ActualValue], 
+      [tblActual].[AnnouncementDate] AS [AnnouncementDate], 
+      [tblActual].[UpdateDate] AS [UpdateDate], 
+      [tblActual].[Currency] AS [Currency]
+      FROM [dbo].[tblActual] AS [tblActual]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tblBrokers" EntityType="ReutersModel.Store.tblBrokers" store:Type="Tables" store:Schema="dbo" store:Name="tblBrokers">
+      <DefiningQuery>SELECT 
+      [tblBrokers].[broker_id] AS [broker_id], 
+      [tblBrokers].[start] AS [start], 
+      [tblBrokers].[broker_name] AS [broker_name], 
+      [tblBrokers].[address1] AS [address1], 
+      [tblBrokers].[address2] AS [address2], 
+      [tblBrokers].[city] AS [city], 
+      [tblBrokers].[state_region] AS [state_region], 
+      [tblBrokers].[postalcode] AS [postalcode], 
+      [tblBrokers].[country] AS [country]
+      FROM [dbo].[tblBrokers] AS [tblBrokers]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tblCETargetPrice" EntityType="ReutersModel.Store.tblCETargetPrice" store:Type="Tables" store:Schema="dbo" store:Name="tblCETargetPrice">
+      <DefiningQuery>SELECT 
+      [tblCETargetPrice].[XRef] AS [XRef], 
+      [tblCETargetPrice].[StartDate] AS [StartDate], 
+      [tblCETargetPrice].[EndDate] AS [EndDate], 
+      [tblCETargetPrice].[OriginalDate] AS [OriginalDate], 
+      [tblCETargetPrice].[ExpirationDate] AS [ExpirationDate], 
+      [tblCETargetPrice].[Unit] AS [Unit], 
+      [tblCETargetPrice].[NumOfEsts] AS [NumOfEsts], 
+      [tblCETargetPrice].[High] AS [High], 
+      [tblCETargetPrice].[Low] AS [Low], 
+      [tblCETargetPrice].[Mean] AS [Mean], 
+      [tblCETargetPrice].[StdDev] AS [StdDev], 
+      [tblCETargetPrice].[Median] AS [Median], 
+      [tblCETargetPrice].[Currency] AS [Currency]
+      FROM [dbo].[tblCETargetPrice] AS [tblCETargetPrice]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tblCompanyInfo" EntityType="ReutersModel.Store.tblCompanyInfo" store:Type="Tables" store:Schema="dbo" store:Name="tblCompanyInfo">
+      <DefiningQuery>SELECT 
+      [tblCompanyInfo].[XRef] AS [XRef], 
+      [tblCompanyInfo].[ReportNumber] AS [ReportNumber], 
+      [tblCompanyInfo].[Name] AS [Name], 
+      [tblCompanyInfo].[Country] AS [Country], 
+      [tblCompanyInfo].[Ticker] AS [Ticker], 
+      [tblCompanyInfo].[CUSIP] AS [CUSIP], 
+      [tblCompanyInfo].[ISIN] AS [ISIN], 
+      [tblCompanyInfo].[SEDOL] AS [SEDOL], 
+      [tblCompanyInfo].[VALOREN] AS [VALOREN], 
+      [tblCompanyInfo].[RIC] AS [RIC], 
+      [tblCompanyInfo].[DisplayRIC] AS [DisplayRIC], 
+      [tblCompanyInfo].[RecentSplitDate] AS [RecentSplitDate], 
+      [tblCompanyInfo].[RecentCapitalAdjDate] AS [RecentCapitalAdjDate], 
+      [tblCompanyInfo].[Consensus] AS [Consensus], 
+      [tblCompanyInfo].[Estimate] AS [Estimate], 
+      [tblCompanyInfo].[Earnings] AS [Earnings], 
+      [tblCompanyInfo].[Periodicity] AS [Periodicity], 
+      [tblCompanyInfo].[CurrentPeriod] AS [CurrentPeriod], 
+      [tblCompanyInfo].[pEndDate] AS [pEndDate], 
+      [tblCompanyInfo].[fYearEnd] AS [fYearEnd], 
+      [tblCompanyInfo].[fPeriodEnd] AS [fPeriodEnd], 
+      [tblCompanyInfo].[CurrentPrice] AS [CurrentPrice], 
+      [tblCompanyInfo].[CurrentPriceDate] AS [CurrentPriceDate], 
+      [tblCompanyInfo].[Currency] AS [Currency], 
+      [tblCompanyInfo].[OutstandingShares] AS [OutstandingShares], 
+      [tblCompanyInfo].[Active] AS [Active]
+      FROM [dbo].[tblCompanyInfo] AS [tblCompanyInfo]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tblConsensusEstimate" EntityType="ReutersModel.Store.tblConsensusEstimate" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tblDetailedEstimate" EntityType="ReutersModel.Store.tblDetailedEstimate" store:Type="Tables" store:Schema="dbo" store:Name="tblDetailedEstimate">
+      <DefiningQuery>SELECT 
+      [tblDetailedEstimate].[XRef] AS [XRef], 
+      [tblDetailedEstimate].[fYearEnd] AS [fYearEnd], 
+      [tblDetailedEstimate].[fPeriodEnd] AS [fPeriodEnd], 
+      [tblDetailedEstimate].[PeriodEndDate] AS [PeriodEndDate], 
+      [tblDetailedEstimate].[BrokerID] AS [BrokerID], 
+      [tblDetailedEstimate].[PeriodType] AS [PeriodType], 
+      [tblDetailedEstimate].[EstimateType] AS [EstimateType], 
+      [tblDetailedEstimate].[StartDate] AS [StartDate], 
+      [tblDetailedEstimate].[EndDate] AS [EndDate], 
+      [tblDetailedEstimate].[OriginalDate] AS [OriginalDate], 
+      [tblDetailedEstimate].[ExpirationDate] AS [ExpirationDate], 
+      [tblDetailedEstimate].[ConfirmationDate] AS [ConfirmationDate], 
+      [tblDetailedEstimate].[SuppressStartDate] AS [SuppressStartDate], 
+      [tblDetailedEstimate].[SuppressEndDate] AS [SuppressEndDate], 
+      [tblDetailedEstimate].[SuppressOriginalDate] AS [SuppressOriginalDate], 
+      [tblDetailedEstimate].[SuppressExpirationDate] AS [SuppressExpirationDate], 
+      [tblDetailedEstimate].[Unit] AS [Unit], 
+      [tblDetailedEstimate].[Amount] AS [Amount], 
+      [tblDetailedEstimate].[Currency] AS [Currency]
+      FROM [dbo].[tblDetailedEstimate] AS [tblDetailedEstimate]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tblStdInterim" EntityType="ReutersModel.Store.tblStdInterim" store:Type="Tables" store:Schema="dbo" store:Name="tblStdInterim">
+      <DefiningQuery>SELECT 
+      [tblStdInterim].[ReportNumber] AS [ReportNumber], 
+      [tblStdInterim].[ReportYear] AS [ReportYear], 
+      [tblStdInterim].[COA] AS [COA], 
+      [tblStdInterim].[RefNo] AS [RefNo], 
+      [tblStdInterim].[Amount] AS [Amount]
+      FROM [dbo].[tblStdInterim] AS [tblStdInterim]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tblStdInterimCompanyInfo" EntityType="ReutersModel.Store.tblStdInterimCompanyInfo" store:Type="Tables" store:Schema="dbo" store:Name="tblStdInterimCompanyInfo">
+      <DefiningQuery>SELECT 
+      [tblStdInterimCompanyInfo].[ReportNumber] AS [ReportNumber], 
+      [tblStdInterimCompanyInfo].[Name] AS [Name], 
+      [tblStdInterimCompanyInfo].[Active] AS [Active], 
+      [tblStdInterimCompanyInfo].[LatestFinancialsAnnual] AS [LatestFinancialsAnnual], 
+      [tblStdInterimCompanyInfo].[LatestFinancialsInterim] AS [LatestFinancialsInterim], 
+      [tblStdInterimCompanyInfo].[Currency] AS [Currency], 
+      [tblStdInterimCompanyInfo].[COAType] AS [COAType]
+      FROM [dbo].[tblStdInterimCompanyInfo] AS [tblStdInterimCompanyInfo]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tblStdInterimRef" EntityType="ReutersModel.Store.tblStdInterimRef" store:Type="Tables" store:Schema="dbo" store:Name="tblStdInterimRef">
+      <DefiningQuery>SELECT 
+      [tblStdInterimRef].[ReportNumber] AS [ReportNumber], 
+      [tblStdInterimRef].[RefNo] AS [RefNo], 
+      [tblStdInterimRef].[FiscalYear] AS [FiscalYear], 
+      [tblStdInterimRef].[StatementType] AS [StatementType], 
+      [tblStdInterimRef].[InterimNumber] AS [InterimNumber], 
+      [tblStdInterimRef].[UpdateType] AS [UpdateType], 
+      [tblStdInterimRef].[UpdateDate] AS [UpdateDate], 
+      [tblStdInterimRef].[CompleteStatement] AS [CompleteStatement], 
+      [tblStdInterimRef].[PeriodLengthCode] AS [PeriodLengthCode], 
+      [tblStdInterimRef].[PeriodLength] AS [PeriodLength], 
+      [tblStdInterimRef].[PeriodEndDate] AS [PeriodEndDate], 
+      [tblStdInterimRef].[Source] AS [Source], 
+      [tblStdInterimRef].[SourceDate] AS [SourceDate], 
+      [tblStdInterimRef].[ReportedAccountingStandardCode] AS [ReportedAccountingStandardCode], 
+      [tblStdInterimRef].[ReportedAccountingStandard] AS [ReportedAccountingStandard], 
+      [tblStdInterimRef].[STECFlag] AS [STECFlag], 
+      [tblStdInterimRef].[CurrencyConvertedTo] AS [CurrencyConvertedTo], 
+      [tblStdInterimRef].[CurrencyReported] AS [CurrencyReported], 
+      [tblStdInterimRef].[RepToConvExRate] AS [RepToConvExRate], 
+      [tblStdInterimRef].[UnitConvertedTo] AS [UnitConvertedTo], 
+      [tblStdInterimRef].[UnitReported] AS [UnitReported], 
+      [tblStdInterimRef].[SystemDate] AS [SystemDate]
+      FROM [dbo].[tblStdInterimRef] AS [tblStdInterimRef]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.BENCHMARK_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="BENCHMARK_FINANCIALS">
+    <Key>
+      <PropertyRef Name="BENCHMARK_ID" />
+      <PropertyRef Name="BENCHMARK_DATE" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="UPDATE_DATE" />
+    </Key>
+    <Property Name="BENCHMARK_ID" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="BENCHMARK_DATE" Type="datetime" Nullable="false" />
+    <Property Name="DATA_ID" Type="int" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+    <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="UPDATE_DATE" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.BENCHMARK_NODE_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="BENCHMARK_NODE_FINANCIALS">
+    <Key>
+      <PropertyRef Name="BENCHMARK_ID" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="UPDATE_DATE" />
+    </Key>
+    <Property Name="BENCHMARK_ID" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="NODE_NAME1" Type="varchar" MaxLength="50" />
+    <Property Name="NODE_ID1" Type="varchar" MaxLength="50" />
+    <Property Name="NODE_NAME2" Type="varchar" MaxLength="50" />
+    <Property Name="NODE_ID2" Type="varchar" MaxLength="50" />
+    <Property Name="DATA_ID" Type="int" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+    <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="UPDATE_DATE" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.PORTFOLIO_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="PORTFOLIO_FINANCIALS">
+    <Key>
+      <PropertyRef Name="PORTFOLIO_ID" />
+      <PropertyRef Name="PORTFOLIO_DATE" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="UPDATE_DATE" />
+    </Key>
+    <Property Name="PORTFOLIO_ID" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="PORTFOLIO_DATE" Type="datetime" Nullable="false" />
+    <Property Name="DATA_ID" Type="int" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+    <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="UPDATE_DATE" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.tblActual' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="tblActual">
+    <Key>
+      <PropertyRef Name="XRef" />
+      <PropertyRef Name="PeriodType" />
+      <PropertyRef Name="EstimateType" />
+      <PropertyRef Name="fYearEnd" />
+      <PropertyRef Name="fPeriodEnd" />
+      <PropertyRef Name="PeriodEndDate" />
+    </Key>
+    <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+    <Property Name="PeriodType" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="EstimateType" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="fYearEnd" Type="char" Nullable="false" MaxLength="6" />
+    <Property Name="fPeriodEnd" Type="char" Nullable="false" MaxLength="6" />
+    <Property Name="PeriodEndDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="Unit" Type="varchar" MaxLength="2" />
+    <Property Name="ActualValue" Type="real" />
+    <Property Name="AnnouncementDate" Type="datetime" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="Currency" Type="varchar" MaxLength="3" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.tblBrokers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="tblBrokers">
+    <Key>
+      <PropertyRef Name="broker_id" />
+    </Key>
+    <Property Name="broker_id" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="start" Type="datetime" />
+    <Property Name="broker_name" Type="varchar" MaxLength="100" />
+    <Property Name="address1" Type="varchar" MaxLength="100" />
+    <Property Name="address2" Type="varchar" MaxLength="100" />
+    <Property Name="city" Type="varchar" MaxLength="50" />
+    <Property Name="state_region" Type="varchar" MaxLength="50" />
+    <Property Name="postalcode" Type="varchar" MaxLength="50" />
+    <Property Name="country" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.tblCETargetPrice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="tblCETargetPrice">
+    <Key>
+      <PropertyRef Name="XRef" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="OriginalDate" />
+    </Key>
+    <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="OriginalDate" Type="datetime" Nullable="false" />
+    <Property Name="ExpirationDate" Type="datetime" />
+    <Property Name="Unit" Type="varchar" MaxLength="2" />
+    <Property Name="NumOfEsts" Type="int" />
+    <Property Name="High" Type="real" />
+    <Property Name="Low" Type="real" />
+    <Property Name="Mean" Type="real" />
+    <Property Name="StdDev" Type="real" />
+    <Property Name="Median" Type="real" />
+    <Property Name="Currency" Type="char" MaxLength="3" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.tblCompanyInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="tblCompanyInfo">
+    <Key>
+      <PropertyRef Name="XRef" />
+    </Key>
+    <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+    <Property Name="ReportNumber" Type="varchar" MaxLength="5" />
+    <Property Name="Name" Type="varchar" MaxLength="80" />
+    <Property Name="Country" Type="char" MaxLength="3" />
+    <Property Name="Ticker" Type="varchar" MaxLength="15" />
+    <Property Name="CUSIP" Type="varchar" MaxLength="12" />
+    <Property Name="ISIN" Type="varchar" MaxLength="12" />
+    <Property Name="SEDOL" Type="varchar" MaxLength="12" />
+    <Property Name="VALOREN" Type="varchar" MaxLength="12" />
+    <Property Name="RIC" Type="varchar" MaxLength="21" />
+    <Property Name="DisplayRIC" Type="varchar" MaxLength="21" />
+    <Property Name="RecentSplitDate" Type="datetime" />
+    <Property Name="RecentCapitalAdjDate" Type="datetime" />
+    <Property Name="Consensus" Type="varchar" MaxLength="20" />
+    <Property Name="Estimate" Type="varchar" MaxLength="10" />
+    <Property Name="Earnings" Type="varchar" MaxLength="10" />
+    <Property Name="Periodicity" Type="varchar" MaxLength="2" />
+    <Property Name="CurrentPeriod" Type="char" MaxLength="2" />
+    <Property Name="pEndDate" Type="smalldatetime" />
+    <Property Name="fYearEnd" Type="char" MaxLength="6" />
+    <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
+    <Property Name="CurrentPrice" Type="real" />
+    <Property Name="CurrentPriceDate" Type="smalldatetime" />
+    <Property Name="Currency" Type="char" MaxLength="3" />
+    <Property Name="OutstandingShares" Type="decimal" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblConsensusEstimate">
+    <Key>
+      <PropertyRef Name="XRef" />
+      <PropertyRef Name="PeriodEndDate" />
+      <PropertyRef Name="fYearEnd" />
+      <PropertyRef Name="EstimateType" />
+      <PropertyRef Name="PeriodType" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="OriginalDate" />
+    </Key>
+    <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+    <Property Name="PeriodEndDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="fYearEnd" Type="char" Nullable="false" MaxLength="6" />
+    <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
+    <Property Name="EstimateType" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="PeriodType" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="OriginalDate" Type="datetime" Nullable="false" />
+    <Property Name="ExpirationDate" Type="datetime" />
+    <Property Name="Unit" Type="varchar" MaxLength="2" />
+    <Property Name="NumOfEsts" Type="int" />
+    <Property Name="High" Type="real" />
+    <Property Name="Low" Type="real" />
+    <Property Name="Mean" Type="real" />
+    <Property Name="StdDev" Type="real" />
+    <Property Name="Median" Type="real" />
+    <Property Name="Currency" Type="char" MaxLength="3" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.tblDetailedEstimate' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="tblDetailedEstimate">
+    <Key>
+      <PropertyRef Name="XRef" />
+      <PropertyRef Name="fYearEnd" />
+      <PropertyRef Name="PeriodEndDate" />
+      <PropertyRef Name="BrokerID" />
+      <PropertyRef Name="PeriodType" />
+      <PropertyRef Name="EstimateType" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="OriginalDate" />
+    </Key>
+    <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+    <Property Name="fYearEnd" Type="char" Nullable="false" MaxLength="6" />
+    <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
+    <Property Name="PeriodEndDate" Type="datetime" Nullable="false" />
+    <Property Name="BrokerID" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="PeriodType" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="EstimateType" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="OriginalDate" Type="datetime" Nullable="false" />
+    <Property Name="ExpirationDate" Type="datetime" />
+    <Property Name="ConfirmationDate" Type="datetime" />
+    <Property Name="SuppressStartDate" Type="datetime" />
+    <Property Name="SuppressEndDate" Type="datetime" />
+    <Property Name="SuppressOriginalDate" Type="datetime" />
+    <Property Name="SuppressExpirationDate" Type="datetime" />
+    <Property Name="Unit" Type="varchar" MaxLength="2" />
+    <Property Name="Amount" Type="real" />
+    <Property Name="Currency" Type="char" MaxLength="3" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.tblStdInterim' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="tblStdInterim">
+    <Key>
+      <PropertyRef Name="ReportNumber" />
+      <PropertyRef Name="ReportYear" />
+      <PropertyRef Name="COA" />
+      <PropertyRef Name="RefNo" />
+      <PropertyRef Name="Amount" />
+    </Key>
+    <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="ReportYear" Type="int" Nullable="false" />
+    <Property Name="COA" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="RefNo" Type="varchar" Nullable="false" MaxLength="13" />
+    <Property Name="Amount" Type="real" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.tblStdInterimCompanyInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="tblStdInterimCompanyInfo">
+    <Key>
+      <PropertyRef Name="ReportNumber" />
+    </Key>
+    <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="LatestFinancialsAnnual" Type="datetime" />
+    <Property Name="LatestFinancialsInterim" Type="datetime" />
+    <Property Name="Currency" Type="char" MaxLength="3" />
+    <Property Name="COAType" Type="char" MaxLength="3" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'Reuters.dbo.tblStdInterimRef' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="tblStdInterimRef">
+    <Key>
+      <PropertyRef Name="ReportNumber" />
+      <PropertyRef Name="RefNo" />
+    </Key>
+    <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="RefNo" Type="varchar" Nullable="false" MaxLength="13" />
+    <Property Name="FiscalYear" Type="int" />
+    <Property Name="StatementType" Type="char" MaxLength="3" />
+    <Property Name="InterimNumber" Type="smallint" />
+    <Property Name="UpdateType" Type="varchar" MaxLength="10" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="CompleteStatement" Type="bit" />
+    <Property Name="PeriodLengthCode" Type="char" MaxLength="1" />
+    <Property Name="PeriodLength" Type="int" />
+    <Property Name="PeriodEndDate" Type="datetime" />
+    <Property Name="Source" Type="varchar" MaxLength="50" />
+    <Property Name="SourceDate" Type="datetime" />
+    <Property Name="ReportedAccountingStandardCode" Type="varchar" MaxLength="20" />
+    <Property Name="ReportedAccountingStandard" Type="varchar" MaxLength="100" />
+    <Property Name="STECFlag" Type="bit" />
+    <Property Name="CurrencyConvertedTo" Type="char" MaxLength="3" />
+    <Property Name="CurrencyReported" Type="char" MaxLength="3" />
+    <Property Name="RepToConvExRate" Type="real" />
+    <Property Name="UnitConvertedTo" Type="char" MaxLength="3" />
+    <Property Name="UnitReported" Type="char" MaxLength="3" />
+    <Property Name="SystemDate" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6013: The table/view 'Reuters.dbo.tblConsensusRecommendation' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="tblConsensusRecommendation">
+        <Property Name="XRef" Type="nvarchar" MaxLength="9" />
+        <Property Name="StartDate" Type="datetime" />
+        <Property Name="EndDate" Type="datetime" />
+        <Property Name="OriginalDate" Type="datetime" />
+        <Property Name="ExpirationDate" Type="datetime" />
+        <Property Name="MeanRating" Type="real" />
+        <Property Name="MeanLabel" Type="nvarchar" MaxLength="20" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Reuters.dbo.tblStatementRef' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="tblStatementRef">
+        <Property Name="ReportNumber" Type="nvarchar" MaxLength="5" />
+        <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
+        <Property Name="FiscalYear" Type="int" />
+        <Property Name="StatementType" Type="nvarchar" MaxLength="3" />
+        <Property Name="UpdateType" Type="nvarchar" MaxLength="10" />
+        <Property Name="UpdateDate" Type="datetime" />
+        <Property Name="CompleteStatement" Type="bit" />
+        <Property Name="PeriodLengthCode" Type="nvarchar" MaxLength="1" />
+        <Property Name="PeriodLength" Type="int" />
+        <Property Name="PeriodEndDate" Type="datetime" />
+        <Property Name="ReportedAccountingStandardCode" Type="nvarchar" MaxLength="20" />
+        <Property Name="ReportedAccountingStandard" Type="nvarchar" MaxLength="100" />
+        <Property Name="CurrencyConvertedTo" Type="nvarchar" MaxLength="3" />
+        <Property Name="CurrencyReported" Type="nvarchar" MaxLength="3" />
+        <Property Name="RepToConvExRate" Type="real" />
+        <Property Name="UnitConvertedTo" Type="nvarchar" MaxLength="3" />
+        <Property Name="UnitReported" Type="nvarchar" MaxLength="3" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Reuters.dbo.tblStd' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="tblStd">
+        <Property Name="ReportNumber" Type="nvarchar" MaxLength="5" />
+        <Property Name="ReportYear" Type="int" />
+        <Property Name="COA" Type="nvarchar" MaxLength="10" />
+        <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
+        <Property Name="Amount" Type="real" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Reuters.dbo.tblStdCompanyInfo' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="tblStdCompanyInfo">
+        <Property Name="ReportNumber" Type="nvarchar" MaxLength="5" />
+        <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        <Property Name="Active" Type="bit" />
+        <Property Name="LatestFinancialsAnnual" Type="datetime" />
+        <Property Name="LatestFinancialsInterim" Type="datetime" />
+        <Property Name="Currency" Type="nvarchar" MaxLength="3" />
+        <Property Name="COAType" Type="nvarchar" MaxLength="3" />
+      </EntityType>-->
+</Schema>

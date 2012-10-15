@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ReutersModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="ReutersEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BENCHMARK_FINANCIALS" EntityType="ReutersModel.BENCHMARK_FINANCIALS" />
+    <EntitySet Name="BENCHMARK_NODE_FINANCIALS" EntityType="ReutersModel.BENCHMARK_NODE_FINANCIALS" />
+    <EntitySet Name="PORTFOLIO_FINANCIALS" EntityType="ReutersModel.PORTFOLIO_FINANCIALS" />
+    <EntitySet Name="tblActuals" EntityType="ReutersModel.tblActual" />
+    <EntitySet Name="tblBrokers" EntityType="ReutersModel.tblBroker" />
+    <EntitySet Name="tblCETargetPrices" EntityType="ReutersModel.tblCETargetPrice" />
+    <EntitySet Name="tblCompanyInfoes" EntityType="ReutersModel.tblCompanyInfo" />
+    <EntitySet Name="tblConsensusEstimates" EntityType="ReutersModel.tblConsensusEstimate" />
+    <EntitySet Name="tblDetailedEstimates" EntityType="ReutersModel.tblDetailedEstimate" />
+    <EntitySet Name="tblStdInterims" EntityType="ReutersModel.tblStdInterim" />
+    <EntitySet Name="tblStdInterimCompanyInfoes" EntityType="ReutersModel.tblStdInterimCompanyInfo" />
+    <EntitySet Name="tblStdInterimRefs" EntityType="ReutersModel.tblStdInterimRef" />
+  </EntityContainer>
+  <EntityType Name="BENCHMARK_FINANCIALS">
+    <Key>
+      <PropertyRef Name="BENCHMARK_ID" />
+      <PropertyRef Name="BENCHMARK_DATE" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="UPDATE_DATE" />
+    </Key>
+    <Property Name="BENCHMARK_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="BENCHMARK_DATE" Type="DateTime" Nullable="false" />
+    <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+    <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+    <Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="UPDATE_DATE" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BENCHMARK_NODE_FINANCIALS">
+    <Key>
+      <PropertyRef Name="BENCHMARK_ID" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="UPDATE_DATE" />
+    </Key>
+    <Property Name="BENCHMARK_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="NODE_NAME1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="NODE_ID1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="NODE_NAME2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="NODE_ID2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+    <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+    <Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="UPDATE_DATE" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PORTFOLIO_FINANCIALS">
+    <Key>
+      <PropertyRef Name="PORTFOLIO_ID" />
+      <PropertyRef Name="PORTFOLIO_DATE" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="UPDATE_DATE" />
+    </Key>
+    <Property Name="PORTFOLIO_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="PORTFOLIO_DATE" Type="DateTime" Nullable="false" />
+    <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+    <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+    <Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="UPDATE_DATE" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblActual">
+    <Key>
+      <PropertyRef Name="XRef" />
+      <PropertyRef Name="PeriodType" />
+      <PropertyRef Name="EstimateType" />
+      <PropertyRef Name="fYearEnd" />
+      <PropertyRef Name="fPeriodEnd" />
+      <PropertyRef Name="PeriodEndDate" />
+    </Key>
+    <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+    <Property Name="PeriodType" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="EstimateType" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="fYearEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
+    <Property Name="fPeriodEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
+    <Property Name="PeriodEndDate" Type="DateTime" Nullable="false" />
+    <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="ActualValue" Type="Single" />
+    <Property Name="AnnouncementDate" Type="DateTime" />
+    <Property Name="UpdateDate" Type="DateTime" />
+    <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblBroker">
+    <Key>
+      <PropertyRef Name="broker_id" />
+    </Key>
+    <Property Name="broker_id" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="start" Type="DateTime" />
+    <Property Name="broker_name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="address1" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="address2" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="city" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="state_region" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="postalcode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="country" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblCETargetPrice">
+    <Key>
+      <PropertyRef Name="XRef" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="OriginalDate" />
+    </Key>
+    <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" />
+    <Property Name="EndDate" Type="DateTime" />
+    <Property Name="OriginalDate" Type="DateTime" Nullable="false" />
+    <Property Name="ExpirationDate" Type="DateTime" />
+    <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="NumOfEsts" Type="Int32" />
+    <Property Name="High" Type="Single" />
+    <Property Name="Low" Type="Single" />
+    <Property Name="Mean" Type="Single" />
+    <Property Name="StdDev" Type="Single" />
+    <Property Name="Median" Type="Single" />
+    <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+  </EntityType>
+  <EntityType Name="tblCompanyInfo">
+    <Key>
+      <PropertyRef Name="XRef" />
+    </Key>
+    <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+    <Property Name="ReportNumber" Type="String" MaxLength="5" Unicode="false" FixedLength="false" />
+    <Property Name="Name" Type="String" MaxLength="80" Unicode="false" FixedLength="false" />
+    <Property Name="Country" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="Ticker" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+    <Property Name="CUSIP" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+    <Property Name="ISIN" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+    <Property Name="SEDOL" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+    <Property Name="VALOREN" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+    <Property Name="RIC" Type="String" MaxLength="21" Unicode="false" FixedLength="false" />
+    <Property Name="DisplayRIC" Type="String" MaxLength="21" Unicode="false" FixedLength="false" />
+    <Property Name="RecentSplitDate" Type="DateTime" />
+    <Property Name="RecentCapitalAdjDate" Type="DateTime" />
+    <Property Name="Consensus" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Estimate" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="Earnings" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="Periodicity" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="CurrentPeriod" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+    <Property Name="pEndDate" Type="DateTime" />
+    <Property Name="fYearEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
+    <Property Name="fPeriodEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
+    <Property Name="CurrentPrice" Type="Single" />
+    <Property Name="CurrentPriceDate" Type="DateTime" />
+    <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="OutstandingShares" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="tblConsensusEstimate">
+    <Key>
+      <PropertyRef Name="XRef" />
+      <PropertyRef Name="PeriodEndDate" />
+      <PropertyRef Name="fYearEnd" />
+      <PropertyRef Name="EstimateType" />
+      <PropertyRef Name="PeriodType" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="OriginalDate" />
+    </Key>
+    <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+    <Property Name="PeriodEndDate" Type="DateTime" Nullable="false" />
+    <Property Name="fYearEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
+    <Property Name="fPeriodEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
+    <Property Name="EstimateType" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="PeriodType" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" />
+    <Property Name="EndDate" Type="DateTime" />
+    <Property Name="OriginalDate" Type="DateTime" Nullable="false" />
+    <Property Name="ExpirationDate" Type="DateTime" />
+    <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="NumOfEsts" Type="Int32" />
+    <Property Name="High" Type="Single" />
+    <Property Name="Low" Type="Single" />
+    <Property Name="Mean" Type="Single" />
+    <Property Name="StdDev" Type="Single" />
+    <Property Name="Median" Type="Single" />
+    <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+  </EntityType>
+  <EntityType Name="tblDetailedEstimate">
+    <Key>
+      <PropertyRef Name="XRef" />
+      <PropertyRef Name="fYearEnd" />
+      <PropertyRef Name="PeriodEndDate" />
+      <PropertyRef Name="BrokerID" />
+      <PropertyRef Name="PeriodType" />
+      <PropertyRef Name="EstimateType" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="OriginalDate" />
+    </Key>
+    <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+    <Property Name="fYearEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
+    <Property Name="fPeriodEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
+    <Property Name="PeriodEndDate" Type="DateTime" Nullable="false" />
+    <Property Name="BrokerID" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="PeriodType" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="EstimateType" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" />
+    <Property Name="EndDate" Type="DateTime" />
+    <Property Name="OriginalDate" Type="DateTime" Nullable="false" />
+    <Property Name="ExpirationDate" Type="DateTime" />
+    <Property Name="ConfirmationDate" Type="DateTime" />
+    <Property Name="SuppressStartDate" Type="DateTime" />
+    <Property Name="SuppressEndDate" Type="DateTime" />
+    <Property Name="SuppressOriginalDate" Type="DateTime" />
+    <Property Name="SuppressExpirationDate" Type="DateTime" />
+    <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="Amount" Type="Single" />
+    <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+  </EntityType>
+  <EntityType Name="tblStdInterim">
+    <Key>
+      <PropertyRef Name="ReportNumber" />
+      <PropertyRef Name="ReportYear" />
+      <PropertyRef Name="COA" />
+      <PropertyRef Name="RefNo" />
+      <PropertyRef Name="Amount" />
+    </Key>
+    <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
+    <Property Name="ReportYear" Type="Int32" Nullable="false" />
+    <Property Name="COA" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="RefNo" Type="String" Nullable="false" MaxLength="13" Unicode="false" FixedLength="false" />
+    <Property Name="Amount" Type="Single" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblStdInterimCompanyInfo">
+    <Key>
+      <PropertyRef Name="ReportNumber" />
+    </Key>
+    <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
+    <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="LatestFinancialsAnnual" Type="DateTime" />
+    <Property Name="LatestFinancialsInterim" Type="DateTime" />
+    <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="COAType" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+  </EntityType>
+  <EntityType Name="tblStdInterimRef">
+    <Key>
+      <PropertyRef Name="ReportNumber" />
+      <PropertyRef Name="RefNo" />
+    </Key>
+    <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
+    <Property Name="RefNo" Type="String" Nullable="false" MaxLength="13" Unicode="false" FixedLength="false" />
+    <Property Name="FiscalYear" Type="Int32" />
+    <Property Name="StatementType" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="InterimNumber" Type="Int16" />
+    <Property Name="UpdateType" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="UpdateDate" Type="DateTime" />
+    <Property Name="CompleteStatement" Type="Boolean" />
+    <Property Name="PeriodLengthCode" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+    <Property Name="PeriodLength" Type="Int32" />
+    <Property Name="PeriodEndDate" Type="DateTime" />
+    <Property Name="Source" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="SourceDate" Type="DateTime" />
+    <Property Name="ReportedAccountingStandardCode" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ReportedAccountingStandard" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="STECFlag" Type="Boolean" />
+    <Property Name="CurrencyConvertedTo" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="CurrencyReported" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="RepToConvExRate" Type="Single" />
+    <Property Name="UnitConvertedTo" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="UnitReported" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="SystemDate" Type="DateTime" />
+  </EntityType>
+</Schema>

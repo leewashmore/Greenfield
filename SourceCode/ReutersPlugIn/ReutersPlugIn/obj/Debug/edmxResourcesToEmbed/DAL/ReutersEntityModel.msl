@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ReutersModelStoreContainer" CdmEntityContainer="ReutersEntities">
+    <EntitySetMapping Name="BENCHMARK_FINANCIALS">
+      <EntityTypeMapping TypeName="ReutersModel.BENCHMARK_FINANCIALS">
+        <MappingFragment StoreEntitySet="BENCHMARK_FINANCIALS">
+          <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+          <ScalarProperty Name="BENCHMARK_DATE" ColumnName="BENCHMARK_DATE" />
+          <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+          <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+          <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+          <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BENCHMARK_NODE_FINANCIALS">
+      <EntityTypeMapping TypeName="ReutersModel.BENCHMARK_NODE_FINANCIALS">
+        <MappingFragment StoreEntitySet="BENCHMARK_NODE_FINANCIALS">
+          <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+          <ScalarProperty Name="NODE_NAME1" ColumnName="NODE_NAME1" />
+          <ScalarProperty Name="NODE_ID1" ColumnName="NODE_ID1" />
+          <ScalarProperty Name="NODE_NAME2" ColumnName="NODE_NAME2" />
+          <ScalarProperty Name="NODE_ID2" ColumnName="NODE_ID2" />
+          <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+          <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+          <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+          <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PORTFOLIO_FINANCIALS">
+      <EntityTypeMapping TypeName="ReutersModel.PORTFOLIO_FINANCIALS">
+        <MappingFragment StoreEntitySet="PORTFOLIO_FINANCIALS">
+          <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
+          <ScalarProperty Name="PORTFOLIO_DATE" ColumnName="PORTFOLIO_DATE" />
+          <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+          <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+          <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+          <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblActuals">
+      <EntityTypeMapping TypeName="ReutersModel.tblActual">
+        <MappingFragment StoreEntitySet="tblActual">
+          <ScalarProperty Name="XRef" ColumnName="XRef" />
+          <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+          <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
+          <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
+          <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+          <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="ActualValue" ColumnName="ActualValue" />
+          <ScalarProperty Name="AnnouncementDate" ColumnName="AnnouncementDate" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblBrokers">
+      <EntityTypeMapping TypeName="ReutersModel.tblBroker">
+        <MappingFragment StoreEntitySet="tblBrokers">
+          <ScalarProperty Name="broker_id" ColumnName="broker_id" />
+          <ScalarProperty Name="start" ColumnName="start" />
+          <ScalarProperty Name="broker_name" ColumnName="broker_name" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="state_region" ColumnName="state_region" />
+          <ScalarProperty Name="postalcode" ColumnName="postalcode" />
+          <ScalarProperty Name="country" ColumnName="country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblCETargetPrices">
+      <EntityTypeMapping TypeName="ReutersModel.tblCETargetPrice">
+        <MappingFragment StoreEntitySet="tblCETargetPrice">
+          <ScalarProperty Name="XRef" ColumnName="XRef" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
+          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
+          <ScalarProperty Name="High" ColumnName="High" />
+          <ScalarProperty Name="Low" ColumnName="Low" />
+          <ScalarProperty Name="Mean" ColumnName="Mean" />
+          <ScalarProperty Name="StdDev" ColumnName="StdDev" />
+          <ScalarProperty Name="Median" ColumnName="Median" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblCompanyInfoes">
+      <EntityTypeMapping TypeName="ReutersModel.tblCompanyInfo">
+        <MappingFragment StoreEntitySet="tblCompanyInfo">
+          <ScalarProperty Name="XRef" ColumnName="XRef" />
+          <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+          <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
+          <ScalarProperty Name="ISIN" ColumnName="ISIN" />
+          <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
+          <ScalarProperty Name="VALOREN" ColumnName="VALOREN" />
+          <ScalarProperty Name="RIC" ColumnName="RIC" />
+          <ScalarProperty Name="DisplayRIC" ColumnName="DisplayRIC" />
+          <ScalarProperty Name="RecentSplitDate" ColumnName="RecentSplitDate" />
+          <ScalarProperty Name="RecentCapitalAdjDate" ColumnName="RecentCapitalAdjDate" />
+          <ScalarProperty Name="Consensus" ColumnName="Consensus" />
+          <ScalarProperty Name="Estimate" ColumnName="Estimate" />
+          <ScalarProperty Name="Earnings" ColumnName="Earnings" />
+          <ScalarProperty Name="Periodicity" ColumnName="Periodicity" />
+          <ScalarProperty Name="CurrentPeriod" ColumnName="CurrentPeriod" />
+          <ScalarProperty Name="pEndDate" ColumnName="pEndDate" />
+          <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
+          <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+          <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+          <ScalarProperty Name="CurrentPriceDate" ColumnName="CurrentPriceDate" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="OutstandingShares" ColumnName="OutstandingShares" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblConsensusEstimates">
+      <EntityTypeMapping TypeName="ReutersModel.tblConsensusEstimate">
+        <MappingFragment StoreEntitySet="tblConsensusEstimate">
+          <ScalarProperty Name="XRef" ColumnName="XRef" />
+          <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
+          <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
+          <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+          <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
+          <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
+          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
+          <ScalarProperty Name="High" ColumnName="High" />
+          <ScalarProperty Name="Low" ColumnName="Low" />
+          <ScalarProperty Name="Mean" ColumnName="Mean" />
+          <ScalarProperty Name="StdDev" ColumnName="StdDev" />
+          <ScalarProperty Name="Median" ColumnName="Median" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblDetailedEstimates">
+      <EntityTypeMapping TypeName="ReutersModel.tblDetailedEstimate">
+        <MappingFragment StoreEntitySet="tblDetailedEstimate">
+          <ScalarProperty Name="XRef" ColumnName="XRef" />
+          <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
+          <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+          <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
+          <ScalarProperty Name="BrokerID" ColumnName="BrokerID" />
+          <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+          <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
+          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="ConfirmationDate" ColumnName="ConfirmationDate" />
+          <ScalarProperty Name="SuppressStartDate" ColumnName="SuppressStartDate" />
+          <ScalarProperty Name="SuppressEndDate" ColumnName="SuppressEndDate" />
+          <ScalarProperty Name="SuppressOriginalDate" ColumnName="SuppressOriginalDate" />
+          <ScalarProperty Name="SuppressExpirationDate" ColumnName="SuppressExpirationDate" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblStdInterims">
+      <EntityTypeMapping TypeName="ReutersModel.tblStdInterim">
+        <MappingFragment StoreEntitySet="tblStdInterim">
+          <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+          <ScalarProperty Name="ReportYear" ColumnName="ReportYear" />
+          <ScalarProperty Name="COA" ColumnName="COA" />
+          <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblStdInterimCompanyInfoes">
+      <EntityTypeMapping TypeName="ReutersModel.tblStdInterimCompanyInfo">
+        <MappingFragment StoreEntitySet="tblStdInterimCompanyInfo">
+          <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="LatestFinancialsAnnual" ColumnName="LatestFinancialsAnnual" />
+          <ScalarProperty Name="LatestFinancialsInterim" ColumnName="LatestFinancialsInterim" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="COAType" ColumnName="COAType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblStdInterimRefs">
+      <EntityTypeMapping TypeName="ReutersModel.tblStdInterimRef">
+        <MappingFragment StoreEntitySet="tblStdInterimRef">
+          <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+          <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+          <ScalarProperty Name="FiscalYear" ColumnName="FiscalYear" />
+          <ScalarProperty Name="StatementType" ColumnName="StatementType" />
+          <ScalarProperty Name="InterimNumber" ColumnName="InterimNumber" />
+          <ScalarProperty Name="UpdateType" ColumnName="UpdateType" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="CompleteStatement" ColumnName="CompleteStatement" />
+          <ScalarProperty Name="PeriodLengthCode" ColumnName="PeriodLengthCode" />
+          <ScalarProperty Name="PeriodLength" ColumnName="PeriodLength" />
+          <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="SourceDate" ColumnName="SourceDate" />
+          <ScalarProperty Name="ReportedAccountingStandardCode" ColumnName="ReportedAccountingStandardCode" />
+          <ScalarProperty Name="ReportedAccountingStandard" ColumnName="ReportedAccountingStandard" />
+          <ScalarProperty Name="STECFlag" ColumnName="STECFlag" />
+          <ScalarProperty Name="CurrencyConvertedTo" ColumnName="CurrencyConvertedTo" />
+          <ScalarProperty Name="CurrencyReported" ColumnName="CurrencyReported" />
+          <ScalarProperty Name="RepToConvExRate" ColumnName="RepToConvExRate" />
+          <ScalarProperty Name="UnitConvertedTo" ColumnName="UnitConvertedTo" />
+          <ScalarProperty Name="UnitReported" ColumnName="UnitReported" />
+          <ScalarProperty Name="SystemDate" ColumnName="SystemDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

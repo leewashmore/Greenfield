@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AIMSModelStoreContainer" CdmEntityContainer="AIMSEntities">
+    <FunctionImportMapping FunctionImportName="Get_Statement_Models" FunctionName="AIMSModel.Store.Get_Statement_Models">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AIMSModel.DCFAnalysisSummaryData_Result">
+          <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+          <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+          <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+          <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+          <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+          <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+          <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+          <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+          <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+          <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+          <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+          <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+          <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+          <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

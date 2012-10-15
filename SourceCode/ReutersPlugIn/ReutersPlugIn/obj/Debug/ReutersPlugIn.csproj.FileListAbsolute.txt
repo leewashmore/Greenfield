@@ -1,0 +1,15 @@
+E:\ReutersPlugIn\ReutersPlugIn\bin\Debug\ReutersPlugIn.dll.config
+E:\ReutersPlugIn\ReutersPlugIn\bin\Debug\ReutersPlugIn.dll
+E:\ReutersPlugIn\ReutersPlugIn\bin\Debug\ReutersPlugIn.pdb
+E:\ReutersPlugIn\ReutersPlugIn\bin\Debug\ReutersPlugIn.dll.manifest
+E:\ReutersPlugIn\ReutersPlugIn\bin\Debug\ReutersPlugIn.vsto
+E:\ReutersPlugIn\ReutersPlugIn\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+E:\ReutersPlugIn\ReutersPlugIn\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+E:\ReutersPlugIn\ReutersPlugIn\obj\Debug\ResolveAssemblyReference.cache
+E:\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.Properties.Resources.resources
+E:\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.ReutersRibbon.resources
+E:\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.TaskPaneView.resources
+E:\ReutersPlugIn\ReutersPlugIn\obj\Debug\GenerateResource.read.1.tlog
+E:\ReutersPlugIn\ReutersPlugIn\obj\Debug\GenerateResource.write.1.tlog
+E:\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.dll
+E:\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.pdb
