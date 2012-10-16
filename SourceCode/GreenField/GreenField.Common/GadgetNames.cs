@@ -82,7 +82,7 @@ namespace GreenField.Common
 
         #region Valuation
         #region Valuation DCF
-        public static string HOLDINGS_DISCOUNTED_CASH_FLOW = "DCF - Discounted Cash Flow Holdings 4.1";
+        public static string HOLDINGS_DISCOUNTED_CASH_FLOW = "Discounted Cash Flow Holdings";
         public static string HOLDINGS_FREE_CASH_FLOW = "Free Cash Flow";
         #endregion
 
@@ -92,7 +92,7 @@ namespace GreenField.Common
         #endregion
 
         #region Documents
-        public static string PORTAL_ENHANCEMENTS_DOCUMENTS = "Documents Portal Enhancements 4.1";
+        public static string PORTAL_ENHANCEMENTS_DOCUMENTS = "Documents";
         #endregion
 
         #region Charting
@@ -105,24 +105,24 @@ namespace GreenField.Common
         #endregion
 
         #region Charting Context
-        public static string EXTERNAL_RESEARCH_SCATTER_CHART_BANK = "Scatter Charts Bank External Research 4.4.2";
-        public static string EXTERNAL_RESEARCH_SCATTER_CHART_INDUSTRIAL = "Scatter Charts Industrial External Research 4.4.2";
-        public static string EXTERNAL_RESEARCH_SCATTER_CHART_INSURANCE = "Scatter Charts Insurance External Research 4.4.2";
-        public static string EXTERNAL_RESEARCH_SCATTER_CHART_UTILITY = "Scatter Charts Utility External Research 4.4.2";
+        public static string EXTERNAL_RESEARCH_SCATTER_CHART_BANK = "Scatter Charts Bank";
+        public static string EXTERNAL_RESEARCH_SCATTER_CHART_INDUSTRIAL = "Scatter Charts Industrial";
+        public static string EXTERNAL_RESEARCH_SCATTER_CHART_INSURANCE = "Scatter Charts Insurance";
+        public static string EXTERNAL_RESEARCH_SCATTER_CHART_UTILITY = "Scatter Charts Utility";
         #endregion
 
         #region Charting Valuation
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_BANK = "Historical Valuation Charts Bank External Research 4.4.1";
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INDUSTRIAL = "Historical Valuation Charts Industrial External Research 4.4.1";
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INSURANCE = "Historical Valuation Charts Insurance External Research 4.4.1";
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_UTILITY = "Historical Valuation Charts Utility External Research 4.4.1";
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PREVENUE = "Historical Valuation Charts P/Revenue External Research 4.4.1";
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_EVEBITDA = "Historical Valuation Charts EV/EBITDA External Research 4.4.1";
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE = "Historical Valuation Charts P/CE External Research 4.4.1";
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PE = "Historical Valuation Charts P/E External Research 4.4.1";
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PBV = "Historical Valuation Charts P/BV External Research 4.4.1";
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_FCFYield = "Historical Valuation Charts FCF Yield External Research 4.4.1";
-        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_DividendYield = "Historical Valuation Charts Dividend Yield External Research 4.4.1";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_BANK = "Historical Valuation Charts Bank";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INDUSTRIAL = "Historical Valuation Charts Industrial";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INSURANCE = "Historical Valuation Charts Insurance";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_UTILITY = "Historical Valuation Charts Utility";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PREVENUE = "Historical Valuation Charts P/Revenue";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_EVEBITDA = "Historical Valuation Charts EV/EBITDA";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE = "Historical Valuation Charts P/CE";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PE = "Historical Valuation Charts P/E";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PBV = "Historical Valuation Charts P/BV";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_FCFYield = "Historical Valuation Charts FCF Yield";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_DividendYield = "Historical Valuation Charts Dividend Yield";
         #endregion
         #endregion
 
