@@ -357,10 +357,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
+                EntitySelectionInfo = result;
                 if (result != null && IsActive)
                 {
-                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
-                    EntitySelectionInfo = result;
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);                    
                     if (EntitySelectionInfo != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
