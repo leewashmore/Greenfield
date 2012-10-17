@@ -87,5 +87,15 @@ namespace ReutersPlugIn
                 }
             }
         }
+
+        /// <summary>
+        /// clearScrenToolStripMenuItem Click EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clearScrenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.rtbLogs.Clear();
+        }
     }
 }

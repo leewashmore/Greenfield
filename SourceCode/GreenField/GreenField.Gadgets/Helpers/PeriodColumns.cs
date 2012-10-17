@@ -561,12 +561,14 @@ namespace GreenField.Gadgets.Helpers
                     object dataFirstAdditionalInfo = null;
                     if (additionalFirstDescPropertyName != null)
                     {
-                        dataFirstAdditionalInfo = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("HarmonicFirst").GetValue(yearFourData, null), dataDecimal, dataPercentage);
+                        dataFirstAdditionalInfo = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType()
+                            .GetProperty("HarmonicFirst").GetValue(yearFourData, null), dataDecimal, dataPercentage);
                     }
                     object dataSecondAdditionalInfo = null;
                     if (additionalSecondDescPropertyName != null)
                     {
-                        dataSecondAdditionalInfo = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("HarmonicSecond").GetValue(yearFourData, null), dataDecimal, dataPercentage);
+                        dataSecondAdditionalInfo = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType()
+                            .GetProperty("HarmonicSecond").GetValue(yearFourData, null), dataDecimal, dataPercentage);
                     }
                     result.Add(new PeriodColumnDisplayData()
                     {
@@ -652,20 +654,34 @@ namespace GreenField.Gadgets.Helpers
                         QUARTER_SEVEN_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(quarterSevenData, "ReportedCurrency"),
 
                         DATA_DESC = dataDesc,
-                        YEAR_ONE = yearOneData == null ? null : GetFormattedValue(yearOneData.GetType().GetProperty("Amount").GetValue(yearOneData, null), dataDecimal, dataPercentage),
-                        YEAR_TWO = yearTwoData == null ? null : GetFormattedValue(yearTwoData.GetType().GetProperty("Amount").GetValue(yearTwoData, null), dataDecimal, dataPercentage),
-                        YEAR_THREE = yearThreeData == null ? null : GetFormattedValue(yearThreeData.GetType().GetProperty("Amount").GetValue(yearThreeData, null), dataDecimal, dataPercentage),
-                        YEAR_FOUR = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("Amount").GetValue(yearFourData, null), dataDecimal, dataPercentage),
-                        YEAR_FIVE = yearFiveData == null ? null : GetFormattedValue(yearFiveData.GetType().GetProperty("Amount").GetValue(yearFiveData, null), dataDecimal, dataPercentage),
-                        YEAR_SIX = yearSixData == null ? null : GetFormattedValue(yearSixData.GetType().GetProperty("Amount").GetValue(yearSixData, null), dataDecimal, dataPercentage),
-                        YEAR_SEVEN = yearSevenData == null ? null : GetFormattedValue(yearSevenData.GetType().GetProperty("Amount").GetValue(yearSevenData, null), dataDecimal, dataPercentage),
-                        QUARTER_ONE = quarterOneData == null ? null : GetFormattedValue(quarterOneData.GetType().GetProperty("Amount").GetValue(quarterOneData, null), dataDecimal, dataPercentage),
-                        QUARTER_TWO = quarterTwoData == null ? null : GetFormattedValue(quarterTwoData.GetType().GetProperty("Amount").GetValue(quarterTwoData, null), dataDecimal, dataPercentage),
-                        QUARTER_THREE = quarterThreeData == null ? null : GetFormattedValue(quarterThreeData.GetType().GetProperty("Amount").GetValue(quarterThreeData, null), dataDecimal, dataPercentage),
-                        QUARTER_FOUR = quarterFourData == null ? null : GetFormattedValue(quarterFourData.GetType().GetProperty("Amount").GetValue(quarterFourData, null), dataDecimal, dataPercentage),
-                        QUARTER_FIVE = quarterFiveData == null ? null : GetFormattedValue(quarterFiveData.GetType().GetProperty("Amount").GetValue(quarterFiveData, null), dataDecimal, dataPercentage),
-                        QUARTER_SIX = quarterSixData == null ? null : GetFormattedValue(quarterSixData.GetType().GetProperty("Amount").GetValue(quarterSixData, null), dataDecimal, dataPercentage),
-                        QUARTER_SEVEN = quarterSevenData == null ? null : GetFormattedValue(quarterSevenData.GetType().GetProperty("Amount").GetValue(quarterSevenData, null), dataDecimal, dataPercentage),
+                        YEAR_ONE = yearOneData == null ? null : GetFormattedValue(yearOneData.GetType().GetProperty("Amount")
+                        .GetValue(yearOneData, null), dataDecimal, dataPercentage),
+                        YEAR_TWO = yearTwoData == null ? null : GetFormattedValue(yearTwoData.GetType().GetProperty("Amount")
+                        .GetValue(yearTwoData, null), dataDecimal, dataPercentage),
+                        YEAR_THREE = yearThreeData == null ? null : GetFormattedValue(yearThreeData.GetType().GetProperty("Amount")
+                        .GetValue(yearThreeData, null), dataDecimal, dataPercentage),
+                        YEAR_FOUR = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("Amount")
+                        .GetValue(yearFourData, null), dataDecimal, dataPercentage),
+                        YEAR_FIVE = yearFiveData == null ? null : GetFormattedValue(yearFiveData.GetType().GetProperty("Amount")
+                        .GetValue(yearFiveData, null), dataDecimal, dataPercentage),
+                        YEAR_SIX = yearSixData == null ? null : GetFormattedValue(yearSixData.GetType().GetProperty("Amount")
+                        .GetValue(yearSixData, null), dataDecimal, dataPercentage),
+                        YEAR_SEVEN = yearSevenData == null ? null : GetFormattedValue(yearSevenData.GetType().GetProperty("Amount")
+                        .GetValue(yearSevenData, null), dataDecimal, dataPercentage),
+                        QUARTER_ONE = quarterOneData == null ? null : GetFormattedValue(quarterOneData.GetType().GetProperty("Amount")
+                        .GetValue(quarterOneData, null), dataDecimal, dataPercentage),
+                        QUARTER_TWO = quarterTwoData == null ? null : GetFormattedValue(quarterTwoData.GetType().GetProperty("Amount")
+                        .GetValue(quarterTwoData, null), dataDecimal, dataPercentage),
+                        QUARTER_THREE = quarterThreeData == null ? null : GetFormattedValue(quarterThreeData.GetType().GetProperty("Amount")
+                        .GetValue(quarterThreeData, null), dataDecimal, dataPercentage),
+                        QUARTER_FOUR = quarterFourData == null ? null : GetFormattedValue(quarterFourData.GetType().GetProperty("Amount")
+                        .GetValue(quarterFourData, null), dataDecimal, dataPercentage),
+                        QUARTER_FIVE = quarterFiveData == null ? null : GetFormattedValue(quarterFiveData.GetType().GetProperty("Amount")
+                        .GetValue(quarterFiveData, null), dataDecimal, dataPercentage),
+                        QUARTER_SIX = quarterSixData == null ? null : GetFormattedValue(quarterSixData.GetType().GetProperty("Amount")
+                        .GetValue(quarterSixData, null), dataDecimal, dataPercentage),
+                        QUARTER_SEVEN = quarterSevenData == null ? null : GetFormattedValue(quarterSevenData.GetType().GetProperty("Amount")
+                        .GetValue(quarterSevenData, null), dataDecimal, dataPercentage),
                     });
                 }
             }
@@ -714,7 +730,6 @@ namespace GreenField.Gadgets.Helpers
             if (e.Row is GridViewRow)
             {
                 var row = e.Row as GridViewRow;
-
                 if (row != null)
                 {
                     PeriodColumnDisplayData rowContext = row.DataContext as PeriodColumnDisplayData;
@@ -726,16 +741,19 @@ namespace GreenField.Gadgets.Helpers
                         {
                             //Null Check
                             if (cell.Value == null)
+                            {
                                 continue;
-
+                            }
                             //No toolTip service for Description and left navigation
                             if (cell.Column.DisplayIndex <= 1)
+                            {
                                 continue;
-
+                            }
                             //No toolTip service for right navigation column
                             if (cell.Column.DisplayIndex == e.GridViewDataControl.Columns.Count - 1)
+                            {
                                 continue;
-
+                            }
                             String toolTipContent = GetToolTipContent(rowContext, cell.DataColumn.DataMemberBinding.Path.Path);
 
                             if (toolTipContent != null)
@@ -750,7 +768,6 @@ namespace GreenField.Gadgets.Helpers
                                 ToolTipService.SetToolTip(cell, toolTip);
                             }
                         }
-
                     }
                 }
             }
@@ -765,7 +782,6 @@ namespace GreenField.Gadgets.Helpers
             if (e.Row is GridViewRow)
             {
                 var row = e.Row as GridViewRow;
-
                 if (row != null)
                 {
                     PeriodColumnDisplayData rowContext = row.DataContext as PeriodColumnDisplayData;
@@ -777,16 +793,19 @@ namespace GreenField.Gadgets.Helpers
                         {
                             //Null Check
                             if (cell.Value == null)
+                            {
                                 continue;
-
+                            }
                             //No toolTip service for Description and left navigation
                             if (cell.Column.DisplayIndex <= 1)
+                            {
                                 continue;
-
+                            }
                             //No toolTip service for right navigation column
                             if (cell.Column.DisplayIndex == e.GridViewDataControl.Columns.Count - 1)
+                            {
                                 continue;
-
+                            }
                             String toolTipContent = GetToolTipContentForCOASpecificGadget(rowContext, cell.DataColumn.DataMemberBinding.Path.Path);
 
                             if (toolTipContent != null)
@@ -801,7 +820,6 @@ namespace GreenField.Gadgets.Helpers
                                 ToolTipService.SetToolTip(cell, toolTip);
                             }
                         }
-
                     }
                 }
             }
@@ -816,7 +834,6 @@ namespace GreenField.Gadgets.Helpers
             if (e.Row is GridViewRow)
             {
                 var row = e.Row as GridViewRow;
-
                 if (row != null)
                 {
                     PeriodColumnDisplayData rowContext = row.DataContext as PeriodColumnDisplayData;
@@ -828,16 +845,19 @@ namespace GreenField.Gadgets.Helpers
                         {
                             //Null Check
                             if (cell.Value == null)
+                            {
                                 continue;
-
+                            }
                             //No toolTip service for Description and left navigation
                             if (cell.Column.DisplayIndex <= 1)
+                            {
                                 continue;
-
+                            }
                             //No toolTip service for right navigation column
                             if (cell.Column.DisplayIndex == e.GridViewDataControl.Columns.Count - 1)
+                            {
                                 continue;
-
+                            }
                             String toolTipContent = GetToolTipContentForConsensusDetailedGadget(rowContext, cell.DataColumn.DataMemberBinding.Path.Path);
 
                             if (toolTipContent != null)
@@ -852,7 +872,6 @@ namespace GreenField.Gadgets.Helpers
                                 ToolTipService.SetToolTip(cell, toolTip);
                             }
                         }
-
                     }
                 }
             }
@@ -976,7 +995,7 @@ namespace GreenField.Gadgets.Helpers
 
             Decimal result;
             Int32 decimalPlaces = Convert.ToInt32(decimals);
-            String formattedValue = Decimal.TryParse(value.ToString(), out result) ? Math.Round(result, decimalPlaces).ToString() : value.ToString();
+            String formattedValue = Decimal.TryParse(value.ToString(), out result) ? String.Format("{0:n" + decimalPlaces.ToString() + "}", result) : value.ToString();            
 
             if (percentage == true)
                 formattedValue = formattedValue + " %";

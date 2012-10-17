@@ -205,15 +205,13 @@ namespace GreenField.Web.Services
                     membershipUser.IsApproved = user.IsApproved;
                     if (membershipUser != null)
                     {
-                        Membership.UpdateUser(membershipUser);
-                        return true;
+                        Membership.UpdateUser(membershipUser);                        
                     }
                     else
                     {
                         return false;
                     }
                 }
-
                 return true;
             }
             catch (Exception ex)

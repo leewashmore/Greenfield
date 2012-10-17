@@ -28,7 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.rtbLogs = new System.Windows.Forms.RichTextBox();
+            this.cmsTaskPane = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.clearScrenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsTaskPane.SuspendLayout();
             this.SuspendLayout();
             // 
             // rtbLogs
@@ -46,12 +50,27 @@
             this.rtbLogs.TabIndex = 0;
             this.rtbLogs.Text = "";
             // 
+            // cmsTaskPane
+            // 
+            this.cmsTaskPane.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearScrenToolStripMenuItem});
+            this.cmsTaskPane.Name = "cmsTaskPane";
+            this.cmsTaskPane.Size = new System.Drawing.Size(153, 48);
+            // 
+            // clearScrenToolStripMenuItem
+            // 
+            this.clearScrenToolStripMenuItem.Name = "clearScrenToolStripMenuItem";
+            this.clearScrenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearScrenToolStripMenuItem.Text = "Clear Screen";
+            this.clearScrenToolStripMenuItem.Click += new System.EventHandler(this.clearScrenToolStripMenuItem_Click);
+            // 
             // TaskPaneView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.rtbLogs);
             this.Name = "TaskPaneView";
+            this.cmsTaskPane.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -59,6 +78,8 @@
         #endregion
 
         private System.Windows.Forms.RichTextBox rtbLogs;
+        private System.Windows.Forms.ContextMenuStrip cmsTaskPane;
+        private System.Windows.Forms.ToolStripMenuItem clearScrenToolStripMenuItem;
 
     }
 }

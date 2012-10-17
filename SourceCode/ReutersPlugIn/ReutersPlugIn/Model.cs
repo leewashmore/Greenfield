@@ -49,12 +49,13 @@ namespace ReutersPlugIn
                 //'Reuters Reported' worksheet
                 Worksheet workSheetReuters = workBook.Worksheets[ThisAddIn.REUTERS_REPORTED_WORKSHEET_NAME];
                 Globals.ThisAddIn.AppendMessage("Updating reuters reported headers...");
+                workSheetReuters.Cells.ClearContents();
                 workSheetReuters = UpdateReutersHeaders(workSheetReuters, Convert.ToInt32(firstYear), Convert.ToInt32(lastYear));
                 if (workSheetReuters == null)
                 {
                     throw new Exception("An Error occured while updating reuters reported headers");
                 }
-                Globals.ThisAddIn.AppendMessage("Updating reuters reported data...");
+                Globals.ThisAddIn.AppendMessage("Updating reuters reported data...");                
                 workSheetReuters = UpdateReutersData(workSheetReuters, financialData);
                 if (workSheetReuters == null)
                 {
@@ -65,12 +66,13 @@ namespace ReutersPlugIn
                 //'Consensus Data' worksheet
                 Worksheet workSheetConsensus = workBook.Worksheets[ThisAddIn.CONSENSUS_DATA_WORKSHEET_NAME];
                 Globals.ThisAddIn.AppendMessage("Updating consensus headers...");
+                workSheetConsensus.Cells.ClearContents();
                 workSheetConsensus = UpdateConsensusHeaders(workSheetConsensus, Convert.ToInt32(firstYear), Convert.ToInt32(lastYear));
                 if (workSheetConsensus == null)
                 {
                     throw new Exception("An Error occured while updating consensus headers");
                 }
-                Globals.ThisAddIn.AppendMessage("Updating consensus data...");
+                Globals.ThisAddIn.AppendMessage("Updating consensus data...");                
                 workSheetConsensus = UpdateConsensusData(workSheetConsensus, consensusData);
                 if (workSheetConsensus == null)
                 {

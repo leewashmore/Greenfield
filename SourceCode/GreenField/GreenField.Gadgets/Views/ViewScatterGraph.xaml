@@ -285,7 +285,7 @@
 
                     <TextBlock Text="*Missing Data for Security Selected" Grid.Row="1"
                                Margin="5" Opacity="0.3" VerticalAlignment="Bottom"
-                               HorizontalAlignment="Left" Visibility="{Binding MissingSecurityDataNotificationVisibility}"
+                               HorizontalAlignment="Right" Visibility="{Binding MissingSecurityDataNotificationVisibility}"
                                Style="{StaticResource TextBlockStyle}"/>
                 </Grid>
             </Grid>

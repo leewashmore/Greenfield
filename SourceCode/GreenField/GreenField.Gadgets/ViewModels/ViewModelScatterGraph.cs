@@ -335,11 +335,14 @@ namespace GreenField.Gadgets.ViewModels
             EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
             scatterChartDefault = (ScatterChartDefaults)param.AdditionalInfo;
             SetScatterChartDefaults(scatterChartDefault);
-
             if (eventAggregator != null)
             {
                 eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
-            }            
+            }
+            if (EntitySelectionInfo != null)
+            {
+                HandleSecurityReferenceSetEvent(EntitySelectionInfo);
+            }
         } 
         #endregion        
 
