@@ -542,6 +542,10 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                if (ExceptionMessage == null || ExceptionMessage == "")
+                {
+                    ExceptionMessage = ex.Message;
+                }
                 return ExceptionMessage;
             }
         }
@@ -2365,6 +2369,7 @@ namespace GreenField.Web.Helpers
                 isValid = FetchUserRole(UserName);
                 if (!isValid)
                 {
+                    
                     throw new Exception();
                 }
 
@@ -2703,7 +2708,7 @@ namespace GreenField.Web.Helpers
             try
             {
                 InvalidValue = "Issuer Id= " + issuerId;
-                ExternalResearchEntity.Get_Data(issuerId, calcLog);
+                ExternalResearchEntity.Get_Data(issuerId, calcLog,"Y");
             }
             catch (Exception ex)
             {

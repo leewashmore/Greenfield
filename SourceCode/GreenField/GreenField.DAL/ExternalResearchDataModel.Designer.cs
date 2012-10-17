@@ -2624,7 +2624,8 @@ namespace GreenField.DAL
         /// </summary>
         /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
         /// <param name="cALC_LOG">No Metadata Documentation available.</param>
-        public int Get_Data(global::System.String iSSUER_ID, global::System.String cALC_LOG)
+        /// <param name="vERBOSE">No Metadata Documentation available.</param>
+        public int Get_Data(global::System.String iSSUER_ID, global::System.String cALC_LOG, global::System.String vERBOSE)
         {
             ObjectParameter iSSUER_IDParameter;
             if (iSSUER_ID != null)
@@ -2646,7 +2647,17 @@ namespace GreenField.DAL
                 cALC_LOGParameter = new ObjectParameter("CALC_LOG", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction("Get_Data", iSSUER_IDParameter, cALC_LOGParameter);
+            ObjectParameter vERBOSEParameter;
+            if (vERBOSE != null)
+            {
+                vERBOSEParameter = new ObjectParameter("VERBOSE", vERBOSE);
+            }
+            else
+            {
+                vERBOSEParameter = new ObjectParameter("VERBOSE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("Get_Data", iSSUER_IDParameter, cALC_LOGParameter, vERBOSEParameter);
         }
     
         /// <summary>

@@ -583,6 +583,7 @@
         <Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="CALC_LOG" Type="char" Mode="In" />
+          <Parameter Name="VERBOSE" Type="char" Mode="In" />
         </Function>
         <Function Name="Get_EV_EBITDA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityId" Type="varchar" Mode="In" />
@@ -1197,6 +1198,7 @@
 					<FunctionImport Name="Get_Data">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="CALC_LOG" Mode="In" Type="String" />
+            <Parameter Name="VERBOSE" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="ModelInsertInternalModelLoadData">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />

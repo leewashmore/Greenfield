@@ -101,7 +101,7 @@
                                          AlternationCount="2" 
                                          MinColumnWidth="70" DataLoaded="dgPortfolioDetails_DataLoaded"
                                          EnableRowVirtualization="True"
-                                         EnableColumnVirtualization="True"
+                                         EnableColumnVirtualization="False"
                                          GridLinesVisibility="None">
                         <telerik:RadGridView.Columns >
                             <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
