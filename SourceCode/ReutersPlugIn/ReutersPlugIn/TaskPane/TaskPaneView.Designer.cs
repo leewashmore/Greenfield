@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.rtbLogs = new System.Windows.Forms.RichTextBox();
             this.cmsTaskPane = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.clearScrenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsTaskPane.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,6 +41,7 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbLogs.BackColor = System.Drawing.SystemColors.Window;
+            this.rtbLogs.ContextMenuStrip = this.cmsTaskPane;
             this.rtbLogs.Enabled = false;
             this.rtbLogs.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbLogs.Location = new System.Drawing.Point(0, 0);
@@ -53,16 +54,16 @@
             // cmsTaskPane
             // 
             this.cmsTaskPane.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearScrenToolStripMenuItem});
+            this.clearScreenToolStripMenuItem});
             this.cmsTaskPane.Name = "cmsTaskPane";
-            this.cmsTaskPane.Size = new System.Drawing.Size(153, 48);
+            this.cmsTaskPane.Size = new System.Drawing.Size(140, 26);
             // 
-            // clearScrenToolStripMenuItem
+            // clearScreenToolStripMenuItem
             // 
-            this.clearScrenToolStripMenuItem.Name = "clearScrenToolStripMenuItem";
-            this.clearScrenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.clearScrenToolStripMenuItem.Text = "Clear Screen";
-            this.clearScrenToolStripMenuItem.Click += new System.EventHandler(this.clearScrenToolStripMenuItem_Click);
+            this.clearScreenToolStripMenuItem.Name = "clearScreenToolStripMenuItem";
+            this.clearScreenToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.clearScreenToolStripMenuItem.Text = "Clear Screen";
+            this.clearScreenToolStripMenuItem.Click += new System.EventHandler(this.clearScrenToolStripMenuItem_Click);
             // 
             // TaskPaneView
             // 
@@ -79,7 +80,7 @@
 
         private System.Windows.Forms.RichTextBox rtbLogs;
         private System.Windows.Forms.ContextMenuStrip cmsTaskPane;
-        private System.Windows.Forms.ToolStripMenuItem clearScrenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearScreenToolStripMenuItem;
 
     }
 }

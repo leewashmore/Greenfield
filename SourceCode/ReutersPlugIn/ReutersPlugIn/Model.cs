@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Microsoft.Office.Interop.Excel;
 using ReutersPlugIn.ModelRefreshDefinitions;
@@ -11,6 +12,8 @@ namespace ReutersPlugIn
     /// </summary>
     public static class Model
     {
+        private static dynamic headerColor;
+
         /// <summary>
         /// Generate Excel
         /// </summary>
@@ -32,30 +35,32 @@ namespace ReutersPlugIn
                 }
 
                 var excelApp = Globals.ThisAddIn.Application;
-                Workbook workBook = excelApp.ActiveWorkbook;//excelApp.Workbooks[1];
+                Workbook workBook = excelApp.ActiveWorkbook;
 
-                Globals.ThisAddIn.AppendMessage("Validating reuters reported data...");
-                List<int?> distinctPeriodYears = financialData.Where(a => a.PeriodYear != null)
+                //'Reuters Reported' worksheet
+                Globals.ThisAddIn.AppendMessage("Updating reuters reported headers...");
+                List<int?> distinctPeriodYears_reuters = financialData.Where(a => a.PeriodYear != null)
                     .Select(a => a.PeriodYear).OrderBy(a => a).ToList().Distinct().ToList();
-                if (distinctPeriodYears == null || distinctPeriodYears.Count == 0)
+                if (distinctPeriodYears_reuters == null || distinctPeriodYears_reuters.Count == 0)
                 {
                     throw new Exception("No reuters data available");
                 }
 
-                int? firstYear = distinctPeriodYears[0];
-                int? lastYear = distinctPeriodYears[distinctPeriodYears.Count - 1];
-                int? numberOfYears = lastYear - firstYear;
-
-                //'Reuters Reported' worksheet
-                Worksheet workSheetReuters = workBook.Worksheets[ThisAddIn.REUTERS_REPORTED_WORKSHEET_NAME];
-                Globals.ThisAddIn.AppendMessage("Updating reuters reported headers...");
+                int? firstYear_reuters = distinctPeriodYears_reuters[0];
+                int? lastYear_reuters = distinctPeriodYears_reuters[distinctPeriodYears_reuters.Count - 1];
+                int? numberOfYears_reuters = lastYear_reuters - firstYear_reuters;
+                
+                Worksheet workSheetReuters = workBook.Worksheets[ThisAddIn.REUTERS_REPORTED_WORKSHEET_NAME];                
+                headerColor = (workSheetReuters.Cells[1, 1] as Range).Interior.Color;
                 workSheetReuters.Cells.ClearContents();
-                workSheetReuters = UpdateReutersHeaders(workSheetReuters, Convert.ToInt32(firstYear), Convert.ToInt32(lastYear));
+                workSheetReuters.Cells.ClearOutline();
+                workSheetReuters.Cells.ClearFormats();
+                workSheetReuters = UpdateReutersHeaders(workSheetReuters, Convert.ToInt32(firstYear_reuters), Convert.ToInt32(lastYear_reuters));
                 if (workSheetReuters == null)
                 {
                     throw new Exception("An Error occured while updating reuters reported headers");
                 }
-                Globals.ThisAddIn.AppendMessage("Updating reuters reported data...");                
+                Globals.ThisAddIn.AppendMessage("Updating reuters reported data...");
                 workSheetReuters = UpdateReutersData(workSheetReuters, financialData);
                 if (workSheetReuters == null)
                 {
@@ -63,16 +68,29 @@ namespace ReutersPlugIn
                 }
                 Globals.ThisAddIn.AppendMessage("Reuters reported data update complete");
 
-                //'Consensus Data' worksheet
-                Worksheet workSheetConsensus = workBook.Worksheets[ThisAddIn.CONSENSUS_DATA_WORKSHEET_NAME];
+                //'Consensus Data' worksheet                
                 Globals.ThisAddIn.AppendMessage("Updating consensus headers...");
+                List<int> distinctPeriodYears_consensus = consensusData.Select(a => a.PERIOD_YEAR).OrderBy(a => a).ToList().Distinct().ToList();
+                if (distinctPeriodYears_consensus == null || distinctPeriodYears_consensus.Count == 0)
+                {
+                    throw new Exception("No consensus data available");
+                }
+
+                int? firstYear_consensus = distinctPeriodYears_consensus[0];
+                int? lastYear_consensus = distinctPeriodYears_consensus[distinctPeriodYears_consensus.Count - 1];
+                int? numberOfYears_consensus = lastYear_consensus - firstYear_consensus;
+
+                Worksheet workSheetConsensus = workBook.Worksheets[ThisAddIn.CONSENSUS_DATA_WORKSHEET_NAME];
+
                 workSheetConsensus.Cells.ClearContents();
-                workSheetConsensus = UpdateConsensusHeaders(workSheetConsensus, Convert.ToInt32(firstYear), Convert.ToInt32(lastYear));
+                workSheetConsensus.Cells.ClearOutline();
+                workSheetConsensus.Cells.ClearFormats();
+                workSheetConsensus = UpdateConsensusHeaders(workSheetConsensus, Convert.ToInt32(firstYear_consensus), Convert.ToInt32(lastYear_consensus));
                 if (workSheetConsensus == null)
                 {
                     throw new Exception("An Error occured while updating consensus headers");
                 }
-                Globals.ThisAddIn.AppendMessage("Updating consensus data...");                
+                Globals.ThisAddIn.AppendMessage("Updating consensus data...");
                 workSheetConsensus = UpdateConsensusData(workSheetConsensus, consensusData);
                 if (workSheetConsensus == null)
                 {
@@ -114,18 +132,22 @@ namespace ReutersPlugIn
             try
             {
                 var row = 1;
-                workSheet.Cells[row, "A"] = "Data Id";
+                workSheet.Cells[row, "A"] = "Data Id";                
                 workSheet.Cells[row, "B"] = "Data Description";
                 int numberOfYears = lastYear - firstYear;
                 for (int i = 1; i <= numberOfYears * 5 + 1; i = i + 5)
-                {
+                {                    
+                    workSheet.Range[workSheet.Columns[i + 2], workSheet.Columns[i + 5]].Group();
+                    workSheet.Range[workSheet.Columns[i + 2], workSheet.Columns[i + 5]].Hidden = true;
                     workSheet.Cells[row, i + 2] = firstYear + " Q1";
                     workSheet.Cells[row, i + 3] = firstYear + " Q2";
                     workSheet.Cells[row, i + 4] = firstYear + " Q3";
                     workSheet.Cells[row, i + 5] = firstYear + " Q4";
-                    workSheet.Cells[row, i + 6] = firstYear + " A";
+                    workSheet.Cells[row, i + 6] = firstYear + " A";                    
                     firstYear++;
                 }
+                workSheet.Range[workSheet.Cells[row, 1], workSheet.Cells[row, numberOfYears * 5 + 7]].Interior.Color = headerColor;                    
+                workSheet.Range[workSheet.Cells[row, 1], workSheet.Cells[row, numberOfYears * 5 + 7]].Font.Bold = true;
             }
             catch (Exception ex)
             {
@@ -212,6 +234,8 @@ namespace ReutersPlugIn
                 int numberOfYears = lastYear - firstYear;
                 for (int i = 1; i <= numberOfYears * 5 + 1; i = i + 5)
                 {
+                    workSheet.Range[workSheet.Columns[i + 2], workSheet.Columns[i + 5]].Group();
+                    workSheet.Range[workSheet.Columns[i + 2], workSheet.Columns[i + 5]].Hidden = true;
                     workSheet.Cells[row, i + 2] = firstYear + " Q1";
                     workSheet.Cells[row, i + 3] = firstYear + " Q2";
                     workSheet.Cells[row, i + 4] = firstYear + " Q3";
@@ -219,6 +243,8 @@ namespace ReutersPlugIn
                     workSheet.Cells[row, i + 6] = firstYear + " A";
                     firstYear++;
                 }
+                workSheet.Range[workSheet.Cells[row, 1], workSheet.Cells[row, numberOfYears * 5 + 7]].Interior.Color = headerColor;
+                workSheet.Range[workSheet.Cells[row, 1], workSheet.Cells[row, numberOfYears * 5 + 7]].Font.Bold = true;
             }
             catch (Exception ex)
             {
@@ -299,7 +325,7 @@ namespace ReutersPlugIn
                     String coaType = (worksheet.Cells[rowCount, 1] as Range).Value;
                     String dataDescription = (worksheet.Cells[rowCount, 2] as Range).Value;
 
-                    if (coaType == null || dataDescription == null ||
+                    while (coaType == null || dataDescription == null ||
                         (modelUploadData.Any(g => g.COA.ToLower().Trim() == coaType.ToLower().Trim() &&
                             g.DATA_DESCRIPTION.ToLower().Trim() == dataDescription.ToLower().Trim()) == false))
                     {
@@ -307,9 +333,9 @@ namespace ReutersPlugIn
                         {
                             Globals.ThisAddIn.AppendMessage(ThisAddIn.MODEL_UPLOAD_WORKSHEET_NAME
                                 + ": COA '" + coaType.Trim() + "', Description '" + dataDescription.Trim()
-                                + "' no longer exists and has been removed", true);
-                            (worksheet.Rows[rowCount] as Range).Delete(XlDeleteShiftDirection.xlShiftUp);
+                                + "' no longer exists and has been removed", true);                            
                         }
+                        (worksheet.Rows[rowCount] as Range).Delete(XlDeleteShiftDirection.xlShiftUp);
                         coaType = (worksheet.Cells[rowCount, 1] as Range).Value;
                         dataDescription = (worksheet.Cells[rowCount, 2] as Range).Value;
                     }
@@ -324,8 +350,9 @@ namespace ReutersPlugIn
                         (worksheet.Cells[rowCount, 1] as Range).Value = record.COA.Trim();
                         (worksheet.Cells[rowCount, 2] as Range).Value = record.DATA_DESCRIPTION.Trim();
 
-                        Globals.ThisAddIn.AppendMessage(ThisAddIn.MODEL_UPLOAD_WORKSHEET_NAME 
-                            + ": New COA/Description inserted at row " + rowCount, true);
+                        Globals.ThisAddIn.AppendMessage(ThisAddIn.MODEL_UPLOAD_WORKSHEET_NAME
+                            + ": COA '" + coaType.Trim() + "', Description '" + dataDescription.Trim() 
+                            + "' inserted at row " + rowCount, true);
                     }
 
                     rowCount++;
@@ -347,4 +374,5 @@ namespace ReutersPlugIn
         }
     }
 }
+
 

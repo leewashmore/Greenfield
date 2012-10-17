@@ -96,6 +96,7 @@ namespace ReutersPlugIn
         private void clearScrenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.rtbLogs.Clear();
+            AppendMessageToRtb("Application Startup", 0, false);
         }
     }
 }
