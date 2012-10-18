@@ -67,11 +67,19 @@ namespace GreenField.DashboardModule.Views
                 Content = new ViewSecurityOverview(new ViewModelSecurityOverview(param))
             });
 
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_PRICING, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-            //    Content = null
-            //});
+            this.rtvDashboard.Items.Add(new RadTileViewItem
+            {
+
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize = 12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                RestoredHeight = 300,
+                Content = new ViewCOASpecific(new ViewModelCOASpecific(param))
+            });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
@@ -118,15 +126,7 @@ namespace GreenField.DashboardModule.Views
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION_SUMMARY,
                     Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 Content = new ViewFairValueCompositionSummary(new ViewModelFairValueCompositionSummary(param))
-            });           
-
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-
-            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.INTERNAL_RESEARCH_VALUATIONS_DETAILED,
-            //        Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-            //    Content = null
-            //});
+            });                       
          
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
@@ -135,16 +135,7 @@ namespace GreenField.DashboardModule.Views
                     Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 220,
                 Content = new ViewConsensusEstimateSummary(new ViewModelConsensusEstimateSummary(param))
-            });
-
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
-
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC,
-                    Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 300,
-                Content =  new ViewCOASpecific(new ViewModelCOASpecific(param))
-            });
+            });            
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

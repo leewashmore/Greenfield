@@ -18,7 +18,7 @@ namespace GreenField.Common
         #region Snapshot Summary
         public static string SECURITY_OVERVIEW = "Security Overview";
         public static string EXTERNAL_RESEARCH_PRICING = "Pricing Information External Research 4.1.3.1 / 4.4.3";
-        public static string INTERNAL_RESEARCH_PRICING_DETAILED = "Composite/Fund";
+        public static string INTERNAL_RESEARCH_PRICING_DETAILED = "Targets & Index Weights";
         public static string EXTERNAL_RESEARCH_VALUATIONS = "Valuation Information External Research 4.1.3.8 / 4.4.3";
         public static string HOLDINGS_CHART_EXTENTION = "Chart Extention Holdings";
         public static string EXTERNAL_RESEARCH_GROWTH = "Growth Information External Research 4.1.3.9 / 4.4.3";
