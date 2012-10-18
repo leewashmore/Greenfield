@@ -17,8 +17,6 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 
-
-
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewFreeCashFlows : ViewBaseUserControl
@@ -118,7 +116,7 @@ namespace GreenField.Gadgets.Views
                 dgFreeCashFlows.Columns[9].Background = new SolidColorBrush(Colors.LightGray);
                 dgFreeCashFlows.Columns[10].Background = new SolidColorBrush(Colors.LightGray);
 
-            }           
+            }
 
         }
 
@@ -126,62 +124,62 @@ namespace GreenField.Gadgets.Views
         {
             if (e.Row != null)
             {
-                if(e.Row.DataContext != null)
+                if (e.Row.DataContext != null)
                 {
-                   var item = (e.Row.DataContext) as FreeCashFlowsData;
-                   if(item != null)
-                   {
-                       if (item.ValueY0 != null)
-                       {
-                           if (item.ValueY0.Contains("("))
-                               dgFreeCashFlows.Columns[1].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
-                       }
-                       if (item.ValueY1 != null)
-                       {
-                           if (item.ValueY1.Contains("("))
-                               dgFreeCashFlows.Columns[2].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
-                       }
-                       if (item.ValueY2 != null)
-                       {
-                           if (item.ValueY2.Contains("("))
-                               dgFreeCashFlows.Columns[3].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
-                       }
-                       if (item.ValueY3 != null)
-                       {
-                           if (item.ValueY3.Contains("("))
-                               dgFreeCashFlows.Columns[4].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
-                       }
-                       if (item.ValueY4 != null)
-                       {
-                           if (item.ValueY4.Contains("("))
-                               dgFreeCashFlows.Columns[5].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
-                       }
-                       if (item.ValueY5 != null)
-                       {
-                           if (item.ValueY5.Contains("("))
-                               dgFreeCashFlows.Columns[6].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
-                       }
-                       if (item.ValueY6 != null)
-                       {
-                           if (item.ValueY6.Contains("("))
-                               dgFreeCashFlows.Columns[7].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
-                       }
-                       if (item.ValueY7 != null)
-                       {
-                           if (item.ValueY7.Contains("("))
-                               dgFreeCashFlows.Columns[8].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
-                       }
-                       if (item.ValueY8 != null)
-                       {
-                           if (item.ValueY8.Contains("("))
-                               dgFreeCashFlows.Columns[9].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
-                       }
-                       if (item.ValueY9 != null)
-                       {
-                           if (item.ValueY9.Contains("("))
-                               dgFreeCashFlows.Columns[10].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
-                       }
-                   }
+                    var item = (e.Row.DataContext) as FreeCashFlowsData;
+                    if (item != null)
+                    {
+                        if (item.ValueY0 != null)
+                        {
+                            if (item.ValueY0.Contains("("))
+                                dgFreeCashFlows.Columns[1].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
+                        }
+                        if (item.ValueY1 != null)
+                        {
+                            if (item.ValueY1.Contains("("))
+                                dgFreeCashFlows.Columns[2].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
+                        }
+                        if (item.ValueY2 != null)
+                        {
+                            if (item.ValueY2.Contains("("))
+                                dgFreeCashFlows.Columns[3].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
+                        }
+                        if (item.ValueY3 != null)
+                        {
+                            if (item.ValueY3.Contains("("))
+                                dgFreeCashFlows.Columns[4].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
+                        }
+                        if (item.ValueY4 != null)
+                        {
+                            if (item.ValueY4.Contains("("))
+                                dgFreeCashFlows.Columns[5].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
+                        }
+                        if (item.ValueY5 != null)
+                        {
+                            if (item.ValueY5.Contains("("))
+                                dgFreeCashFlows.Columns[6].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
+                        }
+                        if (item.ValueY6 != null)
+                        {
+                            if (item.ValueY6.Contains("("))
+                                dgFreeCashFlows.Columns[7].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
+                        }
+                        if (item.ValueY7 != null)
+                        {
+                            if (item.ValueY7.Contains("("))
+                                dgFreeCashFlows.Columns[8].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
+                        }
+                        if (item.ValueY8 != null)
+                        {
+                            if (item.ValueY8.Contains("("))
+                                dgFreeCashFlows.Columns[9].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
+                        }
+                        if (item.ValueY9 != null)
+                        {
+                            if (item.ValueY9.Contains("("))
+                                dgFreeCashFlows.Columns[10].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
+                        }
+                    }
                 }
 
             }
@@ -317,7 +315,13 @@ namespace GreenField.Gadgets.Views
             try
             {
                 DCFPDFExport data = new DCFPDFExport();
-                data.DataTable=PDFExporter.CreateTable(dgFreeCashFlows, 11, "FreeCashFlows");
+                GridViewLength columnWidth = this.dgFreeCashFlows.Columns[0].ActualWidth;
+                data.DataTable = PDFExporter.CreateTable(dgFreeCashFlows, 11, columnWidth, "FreeCashFlows");
+                foreach (GridViewBoundColumnBase item in dgFreeCashFlows.Columns)
+                {
+                    item.Width = GridViewLength.Auto;
+                }
+                dgFreeCashFlows.InvalidateMeasure();
                 return data;
             }
             catch (Exception ex)

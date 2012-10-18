@@ -76,7 +76,7 @@ namespace GreenField.Gadgets.Views
             try
             {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                openFileDialog1.Filter = "Excel Files (.xls)|*.xls|All Files (*.*)|*.*";
+                openFileDialog1.Filter = "Excel Files (.xlsx)|*.xlsx|All Files (*.*)|*.*";
                 openFileDialog1.FilterIndex = 1;
                 openFileDialog1.Multiselect = true;
                 bool? userClickedOK = openFileDialog1.ShowDialog();

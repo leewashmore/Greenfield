@@ -138,7 +138,7 @@ namespace GreenField.Web.Services
             try
             {
                 List<DCFTerminalValueCalculationsData> result = new List<DCFTerminalValueCalculationsData>();
-                Dictionary<string, decimal> dataROIC_SDPR = new Dictionary<string, decimal>();
+                Dictionary<string, decimal?> dataROIC_SDPR = new Dictionary<string, decimal?>();
                 List<DCFCashFlowData> cashFlowResult = new List<DCFCashFlowData>();
                 string issuerId;
                 ExternalResearchEntities entity = new ExternalResearchEntities();
@@ -175,7 +175,7 @@ namespace GreenField.Web.Services
                 }
                 if (dataROIC_SDPR.ContainsKey("SDPR"))
                 {
-                    data.SustainableDividendPayoutRatio = dataROIC_SDPR.Where(a => a.Key == "SDPR").Select(a => a.Value).FirstOrDefault();
+                    data.SustainableDividendPayoutRatio = Convert.ToDecimal(dataROIC_SDPR.Where(a => a.Key == "SDPR").Select(a => a.Value).FirstOrDefault());
                 }
                 data.LongTermNominalGDPGrowth = longTermGDPGrowth;
                 result.Add(data);
@@ -301,12 +301,12 @@ namespace GreenField.Web.Services
                     {
                         result.Add(dbResult.Where(a => a.PERIOD_YEAR == currentYear + i).FirstOrDefault());
                     }
+                    else
+                    {
+                        result.Add(new DCFCashFlowData() { AMOUNT = 0, DISCOUNTING_FACTOR = 0, PERIOD_YEAR = currentYear + i });
+                    }
                 }
-                decimal average = result.Where(a => a.PERIOD_YEAR < currentYear + 5).Select(a => Convert.ToDecimal(a.AMOUNT)).Average();
-                for (int i = 5; i < 10; i++)
-                {
-                    result.Add(new DCFCashFlowData() { AMOUNT = 0, DISCOUNTING_FACTOR = 0, PERIOD_YEAR = currentYear + i });
-                }
+                decimal average = result.Where(a => a.PERIOD_YEAR < currentYear + 5).Select(a => Convert.ToDecimal(a.AMOUNT)).Sum() / 5;
                 foreach (DCFCashFlowData item in result)
                 {
                     if (item.PERIOD_YEAR > currentYear + 4)
@@ -581,10 +581,10 @@ namespace GreenField.Web.Services
         /// </summary>
         /// <param name="issuerid">IssuerId of Selected Security</param>
         /// <returns>Nullable Decimal as ROIC</returns>
-        private Dictionary<string, decimal> GetROIC(string issuerid)
+        private Dictionary<string, decimal?> GetROIC(string issuerid)
         {
             ExternalResearchEntities entity = new ExternalResearchEntities();
-            Dictionary<string, decimal> result = new Dictionary<string, decimal>();
+            Dictionary<string, decimal?> result = new Dictionary<string, decimal?>();
             List<decimal?> collectionROIC = new List<decimal?>();
             List<decimal?> collectionSustainableDividendPayoutRatio = new List<decimal?>();
             decimal? valueROIC;
@@ -592,13 +592,24 @@ namespace GreenField.Web.Services
             int currentYear = DateTime.Today.Year;
             for (int i = 0; i < 5; i++)
             {
-                valueROIC = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 162 && a.FISCAL == "CALENDAR")
-                    .Select(a => a.AMOUNT).FirstOrDefault();
+                List<DCF_ROICResult> res = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").ToList();
+                if (res.Where(a => a.DATA_ID == 162 && a.FISCAL == "CALENDAR").ToList().Count > 0)
+                {
+                    valueROIC = res.Where(a => a.DATA_ID == 162 && a.FISCAL.ToUpper().Trim() == "CALENDAR").Select(a => a.AMOUNT).FirstOrDefault();
+                }
+                else
+                {
+                    valueROIC = null;
+                }
                 if (valueROIC != null)
                 {
                     collectionROIC.Add(valueROIC);
                 }
-                valueSustainableDividendPayoutRatio = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 141 && a.FISCAL == "FISCAL")
+                else
+                {
+                    collectionROIC.Add(null);
+                }
+                valueSustainableDividendPayoutRatio = res.Where(a => a.DATA_ID == 141 && a.FISCAL.ToUpper().Trim() == "FISCAL")
                     .Select(a => a.AMOUNT).FirstOrDefault();
                 if (valueSustainableDividendPayoutRatio != null)
                 {
@@ -606,7 +617,7 @@ namespace GreenField.Web.Services
                 }
             }
 
-            if (collectionROIC.Any(a => a.Value != null))
+            if (collectionROIC.All(a => a != null))
             {
                 if (Convert.ToDecimal(collectionROIC.Average()) != 0)
                 {
@@ -614,9 +625,14 @@ namespace GreenField.Web.Services
                 }
                 else
                 {
-                    result.Add("ROIC", Convert.ToDecimal(0.3333));
+                    result.Add("ROIC", 0);
                 }
             }
+            else
+            {
+                result.Add("ROIC", null);
+            }
+
             if (collectionSustainableDividendPayoutRatio.Any(a => a.Value != null))
             {
                 if (Convert.ToDecimal(collectionSustainableDividendPayoutRatio.Average()) != 0)
@@ -628,6 +644,11 @@ namespace GreenField.Web.Services
                     result.Add("SDPR", Convert.ToDecimal(0.3333));
                 }
             }
+            else
+            {
+                result.Add("SDPR", Convert.ToDecimal(0.3333));
+            }
+
             return result;
         }
 

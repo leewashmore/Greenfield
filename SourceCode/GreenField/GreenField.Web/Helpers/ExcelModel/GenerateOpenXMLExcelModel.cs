@@ -1115,8 +1115,6 @@ namespace GreenField.Web.ExcelModel
                 }
             }
             g.Dispose();
-
-            // Truncate([{Number of Characters} * {Maximum Digit Width} + {5 pixel padding}] / {Maximum Digit Width} * 256) / 256
             fTruncWidth = Math.Truncate((sILT.ToCharArray().Count() * fMaxDigitWidth + 5.0) / fMaxDigitWidth * 256.0) / 256.0;
 
             return fTruncWidth;

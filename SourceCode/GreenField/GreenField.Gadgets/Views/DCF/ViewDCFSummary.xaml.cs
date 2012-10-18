@@ -9,13 +9,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
-using GreenField.Common;
-using GreenField.ServiceCaller;
-using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Controls;
+using Telerik.Windows.Documents.Model;
+using GreenField.Common;
+using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
+using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -76,7 +76,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextSource = dataContextSource;
-        } 
+        }
 
         #endregion
 
@@ -196,7 +196,8 @@ namespace GreenField.Gadgets.Views
             try
             {
                 DCFPDFExport data = new DCFPDFExport();
-                data.DataTable=PDFExporter.CreateTable(dgDCFSummary, 12);
+                GridViewLength columnWidth = this.dgDCFSummary.Columns[0].ActualWidth;
+                data.DataTable = PDFExporter.CreateTable(dgDCFSummary, 12, columnWidth, string.Empty);
                 return data;
             }
             catch (Exception ex)
@@ -291,7 +292,7 @@ namespace GreenField.Gadgets.Views
                 }
             }
         }
-        
+
         #endregion
 
         #region Unsubscribe Events

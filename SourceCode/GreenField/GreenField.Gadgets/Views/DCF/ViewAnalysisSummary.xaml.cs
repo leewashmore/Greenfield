@@ -267,7 +267,7 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-       
+
         #region PDF Export
 
         /// <summary>
@@ -279,10 +279,15 @@ namespace GreenField.Gadgets.Views
             try
             {
                 DCFPDFExport data = new DCFPDFExport();
-                data.DataTable = PDFExporter.CreateTable(dgDCFAnalysisSummary, 12);
+                GridViewLength columnWidth = this.dgDCFAnalysisSummary.Columns[0].ActualWidth;
+                data.DataTable = PDFExporter.CreateTable(dgDCFAnalysisSummary, 12, columnWidth, string.Empty);
                 data.CountryName = this.DataContextSource.CountryName;
                 data.SecurityName = this.DataContextSource.EntitySelectionData.ShortName;
                 data.CreatedBy = SessionManager.SESSION.UserName;
+                foreach (GridViewBoundColumnBase item in dgDCFAnalysisSummary.Columns)
+                {
+                    item.Width = GridViewLength.Auto;
+                }
                 return data;
             }
             catch (Exception ex)
@@ -292,7 +297,7 @@ namespace GreenField.Gadgets.Views
                 return null;
             }
         }
-        
+
         #endregion
 
         #region Unsubscribe Events

@@ -418,7 +418,6 @@ namespace GreenField.DashboardModule.Views
         private Table GenerateCombinedTable(List<Table> tables)
         {
             Table documentTable = new Table(tables.Count(), 3);
-
             for (int i = 0; i < tables.Count; i++)
             {
                 if (i == 2 || i == 3)
@@ -427,7 +426,7 @@ namespace GreenField.DashboardModule.Views
                     {
                         TableRow row = GetTableRowForSingleTable(tables[i], 1);
                         TableCell cellEmptyParagraph = new TableCell();
-                        cellEmptyParagraph.PreferredWidth = new TableWidthUnit(TableWidthUnitType.Percent, 1);
+                        cellEmptyParagraph.PreferredWidth = new TableWidthUnit(20);
                         Telerik.Windows.Documents.Model.Paragraph p1 = new Telerik.Windows.Documents.Model.Paragraph();
                         cellEmptyParagraph.Blocks.Add(p1);
                         row.Cells.Add(cellEmptyParagraph);
@@ -445,6 +444,9 @@ namespace GreenField.DashboardModule.Views
                     documentTable.Rows.Add(row);
                 }
             }
+            documentTable.SetGridColumnWidth(0, new TableWidthUnit(10));
+            documentTable.SetGridColumnWidth(1, new TableWidthUnit(1));
+            documentTable.SetGridColumnWidth(2, new TableWidthUnit(10));
             return documentTable;
         }
 

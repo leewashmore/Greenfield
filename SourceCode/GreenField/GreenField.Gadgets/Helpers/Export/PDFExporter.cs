@@ -150,11 +150,6 @@ namespace GreenField.Gadgets.Helpers
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
                                                      orderby c.DisplayIndex
                                                      select c).ToList();
-            foreach (GridViewBoundColumnBase item in columns)
-            {
-                item.TextWrapping = TextWrapping.NoWrap;
-                item.Width = GridViewLength.Auto;
-            }
 
             Table table = new Table();
             RadDocument document = new RadDocument();
@@ -207,16 +202,20 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="fontSize">FontSize</param>
         /// <param name="header">Header</param>
         /// <returns>Table</returns>
-        public static Table CreateTable(RadGridView grid, int fontSize, string header = "")
+        public static Table CreateTable(RadGridView grid, int fontSize, GridViewLength width, string header = "")
         {
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
                                                      orderby c.DisplayIndex
                                                      select c).ToList();
-            foreach (GridViewBoundColumnBase item in columns)
+            if (width != null)
             {
-                item.TextWrapping = TextWrapping.NoWrap;
-                item.Width = GridViewLength.Auto;
+                foreach (GridViewBoundColumnBase item in columns)
+                {
+                    item.TextWrapping = TextWrapping.NoWrap;
+                    item.Width = 200;
+                }
             }
+            grid.InvalidateMeasure();
             Table table = new Table();
             fontSizePDF = fontSize;
 
@@ -290,11 +289,6 @@ namespace GreenField.Gadgets.Helpers
                     row.Cells.Add(indentCell);
                 }
 
-                foreach (GridViewBoundColumnBase item in columns)
-                {
-                    item.TextWrapping = TextWrapping.NoWrap;
-                    item.Width = GridViewLength.Auto;
-                }
                 for (int j = 0; j < columns.Count(); j++)
                 {
                     TableCell cell = new TableCell();
@@ -356,10 +350,7 @@ namespace GreenField.Gadgets.Helpers
             }
             else
             {
-                //for (int i = 0; i < group.ItemCount; i++)
-                //{
                 AddDataRows(table, group.Items, columns, grid);
-                //}
             }
         }
 

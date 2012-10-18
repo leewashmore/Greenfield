@@ -67,11 +67,11 @@ namespace GreenField.DashboardModule.Views
                 Content = new ViewSecurityOverview(new ViewModelSecurityOverview(param))
             });
 
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_PRICING, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-                Content = null
-            });
+            //this.rtvDashboard.Items.Add(new RadTileViewItem
+            //{
+            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_PRICING, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
+            //    Content = null
+            //});
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
@@ -120,13 +120,13 @@ namespace GreenField.DashboardModule.Views
                 Content = new ViewFairValueCompositionSummary(new ViewModelFairValueCompositionSummary(param))
             });           
 
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
+            //this.rtvDashboard.Items.Add(new RadTileViewItem
+            //{
 
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.INTERNAL_RESEARCH_VALUATIONS_DETAILED,
-                    Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-                Content = null
-            });
+            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.INTERNAL_RESEARCH_VALUATIONS_DETAILED,
+            //        Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
+            //    Content = null
+            //});
          
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {

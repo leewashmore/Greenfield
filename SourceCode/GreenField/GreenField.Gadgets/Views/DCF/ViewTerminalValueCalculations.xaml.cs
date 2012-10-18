@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Documents.Model;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Views
 {
@@ -60,7 +61,7 @@ namespace GreenField.Gadgets.Views
                 }
             }
         }
-        
+
         #endregion
 
         #region ExportToExcel/PDF/Print
@@ -183,7 +184,8 @@ namespace GreenField.Gadgets.Views
                 if (dgTerminalValueCalculations.Items.Count > 0)
                 {
                     DCFPDFExport data = new DCFPDFExport();
-                    data.DataTable = PDFExporter.CreateTable(dgTerminalValueCalculations, 12, "Terminal Value");
+                    GridViewLength columnWidth = this.dgTerminalValueCalculations.Columns[0].ActualWidth;
+                    data.DataTable = PDFExporter.CreateTable(dgTerminalValueCalculations, 12, columnWidth, "Terminal Value");
                     return data;
                 }
                 else
@@ -210,7 +212,7 @@ namespace GreenField.Gadgets.Views
         {
             this.DataContextSource.Dispose();
         }
-        
+
         #endregion
     }
 }
