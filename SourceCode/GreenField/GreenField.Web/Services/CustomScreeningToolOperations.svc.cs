@@ -564,13 +564,13 @@ namespace GreenField.Web.Services
                                 fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
                                     .Select(a => a.IssueName).FirstOrDefault();
                                 fillData.Type = item.DataDescription;
-                                fillData.Multiplier = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId)
+                                fillData.Multiplier = cstEntity.SCREENING_DISPLAY_CURRENT.Where(a => a.SCREENING_ID == item.ScreeningId)
                                     .Select(a => a.MULTIPLIER).FirstOrDefault();
                                 decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
                                 fillData.DataSource = item.DataSource;
-                                fillData.Decimals = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.DECIMAL)
+                                fillData.Decimals = cstEntity.SCREENING_DISPLAY_CURRENT.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.DECIMAL)
                                     .FirstOrDefault();
-                                fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.PERCENTAGE)
+                                fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_CURRENT.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.PERCENTAGE)
                                     .FirstOrDefault();
                                 _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
                                 fillData.Value = fillData.IsPercentage == "Y" ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount);
