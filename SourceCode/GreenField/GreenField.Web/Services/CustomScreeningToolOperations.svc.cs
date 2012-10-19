@@ -477,7 +477,7 @@ namespace GreenField.Web.Services
                                     fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_REFERENCE.Where(a => a.SCREENING_ID == item.ScreeningId)
                                         .Select(a => a.PERCENTAGE).FirstOrDefault();
                                     amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(amount), Convert.ToInt16(fillData.Decimals)) : amount;
-                                    fillData.Value = fillData.IsPercentage == "Y" ? Convert.ToString(amount) + "%" : Convert.ToString(amount);                                     
+                                    fillData.Value = fillData.IsPercentage.Contains("Y") ? Convert.ToString(amount) + "%" : Convert.ToString(amount);                                     
                                     result.Add(fillData);
                                 }
                             }
@@ -532,7 +532,7 @@ namespace GreenField.Web.Services
                                     fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId)
                                         .Select(a => a.PERCENTAGE).FirstOrDefault();
                                     _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
-                                    fillData.Value = fillData.IsPercentage == "Y" ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount);
+                                    fillData.Value = fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount);
                                     result.Add(fillData);
                                 }
                             }
@@ -573,7 +573,7 @@ namespace GreenField.Web.Services
                                 fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_CURRENT.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.PERCENTAGE)
                                     .FirstOrDefault();
                                 _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
-                                fillData.Value = fillData.IsPercentage == "Y" ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount);
+                                fillData.Value = fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount);
                                 result.Add(fillData);
                             }
                         }
@@ -612,7 +612,7 @@ namespace GreenField.Web.Services
                                     fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId)
                                         .Select(a => a.PERCENTAGE).FirstOrDefault();
                                     amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(amount), Convert.ToInt16(fillData.Decimals)) : amount;
-                                    fillData.Value = fillData.IsPercentage == "Y" ? Convert.ToString(amount) + "%" : Convert.ToString(amount);     
+                                    fillData.Value = fillData.IsPercentage.Contains("Y") ? Convert.ToString(amount) + "%" : Convert.ToString(amount);     
                                     fillData.DataSource = item.DataSource;
                                     result.Add(fillData);
                                 }
