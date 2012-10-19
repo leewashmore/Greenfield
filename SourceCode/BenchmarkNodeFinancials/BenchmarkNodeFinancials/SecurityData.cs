@@ -12,6 +12,5 @@ namespace BenchmarkNodeFinancials
         public string IssuerId { get; set; }
         public string IssueName { get; set; }
         public string AsecShortName { get; set; }
-
     }
 }

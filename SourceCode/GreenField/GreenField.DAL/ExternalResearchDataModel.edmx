@@ -880,6 +880,7 @@
           <Parameter Name="FV_BUY" Type="decimal" Mode="In" />
           <Parameter Name="FV_SELL" Type="decimal" Mode="In" />
         </Function>
+        <Function Name="usp_GetCountryDataForEMMarketData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cSource" Type="varchar" Mode="In" />
           <Parameter Name="cFiscalType" Type="varchar" Mode="In" />
@@ -1279,6 +1280,7 @@
           <FunctionImport Name="GetPortfolioDetailsFairValue" EntitySet="FAIR_VALUE" ReturnType="Collection(ExternalResearchModel.FAIR_VALUE)">
           <Parameter Name="SECURITY_IDS" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="usp_GetCountryDataForEMMarketData" ReturnType="Collection(ExternalResearchModel.EMSumCountryData)" />
 
 
 				</EntityContainer>
@@ -1921,6 +1923,12 @@
           <Property Type="Int32" Name="DataId" Nullable="true" />
           <Property Type="Decimal" Name="Amount" Nullable="true" Precision="32" Scale="6" />
           <Property Type="Int32" Name="PeriodYear" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="EMSumCountryData" >
+          <Property Type="String" Name="CountryCode" Nullable="false" />
+          <Property Type="String" Name="CountryName" Nullable="false" />
+          <Property Type="String" Name="RegionName" Nullable="false" />
+          <Property Type="String" Name="Type" Nullable="false" />
         </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -2683,6 +2691,16 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetPortfolioDetailsFairValue" FunctionName="ExternalResearchModel.Store.GetPortfolioDetailsFairValue" />
+          <FunctionImportMapping FunctionImportName="usp_GetCountryDataForEMMarketData" FunctionName="ExternalResearchModel.Store.usp_GetCountryDataForEMMarketData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.EMSumCountryData">
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />

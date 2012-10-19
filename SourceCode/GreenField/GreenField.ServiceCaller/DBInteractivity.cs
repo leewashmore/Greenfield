@@ -2622,6 +2622,54 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        public void RetrieveEMSummaryMarketData(String selectedPortfolio, Action<List<EMSummaryMarketData>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, 
+                System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), 
+                SessionManager.SESSION != null ?
+                SessionManager.SESSION.UserName : "Unspecified");
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveEmergingMarketDataAsync(selectedPortfolio);
+            client.RetrieveEmergingMarketDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                    {
+                        callback(null);
+                    }
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                    {
+                        callback(null);
+                    }
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(),
+                    SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
         #region ConsensusEstimates Gadgets
 
         /// <summary>

@@ -306,15 +306,21 @@ namespace GreenField.ServiceCaller
         /// <param name="currency"></param>
         /// <param name="callback"></param>
         void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency,
-                                                                                            Action<List<ConsensusEstimateDetail>> callback);
+                                                                                            Action<List<ConsensusEstimateDetail>> 
+            callback);
 
         void RetrieveRatioComparisonData(String contextSecurityXML, Action<List<RatioComparisonData>> callback);
 
-        void RetrieveRatioSecurityReferenceData(ScatterGraphContext context, IssuerReferenceData issuerDetails, Action<List<GF_SECURITY_BASEVIEW>> callback);
+        void RetrieveRatioSecurityReferenceData(ScatterGraphContext context, IssuerReferenceData issuerDetails, 
+            Action<List<GF_SECURITY_BASEVIEW>> callback);
 
-        void RetrieveCOASpecificData(String issuerId, int? securityId, FinancialStatementDataSource cSource, FinancialStatementFiscalType cFiscalType, String cCurrency, Action<List<COASpecificData>> callback);
+        void RetrieveCOASpecificData(String issuerId, int? securityId, FinancialStatementDataSource cSource, 
+            FinancialStatementFiscalType cFiscalType, String cCurrency, Action<List<COASpecificData>> callback);
 
-        void RetrieveValuationGrowthData(PortfolioSelectionData selectedPortfolio, DateTime? effectiveDate, String filterType, String filterValue, bool lookThruEnabled, Action<List<ValuationQualityGrowthData>> callback);
+        void RetrieveValuationGrowthData(PortfolioSelectionData selectedPortfolio, DateTime? effectiveDate, String filterType, 
+            String filterValue, bool lookThruEnabled, Action<List<ValuationQualityGrowthData>> callback);
+
+        void RetrieveEMSummaryMarketData(String selectedPortfolio, Action<List<EMSummaryMarketData>> callback);
 
         /// <summary>
         /// service call for Consensus estimate detail broker data retrieval

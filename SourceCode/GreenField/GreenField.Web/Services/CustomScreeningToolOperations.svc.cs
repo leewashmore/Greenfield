@@ -592,7 +592,17 @@ namespace GreenField.Web.Services
                                     fillData.Type = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.TABLE_COLUMN)
                                         .FirstOrDefault();
                                     fillData.DataSource = item.DataSource;
-                                    fillData.Value = record.GetType().GetProperty(fillData.Type).GetValue(record, null);
+                                    fillData.Multiplier = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId)
+                                                         .Select(a => a.MULTIPLIER).FirstOrDefault();
+                                    Decimal? amount = fillData.Multiplier != null ? Convert.ToDecimal(record.GetType().GetProperty(fillData.Type)
+                                        .GetValue(record, null)) * fillData.Multiplier : Convert.ToDecimal(record.GetType().GetProperty(fillData.Type)
+                                        .GetValue(record, null));
+                                    fillData.Decimals = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId)
+                                        .Select(a => a.DECIMAL).FirstOrDefault();
+                                    fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId)
+                                        .Select(a => a.PERCENTAGE).FirstOrDefault();
+                                    amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(amount), Convert.ToInt16(fillData.Decimals)) : amount;
+                                    fillData.Value = fillData.IsPercentage == "Y" ? Convert.ToString(amount) + "%" : Convert.ToString(amount);     
                                     fillData.DataSource = item.DataSource;
                                     result.Add(fillData);
                                 }

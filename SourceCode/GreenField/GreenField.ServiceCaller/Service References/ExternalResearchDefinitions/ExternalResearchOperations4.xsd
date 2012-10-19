@@ -89,4 +89,32 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ValuationQualityGrowthData" nillable="true" type="tns:ValuationQualityGrowthData" />
+  <xs:complexType name="ArrayOfEMSummaryMarketData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EMSummaryMarketData" nillable="true" type="tns:EMSummaryMarketData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEMSummaryMarketData" nillable="true" type="tns:ArrayOfEMSummaryMarketData" />
+  <xs:complexType name="EMSummaryMarketData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BaseTarget" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DYCurYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PBVCurYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PECurYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PECurYearCon" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PENextYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PENextYearCon" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ROECurYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="USDEarCurYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="USDEarCurYearCon" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="USDEarNextYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="USDEarNextYearCon" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YTDReturns" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EMSummaryMarketData" nillable="true" type="tns:EMSummaryMarketData" />
 </xs:schema>

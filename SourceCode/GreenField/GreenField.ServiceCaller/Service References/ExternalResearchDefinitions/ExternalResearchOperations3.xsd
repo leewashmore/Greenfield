@@ -286,4 +286,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveEmergingMarketData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="selectedPortfolio" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveEmergingMarketDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveEmergingMarketDataResult" nillable="true" type="q39:ArrayOfEMSummaryMarketData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

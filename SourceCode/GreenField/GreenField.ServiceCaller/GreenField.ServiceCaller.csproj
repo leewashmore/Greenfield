@@ -190,6 +190,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.CustomScreeningSecurityData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.CustomSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.EMSummaryMarketData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.PRevenueData1.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.QuarterlyResultsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.RegionSelectionData.datasource" />

@@ -3395,6 +3395,14 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<FAIR_VALUE>("GetPortfolioDetailsFairValue", mergeOption, sECURITY_IDSParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectResult<EMSumCountryData> usp_GetCountryDataForEMMarketData()
+        {
+            return base.ExecuteFunction<EMSumCountryData>("usp_GetCountryDataForEMMarketData");
+        }
 
         #endregion
     }
@@ -10241,6 +10249,135 @@ namespace GreenField.DAL
         private global::System.Int32 _DATA_ID;
         partial void OnDATA_IDChanging(global::System.Int32 value);
         partial void OnDATA_IDChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="EMSumCountryData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class EMSumCountryData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new EMSumCountryData object.
+        /// </summary>
+        /// <param name="countryCode">Initial value of the CountryCode property.</param>
+        /// <param name="countryName">Initial value of the CountryName property.</param>
+        /// <param name="regionName">Initial value of the RegionName property.</param>
+        /// <param name="type">Initial value of the Type property.</param>
+        public static EMSumCountryData CreateEMSumCountryData(global::System.String countryCode, global::System.String countryName, global::System.String regionName, global::System.String type)
+        {
+            EMSumCountryData eMSumCountryData = new EMSumCountryData();
+            eMSumCountryData.CountryCode = countryCode;
+            eMSumCountryData.CountryName = countryName;
+            eMSumCountryData.RegionName = regionName;
+            eMSumCountryData.Type = type;
+            return eMSumCountryData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CountryCode
+        {
+            get
+            {
+                return _CountryCode;
+            }
+            set
+            {
+                OnCountryCodeChanging(value);
+                ReportPropertyChanging("CountryCode");
+                _CountryCode = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CountryCode");
+                OnCountryCodeChanged();
+            }
+        }
+        private global::System.String _CountryCode;
+        partial void OnCountryCodeChanging(global::System.String value);
+        partial void OnCountryCodeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CountryName
+        {
+            get
+            {
+                return _CountryName;
+            }
+            set
+            {
+                OnCountryNameChanging(value);
+                ReportPropertyChanging("CountryName");
+                _CountryName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CountryName");
+                OnCountryNameChanged();
+            }
+        }
+        private global::System.String _CountryName;
+        partial void OnCountryNameChanging(global::System.String value);
+        partial void OnCountryNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String RegionName
+        {
+            get
+            {
+                return _RegionName;
+            }
+            set
+            {
+                OnRegionNameChanging(value);
+                ReportPropertyChanging("RegionName");
+                _RegionName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("RegionName");
+                OnRegionNameChanged();
+            }
+        }
+        private global::System.String _RegionName;
+        partial void OnRegionNameChanging(global::System.String value);
+        partial void OnRegionNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Type
+        {
+            get
+            {
+                return _Type;
+            }
+            set
+            {
+                OnTypeChanging(value);
+                ReportPropertyChanging("Type");
+                _Type = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Type");
+                OnTypeChanged();
+            }
+        }
+        private global::System.String _Type;
+        partial void OnTypeChanging(global::System.String value);
+        partial void OnTypeChanged();
 
         #endregion
     }

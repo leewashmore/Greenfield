@@ -176,6 +176,15 @@
   <wsdl:message name="ExternalResearchOperations_RetrieveCompanyData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q18:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveEmergingMarketData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveEmergingMarketData" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveEmergingMarketData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveEmergingMarketDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveEmergingMarketData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q19:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerId" message="tns:ExternalResearchOperations_RetrieveIssuerId_InputMessage" />
@@ -266,6 +275,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyData" message="tns:ExternalResearchOperations_RetrieveCompanyData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyDataResponse" message="tns:ExternalResearchOperations_RetrieveCompanyData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveCompanyData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveEmergingMarketData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveEmergingMarketData" message="tns:ExternalResearchOperations_RetrieveEmergingMarketData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveEmergingMarketDataResponse" message="tns:ExternalResearchOperations_RetrieveEmergingMarketData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveEmergingMarketDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveEmergingMarketData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ExternalResearchOperations" type="tns:ExternalResearchOperations">
@@ -476,6 +490,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveCompanyData">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveEmergingMarketData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveEmergingMarketData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

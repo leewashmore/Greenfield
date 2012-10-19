@@ -1740,6 +1740,13 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         System.IAsyncResult BeginRetrieveCompanyData(System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<string> EndRetrieveCompanyData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveEmergingMarketData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveEmergingMarketDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveEmergingMarketDataServiceFa" +
+            "ultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveEmergingMarketData(string selectedPortfolio, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.EMSummaryMarketData> EndRetrieveEmergingMarketData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -2090,6 +2097,25 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveEmergingMarketDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveEmergingMarketDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.EMSummaryMarketData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.EMSummaryMarketData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ExternalResearchOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations>, GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations {
         
         private BeginOperationDelegate onBeginRetrieveIssuerIdDelegate;
@@ -2200,6 +2226,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveCompanyDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveEmergingMarketDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveEmergingMarketDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveEmergingMarketDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -2288,6 +2320,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         public event System.EventHandler<RetrieveValuationGrowthDataCompletedEventArgs> RetrieveValuationGrowthDataCompleted;
         
         public event System.EventHandler<RetrieveCompanyDataCompletedEventArgs> RetrieveCompanyDataCompleted;
+        
+        public event System.EventHandler<RetrieveEmergingMarketDataCompletedEventArgs> RetrieveEmergingMarketDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -3179,6 +3213,52 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             base.InvokeAsync(this.onBeginRetrieveCompanyDataDelegate, null, this.onEndRetrieveCompanyDataDelegate, this.onRetrieveCompanyDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveEmergingMarketData(string selectedPortfolio, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveEmergingMarketData(selectedPortfolio, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.EMSummaryMarketData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveEmergingMarketData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveEmergingMarketData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveEmergingMarketData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string selectedPortfolio = ((string)(inValues[0]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveEmergingMarketData(selectedPortfolio, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveEmergingMarketData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.EMSummaryMarketData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveEmergingMarketData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveEmergingMarketDataCompleted(object state) {
+            if ((this.RetrieveEmergingMarketDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveEmergingMarketDataCompleted(this, new RetrieveEmergingMarketDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveEmergingMarketDataAsync(string selectedPortfolio) {
+            this.RetrieveEmergingMarketDataAsync(selectedPortfolio, null);
+        }
+        
+        public void RetrieveEmergingMarketDataAsync(string selectedPortfolio, object userState) {
+            if ((this.onBeginRetrieveEmergingMarketDataDelegate == null)) {
+                this.onBeginRetrieveEmergingMarketDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveEmergingMarketData);
+            }
+            if ((this.onEndRetrieveEmergingMarketDataDelegate == null)) {
+                this.onEndRetrieveEmergingMarketDataDelegate = new EndOperationDelegate(this.OnEndRetrieveEmergingMarketData);
+            }
+            if ((this.onRetrieveEmergingMarketDataCompletedDelegate == null)) {
+                this.onRetrieveEmergingMarketDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveEmergingMarketDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveEmergingMarketDataDelegate, new object[] {
+                        selectedPortfolio}, this.onEndRetrieveEmergingMarketDataDelegate, this.onRetrieveEmergingMarketDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -3515,6 +3595,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<string> EndRetrieveCompanyData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<string> _result = ((System.Collections.ObjectModel.ObservableCollection<string>)(base.EndInvoke("RetrieveCompanyData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveEmergingMarketData(string selectedPortfolio, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = selectedPortfolio;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveEmergingMarketData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.EMSummaryMarketData> EndRetrieveEmergingMarketData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.EMSummaryMarketData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.EMSummaryMarketData>)(base.EndInvoke("RetrieveEmergingMarketData", _args, result)));
                 return _result;
             }
         }

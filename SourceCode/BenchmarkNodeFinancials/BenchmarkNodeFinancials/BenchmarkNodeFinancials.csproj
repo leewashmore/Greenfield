@@ -70,7 +70,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BenchmarkEntities.cs" />
     <Compile Include="BenchmarkNodeFinancial.cs" />
     <Compile Include="BenchmarkNodeFinancialsData.cs" />
     <Compile Include="BNFDataModel.Designer.cs">

@@ -234,6 +234,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
         #region ICommand
         /// <summary>
         /// Zoom In Command Method
@@ -325,6 +326,7 @@ namespace GreenField.Gadgets.ViewModels
 
 
         #endregion
+
         #region EVENTHANDLERS
         /// <summary>
         /// Event Handler to subscribed event 'SecurityReferenceSet'
