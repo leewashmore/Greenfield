@@ -99,10 +99,10 @@
                     <telerik:RadMenuItem x:Name="rmItemCompanySnapshot" Header="Snapshot">
                         <telerik:RadMenuItem x:Name="rmItemCompanySummary" Header="Summary" Command="{Binding DashboardCompanySnapshotSummaryCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}" />
-                        <telerik:RadMenuItem x:Name="rmItemCompanyProfile" Header="Company Profile"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemTearSheet" Header="Tear Sheet"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!--<telerik:RadMenuItem x:Name="rmItemCompanyProfile" Header="Company Profile"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
+                        <!--<telerik:RadMenuItem x:Name="rmItemTearSheet" Header="Tear Sheet"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                     </telerik:RadMenuItem>
 
                     <telerik:RadMenuItem x:Name="rmItemFinancials" Header="Financials">
@@ -120,8 +120,8 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem Header="FinStat" x:Name="rmItemFinStat"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}" Command="{Binding DashboardCompanyFinstatCommand}"/>
-                        <telerik:RadMenuItem Header="Peer Comparison" x:Name="rmItemPeerComparison"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!--<telerik:RadMenuItem Header="Peer Comparison" x:Name="rmItemPeerComparison"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                     </telerik:RadMenuItem>
 
 
@@ -132,8 +132,8 @@
                         <telerik:RadMenuItem x:Name="rmItemDetailed" Header="Detailed"
                                              Command="{Binding DashboardCompanyEstimatesDetailedCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemComparison" Header="Comparison"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!--<telerik:RadMenuItem x:Name="rmItemComparison" Header="Comparison"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                     </telerik:RadMenuItem>
 
                     <telerik:RadMenuItem Header="Valuation" x:Name="rmItemValuation">
@@ -163,12 +163,12 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Header="Corporate Governance" x:Name="rmItemCorporateGovernance">
+                    <!--<telerik:RadMenuItem Header="Corporate Governance" x:Name="rmItemCorporateGovernance">
                         <telerik:RadMenuItem x:Name="rmItemQuestionnaire" Header="Questionnaire"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem x:Name="rmItemReport" Header="Report"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                    </telerik:RadMenuItem>
+                    </telerik:RadMenuItem>-->
 
                 </telerik:RadMenu>
             </telerik:RadPanelBarItem>

@@ -277,7 +277,7 @@ namespace GreenField.Gadgets.Views
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    RichTextBox.Document = PDFExporter.Print(dgFreeCashFlows, 6);
+                    RichTextBox.Document = PDFExporter.Print(dgFreeCashFlows, 10);
                 }));
 
                 this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
