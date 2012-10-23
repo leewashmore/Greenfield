@@ -50,7 +50,7 @@
                                                     DataMemberBinding="{Binding Name}"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"
-                                                    Width="*" 
+                                                    
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left">
                     </telerik:GridViewDataColumn>
@@ -58,7 +58,7 @@
                                                     DataMemberBinding="{Binding TopRcTwr1D}"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"
-                                                    Width="Auto"                                                  
+                                                                                                 
                                                     DataFormatString="{}{0:p2}"
                                                     HeaderTextAlignment="Right"
                                                     TextAlignment="Right">
@@ -67,7 +67,7 @@
                                                  DataMemberBinding="{Binding TopRcTwr1W}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
-                                                 Width="Auto"   
+                                                 
                                                  HeaderTextAlignment="Right"                                                   
                                                  DataFormatString="{}{0:p2}"
                                                  TextAlignment="Right"/>
@@ -75,7 +75,7 @@
                                                  DataMemberBinding="{Binding TopRcTwrMtd}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
-                                                 Width="Auto"                                                   
+                                                                                               
                                                  DataFormatString="{}{0:p2}"
                                                  HeaderTextAlignment="Right"                                                    
                                                  TextAlignment="Right"/>
@@ -83,7 +83,7 @@
                                                 DataMemberBinding="{Binding TopRcTwrQtd}"                                                
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
-                                                Width="Auto" 
+                                                
                                                 DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
@@ -91,7 +91,7 @@
                                                 DataMemberBinding="{Binding TopRcTwrYtd}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
-                                                 Width="Auto"  
+                                                
                                                 DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
@@ -99,7 +99,7 @@
                                                 DataMemberBinding="{Binding TopRcTwr1Y}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
-                                                 Width="Auto" 
+                                                
                                                 DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>                   

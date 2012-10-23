@@ -96,7 +96,7 @@
                                     <telerik:GridViewDataColumn Header="Portfolio ID" 
                                                     DataMemberBinding="{Binding PortfolioID}"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    Width="*" 
+                                                    
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left"
                                                     CellStyle="{StaticResource GridViewCellStyle}">
@@ -105,7 +105,7 @@
                                                     DataMemberBinding="{Binding BenchmarkID}"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"
-                                                    Width="Auto"    
+                                                    
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left">
                                     </telerik:GridViewDataColumn>
@@ -113,7 +113,7 @@
                                                  DataMemberBinding="{Binding PortfolioPerformance}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  CellStyle="{StaticResource GridViewCellStyle}"
-                                                 Width="Auto"   
+                                                 
                                                  HeaderTextAlignment="Right"                                                   
                                                  DataFormatString="{}{0:n3}"
                                                  TextAlignment="Right"/>
@@ -121,7 +121,7 @@
                                                  DataMemberBinding="{Binding BenchmarkPerformance}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  CellStyle="{StaticResource GridViewCellStyle}"
-                                                 Width="Auto"                                                   
+                                                                                               
                                                  DataFormatString="{}{0:n3}"
                                                  HeaderTextAlignment="Right"                                                    
                                                  TextAlignment="Right"/>
@@ -129,7 +129,7 @@
                                                 DataMemberBinding="{Binding EffectiveDate}"                                                
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
-                                                Width="Auto"                                                 
+                                                                                     
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"/>                                    
                                 </telerik:RadGridView.Columns>

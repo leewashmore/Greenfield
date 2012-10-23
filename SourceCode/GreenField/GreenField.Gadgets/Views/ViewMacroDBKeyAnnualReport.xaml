@@ -103,7 +103,7 @@
                                                     Header="Description" 
                                                     IsFilterable="False" 
                                                     DataMemberBinding="{Binding DESCRIPTION}" 
-                                                    Width="*"
+                                                   
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -113,7 +113,7 @@
                             <telerik:GridViewDataColumn x:Name="dgcYear1" 
                                                     Header="Year1" 
                                                     DataMemberBinding="{Binding YearOne, StringFormat=\{0:n2\}}" 
-                                                    Width="Auto"
+                                                    
                                                     HeaderTextAlignment="Right"                                                     
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -121,7 +121,7 @@
                         <telerik:GridViewDataColumn x:Name="dgcYear2" 
                                                     Header="Year2" 
                                                     DataMemberBinding="{Binding YearTwo, StringFormat=\{0:n2\}}" 
-                                                     Width="Auto"
+                                                     
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -130,7 +130,7 @@
                         <telerik:GridViewDataColumn x:Name="dgcYear3" 
                                                     Header="Year3" 
                                                     DataMemberBinding="{Binding YearThree, StringFormat=\{0:n2\}}" 
-                                                    Width="Auto" 
+                                                    
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -139,7 +139,7 @@
                         <telerik:GridViewDataColumn x:Name="dgcYear4" 
                                                     Header="Year4" 
                                                     DataMemberBinding="{Binding YearFour, StringFormat=\{0:n2\}}" 
-                                                    Width="Auto" 
+                                                    
                                                     HeaderTextAlignment="Right"                                                    
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -148,7 +148,7 @@
                         <telerik:GridViewDataColumn x:Name="dgcYear5" 
                                                     Header="Year5" 
                                                     DataMemberBinding="{Binding YearFive, StringFormat=\{0:n2\}}" 
-                                                    Width="Auto" 
+                                                    
                                                     HeaderTextAlignment="Right"                                                     
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -156,7 +156,7 @@
                             <telerik:GridViewDataColumn x:Name="dgcYear6" 
                                                     Header="Year6" 
                                                     DataMemberBinding="{Binding YearSix, StringFormat=\{0:n2\}}" 
-                                                    Width="Auto"
+                                                    
                                                     HeaderTextAlignment="Right"                                                     
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -166,7 +166,7 @@
                             <telerik:GridViewDataColumn x:Name="dgcFiveYearAverage" 
                                                     Header="FiveYearAvg" 
                                                     DataMemberBinding="{Binding FiveYearAvg, StringFormat=\{0:n2\}}" 
-                                                    Width="Auto"
+                                                   
                                                     HeaderTextAlignment="Right"                                                     
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"

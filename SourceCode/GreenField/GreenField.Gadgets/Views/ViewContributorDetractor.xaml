@@ -68,18 +68,18 @@
                                      RowStyle="{StaticResource GridViewRowStyle}">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgCountryId" Header="Country Id" DataMemberBinding="{Binding SecurityCountryId}" 
-                                                    Width="Auto" HeaderTextAlignment="Left"
+                                                     HeaderTextAlignment="Left"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left" 
                                                     CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgSecurityName" Header="Security Name" DataMemberBinding="{Binding SecurityName}" Width="Auto"  
+                        <telerik:GridViewDataColumn x:Name="dgSecurityName" Header="Security Name" DataMemberBinding="{Binding SecurityName}" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" HeaderTextAlignment="Left" TextAlignment="Left"
                                                      CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgBasisPts" Header="Basis Pts" 
                                                     DataMemberBinding="{Binding SecurityAlpha, Converter={StaticResource basisPointsConverter}}" 
-                                                    Width="*" TextAlignment="Right" 
+                                                   TextAlignment="Right" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" HeaderTextAlignment="Right"
                                                      CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgSector" Header="Sector" DataMemberBinding="{Binding SecuritySectorName}" Width="Auto"  
+                        <telerik:GridViewDataColumn x:Name="dgSector" Header="Sector" DataMemberBinding="{Binding SecuritySectorName}"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left"  HeaderTextAlignment="Left"
                                                      CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
                     </telerik:RadGridView.Columns>

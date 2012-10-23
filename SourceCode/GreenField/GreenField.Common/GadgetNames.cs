@@ -168,7 +168,7 @@ namespace GreenField.Common
         public static string HOLDINGS_TOP_TEN_HOLDINGS = "Top 10 Holdings";
         public static string HOLDINGS_RELATIVE_RISK = "Relative Risk";
         public static string HOLDINGS_REGION_BREAKDOWN = "Region Breakdown";
-        public static string HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES = "Valuation, Quality & Growth Measures Fund Holdings and Discounted Cash Flows 4.2.1.7";
+        public static string HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES = "Valuation, Quality, & Growth Measures";
         public static string HOLDINGS_SECTOR_BREAKDOWN = "Sector Breakdown";
         public static string HOLDINGS_RISK_RETURN = "Risk/Return";
         public static string HOLDINGS_ASSET_ALLOCATION = "Asset Allocation";

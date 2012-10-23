@@ -131,7 +131,7 @@
                     <telerik:RadGridView.Columns>
                         <!--CountryID Column-->
                         <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    Width="auto" HeaderTextAlignment="Left" TextAlignment="Left" UniqueName="CountryId"
+                                                     HeaderTextAlignment="Left" TextAlignment="Left" UniqueName="CountryId"
                                                     FooterCellStyle="{Binding GridViewCustomFooterCellStyle}">
                             <telerik:GridViewDataColumn.CellTemplate>
                                 <DataTemplate>
@@ -147,7 +147,7 @@
                         <!--Totals Column-->
                         <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total" FooterTextAlignment="Right" HeaderTextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
-                                                    UniqueName="Total" Width="*">
+                                                    UniqueName="Total" >
                             <telerik:GridViewDataColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">

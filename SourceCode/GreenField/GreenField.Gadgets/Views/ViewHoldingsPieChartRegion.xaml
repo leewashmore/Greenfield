@@ -102,7 +102,7 @@
                                                     DataMemberBinding="{Binding BenchmarkName}"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"
-                                                    Width="*" 
+                                                    
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left">
                                 </telerik:GridViewDataColumn>
@@ -110,7 +110,7 @@
                                                     DataMemberBinding="{Binding EffectiveDate,StringFormat='dd/MM/yyyy'}"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"
-                                                    Width="*"                                                     
+                                                                                    
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left">
                                 </telerik:GridViewDataColumn>
@@ -118,14 +118,14 @@
                                                  DataMemberBinding="{Binding SegmentName}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  CellStyle="{StaticResource GridViewCellStyle}"
-                                                 Width="*"                                                   
+                                                                                      
                                                  HeaderTextAlignment="Left"                                                    
                                                  TextAlignment="Left"/>
                                 <telerik:GridViewDataColumn Header="Portfolio Weight" 
                                                 DataMemberBinding="{Binding PortfolioWeight}"                                                
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
-                                                Width="*" 
+                                                
                                                 DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
@@ -133,7 +133,7 @@
                                                 DataMemberBinding="{Binding BenchmarkWeight}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
-                                                Width="*" 
+                                                
                                                 DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
