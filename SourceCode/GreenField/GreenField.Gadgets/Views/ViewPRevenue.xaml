@@ -100,9 +100,8 @@
 
                                         <telerikCharting:ChartArea.AxisY>
                                             <telerikCharting:AxisY AutoRange="True"  
-                                                                IsZeroBased="False"  
-                                                                DefaultLabelFormat="#VAL{n0}"
-                                                                    >
+                                                                   IsZeroBased="False"  
+                                                                   DefaultLabelFormat="#VAL{n1}">
                                                 <telerikCharting:AxisY.AxisStyles>
                                                     <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                 </telerikCharting:AxisY.AxisStyles>

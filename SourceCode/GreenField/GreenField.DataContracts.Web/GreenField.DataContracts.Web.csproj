@@ -109,6 +109,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\EMSummaryMarketData.cs">
       <Link>DataContracts\EMSummaryMarketData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\EMSummaryMarketSSRData.cs">
+      <Link>DataContracts\EMSummaryMarketSSRData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\EntitySelectionData.cs">
       <Link>DataContracts\EntitySelectionData.cs</Link>
     </Compile>

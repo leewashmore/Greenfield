@@ -2249,6 +2249,124 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+        /// <summary>
+        /// Retrieve data for EMM Market SSR data gadget
+        /// </summary>
+        /// <param name="lastBusinessDate">last business date available in the view </param>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<EMSummaryMarketSSRData> RetrieveEmergingMarketSSRData(String selectedPortfolio)
+        {
+            try
+            {
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                ExternalResearchEntities research = new ExternalResearchEntities();
+                research.CommandTimeout = 5000;
+                Decimal? benchmarkWeight = 0;
+                List<String> benchmarkIds = new List<string>();
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                if (!isServiceUp)
+                {
+                    throw new Exception("Services are not available");
+                }
+                List<EMSummaryMarketBenchmarkData> emBenchData = new List<EMSummaryMarketBenchmarkData>();
+                DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
+                GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS
+                    .Where(record => record.PORTFOLIO_ID == selectedPortfolio).
+                    OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                if (lastBusinessRecord != null)
+                {
+                    if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                    {
+                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+                    }
+                }
+                String benId = lastBusinessRecord.BENCHMARK_ID;
+
+                //gathering the data from GF_BENCHMARK_HOLDINGS
+                List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
+                dataBenchmarkHoldings = dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
+                                                         && record.PORTFOLIO_DATE == lastBusinessDate
+                                                          && record.BENCHMARK_WEIGHT > 0).ToList();
+
+                var benchData = dataBenchmarkHoldings != null ? (from p in dataBenchmarkHoldings
+                                                                 select new
+                                                                 {
+                                                                     IssuerId = p.ISSUER_ID,
+                                                                     AsecShortName = p.ASEC_SEC_SHORT_NAME,
+                                                                     IssueName = p.ISSUE_NAME,
+                                                                     Region = p.ASHEMM_PROP_REGION_CODE,
+                                                                     Country = p.ISO_COUNTRY_CODE,
+                                                                     Sector = p.GICS_SECTOR,
+                                                                     Industry = p.GICS_INDUSTRY,
+                                                                     Weight = p.BENCHMARK_WEIGHT
+                                                                 }).Distinct() : null;
+
+                List<String> asecShortNames = benchData != null ? (from p in benchData
+                                                                   select p.AsecShortName).ToList() : null;
+                //retrieve security Id's              
+                List<SecurityData> securityData = RetrieveSecurityIds(asecShortNames);
+                List<String> distinctSecurityId = securityData.Select(record => record.SecurityId).ToList();
+                List<String> distinctIssuerId = securityData.Select(record => record.IssuerId).ToList();
+
+                //String _securityIds = StringBuilder(distinctSecurityId);
+                //String _issuerIds = StringBuilder(distinctIssuerId);
+
+                foreach (String asec in securityData.Select(record => record.AsecShortName).ToList())
+                {
+                    EMSummaryMarketBenchmarkData obj = new EMSummaryMarketBenchmarkData();
+                    obj.AsecShortName = benchData.Where(t => t.AsecShortName == asec).Select(t => t.AsecShortName)
+                        .FirstOrDefault();
+                    obj.IssuerId = benchData.Where(t => t.AsecShortName == asec).Select(t => t.IssuerId).FirstOrDefault();
+                    obj.IssueName = benchData.Where(t => t.AsecShortName == asec).Select(t => t.IssueName).FirstOrDefault();
+                    obj.CountryCode = benchData.Where(t => t.AsecShortName == asec).Select(t => t.Country).FirstOrDefault();
+                    obj.BenWeight = benchData.Where(t => t.AsecShortName == asec).Select(t => t.Weight).FirstOrDefault();
+                    emBenchData.Add(obj);
+                }
+                //calling the stored procedure from the database
+                List<EMSummaryMarketSSRData> resultList = new List<EMSummaryMarketSSRData>();
+                List<EMSumCountryData> wholeData = research.usp_GetCountryDataForEMMarketData().ToList();
+                List<EMSumCountryData> countryData = wholeData.Where(t => t.Type == "C").ToList();
+                List<EMSumCountryData> groupData = wholeData.Where(t => t.Type == "G").ToList();
+
+                foreach (EMSumCountryData row in countryData)
+                {
+                    if (emBenchData.Select(t => t.CountryCode).Contains(row.CountryCode))
+                    {
+                        EMSummaryMarketSSRData record = new EMSummaryMarketSSRData();
+                        record.Region = row.RegionName;
+                        record.Country = row.CountryName;
+                        record.BenchmarkWeight = emBenchData.Where(t => t.CountryCode == row.CountryCode).Select(t => t.BenWeight)
+                            .FirstOrDefault();
+                        resultList.Add(record);
+                    }
+                }
+                foreach (String group in groupData.Select(t => t.CountryName).Distinct())
+                {
+                    EMSummaryMarketSSRData record = new EMSummaryMarketSSRData();
+                    record.Region = groupData.Where(t => t.CountryName == group).Select(t => t.RegionName).FirstOrDefault();
+                    record.Country = group;
+                    foreach (String cou in groupData.Where(t => t.CountryName == group).Select(t => t.CountryCode).Distinct())
+                    {
+                        benchmarkWeight = benchmarkWeight + emBenchData.Where(t => t.CountryCode == cou).Select(t => t.BenWeight)
+                              .FirstOrDefault();
+                    }
+                    record.BenchmarkWeight = benchmarkWeight;
+                    resultList.Add(record);
+                }
+                return resultList;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
         /// <summary>
         /// Retrieve security Id's according to asecShortNames from GF_SECURITY_BASEVIEW
         /// </summary>

@@ -152,7 +152,7 @@ namespace ReutersPlugIn
                     throw new Exception("Unable to parse async argument to input data type...");
                 }
 
-                ExcelModelRefreshOperationsClient client = new ExcelModelRefreshOperationsClient();
+                ExcelModelRefreshOperationsClient client = new ExcelModelRefreshOperationsClient();                
                 ExcelModelData outputData = client.RetrieveStatementData(inputData.IssuerID);
 
                 if (outputData == null)

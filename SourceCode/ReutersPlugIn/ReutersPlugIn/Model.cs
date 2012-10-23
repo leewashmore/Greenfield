@@ -37,7 +37,7 @@ namespace ReutersPlugIn
                 var excelApp = Globals.ThisAddIn.Application;
                 Workbook workBook = excelApp.ActiveWorkbook;
 
-                //'Reuters Reported' worksheet
+                //'Reuters Reported' data fetch
                 Globals.ThisAddIn.AppendMessage("Updating reuters reported headers...");
                 List<int?> distinctPeriodYears_reuters = financialData.Where(a => a.PeriodYear != null)
                     .Select(a => a.PeriodYear).OrderBy(a => a).ToList().Distinct().ToList();
@@ -46,11 +46,20 @@ namespace ReutersPlugIn
                     throw new Exception("No reuters data available");
                 }
 
+                //'Consensus Data' data fetch                
+                Globals.ThisAddIn.AppendMessage("Updating consensus headers...");
+                List<int> distinctPeriodYears_consensus = consensusData.Select(a => a.PERIOD_YEAR).OrderBy(a => a).ToList().Distinct().ToList();
+                if (distinctPeriodYears_consensus == null || distinctPeriodYears_consensus.Count == 0)
+                {
+                    throw new Exception("No consensus data available");
+                }
+
+                //'Reuters Reported' worksheet write
                 int? firstYear_reuters = distinctPeriodYears_reuters[0];
                 int? lastYear_reuters = distinctPeriodYears_reuters[distinctPeriodYears_reuters.Count - 1];
                 int? numberOfYears_reuters = lastYear_reuters - firstYear_reuters;
-                
-                Worksheet workSheetReuters = workBook.Worksheets[ThisAddIn.REUTERS_REPORTED_WORKSHEET_NAME];                
+
+                Worksheet workSheetReuters = workBook.Worksheets[ThisAddIn.REUTERS_REPORTED_WORKSHEET_NAME];
                 headerColor = (workSheetReuters.Cells[1, 1] as Range).Interior.Color;
                 workSheetReuters.Cells.ClearContents();
                 workSheetReuters.Cells.ClearOutline();
@@ -68,14 +77,7 @@ namespace ReutersPlugIn
                 }
                 Globals.ThisAddIn.AppendMessage("Reuters reported data update complete");
 
-                //'Consensus Data' worksheet                
-                Globals.ThisAddIn.AppendMessage("Updating consensus headers...");
-                List<int> distinctPeriodYears_consensus = consensusData.Select(a => a.PERIOD_YEAR).OrderBy(a => a).ToList().Distinct().ToList();
-                if (distinctPeriodYears_consensus == null || distinctPeriodYears_consensus.Count == 0)
-                {
-                    throw new Exception("No consensus data available");
-                }
-
+                //'Consensus Data' worksheet write
                 int? firstYear_consensus = distinctPeriodYears_consensus[0];
                 int? lastYear_consensus = distinctPeriodYears_consensus[distinctPeriodYears_consensus.Count - 1];
                 int? numberOfYears_consensus = lastYear_consensus - firstYear_consensus;
