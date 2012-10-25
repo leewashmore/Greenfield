@@ -61,9 +61,9 @@ namespace GreenField.DashBoardModule.Views.Screening
                 LoggerFacade = _logger,
                 RegionManager = _regionManager
             };
-            //tempParam = param;
+            tempParam = param;
+            RefreshScreen.refreshFlag = false;
             this.cctrDashboardContent.Content = new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(param));
-
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -78,11 +78,15 @@ namespace GreenField.DashBoardModule.Views.Screening
             {
                 control.IsActive = false;
             }
+            RefreshScreen.refreshFlag = false;
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //this.cctrDashboardContent.Content = new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(tempParam));
+            if (RefreshScreen.refreshFlag)
+            {
+                this.cctrDashboardContent.Content = new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(tempParam));
+            }
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {

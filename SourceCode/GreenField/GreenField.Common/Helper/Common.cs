@@ -20,7 +20,6 @@ using GreenField.DataContracts.DataContracts;
 using System.ComponentModel;
 using System.Reflection;
 
-
 namespace GreenField.Common
 {
     public static class MembershipCreateStatus
@@ -278,6 +277,11 @@ namespace GreenField.Common
         public static String PORTFOLIO = "Portfolio";
         public static String BENCHMARK = "Benchmark";
         public static String CUSTOM = "Custom";
+    }
+
+    public static class RefreshScreen
+    {
+        public static bool refreshFlag = false;
     }
    
     #endregion

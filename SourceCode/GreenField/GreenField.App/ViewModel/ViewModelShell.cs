@@ -2795,6 +2795,8 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.SCREENING_STOCK);
                 UpdateToolBoxSelectorVisibility();
+                //flag to refresh the custom screening tool view
+                RefreshScreen.refreshFlag = true;
                 _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
             }
             catch (Exception ex)

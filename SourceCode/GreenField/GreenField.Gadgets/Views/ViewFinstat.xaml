@@ -274,11 +274,11 @@
                                 <telerik:GridViewDataColumn x:Name="dgvcHarmonicFirst" HeaderTextAlignment="Right" TextAlignment="Right"
                                                         DataMemberBinding="{Binding ADDITIONAL_DESC_FIRST, StringFormat=\{0:n1\}}" 
                                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        IsSortable="False" IsFilterable="False" Width="auto" CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgvcHarmonicSecond" HeaderTextAlignment="Right" TextAlignment="Right"
                                                         DataMemberBinding="{Binding ADDITIONAL_DESC_SECOND, StringFormat=\{0:n1\}}" 
                                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        IsSortable="False" IsFilterable="False" Width="auto" CellStyle="{StaticResource GridViewCellStyle}"/>
                             </telerik:RadGridView.Columns>
                             <telerik:RadGridView.GroupDescriptors>
                                 <telerik:GroupDescriptor Member="SUB_DATA_DESC" />

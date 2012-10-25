@@ -482,7 +482,8 @@ namespace GreenField.Gadgets.Views
                     GridViewDataColumn column = (e.Context as GridViewDataColumn);
                     if (column != null)
                     {
-                        if ((!String.IsNullOrEmpty(column.Header.ToString()) && String.Equals(column.Header.ToString(), "Total", StringComparison.CurrentCultureIgnoreCase)))
+                        if ((!String.IsNullOrEmpty(column.Header.ToString()) && String.Equals(column.Header.ToString(), "Total",
+                            StringComparison.CurrentCultureIgnoreCase)))
                         {
                             return countryTotal;
                         }

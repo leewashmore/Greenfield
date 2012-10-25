@@ -1057,9 +1057,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
             }
+            else if (flag == "Create" && SelectedFieldsDataList.Count == 0)
+            {
+               MessageBox.Show("List contains no data points preference. Empty list cannot be created");
+            }
             else
             {
-                if (SelectedFieldsDataList != null)
+               
+                if (SelectedFieldsDataList.Count > 0)
                 {
                     CSTNavigation.UpdateString(CSTNavigationInfo.ListName, SelectedFieldsDataList[0].ListName);
                     CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, SelectedFieldsDataList[0].Accessibility);

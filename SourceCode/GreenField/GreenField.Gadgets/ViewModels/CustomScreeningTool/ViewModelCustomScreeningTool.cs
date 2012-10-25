@@ -1213,6 +1213,10 @@ namespace GreenField.Gadgets.ViewModels
                                                             SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
                 }
             }
+            else if (flag == null)
+            {
+                flagBsyInd = 0;
+            }
         }
 
         /// <summary>

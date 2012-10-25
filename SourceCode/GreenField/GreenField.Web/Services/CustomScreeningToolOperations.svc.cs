@@ -1026,7 +1026,7 @@ namespace GreenField.Web.Services
                 temp.PortfolioTargetInCountry = objTargetInCountry != null ? Math.Round(Convert.ToDecimal(objTargetInCountry), 1) + "%" : Math.Round(0.0) + "%";
             }
             temp.Holdings = check ? Math.Round(Convert.ToDecimal(portfolioHoldingsData.Where(a => a.ISSUER_ID == issuerId)
-                                                                                              .Sum(a => a.DIRTY_VALUE_PC)), 1)
+                                                                                              .Sum(a => a.DIRTY_VALUE_PC)) / Convert.ToDecimal(1000000), 1)
                 : Math.Round(Convert.ToDecimal(portfolioHoldingsData.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID)
                                                                               .Select(a => a.DIRTY_VALUE_PC).FirstOrDefault()) / Convert.ToDecimal(1000000), 1);
             if (benchmarkData.Count > 0)

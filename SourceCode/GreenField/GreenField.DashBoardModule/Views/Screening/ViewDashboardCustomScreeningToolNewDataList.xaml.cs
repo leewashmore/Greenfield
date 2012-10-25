@@ -1,24 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
+﻿using System.ComponentModel.Composition;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.ServiceCaller;
+using Microsoft.Practices.Prism.Regions;
 using GreenField.Common;
 using GreenField.Common.Helper;
-using GreenField.Gadgets.Views;
-using GreenField.Gadgets.ViewModels;
-using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Views;
+using GreenField.ServiceCaller;
 
 namespace GreenField.DashBoardModule.Views.Screening
 {
