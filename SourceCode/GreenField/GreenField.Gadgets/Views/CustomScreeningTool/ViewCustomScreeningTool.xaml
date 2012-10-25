@@ -50,8 +50,8 @@
                         <ColumnDefinition Width="80"/>
                         <ColumnDefinition Width="80"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="tblkCustomControlSelection" Text="Security Selection Criteria" HorizontalAlignment="Right" 
-                               VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock x:Name="tblkCustomControlSelection" Text="Screening Criteria" HorizontalAlignment="Right" 
+                               VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Style="{StaticResource TextBlockStyle}"/> <!-- was Text="Security Selection Criteria" -->
 
                     <telerik:RadComboBox x:Name="cmbSecuritySelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0"
                                          HorizontalAlignment="Left" 

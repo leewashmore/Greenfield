@@ -161,8 +161,8 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"/>
-                    
+                    <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Options" FontWeight="Bold"/> <!--Text ="Chart Controls"-->
+
                     <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
                     
                     <telerik:RadButton x:Name="btnFlip" Grid.Column="2" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
