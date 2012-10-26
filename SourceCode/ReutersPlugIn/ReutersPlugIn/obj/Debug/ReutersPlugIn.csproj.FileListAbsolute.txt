@@ -28,3 +28,11 @@ E:\Repository\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\GenerateResource.
 E:\Repository\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\GenerateResource.write.1.tlog
 E:\Repository\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.dll
 E:\Repository\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.pdb
+D:\GauravEnlistment\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\ResolveAssemblyReference.cache
+D:\GauravEnlistment\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.Properties.Resources.resources
+D:\GauravEnlistment\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.ReutersRibbon.resources
+D:\GauravEnlistment\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.TaskPaneView.resources
+D:\GauravEnlistment\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\GenerateResource.read.1.tlog
+D:\GauravEnlistment\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\GenerateResource.write.1.tlog
+D:\GauravEnlistment\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.dll
+D:\GauravEnlistment\SourceCode\ReutersPlugIn\ReutersPlugIn\obj\Debug\ReutersPlugIn.pdb
