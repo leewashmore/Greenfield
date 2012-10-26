@@ -21,7 +21,7 @@
         <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" Grid.Row="0" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
             <telerik:RadGridView  Name="dgEMSummaryMarketData"
                                   ItemsSource="{Binding EmSummaryMarketDataInfo}"
-                                  AutoGenerateColumns="True"                                                                 
+                                  AutoGenerateColumns="False"                                                                 
                                   CanUserReorderColumns="False"                                   
                                   CanUserInsertRows="False"                              
                                   CanUserDeleteRows="False" 
@@ -31,34 +31,23 @@
                                   RowIndicatorVisibility="Collapsed" 
                                   ShowGroupPanel="False" 
                                   telerik:StyleManager.Theme="Metro"
-                                  UseLayoutRounding="True"                                  
-                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
-                                  GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
-                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
-                                  RowStyle="{StaticResource GridViewRowStyle}"                              
+                                  UseLayoutRounding="True"   
                                   AlternationCount="2">
-                <!--<telerik:RadGridView.ColumnGroups>                
+                <telerik:RadGridView.ColumnGroups>
+                    <telerik:GridViewColumnGroup  Name="Default" Header=" " />
                     <telerik:GridViewColumnGroup  Name="PriceEarnings" Header="Price/Earnings" />
                     <telerik:GridViewColumnGroup  Name="USDEarGrowth" Header="USD Earnings Growth" />
                     <telerik:GridViewColumnGroup  Name="PBV" Header="P/BV" />
                     <telerik:GridViewColumnGroup  Name="DY" Header="DY" />
                     <telerik:GridViewColumnGroup  Name="ROE" Header="ROE" />
                 </telerik:RadGridView.ColumnGroups>
-                <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn Header="" 
-                                                    DataMemberBinding="{Binding Region}"  
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
-                                                    HeaderTextAlignment="Left"
-                                                    TextAlignment="Left">
-                    </telerik:GridViewDataColumn>
+                <telerik:RadGridView.Columns>                 
                     <telerik:GridViewDataColumn Header="" 
                                                     DataMemberBinding="{Binding Country}"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
                                                     HeaderTextAlignment="Left"
+                                                    ColumnGroupName="Default"
                                                     TextAlignment="Left">
                     </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="NAME" 
@@ -66,6 +55,7 @@
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
                                                     HeaderTextAlignment="Left"
+                                                    ColumnGroupName="Default"
                                                     TextAlignment="Left">
                     </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="YTD"                                                     
@@ -73,7 +63,8 @@
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
                                                  Width="*"    CellStyle="{StaticResource GridViewCellStyle}"
                                                  DataFormatString="{}{0:p2}"
-                                                 HeaderTextAlignment="Right"                                                    
+                                                 HeaderTextAlignment="Right"     
+                                                 ColumnGroupName="Default"
                                                  TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="12" 
                                                 DataMemberBinding="{Binding PECurYear}"                                                
@@ -92,7 +83,10 @@
                                                 HeaderTextAlignment="Right"
                                                 ColumnGroupName="PriceEarnings"
                                                 TextAlignment="Right"/>  
-                </telerik:RadGridView.Columns>-->
+                </telerik:RadGridView.Columns>
+                <telerik:RadGridView.GroupDescriptors>
+                    <telerik:GroupDescriptor Member="Region"/>
+                </telerik:RadGridView.GroupDescriptors>
                 <!--<telerik:RadGridView.SortDescriptors>
                     <telerik:SortDescriptor Member="CountryName"
                                                 SortDirection="Ascending" />

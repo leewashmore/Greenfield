@@ -11,12 +11,12 @@ namespace GreenField.DataContracts.DataContracts
         public String Description { get; set; }
 
         [DataMember]
-        public Decimal? Portfolio { get; set; }
+        public Object Portfolio { get; set; }
 
         [DataMember]
-        public Decimal? Benchmark { get; set; }
+        public Object Benchmark { get; set; }
 
         [DataMember]
-        public Decimal? Relative { get; set; }
+        public Object Relative { get; set; }
     }
 }

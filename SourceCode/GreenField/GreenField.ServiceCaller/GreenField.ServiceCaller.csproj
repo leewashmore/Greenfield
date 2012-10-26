@@ -200,6 +200,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.DCFTerminalValueCalculationsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCatalogData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCategoricalData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.EMSummaryMarketSSRData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FairValueCompositionSummaryData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FilterSelectionData.datasource" />
@@ -543,13 +544,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.disco" />
-    <None Include="Service References\ExternalResearchDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\ExternalResearchDefinitions\configuration.svcinfo" />
-    <None Include="Service References\ExternalResearchDefinitions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Service References\PerformanceDefinitions\PerformanceOperations.disco" />
     <None Include="Service References\PerformanceDefinitions\configuration91.svcinfo" />
     <None Include="Service References\PerformanceDefinitions\configuration.svcinfo" />
@@ -617,6 +611,13 @@
     <None Include="Service References\FairValueDefinitions\configuration91.svcinfo" />
     <None Include="Service References\FairValueDefinitions\configuration.svcinfo" />
     <None Include="Service References\FairValueDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.disco" />
+    <None Include="Service References\ExternalResearchDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\ExternalResearchDefinitions\configuration.svcinfo" />
+    <None Include="Service References\ExternalResearchDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

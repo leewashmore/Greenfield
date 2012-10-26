@@ -90,6 +90,7 @@
                                      CanUserDeleteRows="False" IsReadOnly="True"
                                      CanUserSortColumns="True" ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 
                                      ShowGroupPanel="False"
+                                     GridLinesVisibility="None"
                                      UseLayoutRounding="True"                                     
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"

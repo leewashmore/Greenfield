@@ -18,7 +18,8 @@ namespace GreenField.Gadgets.Views
     {       
         public ViewEMSummaryMarketData(ViewModelEMSummaryMarketData dataContextSource)
         {
-            InitializeComponent();          
+            InitializeComponent();
+            this.DataContext = dataContextSource;
         }
     }
 }

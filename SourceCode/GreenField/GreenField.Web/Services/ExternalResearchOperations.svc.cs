@@ -2046,9 +2046,9 @@ namespace GreenField.Web.Services
             {
                 entry.Benchmark = 1 / harmonicMeanBenchmark;
             }
-            if (entry.Benchmark != 0)
+            if (Convert.ToDecimal(entry.Benchmark) != 0)
             {
-                entry.Relative = entry.Portfolio / entry.Benchmark;
+                entry.Relative = Convert.ToDecimal(entry.Portfolio) / Convert.ToDecimal(entry.Benchmark);
             }
         }
 
@@ -2061,7 +2061,7 @@ namespace GreenField.Web.Services
         /// <param name="initialSumDirtyValuePC">variable to store the sum of all portfolio weights</param>
         /// <param name="harmonicMeanPortfolio">Harmonic mean</param>
         private void CalculateHarmonicMeanPortfolioROE(List<CalculatedValuesForValuation> filteredByDataIdList, String description, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? initialSumDirtyValuePC = 0, Decimal? harmonicMeanPortfolio = 0)
-        {
+        {           
             Decimal? portWeight = 0;
             Decimal? multipliedValue = 0;
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
@@ -2108,10 +2108,12 @@ namespace GreenField.Web.Services
                 harmonicMeanBenchmark = harmonicMeanBenchmark + multipliedValue;
             }
             entry.Benchmark = harmonicMeanBenchmark * 100;
-            if (entry.Benchmark != 0)
+            if (Convert.ToDecimal(entry.Benchmark) != 0)
             {
-                entry.Relative = entry.Portfolio / entry.Benchmark;
+                entry.Relative = Convert.ToDecimal(entry.Portfolio) / Convert.ToDecimal(entry.Benchmark);
             }
+            entry.Portfolio = Math.Round(Convert.ToDecimal(entry.Portfolio), 1) + "%";
+            entry.Benchmark = Math.Round(Convert.ToDecimal(harmonicMeanBenchmark * 100),1) + "%";
         }
         #endregion
 
@@ -2175,6 +2177,9 @@ namespace GreenField.Web.Services
                 dataBenchmarkHoldings = dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
                                                          && record.PORTFOLIO_DATE == lastBusinessDate
                                                           && record.BENCHMARK_WEIGHT > 0).ToList();
+                //gathering data from GF_PERF_DAILY_ATTRIBUTION
+                List<GF_PERF_DAILY_ATTRIBUTION> attributionData = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                attributionData =  RetrieveBenchmarkYTDReturns(selectedPortfolio, lastBusinessDate);
 
                 var benchData = dataBenchmarkHoldings != null ? (from p in dataBenchmarkHoldings
                                                                  select new
@@ -2215,17 +2220,24 @@ namespace GreenField.Web.Services
                 List<EMSumCountryData> wholeData = research.usp_GetCountryDataForEMMarketData().ToList();
                 List<EMSumCountryData> countryData = wholeData.Where(t => t.Type == "C").ToList();
                 List<EMSumCountryData> groupData = wholeData.Where(t => t.Type == "G").ToList();
+                List<String> countryCodes = wholeData.Where(t => t.Type == "C").Select(t => t.CountryCode).ToList();
+
                 foreach (EMSumCountryData row in countryData)
                 {
-                    if (emBenchData.Select(t => t.CountryCode).Contains(row.CountryCode))
-                    {
                         EMSummaryMarketData obj = new EMSummaryMarketData();
                         obj.Region = row.RegionName;
                         obj.Country = row.CountryName;
-                        obj.BenchmarkWeight = emBenchData.Where(t => t.CountryCode == row.CountryCode).Select(t => t.BenWeight)
-                            .FirstOrDefault();
-                        resultList.Add(obj);
-                    }
+                        if (emBenchData != null)
+                        {
+                            obj.BenchmarkWeight = emBenchData.Where(t => t.CountryCode == row.CountryCode).Select(t => t.BenWeight)
+                                .FirstOrDefault();
+                        }
+                        if (attributionData != null)
+                        {
+                            obj.YTDReturns = attributionData.Where(t => t.COUNTRY == row.CountryCode).Select(t => t.BM1_RC_TWR_YTD)
+                                .FirstOrDefault();
+                        }
+                        resultList.Add(obj);                    
                 }
                 foreach (String group in groupData.Select(t => t.CountryName).Distinct())
                 {
@@ -2240,6 +2252,8 @@ namespace GreenField.Web.Services
                     obj.BenchmarkWeight = benchmarkWeight;
                     resultList.Add(obj);
                 }
+                //retrieves YTD returns for the countries
+             
                 return resultList;
             }
             catch (Exception ex)
@@ -2392,7 +2406,7 @@ namespace GreenField.Web.Services
                 }
             }
             return secData;
-        }
+        }       
 
         /// <summary>
         /// String builder that adds ' between Id's
@@ -2411,6 +2425,16 @@ namespace GreenField.Web.Services
             var = check == 0 ? var.Remove(0, 1) : null;
             string result = var == null ? null : var.ToString();
             return result;
+        }
+
+        private List<GF_PERF_DAILY_ATTRIBUTION> RetrieveBenchmarkYTDReturns(String selectedPortfolio,
+            DateTime lastBusinessDate)
+        {
+            DimensionEntitiesService.Entities entity = DimensionEntity;
+           List<GF_PERF_DAILY_ATTRIBUTION> dataDailyAttribution = new List<GF_PERF_DAILY_ATTRIBUTION>();
+           dataDailyAttribution = entity.GF_PERF_DAILY_ATTRIBUTION.Where(record => record.PORTFOLIO == selectedPortfolio
+                                                         && record.TO_DATE == lastBusinessDate && record.NODE_NAME=="Country").ToList();
+           return dataDailyAttribution;
         }
         #endregion
     }
