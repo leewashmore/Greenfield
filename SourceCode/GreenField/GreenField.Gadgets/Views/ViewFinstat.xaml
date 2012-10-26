@@ -43,9 +43,9 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Gadget Controls" FontWeight="Bold" VerticalAlignment="Center" 
+                                <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Data Options" FontWeight="Bold" VerticalAlignment="Center" 
                                            Style="{StaticResource TextBlockStyle}"/>
-                                <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
+                                <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/> <!-- "Gadget Controls" -->
 
                                 <telerik:RadButton Grid.Column="2"  HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="True"
                                                Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export to Excel" Click="btnExportExcel_Click">

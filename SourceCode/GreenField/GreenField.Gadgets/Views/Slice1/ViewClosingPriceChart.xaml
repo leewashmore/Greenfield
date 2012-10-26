@@ -98,11 +98,11 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold" Style="{StaticResource TextBlockStyle}" />
+                    <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Options" FontWeight="Bold" Style="{StaticResource TextBlockStyle}" />
                     <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
                     <telerik:RadButton x:Name="btnFlip" Grid.Column="2" Height="20" Width="20" HorizontalAlignment="Center" 
                                        VerticalAlignment="Center"
-                                       Margin="5,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
+                                       Margin="5,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip"><!--Text ="Chart Controls"-->
                         <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
                     <telerik:RadButton x:Name="btnExportExcel" Grid.Column="3" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"

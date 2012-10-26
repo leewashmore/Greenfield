@@ -164,8 +164,8 @@
                                 </Grid>
                             </Grid>
                         </telerik:RadTabItem>
-                    
-                        <telerik:RadTabItem Header="Period Financials" Margin="2,0,2,0">
+
+                            <telerik:RadTabItem Header="Standard Periods" Margin="2,0,2,0"> <!-- was Header="Period Financials" -->
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -367,8 +367,8 @@
 
                             </Grid>
                         </telerik:RadTabItem>
-                    
-                        <telerik:RadTabItem Header="Current Financials"  Margin="2,0,2,0">
+
+                            <telerik:RadTabItem Header="Rolling Periods"  Margin="2,0,2,0"> <!-- Header="Current Financials"-->
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>

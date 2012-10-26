@@ -78,7 +78,7 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem x:Name="rmItemModels" Header="Models">
+                    <!-- <telerik:RadMenuItem x:Name="rmItemModels" Header="Models">
                         <telerik:RadMenuItem Header="Asset Allocation" x:Name="rmItemAssetAllocation"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem Header="Stock Selection" x:Name="rmItemStockSelection"
@@ -87,7 +87,7 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem Header="Direct Overlay" x:Name="rmItemDirectOverlay"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                    </telerik:RadMenuItem>
+                    </telerik:RadMenuItem> -->
                 </telerik:RadMenu>
             </telerik:RadPanelBarItem>
 
@@ -216,11 +216,11 @@
             </telerik:RadPanelBarItem>
 
             <!--Gadgets SubMenu-->
-            <telerik:RadPanelBarItem Header="Gadgets" x:Name="pbItemGadgets" Style="{StaticResource PanelBarItemStyle}">
+            <!--<telerik:RadPanelBarItem Header="Gadgets" x:Name="pbItemGadgets" Style="{StaticResource PanelBarItemStyle}">
                 <telerik:RadMenu x:Name="radMenuGadgets" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
                 </telerik:RadMenu>
-            </telerik:RadPanelBarItem>
+            </telerik:RadPanelBarItem> -->
 
             <!--Others SubMenu-->
             <telerik:RadPanelBarItem Header="Others" x:Name="pbItemOthers" Style="{StaticResource PanelBarItemStyle}">
