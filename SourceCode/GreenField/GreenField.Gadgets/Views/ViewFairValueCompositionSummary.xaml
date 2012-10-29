@@ -104,7 +104,8 @@
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Upside" 
-                                                        DataMemberBinding="{Binding UPSIDE,Converter={StaticResource ConverterPercValTwoDecPlace}}"
+                                                        DataMemberBinding="{Binding UPSIDE}"
+                                                        DataFormatString="{}{0:p2}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
