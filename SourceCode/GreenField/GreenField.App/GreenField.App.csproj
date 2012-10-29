@@ -121,6 +121,7 @@
     <Compile Include="Helpers\ApplicationMenu.xaml.cs">
       <DependentUpon>ApplicationMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GadgetListing.cs" />
     <Compile Include="Helpers\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\RegionDataItem.cs" />

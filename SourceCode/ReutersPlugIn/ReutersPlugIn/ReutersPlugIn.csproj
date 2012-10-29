@@ -44,7 +44,7 @@
     <SupportUrl />
     <FriendlyName>ReutersPlugIn</FriendlyName>
     <OfficeApplicationDescription />
-    <LoadBehavior>16</LoadBehavior>
+    <LoadBehavior>3</LoadBehavior>
   </PropertyGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

@@ -43,7 +43,7 @@ namespace GreenField.DashboardModule.Views
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
-            this.tbHeader.Text = GadgetNames.PORTAL_ENHANCEMENTS_TEAR_SHEET;
+            this.tbHeader.Text = "";//GadgetNames.PORTAL_ENHANCEMENTS_TEAR_SHEET;
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)

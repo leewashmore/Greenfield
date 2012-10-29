@@ -17,15 +17,17 @@ using GreenField.Common;
 using GreenField.ServiceCaller;
 using GreenField.App.ViewModel;
 using Telerik.Windows.Controls;
+using Microsoft.Practices.Prism.Events;
 
 namespace GreenField.App
 {
     [Export]
     public partial class Shell : UserControl
     {
+        [ImportingConstructor]
         public Shell()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         [Import]
@@ -36,7 +38,7 @@ namespace GreenField.App
                 this.DataContext = value;
                 value.ShellDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellDataLoadEvent);
                 value.ShellFilterDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellFilterDataLoadEvent);
-                value.ShellSnapshotDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellSnapshotDataLoadEvent);
+                value.ShellSnapshotDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellSnapshotDataLoadEvent);                
             }
         }
 
@@ -53,6 +55,6 @@ namespace GreenField.App
         void dataContextSource_ShellDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             this.gridBusyIndicator.IsBusy = e.ShowBusy;
-        }
+        }        
     }
 }

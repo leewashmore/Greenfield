@@ -36,14 +36,6 @@
         <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
     </Style>
 
-
-
-
-
-
-
-
-
     <!-- Primary Color Brushes -->
     <SolidColorBrush x:Key="TileView_Background" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="TileView_OuterBorder" Color="#cbd4f1" />
@@ -399,10 +391,10 @@
                                                     <telerik:RadToggleButton x:Name="MaximizeToggleButton" 
                                                                              Command="tileView:TileViewCommands.ToggleTileState"
                                                                 Style="{StaticResource maximizeToggleStyle}" />
-                                                    <!--<Button Width="17" Height="17" HorizontalAlignment="Right"
+                                                    <Button Width="17" Height="17" HorizontalAlignment="Right"
                                                                 Click="DashboardTileViewItemRemoved"
                                                                 Style="{StaticResource CloseButtonStyle}"
-                                                                    />-->
+                                                                    />
                                                 </StackPanel>
                                             </Grid>
                                         </Border>

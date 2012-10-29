@@ -26,6 +26,8 @@ using Telerik.Windows.Controls;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.DataContracts;
 using GreenField.UserSession;
+using GreenField.DashBoardModule.Helpers;
+using GreenField.DashboardModule.Helpers;
 
 namespace GreenField.App.ViewModel
 {
@@ -37,13 +39,29 @@ namespace GreenField.App.ViewModel
     {
         #region Fields
         /// <summary>
-        /// MEF Singletons
+        /// Region Manager
         /// </summary>
-        private IRegionManager _regionManager;
-        private IManageSessions _manageSessions;
-        private ILoggerFacade _logger;
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
+        private IRegionManager regionManager;
+
+        /// <summary>
+        /// Manage Session service caller
+        /// </summary>
+        private IManageSessions manageSessions;
+
+        /// <summary>
+        /// Logging instance
+        /// </summary>
+        private ILoggerFacade logger;
+
+        /// <summary>
+        /// MEF Event Aggregator
+        /// </summary>
+        private IEventAggregator eventAggregator;
+
+        /// <summary>
+        /// Service caller instance
+        /// </summary>
+        private IDBInteractivity dbInteractivity;
         #endregion
 
         #region Constructor
@@ -59,148 +77,107 @@ namespace GreenField.App.ViewModel
         public ViewModelShell(IRegionManager regionManager, IManageSessions manageSessions,
             ILoggerFacade logger, IEventAggregator eventAggregator, IDBInteractivity dbInteractivity)
         {
-            _logger = logger;
-            _regionManager = regionManager;
-            _manageSessions = manageSessions;
-            _eventAggregator = eventAggregator;
-            _dbInteractivity = dbInteractivity;
+            this.logger = logger;
+            this.regionManager = regionManager;
+            this.manageSessions = manageSessions;
+            this.eventAggregator = eventAggregator;
+            this.dbInteractivity = dbInteractivity;
 
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Subscribe(HandleMarketPerformanceSnapshotActionCompletionEvent);
-                _eventAggregator.GetEvent<ToolboxUpdateEvent>().Subscribe(HandleToolboxUpdateEvent);
+                eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Subscribe(HandleMarketPerformanceSnapshotActionCompletionEvent);
+                eventAggregator.GetEvent<ToolboxUpdateEvent>().Subscribe(HandleToolboxUpdateEvent);
             }
-            if (_manageSessions != null)
+            if (manageSessions != null)
             {
-                try
-                {
-                    _manageSessions.GetSession((session) =>
-                            {
-                                if (session != null)
-                                {
-                                    SessionManager.SESSION = session;
-                                    UserName = SessionManager.SESSION.UserName;
-
-                                    if (session.Roles != null)
-                                    {
-                                        RoleIsICAdmin = session.Roles.Contains(MemberGroups.IC_ADMIN);
-                                        RoleIsIC = session.Roles.Any(record => record == MemberGroups.IC_ADMIN
-                                            || record == MemberGroups.IC_CHIEF_EXECUTIVE || record == MemberGroups.IC_VOTING_MEMBER 
-                                            || record == MemberGroups.IC_NON_VOTING_MEMBER);
-                                    }
-
-                                    Logging.LogSessionStart(_logger);
-                                    if (_dbInteractivity != null)
-                                    {
-                                        _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
-                                        _dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
-                                        //_dbInteractivity.RetrieveBenchmarkSelectionData(RetrieveBenchmarkSelectionDataCallBackMethod);
-
-                                    }
-                                }
-                            });
-                }
-                catch (Exception ex)
-                {
-                    string StackTrace = Logging.StackTraceToString(ex);
-                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + StackTrace, "Exception", MessageBoxButton.OK);
-                    Logging.LogException(_logger, ex);
-                }
+                BusyIndicatorNotification(true, "Retrieving session information...");
+                manageSessions.GetSession(GetSessionCallbackMethod);
             }
-
         }
         #endregion
 
         # region Properties
-
         #region UI Fields
+        #region User/Role Management
         /// <summary>
         /// Property binding UserName TextBlock
         /// </summary>
-        private string _userName;
+        private string userName;
         public string UserName
         {
             get
             {
-                if (_userName == null)
+                if (userName == null)
                 {
-                    _userName = SessionManager.SESSION != null ? SessionManager.SESSION.UserName : null;
+                    userName = SessionManager.SESSION != null ? SessionManager.SESSION.UserName : null;
                 }
-                return _userName;
+                return userName;
             }
             set
             {
-                if (_userName != value)
-                    _userName = value;
+                if (userName != value)
+                    userName = value;
                 RaisePropertyChanged(() => this.UserName);
             }
         }
 
-        private Boolean _roleIsICAdmin = false;
+        private Boolean roleIsICAdmin = false;
         public Boolean RoleIsICAdmin
         {
-            get { return _roleIsICAdmin; }
-            set 
+            get { return roleIsICAdmin; }
+            set
             {
-                _roleIsICAdmin = value;
+                roleIsICAdmin = value;
                 RaisePropertyChanged(() => this.RoleIsICAdmin);
             }
         }
 
-        private Boolean _roleIsIC = false;
+        private Boolean roleIsIC = false;
         public Boolean RoleIsIC
         {
-            get { return _roleIsIC; }
+            get { return roleIsIC; }
             set
             {
-                _roleIsIC = value;
+                roleIsIC = value;
                 RaisePropertyChanged(() => this.RoleIsIC);
             }
-        }
-        
+        } 
+        #endregion
 
-        private string _busyIndicatorContent;
-        public string BusyIndicatorContent
+        #region Application Menu
+        /// <summary>
+        /// Stores true if Application Menu is expanded
+        /// </summary>
+        private Boolean isApplicationMenuExpanded;
+        public Boolean IsApplicationMenuExpanded
         {
-            get { return _busyIndicatorContent; }
+            get { return isApplicationMenuExpanded; }
             set
             {
-                _busyIndicatorContent = value;
-                RaisePropertyChanged(() => this.BusyIndicatorContent);
+                isApplicationMenuExpanded = value;
+                RaisePropertyChanged(() => this.IsApplicationMenuExpanded);
             }
-        }
-
-        private string _snapshotBusyIndicatorContent;
-        public string SnapshotBusyIndicatorContent
-        {
-            get { return _snapshotBusyIndicatorContent; }
-            set
-            {
-                _snapshotBusyIndicatorContent = value;
-                RaisePropertyChanged(() => this.SnapshotBusyIndicatorContent);
-            }
-        }
+        } 
+        #endregion        
 
         #region Payload
-
         /// <summary>
         /// Stores payload to be published through aggregate events
         /// </summary>
-        private DashboardGadgetPayload _selectorPayload;
+        private DashboardGadgetPayload selectorPayload;
         public DashboardGadgetPayload SelectorPayload
         {
             get
             {
-                if (_selectorPayload == null)
-                    _selectorPayload = new DashboardGadgetPayload();
-                return _selectorPayload;
+                if (selectorPayload == null)
+                    selectorPayload = new DashboardGadgetPayload();
+                return selectorPayload;
             }
             set
             {
-                _selectorPayload = value;
+                selectorPayload = value;
             }
         }
-
         #endregion
 
         #region ToolBox
@@ -208,18 +185,18 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores the list of EntitySelectionData for all entity Types
         /// </summary>
-        private List<EntitySelectionData> _entitySelectionInfo;
+        private List<EntitySelectionData> entitySelectionInfo;
         public List<EntitySelectionData> EntitySelectionInfo
         {
             get
             {
-                if (_entitySelectionInfo == null)
-                    _entitySelectionInfo = new List<EntitySelectionData>();
-                return _entitySelectionInfo;
+                if (entitySelectionInfo == null)
+                    entitySelectionInfo = new List<EntitySelectionData>();
+                return entitySelectionInfo;
             }
             set
             {
-                _entitySelectionInfo = value;
+                entitySelectionInfo = value;
                 RaisePropertyChanged(() => this.EntitySelectionInfo);
 
                 SecuritySelectorInfo = value
@@ -231,13 +208,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores the list of EntitySelectionData for entity type - SECURITY
         /// </summary>
-        private List<EntitySelectionData> _securitySelectorInfo;
+        private List<EntitySelectionData> securitySelectorInfo;
         public List<EntitySelectionData> SecuritySelectorInfo
         {
-            get { return _securitySelectorInfo; }
+            get { return securitySelectorInfo; }
             set
             {
-                _securitySelectorInfo = value;
+                securitySelectorInfo = value;
                 RaisePropertyChanged(() => this.SecuritySelectorInfo);
             }
         }
@@ -245,20 +222,20 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores selected security - Publishes SecurityReferenceSetEvent on set event
         /// </summary>
-        private EntitySelectionData _selectedSecurityInfo;
+        private EntitySelectionData selectedSecurityInfo;
         public EntitySelectionData SelectedSecurityInfo
         {
-            get { return _selectedSecurityInfo; }
+            get { return selectedSecurityInfo; }
             set
             {
-                if (_selectedSecurityInfo != value)
+                if (selectedSecurityInfo != value)
                 {
-                    _selectedSecurityInfo = value;
+                    selectedSecurityInfo = value;
                     RaisePropertyChanged(() => this.SelectedSecurityInfo);
                     if (value != null)
                     {
                         SelectorPayload.EntitySelectionData = value;
-                        _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(value);
+                        eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(value);
                     }
                 }
             }
@@ -267,13 +244,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores search text entered by user - Refines SecuritySelectionInfo based on the text entered
         /// </summary>
-        private string _securitySearchText;
+        private string securitySearchText;
         public string SecuritySearchText
         {
-            get { return _securitySearchText; }
+            get { return securitySearchText; }
             set
             {
-                _securitySearchText = value;
+                securitySearchText = value;
                 RaisePropertyChanged(() => this.SecuritySearchText);
                 if (value != null)
                 {
@@ -294,13 +271,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the security selector
         /// </summary>
-        private Visibility _securitySelectorVisibility = Visibility.Collapsed;
+        private Visibility securitySelectorVisibility = Visibility.Collapsed;
         public Visibility SecuritySelectorVisibility
         {
-            get { return _securitySelectorVisibility; }
+            get { return securitySelectorVisibility; }
             set
             {
-                _securitySelectorVisibility = value;
+                securitySelectorVisibility = value;
                 RaisePropertyChanged(() => this.SecuritySelectorVisibility);
                 if (value == Visibility.Visible && EntitySelectionInfo == null)
                 {
@@ -309,7 +286,7 @@ namespace GreenField.App.ViewModel
                     {
                         ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
-                    _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
+                    dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
                 }
             }
         }
@@ -319,13 +296,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores the list of PortfolioSelectionData for all portfolios
         /// </summary>
-        private List<PortfolioSelectionData> _portfolioSelectionInfo;
+        private List<PortfolioSelectionData> portfolioSelectionInfo;
         public List<PortfolioSelectionData> PortfolioSelectionInfo
         {
-            get { return _portfolioSelectionInfo; }
+            get { return portfolioSelectionInfo; }
             set
             {
-                _portfolioSelectionInfo = value;
+                portfolioSelectionInfo = value;
                 RaisePropertyChanged(() => this.PortfolioSelectionInfo);
                 PortfolioSelectorInfo = value;
             }
@@ -334,13 +311,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores the list of PortfolioSelectionData for selector
         /// </summary>
-        private List<PortfolioSelectionData> _portfolioSelectorInfo;
+        private List<PortfolioSelectionData> portfolioSelectorInfo;
         public List<PortfolioSelectionData> PortfolioSelectorInfo
         {
-            get { return _portfolioSelectorInfo; }
+            get { return portfolioSelectorInfo; }
             set
             {
-                _portfolioSelectorInfo = value;
+                portfolioSelectorInfo = value;
                 RaisePropertyChanged(() => this.PortfolioSelectorInfo);
             }
         }
@@ -348,28 +325,28 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores selected portfolio - Publishes PortfolioReferenceSetEvent on set event
         /// </summary>
-        private PortfolioSelectionData _selectedPortfolioInfo;
+        private PortfolioSelectionData selectedPortfolioInfo;
         public PortfolioSelectionData SelectedPortfolioInfo
         {
-            get { return _selectedPortfolioInfo; }
+            get { return selectedPortfolioInfo; }
             set
             {
-                if (_selectedPortfolioInfo != value)
+                if (selectedPortfolioInfo != value)
                 {
-                    _selectedPortfolioInfo = value;
+                    selectedPortfolioInfo = value;
                     RaisePropertyChanged(() => this.SelectedPortfolioInfo);
                     if (value != null)
                     {
                         SelectorPayload.PortfolioSelectionData = value;
-                        _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
-                        if (_dbInteractivity != null && _filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
+                        eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
+                        if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
                         {
                             BusyIndicatorContent = "Retrieving...";
                             if (ShellFilterDataLoadEvent != null)
                             {
                                 ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                             }
-                            _dbInteractivity.RetrieveFilterSelectionData(value, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
+                            dbInteractivity.RetrieveFilterSelectionData(value, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                         }
                     }
                 }
@@ -379,15 +356,15 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores search text entered by user - Refines PortfolioSelectionInfo based on the text entered
         /// </summary>
-        private string _portfolioSearchText;
+        private string portfolioSearchText;
         public string PortfolioSearchText
         {
-            get { return _portfolioSearchText; }
+            get { return portfolioSearchText; }
             set
             {
                 if (value != null)
                 {
-                    _portfolioSearchText = value;
+                    portfolioSearchText = value;
                     RaisePropertyChanged(() => this.PortfolioSearchText);
                     if (value != String.Empty && PortfolioSelectionInfo != null)
                         PortfolioSelectorInfo = PortfolioSelectionInfo
@@ -402,13 +379,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the portfolio selector
         /// </summary>
-        private Visibility _portfolioSelectorVisibility = Visibility.Collapsed;
+        private Visibility portfolioSelectorVisibility = Visibility.Collapsed;
         public Visibility PortfolioSelectorVisibility
         {
-            get { return _portfolioSelectorVisibility; }
+            get { return portfolioSelectorVisibility; }
             set
             {
-                _portfolioSelectorVisibility = value;
+                portfolioSelectorVisibility = value;
                 RaisePropertyChanged(() => this.PortfolioSelectorVisibility);
                 if (value == Visibility.Visible && PortfolioSelectionInfo == null)
                 {
@@ -417,7 +394,7 @@ namespace GreenField.App.ViewModel
                     {
                         ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
-                    _dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
+                    dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
                 }
             }
         }
@@ -427,29 +404,29 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores selected effective date - Publishes EffectiveDateReferenceSetEvent on set event
         /// </summary>
-        private DateTime? _selectedEffectiveDateInfo = DateTime.Today.AddDays(-1).Date;
+        private DateTime? selectedEffectiveDateInfo = DateTime.Today.AddDays(-1).Date;
         public DateTime? SelectedEffectiveDateInfo
         {
             get
             {
-                return _selectedEffectiveDateInfo;
+                return selectedEffectiveDateInfo;
             }
             set
             {
-                _selectedEffectiveDateInfo = value;
+                selectedEffectiveDateInfo = value;
                 RaisePropertyChanged(() => this.SelectedEffectiveDateInfo);
                 if (value != null)
                 {
                     SelectorPayload.EffectiveDate = Convert.ToDateTime(value);
-                    _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
-                    if (_dbInteractivity != null && _filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
+                    eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
+                    if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
                     {
                         BusyIndicatorContent = "Retrieving...";
                         if (ShellFilterDataLoadEvent != null)
                         {
                             ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         }
-                        _dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, value, RetrieveFilterSelectionDataCallbackMethod);
+                        dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, value, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
             }
@@ -458,13 +435,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the effective date selector
         /// </summary>
-        private Visibility _effectiveDateSelectorVisibility = Visibility.Collapsed;
+        private Visibility effectiveDateSelectorVisibility = Visibility.Collapsed;
         public Visibility EffectiveDateSelectorVisibility
         {
-            get { return _effectiveDateSelectorVisibility; }
+            get { return effectiveDateSelectorVisibility; }
             set
             {
-                _effectiveDateSelectorVisibility = value;
+                effectiveDateSelectorVisibility = value;
                 RaisePropertyChanged(() => this.EffectiveDateSelectorVisibility);
                 if (value == Visibility.Collapsed)
                 {
@@ -475,27 +452,27 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Period Selector
-
+        /// <summary>
+        /// Period Type reference information
+        /// </summary>
         public List<String> PeriodTypeInfo
         {
             get
             {
-                return new List<String> { "1D", "1W", "MTD", "QTD", "YTD", "1Y"};
+                return new List<String> { "1D", "1W", "MTD", "QTD", "YTD", "1Y" };
             }
         }
-
-
 
         /// <summary>
         /// Stores visibility property of the period selector
         /// </summary>
-        private Visibility _periodSelectorVisibility = Visibility.Collapsed;
+        private Visibility periodSelectorVisibility = Visibility.Collapsed;
         public Visibility PeriodSelectorVisibility
         {
-            get { return _periodSelectorVisibility; }
+            get { return periodSelectorVisibility; }
             set
             {
-                _periodSelectorVisibility = value;
+                periodSelectorVisibility = value;
                 RaisePropertyChanged(() => this.PeriodSelectorVisibility);
 
             }
@@ -504,29 +481,31 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// String that contains the selected filter type
         /// </summary>
-        private String _selectedPeriodType = "YTD";
+        private String selectedPeriodType = "YTD";
         public String SelectedPeriodType
         {
             get
             {
-                return _selectedPeriodType;
+                return selectedPeriodType;
             }
             set
             {
-                _selectedPeriodType = value;
+                selectedPeriodType = value;
                 RaisePropertyChanged(() => this.SelectedPeriodType);
 
                 if (value != null)
                 {
                     SelectorPayload.PeriodSelectionData = value;
-                    _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(value);
+                    eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(value);
                 }
             }
         }
         #endregion
 
         #region Region Selector
-
+        /// <summary>
+        /// Region Items information
+        /// </summary>
         private ObservableCollection<RegionDataItem> regionItems;
         public ObservableCollection<RegionDataItem> RegionItems
         {
@@ -539,20 +518,23 @@ namespace GreenField.App.ViewModel
                 regionItems = value;
                 RaisePropertyChanged(() => this.RegionItems);
             }
-        }        
+        }
 
-        private List<GreenField.DataContracts.RegionSelectionData> _regionTypeInfo;
-        public List<GreenField.DataContracts.RegionSelectionData> RegionTypeInfo
+        /// <summary>
+        /// Region Type information
+        /// </summary>
+        private List<RegionSelectionData> regionTypeInfo;
+        public List<RegionSelectionData> RegionTypeInfo
         {
             get
             {
 
-                return _regionTypeInfo;
+                return regionTypeInfo;
 
             }
             set
             {
-                _regionTypeInfo = value;
+                regionTypeInfo = value;
                 if (value != null)
                     AddItemsToRegionSelectorComboBox(value);
 
@@ -560,6 +542,9 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        /// <summary>
+        /// Region country information
+        /// </summary>
         private List<String> regionCountryNames;
         public List<String> RegionCountryNames
         {
@@ -575,7 +560,7 @@ namespace GreenField.App.ViewModel
             {
                 regionCountryNames = value;
                 RaisePropertyChanged(() => this.RegionCountryNames);
-                _eventAggregator.GetEvent<RegionFXEvent>().Publish(value);
+                eventAggregator.GetEvent<RegionFXEvent>().Publish(value);
 
             }
         }
@@ -583,66 +568,74 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the country selector
         /// </summary>
-        private Visibility _regionFXSelectorVisibility = Visibility.Collapsed;
+        private Visibility regionFXSelectorVisibility = Visibility.Collapsed;
         public Visibility RegionFXSelectorVisibility
         {
-            get { return _regionFXSelectorVisibility; }
+            get { return regionFXSelectorVisibility; }
             set
             {
-                _regionFXSelectorVisibility = value;
+                regionFXSelectorVisibility = value;
                 RaisePropertyChanged(() => this.RegionFXSelectorVisibility);
                 if (value == Visibility.Visible && RegionTypeInfo == null)
-                    _dbInteractivity.RetrieveRegionSelectionData(RetrieveRegionSelectionCallbackMethod);
+                    dbInteractivity.RetrieveRegionSelectionData(RetrieveRegionSelectionCallbackMethod);
             }
         }
-
         #endregion
 
         #region Country Selector
-        private List<CountrySelectionData> _countryTypeInfo;
+        /// <summary>
+        /// Country type information
+        /// </summary>
+        private List<CountrySelectionData> countryTypeInfo;
         public List<CountrySelectionData> CountryTypeInfo
         {
             get
             {
 
-                return _countryTypeInfo;
+                return countryTypeInfo;
 
             }
             set
             {
-                _countryTypeInfo = value;
-                CountryName = value.OrderBy(t => t.CountryName).Select(t => t.CountryName).Distinct().ToList();               
+                countryTypeInfo = value;
+                CountryName = value.OrderBy(t => t.CountryName).Select(t => t.CountryName).Distinct().ToList();
                 RaisePropertyChanged(() => this.CountryTypeInfo);
             }
         }
 
-        private List<String> _countryName;
+        /// <summary>
+        /// country name information
+        /// </summary>
+        private List<String> countryName;
         public List<String> CountryName
         {
             get
             {
-                return _countryName;
+                return countryName;
 
             }
             set
             {
-                _countryName = value;
+                countryName = value;
                 RaisePropertyChanged(() => this.CountryName);
 
             }
         }
 
-        private String _countryCode;
+        /// <summary>
+        /// country code information
+        /// </summary>
+        private String countryCode;
         public String CountryCode
         {
             get
             {
-                return _countryCode;
+                return countryCode;
 
             }
             set
             {
-                _countryCode = value;
+                countryCode = value;
                 RaisePropertyChanged(() => this.CountryCode);
                 if (value != null)
                 {
@@ -651,7 +644,7 @@ namespace GreenField.App.ViewModel
                         if (CountryTypeInfo[i].CountryName == value)
                         {
                             SelectorPayload.CountrySelectionData = CountryTypeInfo[i].CountryCode;
-                            _eventAggregator.GetEvent<CountrySelectionSetEvent>().Publish(SelectorPayload.CountrySelectionData);
+                            eventAggregator.GetEvent<CountrySelectionSetEvent>().Publish(SelectorPayload.CountrySelectionData);
 
                         }
                     }
@@ -663,15 +656,15 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores search text entered by user - Refines PortfolioSelectionInfo based on the text entered
         /// </summary>
-        private string _countrySearchText;
+        private string countrySearchText;
         public string CountrySearchText
         {
-            get { return _countrySearchText; }
+            get { return countrySearchText; }
             set
             {
                 if (value != null)
                 {
-                    _countrySearchText = value;
+                    countrySearchText = value;
                     RaisePropertyChanged(() => this.CountrySearchText);
                     if (value != String.Empty && CountryTypeInfo != null)
                         CountryName = CountryTypeInfo
@@ -684,29 +677,118 @@ namespace GreenField.App.ViewModel
             }
         }
 
-
-
-
         /// <summary>
         /// Stores visibility property of the country selector
         /// </summary>
-        private Visibility _countrySelectorVisibility = Visibility.Collapsed;
+        private Visibility countrySelectorVisibility = Visibility.Collapsed;
         public Visibility CountrySelectorVisibility
         {
-            get { return _countrySelectorVisibility; }
+            get { return countrySelectorVisibility; }
             set
             {
-                _countrySelectorVisibility = value;
+                countrySelectorVisibility = value;
                 RaisePropertyChanged(() => this.CountrySelectorVisibility);
                 if (value == Visibility.Visible && CountryTypeInfo == null)
-                    _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
+                    dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
 
             }
         }
+        #endregion
 
+        #region Commodity
+        /// <summary>
+        /// Stores Commodity data
+        /// </summary>
+        private List<FXCommodityData> commodityTypeInfo;
+        public List<FXCommodityData> CommodityTypeInfo
+        {
+            get { return commodityTypeInfo; }
+            set
+            {
+                commodityTypeInfo = value;
+                CommodityIDs = value.Select(l => l.CommodityId).Distinct().ToList();
+                RaisePropertyChanged(() => this.CommodityTypeInfo);
+            }
+        }
+
+        /// <summary>
+        /// Stores Commodity ID values
+        /// </summary>
+        private List<String> commodityIDs;
+        public List<String> CommodityIDs
+        {
+            get { return commodityIDs; }
+            set
+            {
+                commodityIDs = value;
+                if (String.IsNullOrEmpty(SelCommodityId))
+                    SelCommodityId = value.LastOrDefault();
+                RaisePropertyChanged(() => this.CommodityIDs);
+            }
+
+        }
+
+        /// <summary>
+        /// Stores selected Commodity ID values
+        /// </summary>
+        private string commodityID;
+        public string CommodityID
+        {
+            get { return commodityID; }
+            set
+            {
+                commodityID = value;
+                RaisePropertyChanged(() => this.CommodityID);
+            }
+        }
+
+        /// <summary>
+        /// Stores commodity ID value selected by user
+        /// </summary>
+        private string selCommodityId;
+        public string SelCommodityId
+        {
+            get { return selCommodityId; }
+            set
+            {
+                selCommodityId = value;
+
+                if (value != null)
+                    //_selectorPayload.CommoditySelectedVal = CommodityTypeInfo.Where(rec => rec.CommodityID.ToUpper().Contains(value.ToUpper())).Select(rec => rec.CommodityID).ToString();
+                    if (CommodityTypeInfo != null && CommodityTypeInfo.Count > 0)
+                    {
+                        foreach (FXCommodityData item in CommodityTypeInfo)
+                        {
+                            if (item.CommodityId.ToUpper() == value.ToUpper())
+                                selectorPayload.CommoditySelectedVal = value;
+                        }
+                    }
+                RaisePropertyChanged(() => this.SelCommodityId);
+                eventAggregator.GetEvent<CommoditySelectionSetEvent>().Publish(selectorPayload.CommoditySelectedVal);
+            }
+        }
+
+        /// <summary>
+        /// Stores Commodity Selector Visibility
+        /// </summary>
+        private Visibility commoditySelectorVisibilty = Visibility.Collapsed;
+        public Visibility CommoditySelectorVisibility
+        {
+            get { return commoditySelectorVisibilty; }
+            set
+            {
+                commoditySelectorVisibilty = value;
+                RaisePropertyChanged(() => this.CommoditySelectorVisibility);
+                if (value == Visibility.Visible && CommodityTypeInfo == null)
+                    dbInteractivity.RetrieveCommoditySelectionData(RetrieveFXCommoditySelectionCallbackMethod);
+            }
+        }
         #endregion
 
         #region Filter Selector
+        /// <summary>
+        /// Filter type reference information
+        /// </summary>
         public List<string> FilterTypeInfo
         {
             get
@@ -718,16 +800,16 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// String that contains the selected filter type
         /// </summary>
-        private String _selectedfilterType;
+        private String selectedfilterType;
         public String SelectedFilterType
         {
             get
             {
-                return _selectedfilterType;
+                return selectedfilterType;
             }
             set
             {
-                _selectedfilterType = value;
+                selectedfilterType = value;
                 RaisePropertyChanged(() => this.SelectedFilterType);
                 if (FilterSelectionInfo != null)
                 {
@@ -740,7 +822,7 @@ namespace GreenField.App.ViewModel
                         SelectedFilterValueInfo = null;
                         SelectorPayload.FilterSelectionData = filterSelData;
                         IsExCashSecurity = false;
-                        _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
+                        eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
                         //this.FilterVisibility = Visibility.Collapsed;
 
 
@@ -759,15 +841,15 @@ namespace GreenField.App.ViewModel
         /// <summary>
         ///  Collection that contains the value types to be displayed in the combo box
         /// </summary>
-        private List<FilterSelectionData> _filterSelectionInfo;
+        private List<FilterSelectionData> filterSelectionInfo;
         public List<FilterSelectionData> FilterSelectionInfo
         {
-            get { return _filterSelectionInfo; }
+            get { return filterSelectionInfo; }
             set
             {
-                if (_filterSelectionInfo != value)
+                if (filterSelectionInfo != value)
                 {
-                    _filterSelectionInfo = value;
+                    filterSelectionInfo = value;
                     RaisePropertyChanged(() => this.FilterSelectionInfo);
                 }
             }
@@ -776,15 +858,15 @@ namespace GreenField.App.ViewModel
         /// <summary>
         ///  Collection that contains the value types to be displayed in the combo box
         /// </summary>
-        private List<FilterSelectionData> _filterSelectorInfo;
+        private List<FilterSelectionData> filterSelectorInfo;
         public List<FilterSelectionData> FilterSelectorInfo
         {
-            get { return _filterSelectorInfo; }
+            get { return filterSelectorInfo; }
             set
             {
-                if (_filterSelectorInfo != value)
+                if (filterSelectorInfo != value)
                 {
-                    _filterSelectorInfo = value;
+                    filterSelectorInfo = value;
                     RaisePropertyChanged(() => this.FilterSelectorInfo);
                 }
             }
@@ -793,20 +875,20 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores selected Value - Publishes FilterReferenceSetEvent on set event
         /// </summary>
-        private FilterSelectionData _selectedFilterValueInfo;
+        private FilterSelectionData selectedFilterValueInfo;
         public FilterSelectionData SelectedFilterValueInfo
         {
-            get { return _selectedFilterValueInfo; }
+            get { return selectedFilterValueInfo; }
             set
             {
-                if (_selectedFilterValueInfo != value)
+                if (selectedFilterValueInfo != value)
                 {
-                    _selectedFilterValueInfo = value;
+                    selectedFilterValueInfo = value;
                     RaisePropertyChanged(() => this.SelectedFilterValueInfo);
                     if (value != null)
                     {
                         SelectorPayload.FilterSelectionData = value;
-                        _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(value);
+                        eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(value);
                     }
                 }
             }
@@ -815,25 +897,25 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the filter selector for holdings pie chart
         /// </summary>
-        private Visibility _filterTypeVisibility = Visibility.Collapsed;
+        private Visibility filterTypeVisibility = Visibility.Collapsed;
         public Visibility FilterTypeVisibility
         {
-            get { return _filterTypeVisibility; }
+            get { return filterTypeVisibility; }
             set
             {
-                _filterTypeVisibility = value;
+                filterTypeVisibility = value;
                 RaisePropertyChanged(() => this.FilterTypeVisibility);
                 if (value == Visibility.Visible && FilterSelectionInfo == null)
                 {
-                    if (_dbInteractivity != null && SelectedEffectiveDateInfo != null)
+                    if (dbInteractivity != null && SelectedEffectiveDateInfo != null)
                     {
                         BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
                         if (ShellFilterDataLoadEvent != null)
                         {
                             ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         }
-                        _dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
-                        
+                        dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
+
                     }
                 }
             }
@@ -842,13 +924,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the filter selector for holdings pie chart
         /// </summary>
-        private Visibility _filterValueVisibility = Visibility.Collapsed;
+        private Visibility filterValueVisibility = Visibility.Collapsed;
         public Visibility FilterValueVisibility
         {
-            get { return _filterValueVisibility; }
+            get { return filterValueVisibility; }
             set
             {
-                _filterValueVisibility = value;
+                filterValueVisibility = value;
                 RaisePropertyChanged(() => this.FilterValueVisibility);
 
             }
@@ -857,13 +939,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the filter selector for holdings pie chart
         /// </summary>
-        private Visibility _marketCapCashSelectorVisibility = Visibility.Collapsed;
+        private Visibility marketCapCashSelectorVisibility = Visibility.Collapsed;
         public Visibility MarketCapCashSelectorVisibility
         {
-            get { return _marketCapCashSelectorVisibility; }
+            get { return marketCapCashSelectorVisibility; }
             set
             {
-                _marketCapCashSelectorVisibility = value;
+                marketCapCashSelectorVisibility = value;
                 RaisePropertyChanged(() => this.MarketCapCashSelectorVisibility);
             }
         }
@@ -873,15 +955,15 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores the list of MarketSnapshotSelectionData for user
         /// </summary>
-        private List<MarketSnapshotSelectionData> _marketSnapshotSelectionInfo;
+        private List<MarketSnapshotSelectionData> marketSnapshotSelectionInfo;
         public List<MarketSnapshotSelectionData> MarketSnapshotSelectionInfo
         {
-            get { return _marketSnapshotSelectionInfo; }
+            get { return marketSnapshotSelectionInfo; }
             set
             {
-                if (_marketSnapshotSelectionInfo != value)
+                if (marketSnapshotSelectionInfo != value)
                 {
-                    _marketSnapshotSelectionInfo = value;
+                    marketSnapshotSelectionInfo = value;
                     RaisePropertyChanged(() => MarketSnapshotSelectionInfo);
                     MarketSnapshotSelectorInfo = value;
                 }
@@ -891,15 +973,15 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores the list of MarketSnapshotSelectionData for selector
         /// </summary>
-        private List<MarketSnapshotSelectionData> _marketSnapshotSelectorInfo;
+        private List<MarketSnapshotSelectionData> marketSnapshotSelectorInfo;
         public List<MarketSnapshotSelectionData> MarketSnapshotSelectorInfo
         {
-            get { return _marketSnapshotSelectorInfo; }
+            get { return marketSnapshotSelectorInfo; }
             set
             {
-                if (_marketSnapshotSelectorInfo != value)
+                if (marketSnapshotSelectorInfo != value)
                 {
-                    _marketSnapshotSelectorInfo = value;
+                    marketSnapshotSelectorInfo = value;
                     RaisePropertyChanged(() => MarketSnapshotSelectorInfo);
                 }
             }
@@ -909,15 +991,15 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores selected snapshot - Publishes MarketPerformanceSnapshotReferenceSetEvent on set event
         /// </summary>
-        private MarketSnapshotSelectionData _selectedMarketSnapshotSelectionInfo;
+        private MarketSnapshotSelectionData selectedMarketSnapshotSelectionInfo;
         public MarketSnapshotSelectionData SelectedMarketSnapshotSelectionInfo
         {
-            get { return _selectedMarketSnapshotSelectionInfo; }
+            get { return selectedMarketSnapshotSelectionInfo; }
             set
             {
-                if (_selectedMarketSnapshotSelectionInfo != value)
+                if (selectedMarketSnapshotSelectionInfo != value)
                 {
-                    _selectedMarketSnapshotSelectionInfo = value;
+                    selectedMarketSnapshotSelectionInfo = value;
                     RaisePropertyChanged(() => SelectedMarketSnapshotSelectionInfo);
                     RaisePropertyChanged(() => this.MarketSnapshotSaveCommand);
                     RaisePropertyChanged(() => this.MarketSnapshotRemoveCommand);
@@ -928,7 +1010,7 @@ namespace GreenField.App.ViewModel
                             MarketPerformanceSnapshotSearchText = value.SnapshotName;
                         }
                         SelectorPayload.MarketSnapshotSelectionData = value;
-                        _eventAggregator.GetEvent<MarketPerformanceSnapshotReferenceSetEvent>().Publish(value);
+                        eventAggregator.GetEvent<MarketPerformanceSnapshotReferenceSetEvent>().Publish(value);
                     }
 
                 }
@@ -938,13 +1020,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores search text entered by user - Refines MarketSnapshotSelectionInfo based on the text entered
         /// </summary>
-        private string _marketPerformanceSnapshotSearchText;
+        private string marketPerformanceSnapshotSearchText;
         public string MarketPerformanceSnapshotSearchText
         {
-            get { return _marketPerformanceSnapshotSearchText; }
+            get { return marketPerformanceSnapshotSearchText; }
             set
             {
-                _marketPerformanceSnapshotSearchText = value;
+                marketPerformanceSnapshotSearchText = value;
                 RaisePropertyChanged(() => this.MarketPerformanceSnapshotSearchText);
                 if (value != String.Empty && value != null && MarketSnapshotSelectionInfo != null)
                     MarketSnapshotSelectorInfo = MarketSnapshotSelectionInfo
@@ -957,13 +1039,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the snapshot selector
         /// </summary>
-        private Visibility _snapshotSelectorVisibility = Visibility.Collapsed;
+        private Visibility snapshotSelectorVisibility = Visibility.Collapsed;
         public Visibility SnapshotSelectorVisibility
         {
-            get { return _snapshotSelectorVisibility; }
+            get { return snapshotSelectorVisibility; }
             set
             {
-                _snapshotSelectorVisibility = value;
+                snapshotSelectorVisibility = value;
                 RaisePropertyChanged(() => this.SnapshotSelectorVisibility);
                 if (value == Visibility.Visible && MarketSnapshotSelectionInfo == null)
                 {
@@ -972,44 +1054,40 @@ namespace GreenField.App.ViewModel
             }
         }
 
-
         /// <summary>
         /// Stores checked-unchecked value for ExCash checkbox
         /// </summary>
-        private bool _isExCashSecurity = false;
+        private bool isExCashSecurity = false;
         public bool IsExCashSecurity
         {
-            get { return _isExCashSecurity; }
+            get { return isExCashSecurity; }
             set
             {
-                _isExCashSecurity = value;
+                isExCashSecurity = value;
                 RaisePropertyChanged(() => this.IsExCashSecurity);
                 if (SelectedFilterType == "Show Everything" && value == true)
                     SelectedFilterType = "";
-                _selectorPayload.IsExCashSecurityData = value;
-                _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
+                selectorPayload.IsExCashSecurityData = value;
+                eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
 
             }
         }
-
-
         #endregion
 
         #region Cash/NoCash Selector
         /// <summary>
         /// Strores market cap excluding cash securities checkbox visibility
         /// </summary>
-        private Visibility _mktCapExCashSelectorVisibility = Visibility.Collapsed;
+        private Visibility mktCapExCashSelectorVisibility = Visibility.Collapsed;
         public Visibility MktCapExCashSelectorVisibility
         {
-            get { return _mktCapExCashSelectorVisibility; }
+            get { return mktCapExCashSelectorVisibility; }
             set
             {
-                _mktCapExCashSelectorVisibility = value;
+                mktCapExCashSelectorVisibility = value;
                 RaisePropertyChanged(() => this.MktCapExCashSelectorVisibility);
             }
         }
-
         #endregion
 
         #region NodeNameFilter Selector
@@ -1024,18 +1102,16 @@ namespace GreenField.App.ViewModel
             }
         }
 
-
-
         /// <summary>
         /// Stores visibility property of the Node selector
         /// </summary>
-        private Visibility _nodeSelectorVisibility = Visibility.Collapsed;
+        private Visibility nodeSelectorVisibility = Visibility.Collapsed;
         public Visibility NodeSelectorVisibility
         {
-            get { return _nodeSelectorVisibility; }
+            get { return nodeSelectorVisibility; }
             set
             {
-                _nodeSelectorVisibility = value;
+                nodeSelectorVisibility = value;
                 RaisePropertyChanged(() => this.NodeSelectorVisibility);
 
             }
@@ -1044,43 +1120,41 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// String that contains the selected Node Name
         /// </summary>
-        private String _selectedNodeName = "Country";
+        private String selectedNodeName = "Country";
         public String SelectedNodeName
         {
             get
             {
-                return _selectedNodeName;
+                return selectedNodeName;
             }
             set
             {
-                _selectedNodeName = value;
+                selectedNodeName = value;
                 RaisePropertyChanged(() => this.SelectedNodeName);
 
                 if (value != null)
                 {
                     SelectorPayload.NodeNameSelectionData = value;
-                    _eventAggregator.GetEvent<NodeNameReferenceSetEvent>().Publish(value);
+                    eventAggregator.GetEvent<NodeNameReferenceSetEvent>().Publish(value);
                 }
             }
         }
-
         #endregion
 
         #region LookThruSelector
-
         /// <summary>
         /// Visibility of LookThru Selector
         /// </summary>
-        private Visibility _lookThruSelectorVisibility = Visibility.Collapsed;
+        private Visibility lookThruSelectorVisibility = Visibility.Collapsed;
         public Visibility LookThruSelectorVisibility
         {
             get
             {
-                return _lookThruSelectorVisibility;
+                return lookThruSelectorVisibility;
             }
             set
             {
-                _lookThruSelectorVisibility = value;
+                lookThruSelectorVisibility = value;
                 this.RaisePropertyChanged(() => this.LookThruSelectorVisibility);
             }
         }
@@ -1088,367 +1162,276 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores checked/unchecked value of LookThru Selector
         /// </summary>
-        private bool _isLookThruEnabled = false;
+        private bool isLookThruEnabled = false;
         public bool IsLookThruEnabled
         {
             get
             {
-                return _isLookThruEnabled;
+                return isLookThruEnabled;
             }
             set
             {
-                _isLookThruEnabled = value;
+                isLookThruEnabled = value;
                 this.RaisePropertyChanged(() => this.IsLookThruEnabled);
-                _selectorPayload.IsLookThruEnabled = value;
-                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Publish(value);
+                selectorPayload.IsLookThruEnabled = value;
+                eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Publish(value);
             }
         }
-
         #endregion
 
-        #endregion
-
-        #region COMMODITY
+        #region Gadget Selector
         /// <summary>
-        /// Stores Commodity data
+        /// Stores gadget information for dashboard
         /// </summary>
-        private List<FXCommodityData> _commodityTypeInfo;
-        public List<FXCommodityData> CommodityTypeInfo
+        private List<GadgetInfo> gadgetSelectorStoreOffInfo;
+        public List<GadgetInfo> GadgetSelectorStoreOffInfo
         {
-            get { return _commodityTypeInfo; }
+            get
+            {
+                if (gadgetSelectorStoreOffInfo == null)
+                {
+                    gadgetSelectorStoreOffInfo = GadgetListing.Info;
+                }
+                return gadgetSelectorStoreOffInfo;
+            }
             set
             {
-                _commodityTypeInfo = value;
-                CommodityIDs = value.Select(l => l.CommodityId).Distinct().ToList();
-                RaisePropertyChanged(() => this.CommodityTypeInfo);
-            }
-        }
-       
-        /// <summary>
-        /// Stores Commodity ID values
-        /// </summary>
-        private List<String> _commodityIDs;
-        public List<String> CommodityIDs
-        {
-            get { return _commodityIDs; }
-            set
-            {
-                _commodityIDs = value;
-                if(String.IsNullOrEmpty(SelCommodityId))
-                    SelCommodityId = value.LastOrDefault();
-                RaisePropertyChanged(() => this.CommodityIDs);
-            }
-
-        }
-        private string _CommodityID;
-        public string CommodityID
-        {
-            get { return _CommodityID;}
-            set{
-                _CommodityID = value; 
-                RaisePropertyChanged(() => this.CommodityID);
-            }
-        }               
-
-        /// <summary>
-        /// Stores commodity ID value selected by user
-        /// </summary>
-        private string _selCommodityId;
-        public string SelCommodityId
-        {
-            get { return _selCommodityId; }
-            set
-            {
-                _selCommodityId = value;
-                
-                if (value != null)
-                    //_selectorPayload.CommoditySelectedVal = CommodityTypeInfo.Where(rec => rec.CommodityID.ToUpper().Contains(value.ToUpper())).Select(rec => rec.CommodityID).ToString();
-                    if (CommodityTypeInfo != null && CommodityTypeInfo.Count > 0)
+                gadgetSelectorStoreOffInfo = value;
+                if (value == null)
+                {
+                    GadgetSelectorInfo = null;
+                }
+                else
+                {
+                    if (GadgetSearchText != String.Empty && value != null)
                     {
-                        foreach (FXCommodityData item in CommodityTypeInfo)
-                        {
-                            if (item.CommodityId.ToUpper() == value.ToUpper())
-                                _selectorPayload.CommoditySelectedVal = value;
-                        }
-                    }                
-                RaisePropertyChanged(() => this.SelCommodityId);
-                _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Publish(_selectorPayload.CommoditySelectedVal);
+                        GadgetSelectorInfo = value
+                                    .Where(record => record.DisplayName.ToLower().Contains(GadgetSearchText.ToLower()))
+                                    .ToList();
+                    }
+                    else
+                    {
+                        GadgetSelectorInfo = value;
+                    }
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Stores gadget information for dashboard
+        /// </summary>
+        private List<GadgetInfo> gadgetSelectorInfo;
+        public List<GadgetInfo> GadgetSelectorInfo
+        {
+            get
+            {
+                if (gadgetSelectorInfo == null)
+                {
+                    gadgetSelectorInfo = GadgetListing.Info;
+                }
+                return gadgetSelectorInfo;
+            }
+            set
+            {
+                gadgetSelectorInfo = value;
+                RaisePropertyChanged(() => this.GadgetSelectorInfo);
             }
         }
 
         /// <summary>
-        /// Stores Commodity Selector Visibility
+        /// Stores selected gadget information - Publishes DashboardTileViewItemAdded on set event
         /// </summary>
-        private Visibility _commoditySelectorVisibilty = Visibility.Collapsed;
-        public Visibility CommoditySelectorVisibility
+        private GadgetInfo selectedGadgetInfo;
+        public GadgetInfo SelectedGadgetInfo
         {
-            get { return _commoditySelectorVisibilty; }
+            get { return selectedGadgetInfo; }
             set
             {
-                _commoditySelectorVisibilty = value;
-                RaisePropertyChanged(() => this.CommoditySelectorVisibility);
-                if (value == Visibility.Visible && CommodityTypeInfo == null)
-                    _dbInteractivity.RetrieveCommoditySelectionData(RetrieveFXCommoditySelectionCallbackMethod);
-            }
-        }
-        #endregion
-        #endregion
-
-        # region ICommand
-        public ICommand LogOutCommand
-        {
-            get { return new DelegateCommand<object>(LogOutCommandMethod); }
-        }
-
-        public ICommand MyDashboardCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(MyDashboardCommandMethod);
-            }
-        }
-
-        public ICommand GadgetSecurityOverviewCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetSecurityOverviewCommandMethod);
-            }
-        }
-
-        public ICommand GadgetPricingCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetPricingCommandMethod);
-            }
-        }
-
-        public ICommand GadgetTheoreticalUnrealizedGainLossCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetTheoreticalUnrealizedGainLossCommandMethod);
-            }
-        }
-
-        public ICommand GadgetRegionBreakdownCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetRegionBreakdownCommandMethod);
-            }
-        }
-
-        public ICommand GadgetSectorBreakdownCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetSectorBreakdownCommandMethod);
-            }
-        }
-
-        public ICommand GadgetIndexConstituentsCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetIndexConstituentsCommandMethod);
-            }
-        }
-
-        public ICommand GadgetMarketCapitalizationCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetMarketCapitalizationCommandMethod);
-            }
-        }
-
-        public ICommand GadgetTopHoldingsCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetTopHoldingsCommandMethod);
-            }
-        }
-
-        public ICommand GadgetAssetAllocationCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetAssetAllocationCommandMethod);
-            }
-        }
-
-        public ICommand GadgetHoldingsPieChartCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetHoldingsPieChartCommandMethod);
-            }
-        }
-
-        public ICommand GadgetPortfolioRiskReturnsCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetPortfolioRiskReturnsCommandMethod);
-            }
-        }
-
-        public ICommand GadgetTopBenchmarkSecuritiesCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetTopBenchmarkSecuritiesCommandMethod);
-            }
-        }
-
-        public ICommand GadgetRelativeRiskCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetRelativeRiskCommandMethod);
-            }
-        }
-
-        public ICommand GadgetRelativePerformanceCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetRelativePerformanceCommandMethod);
-            }
-        }
-
-        public ICommand GadgetCountryActivePositionCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetCountryActivePositionCommandMethod);
-            }
-        }
-
-        public ICommand GadgetSectorActivePositionCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetSectorActivePositionCommandMethod);
-            }
-        }
-
-        public ICommand GadgetSecurityActivePositionCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetSecurityActivePositionCommandMethod);
-            }
-        }
-
-        public ICommand GadgetContributorDetractorCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetContributorDetractorCommandMethod);
-            }
-        }
-
-        public ICommand GadgetSaveCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetSaveCommandMethod);
-            }
-        }
-
-        public ICommand RelativePerformanceCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(RelativePerformanceCommandMethod);
-            }
-        }
-
-        public ICommand PerformanceGraphCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(PerformanceGraphCommandMethod);
-            }
-        }
-
-        public ICommand PerformanceGridCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(PerformanceGridCommandMethod);
-            }
-        }
-
-        public ICommand AttributionCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(AttributionCommandMethod);
+                if (selectedGadgetInfo != value)
+                {
+                    selectedGadgetInfo = value;
+                    RaisePropertyChanged(() => this.SelectedGadgetInfo);
+                    if (value != null)
+                    {
+                        IsApplicationMenuExpanded = false;
+                        if (value.DisplayName == GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW)
+                        {
+                            Type[] argumentTypes = new Type[] { typeof(DashboardGadgetParam) };
+                            object[] argumentValues = new object[] { GetDashboardGadgetParam() };
+                            Object viewModelObject = TypeResolution.GetNewTypeObject(typeof(ViewModelDCF), argumentTypes, argumentValues);
+                            GadgetInfo gadgetInfo = new GadgetInfo() 
+                            {
+                                DisplayName = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_ASSUMPTIONS,
+                                ViewType = typeof(ViewAnalysisSummary),
+                                ViewModelType = typeof(ViewModelDCF)
+                            };
+                            AddItemToUserDashboard(gadgetInfo, viewModelObject);
+                            gadgetInfo = new GadgetInfo()
+                            {
+                                DisplayName = GadgetNames.HOLDINGS_FREE_CASH_FLOW,
+                                ViewType = typeof(ViewFreeCashFlows),
+                                ViewModelType = typeof(ViewModelFreeCashFlows)
+                            };
+                            AddItemToUserDashboard(gadgetInfo);
+                            gadgetInfo = new GadgetInfo()
+                            {
+                                DisplayName = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_TERMINAL_VALUE_CALCULATIONS,
+                                ViewType = typeof(ViewTerminalValueCalculations),
+                                ViewModelType = typeof(ViewModelDCF)
+                            };
+                            AddItemToUserDashboard(gadgetInfo, viewModelObject);
+                            gadgetInfo = new GadgetInfo()
+                            {
+                                DisplayName = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_SUMMARY,
+                                ViewType = typeof(ViewDCFSummary),
+                                ViewModelType = typeof(ViewModelDCF)
+                            };
+                            AddItemToUserDashboard(gadgetInfo, viewModelObject);
+                            gadgetInfo = new GadgetInfo()
+                            {
+                                DisplayName = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_SENSIVITY,
+                                ViewType = typeof(ViewSensitivity),
+                                ViewModelType = typeof(ViewModelDCF)
+                            };
+                            AddItemToUserDashboard(gadgetInfo, viewModelObject);
+                            gadgetInfo = new GadgetInfo()
+                            {
+                                DisplayName = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_FORWARD_EPS,
+                                ViewType = typeof(ViewSensitivityEPS),
+                                ViewModelType = typeof(ViewModelDCF)
+                            };
+                            AddItemToUserDashboard(gadgetInfo, viewModelObject);
+                            gadgetInfo = new GadgetInfo()
+                            {
+                                DisplayName = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_FORWARD_BVPS,
+                                ViewType = typeof(ViewSensitivityBVPS),
+                                ViewModelType = typeof(ViewModelDCF)
+                            };
+                            AddItemToUserDashboard(gadgetInfo, viewModelObject);                            
+                        }
+                        else
+                        {
+                            AddItemToUserDashboard(value);                            
+                        }
+                    }
+                }
             }
         }        
 
-        public ICommand PortfolioDetailsCommand
+        /// <summary>
+        /// Stores search text entered by user - Refines SelectedGadgetInfo based on the text entered
+        /// </summary>
+        private string gadgetSearchText;
+        public string GadgetSearchText
         {
-            get
+            get { return gadgetSearchText; }
+            set
             {
-                return new DelegateCommand<object>(PortfolioDetailsCommandMethod);
+                gadgetSearchText = value;
+                RaisePropertyChanged(() => this.GadgetSearchText);
+                if (value != null)
+                {
+                    if (value != String.Empty && GadgetSelectorStoreOffInfo != null)
+                    {
+                        GadgetSelectorInfo = GadgetSelectorStoreOffInfo
+                                    .Where(record => record.DisplayName.ToLower().Contains(value.ToLower()))
+                                    .ToList();
+                    }
+                    else
+                    {
+                        GadgetSelectorInfo = GadgetSelectorStoreOffInfo;
+                    }
+                }
             }
         }
 
-        public ICommand AssetAllocationCommand
+        /// <summary>
+        /// Stores visibility property of the security selector
+        /// </summary>
+        private Visibility gadgetSelectorVisibility = Visibility.Collapsed;
+        public Visibility GadgetSelectorVisibility
         {
-            get
+            get { return gadgetSelectorVisibility; }
+            set
             {
-                return new DelegateCommand<object>(AssetAllocationCommandMethod);
+                gadgetSelectorVisibility = value;
+                RaisePropertyChanged(() => this.GadgetSelectorVisibility);
+            }
+        }
+        #endregion
+        #endregion        
+
+        #region Busy Indicator Notification
+        /// <summary>
+        /// Displays/Hides busy indicator to notify user of the on going process
+        /// </summary>
+        private bool isBusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
+        {
+            get { return isBusyIndicatorBusy; }
+            set
+            {
+                isBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
             }
         }
 
-        public ICommand QuarterlyComparisonCommand
+        /// <summary>
+        /// Stores the message displayed over the busy indicator to notify user of the on going process
+        /// </summary>
+        private string busyIndicatorContent;
+        public string BusyIndicatorContent
         {
-            get
+            get { return busyIndicatorContent; }
+            set
             {
-                return new DelegateCommand<object>(QuarterlyComparisonCommandMethod);
+                busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
+        #endregion        
+        #endregion
 
-        public ICommand UserManagementCommand
+        # region ICommand
+        /// <summary>
+        /// LogOutCommand
+        /// </summary>
+        public ICommand LogOutCommand
         {
-            get
-            {
-                return new DelegateCommand<object>(UserManagementCommandMethod);
-            }
-        }
-
-        public ICommand RoleManagementCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(RoleManagementCommandMethod);
-            }
-        }
-
+            get { return new DelegateCommand<object>(LogOutCommandMethod); }
+        }        
+        
         #region Dashboard
         #region Company
         #region Snapshot
+        /// <summary>
+        /// DashboardCompanySnapshotSummaryCommand
+        /// </summary>
         public ICommand DashboardCompanySnapshotSummaryCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanySnapshotSummaryCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanySnapshotCompanyProfileCommand
+        /// </summary>
         public ICommand DashboardCompanySnapshotCompanyProfileCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanySnapshotCompanyProfileCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanySnapshotTearSheetCommand
+        /// </summary>
         public ICommand DashboardCompanySnapshotTearSheetCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanySnapshotTearSheetCommandMethod); }
         }
+
+        /// <summary>
+        /// DashboardCompanyBasicDataCommand
+        /// </summary>
         public ICommand DashboardCompanyBasicDataCommand
         {
             get
@@ -1457,6 +1440,9 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        /// <summary>
+        /// DashboardConsensusEstimateSummaryCommand
+        /// </summary>
         public ICommand DashboardConsensusEstimateSummaryCommand
         {
             get
@@ -1467,36 +1453,57 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Financials
+        /// <summary>
+        /// DashboardCompanyFinancialsSummaryCommand
+        /// </summary>
         public ICommand DashboardCompanyFinancialsSummaryCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyFinancialsSummaryCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyFinancialsIncomeStatementCommand
+        /// </summary>
         public ICommand DashboardCompanyFinancialsIncomeStatementCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyFinancialsIncomeStatementCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyFinancialsBalanceSheetCommand
+        /// </summary>
         public ICommand DashboardCompanyFinancialsBalanceSheetCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyFinancialsBalanceSheetCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyFinancialsCashFlowCommand
+        /// </summary>
         public ICommand DashboardCompanyFinancialsCashFlowCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyFinancialsCashFlowCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyFinstatCommand
+        /// </summary>
         public ICommand DashboardCompanyFinstatCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyFinstatCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyFinancialsFinStatCommand
+        /// </summary>
         public ICommand DashboardCompanyFinancialsFinStatCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyFinancialsFinStatCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyFinancialsPeerComparisonCommand
+        /// </summary>
         public ICommand DashboardCompanyFinancialsPeerComparisonCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyFinancialsPeerComparisonCommandMethod); }
@@ -1504,16 +1511,25 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Estimates
+        /// <summary>
+        /// DashboardCompanyEstimatesConsensusCommand
+        /// </summary>
         public ICommand DashboardCompanyEstimatesConsensusCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyEstimatesConsensusCommandMethod); }
         }
-
+        
+        /// <summary>
+        /// DashboardCompanyEstimatesDetailedCommand
+        /// </summary>
         public ICommand DashboardCompanyEstimatesDetailedCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyEstimatesDetailedCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyEstimatesComparisonCommand
+        /// </summary>
         public ICommand DashboardCompanyEstimatesComparisonCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyEstimatesComparisonCommandMethod); }
@@ -1521,11 +1537,17 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Valuation
+        /// <summary>
+        /// DashboardCompanyValuationFairValueCommand
+        /// </summary>
         public ICommand DashboardCompanyValuationFairValueCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyValuationFairValueCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyValuationDiscountedCashFlowCommand
+        /// </summary>
         public ICommand DashboardCompanyValuationDiscountedCashFlowCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyValuationDiscountedCashFlowCommandMethod); }
@@ -1533,34 +1555,51 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Documents
+        /// <summary>
+        /// DashboardCompanyDocumentsCommand
+        /// </summary>
         public ICommand DashboardCompanyDocumentsCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyDocumentsCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyDocumentsLoadModelCommand
+        /// </summary>
         public ICommand DashboardCompanyDocumentsLoadModelCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyDocumentsLoadModelCommandMethod); }
         }
-
         #endregion
 
         #region Charting
+        /// <summary>
+        /// DashboardCompanyChartingClosingPriceCommand
+        /// </summary>
         public ICommand DashboardCompanyChartingClosingPriceCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyChartingClosingPriceCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyChartingUnrealizedGainCommand
+        /// </summary>
         public ICommand DashboardCompanyChartingUnrealizedGainCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyChartingUnrealizedGainCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyChartingContextCommand
+        /// </summary>
         public ICommand DashboardCompanyChartingContextCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyChartingContextCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyChartingValuationCommand
+        /// </summary>
         public ICommand DashboardCompanyChartingValuationCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyChartingValuationCommandMethod); }
@@ -1568,11 +1607,17 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Corporate Governance
+        /// <summary>
+        /// DashboardCompanyCorporateGovernanceQuestionnaireCommand
+        /// </summary>
         public ICommand DashboardCompanyCorporateGovernanceQuestionnaireCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyCorporateGovernanceQuestionnaireCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardCompanyCorporateGovernanceReportCommand
+        /// </summary>
         public ICommand DashboardCompanyCorporateGovernanceReportCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyCorporateGovernanceReportCommandMethod); }
@@ -1582,16 +1627,25 @@ namespace GreenField.App.ViewModel
 
         #region Markets
         #region Snapshot
+        /// <summary>
+        /// DashboardMarketsSnapshotSummaryCommand
+        /// </summary>
         public ICommand DashboardMarketsSnapshotSummaryCommand
         {
             get { return new DelegateCommand<object>(DashboardMarketsSnapshotSummaryCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardMarketsSnapshotMarketPerformanceCommand
+        /// </summary>
         public ICommand DashboardMarketsSnapshotMarketPerformanceCommand
         {
             get { return new DelegateCommand<object>(DashboardMarketsSnapshotMarketPerformanceCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardMarketsSnapshotInternalModelValuationCommand
+        /// </summary>
         public ICommand DashboardMarketsSnapshotInternalModelValuationCommand
         {
             get { return new DelegateCommand<object>(DashboardMarketsSnapshotInternalModelValuationCommandMethod); }
@@ -1599,11 +1653,17 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region MacroEconomic
+        /// <summary>
+        /// DashboardMarketsMacroEconomicsEMSummaryCommand
+        /// </summary>
         public ICommand DashboardMarketsMacroEconomicsEMSummaryCommand
         {
             get { return new DelegateCommand<object>(DashboardMarketsMacroEconomicsEMSummaryCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardMarketsMacroEconomicsCountrySummaryCommand
+        /// </summary>
         public ICommand DashboardMarketsMacroEconomicsCountrySummaryCommand
         {
             get { return new DelegateCommand<object>(DashboardMarketsMacroEconomicsCountrySummaryCommandMethod); }
@@ -1611,6 +1671,9 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Commodities
+        /// <summary>
+        /// DashboardMarketsCommoditiesSummaryCommand
+        /// </summary>
         public ICommand DashboardMarketsCommoditiesSummaryCommand
         {
             get { return new DelegateCommand<object>(DashboardMarketsCommoditiesSummaryCommandMethod); }
@@ -1620,6 +1683,9 @@ namespace GreenField.App.ViewModel
 
         #region Portfolio
         #region Snapshot
+        /// <summary>
+        /// DashboardPortfolioSnapshotCommand
+        /// </summary>
         public ICommand DashboardPortfolioSnapshotCommand
         {
             get { return new DelegateCommand<object>(DashboardPortfolioSnapshotCommandMethod); }
@@ -1627,6 +1693,9 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Holdings
+        /// <summary>
+        /// DashboardPortfolioHoldingsCommand
+        /// </summary>
         public ICommand DashboardPortfolioHoldingsCommand
         {
             get { return new DelegateCommand<object>(DashboardPortfolioHoldingsCommandMethod); }
@@ -1634,29 +1703,43 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Performance
+        /// <summary>
+        /// DashboardPortfolioPerformanceSummaryCommand
+        /// </summary>
         public ICommand DashboardPortfolioPerformanceSummaryCommand
         {
             get { return new DelegateCommand<object>(DashboardPortfolioPerformanceSummaryCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardPortfolioPerformanceAttributionCommand
+        /// </summary>
         public ICommand DashboardPortfolioPerformanceAttributionCommand
         {
             get { return new DelegateCommand<object>(DashboardPortfolioPerformanceAttributionCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardPortfolioPerformanceRelativePerformanceCommand
+        /// </summary>
         public ICommand DashboardPortfolioPerformanceRelativePerformanceCommand
         {
             get { return new DelegateCommand<object>(DashboardPortfolioPerformanceRelativePerformanceCommandMethod); }
         }
-
         #endregion
 
         #region Benchmark
+        /// <summary>
+        /// DashboardPortfolioBenchmarkSummaryCommand
+        /// </summary>
         public ICommand DashboardPortfolioBenchmarkSummaryCommand
         {
             get { return new DelegateCommand<object>(DashboardPortfolioBenchmarkSummaryCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardPortfolioBenchmarkComponentsCommand
+        /// </summary>
         public ICommand DashboardPortfolioBenchmarkComponentsCommand
         {
             get { return new DelegateCommand<object>(DashboardPortfolioBenchmarkComponentsCommandMethod); }
@@ -1666,6 +1749,9 @@ namespace GreenField.App.ViewModel
 
         #region Screening
         #region QuarterlyResultsComparison
+        /// <summary>
+        /// DashboardQuarterlyResultsComparisonCommand
+        /// </summary>
         public ICommand DashboardQuarterlyResultsComparisonCommand
         {
             get { return new DelegateCommand<object>(DashboardQuarterlyResultsComparisonCommandMethod); }
@@ -1673,6 +1759,9 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Stock
+        /// <summary>
+        /// DashboardCustomScreeningToolCommand
+        /// </summary>
         public ICommand DashboardCustomScreeningToolCommand
         {
             get { return new DelegateCommand<object>(DashboardCustomScreeningToolCommandMethod); }
@@ -1681,55 +1770,120 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Investment Committee
+        /// <summary>
+        /// DashboardInvestmentCommitteeCreateEditCommand
+        /// </summary>
         public ICommand DashboardInvestmentCommitteeCreateEditCommand
         {
             get { return new DelegateCommand<object>(DashboardInvestmentCommitteeCreateEditCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardInvestmentCommitteeVoteCommand
+        /// </summary>
         public ICommand DashboardInvestmentCommitteeVoteCommand
         {
             get { return new DelegateCommand<object>(DashboardInvestmentCommitteeVoteCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardInvestmentCommitteePreMeetingReportCommand
+        /// </summary>
         public ICommand DashboardInvestmentCommitteePreMeetingReportCommand
         {
             get { return new DelegateCommand<object>(DashboardInvestmentCommitteePreMeetingReportCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardInvestmentCommitteeMeetingMinutesCommand
+        /// </summary>
         public ICommand DashboardInvestmentCommitteeMeetingMinutesCommand
         {
             get { return new DelegateCommand<object>(DashboardInvestmentCommitteeMeetingMinutesCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardInvestmentCommitteeSummaryReportCommand
+        /// </summary>
         public ICommand DashboardInvestmentCommitteeSummaryReportCommand
         {
             get { return new DelegateCommand<object>(DashboardInvestmentCommitteeSummaryReportCommandMethod); }
         }
 
+        /// <summary>
+        /// DashboardInvestmentCommitteeMetricsReportCommand
+        /// </summary>
         public ICommand DashboardInvestmentCommitteeMetricsReportCommand
         {
             get { return new DelegateCommand<object>(DashboardInvestmentCommitteeMetricsReportCommandMethod); }
         }
         #endregion
 
+        #region Dashboard
+        /// <summary>
+        /// MyDashboardCommand
+        /// </summary>
+        public ICommand MyDashboardCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(MyDashboardCommandMethod);
+            }
+        }         
+        #endregion
+
         #region Admin
         #region Investment Committee
+        /// <summary>
+        /// DashboardAdminInvestmentCommitteeChangeDateCommand
+        /// </summary>
         public ICommand DashboardAdminInvestmentCommitteeChangeDateCommand
         {
             get { return new DelegateCommand<object>(DashboardAdminInvestmentCommitteeChangeDateCommandMethod); }
         }
-
-
         #endregion
-        
         #endregion
 
-        
+        #region Others
+        /// <summary>
+        /// UserManagementCommand
+        /// </summary>
+        public ICommand UserManagementCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(UserManagementCommandMethod);
+            }
+        }
 
-       
+        /// <summary>
+        /// RoleManagementCommand
+        /// </summary>
+        public ICommand RoleManagementCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(RoleManagementCommandMethod);
+            }
+        } 
+        #endregion
         #endregion
 
         #region ToolBox
+        /// <summary>
+        /// UserDashboardSaveCommand
+        /// </summary>
+        public ICommand UserDashboardSaveCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(UserDashboardSaveCommandMethod);
+            }
+        }
+
+        /// <summary>
+        /// MarketSnapshotSaveCommand
+        /// </summary>
         public ICommand MarketSnapshotSaveCommand
         {
             get
@@ -1738,6 +1892,9 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        /// <summary>
+        /// MarketSnapshotSaveAsCommand
+        /// </summary>
         public ICommand MarketSnapshotSaveAsCommand
         {
             get
@@ -1746,6 +1903,9 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        /// <summary>
+        /// MarketSnapshotAddCommand
+        /// </summary>
         public ICommand MarketSnapshotAddCommand
         {
             get
@@ -1754,6 +1914,9 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        /// <summary>
+        /// MarketSnapshotRemoveCommand
+        /// </summary>
         public ICommand MarketSnapshotRemoveCommand
         {
             get
@@ -1763,7 +1926,7 @@ namespace GreenField.App.ViewModel
         }
 
         /// <summary>
-        /// ICommand for Retrive Region EM Data Button 
+        /// RetrieveRegionDataCommand
         /// </summary>
         public ICommand RetrieveRegionDataCommand
         {
@@ -1794,6 +1957,10 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Event Handlers
+        /// <summary>
+        /// MarketPerformanceSnapshotActionCompletion Event Handler
+        /// </summary>
+        /// <param name="result">MarketPerformanceSnapshotActionPayload</param>
         public void HandleMarketPerformanceSnapshotActionCompletionEvent(MarketPerformanceSnapshotActionPayload result)
         {
             if (!(result.ActionType == MarketPerformanceSnapshotActionType.SNAPSHOT_PAGE_NAVIGATION))
@@ -1811,6 +1978,10 @@ namespace GreenField.App.ViewModel
             RaisePropertyChanged(() => this.MarketSnapshotRemoveCommand);
         }
 
+        /// <summary>
+        /// ToolboxUpdate Event Handler
+        /// </summary>
+        /// <param name="result">DashboardCategoryType</param>
         public void HandleToolboxUpdateEvent(DashboardCategoryType result)
         {
             ToolBoxSelecter.SetToolBoxItemVisibility(result);
@@ -1833,7 +2004,7 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -1843,97 +2014,97 @@ namespace GreenField.App.ViewModel
         private void DashboardCompanySnapshotSummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_SNAPSHOT_SUMMARY);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotSummary", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotSummary", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanySnapshotCompanyProfileCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_SNAPSHOT_COMPANY_PROFILE);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotCompanyProfile", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotCompanyProfile", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanySnapshotTearSheetCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_SNAPSHOT_TEAR_SHEET);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotTearSheet", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotTearSheet", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardConsensusEstimateSummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_SNAPSHOT_SUMMARY);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotSummary", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotSummary", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
 
         private void DashboardCompanySnapshotBasicDataCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_SNAPSHOT_BASICDATA_SUMMARY);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewBasicData", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewBasicData", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
 
@@ -1943,134 +2114,134 @@ namespace GreenField.App.ViewModel
         private void DashboardCompanyFinancialsSummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_SUMMARY);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsSummary", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsSummary", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyFinancialsIncomeStatementCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_INCOME_STATEMENT);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsIncomeStatement", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsIncomeStatement", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyFinancialsBalanceSheetCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_BALANCE_SHEET);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsBalanceSheet", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsBalanceSheet", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyFinancialsCashFlowCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_CASH_FLOW);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsCashFlow", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsCashFlow", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyFinstatCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_FINSTAT);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsFinStat", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsFinStat", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyFinancialsFinStatCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_FINSTAT);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsFinStat", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsFinStat", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyFinancialsPeerComparisonCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_PEER_COMPARISON);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsPeerComparison", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsPeerComparison", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -2078,58 +2249,58 @@ namespace GreenField.App.ViewModel
         private void DashboardCompanyEstimatesConsensusCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_ESTIMATES_CONSENSUS);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyEstimatesConsensus", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyEstimatesConsensus", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyEstimatesDetailedCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_ESTIMATES_DETAILED);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyEstimatesDetailed", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyEstimatesDetailed", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyEstimatesComparisonCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_ESTIMATES_COMPARISON);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyEstimatesComparison", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyEstimatesComparison", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -2137,39 +2308,39 @@ namespace GreenField.App.ViewModel
         private void DashboardCompanyValuationFairValueCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_VALUATION_FAIR_VALUE);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyValuationFairValue", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyValuationFairValue", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyValuationDiscountedCashFlowCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_VALUATION_DCF);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyValuationDiscountedCashFlow", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyValuationDiscountedCashFlow", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -2177,39 +2348,39 @@ namespace GreenField.App.ViewModel
         private void DashboardCompanyDocumentsCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_DOCUMENTS);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyDocuments", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyDocuments", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyDocumentsLoadModelCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_DOCUMENTS);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyDocumentsLoad", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyDocumentsLoad", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -2218,77 +2389,77 @@ namespace GreenField.App.ViewModel
         private void DashboardCompanyChartingClosingPriceCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_CHARTING_PRICE_COMPARISON);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingClosingPrice", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingClosingPrice", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyChartingUnrealizedGainCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_CHARTING_UNREALIZED_GAIN_LOSS);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingUnrealizedGainLoss", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingUnrealizedGainLoss", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyChartingContextCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_CHARTING_CONTEXT);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingContext", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingContext", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyChartingValuationCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_CHARTING_VALUATION);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingValuation", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingValuation", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -2296,39 +2467,39 @@ namespace GreenField.App.ViewModel
         private void DashboardCompanyCorporateGovernanceQuestionnaireCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_CORPORATE_GOVERNANCE_QUESTIONNAIRE);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyCorporateGovernanceQuestionnaire", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyCorporateGovernanceQuestionnaire", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardCompanyCorporateGovernanceReportCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_CORPORATE_GOVERNANCE_REPORT);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyCorporateGovernanceReport", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyCorporateGovernanceReport", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
         #endregion
@@ -2338,58 +2509,58 @@ namespace GreenField.App.ViewModel
         private void DashboardMarketsSnapshotSummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.MARKETS_SNAPSHOT_SUMMARY);
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsSnapshotSummary", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsSnapshotSummary", UriKind.Relative));
                 UpdateToolBoxSelectorVisibility();
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardMarketsSnapshotMarketPerformanceCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.MARKETS_SNAPSHOT_MARKET_PERFORMANCE);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsSnapshotMarketPerformance", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsSnapshotMarketPerformance", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardMarketsSnapshotInternalModelValuationCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.MARKETS_SNAPSHOT_INTERNAL_MODEL_VALUATION);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsSnapshotInternalModelValuation", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsSnapshotInternalModelValuation", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -2397,39 +2568,39 @@ namespace GreenField.App.ViewModel
         private void DashboardMarketsMacroEconomicsEMSummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.MARKETS_MACROECONOMIC_EM_SUMMARY);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsMacroEconomicsEMSummary", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsMacroEconomicsEMSummary", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardMarketsMacroEconomicsCountrySummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.MARKETS_MACROECONOMIC_COUNTRY_SUMMARY);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsMacroEconomicsCountrySummary", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsMacroEconomicsCountrySummary", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -2437,20 +2608,20 @@ namespace GreenField.App.ViewModel
         private void DashboardMarketsCommoditiesSummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.MARKETS_COMMODITIES_SUMMARY);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsCommoditiesSummary", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsCommoditiesSummary", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
         #endregion
@@ -2460,20 +2631,20 @@ namespace GreenField.App.ViewModel
         private void DashboardPortfolioSnapshotCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.PORTFOLIO_SNAPSHOT);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioSnapshot", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioSnapshot", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -2481,20 +2652,20 @@ namespace GreenField.App.ViewModel
         private void DashboardPortfolioHoldingsCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.PORTFOLIO_HOLDINGS);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioHoldings", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioHoldings", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -2502,58 +2673,58 @@ namespace GreenField.App.ViewModel
         private void DashboardPortfolioPerformanceSummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.PORTFOLIO_PERFORMANCE_SUMMARY);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioPerformanceSummary", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioPerformanceSummary", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardPortfolioPerformanceAttributionCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.PORTFOLIO_PERFORMANCE_ATTRIBUTION);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioPerformanceAttribution", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioPerformanceAttribution", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardPortfolioPerformanceRelativePerformanceCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.PORTFOLIO_PERFORMANCE_RELATIVE_PERFORMANCE);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioPerformanceRelativePerformance", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioPerformanceRelativePerformance", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -2561,39 +2732,39 @@ namespace GreenField.App.ViewModel
         private void DashboardPortfolioBenchmarkSummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.PORTFOLIO_BENCHMARK_SUMMARY);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioBenchmarkSummary", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioBenchmarkSummary", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardPortfolioBenchmarkComponentsCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.PORTFOLIO_BENCHMARK_COMPOSITION);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioBenchmarkComponents", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioBenchmarkComponents", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
         #endregion
@@ -2604,10 +2775,10 @@ namespace GreenField.App.ViewModel
         private void QuarterlyComparisonCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.QUARTERLY_RESULTS_COMPARISON,
@@ -2617,9 +2788,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
         #endregion
@@ -2628,115 +2799,115 @@ namespace GreenField.App.ViewModel
         private void DashboardInvestmentCommitteeCreateEditCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_CREATE_EDIT);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteePresentations", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteePresentations", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardInvestmentCommitteeVoteCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeVote", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeVote", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardInvestmentCommitteePreMeetingReportCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_PRE_MEETING_REPORT);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteePreMeetingReport", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteePreMeetingReport", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardInvestmentCommitteeMeetingMinutesCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_MEETING_MINUTES);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeMeetingMinutes", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeMeetingMinutes", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardInvestmentCommitteeSummaryReportCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_SUMMARY_REPORT);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeSummaryReport", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeSummaryReport", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void DashboardInvestmentCommitteeMetricsReportCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_METRICS_REPORT);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeMetricsReport", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeMetricsReport", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -2747,20 +2918,20 @@ namespace GreenField.App.ViewModel
         private void DashboardAdminInvestmentCommitteeChangeDateCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.ADMIN_INVESTMENT_COMMITTEE_EDIT_DATE);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardAdminInvestmentCommitteeChangeDate", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardAdminInvestmentCommitteeChangeDate", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
@@ -2769,58 +2940,73 @@ namespace GreenField.App.ViewModel
         private void DashboardQuarterlyResultsComparisonCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.SCREENING_QUARTERLY_COMPARISON);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardQuarterlyResultsComparison", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardQuarterlyResultsComparison", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
 
         }
 
         private void DashboardCustomScreeningToolCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.SCREENING_STOCK);
                 UpdateToolBoxSelectorVisibility();
                 //flag to refresh the custom screening tool view
                 RefreshScreen.refreshFlag = true;
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
 
         }
 
         #endregion
 
         #region ToolBox
+        private void UserDashboardSaveCommandMethod(object param)
+        {
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            try
+            {
+                eventAggregator.GetEvent<DashboardGadgetSave>().Publish(null);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+        }
+
         /// MarketSnapshotAddCommand execution method - creates new market performance snapshot
         /// </summary>
         /// <param name="param">sender info</param>
         private void MarketSnapshotAddCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
+                eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
                     .Publish(new MarketPerformanceSnapshotActionPayload()
                     {
                         ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_ADD,
@@ -2831,9 +3017,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -2853,10 +3039,10 @@ namespace GreenField.App.ViewModel
         private void MarketSnapshotSaveCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
+                eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
                    .Publish(new MarketPerformanceSnapshotActionPayload()
                    {
                        ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE,
@@ -2867,9 +3053,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -2879,10 +3065,10 @@ namespace GreenField.App.ViewModel
         private void MarketSnapshotSaveAsCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
+                eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
                    .Publish(new MarketPerformanceSnapshotActionPayload()
                    {
                        ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE_AS,
@@ -2893,9 +3079,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -2915,10 +3101,10 @@ namespace GreenField.App.ViewModel
         private void MarketSnapshotRemoveCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
+                eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
                    .Publish(new MarketPerformanceSnapshotActionPayload()
                    {
                        ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_REMOVE,
@@ -2929,46 +3115,46 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
 
         private void UserManagementCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
-            {                
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewManageUsers", UriKind.Relative));
+            {
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewManageUsers", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         private void RoleManagementCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewManageRoles", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewManageRoles", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         private void DailyMorningSnapshotCommandMethod(object param)
         {
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewMorningSnapshot", UriKind.Relative));
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewMorningSnapshot", UriKind.Relative));
         }
 
         /// <summary>
@@ -2977,20 +3163,21 @@ namespace GreenField.App.ViewModel
         /// <param name="param"></param>
         private void MyDashboardCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                IsApplicationMenuExpanded = false;
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.USER_DASHBOARD);
                 UpdateToolBoxSelectorVisibility();
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboard", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboard", UriKind.Relative));
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         /// <summary>
@@ -2999,10 +3186,10 @@ namespace GreenField.App.ViewModel
         /// <param name="param">SenderInfo</param>
         private void GadgetSecurityOverviewCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                        (new DashboardTileViewItemInfo
                        {
                            DashboardTileHeader = GadgetNames.SECURITY_OVERVIEW,
@@ -3012,9 +3199,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         /// <summary>
@@ -3023,10 +3210,10 @@ namespace GreenField.App.ViewModel
         /// <param name="param">SenderInfo</param>
         private void GadgetPricingCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                        (new DashboardTileViewItemInfo
                        {
                            DashboardTileHeader = GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON,
@@ -3036,9 +3223,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         /// <summary>
@@ -3047,10 +3234,10 @@ namespace GreenField.App.ViewModel
         /// <param name="param">SenderInfo</param>
         private void GadgetTheoreticalUnrealizedGainLossCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.SECURITY_REFERENCE_UNREALIZED_GAIN_LOSS,
@@ -3060,9 +3247,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         /// <summary>
@@ -3071,10 +3258,10 @@ namespace GreenField.App.ViewModel
         /// <param name="param">SenderInfo</param>
         private void GadgetRegionBreakdownCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.HOLDINGS_REGION_BREAKDOWN,
@@ -3084,9 +3271,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         /// <summary>
@@ -3095,10 +3282,10 @@ namespace GreenField.App.ViewModel
         /// <param name="param">SenderInfo</param>
         private void GadgetSectorBreakdownCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.HOLDINGS_SECTOR_BREAKDOWN,
@@ -3108,9 +3295,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         /// <summary>
@@ -3119,10 +3306,10 @@ namespace GreenField.App.ViewModel
         /// <param name="param">SenderInfo</param>
         private void GadgetIndexConstituentsCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.BENCHMARK_INDEX_CONSTITUENTS,
@@ -3132,9 +3319,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         /// <summary>
@@ -3143,10 +3330,10 @@ namespace GreenField.App.ViewModel
         /// <param name="param">SenderInfo</param>
         private void GadgetMarketCapitalizationCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.HOLDINGS_MARKET_CAPITALIZATION,
@@ -3156,9 +3343,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         /// <summary>
@@ -3167,10 +3354,10 @@ namespace GreenField.App.ViewModel
         /// <param name="param">SenderInfo</param>
         private void GadgetTopHoldingsCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.HOLDINGS_TOP_TEN_HOLDINGS,
@@ -3180,9 +3367,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         /// <summary>
@@ -3192,10 +3379,10 @@ namespace GreenField.App.ViewModel
         private void GadgetAssetAllocationCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.HOLDINGS_ASSET_ALLOCATION,
@@ -3205,9 +3392,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3217,10 +3404,10 @@ namespace GreenField.App.ViewModel
         private void GadgetHoldingsPieChartCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART,
@@ -3230,9 +3417,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3242,10 +3429,10 @@ namespace GreenField.App.ViewModel
         private void GadgetPortfolioRiskReturnsCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.HOLDINGS_RISK_RETURN,
@@ -3255,9 +3442,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3267,10 +3454,10 @@ namespace GreenField.App.ViewModel
         private void GadgetTopBenchmarkSecuritiesCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.BENCHMARK_TOP_TEN_CONSTITUENTS,
@@ -3280,9 +3467,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3292,10 +3479,10 @@ namespace GreenField.App.ViewModel
         private void GadgetRelativeRiskCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.HOLDINGS_RELATIVE_RISK,
@@ -3305,9 +3492,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3317,10 +3504,10 @@ namespace GreenField.App.ViewModel
         private void GadgetRelativePerformanceCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.PERFORMANCE_RELATIVE_PERFORMANCE,
@@ -3330,9 +3517,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3342,10 +3529,10 @@ namespace GreenField.App.ViewModel
         private void GadgetCountryActivePositionCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.PERFORMANCE_COUNTRY_ACTIVE_POSITION,
@@ -3355,9 +3542,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3367,10 +3554,10 @@ namespace GreenField.App.ViewModel
         private void GadgetSectorActivePositionCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.PERFORMANCE_SECTOR_ACTIVE_POSITION,
@@ -3380,9 +3567,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3392,10 +3579,10 @@ namespace GreenField.App.ViewModel
         private void GadgetSecurityActivePositionCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.PERFORMANCE_SECTOR_ACTIVE_POSITION,
@@ -3405,9 +3592,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3417,10 +3604,10 @@ namespace GreenField.App.ViewModel
         private void GadgetContributorDetractorCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.PERFORMANCE_CONTRIBUTOR_DETRACTOR,
@@ -3430,9 +3617,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3441,22 +3628,22 @@ namespace GreenField.App.ViewModel
         /// <param name="param">SenderInfo</param>
         private void GadgetSaveCommandMethod(object param)
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetSave>().Publish(null);
+                eventAggregator.GetEvent<DashboardGadgetSave>().Publish(null);
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         private void RelativePerformanceCommandMethod(object param)
         {
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewRelativePerformance", UriKind.Relative));
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewRelativePerformance", UriKind.Relative));
         }
 
         /// <summary>
@@ -3466,10 +3653,10 @@ namespace GreenField.App.ViewModel
         private void PortfolioDetailsCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.HOLDINGS_PORTFOLIO_DETAILS_UI,
@@ -3479,9 +3666,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3491,10 +3678,10 @@ namespace GreenField.App.ViewModel
         private void AssetAllocationCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.HOLDINGS_ASSET_ALLOCATION,
@@ -3504,18 +3691,18 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void PerformanceGraphCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.PERFORMANCE_GRAPH,
@@ -3525,18 +3712,18 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void PerformanceGridCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.PERFORMANCE_GRID,
@@ -3546,18 +3733,18 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }      
+            Logging.LogEndMethod(logger, methodNamespace);
+        }
 
         private void AttributionCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
                             DashboardTileHeader = GadgetNames.PERFORMANCE_ATTRIBUTION,
@@ -3567,15 +3754,15 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void RetrieveRegionDataCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 List<String> selectedCountries = new List<String>();
@@ -3599,13 +3786,64 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
         #region Callback Methods
+        /// <summary>
+        /// GetSession Callback Method
+        /// </summary>
+        /// <param name="result">Session object</param>
+        private void GetSessionCallbackMethod(Session result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogSessionStart(logger);
+                    SessionManager.SESSION = result;
+                    UserName = SessionManager.SESSION.UserName;
+
+                    if (result.Roles != null)
+                    {
+                        RoleIsICAdmin = result.Roles.Contains(MemberGroups.IC_ADMIN);
+                        RoleIsIC = result.Roles.Any(record => record == MemberGroups.IC_ADMIN
+                            || record == MemberGroups.IC_CHIEF_EXECUTIVE || record == MemberGroups.IC_VOTING_MEMBER
+                            || record == MemberGroups.IC_NON_VOTING_MEMBER);
+                    }
+
+                    if (dbInteractivity != null)
+                    {
+                        //BusyIndicatorNotification(true, "Retrieving entity selection data...");
+                        dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    //BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+                //BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+        }
+
         /// <summary>
         /// RetrieveEntitySelectionData Callback Method
         /// </summary>
@@ -3613,31 +3851,38 @@ namespace GreenField.App.ViewModel
         private void RetrieveEntitySelectionDataCallbackMethod(List<EntitySelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     EntitySelectionInfo = result.OrderBy(t => t.LongName).ToList();
                     SelectionData.EntitySelectionData = result.OrderBy(t => t.LongName).ToList();
+                    if (dbInteractivity != null)
+                    {
+                        //BusyIndicatorNotification(true, "Retrieving portfolio selection data...");
+                        dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
+                    }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    //BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
+                //BusyIndicatorNotification();
             }
-            if (ShellDataLoadEvent != null)
+            finally
             {
-                ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         /// <summary>
@@ -3647,30 +3892,30 @@ namespace GreenField.App.ViewModel
         private void RetrievePortfolioSelectionDataCallbackMethod(List<PortfolioSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);                  
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     PortfolioSelectionInfo = result.OrderBy(o => o.PortfolioId).ToList();
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-                if (ShellDataLoadEvent != null)
-                {
-                    ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         /// <summary>
@@ -3680,12 +3925,12 @@ namespace GreenField.App.ViewModel
         private void RetrieveMarketSnapshotSelectionDataCallbackMethod(List<MarketSnapshotSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     try
                     {
                         MarketSnapshotSelectionInfo = result;
@@ -3693,12 +3938,12 @@ namespace GreenField.App.ViewModel
                     catch (Exception ex)
                     {
                         Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                        Logging.LogException(_logger, ex);
+                        Logging.LogException(logger, ex);
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
                 if (ShellSnapshotDataLoadEvent != null)
                 {
@@ -3708,9 +3953,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -3720,7 +3965,7 @@ namespace GreenField.App.ViewModel
         public void RetrieveFilterSelectionDataCallbackMethod(List<FilterSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (ShellFilterDataLoadEvent != null)
@@ -3730,7 +3975,7 @@ namespace GreenField.App.ViewModel
 
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     FilterSelectionInfo = result;
                     if (SelectedFilterType != null)
                     {
@@ -3741,7 +3986,7 @@ namespace GreenField.App.ViewModel
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
                 if (ShellDataLoadEvent != null)
                 {
@@ -3751,60 +3996,60 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void RetrieveCountrySelectionCallbackMethod(List<CountrySelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
 
                     CountryTypeInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
 
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void RetrieveRegionSelectionCallbackMethod(List<GreenField.DataContracts.RegionSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     RegionTypeInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
 
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -3814,29 +4059,61 @@ namespace GreenField.App.ViewModel
         /// Get DashboardGadgetParam object
         /// </summary>
         /// <returns>DashboardGadgetParam</returns>
-        private DashboardGadgetParam GetDashboardGadgetParam()
+        private DashboardGadgetParam GetDashboardGadgetParam(String gadgetName = null)
         {
             DashboardGadgetParam param;
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
+                Object additionalInfo = null;
+
+                switch (gadgetName)
+                {
+                    case GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_BANK:
+                        additionalInfo = ScatterChartDefaults.BANK;
+                        break;
+                    case GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_INDUSTRIAL:
+                        additionalInfo = ScatterChartDefaults.INDUSTRIAL;
+                        break;
+                    case GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_INSURANCE:
+                        additionalInfo = ScatterChartDefaults.INSURANCE;
+                        break;
+                    case GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_UTILITY:
+                        additionalInfo = ScatterChartDefaults.UTILITY;
+                        break;
+                    case GadgetNames.EXTERNAL_RESEARCH_BALANCE_SHEET:
+                        additionalInfo = FinancialStatementType.BALANCE_SHEET;
+                        break;
+                    case GadgetNames.EXTERNAL_RESEARCH_INCOME_STATEMENT:
+                        additionalInfo = FinancialStatementType.INCOME_STATEMENT;
+                        break;
+                    case GadgetNames.EXTERNAL_RESEARCH_CASH_FLOW:
+                        additionalInfo = FinancialStatementType.CASH_FLOW_STATEMENT;
+                        break;
+                    case GadgetNames.EXTERNAL_RESEARCH_FUNDAMENTALS_SUMMARY:
+                        additionalInfo = FinancialStatementType.FUNDAMENTAL_SUMMARY;
+                        break;
+                    default:
+                        break;
+                }
                 param = new DashboardGadgetParam()
                     {
-                        DBInteractivity = _dbInteractivity,
-                        EventAggregator = _eventAggregator,
-                        LoggerFacade = _logger,
+                        DBInteractivity = dbInteractivity,
+                        EventAggregator = eventAggregator,
+                        AdditionalInfo = additionalInfo,
+                        LoggerFacade = logger,
                         DashboardGadgetPayload = SelectorPayload,
-                        RegionManager = _regionManager
+                        RegionManager = regionManager
                     };
             }
             catch (Exception ex)
             {
                 param = null;
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
 
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             return param;
         }
 
@@ -3858,36 +4135,36 @@ namespace GreenField.App.ViewModel
             RegionFXSelectorVisibility = ToolBoxItemVisibility.REGIONFX_SELECTOR_VISIBILITY;
             LookThruSelectorVisibility = ToolBoxItemVisibility.LOOK_THRU_VISIBILITY;
             NodeSelectorVisibility = ToolBoxItemVisibility.NODENAME_SELECTOR_VISIBILITY;
-
+            GadgetSelectorVisibility = ToolBoxItemVisibility.GADGET_SELECTOR_VISIBILITY;
         }
 
         private void RetrieveMarketSnapshotSelectionData()
         {
-            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogBeginMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
                 if (SessionManager.SESSION != null)
                 {
-                    SnapshotBusyIndicatorContent = "Retrieving Snapshot selection data...";
+                    BusyIndicatorNotification(true, "Retrieving Snapshot selection data...");
                     if (ShellSnapshotDataLoadEvent != null)
                     {
                         ShellSnapshotDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
-                    _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
+                    dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
                 }
                 else
                 {
-                    _manageSessions.GetSession((session) =>
+                    manageSessions.GetSession((session) =>
                     {
                         if (session != null)
                         {
                             SessionManager.SESSION = session;
-                            SnapshotBusyIndicatorContent = "Retrieving Snapshot selection data...";
+                            BusyIndicatorNotification(true, "Retrieving Snapshot selection data...");                            
                             if (ShellSnapshotDataLoadEvent != null)
                             {
                                 ShellSnapshotDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                             }
-                            _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
+                            dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
                         }
                     });
                 }
@@ -3895,34 +4172,34 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
 
-            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
         private void RetrieveFXCommoditySelectionCallbackMethod(List<FXCommodityData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     CommodityTypeInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         private void AddItemsToRegionSelectorComboBox(List<GreenField.DataContracts.RegionSelectionData> items)
@@ -3938,7 +4215,7 @@ namespace GreenField.App.ViewModel
                 {
                     RegionDataItem regionItem = new RegionDataItem(null);
                     regionItem.Name = region;
-                    regionItem.DisplayName = region;                    
+                    regionItem.DisplayName = region;
 
                     List<RegionSelectionData> selectedCountries = (from p in items
                                                                    where p.Region == region
@@ -3949,16 +4226,55 @@ namespace GreenField.App.ViewModel
                         RegionDataItem country = new RegionDataItem(regionItem)
                         {
                             Name = item.Country,
-                            DisplayName = item.CountryNames                            
-                        };                       
+                            DisplayName = item.CountryNames
+                        };
 
                         regionItem.SubCategories.Add(country);
                     }
 
                     RegionItems.Add(regionItem);
-                }              
+                }
             }
-        }       
+        }
+
+        private void AddItemToUserDashboard(GadgetInfo gadgetInfo, object viewModelObject = null)
+        {
+            Object content = null;
+            if (gadgetInfo.ViewType.IsClass && gadgetInfo.ViewModelType.IsClass)
+            {
+                if (viewModelObject == null)
+                {
+                    Type[] argumentTypes = new Type[] { typeof(DashboardGadgetParam) };
+                    object[] argumentValues = new object[] { GetDashboardGadgetParam(gadgetInfo.DisplayName) };
+                    viewModelObject = TypeResolution.GetNewTypeObject(gadgetInfo.ViewModelType, argumentTypes, argumentValues);
+                }
+                content = TypeResolution.GetNewTypeObject(gadgetInfo.ViewType, new Type[] { gadgetInfo.ViewModelType }, new object[] { viewModelObject });
+            }
+
+            IsApplicationMenuExpanded = false;
+            eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+            (
+                new DashboardTileViewItemInfo
+                {
+                    DashboardTileHeader = gadgetInfo.DisplayName,
+                    DashboardTileObject = content
+                }
+            );
+        }
+
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
+        /// <param name="message">Content message for indicator; default null</param>
+        private void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
+        {
+            if (message != null)
+            {
+                BusyIndicatorContent = message;
+            }
+            IsBusyIndicatorBusy = isBusyIndicatorVisible;
+        }
         #endregion
 
     }

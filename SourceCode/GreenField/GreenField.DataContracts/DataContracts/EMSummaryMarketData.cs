@@ -17,6 +17,12 @@ namespace GreenField.DataContracts.DataContracts
         public string Country { get; set; }
 
         [DataMember]
+        public string BenchmarkId { get; set; }
+
+        [DataMember]
+        public DateTime PortfolioDate { get; set; }
+
+        [DataMember]
         public decimal? BenchmarkWeight { get; set; }
 
         [DataMember]

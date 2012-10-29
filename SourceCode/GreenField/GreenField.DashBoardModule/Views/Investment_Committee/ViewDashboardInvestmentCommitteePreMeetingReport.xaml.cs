@@ -44,7 +44,7 @@ namespace GreenField.DashboardModule.Views
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
-            this.tbHeader.Text = GadgetNames.ICPRESENTATION_PRE_MEETING_REPORT;
+            this.tbHeader.Text = "";//GadgetNames.ICPRESENTATION_PRE_MEETING_REPORT;
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)

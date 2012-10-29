@@ -350,7 +350,7 @@ namespace GreenField.Gadgets.ViewModels
     
         #endregion
 
-        #region Callback Methods       
+        #region Callback Methods
         /// <summary>
         /// Callback method that assigns value to the HoldingsPercentageInfoForRegion property
         /// </summary>

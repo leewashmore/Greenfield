@@ -158,7 +158,7 @@ namespace GreenField.DashboardModule.Views
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
-                    Content = "Assumptions",
+                    Content = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_ASSUMPTIONS,
                     Foreground = new SolidColorBrush(Colors.Black),
                     FontSize = 12,
                     FontFamily = new FontFamily("Arial")
@@ -182,7 +182,7 @@ namespace GreenField.DashboardModule.Views
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
-                    Content = "Terminal Value Calculations",
+                    Content = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_TERMINAL_VALUE_CALCULATIONS,
                     Foreground = new SolidColorBrush(Colors.Black),
                     FontSize = 12,
                     FontFamily = new FontFamily("Arial")
@@ -193,7 +193,7 @@ namespace GreenField.DashboardModule.Views
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
-                    Content = "DCF Summary",
+                    Content = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_SUMMARY,
                     Foreground = new SolidColorBrush(Colors.Black),
                     FontSize = 12,
                     FontFamily = new FontFamily("Arial")
@@ -204,7 +204,7 @@ namespace GreenField.DashboardModule.Views
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
-                    Content = "Sensitivity",
+                    Content = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_SENSIVITY,
                     Foreground = new SolidColorBrush(Colors.Black),
                     FontSize = 12,
                     FontFamily = new FontFamily("Arial")
@@ -215,7 +215,7 @@ namespace GreenField.DashboardModule.Views
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
-                    Content = "FORWARD EPS",
+                    Content = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_FORWARD_EPS,
                     Foreground = new SolidColorBrush(Colors.Black),
                     FontSize = 12,
                     FontFamily = new FontFamily("Arial")
@@ -226,7 +226,7 @@ namespace GreenField.DashboardModule.Views
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
-                    Content = "FORWARD BVPS",
+                    Content = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_FORWARD_BVPS,
                     Foreground = new SolidColorBrush(Colors.Black),
                     FontSize = 12,
                     FontFamily = new FontFamily("Arial")

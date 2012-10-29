@@ -63,14 +63,14 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 
-                Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_COMPARISON_CHART,
+                Header = "",//GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_COMPARISON_CHART,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                
-                Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_ESTIMATES_SUMMARY,
+
+                Header = "",//GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_ESTIMATES_SUMMARY,
                 Content = null
             });
             

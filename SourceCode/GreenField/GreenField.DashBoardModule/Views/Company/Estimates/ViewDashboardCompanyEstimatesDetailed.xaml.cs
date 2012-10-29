@@ -60,13 +60,6 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-
-            //    Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_OVERVIEW,
-            //    Content = null
-            //});
-
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
 

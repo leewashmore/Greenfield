@@ -60,33 +60,6 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-                 
-            //    Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_BANK,
-            //    Content = null
-            //});
-
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-                 
-            //    Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INDUSTRIAL,
-            //    Content = null
-            //});
-
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-                 
-            //    Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INSURANCE,
-            //    Content = null
-            //});
-
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-                 
-            //    Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_UTILITY,
-            //    Content = null
-            //});
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
@@ -117,7 +90,6 @@ namespace GreenField.DashboardModule.Views
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                //Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
                     Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE,
@@ -132,7 +104,6 @@ namespace GreenField.DashboardModule.Views
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                //Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PE, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
                     Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PE,
@@ -147,7 +118,6 @@ namespace GreenField.DashboardModule.Views
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                //Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PBV, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
                     Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PBV,
@@ -162,7 +132,6 @@ namespace GreenField.DashboardModule.Views
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                //Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_FCFYield, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
                     Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_FCFYield,
@@ -177,7 +146,6 @@ namespace GreenField.DashboardModule.Views
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                //Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_DividendYield, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
                     Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_DividendYield,
