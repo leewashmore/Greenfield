@@ -171,7 +171,5 @@
         <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
         <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-    </Style>
-
-
+    </Style>   
 </ResourceDictionary>

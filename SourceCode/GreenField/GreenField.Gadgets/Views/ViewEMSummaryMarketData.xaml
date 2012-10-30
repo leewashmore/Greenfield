@@ -13,11 +13,8 @@
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </helpers:ViewBaseUserControl.Resources>
+    </helpers:ViewBaseUserControl.Resources>    
     <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>            
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" Grid.Row="0" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
             <telerik:RadGridView  Name="dgEMSummaryMarketData"
                                   ItemsSource="{Binding EmSummaryMarketDataInfo}"
@@ -25,72 +22,207 @@
                                   CanUserReorderColumns="False"                                   
                                   CanUserInsertRows="False"                              
                                   CanUserDeleteRows="False" 
-                                  IsReadOnly="True"                                 
+                                  IsReadOnly="True"                 
+                                  ShowGroupFooters="True"
+                                  ShowColumnFooters="False" 
                                   CanUserSortColumns="True" 
                                   ScrollMode="Deferred"  
                                   RowIndicatorVisibility="Collapsed" 
-                                  ShowGroupPanel="False" 
-                                  telerik:StyleManager.Theme="Metro"
-                                  UseLayoutRounding="True"   
+                                  ShowGroupPanel="False"                                   
+                                  UseLayoutRounding="True"                                            
+                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                  HeaderRowStyle="{StaticResource GridViewMergerHeaderRowStyle}"
+                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                  GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
+                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
+                                  RowStyle="{StaticResource GridViewRowStyle}"       
+                                  GridLinesVisibility="None"
                                   AlternationCount="2">
                 <telerik:RadGridView.ColumnGroups>
-                    <telerik:GridViewColumnGroup  Name="Default" Header=" " />
-                    <telerik:GridViewColumnGroup  Name="PriceEarnings" Header="Price/Earnings" />
-                    <telerik:GridViewColumnGroup  Name="USDEarGrowth" Header="USD Earnings Growth" />
-                    <telerik:GridViewColumnGroup  Name="PBV" Header="P/BV" />
-                    <telerik:GridViewColumnGroup  Name="DY" Header="DY" />
-                    <telerik:GridViewColumnGroup  Name="ROE" Header="ROE" />
+                    <telerik:GridViewColumnGroup  Name="cgDefault" Header="" HeaderStyle="{StaticResource GridViewColumnGroupHeaderStyle_CenterAligned}"/>
+                    <telerik:GridViewColumnGroup  Name="cgBenchmark" Header="" HeaderStyle="{StaticResource GridViewColumnGroupHeaderStyle_RightAligned}"/>
+                    <telerik:GridViewColumnGroup  Name="cgBaseTargets" Header="Base Targets" HeaderStyle="{StaticResource GridViewColumnGroupHeaderStyle_RightAligned}" />
+                    <telerik:GridViewColumnGroup  Name="cgActiveWeight" Header="Active" HeaderStyle="{StaticResource GridViewColumnGroupHeaderStyle_RightAligned}" />
+                    <telerik:GridViewColumnGroup  Name="cgPriceEarnings" Header="Price/Earnings" HeaderStyle="{StaticResource GridViewColumnGroupHeaderStyle_CenterAligned}"/>
+                    <telerik:GridViewColumnGroup  Name="cgUSDEarGrowth" Header="USD Earnings Growth" HeaderStyle="{StaticResource GridViewColumnGroupHeaderStyle_CenterAligned}"/>
+                    <telerik:GridViewColumnGroup  Name="cgPBV" Header="P/BV" HeaderStyle="{StaticResource GridViewColumnGroupHeaderStyle_RightAligned}"/>
+                    <telerik:GridViewColumnGroup  Name="cgDY" Header="DY" HeaderStyle="{StaticResource GridViewColumnGroupHeaderStyle_RightAligned}"/>
+                    <telerik:GridViewColumnGroup  Name="cgROE" Header="ROE" HeaderStyle="{StaticResource GridViewColumnGroupHeaderStyle_RightAligned}"/>
                 </telerik:RadGridView.ColumnGroups>
-                <telerik:RadGridView.Columns>                 
-                    <telerik:GridViewDataColumn Header="" 
-                                                    DataMemberBinding="{Binding Country}"  
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
-                                                    HeaderTextAlignment="Left"
-                                                    ColumnGroupName="Default"
-                                                    TextAlignment="Left">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn x:Name="dgcCountry" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding Country}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgDefault"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Left"                                                
+                                                TextAlignment="Left">
                     </telerik:GridViewDataColumn>
-                    <telerik:GridViewDataColumn Header="NAME" 
-                                                    DataMemberBinding="{Binding BenchmarkWeight}"                                                     
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
-                                                    HeaderTextAlignment="Left"
-                                                    ColumnGroupName="Default"
-                                                    TextAlignment="Left">
+                    <telerik:GridViewDataColumn x:Name="dgcBenchmarkWeight" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding BenchmarkWeight, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgBenchmark"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="BenchmarkWeight" ResultFormatString="{}{0:n1}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
                     </telerik:GridViewDataColumn>
-                    <telerik:GridViewDataColumn Header="YTD"                                                     
-                                                 DataMemberBinding="{Binding YTDReturns}"          
-                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
-                                                 Width="*"    CellStyle="{StaticResource GridViewCellStyle}"
-                                                 DataFormatString="{}{0:p2}"
-                                                 HeaderTextAlignment="Right"     
-                                                 ColumnGroupName="Default"
-                                                 TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="12" 
-                                                DataMemberBinding="{Binding PECurYear}"                                                
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
-                                                DataFormatString="{}{0:p2}"
-                                                HeaderTextAlignment="Right"
-                                                ColumnGroupName="PriceEarnings"
-                                                TextAlignment="Right"/>
-                    
-                    <telerik:GridViewDataColumn Header="12C" 
-                                                DataMemberBinding="{Binding PECurYearCon}"                                               
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
-                                                DataFormatString="{}{0:p2}"
-                                                HeaderTextAlignment="Right"
-                                                ColumnGroupName="PriceEarnings"
-                                                TextAlignment="Right"/>  
+                    <telerik:GridViewDataColumn x:Name="dgcBaseTarget" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding BaseTarget, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgBaseTargets"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="BaseTarget" ResultFormatString="{}{0:n1}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcActiveWeight" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding Active, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgActiveWeight"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="Active" ResultFormatString="{}{0:n1}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcYTDReturns" 
+                                                Header="YTD" 
+                                                DataMemberBinding="{Binding YTDReturns, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgBenchmark"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcPriceEarningYear1" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding PECurYear, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgPriceEarnings"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcPriceEarningConsensusYear1" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding PECurYearCon, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgPriceEarnings"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcPriceEarningYear2" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding PENextYear, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgPriceEarnings"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcPriceEarningConsensusYear2" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding PENextYearCon, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgPriceEarnings"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcUSDEarYear1" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding USDEarCurYear, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgUSDEarGrowth"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcUSDEarConsensusYear1" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding USDEarCurYearCon, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgUSDEarGrowth"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcUSDEarYear2" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding USDEarNextYear, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgUSDEarGrowth"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcUSDEarConsensusYear2" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding USDEarNextYearCon, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgUSDEarGrowth"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcPBV" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding PBVCurYear, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgPBV"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcDY" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding DYCurYear, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgDY"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="dgcROE" 
+                                                Header="" 
+                                                DataMemberBinding="{Binding ROECurYear, StringFormat=\{0:n1\}%}"  
+                                                HeaderCellStyle="{StaticResource GridViewMergedHeaderCellStyle}"
+                                                Width="*"
+                                                ColumnGroupName="cgROE"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"                                                
+                                                TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
                 </telerik:RadGridView.Columns>
                 <telerik:RadGridView.GroupDescriptors>
                     <telerik:GroupDescriptor Member="Region"/>
                 </telerik:RadGridView.GroupDescriptors>
-                <!--<telerik:RadGridView.SortDescriptors>
-                    <telerik:SortDescriptor Member="CountryName"
-                                                SortDirection="Ascending" />
-                </telerik:RadGridView.SortDescriptors>-->
             </telerik:RadGridView>
         </telerik:RadBusyIndicator>
     </Grid>

@@ -1170,4 +1170,68 @@
         <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
         <Setter Property="Foreground" Value="Red"/>
     </Style>
+
+    <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewMergerHeaderRowStyle">
+        <Setter Property="Template" Value="{StaticResource GridViewHeaderRowTemplate}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderRowOuterBorder}"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="BorderThickness" Value="1,1,0,1"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderRowBackground}"/>
+        <Setter Property="IndentLevel" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <Style TargetType="telerik:CommonColumnHeader" x:Name="GridViewColumnGroupHeaderStyle_CenterAligned">
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForegroundColor}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderRowOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1,0,0,1"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="MinHeight" Value="15"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderRowBackground}"/>
+        <Setter Property="Padding" Value="0,0,0,0"/>
+    </Style>
+
+    <Style TargetType="telerik:CommonColumnHeader" x:Name="GridViewColumnGroupHeaderStyle_RightAligned">
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForegroundColor}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderRowOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1,0,1,0"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="MinHeight" Value="15"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderRowBackground}"/>
+        <Setter Property="Padding" Value="0,0,0,0"/>
+    </Style>
+
+    <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewMergedHeaderCellStyle">
+        <Setter Property="Template" Value="{StaticResource GridViewHeaderCellTemplate}"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1,0,0,1"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Height" Value="18"/>
+        <Setter Property="MinHeight" Value="18"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Foreground" Value="{StaticResource GridView_HeaderForeground}"/>
+    </Style>
 </ResourceDictionary>

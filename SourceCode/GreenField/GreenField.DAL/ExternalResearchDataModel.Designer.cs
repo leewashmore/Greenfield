@@ -3403,6 +3403,36 @@ namespace GreenField.DAL
         {
             return base.ExecuteFunction<EMSumCountryData>("usp_GetCountryDataForEMMarketData");
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="securityIdsList">No Metadata Documentation available.</param>
+        /// <param name="yearList">No Metadata Documentation available.</param>
+        public ObjectResult<EMData> usp_GetDataForEMData(global::System.String securityIdsList, global::System.String yearList)
+        {
+            ObjectParameter securityIdsListParameter;
+            if (securityIdsList != null)
+            {
+                securityIdsListParameter = new ObjectParameter("securityIdsList", securityIdsList);
+            }
+            else
+            {
+                securityIdsListParameter = new ObjectParameter("securityIdsList", typeof(global::System.String));
+            }
+    
+            ObjectParameter yearListParameter;
+            if (yearList != null)
+            {
+                yearListParameter = new ObjectParameter("yearList", yearList);
+            }
+            else
+            {
+                yearListParameter = new ObjectParameter("yearList", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<EMData>("usp_GetDataForEMData", securityIdsListParameter, yearListParameter);
+        }
 
         #endregion
     }
@@ -10249,6 +10279,213 @@ namespace GreenField.DAL
         private global::System.Int32 _DATA_ID;
         partial void OnDATA_IDChanging(global::System.Int32 value);
         partial void OnDATA_IDChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="EMData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class EMData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new EMData object.
+        /// </summary>
+        /// <param name="issuerId">Initial value of the IssuerId property.</param>
+        /// <param name="securityId">Initial value of the SecurityId property.</param>
+        /// <param name="dataSource">Initial value of the DataSource property.</param>
+        /// <param name="dataId">Initial value of the DataId property.</param>
+        /// <param name="amount">Initial value of the Amount property.</param>
+        /// <param name="dataYear">Initial value of the DataYear property.</param>
+        /// <param name="dataType">Initial value of the DataType property.</param>
+        public static EMData CreateEMData(global::System.String issuerId, global::System.String securityId, global::System.String dataSource, global::System.Int32 dataId, global::System.Decimal amount, global::System.Int32 dataYear, global::System.String dataType)
+        {
+            EMData eMData = new EMData();
+            eMData.IssuerId = issuerId;
+            eMData.SecurityId = securityId;
+            eMData.DataSource = dataSource;
+            eMData.DataId = dataId;
+            eMData.Amount = amount;
+            eMData.DataYear = dataYear;
+            eMData.DataType = dataType;
+            return eMData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String IssuerId
+        {
+            get
+            {
+                return _IssuerId;
+            }
+            set
+            {
+                OnIssuerIdChanging(value);
+                ReportPropertyChanging("IssuerId");
+                _IssuerId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("IssuerId");
+                OnIssuerIdChanged();
+            }
+        }
+        private global::System.String _IssuerId;
+        partial void OnIssuerIdChanging(global::System.String value);
+        partial void OnIssuerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SecurityId
+        {
+            get
+            {
+                return _SecurityId;
+            }
+            set
+            {
+                OnSecurityIdChanging(value);
+                ReportPropertyChanging("SecurityId");
+                _SecurityId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SecurityId");
+                OnSecurityIdChanged();
+            }
+        }
+        private global::System.String _SecurityId;
+        partial void OnSecurityIdChanging(global::System.String value);
+        partial void OnSecurityIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DataSource
+        {
+            get
+            {
+                return _DataSource;
+            }
+            set
+            {
+                OnDataSourceChanging(value);
+                ReportPropertyChanging("DataSource");
+                _DataSource = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("DataSource");
+                OnDataSourceChanged();
+            }
+        }
+        private global::System.String _DataSource;
+        partial void OnDataSourceChanging(global::System.String value);
+        partial void OnDataSourceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DataId
+        {
+            get
+            {
+                return _DataId;
+            }
+            set
+            {
+                OnDataIdChanging(value);
+                ReportPropertyChanging("DataId");
+                _DataId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DataId");
+                OnDataIdChanged();
+            }
+        }
+        private global::System.Int32 _DataId;
+        partial void OnDataIdChanging(global::System.Int32 value);
+        partial void OnDataIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                OnAmountChanging(value);
+                ReportPropertyChanging("Amount");
+                _Amount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Amount");
+                OnAmountChanged();
+            }
+        }
+        private global::System.Decimal _Amount;
+        partial void OnAmountChanging(global::System.Decimal value);
+        partial void OnAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DataYear
+        {
+            get
+            {
+                return _DataYear;
+            }
+            set
+            {
+                OnDataYearChanging(value);
+                ReportPropertyChanging("DataYear");
+                _DataYear = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DataYear");
+                OnDataYearChanged();
+            }
+        }
+        private global::System.Int32 _DataYear;
+        partial void OnDataYearChanging(global::System.Int32 value);
+        partial void OnDataYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DataType
+        {
+            get
+            {
+                return _DataType;
+            }
+            set
+            {
+                OnDataTypeChanging(value);
+                ReportPropertyChanging("DataType");
+                _DataType = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("DataType");
+                OnDataTypeChanged();
+            }
+        }
+        private global::System.String _DataType;
+        partial void OnDataTypeChanging(global::System.String value);
+        partial void OnDataTypeChanged();
 
         #endregion
     }

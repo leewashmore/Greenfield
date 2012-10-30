@@ -42,7 +42,8 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private PortfolioSelectionData portfolioSelectionData;        
         #endregion
-       #region Constructor
+
+        #region Constructor
         /// <summary>
         /// Constructor of the class that initializes various objects
         /// </summary>
@@ -89,11 +90,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null && result.Count > 0)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
-                    EmSummaryMarketDataInfo = result;                   
+                    EmSummaryMarketDataInfo = result;
+                    RetrieveEMSummaryDataCompletedEvent(new RetrieveEMSummaryDataCompleteEventArgs() { EMSummaryInfo = result });
                 }
                 else
                 {
                     EmSummaryMarketDataInfo = new List<EMSummaryMarketData>();
+                    RetrieveEMSummaryDataCompletedEvent(new RetrieveEMSummaryDataCompleteEventArgs() { EMSummaryInfo = result });
                 }
             }
 
@@ -106,5 +109,11 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Events
+        /// <summary>
+        /// Event for the Retrieval of Data 
+        /// </summary>
+        public event RetrieveEMSummaryDataCompleteEventHandler RetrieveEMSummaryDataCompletedEvent;     
+        #endregion
     }
 }

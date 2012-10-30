@@ -2061,7 +2061,7 @@ namespace GreenField.Web.Services
         /// <param name="initialSumDirtyValuePC">variable to store the sum of all portfolio weights</param>
         /// <param name="harmonicMeanPortfolio">Harmonic mean</param>
         private void CalculateHarmonicMeanPortfolioROE(List<CalculatedValuesForValuation> filteredByDataIdList, String description, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? initialSumDirtyValuePC = 0, Decimal? harmonicMeanPortfolio = 0)
-        {           
+        {
             Decimal? portWeight = 0;
             Decimal? multipliedValue = 0;
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
@@ -2113,7 +2113,7 @@ namespace GreenField.Web.Services
                 entry.Relative = Convert.ToDecimal(entry.Portfolio) / Convert.ToDecimal(entry.Benchmark);
             }
             entry.Portfolio = Math.Round(Convert.ToDecimal(entry.Portfolio), 1) + "%";
-            entry.Benchmark = Math.Round(Convert.ToDecimal(harmonicMeanBenchmark * 100),1) + "%";
+            entry.Benchmark = Math.Round(Convert.ToDecimal(harmonicMeanBenchmark * 100), 1) + "%";
         }
         #endregion
 
@@ -2179,7 +2179,7 @@ namespace GreenField.Web.Services
                                                           && record.BENCHMARK_WEIGHT > 0).ToList();
                 //gathering data from GF_PERF_DAILY_ATTRIBUTION
                 List<GF_PERF_DAILY_ATTRIBUTION> attributionData = new List<GF_PERF_DAILY_ATTRIBUTION>();
-                attributionData =  RetrieveBenchmarkYTDReturns(selectedPortfolio, lastBusinessDate);
+                attributionData = RetrieveBenchmarkYTDReturns(selectedPortfolio, lastBusinessDate);
 
                 var benchData = dataBenchmarkHoldings != null ? (from p in dataBenchmarkHoldings
                                                                  select new
@@ -2199,9 +2199,10 @@ namespace GreenField.Web.Services
                 //retrieve security Id's              
                 List<SecurityData> securityData = RetrieveSecurityIds(asecShortNames);
                 List<String> distinctSecurityId = securityData.Select(record => record.SecurityId).ToList();
-                List<String> distinctIssuerId = securityData.Select(record => record.IssuerId).ToList();
+                //List<String> distinctIssuerId = securityData.Select(record => record.IssuerId).ToList();
 
-                //String _securityIds = StringBuilder(distinctSecurityId);
+                String securityIds = StringBuilder(distinctSecurityId);
+                String yearList = (DateTime.Now.Year).ToString() + "," + (DateTime.Now.Year + 1).ToString();
                 //String _issuerIds = StringBuilder(distinctIssuerId);
 
                 foreach (String asec in securityData.Select(record => record.AsecShortName).ToList())
@@ -2217,159 +2218,202 @@ namespace GreenField.Web.Services
                 }
                 //calling the stored procedure from the database
                 List<EMSummaryMarketData> resultList = new List<EMSummaryMarketData>();
+                List<EMSummaryMarketData> tempResultListForGroups = new List<EMSummaryMarketData>();
                 List<EMSumCountryData> wholeData = research.usp_GetCountryDataForEMMarketData().ToList();
                 List<EMSumCountryData> countryData = wholeData.Where(t => t.Type == "C").ToList();
                 List<EMSumCountryData> groupData = wholeData.Where(t => t.Type == "G").ToList();
                 List<String> countryCodes = wholeData.Where(t => t.Type == "C").Select(t => t.CountryCode).ToList();
+                List<EMData> emSummaryData = research.usp_GetDataForEMData(securityIds, yearList).ToList();
+                List<EMSummFinalData> emFinalData = new List<EMSummFinalData>();
 
                 foreach (EMSumCountryData row in countryData)
                 {
-                        EMSummaryMarketData obj = new EMSummaryMarketData();
-                        obj.Region = row.RegionName;
-                        obj.Country = row.CountryName;
-                        if (emBenchData != null)
+                    EMSummaryMarketData obj = new EMSummaryMarketData();
+                    obj.Region = row.RegionName;
+                    obj.Country = row.CountryName;
+                    if (emBenchData != null)
+                    {
+                        obj.BenchmarkWeight = emBenchData.Where(t => t.CountryCode == row.CountryCode).Select(t => t.BenWeight)
+                            .FirstOrDefault();
+                    }
+                    if (attributionData != null)
+                    {
+                        obj.YTDReturns = attributionData.Where(t => t.COUNTRY == row.CountryCode).Select(t => t.BM1_RC_TWR_YTD)
+                            .FirstOrDefault();
+                    }
+                    if (emSummaryData != null)
+                    {
+                        foreach (int dataId in emSummaryData.Select(t => t.DataId).ToList())
                         {
-                            obj.BenchmarkWeight = emBenchData.Where(t => t.CountryCode == row.CountryCode).Select(t => t.BenWeight)
-                                .FirstOrDefault();
+                            foreach (int year in emSummaryData.Where(t => t.DataId == dataId).Select(t => t.DataYear).ToList())
+                            {
+                                foreach (String d in emSummaryData.Where(t => t.DataId == dataId && t.DataYear == year).
+                                    Select(t => t.DataType).ToList())
+                                {
+                                    List<EMSummHarmonicData> emHarmonicData = new List<EMSummHarmonicData>();
+                                    List<EMData> emFilteredData = new List<EMData>();
+                                    EMSummFinalData emFinData = new EMSummFinalData();
+                                    emFilteredData = emSummaryData.Where(t => t.DataId == dataId && t.DataYear == year && t.DataType == d)
+                                        .ToList();
+                                    foreach (EMData emData in emFilteredData)
+                                    {
+                                        EMSummHarmonicData summHarDataObj = new EMSummHarmonicData();
+                                        summHarDataObj.IssuerId = emData.IssuerId;
+                                        summHarDataObj.SecurityId = emData.SecurityId;
+                                        String secId = summHarDataObj.SecurityId;
+                                        String asecShrtName = securityData.Where(record => record.SecurityId == secId)
+                                            .Select(record => record.AsecShortName).FirstOrDefault();
+                                        summHarDataObj.PeriodYear = year;
+                                        summHarDataObj.DataId = dataId;
+                                        summHarDataObj.Country = row.CountryCode;
+                                        summHarDataObj.DataType = d;
+                                        summHarDataObj.BenWeight = emBenchData.Where(t => t.CountryCode == row.CountryCode &&
+                                            t.AsecShortName == asecShrtName).Select(t => t.BenWeight).FirstOrDefault();
+                                        summHarDataObj.Amount = emData.Amount;
+                                        summHarDataObj.InvAmount = emData.Amount != 0 ? (1 / emData.Amount) : 0;
+                                        emHarmonicData.Add(summHarDataObj);
+                                    }
+                                    Decimal harmonicMean = CalculateHarmonicMeanBenchmark(emHarmonicData);
+                                    emFinData.DataId = dataId;
+                                    emFinData.DataType = d;
+                                    emFinData.PeriodYear = year;
+                                    emFinData.CountryCode = row.CountryCode;
+                                    emFinData.HarmonicMean = harmonicMean;
+                                    emFinalData.Add(emFinData);
+                                }
+                            }
                         }
-                        if (attributionData != null)
-                        {
-                            obj.YTDReturns = attributionData.Where(t => t.COUNTRY == row.CountryCode).Select(t => t.BM1_RC_TWR_YTD)
-                                .FirstOrDefault();
-                        }
-                        resultList.Add(obj);                    
+                    }
+                    obj.PECurYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
+                        && t.CountryCode == row.CountryCode)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.PECurYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C" 
+                        && t.CountryCode == row.CountryCode)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.PENextYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "W" 
+                        && t.CountryCode == row.CountryCode)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.PENextYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "C" 
+                        && t.CountryCode == row.CountryCode)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.USDEarCurYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
+                        && t.CountryCode == row.CountryCode)
+                      .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.USDEarCurYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C" 
+                        && t.CountryCode == row.CountryCode)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.USDEarNextYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType 
+                        == "W" && t.CountryCode == row.CountryCode)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.USDEarNextYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType 
+                        == "C" && t.CountryCode == row.CountryCode)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.PBVCurYear = emFinalData.Where(t => t.DataId == 164 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
+                        && t.CountryCode == row.CountryCode)
+                      .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.DYCurYear = emFinalData.Where(t => t.DataId == 192 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
+                        && t.CountryCode == row.CountryCode)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.ROECurYear = emFinalData.Where(t => t.DataId == 133 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
+                        && t.CountryCode == row.CountryCode)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    resultList.Add(obj);
                 }
                 foreach (String group in groupData.Select(t => t.CountryName).Distinct())
                 {
                     EMSummaryMarketData obj = new EMSummaryMarketData();
-                    obj.Region = groupData.Where(t=>t.CountryName == group).Select(t => t.RegionName).FirstOrDefault();
+                    obj.Region = groupData.Where(t => t.CountryName == group).Select(t => t.RegionName).FirstOrDefault();
                     obj.Country = group;
-                    foreach(String cou in groupData.Where(t=>t.CountryName == group).Select(t => t.CountryCode).Distinct())
-                    {
-                        benchmarkWeight = benchmarkWeight + emBenchData.Where(t => t.CountryCode == cou).Select(t => t.BenWeight)
-                              .FirstOrDefault();                     
-                    }
-                    obj.BenchmarkWeight = benchmarkWeight;
-                    resultList.Add(obj);
-                }
-                //retrieves YTD returns for the countries
-             
-                return resultList;
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
-
-        /// <summary>
-        /// Retrieve data for EMM Market SSR data gadget
-        /// </summary>
-        /// <param name="lastBusinessDate">last business date available in the view </param>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<EMSummaryMarketSSRData> RetrieveEmergingMarketSSRData(String selectedPortfolio)
-        {
-            try
-            {
-
-                DimensionEntitiesService.Entities entity = DimensionEntity;
-                ExternalResearchEntities research = new ExternalResearchEntities();
-                research.CommandTimeout = 5000;
-                Decimal? benchmarkWeight = 0;
-                List<String> benchmarkIds = new List<string>();
-                bool isServiceUp;
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-                if (!isServiceUp)
-                {
-                    throw new Exception("Services are not available");
-                }
-                List<EMSummaryMarketBenchmarkData> emBenchData = new List<EMSummaryMarketBenchmarkData>();
-                DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
-                GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS
-                    .Where(record => record.PORTFOLIO_ID == selectedPortfolio).
-                    OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
-                if (lastBusinessRecord != null)
-                {
-                    if (lastBusinessRecord.PORTFOLIO_DATE != null)
-                    {
-                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
-                    }
-                }
-                String benId = lastBusinessRecord.BENCHMARK_ID;
-
-                //gathering the data from GF_BENCHMARK_HOLDINGS
-                List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
-                dataBenchmarkHoldings = dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
-                                                         && record.PORTFOLIO_DATE == lastBusinessDate
-                                                          && record.BENCHMARK_WEIGHT > 0).ToList();
-
-                var benchData = dataBenchmarkHoldings != null ? (from p in dataBenchmarkHoldings
-                                                                 select new
-                                                                 {
-                                                                     IssuerId = p.ISSUER_ID,
-                                                                     AsecShortName = p.ASEC_SEC_SHORT_NAME,
-                                                                     IssueName = p.ISSUE_NAME,
-                                                                     Region = p.ASHEMM_PROP_REGION_CODE,
-                                                                     Country = p.ISO_COUNTRY_CODE,
-                                                                     Sector = p.GICS_SECTOR,
-                                                                     Industry = p.GICS_INDUSTRY,
-                                                                     Weight = p.BENCHMARK_WEIGHT
-                                                                 }).Distinct() : null;
-
-                List<String> asecShortNames = benchData != null ? (from p in benchData
-                                                                   select p.AsecShortName).ToList() : null;
-                //retrieve security Id's              
-                List<SecurityData> securityData = RetrieveSecurityIds(asecShortNames);
-                List<String> distinctSecurityId = securityData.Select(record => record.SecurityId).ToList();
-                List<String> distinctIssuerId = securityData.Select(record => record.IssuerId).ToList();
-
-                //String _securityIds = StringBuilder(distinctSecurityId);
-                //String _issuerIds = StringBuilder(distinctIssuerId);
-
-                foreach (String asec in securityData.Select(record => record.AsecShortName).ToList())
-                {
-                    EMSummaryMarketBenchmarkData obj = new EMSummaryMarketBenchmarkData();
-                    obj.AsecShortName = benchData.Where(t => t.AsecShortName == asec).Select(t => t.AsecShortName)
-                        .FirstOrDefault();
-                    obj.IssuerId = benchData.Where(t => t.AsecShortName == asec).Select(t => t.IssuerId).FirstOrDefault();
-                    obj.IssueName = benchData.Where(t => t.AsecShortName == asec).Select(t => t.IssueName).FirstOrDefault();
-                    obj.CountryCode = benchData.Where(t => t.AsecShortName == asec).Select(t => t.Country).FirstOrDefault();
-                    obj.BenWeight = benchData.Where(t => t.AsecShortName == asec).Select(t => t.Weight).FirstOrDefault();
-                    emBenchData.Add(obj);
-                }
-                //calling the stored procedure from the database
-                List<EMSummaryMarketSSRData> resultList = new List<EMSummaryMarketSSRData>();
-                List<EMSumCountryData> wholeData = research.usp_GetCountryDataForEMMarketData().ToList();
-                List<EMSumCountryData> countryData = wholeData.Where(t => t.Type == "C").ToList();
-                List<EMSumCountryData> groupData = wholeData.Where(t => t.Type == "G").ToList();
-
-                foreach (EMSumCountryData row in countryData)
-                {
-                    if (emBenchData.Select(t => t.CountryCode).Contains(row.CountryCode))
-                    {
-                        EMSummaryMarketSSRData record = new EMSummaryMarketSSRData();
-                        record.Region = row.RegionName;
-                        record.Country = row.CountryName;
-                        record.BenchmarkWeight = emBenchData.Where(t => t.CountryCode == row.CountryCode).Select(t => t.BenWeight)
-                            .FirstOrDefault();
-                        resultList.Add(record);
-                    }
-                }
-                foreach (String group in groupData.Select(t => t.CountryName).Distinct())
-                {
-                    EMSummaryMarketSSRData record = new EMSummaryMarketSSRData();
-                    record.Region = groupData.Where(t => t.CountryName == group).Select(t => t.RegionName).FirstOrDefault();
-                    record.Country = group;
                     foreach (String cou in groupData.Where(t => t.CountryName == group).Select(t => t.CountryCode).Distinct())
                     {
                         benchmarkWeight = benchmarkWeight + emBenchData.Where(t => t.CountryCode == cou).Select(t => t.BenWeight)
                               .FirstOrDefault();
                     }
-                    record.BenchmarkWeight = benchmarkWeight;
-                    resultList.Add(record);
+                    obj.BenchmarkWeight = benchmarkWeight;
+                    tempResultListForGroups.Add(obj);
+                }
+                foreach (int dataId in emSummaryData.Select(t => t.DataId).ToList())
+                {
+                    foreach (int year in emSummaryData.Where(t => t.DataId == dataId).Select(t => t.DataYear).ToList())
+                    {
+                        foreach (String d in emSummaryData.Where(t => t.DataId == dataId && t.DataYear == year).
+                            Select(t => t.DataType).ToList())
+                        {
+                            List<EMSummHarmonicData> emHarmonicData = new List<EMSummHarmonicData>();
+                            List<EMData> emFilteredData = new List<EMData>();
+                            EMSummFinalData emFinData = new EMSummFinalData();
+                            emFilteredData = emSummaryData.Where(t => t.DataId == dataId && t.DataYear == year && t.DataType == d)
+                                .ToList();
+                            foreach (String group in groupData.Select(t => t.CountryName).Distinct())
+                            {                               
+                                foreach (String cou in groupData.Where(t => t.CountryName == group).Select(t => t.CountryCode).Distinct())
+                                {
+                                    foreach (EMData emData in emFilteredData)
+                                    {
+                                        EMSummHarmonicData summHarDataObj = new EMSummHarmonicData();
+                                        summHarDataObj.IssuerId = emData.IssuerId;
+                                        summHarDataObj.SecurityId = emData.SecurityId;
+                                        String secId = summHarDataObj.SecurityId;
+                                        String asecShrtName = securityData.Where(record => record.SecurityId == secId)
+                                            .Select(record => record.AsecShortName).FirstOrDefault();
+                                        summHarDataObj.PeriodYear = year;
+                                        summHarDataObj.DataId = dataId;
+                                        summHarDataObj.Country = cou;
+                                        summHarDataObj.DataType = d;
+                                        summHarDataObj.BenWeight = emBenchData.Where(t => t.CountryCode == cou &&
+                                            t.AsecShortName == asecShrtName).Select(t => t.BenWeight).FirstOrDefault();
+                                        summHarDataObj.Amount = emData.Amount;
+                                        summHarDataObj.InvAmount = emData.Amount != 0 ? (1 / emData.Amount) : 0;
+                                        emHarmonicData.Add(summHarDataObj);
+                                    }
+                                }
+                                Decimal harmonicMean = CalculateHarmonicMeanBenchmark(emHarmonicData);
+                                emFinData.DataId = dataId;
+                                emFinData.DataType = d;
+                                emFinData.PeriodYear = year;
+                                emFinData.CountryCode = group;
+                                emFinData.HarmonicMean = harmonicMean;
+                                emFinalData.Add(emFinData);
+                            }
+                        }
+                    }
+                }
+                foreach (EMSummaryMarketData row in tempResultListForGroups)
+                {
+                    row.PECurYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
+                        && t.CountryCode == row.Country)
+                       .Select(t => t.HarmonicMean).FirstOrDefault();
+                    row.PECurYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C" 
+                        && t.CountryCode == row.Country)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    row.PENextYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "W" 
+                        && t.CountryCode == row.Country)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    row.PENextYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "C" 
+                        && t.CountryCode == row.Country)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    row.USDEarCurYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
+                        && t.CountryCode == row.Country)
+                      .Select(t => t.HarmonicMean).FirstOrDefault();
+                    row.USDEarCurYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C" 
+                        && t.CountryCode == row.Country)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    row.USDEarNextYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "W"
+                        && t.CountryCode == row.Country)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    row.USDEarNextYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType ==
+                        "C" && t.CountryCode == row.Country)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    row.PBVCurYear = emFinalData.Where(t => t.DataId == 164 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
+                        && t.CountryCode == row.Country)
+                      .Select(t => t.HarmonicMean).FirstOrDefault();
+                    row.DYCurYear = emFinalData.Where(t => t.DataId == 192 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
+                        && t.CountryCode == row.Country)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    row.ROECurYear = emFinalData.Where(t => t.DataId == 133 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
+                        && t.CountryCode == row.Country)
+                        .Select(t => t.HarmonicMean).FirstOrDefault();
+                    resultList.Add(row);
                 }
                 return resultList;
             }
@@ -2379,7 +2423,7 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        }
+        }       
 
         /// <summary>
         /// Retrieve security Id's according to asecShortNames from GF_SECURITY_BASEVIEW
@@ -2406,7 +2450,7 @@ namespace GreenField.Web.Services
                 }
             }
             return secData;
-        }       
+        }
 
         /// <summary>
         /// String builder that adds ' between Id's
@@ -2427,14 +2471,39 @@ namespace GreenField.Web.Services
             return result;
         }
 
+        /// <summary>
+        /// Calculates harmonic mean
+        /// </summary>
+        /// <param name="filteredList">filtered list according to various groups formed</param>
+        /// <returns></returns>
+        private Decimal CalculateHarmonicMeanBenchmark(List<EMSummHarmonicData> filteredList)
+        {
+            Decimal? initialSumBenchmarkWeight = 0;
+            Decimal? multipliedAmount = 0;
+            Decimal? totalAmount = 0;
+            Decimal? harmonicMean = 0;
+            Decimal? benchWeight = 0;
+
+            initialSumBenchmarkWeight = filteredList.Sum(t => t.BenWeight);
+
+            foreach (EMSummHarmonicData row in filteredList)
+            {
+                benchWeight = initialSumBenchmarkWeight != 0 ? (row.BenWeight / initialSumBenchmarkWeight) : 0;
+                multipliedAmount = row.InvAmount * benchWeight;
+                totalAmount = totalAmount + multipliedAmount;
+            }
+            harmonicMean = totalAmount != 0 ? 1 / totalAmount : 0;
+            return Convert.ToDecimal(harmonicMean);
+        }
+
         private List<GF_PERF_DAILY_ATTRIBUTION> RetrieveBenchmarkYTDReturns(String selectedPortfolio,
             DateTime lastBusinessDate)
         {
             DimensionEntitiesService.Entities entity = DimensionEntity;
-           List<GF_PERF_DAILY_ATTRIBUTION> dataDailyAttribution = new List<GF_PERF_DAILY_ATTRIBUTION>();
-           dataDailyAttribution = entity.GF_PERF_DAILY_ATTRIBUTION.Where(record => record.PORTFOLIO == selectedPortfolio
-                                                         && record.TO_DATE == lastBusinessDate && record.NODE_NAME=="Country").ToList();
-           return dataDailyAttribution;
+            List<GF_PERF_DAILY_ATTRIBUTION> dataDailyAttribution = new List<GF_PERF_DAILY_ATTRIBUTION>();
+            dataDailyAttribution = entity.GF_PERF_DAILY_ATTRIBUTION.Where(record => record.PORTFOLIO == selectedPortfolio
+                                                          && record.TO_DATE == lastBusinessDate && record.NODE_NAME == "Country").ToList();
+            return dataDailyAttribution;
         }
         #endregion
     }

@@ -108,6 +108,12 @@ namespace GreenField.Common
         public List<HeatMapData> HeatMapInfo { get; set; }
     }
 
+    public delegate void RetrieveEMSummaryDataCompleteEventHandler(RetrieveEMSummaryDataCompleteEventArgs e);
+    public class RetrieveEMSummaryDataCompleteEventArgs : EventArgs
+    {
+        public List<EMSummaryMarketData> EMSummaryInfo { get; set; }
+    }
+
     public delegate void RetrieveConsensusEstimatesSummaryCompleteEventHandler(RetrieveConsensusSummaryCompletedEventsArgs e);
      public class RetrieveConsensusSummaryCompletedEventsArgs : EventArgs
     {

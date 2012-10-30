@@ -881,6 +881,10 @@
           <Parameter Name="FV_SELL" Type="decimal" Mode="In" />
         </Function>
         <Function Name="usp_GetCountryDataForEMMarketData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_GetDataForEMData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+          <Parameter Name="yearList" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cSource" Type="varchar" Mode="In" />
           <Parameter Name="cFiscalType" Type="varchar" Mode="In" />
@@ -1281,6 +1285,10 @@
           <Parameter Name="SECURITY_IDS" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="usp_GetCountryDataForEMMarketData" ReturnType="Collection(ExternalResearchModel.EMSumCountryData)" />
+          <FunctionImport Name="usp_GetDataForEMData" ReturnType="Collection(ExternalResearchModel.EMData)">
+            <Parameter Name="securityIdsList" Mode="In" Type="String" />
+            <Parameter Name="yearList" Mode="In" Type="String" />
+          </FunctionImport>
 
 
 				</EntityContainer>
@@ -1929,6 +1937,15 @@
           <Property Type="String" Name="CountryName" Nullable="false" />
           <Property Type="String" Name="RegionName" Nullable="false" />
           <Property Type="String" Name="Type" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="EMData" >
+          <Property Type="String" Name="IssuerId" Nullable="false" />
+          <Property Type="String" Name="SecurityId" Nullable="false" />
+          <Property Type="String" Name="DataSource" Nullable="false" />
+          <Property Type="Int32" Name="DataId" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" />
+          <Property Type="Int32" Name="DataYear" Nullable="false" />
+          <Property Type="String" Name="DataType" Nullable="false" />
         </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -2698,6 +2715,19 @@
                 <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="RegionName" ColumnName="RegionName" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetDataForEMData" FunctionName="ExternalResearchModel.Store.usp_GetDataForEMData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.EMData">
+                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DataYear" ColumnName="DataYear" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
