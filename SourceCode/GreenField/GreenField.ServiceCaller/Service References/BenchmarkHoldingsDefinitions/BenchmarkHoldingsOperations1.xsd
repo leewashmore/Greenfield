@@ -157,24 +157,39 @@
       <xs:element minOccurs="0" name="BalanceNominal" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="DirtyValuePC" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FairValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ForwardEB_EBITDA" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ForwardPBV" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ForwardPE" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FreecashFlowMargin" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="IndustryName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsoCountryCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MarketCap" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="MarketCapUSD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NetDebtEquity" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NetIncomeGrowthCurrentYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NetIncomeGrowthNextYear" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PortfolioDirtyValuePC" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PortfolioWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="ProprietaryRegionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ROE" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="ReAshEmmModelWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="ReBenchmarkWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="RePortfolioWeight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RevenueGrowthCurrentYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RevenueGrowthNextYear" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="SectorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SecurityThemeCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SubIndustryName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TradingCurrency" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Upside" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PortfolioDetailsData" nillable="true" type="tns:PortfolioDetailsData" />

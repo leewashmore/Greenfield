@@ -157,6 +157,15 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         
         System.Collections.Generic.List<GreenField.DataContracts.TopBenchmarkSecuritiesData> EndRetrieveTopBenchmarkSecuritiesData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveAvailableDatesInPortfolios" +
+            "", ReplyAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveAvailableDatesInPortfolios" +
+            "Response")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveAvailableDatesInPortfolios" +
+            "ServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveAvailableDatesInPortfolios(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<System.DateTime> EndRetrieveAvailableDatesInPortfolios(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHeatMapData", ReplyAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHeatMapDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHeatMapDataServiceFaultFau" +
             "lt", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
@@ -433,6 +442,25 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveAvailableDatesInPortfoliosCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveAvailableDatesInPortfoliosCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<System.DateTime> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<System.DateTime>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveHeatMapDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -576,6 +604,12 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveTopBenchmarkSecuritiesDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveAvailableDatesInPortfoliosDelegate;
+        
+        private EndOperationDelegate onEndRetrieveAvailableDatesInPortfoliosDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveAvailableDatesInPortfoliosCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrieveHeatMapDataDelegate;
         
         private EndOperationDelegate onEndRetrieveHeatMapDataDelegate;
@@ -674,6 +708,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         public event System.EventHandler<RetrieveHoldingsPercentageDataForRegionCompletedEventArgs> RetrieveHoldingsPercentageDataForRegionCompleted;
         
         public event System.EventHandler<RetrieveTopBenchmarkSecuritiesDataCompletedEventArgs> RetrieveTopBenchmarkSecuritiesDataCompleted;
+        
+        public event System.EventHandler<RetrieveAvailableDatesInPortfoliosCompletedEventArgs> RetrieveAvailableDatesInPortfoliosCompleted;
         
         public event System.EventHandler<RetrieveHeatMapDataCompletedEventArgs> RetrieveHeatMapDataCompleted;
         
@@ -1391,6 +1427,50 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveAvailableDatesInPortfolios(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveAvailableDatesInPortfolios(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<System.DateTime> GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.EndRetrieveAvailableDatesInPortfolios(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveAvailableDatesInPortfolios(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveAvailableDatesInPortfolios(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveAvailableDatesInPortfolios(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveAvailableDatesInPortfolios(System.IAsyncResult result) {
+            System.Collections.Generic.List<System.DateTime> retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).EndRetrieveAvailableDatesInPortfolios(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveAvailableDatesInPortfoliosCompleted(object state) {
+            if ((this.RetrieveAvailableDatesInPortfoliosCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveAvailableDatesInPortfoliosCompleted(this, new RetrieveAvailableDatesInPortfoliosCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveAvailableDatesInPortfoliosAsync() {
+            this.RetrieveAvailableDatesInPortfoliosAsync(null);
+        }
+        
+        public void RetrieveAvailableDatesInPortfoliosAsync(object userState) {
+            if ((this.onBeginRetrieveAvailableDatesInPortfoliosDelegate == null)) {
+                this.onBeginRetrieveAvailableDatesInPortfoliosDelegate = new BeginOperationDelegate(this.OnBeginRetrieveAvailableDatesInPortfolios);
+            }
+            if ((this.onEndRetrieveAvailableDatesInPortfoliosDelegate == null)) {
+                this.onEndRetrieveAvailableDatesInPortfoliosDelegate = new EndOperationDelegate(this.OnEndRetrieveAvailableDatesInPortfolios);
+            }
+            if ((this.onRetrieveAvailableDatesInPortfoliosCompletedDelegate == null)) {
+                this.onRetrieveAvailableDatesInPortfoliosCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveAvailableDatesInPortfoliosCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveAvailableDatesInPortfoliosDelegate, null, this.onEndRetrieveAvailableDatesInPortfoliosDelegate, this.onRetrieveAvailableDatesInPortfoliosCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveHeatMapData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveHeatMapData(fundSelectionData, effectiveDate, period, callback, asyncState);
         }
@@ -1823,6 +1903,18 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             public System.Collections.Generic.List<GreenField.DataContracts.TopBenchmarkSecuritiesData> EndRetrieveTopBenchmarkSecuritiesData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.DataContracts.TopBenchmarkSecuritiesData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.TopBenchmarkSecuritiesData>)(base.EndInvoke("RetrieveTopBenchmarkSecuritiesData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveAvailableDatesInPortfolios(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveAvailableDatesInPortfolios", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<System.DateTime> EndRetrieveAvailableDatesInPortfolios(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<System.DateTime> _result = ((System.Collections.Generic.List<System.DateTime>)(base.EndInvoke("RetrieveAvailableDatesInPortfolios", _args, result)));
                 return _result;
             }
             

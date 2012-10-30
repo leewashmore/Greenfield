@@ -92,6 +92,7 @@ namespace GreenField.App.ViewModel
             {
                 BusyIndicatorNotification(true, "Retrieving session information...");
                 manageSessions.GetSession(GetSessionCallbackMethod);
+                                        _dbInteractivity.RetrieveAvailableDatesInPortfolios(RetrieveAvailableDatesInPortfoliosCallbackMethod);
             }
         }
         #endregion
@@ -449,6 +450,50 @@ namespace GreenField.App.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// Stores the list of available Dates For Portfolio
+        /// </summary>
+        private List<DateTime> availableDateList;
+        public List<DateTime> AvailableDateList
+        {
+            get { return availableDateList; }
+            set
+            {
+                availableDateList = value;
+                RaisePropertyChanged(() => this.AvailableDateList);
+                AvailableDateStringList = (from p in availableDateList
+                                           select p.Date.ToShortDateString()).ToList();
+
+            }
+        }
+
+        /// <summary>
+        /// Stores the formatted value of Available dates in portfolio
+        /// </summary>
+        private List<String> availableDateStringList;
+        public List<String> AvailableDateStringList
+        {
+            get { return availableDateStringList; }
+            set
+            {
+                availableDateStringList = value;
+                RaisePropertyChanged(() => this.AvailableDateStringList);
+            }
+        }
+
+        private String selectedEffectiveDateString;
+        public String SelectedEffectiveDateString
+        {
+            get { return selectedEffectiveDateString; }
+            set
+            {
+                selectedEffectiveDateString = value;
+                RaisePropertyChanged(() => this.SelectedEffectiveDateString);
+                SelectedEffectiveDateInfo = Convert.ToDateTime(selectedEffectiveDateString);
+            } 
+        }
+
         #endregion
 
         #region Period Selector
@@ -4052,6 +4097,38 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(logger, methodNamespace);
         }
 
+        /// <summary>
+        /// RetrievePortfolioSelectionData Callback Method
+        /// </summary>
+        /// <param name="result">List of PortfolioSelectionData objects</param>
+        private void RetrieveAvailableDatesInPortfoliosCallbackMethod(List<DateTime> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    AvailableDateList = result.OrderByDescending(o => o.Date).ToList();
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+                if (ShellDataLoadEvent != null)
+                {
+                    ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
         #endregion
 
         #region Helper Methods

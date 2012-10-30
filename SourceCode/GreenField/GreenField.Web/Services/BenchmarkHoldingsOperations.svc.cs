@@ -33,9 +33,46 @@ namespace GreenField.Web.Services
             get
             {
                 if (null == dimensionEntity)
+                {
                     dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+                }
 
                 return dimensionEntity;
+            }
+        }
+
+        /// <summary>
+        /// Returns the cache folder specified in web.config
+        /// </summary>
+        private String cacheFolder;
+        public String CacheFolder
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(cacheFolder))
+                {
+                    cacheFolder = ConfigurationManager.AppSettings["CacheDirectory"];
+                }
+
+                return cacheFolder;
+            }
+        }
+
+        /// <summary>
+        /// Returns the portfolioName from which the available
+        /// dates needs to be found
+        /// </summary>
+        private String portfolioName;
+        public String PortfolioName
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(portfolioName))
+                {
+                    portfolioName = ConfigurationManager.AppSettings["PortfolioName"];
+                }
+
+                return portfolioName;
             }
         }
 
@@ -2565,6 +2602,47 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Retrieve list of dates available in portfolio
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<DateTime> RetrieveAvailableDatesInPortfolios()
+        {
+            try
+            {
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                List<DateTime> availableDateList = new List<DateTime>();
+                FileCacheManager cacheManager = new FileCacheManager(CacheFolder);
+
+                string availableDates = cacheManager["Dates"];
+
+                if (String.IsNullOrEmpty(availableDates))
+                {
+                    List<DateTime?> dateList = GetAvailablePortolioDates();
+                    availableDates = GenerateDateString(dateList);
+                    StoreDateInCache(cacheManager, "Dates", availableDates);
+                }
+
+                availableDateList = GetDateListFromString(availableDates);
+                availableDateList.Sort();
+
+                return availableDateList;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
         #region Heat Map Operation Contract
 
         /// <summary>
@@ -3196,6 +3274,72 @@ namespace GreenField.Web.Services
                 }
             return tempList;
         }
+        #endregion
+
+        #region Helper Methods Portfolio Date Retrieval
+
+        private List<DateTime> GetDateListFromString(string availableDates)
+        {
+            List<DateTime> dateList = new List<DateTime>();
+            string[] dateArr = availableDates.Split(new char[] { ',' });
+
+            foreach (string date in dateArr)
+            {
+                DateTime availableDate = new DateTime();
+
+                bool isDateConverted = DateTime.TryParse(date, out availableDate);
+
+                if (isDateConverted)
+                {
+                    dateList.Add(availableDate);
+                }
+            }
+            return dateList;
+        }
+
+        private List<DateTime?> GetAvailablePortolioDates()
+        {
+            Entities entity = DimensionEntity;
+            List<GF_PORTFOLIO_HOLDINGS> selectedPortfolioDetails = (from p in entity.GF_PORTFOLIO_HOLDINGS
+                                                                    where p.PORTFOLIO_ID == PortfolioName
+                                                                    select p).ToList();
+
+            List<DateTime?> dateList = (from p in selectedPortfolioDetails
+                                        select p.PORTFOLIO_DATE).Distinct().ToList();
+            return dateList;
+        }
+
+        private void StoreDateInCache(FileCacheManager cacheManager, string key, string dateString)
+        {
+            if (cacheManager != null)
+            {
+                cacheManager.SetCacheItem(key, dateString);
+            }
+        }
+
+        private String GenerateDateString(List<DateTime?> dateList)
+        {
+            StringBuilder dateString = new StringBuilder();
+
+            if (dateList != null)
+            {
+                for (int i = 0; i < dateList.Count; i++)
+                {
+                    if (dateList[i].HasValue)
+                    {
+                        dateString.Append(dateList[i].Value.Date.ToShortDateString());
+
+                        if (i < dateList.Count - 1)
+                        {
+                            dateString.Append(",");
+                        }
+                    }
+                }
+            }
+
+            return dateString.ToString();
+        }
+
         #endregion
 
     }

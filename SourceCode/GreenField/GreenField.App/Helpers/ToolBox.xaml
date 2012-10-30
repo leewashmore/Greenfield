@@ -312,12 +312,29 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" 
                                    Width="Auto" Foreground="Black" 
-                                  FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                        <telerik:RadDatePicker x:Name="dpEffectiveDateSelector"
-                                               SelectedValue="{Binding SelectedEffectiveDateInfo, Mode=TwoWay}"                                               
-                                               Style="{StaticResource RadDatePickerStyle}"
-                                               Width="Auto"                                           
-                                               Margin="5,0,0,0"/>
+                                  FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>                       
+                        <telerik:RadComboBox x:Name="cbEffectiveDateSelector"
+                                         ItemsSource="{Binding AvailableDateStringList}"
+                                         SelectedItem="{Binding SelectedEffectiveDateString, Mode=TwoWay}"                                             
+                                         SelectedIndex="0"
+                                         Width="auto" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         Style="{StaticResource RadComboBoxStyle}"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False"
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False"
+                                         >                            
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
                     </StackPanel>
                 </Grid>
 
