@@ -38,7 +38,7 @@
                                  ShowGroupFooters="False"
                                  RowIndicatorVisibility="Collapsed" 
                                  ShowGroupPanel="False" 
-                                 ShowColumnFooters="False" 
+                                 ShowColumnFooters="True" 
                                  AlternationCount="2" 
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  SelectionUnit="FullRow"
@@ -47,23 +47,46 @@
                                  GridLinesVisibility="None">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="Sector" DataMemberBinding="{Binding Entity}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                 TextAlignment="Left" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                 TextAlignment="Left" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Left"
+                                                Footer="Totals">
+                        <telerik:GridViewDataColumn.FooterCellStyle>
+                            <Style TargetType="telerik:GridViewFooterCell">
+                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            </Style>
+                        </telerik:GridViewDataColumn.FooterCellStyle>
+                    </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="Market Value" DataMemberBinding="{Binding MarketValue, StringFormat=\{0:n0\}}"
-                                                 HeaderTextAlignment="Right"
+                                                HeaderTextAlignment="Right"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="MarketValue" ResultFormatString="{}{0:n0}" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="Fund Wt."  TextAlignment="Right" 
                                                 DataMemberBinding="{Binding FundWeight, Converter={StaticResource PercentageValueConverter}}" 
                                                 HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="FundWeight" ResultFormatString="{}{0:n2}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="Benchmark Wt."  HeaderTextAlignment="Right" 
                                                 DataMemberBinding="{Binding BenchmarkWeight, Converter={StaticResource PercentageValueConverter}}" 
                                                 TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="BenchmarkWeight" ResultFormatString="{}{0:n2}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="Active Position"  TextAlignment="Right" 
                                                 DataMemberBinding="{Binding ActivePosition, Converter={StaticResource PercentageValueConverter}}" 
                                                 HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="ActivePosition" ResultFormatString="{}{0:n2}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </telerik:RadBusyIndicator>

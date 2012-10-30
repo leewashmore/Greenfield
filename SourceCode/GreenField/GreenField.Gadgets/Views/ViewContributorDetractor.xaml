@@ -47,7 +47,7 @@
         <Border telerikQuickstart:ThemeAwareBackgroundBehavior.IsEnabled="True">
             <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}"
                                       Style="{StaticResource BusyIndicatorStyle}">
-                
+
                 <!--Grid to display data-->
                 <telerik:RadGridView Name="dgContributorDetractor" 
                                      AutoGenerateColumns="False" 
@@ -58,6 +58,7 @@
                                      IsReadOnly="True" 
                                      ScrollMode="RealTime" 
                                      ShowGroupPanel="False" 
+                                     ShowColumnFooters="True"
                                      CanUserSortColumns="False"
                                      RowIndicatorVisibility="Collapsed" 
                                      ItemsSource="{Binding ContributorDetractorInfo}"
@@ -70,15 +71,36 @@
                         <telerik:GridViewDataColumn x:Name="dgCountryId" Header="Country Id" DataMemberBinding="{Binding SecurityCountryId}" 
                                                      HeaderTextAlignment="Left"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left" 
-                                                    CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
+                                                    CellStyleSelector="{StaticResource GridRowMarkerStyle}" FooterTextAlignment="Left"
+                                                Footer="Totals">
+                            <telerik:GridViewDataColumn.FooterCellStyle>
+                                <Style TargetType="telerik:GridViewFooterCell">
+                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                </Style>
+                            </telerik:GridViewDataColumn.FooterCellStyle>
+                        </telerik:GridViewDataColumn>
                         <telerik:GridViewDataColumn x:Name="dgSecurityName" Header="Security Name" DataMemberBinding="{Binding SecurityName}" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" HeaderTextAlignment="Left" TextAlignment="Left"
                                                      CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgBasisPts" Header="Basis Pts" 
                                                     DataMemberBinding="{Binding SecurityAlpha, Converter={StaticResource basisPointsConverter}}" 
-                                                   TextAlignment="Right" 
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" HeaderTextAlignment="Right"
-                                                     CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
+                                                    TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" HeaderTextAlignment="Right"
+                                                    CellStyleSelector="{StaticResource GridRowMarkerStyle}" FooterTextAlignment="Right">
+                            <telerik:GridViewDataColumn.Footer>
+                                <telerik:AggregateResultsList ItemsSource="{Binding}">
+                                    <telerik:AggregateResultsList.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Converter={StaticResource basisPointsConverter}}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </telerik:AggregateResultsList.ItemTemplate>
+                                </telerik:AggregateResultsList>
+                            </telerik:GridViewDataColumn.Footer>
+                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                <telerik:SumFunction SourceField="SecurityAlpha"/>
+                            </telerik:GridViewDataColumn.AggregateFunctions>
+                        </telerik:GridViewDataColumn>
                         <telerik:GridViewDataColumn x:Name="dgSector" Header="Sector" DataMemberBinding="{Binding SecuritySectorName}"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left"  HeaderTextAlignment="Left"
                                                      CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>

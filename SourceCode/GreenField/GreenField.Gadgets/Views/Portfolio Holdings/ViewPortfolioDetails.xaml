@@ -87,7 +87,7 @@
                                          Filtered="dgPortfolioDetails_Filtered" 
                                          RowIndicatorVisibility="Collapsed" 
                                          UseLayoutRounding="True" 
-                                         ColumnWidth="Auto" ShowColumnFooters="False"
+                                         ColumnWidth="Auto" ShowColumnFooters="True"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          ShowGroupFooters="True"
@@ -135,11 +135,11 @@
                             <telerik:GridViewDataColumn Header="Quantity" UniqueName="Quantity" DataMemberBinding="{Binding BalanceNominal}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Market Value" UniqueName="Market Value" DataMemberBinding="{Binding DirtyValuePC, StringFormat=c}" TextAlignment="Right" 
                                                         HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Model %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
                                                         DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"

@@ -99,7 +99,7 @@
                                          ShowGroupPanel="False" 
                                          UseLayoutRounding="True" 
                                          ShowGroupFooters="True"
-                                         ShowColumnFooters="False" 
+                                         ShowColumnFooters="True" 
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
@@ -109,7 +109,14 @@
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" DataMemberBinding="{Binding Security}" 
                                                         Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        MinWidth="150" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        MinWidth="150" CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Left"
+                                                        Footer="Totals">
+                                <telerik:GridViewDataColumn.FooterCellStyle>
+                                    <Style TargetType="telerik:GridViewFooterCell">
+                                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                    </Style>
+                                </telerik:GridViewDataColumn.FooterCellStyle>
+                            </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" IsFilterable="False"
                                                         DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
                                                         Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"

@@ -103,11 +103,11 @@
                     <telerik:RadExpander.Content>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="50"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Image Source="/GreenField.App;component/Images/AIMS_Logo.jpg"/>
+                            <Grid HorizontalAlignment="Stretch" Background="White">
+                                <Image Source="/GreenField.App;component/Images/AIMS_Logo.jpg" />
                             </Grid>
                             <helpers:ApplicationMenu Grid.Row="1" />
                         </Grid>

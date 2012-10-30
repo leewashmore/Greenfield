@@ -27,7 +27,7 @@
                         <Setter Property="BorderThickness" Value="0,0,0,0"/>
                         <Setter Property="Padding" Value="5,0,3,0"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="Foreground" Value="Black"/>
                         <Setter Property="FontSize" Value="9"/>
@@ -132,18 +132,13 @@
                         <!--CountryID Column-->
                         <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                      HeaderTextAlignment="Left" TextAlignment="Left" UniqueName="CountryId"
-                                                    FooterCellStyle="{Binding GridViewCustomFooterCellStyle}">
+                                                    FooterCellStyle="{Binding GridViewCustomFooterCellStyle}" Footer="Totals">
                             <telerik:GridViewDataColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding CountryId}" Foreground="Black"/>
                                 </DataTemplate>
-                            </telerik:GridViewDataColumn.CellTemplate>
-                            <telerik:GridViewDataColumn.Footer>
-                                <TextBlock Text="Total" FontSize="9" Height="12"/>
-                            </telerik:GridViewDataColumn.Footer>
+                            </telerik:GridViewDataColumn.CellTemplate>                
                         </telerik:GridViewDataColumn>
-
-
                         <!--Totals Column-->
                         <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total" FooterTextAlignment="Right" HeaderTextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 

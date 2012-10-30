@@ -51,8 +51,7 @@
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgcNetIncome"                                                    
                                                     IsFilterable="False" 
-                                                    DataMemberBinding="{Binding NetIncome}" 
-                                                   
+                                                    DataMemberBinding="{Binding NetIncome}"                                                    
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
@@ -65,8 +64,7 @@
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcYear2"                                                     
-                                                    DataMemberBinding="{Binding YEAR2}" 
-                                                    
+                                                    DataMemberBinding="{Binding YEAR2}"                                                     
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -89,8 +87,7 @@
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
 
                         <telerik:GridViewDataColumn x:Name="dgcYear5"                                                    
-                                                    DataMemberBinding="{Binding YEAR5}" 
-                                                    
+                                                    DataMemberBinding="{Binding YEAR5}"                                                     
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"

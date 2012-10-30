@@ -68,8 +68,8 @@
                                                     TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}" >
                             <telerik:GridViewDataColumn.Footer>
-                                <Border> 
-                                    <TextBlock Text="Top 10"/>
+                                <Border>
+                                    <TextBlock Text="Top 10" Style="{StaticResource TextBlockStyle}"/>
                                 </Border>
                             </telerik:GridViewDataColumn.Footer>
                         </telerik:GridViewDataColumn>

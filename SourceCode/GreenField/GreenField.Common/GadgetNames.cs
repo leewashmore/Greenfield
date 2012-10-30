@@ -16,22 +16,14 @@ namespace GreenField.Common
         #region Company
         #region Snapshot
         #region Snapshot Summary
-        public const string SECURITY_OVERVIEW = "Security Overview";
-        //public const string EXTERNAL_RESEARCH_PRICING = "Pricing Information External Research 4.1.3.1 / 4.4.3";
-        public const string INTERNAL_RESEARCH_PRICING_DETAILED = "Targets & Index Weights";
-        //public const string EXTERNAL_RESEARCH_VALUATIONS = "Valuation Information External Research 4.1.3.8 / 4.4.3";
-        public const string HOLDINGS_CHART_EXTENTION = "Chart Extention Holdings";
-        //public const string EXTERNAL_RESEARCH_GROWTH = "Growth Information External Research 4.1.3.9 / 4.4.3";
-        public const string BENCHMARK_RELATIVE_PERFORMANCE = "Relative Performance Benchmarks";
-        //public const string EXTERNAL_RESEARCH_MARGINS = "Margins Information External Research 4.1.3.2 / 4.4.3";
-        public const string EXTERNAL_RESEARCH_BASIC_DATA = "Basic Data";// Information External Research 4.1.4.1";
-        //public const string EXTERNAL_RESEARCH_LEVERAGE_CAPITAL_FINANCIAL_STRENGTH = "Leverage/Capital Structure / Financial Strength External Research 4.1.3.3 / 4.1.3.4 / 4.4.3";
-        public const string PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION_SUMMARY = "Fair Value Composition Summary";
-        //public const string EXTERNAL_RESEARCH_ASSET_QUALITY_CASH_FLOW = "Asset Quality / Cash Flow Information External Research 4.1.3.5 / 4.1.3.6 / 4.4.3";
-        //public const string INTERNAL_RESEARCH_VALUATIONS_DETAILED = "Valuations Detailed Internal Research 5.1.1.2";
-        //public const string EXTERNAL_RESEARCH_PROFITABILITY = "Profitability Information External Research 4.1.3.7 / 4.4.3";
-        public const string INTERNAL_RESEARCH_CONSESUS_ESTIMATE_SUMMARY = "Internal Research Consensus Estimates Summary";
-        public const string GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC = "External Research Gadget with Period Columns COA Specific";
+        public const string SECURITY_OVERVIEW = "Company Overview";
+        public const string INTERNAL_RESEARCH_PRICING_DETAILED = "Holdings and Positioning";
+        public const string HOLDINGS_CHART_EXTENTION = "Trade History";
+        public const string BENCHMARK_RELATIVE_PERFORMANCE = "Relative Performance";
+        public const string EXTERNAL_RESEARCH_BASIC_DATA = "Market Data";
+        public const string PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION_SUMMARY = "Fair Value";
+        public const string INTERNAL_RESEARCH_CONSESUS_ESTIMATE_SUMMARY = "Comparison with Consensus";
+        public const string GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC = "Summary Financials and Valuations";
         #endregion
 
         #region Snapshot company Profile

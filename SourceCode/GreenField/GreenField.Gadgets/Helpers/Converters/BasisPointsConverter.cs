@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Data;
+using Telerik.Windows.Data;
 
 namespace GreenField.Gadgets.Helpers
 {
@@ -18,9 +19,18 @@ namespace GreenField.Gadgets.Helpers
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            Decimal basisPoints = (Decimal)value * 10000;
-            //return basis points with no decimal places
-            return basisPoints.ToString("n0");  
+            if (value is Decimal)
+            {
+                Decimal basisPoints = (Decimal)value * 10000;
+                //return basis points with no decimal places
+                return basisPoints.ToString("n0");
+            }
+            else if (value is AggregateResult)
+            {
+                Decimal basisPoints = (Decimal)((AggregateResult)value).Value * 10000;
+                return basisPoints.ToString("n0");
+            }
+            return value;
         }
 
         /// <summary>

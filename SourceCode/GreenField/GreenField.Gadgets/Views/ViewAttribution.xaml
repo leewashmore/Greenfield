@@ -64,8 +64,7 @@
                                   CanUserSortColumns="True" 
                                   ScrollMode="Deferred"  
                                   RowIndicatorVisibility="Collapsed" 
-                                  ShowGroupPanel="False" 
-                                  telerik:StyleManager.Theme="Metro"
+                                  ShowGroupPanel="False" ShowColumnFooters="True"
                                   UseLayoutRounding="True"                                  
                                   AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                   HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
@@ -95,42 +94,66 @@
                                                  Width="*"    CellStyle="{StaticResource GridViewCellStyle}"
                                                  DataFormatString="{}{0:p2}"
                                                  HeaderTextAlignment="Right"                                                    
-                                                 TextAlignment="Right"/>
+                                                 TextAlignment="Right" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="PortfolioWeight" ResultFormatString="{}{0:p2}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="BENCHMARK WEIGHT" 
                                                 DataMemberBinding="{Binding BenchmarkWeight}"                                                
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                 Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
                                                 DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="BenchmarkWeight" ResultFormatString="{}{0:p2}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="PORTFOLIO RETURN" 
                                                 DataMemberBinding="{Binding PortfolioReturn}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
                                                 DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="PortfolioReturn" ResultFormatString="{}{0:p2}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="BENCHMARK RETURN" 
                                                 DataMemberBinding="{Binding BenchmarkReturn}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
                                                 DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="BenchmarkReturn" ResultFormatString="{}{0:p2}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="ASSET ALLOCATION" 
                                                 DataMemberBinding="{Binding AssetAllocation}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
                                                 DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="AssetAllocation" ResultFormatString="{}{0:p2}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="STOCK SELECTION TOTAL" 
                                                 DataMemberBinding="{Binding StockSelectionTotal}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="*"  CellStyle="{StaticResource GridViewCellStyle}"
                                                 DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="StockSelectionTotal" ResultFormatString="{}{0:p2}%" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
+                    </telerik:GridViewDataColumn>
                 </telerik:RadGridView.Columns>
                 <telerik:RadGridView.SortDescriptors>
                     <telerik:SortDescriptor Member="CountryName"
