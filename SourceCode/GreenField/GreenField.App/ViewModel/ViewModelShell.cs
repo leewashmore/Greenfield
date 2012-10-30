@@ -91,8 +91,7 @@ namespace GreenField.App.ViewModel
             if (manageSessions != null)
             {
                 BusyIndicatorNotification(true, "Retrieving session information...");
-                manageSessions.GetSession(GetSessionCallbackMethod);
-                                        _dbInteractivity.RetrieveAvailableDatesInPortfolios(RetrieveAvailableDatesInPortfoliosCallbackMethod);
+                manageSessions.GetSession(GetSessionCallbackMethod);                                        
             }
         }
         #endregion
@@ -396,6 +395,7 @@ namespace GreenField.App.ViewModel
                         ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                     dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
+                    dbInteractivity.RetrieveAvailableDatesInPortfolios(RetrieveAvailableDatesInPortfoliosCallbackMethod);
                 }
             }
         }
@@ -3909,6 +3909,7 @@ namespace GreenField.App.ViewModel
                     {
                         //BusyIndicatorNotification(true, "Retrieving portfolio selection data...");
                         dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
+                        dbInteractivity.RetrieveAvailableDatesInPortfolios(RetrieveAvailableDatesInPortfoliosCallbackMethod);
                     }
                 }
                 else
@@ -4104,18 +4105,18 @@ namespace GreenField.App.ViewModel
         private void RetrieveAvailableDatesInPortfoliosCallbackMethod(List<DateTime> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     AvailableDateList = result.OrderByDescending(o => o.Date).ToList();
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
                 if (ShellDataLoadEvent != null)
                 {
@@ -4125,9 +4126,9 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion
 
