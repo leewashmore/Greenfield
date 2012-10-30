@@ -1490,7 +1490,7 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 List<DCFDisplayData> result = new List<DCFDisplayData>();
-                decimal cashFlow2020 = Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
+                decimal cashFlow2020 = Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(8).Year)).
                     Select(a => a.FREE_CASH_FLOW).FirstOrDefault());
                 decimal? sustainableROIC = TerminalValueCalculationsData.Select(a => a.SustainableROIC).FirstOrDefault();
                 decimal sustainableDPR = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableDividendPayoutRatio).FirstOrDefault());
@@ -1584,7 +1584,7 @@ namespace GreenField.Gadgets.ViewModels
                 TerminalValueCalculationsDisplayData.Clear();
                 TerminalValueCalculationsDisplayData.AddRange(result);
                 TerminalValuePresent = terminalValuePresent;
-                CalculationParameters.Year9CashFlow = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
+                CalculationParameters.Year9CashFlow = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(8).Year)).
                     Select(a => a.FREE_CASH_FLOW).FirstOrDefault()));
                 CalculationParameters.TerminalGrowthRate = Convert.ToDecimal(TGR);
                 CalculationParameters.Year10DiscountingFactor = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
