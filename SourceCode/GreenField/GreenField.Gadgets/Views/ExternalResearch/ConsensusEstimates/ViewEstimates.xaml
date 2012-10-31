@@ -155,7 +155,7 @@
                                                         DataMemberBinding="{Binding YEAR_ONE}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
-                                    <helpers:ConsensusValuationAmount />
+                                    <helpers:ConsensusValuationAmount  />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgvcYearThree" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"

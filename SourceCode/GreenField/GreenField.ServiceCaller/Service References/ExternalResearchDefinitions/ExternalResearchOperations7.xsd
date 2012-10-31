@@ -198,15 +198,15 @@
       <xs:element minOccurs="0" name="High" type="xs:decimal" />
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Low" type="xs:decimal" />
-      <xs:element minOccurs="0" name="NumberOfEstimates" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfEstimates" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
       <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
       <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
+      <xs:element minOccurs="0" name="StandardDeviation" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Variance" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="YOYGrowth" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YOYGrowth" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ConsensusEstimatesValuations" nillable="true" type="tns:ConsensusEstimatesValuations" />
@@ -252,39 +252,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PortfolioSelectionData" nillable="true" type="tns:PortfolioSelectionData" />
-  <xs:complexType name="ArrayOfEMSummaryMarketSSRData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="EMSummaryMarketSSRData" nillable="true" type="tns:EMSummaryMarketSSRData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfEMSummaryMarketSSRData" nillable="true" type="tns:ArrayOfEMSummaryMarketSSRData" />
-  <xs:complexType name="EMSummaryMarketSSRData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BaseTarget" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CurrAccountY0" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="CurrAccountY1" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="CurrAccountY2" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FxY1Q1" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FxY1Q2" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FxY1Q3" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FxY1Q4" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FxY2Q1" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FxY2Q2" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FxY2Q3" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FxY2Q4" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="GdpY0" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="GdpY1" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="GdpY2" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="InflationY0" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="InflationY1" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="InflationY2" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="StInterestY0" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="StInterestY1" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="StInterestY2" nillable="true" type="xs:decimal" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="EMSummaryMarketSSRData" nillable="true" type="tns:EMSummaryMarketSSRData" />
 </xs:schema>

@@ -99,6 +99,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Active" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="BaseTarget" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrAccountY0" nillable="true" type="xs:decimal" />
@@ -124,6 +125,7 @@
       <xs:element minOccurs="0" name="PECurYearCon" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PENextYear" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PENextYearCon" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ROECurYear" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StInterestY0" nillable="true" type="xs:decimal" />

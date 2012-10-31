@@ -31,22 +31,22 @@ namespace GreenField.DataContracts
         public string PeriodType { get; set; }
 
         [DataMember]
-        public decimal Amount { get; set; }
+        public decimal? Amount { get; set; }
 
         [DataMember]
         public decimal? AshmoreEmmAmount { get; set; }
 
         [DataMember]
-        public int NumberOfEstimates { get; set; }
+        public int? NumberOfEstimates { get; set; }
 
         [DataMember]
-        public decimal High { get; set; }
+        public decimal? High { get; set; }
 
         [DataMember]
-        public decimal Low { get; set; }
+        public decimal? Low { get; set; }
 
         [DataMember]
-        public decimal StandardDeviation { get; set; }
+        public decimal? StandardDeviation { get; set; }
 
         [DataMember]
         public string SourceCurrency { get; set; }
@@ -55,13 +55,13 @@ namespace GreenField.DataContracts
         public string DataSource { get; set; }
 
         [DataMember]
-        public DateTime DataSourceDate { get; set; }
+        public DateTime? DataSourceDate { get; set; }
 
         [DataMember]
         public decimal? Actual { get; set; }
 
         [DataMember]
-        public decimal YOYGrowth { get; set; }
+        public decimal? YOYGrowth { get; set; }
 
         [DataMember]
         public decimal? Variance { get; set; }

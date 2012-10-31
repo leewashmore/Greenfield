@@ -201,6 +201,7 @@
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"   
                                                     IsFilterable="False" 
+                                                    DataFormatString="{}{0:n2}"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcConsensusPer"                                                    
@@ -214,14 +215,16 @@
                                                     DataMemberBinding="{Binding High}" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"     
-                                                     IsFilterable="False" 
+                                                     IsFilterable="False"
+                                                    DataFormatString="{}{0:n2}"                                                            
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcLow"                                                    
                                                     DataMemberBinding="{Binding Low}" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"       
-                                                    IsFilterable="False" 
+                                                    IsFilterable="False"
+                                                    DataFormatString="{}{0:n2}"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcBrokers"                                                    

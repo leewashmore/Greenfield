@@ -56,19 +56,19 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="source"></param>
         /// <param name="selector"></param>
         /// <returns></returns>
-        public static Decimal? ConsensusValuationAmountMethod<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, TResult> selector)
+        public static string ConsensusValuationAmountMethod<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
-            decimal? returnVal = null;
+            string returnVal = null;
             Decimal amount = 0;
             List<string> values = (from i in source
-                                         select Convert.ToString(selector(i)).ToLower()).ToList();
-            
+                                   select Convert.ToString(selector(i)).ToLower()).ToList();
+
             if (values != null && values.Count > 0)
             {
                 amount = decimal.TryParse(values[0], out amount) ? amount : 0;
             }
 
-            returnVal = amount == 0 ? null : (decimal?)amount;
+            returnVal = amount == 0 ? null : Convert.ToDecimal(amount).ToString("N2");
 
             return returnVal;
         }

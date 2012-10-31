@@ -76,7 +76,11 @@
      receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
-    </binding>   
+    </binding>
+    <binding name="ExternalResearchOperations1" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
    </basicHttpBinding>
   </bindings>
 
@@ -128,9 +132,9 @@
     binding="basicHttpBinding" bindingConfiguration="DCFOperations"
     contract="DCFDefinitions.DCFOperations" name="DCFOperations" />
    <endpoint address="http://localhost:59430/Services/ExternalResearchOperations.svc"
-    binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations"
+    binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations1"
     contract="ExternalResearchDefinitions.ExternalResearchOperations"
-    name="ExternalResearchOperations" />   
+    name="ExternalResearchOperations" />
   </client>
 	</system.serviceModel>
 </configuration>

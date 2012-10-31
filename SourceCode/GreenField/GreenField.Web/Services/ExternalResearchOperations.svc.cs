@@ -897,7 +897,7 @@ namespace GreenField.Web.Services
                         }
                         else
                         {
-                            temp.Actual = Convert.ToString(Math.Round(Convert.ToDecimal(data[i].ACTUAL), 2));
+                            temp.Actual = (Math.Round(Convert.ToDecimal(data[i].ACTUAL), 2)).ToString("N");
                         }
                         temp.YOYGrowth = data[i].AMOUNT;
                         temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
@@ -940,7 +940,7 @@ namespace GreenField.Web.Services
             try
             {
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
-                decimal previousYearQuarterAmount;
+                decimal? previousYearQuarterAmount;
                 ExternalResearchEntities entity = new ExternalResearchEntities();
                 GF_SECURITY_BASEVIEW securityData = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == longName).FirstOrDefault();
                 string securityId;

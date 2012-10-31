@@ -8916,15 +8916,7 @@ namespace GreenField.DAL
         /// <param name="aMOUNT_TYPE">Initial value of the AMOUNT_TYPE property.</param>
         /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
         /// <param name="pERIOD_TYPE">Initial value of the PERIOD_TYPE property.</param>
-        /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
-        /// <param name="nUMBER_OF_ESTIMATES">Initial value of the NUMBER_OF_ESTIMATES property.</param>
-        /// <param name="hIGH">Initial value of the HIGH property.</param>
-        /// <param name="lOW">Initial value of the LOW property.</param>
-        /// <param name="sTANDARD_DEVIATION">Initial value of the STANDARD_DEVIATION property.</param>
-        /// <param name="sOURCE_CURRENCY">Initial value of the SOURCE_CURRENCY property.</param>
-        /// <param name="dATA_SOURCE">Initial value of the DATA_SOURCE property.</param>
-        /// <param name="dATA_SOURCE_DATE">Initial value of the DATA_SOURCE_DATE property.</param>
-        public static ConsensusEstimateValuation CreateConsensusEstimateValuation(global::System.String iSSUER_ID, global::System.Int32 eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String period, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE, global::System.Decimal aMOUNT, global::System.Int32 nUMBER_OF_ESTIMATES, global::System.Decimal hIGH, global::System.Decimal lOW, global::System.Decimal sTANDARD_DEVIATION, global::System.String sOURCE_CURRENCY, global::System.String dATA_SOURCE, global::System.DateTime dATA_SOURCE_DATE)
+        public static ConsensusEstimateValuation CreateConsensusEstimateValuation(global::System.String iSSUER_ID, global::System.Int32 eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String period, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE)
         {
             ConsensusEstimateValuation consensusEstimateValuation = new ConsensusEstimateValuation();
             consensusEstimateValuation.ISSUER_ID = iSSUER_ID;
@@ -8934,14 +8926,6 @@ namespace GreenField.DAL
             consensusEstimateValuation.AMOUNT_TYPE = aMOUNT_TYPE;
             consensusEstimateValuation.PERIOD_YEAR = pERIOD_YEAR;
             consensusEstimateValuation.PERIOD_TYPE = pERIOD_TYPE;
-            consensusEstimateValuation.AMOUNT = aMOUNT;
-            consensusEstimateValuation.NUMBER_OF_ESTIMATES = nUMBER_OF_ESTIMATES;
-            consensusEstimateValuation.HIGH = hIGH;
-            consensusEstimateValuation.LOW = lOW;
-            consensusEstimateValuation.STANDARD_DEVIATION = sTANDARD_DEVIATION;
-            consensusEstimateValuation.SOURCE_CURRENCY = sOURCE_CURRENCY;
-            consensusEstimateValuation.DATA_SOURCE = dATA_SOURCE;
-            consensusEstimateValuation.DATA_SOURCE_DATE = dATA_SOURCE_DATE;
             return consensusEstimateValuation;
         }
 
@@ -9119,9 +9103,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Decimal AMOUNT
+        public Nullable<global::System.Decimal> AMOUNT
         {
             get
             {
@@ -9136,8 +9120,8 @@ namespace GreenField.DAL
                 OnAMOUNTChanged();
             }
         }
-        private global::System.Decimal _AMOUNT;
-        partial void OnAMOUNTChanging(global::System.Decimal value);
+        private Nullable<global::System.Decimal> _AMOUNT;
+        partial void OnAMOUNTChanging(Nullable<global::System.Decimal> value);
         partial void OnAMOUNTChanged();
     
         /// <summary>
@@ -9167,9 +9151,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 NUMBER_OF_ESTIMATES
+        public Nullable<global::System.Int32> NUMBER_OF_ESTIMATES
         {
             get
             {
@@ -9184,16 +9168,16 @@ namespace GreenField.DAL
                 OnNUMBER_OF_ESTIMATESChanged();
             }
         }
-        private global::System.Int32 _NUMBER_OF_ESTIMATES;
-        partial void OnNUMBER_OF_ESTIMATESChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _NUMBER_OF_ESTIMATES;
+        partial void OnNUMBER_OF_ESTIMATESChanging(Nullable<global::System.Int32> value);
         partial void OnNUMBER_OF_ESTIMATESChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Decimal HIGH
+        public Nullable<global::System.Decimal> HIGH
         {
             get
             {
@@ -9208,16 +9192,16 @@ namespace GreenField.DAL
                 OnHIGHChanged();
             }
         }
-        private global::System.Decimal _HIGH;
-        partial void OnHIGHChanging(global::System.Decimal value);
+        private Nullable<global::System.Decimal> _HIGH;
+        partial void OnHIGHChanging(Nullable<global::System.Decimal> value);
         partial void OnHIGHChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Decimal LOW
+        public Nullable<global::System.Decimal> LOW
         {
             get
             {
@@ -9232,16 +9216,16 @@ namespace GreenField.DAL
                 OnLOWChanged();
             }
         }
-        private global::System.Decimal _LOW;
-        partial void OnLOWChanging(global::System.Decimal value);
+        private Nullable<global::System.Decimal> _LOW;
+        partial void OnLOWChanging(Nullable<global::System.Decimal> value);
         partial void OnLOWChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Decimal STANDARD_DEVIATION
+        public Nullable<global::System.Decimal> STANDARD_DEVIATION
         {
             get
             {
@@ -9256,14 +9240,14 @@ namespace GreenField.DAL
                 OnSTANDARD_DEVIATIONChanged();
             }
         }
-        private global::System.Decimal _STANDARD_DEVIATION;
-        partial void OnSTANDARD_DEVIATIONChanging(global::System.Decimal value);
+        private Nullable<global::System.Decimal> _STANDARD_DEVIATION;
+        partial void OnSTANDARD_DEVIATIONChanging(Nullable<global::System.Decimal> value);
         partial void OnSTANDARD_DEVIATIONChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String SOURCE_CURRENCY
         {
@@ -9275,7 +9259,7 @@ namespace GreenField.DAL
             {
                 OnSOURCE_CURRENCYChanging(value);
                 ReportPropertyChanging("SOURCE_CURRENCY");
-                _SOURCE_CURRENCY = StructuralObject.SetValidValue(value, false);
+                _SOURCE_CURRENCY = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("SOURCE_CURRENCY");
                 OnSOURCE_CURRENCYChanged();
             }
@@ -9287,7 +9271,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String DATA_SOURCE
         {
@@ -9299,7 +9283,7 @@ namespace GreenField.DAL
             {
                 OnDATA_SOURCEChanging(value);
                 ReportPropertyChanging("DATA_SOURCE");
-                _DATA_SOURCE = StructuralObject.SetValidValue(value, false);
+                _DATA_SOURCE = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("DATA_SOURCE");
                 OnDATA_SOURCEChanged();
             }
@@ -9311,9 +9295,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.DateTime DATA_SOURCE_DATE
+        public Nullable<global::System.DateTime> DATA_SOURCE_DATE
         {
             get
             {
@@ -9328,8 +9312,8 @@ namespace GreenField.DAL
                 OnDATA_SOURCE_DATEChanged();
             }
         }
-        private global::System.DateTime _DATA_SOURCE_DATE;
-        partial void OnDATA_SOURCE_DATEChanging(global::System.DateTime value);
+        private Nullable<global::System.DateTime> _DATA_SOURCE_DATE;
+        partial void OnDATA_SOURCE_DATEChanging(Nullable<global::System.DateTime> value);
         partial void OnDATA_SOURCE_DATEChanged();
     
         /// <summary>

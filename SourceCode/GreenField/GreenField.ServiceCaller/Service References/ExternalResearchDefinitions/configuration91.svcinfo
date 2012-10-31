@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="hesvksy6asut/6G5++FZgzQ9QOM=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="D2DCHuN2n811XdASDmpYcf97HO4=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="basicHttpBinding" name="ExternalResearchOperations2">
+    <bindingConfiguration bindingType="basicHttpBinding" name="ExternalResearchOperations1">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ExternalResearchOperations2</serializedValue>
+          <serializedValue>ExternalResearchOperations1</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -112,7 +112,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="ExternalResearchOperations1" contract="ExternalResearchDefinitions.ExternalResearchOperations" bindingType="basicHttpBinding" address="http://localhost:59430/Services/ExternalResearchOperations.svc" bindingConfiguration="ExternalResearchOperations2">
+    <endpoint name="ExternalResearchOperations" contract="ExternalResearchDefinitions.ExternalResearchOperations" bindingType="basicHttpBinding" address="http://localhost:59430/Services/ExternalResearchOperations.svc" bindingConfiguration="ExternalResearchOperations1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>http://localhost:59430/Services/ExternalResearchOperations.svc</serializedValue>
@@ -124,7 +124,7 @@
           <serializedValue>basicHttpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ExternalResearchOperations2</serializedValue>
+          <serializedValue>ExternalResearchOperations1</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>ExternalResearchDefinitions.ExternalResearchOperations</serializedValue>
@@ -187,7 +187,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ExternalResearchOperations1</serializedValue>
+          <serializedValue>ExternalResearchOperations</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
