@@ -22,6 +22,7 @@
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                 <telerik:RadGridView Name="dgAssetAllocation" AutoGenerateColumns="False" ItemsSource="{Binding AssetAllocationData}" 
                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False"
+                                     FrozenColumnsSplitterVisibility="Collapsed"
                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"                                                                
                                      AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"

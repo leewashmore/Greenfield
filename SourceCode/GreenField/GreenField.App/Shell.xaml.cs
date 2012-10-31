@@ -36,25 +36,25 @@ namespace GreenField.App
             set
             {
                 this.DataContext = value;
-                value.ShellDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellDataLoadEvent);
-                value.ShellFilterDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellFilterDataLoadEvent);
-                value.ShellSnapshotDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellSnapshotDataLoadEvent);                
+                //value.ShellDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellDataLoadEvent);
+                //value.ShellFilterDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellFilterDataLoadEvent);
+                //value.ShellSnapshotDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellSnapshotDataLoadEvent);                
             }
         }
 
-        void dataContextSource_ShellSnapshotDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            this.ctrToolBox.snapshotBusyIndicator.IsBusy = e.ShowBusy;
-        }
+        //void dataContextSource_ShellSnapshotDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        //{
+        //    this.ctrToolBox.snapshotBusyIndicator.IsBusy = e.ShowBusy;
+        //}
 
-        void dataContextSource_ShellFilterDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            this.ctrToolBox.filterBusyIndicator.IsBusy = e.ShowBusy;
-        }       
+        //void dataContextSource_ShellFilterDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        //{
+        //    this.ctrToolBox.filterBusyIndicator.IsBusy = e.ShowBusy;
+        //}       
 
-        void dataContextSource_ShellDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            this.gridBusyIndicator.IsBusy = e.ShowBusy;
-        }        
+        //void dataContextSource_ShellDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        //{
+        //    this.gridBusyIndicator.IsBusy = e.ShowBusy;
+        //}        
     }
 }

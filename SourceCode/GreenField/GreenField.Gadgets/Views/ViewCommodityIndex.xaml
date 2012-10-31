@@ -38,6 +38,7 @@
             <Grid Grid.Row="1">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadGridView Name="dgCommodity" 
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                      AutoGenerateColumns="false" 
                                      ItemsSource="{Binding CommodityData}" 
                                      CanUserSelect="False" 

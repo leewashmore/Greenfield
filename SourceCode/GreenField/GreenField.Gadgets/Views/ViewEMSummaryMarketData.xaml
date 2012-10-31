@@ -17,6 +17,7 @@
     <Grid x:Name="LayoutRoot" Background="White">
         <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" Grid.Row="0" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
             <telerik:RadGridView  Name="dgEMSummaryMarketData"
+                                  FrozenColumnsSplitterVisibility="Collapsed"
                                   ItemsSource="{Binding EmSummaryMarketDataInfo}"
                                   AutoGenerateColumns="False"                                                                 
                                   CanUserReorderColumns="False"                                   

@@ -60,6 +60,7 @@
                 <telerik:RadGridView x:Name="dgDCFSummary" 
                                          ShowGroupPanel="False" 
                                          AutoGenerateColumns="False" 
+                                     FrozenColumnsSplitterVisibility="Collapsed"
                                          ItemsSource="{Binding SummaryDisplayData}"
                                          CanUserFreezeColumns="False" 
                                          CanUserDeleteRows="False"

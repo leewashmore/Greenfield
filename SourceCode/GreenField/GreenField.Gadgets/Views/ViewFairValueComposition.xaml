@@ -60,6 +60,7 @@
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadGridView Name="dgFairValueComposition" 
                                      AutoGenerateColumns="false" 
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                      ItemsSource="{Binding FairValueCompositionData, Mode=TwoWay}" 
                                      CanUserSelect="False" 
                                      CanUserReorderColumns="False" 

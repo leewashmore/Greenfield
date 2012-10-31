@@ -198,7 +198,6 @@
                                    FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadComboBox x:Name="cbGadgetSelector"
                                              ItemsSource="{Binding GadgetSelectorInfo}"
-                                             DisplayMemberPath="DisplayName"
                                              SelectedItem="{Binding SelectedGadgetInfo, Mode=TwoWay}"
                                              Text="{Binding GadgetSearchText, Mode=TwoWay}"
                                              EmptyText="Search Gadget..." 
@@ -219,6 +218,13 @@
                                     <VirtualizingStackPanel />
                                 </ItemsPanelTemplate>
                             </telerik:RadComboBox.ItemsPanel>
+                            <telerik:RadComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" MinWidth="460" >
+                                        <TextBlock Text="{Binding DisplayName}" Style="{StaticResource TextBlockStyle}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:RadComboBox.ItemTemplate>
                         </telerik:RadComboBox>
                         <telerik:RadButton Name="btnSaveDashboardPreference" VerticalAlignment="Center" 
                                            HorizontalAlignment="Left" Width="Auto"  Height="20"
@@ -400,13 +406,10 @@
 
                 <!--Value Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding FilterValueVisibility}" Grid.Column="6">
-                    <telerik:RadBusyIndicator x:Name="filterBusyIndicator"                                  
-                              BusyContent="{Binding BusyIndicatorContent}" telerik:StyleManager.Theme="Metro"
-                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <TextBlock Text="Value" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Value" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
                                         Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                            <telerik:RadComboBox x:Name="cbValueSelector"
+                        <telerik:RadComboBox x:Name="cbValueSelector"
                                          EmptyText="Select Value..." 
                                          ItemsSource="{Binding FilterSelectorInfo}"
                                          DisplayMemberPath="FilterValues"
@@ -423,14 +426,13 @@
                                          StaysOpenOnEdit="True"
                                          TextOptions.TextHintingMode="Fixed"
                                          IsTextSearchEnabled="False">
-                                <telerik:RadComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel />
-                                    </ItemsPanelTemplate>
-                                </telerik:RadComboBox.ItemsPanel>
-                            </telerik:RadComboBox>
-                        </StackPanel>
-                    </telerik:RadBusyIndicator>
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
+                    </StackPanel>
                 </Grid>
 
                 <!--NodeName Selector-->
@@ -570,11 +572,10 @@
 
                 <!--Snapshot Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding SnapshotSelectorVisibility}" Grid.Column="13">
-                    <telerik:RadBusyIndicator x:Name="snapshotBusyIndicator" Style="{StaticResource BusyIndicatorStyle}" BusyContent="{Binding BusyIndicatorContent}" DisplayAfter="0"  IsIndeterminate="True">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <TextBlock Text="Snapshot" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Snapshot" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
                                        Style="{StaticResource TextBlockStyle}" FontFamily="Arial" FontWeight="Bold"/>
-                            <telerik:RadComboBox ItemsSource="{Binding MarketSnapshotSelectorInfo}"
+                        <telerik:RadComboBox ItemsSource="{Binding MarketSnapshotSelectorInfo}"
                                                  SelectedItem="{Binding SelectedMarketSnapshotSelectionInfo, Mode=TwoWay}"
                                                  Text="{Binding MarketPerformanceSnapshotSearchText, Mode=TwoWay}"
                                                  DisplayMemberPath="SnapshotName"      
@@ -594,28 +595,27 @@
                                                  IsTextSearchEnabled="False"
                                                  IsEditable="True" 
                                                  IsFilteringEnabled="True"/>
-                            <telerik:RadButton Name="btnSaveMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto"  Height="20"
+                        <telerik:RadButton Name="btnSaveMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto"  Height="20"
                                                Margin="2,0,0,0" ToolTipService.ToolTip="Save" Command="{Binding MarketSnapshotSaveCommand}"
                                                Style="{StaticResource RadButtonStyle}">
-                                <Image Source="/GreenField.App;component/Images/SaveSnapshot.png" Stretch="Fill"/>
-                            </telerik:RadButton>
-                            <telerik:RadButton Name="btnSaveAsMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="20"
+                            <Image Source="/GreenField.App;component/Images/SaveSnapshot.png" Stretch="Fill"/>
+                        </telerik:RadButton>
+                        <telerik:RadButton Name="btnSaveAsMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="20"
                                     Margin="2,0,0,0" ToolTipService.ToolTip="Save As" Command="{Binding MarketSnapshotSaveAsCommand}"
                                     Style="{StaticResource RadButtonStyle}">
-                                <Image Source="/GreenField.App;component/Images/SaveAsSnapshot.png" Stretch="Fill"/>
-                            </telerik:RadButton>
-                            <telerik:RadButton Name="btnAddNewMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="20" 
+                            <Image Source="/GreenField.App;component/Images/SaveAsSnapshot.png" Stretch="Fill"/>
+                        </telerik:RadButton>
+                        <telerik:RadButton Name="btnAddNewMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="20" 
                                                Margin="2,0,0,0" ToolTipService.ToolTip="Add New" Command="{Binding MarketSnapshotAddCommand}"
                                                Style="{StaticResource RadButtonStyle}">
-                                <Image Source="/GreenField.App;component/Images/AddSnapshot.png" Stretch="Fill"/>
-                            </telerik:RadButton>
-                            <telerik:RadButton Name="btnDeleteMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="20"
+                            <Image Source="/GreenField.App;component/Images/AddSnapshot.png" Stretch="Fill"/>
+                        </telerik:RadButton>
+                        <telerik:RadButton Name="btnDeleteMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="20"
                                     Margin="2,0,0,0" ToolTipService.ToolTip="Delete" Command="{Binding MarketSnapshotRemoveCommand}"
                                     Style="{StaticResource RadButtonStyle}">
-                                <Image Source="/GreenField.App;component/Images/RemoveSnapshot.png" Stretch="Fill"/>
-                            </telerik:RadButton>
-                        </StackPanel>
-                    </telerik:RadBusyIndicator>
+                            <Image Source="/GreenField.App;component/Images/RemoveSnapshot.png" Stretch="Fill"/>
+                        </telerik:RadButton>
+                    </StackPanel>
                 </Grid>
 
             </Grid>

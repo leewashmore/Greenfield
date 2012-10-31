@@ -58,7 +58,7 @@
             <telerik:RadGridView x:Name="dgRelativePerformanceUI" 
                                  ItemsSource="{Binding RelativePerformanceReturnData}" 
                                  AutoGenerateColumns="False" 
-                                 CanUserSelect="False" 
+                                 CanUserSelect="False" FrozenColumnsSplitterVisibility="Collapsed"
                                  CanUserReorderColumns="False" 
                                  CanUserInsertRows="False" ColumnWidth="*"                                 
                                  CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"

@@ -167,7 +167,7 @@
 
                 <!--grid containing data for the gadget-->
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                    <telerik:RadGridView Name="dgPRevenue" 
+                    <telerik:RadGridView Name="dgPRevenue" FrozenColumnsSplitterVisibility="Collapsed"
                                          Background="{StaticResource GridView_GridLinesItemBorder}"
                                          AutoGenerateColumns="False" 
                                          AlternationCount="2"                                         

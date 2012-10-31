@@ -40,6 +40,7 @@
             <Grid Grid.Row="1">
                 <!--grid containing data for the gadget-->
                 <telerik:RadGridView Name="dgTopHoldings" 
+                                     FrozenColumnsSplitterVisibility="Collapsed"
                                      AutoGenerateColumns="False" 
                                      ItemsSource="{Binding TopHoldingsInfo}" 
                                      CanUserSelect="False" 

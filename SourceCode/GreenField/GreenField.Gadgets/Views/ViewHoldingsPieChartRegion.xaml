@@ -87,7 +87,7 @@
                         <telerik:RadGridView Name="dgHoldingsPercentageRegion" AutoGenerateColumns="False" Visibility="Collapsed"
                                      ItemsSource="{Binding HoldingsPercentageInfoForRegion}" CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
-                                     CanUserDeleteRows="False" IsReadOnly="True"
+                                     CanUserDeleteRows="False" IsReadOnly="True" FrozenColumnsSplitterVisibility="Collapsed"
                                      CanUserSortColumns="True" ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 
                                      ShowGroupPanel="False"
                                      GridLinesVisibility="None"

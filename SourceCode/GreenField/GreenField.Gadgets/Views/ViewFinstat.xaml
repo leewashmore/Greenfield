@@ -214,6 +214,7 @@
                     <!--grid containing data-->
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" Grid.Row="3">
                         <telerik:RadGridView x:Name="dgFinstat"
+                                             FrozenColumnsSplitterVisibility="Collapsed"
                                  AutoGenerateColumns="False"
                                  ShowColumnFooters="False"
                                  ShowGroupPanel="False"

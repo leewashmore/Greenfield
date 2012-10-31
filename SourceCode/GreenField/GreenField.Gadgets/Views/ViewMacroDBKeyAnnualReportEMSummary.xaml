@@ -76,6 +76,7 @@
                                               DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                 <telerik:RadGridView Name="dgMacroDBKeyReport" 
+                                     FrozenColumnsSplitterVisibility="Collapsed"
                                      AutoGenerateColumns="False"                                     
                                      CanUserSelect="False" 
                                      CanUserReorderColumns="False" 

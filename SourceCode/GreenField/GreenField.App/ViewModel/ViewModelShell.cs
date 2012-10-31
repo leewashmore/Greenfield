@@ -1,33 +1,26 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Input;
-using System.ComponentModel.Composition;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Prism.ViewModel;
-using Microsoft.Practices.Prism.Commands;
-using System.Windows.Browser;
-using GreenField.Common;
-using GreenField.ServiceCaller;
-using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
+using System.Linq;
+using System.Windows;
+using System.Windows.Browser;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.Gadgets.Views;
-using System.Windows.Data;
-using System.Collections.ObjectModel;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.App.Models;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Common.Helper;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.ViewModel;
 using GreenField.App.Helpers;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
-using GreenField.ServiceCaller.PerformanceDefinitions;
-using Telerik.Windows.Controls;
-using GreenField.ServiceCaller.ModelFXDefinitions;
-using GreenField.DataContracts;
-using GreenField.UserSession;
-using GreenField.DashBoardModule.Helpers;
+using GreenField.Common;
+using GreenField.Common.Helper;
 using GreenField.DashboardModule.Helpers;
+using GreenField.DataContracts;
+using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Views;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.UserSession;
 
 namespace GreenField.App.ViewModel
 {
@@ -62,6 +55,8 @@ namespace GreenField.App.ViewModel
         /// Service caller instance
         /// </summary>
         private IDBInteractivity dbInteractivity;
+
+        private Int32 activeCallCount = 0;
         #endregion
 
         #region Constructor
@@ -141,7 +136,7 @@ namespace GreenField.App.ViewModel
                 roleIsIC = value;
                 RaisePropertyChanged(() => this.RoleIsIC);
             }
-        } 
+        }
         #endregion
 
         #region Application Menu
@@ -157,8 +152,8 @@ namespace GreenField.App.ViewModel
                 isApplicationMenuExpanded = value;
                 RaisePropertyChanged(() => this.IsApplicationMenuExpanded);
             }
-        } 
-        #endregion        
+        }
+        #endregion
 
         #region Payload
         /// <summary>
@@ -279,13 +274,9 @@ namespace GreenField.App.ViewModel
             {
                 securitySelectorVisibility = value;
                 RaisePropertyChanged(() => this.SecuritySelectorVisibility);
-                if (value == Visibility.Visible && EntitySelectionInfo == null)
+                if (value == Visibility.Visible && (EntitySelectionInfo == null || EntitySelectionInfo.Count == 0))
                 {
-                    BusyIndicatorContent = "Retrieving Security selection data...";
-                    if (ShellDataLoadEvent != null)
-                    {
-                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    }
+                    BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
                 }
             }
@@ -341,11 +332,7 @@ namespace GreenField.App.ViewModel
                         eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
                         if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
                         {
-                            BusyIndicatorContent = "Retrieving...";
-                            if (ShellFilterDataLoadEvent != null)
-                            {
-                                ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                            }
+                            BusyIndicatorNotification(true, "Retrieving reference data...");
                             dbInteractivity.RetrieveFilterSelectionData(value, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                         }
                     }
@@ -389,12 +376,9 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.PortfolioSelectorVisibility);
                 if (value == Visibility.Visible && PortfolioSelectionInfo == null)
                 {
-                    BusyIndicatorContent = "Retrieving Portfolio selection data...";
-                    if (ShellDataLoadEvent != null)
-                    {
-                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    }
+                    BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
+                    BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveAvailableDatesInPortfolios(RetrieveAvailableDatesInPortfoliosCallbackMethod);
                 }
             }
@@ -408,10 +392,7 @@ namespace GreenField.App.ViewModel
         private DateTime? selectedEffectiveDateInfo = DateTime.Today.AddDays(-1).Date;
         public DateTime? SelectedEffectiveDateInfo
         {
-            get
-            {
-                return selectedEffectiveDateInfo;
-            }
+            get { return selectedEffectiveDateInfo; }
             set
             {
                 selectedEffectiveDateInfo = value;
@@ -422,11 +403,7 @@ namespace GreenField.App.ViewModel
                     eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
                     if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
                     {
-                        BusyIndicatorContent = "Retrieving...";
-                        if (ShellFilterDataLoadEvent != null)
-                        {
-                            ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        }
+                        BusyIndicatorNotification(true, "Retrieving reference data...");
                         dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, value, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
@@ -519,7 +496,6 @@ namespace GreenField.App.ViewModel
             {
                 periodSelectorVisibility = value;
                 RaisePropertyChanged(() => this.PeriodSelectorVisibility);
-
             }
         }
 
@@ -621,8 +597,11 @@ namespace GreenField.App.ViewModel
             {
                 regionFXSelectorVisibility = value;
                 RaisePropertyChanged(() => this.RegionFXSelectorVisibility);
-                if (value == Visibility.Visible && RegionTypeInfo == null)
+                if (value == Visibility.Visible && RegionTypeInfo == null && dbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveRegionSelectionData(RetrieveRegionSelectionCallbackMethod);
+                }
             }
         }
         #endregion
@@ -733,8 +712,11 @@ namespace GreenField.App.ViewModel
             {
                 countrySelectorVisibility = value;
                 RaisePropertyChanged(() => this.CountrySelectorVisibility);
-                if (value == Visibility.Visible && CountryTypeInfo == null)
+                if (value == Visibility.Visible && CountryTypeInfo == null && dbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
+                }
 
             }
         }
@@ -824,8 +806,11 @@ namespace GreenField.App.ViewModel
             {
                 commoditySelectorVisibilty = value;
                 RaisePropertyChanged(() => this.CommoditySelectorVisibility);
-                if (value == Visibility.Visible && CommodityTypeInfo == null)
+                if (value == Visibility.Visible && CommodityTypeInfo == null && dbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveCommoditySelectionData(RetrieveFXCommoditySelectionCallbackMethod);
+                }
             }
         }
         #endregion
@@ -954,13 +939,8 @@ namespace GreenField.App.ViewModel
                 {
                     if (dbInteractivity != null && SelectedEffectiveDateInfo != null)
                     {
-                        BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
-                        if (ShellFilterDataLoadEvent != null)
-                        {
-                            ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        }
+                        BusyIndicatorNotification(true, "Retrieving reference data...");
                         dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
-
                     }
                 }
             }
@@ -977,7 +957,6 @@ namespace GreenField.App.ViewModel
             {
                 filterValueVisibility = value;
                 RaisePropertyChanged(() => this.FilterValueVisibility);
-
             }
         }
 
@@ -1158,7 +1137,6 @@ namespace GreenField.App.ViewModel
             {
                 nodeSelectorVisibility = value;
                 RaisePropertyChanged(() => this.NodeSelectorVisibility);
-
             }
         }
 
@@ -1193,10 +1171,7 @@ namespace GreenField.App.ViewModel
         private Visibility lookThruSelectorVisibility = Visibility.Collapsed;
         public Visibility LookThruSelectorVisibility
         {
-            get
-            {
-                return lookThruSelectorVisibility;
-            }
+            get { return lookThruSelectorVisibility; }
             set
             {
                 lookThruSelectorVisibility = value;
@@ -1305,7 +1280,7 @@ namespace GreenField.App.ViewModel
                             Type[] argumentTypes = new Type[] { typeof(DashboardGadgetParam) };
                             object[] argumentValues = new object[] { GetDashboardGadgetParam() };
                             Object viewModelObject = TypeResolution.GetNewTypeObject(typeof(ViewModelDCF), argumentTypes, argumentValues);
-                            GadgetInfo gadgetInfo = new GadgetInfo() 
+                            GadgetInfo gadgetInfo = new GadgetInfo()
                             {
                                 DisplayName = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW_ASSUMPTIONS,
                                 ViewType = typeof(ViewAnalysisSummary),
@@ -1353,16 +1328,16 @@ namespace GreenField.App.ViewModel
                                 ViewType = typeof(ViewSensitivityBVPS),
                                 ViewModelType = typeof(ViewModelDCF)
                             };
-                            AddItemToUserDashboard(gadgetInfo, viewModelObject);                            
+                            AddItemToUserDashboard(gadgetInfo, viewModelObject);
                         }
                         else
                         {
-                            AddItemToUserDashboard(value);                            
+                            AddItemToUserDashboard(value);
                         }
                     }
                 }
             }
-        }        
+        }
 
         /// <summary>
         /// Stores search text entered by user - Refines SelectedGadgetInfo based on the text entered
@@ -1405,7 +1380,7 @@ namespace GreenField.App.ViewModel
             }
         }
         #endregion
-        #endregion        
+        #endregion
 
         #region Busy Indicator Notification
         /// <summary>
@@ -1434,8 +1409,8 @@ namespace GreenField.App.ViewModel
                 busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
-        }
-        #endregion        
+        }        
+        #endregion
         #endregion
 
         # region ICommand
@@ -1445,8 +1420,8 @@ namespace GreenField.App.ViewModel
         public ICommand LogOutCommand
         {
             get { return new DelegateCommand<object>(LogOutCommandMethod); }
-        }        
-        
+        }
+
         #region Dashboard
         #region Company
         #region Snapshot
@@ -1563,7 +1538,7 @@ namespace GreenField.App.ViewModel
         {
             get { return new DelegateCommand<object>(DashboardCompanyEstimatesConsensusCommandMethod); }
         }
-        
+
         /// <summary>
         /// DashboardCompanyEstimatesDetailedCommand
         /// </summary>
@@ -1874,7 +1849,7 @@ namespace GreenField.App.ViewModel
             {
                 return new DelegateCommand<object>(MyDashboardCommandMethod);
             }
-        }         
+        }
         #endregion
 
         #region Admin
@@ -1910,7 +1885,7 @@ namespace GreenField.App.ViewModel
             {
                 return new DelegateCommand<object>(RoleManagementCommandMethod);
             }
-        } 
+        }
         #endregion
         #endregion
 
@@ -1985,20 +1960,20 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Event
-        /// <summary>
-        /// event to handle data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler ShellDataLoadEvent;
+        ///// <summary>
+        ///// event to handle data retrieval progress indicator
+        ///// </summary>
+        //public event DataRetrievalProgressIndicatorEventHandler ShellDataLoadEvent;
 
-        /// <summary>
-        /// event to handle filter data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler ShellFilterDataLoadEvent;
+        ///// <summary>
+        ///// event to handle filter data retrieval progress indicator
+        ///// </summary>
+        //public event DataRetrievalProgressIndicatorEventHandler ShellFilterDataLoadEvent;
 
-        /// <summary>
-        /// event to handle snapshot selector data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler ShellSnapshotDataLoadEvent;
+        ///// <summary>
+        ///// event to handle snapshot selector data retrieval progress indicator
+        ///// </summary>
+        //public event DataRetrievalProgressIndicatorEventHandler ShellSnapshotDataLoadEvent;
         #endregion
 
         #region Event Handlers
@@ -3863,24 +3838,16 @@ namespace GreenField.App.ViewModel
                             || record == MemberGroups.IC_CHIEF_EXECUTIVE || record == MemberGroups.IC_VOTING_MEMBER
                             || record == MemberGroups.IC_NON_VOTING_MEMBER);
                     }
-
-                    if (dbInteractivity != null)
-                    {
-                        //BusyIndicatorNotification(true, "Retrieving entity selection data...");
-                        dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
-                    }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
-                    //BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
-                //BusyIndicatorNotification();
             }
             finally
             {
@@ -3905,24 +3872,21 @@ namespace GreenField.App.ViewModel
                     Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     EntitySelectionInfo = result.OrderBy(t => t.LongName).ToList();
                     SelectionData.EntitySelectionData = result.OrderBy(t => t.LongName).ToList();
-                    if (dbInteractivity != null)
+                    if(dbInteractivity != null)
                     {
-                        //BusyIndicatorNotification(true, "Retrieving portfolio selection data...");
-                        dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
+                        BusyIndicatorNotification(true, "Retrieving reference data...");
                         dbInteractivity.RetrieveAvailableDatesInPortfolios(RetrieveAvailableDatesInPortfoliosCallbackMethod);
                     }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
-                    //BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
-                //BusyIndicatorNotification();
             }
             finally
             {
@@ -3977,23 +3941,11 @@ namespace GreenField.App.ViewModel
                 if (result != null)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
-                    try
-                    {
-                        MarketSnapshotSelectionInfo = result;
-                    }
-                    catch (Exception ex)
-                    {
-                        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                        Logging.LogException(logger, ex);
-                    }
+                    MarketSnapshotSelectionInfo = result;                    
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
-                }
-                if (ShellSnapshotDataLoadEvent != null)
-                {
-                    ShellSnapshotDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)
@@ -4001,7 +3953,11 @@ namespace GreenField.App.ViewModel
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         /// <summary>
@@ -4014,11 +3970,6 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (ShellFilterDataLoadEvent != null)
-                {
-                    ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                }
-
                 if (result != null)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
@@ -4026,17 +3977,13 @@ namespace GreenField.App.ViewModel
                     if (SelectedFilterType != null)
                     {
                         FilterSelectorInfo = FilterSelectionInfo
-                                        .Where(record => record.Filtertype == SelectedFilterType)
-                                        .ToList();
+                            .Where(record => record.Filtertype == SelectedFilterType)
+                            .ToList();
                     }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
-                }
-                if (ShellDataLoadEvent != null)
-                {
-                    ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)
@@ -4044,7 +3991,11 @@ namespace GreenField.App.ViewModel
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         private void RetrieveCountrySelectionCallbackMethod(List<CountrySelectionData> result)
@@ -4056,7 +4007,6 @@ namespace GreenField.App.ViewModel
                 if (result != null)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
-
                     CountryTypeInfo = result;
                 }
                 else
@@ -4064,13 +4014,16 @@ namespace GreenField.App.ViewModel
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         private void RetrieveRegionSelectionCallbackMethod(List<GreenField.DataContracts.RegionSelectionData> result)
@@ -4089,13 +4042,16 @@ namespace GreenField.App.ViewModel
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         /// <summary>
@@ -4106,7 +4062,6 @@ namespace GreenField.App.ViewModel
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
-
             try
             {
                 if (result != null)
@@ -4117,18 +4072,18 @@ namespace GreenField.App.ViewModel
                 else
                 {
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
-                }
-                if (ShellDataLoadEvent != null)
-                {
-                    ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                }
+                }                
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                BusyIndicatorNotification();
+                Logging.LogEndMethod(logger, methodNamespace);
+            }
         }
         #endregion
 
@@ -4223,11 +4178,7 @@ namespace GreenField.App.ViewModel
             {
                 if (SessionManager.SESSION != null)
                 {
-                    BusyIndicatorNotification(true, "Retrieving Snapshot selection data...");
-                    if (ShellSnapshotDataLoadEvent != null)
-                    {
-                        ShellSnapshotDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    }
+                    BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
                 }
                 else
@@ -4237,11 +4188,7 @@ namespace GreenField.App.ViewModel
                         if (session != null)
                         {
                             SessionManager.SESSION = session;
-                            BusyIndicatorNotification(true, "Retrieving Snapshot selection data...");                            
-                            if (ShellSnapshotDataLoadEvent != null)
-                            {
-                                ShellSnapshotDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                            }
+                            BusyIndicatorNotification(true, "Retrieving reference data...");
                             dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
                         }
                     });
@@ -4251,9 +4198,12 @@ namespace GreenField.App.ViewModel
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
+                BusyIndicatorNotification();
             }
-
-            Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            finally
+            {                
+                Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            }
         }
 
         private void RetrieveFXCommoditySelectionCallbackMethod(List<FXCommodityData> result)
@@ -4277,7 +4227,11 @@ namespace GreenField.App.ViewModel
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         private void AddItemsToRegionSelectorComboBox(List<GreenField.DataContracts.RegionSelectionData> items)
@@ -4285,20 +4239,16 @@ namespace GreenField.App.ViewModel
             if (items != null)
             {
                 RegionItems = new ObservableCollection<RegionDataItem>();
-
                 List<String> regions = (from p in items
                                         select p.Region).Distinct().ToList();
-
                 foreach (string region in regions)
                 {
                     RegionDataItem regionItem = new RegionDataItem(null);
                     regionItem.Name = region;
                     regionItem.DisplayName = region;
-
                     List<RegionSelectionData> selectedCountries = (from p in items
                                                                    where p.Region == region
                                                                    select p).ToList();
-
                     foreach (RegionSelectionData item in selectedCountries)
                     {
                         RegionDataItem country = new RegionDataItem(regionItem)
@@ -4306,10 +4256,8 @@ namespace GreenField.App.ViewModel
                             Name = item.Country,
                             DisplayName = item.CountryNames
                         };
-
                         regionItem.SubCategories.Add(country);
                     }
-
                     RegionItems.Add(regionItem);
                 }
             }
@@ -4351,7 +4299,8 @@ namespace GreenField.App.ViewModel
             {
                 BusyIndicatorContent = message;
             }
-            IsBusyIndicatorBusy = isBusyIndicatorVisible;
+            activeCallCount = isBusyIndicatorVisible ? activeCallCount + 1 : activeCallCount - 1;
+            IsBusyIndicatorBusy = activeCallCount != 0;
         }
         #endregion
 

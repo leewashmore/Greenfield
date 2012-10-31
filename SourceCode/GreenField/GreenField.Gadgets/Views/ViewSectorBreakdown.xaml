@@ -82,6 +82,7 @@
             <!--grid containing data-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadGridView Name="dgSectorBreakdown" 
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                          Background="White"
                                          AutoGenerateColumns="False" 
                                          AlternationCount="2"

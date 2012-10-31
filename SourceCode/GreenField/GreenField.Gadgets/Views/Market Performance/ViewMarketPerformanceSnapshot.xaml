@@ -71,7 +71,7 @@
                                      SelectedItem="{Binding SelectedMarketSnapshotPerformanceInfo, Mode=TwoWay}" CanUserReorderColumns="False" 
                                      CanUserResizeColumns="False" ElementExporting="radGridSnapshot_ElementExporting"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
-                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}" FrozenColumnsSplitterVisibility="Collapsed"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}" EnableRowVirtualization="False"
                                      AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}" GridLinesVisibility="None">
                     <!--context menu on the grid-->

@@ -29,7 +29,7 @@
         </telerik:RadButton>
         <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Grid.Row="1"
                                   Style="{StaticResource BusyIndicatorStyle}">
-            <telerik:RadGridView  Name="dgPerformance"  AutoGenerateColumns="False" 
+            <telerik:RadGridView  Name="dgPerformance"  AutoGenerateColumns="False" FrozenColumnsSplitterVisibility="Collapsed"
                                      ItemsSource="{Binding PerformanceInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True"

@@ -58,6 +58,7 @@
             <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadGridView Name="dgFairValueCompositionSummary" 
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                      AutoGenerateColumns="false" 
                                      ItemsSource="{Binding FairValueCompositionSummaryData}" 
                                      CanUserSelect="False" 

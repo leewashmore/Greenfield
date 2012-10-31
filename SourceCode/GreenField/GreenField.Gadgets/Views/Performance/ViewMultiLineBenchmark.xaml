@@ -144,7 +144,7 @@
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}" Grid.Row="1">
                 <telerik:RadGridView  x:Name="dgBenchmarkUI" AutoGenerateColumns="False"
                                  ItemsSource="{Binding MultiLineBenchmarUIGridData}"  CanUserSelect="True" 
-                                 CanUserReorderColumns="False" 
+                                 CanUserReorderColumns="False" FrozenColumnsSplitterVisibility="Collapsed"
                                  SelectionMode ="Single" SelectionUnit="FullRow" 
                                  CanUserInsertRows="False" AlternationCount="2"
                                  CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="True" 

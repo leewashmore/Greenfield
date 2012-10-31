@@ -46,7 +46,8 @@
         <!--Grid containing data to be displayed in the gadget-->
         <Grid Grid.Row="1">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                    <telerik:RadGridView Name="dgIndexConstituents" 
+                    <telerik:RadGridView Name="dgIndexConstituents" FrozenColumnsSplitterVisibility="Collapsed"
+                                         RowIndicatorVisibility="Collapsed"
                                          ItemsSource="{Binding IndexConstituentsInfo}" 
                                          telerik:StyleManager.Theme="Metro"
                                          ElementExporting="dgIndexConstituents_ElementExporting"

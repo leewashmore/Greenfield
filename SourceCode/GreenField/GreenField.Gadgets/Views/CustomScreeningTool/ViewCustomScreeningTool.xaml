@@ -215,6 +215,7 @@
                 
                 <telerik:RadGridView x:Name="dgCustomSecurity" 
                                      Visibility="{Binding ResultsListVisibility}"
+                                     FrozenColumnsSplitterVisibility="Collapsed"
                                      AutoGenerateColumns="False" 
                                      Grid.Row="1"  
                                      CanUserReorderColumns ="False" 
