@@ -930,11 +930,11 @@ namespace GreenField.Gadgets.Helpers
                     switch (groupItem.GroupDataType)
                     {
                         case PeriodColumnGroupingType.INT:
-                            return ((Int32)groupdata).ToString();
+                            return ((Int32)groupdata).ToString("n");
                         case PeriodColumnGroupingType.DECIMAL:
-                            return (Math.Round((Decimal)groupdata, 2)).ToString();
+                            return (Math.Round((Decimal)groupdata, 2)).ToString("n");
                         case PeriodColumnGroupingType.DECIMAL_PERCENTAGE:
-                            return (Math.Round((Decimal)groupdata, 2)).ToString() + " %";
+                            return (Math.Round((Decimal)groupdata, 2)).ToString("n") + " %";
                         case PeriodColumnGroupingType.SHORT_DATETIME:
                             return ((DateTime)groupdata).ToShortDateString();
                         case PeriodColumnGroupingType.LONG_DATETIME:
@@ -990,13 +990,10 @@ namespace GreenField.Gadgets.Helpers
             if (value == null)
                 return null;
 
-            if (decimals == null)
-                return value.ToString();
-
             Decimal result;
             Int32 decimalPlaces = Convert.ToInt32(decimals);
-            String formattedValue = Decimal.TryParse(value.ToString(), out result) ? String.Format("{0:n" + decimalPlaces.ToString() + "}", result) : value.ToString();            
-
+            String formattedValue = Decimal.TryParse(value.ToString(), out result) ? String.Format("{0:n" + decimalPlaces.ToString() + "}", result) 
+                                                                                       : value.ToString();
             if (percentage == true)
                 formattedValue = formattedValue + " %";
 

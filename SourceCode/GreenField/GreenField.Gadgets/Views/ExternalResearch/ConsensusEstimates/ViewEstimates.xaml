@@ -145,80 +145,77 @@
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}">
                         <telerik:RadGridView.Columns>
-                            <!--<telerik:GridViewDataColumn x:Name="dgvcDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>-->
                             <telerik:GridViewDataColumn x:Name="dgvcSubDataType" Header="Median Estimates in USD(Millions)" HeaderTextAlignment="Left" TextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding SUB_DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" 
                                                         IsFilterable="False" Width="Auto"/>
                             <telerik:GridViewDataColumn x:Name="dgcLeftClick" HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}"
                                                         IsSortable="False" IsFilterable="False"/>
-                            <!--<telerik:GridViewDataColumn x:Name="dgvcYearOne" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" IsVisible="False"  Width="*"/>-->
                             <telerik:GridViewDataColumn x:Name="dgvcYearTwo" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        DataMemberBinding="{Binding YEAR_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataMemberBinding="{Binding YEAR_ONE}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <helpers:ConsensusValuationAmount />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgvcYearThree" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        DataMemberBinding="{Binding YEAR_TWO, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataMemberBinding="{Binding YEAR_TWO}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <helpers:ConsensusValuationAmount />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgvcYearFour" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        DataMemberBinding="{Binding YEAR_THREE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataMemberBinding="{Binding YEAR_THREE}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <helpers:ConsensusValuationAmount />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgvcYearFive" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        DataMemberBinding="{Binding YEAR_FOUR, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataMemberBinding="{Binding YEAR_FOUR}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <helpers:ConsensusValuationAmount />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgvcYearSix" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        DataMemberBinding="{Binding YEAR_FIVE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataMemberBinding="{Binding YEAR_FIVE}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <helpers:ConsensusValuationAmount />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
-                            <!--<telerik:GridViewDataColumn x:Name="dgvcQuarterOne" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding QUARTER_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="*"/>-->
                             <telerik:GridViewDataColumn x:Name="dgvcQuarterTwo" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        DataMemberBinding="{Binding QUARTER_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataMemberBinding="{Binding QUARTER_ONE}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <helpers:ConsensusValuationAmount />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgvcQuarterThree" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        DataMemberBinding="{Binding QUARTER_TWO, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataMemberBinding="{Binding QUARTER_TWO}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <helpers:ConsensusValuationAmount />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgvcQuarterFour" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        DataMemberBinding="{Binding QUARTER_THREE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataMemberBinding="{Binding QUARTER_THREE}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <helpers:ConsensusValuationAmount />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgvcQuarterFive" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        DataMemberBinding="{Binding QUARTER_FOUR, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataMemberBinding="{Binding QUARTER_FOUR}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <helpers:ConsensusValuationAmount />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgvcQuarterSix" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        DataMemberBinding="{Binding QUARTER_FIVE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataMemberBinding="{Binding QUARTER_FIVE}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <helpers:ConsensusValuationAmount />
