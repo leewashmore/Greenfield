@@ -3433,6 +3433,44 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<EMData>("usp_GetDataForEMData", securityIdsListParameter, yearListParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="countryCodes">No Metadata Documentation available.</param>
+        public ObjectResult<FXData> usp_GetCurrencyDataForCountries(global::System.String countryCodes)
+        {
+            ObjectParameter countryCodesParameter;
+            if (countryCodes != null)
+            {
+                countryCodesParameter = new ObjectParameter("countryCodes", countryCodes);
+            }
+            else
+            {
+                countryCodesParameter = new ObjectParameter("countryCodes", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FXData>("usp_GetCurrencyDataForCountries", countryCodesParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="countryCodes">No Metadata Documentation available.</param>
+        public ObjectResult<MacroEMData> usp_GetMacroDataEMSummary(global::System.String countryCodes)
+        {
+            ObjectParameter countryCodesParameter;
+            if (countryCodes != null)
+            {
+                countryCodesParameter = new ObjectParameter("countryCodes", countryCodes);
+            }
+            else
+            {
+                countryCodesParameter = new ObjectParameter("countryCodes", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<MacroEMData>("usp_GetMacroDataEMSummary", countryCodesParameter);
+        }
 
         #endregion
     }
@@ -12131,6 +12169,135 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="FXData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class FXData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FXData object.
+        /// </summary>
+        /// <param name="cOUNTRY_CODE">Initial value of the COUNTRY_CODE property.</param>
+        /// <param name="cURRENCY">Initial value of the CURRENCY property.</param>
+        /// <param name="fX_DATE">Initial value of the FX_DATE property.</param>
+        /// <param name="fX_RATE">Initial value of the FX_RATE property.</param>
+        public static FXData CreateFXData(global::System.String cOUNTRY_CODE, global::System.String cURRENCY, global::System.DateTime fX_DATE, global::System.Decimal fX_RATE)
+        {
+            FXData fXData = new FXData();
+            fXData.COUNTRY_CODE = cOUNTRY_CODE;
+            fXData.CURRENCY = cURRENCY;
+            fXData.FX_DATE = fX_DATE;
+            fXData.FX_RATE = fX_RATE;
+            return fXData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String COUNTRY_CODE
+        {
+            get
+            {
+                return _COUNTRY_CODE;
+            }
+            set
+            {
+                OnCOUNTRY_CODEChanging(value);
+                ReportPropertyChanging("COUNTRY_CODE");
+                _COUNTRY_CODE = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("COUNTRY_CODE");
+                OnCOUNTRY_CODEChanged();
+            }
+        }
+        private global::System.String _COUNTRY_CODE;
+        partial void OnCOUNTRY_CODEChanging(global::System.String value);
+        partial void OnCOUNTRY_CODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CURRENCY
+        {
+            get
+            {
+                return _CURRENCY;
+            }
+            set
+            {
+                OnCURRENCYChanging(value);
+                ReportPropertyChanging("CURRENCY");
+                _CURRENCY = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CURRENCY");
+                OnCURRENCYChanged();
+            }
+        }
+        private global::System.String _CURRENCY;
+        partial void OnCURRENCYChanging(global::System.String value);
+        partial void OnCURRENCYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime FX_DATE
+        {
+            get
+            {
+                return _FX_DATE;
+            }
+            set
+            {
+                OnFX_DATEChanging(value);
+                ReportPropertyChanging("FX_DATE");
+                _FX_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FX_DATE");
+                OnFX_DATEChanged();
+            }
+        }
+        private global::System.DateTime _FX_DATE;
+        partial void OnFX_DATEChanging(global::System.DateTime value);
+        partial void OnFX_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal FX_RATE
+        {
+            get
+            {
+                return _FX_RATE;
+            }
+            set
+            {
+                OnFX_RATEChanging(value);
+                ReportPropertyChanging("FX_RATE");
+                _FX_RATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FX_RATE");
+                OnFX_RATEChanged();
+            }
+        }
+        private global::System.Decimal _FX_RATE;
+        partial void OnFX_RATEChanging(global::System.Decimal value);
+        partial void OnFX_RATEChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="GetBasicData_Result")]
     [DataContractAttribute(IsReference=true)]
     [Serializable()]
@@ -13674,6 +13841,135 @@ namespace GreenField.DAL
         private global::System.Int64 _DOCUMENT_ID;
         partial void OnDOCUMENT_IDChanging(global::System.Int64 value);
         partial void OnDOCUMENT_IDChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="MacroEMData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class MacroEMData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new MacroEMData object.
+        /// </summary>
+        /// <param name="countryCode">Initial value of the CountryCode property.</param>
+        /// <param name="field">Initial value of the Field property.</param>
+        /// <param name="year1">Initial value of the Year1 property.</param>
+        /// <param name="value">Initial value of the Value property.</param>
+        public static MacroEMData CreateMacroEMData(global::System.String countryCode, global::System.String field, global::System.Int32 year1, global::System.Decimal value)
+        {
+            MacroEMData macroEMData = new MacroEMData();
+            macroEMData.CountryCode = countryCode;
+            macroEMData.Field = field;
+            macroEMData.Year1 = year1;
+            macroEMData.Value = value;
+            return macroEMData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CountryCode
+        {
+            get
+            {
+                return _CountryCode;
+            }
+            set
+            {
+                OnCountryCodeChanging(value);
+                ReportPropertyChanging("CountryCode");
+                _CountryCode = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CountryCode");
+                OnCountryCodeChanged();
+            }
+        }
+        private global::System.String _CountryCode;
+        partial void OnCountryCodeChanging(global::System.String value);
+        partial void OnCountryCodeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Field
+        {
+            get
+            {
+                return _Field;
+            }
+            set
+            {
+                OnFieldChanging(value);
+                ReportPropertyChanging("Field");
+                _Field = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Field");
+                OnFieldChanged();
+            }
+        }
+        private global::System.String _Field;
+        partial void OnFieldChanging(global::System.String value);
+        partial void OnFieldChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Year1
+        {
+            get
+            {
+                return _Year1;
+            }
+            set
+            {
+                OnYear1Changing(value);
+                ReportPropertyChanging("Year1");
+                _Year1 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Year1");
+                OnYear1Changed();
+            }
+        }
+        private global::System.Int32 _Year1;
+        partial void OnYear1Changing(global::System.Int32 value);
+        partial void OnYear1Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Value
+        {
+            get
+            {
+                return _Value;
+            }
+            set
+            {
+                OnValueChanging(value);
+                ReportPropertyChanging("Value");
+                _Value = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Value");
+                OnValueChanged();
+            }
+        }
+        private global::System.Decimal _Value;
+        partial void OnValueChanging(global::System.Decimal value);
+        partial void OnValueChanged();
 
         #endregion
     }

@@ -2223,9 +2223,19 @@ namespace GreenField.Web.Services
                 List<EMSumCountryData> countryData = wholeData.Where(t => t.Type == "C").ToList();
                 List<EMSumCountryData> groupData = wholeData.Where(t => t.Type == "G").ToList();
                 List<String> countryCodes = wholeData.Where(t => t.Type == "C").Select(t => t.CountryCode).ToList();
+                String countries = StringBuilder(countryCodes);
+                List<FXData> fxData = research.usp_GetCurrencyDataForCountries(countries).ToList();
+                List<MacroEMData> macroData = research.usp_GetMacroDataEMSummary(countries).ToList();
                 List<EMData> emSummaryData = research.usp_GetDataForEMData(securityIds, yearList).ToList();
                 List<EMSummFinalData> emFinalData = new List<EMSummFinalData>();
-
+                DateTime dateQ1Year1 = new DateTime(DateTime.Now.Year,3,31,0,0,0);
+                DateTime dateQ2Year1 = new DateTime(DateTime.Now.Year, 6, 30,0, 0, 0);
+                DateTime dateQ3Year1 = new DateTime(DateTime.Now.Year, 9, 30, 0, 0, 0);
+                DateTime dateQ4Year1 = new DateTime(DateTime.Now.Year, 12, 31, 0, 0, 0);
+                DateTime dateQ1Year2 = new DateTime(DateTime.Now.Year + 1, 3, 31, 0, 0, 0);
+                DateTime dateQ2Year2 = new DateTime(DateTime.Now.Year + 1, 6, 30, 0, 0, 0);
+                DateTime dateQ3Year2 = new DateTime(DateTime.Now.Year + 1, 9, 30, 0, 0, 0);
+                DateTime dateQ4Year2 = new DateTime(DateTime.Now.Year + 1, 12, 31, 0, 0, 0);
                 foreach (EMSumCountryData row in countryData)
                 {
                     EMSummaryMarketData obj = new EMSummaryMarketData();
@@ -2317,6 +2327,31 @@ namespace GreenField.Web.Services
                     obj.ROECurYear = emFinalData.Where(t => t.DataId == 133 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
                         && t.CountryCode == row.CountryCode)
                         .Select(t => t.HarmonicMean).FirstOrDefault();
+                    obj.FxY1Q1 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
+                        && t.FX_DATE == dateQ1Year1).
+                        Select(t => t.FX_RATE).FirstOrDefault();
+                    obj.FxY1Q2 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
+                        && t.FX_DATE == dateQ2Year1).
+                        Select(t => t.FX_RATE).FirstOrDefault();
+                    obj.FxY1Q3 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
+                        && t.FX_DATE == dateQ3Year1).
+                        Select(t => t.FX_RATE).FirstOrDefault();
+                    obj.FxY1Q4 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
+                        && t.FX_DATE == dateQ4Year1).
+                        Select(t => t.FX_RATE).FirstOrDefault();
+                    obj.FxY2Q1 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
+                        && t.FX_DATE == dateQ1Year2).
+                        Select(t => t.FX_RATE).FirstOrDefault();
+                    obj.FxY2Q2 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
+                        && t.FX_DATE == dateQ2Year2).
+                        Select(t => t.FX_RATE).FirstOrDefault();
+                    obj.FxY2Q3 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
+                        && t.FX_DATE == dateQ3Year2).
+                        Select(t => t.FX_RATE).FirstOrDefault();
+                    obj.FxY2Q4 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
+                        && t.FX_DATE == dateQ4Year2).
+                        Select(t => t.FX_RATE).FirstOrDefault();
+
                     resultList.Add(obj);
                 }
                 foreach (String group in groupData.Select(t => t.CountryName).Distinct())
@@ -2423,7 +2458,7 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        }       
+        }
 
         /// <summary>
         /// Retrieve security Id's according to asecShortNames from GF_SECURITY_BASEVIEW

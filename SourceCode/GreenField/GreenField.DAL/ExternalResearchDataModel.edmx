@@ -881,6 +881,9 @@
           <Parameter Name="FV_SELL" Type="decimal" Mode="In" />
         </Function>
         <Function Name="usp_GetCountryDataForEMMarketData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_GetCurrencyDataForCountries" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="countryCodes" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="usp_GetDataForEMData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
           <Parameter Name="yearList" Type="varchar" Mode="In" />
@@ -905,6 +908,9 @@
           <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
           <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
+        <Function Name="usp_GetMacroDataEMSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="countryCodes" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="usp_GetQuarterlyResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DataId" Type="int" Mode="In" />
@@ -1288,6 +1294,12 @@
           <FunctionImport Name="usp_GetDataForEMData" ReturnType="Collection(ExternalResearchModel.EMData)">
             <Parameter Name="securityIdsList" Mode="In" Type="String" />
             <Parameter Name="yearList" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetCurrencyDataForCountries" ReturnType="Collection(ExternalResearchModel.FXData)">
+          <Parameter Name="countryCodes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetMacroDataEMSummary" ReturnType="Collection(ExternalResearchModel.MacroEMData)">
+            <Parameter Name="countryCodes" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -1946,6 +1958,18 @@
           <Property Type="Decimal" Name="Amount" Nullable="false" />
           <Property Type="Int32" Name="DataYear" Nullable="false" />
           <Property Type="String" Name="DataType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="FXData" >
+          <Property Type="String" Name="COUNTRY_CODE" Nullable="false" />
+          <Property Type="String" Name="CURRENCY" Nullable="false" />
+          <Property Type="DateTime" Name="FX_DATE" Nullable="false" />
+          <Property Type="Decimal" Name="FX_RATE" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="MacroEMData" >
+          <Property Type="String" Name="CountryCode" Nullable="false" />
+          <Property Type="String" Name="Field" Nullable="false" />
+          <Property Type="Int32" Name="Year1" Nullable="false" />
+          <Property Type="Decimal" Name="Value" Nullable="false" />
         </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -2728,6 +2752,26 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="DataYear" ColumnName="DataYear" />
                 <ScalarProperty Name="DataType" ColumnName="DataType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetCurrencyDataForCountries" FunctionName="ExternalResearchModel.Store.usp_GetCurrencyDataForCountries">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.FXData">
+                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="FX_DATE" ColumnName="FX_DATE" />
+                <ScalarProperty Name="FX_RATE" ColumnName="FX_RATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetMacroDataEMSummary" FunctionName="ExternalResearchModel.Store.usp_GetMacroDataEMSummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.MacroEMData">
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="Field" ColumnName="Field" />
+                <ScalarProperty Name="Year1" ColumnName="Year1" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
