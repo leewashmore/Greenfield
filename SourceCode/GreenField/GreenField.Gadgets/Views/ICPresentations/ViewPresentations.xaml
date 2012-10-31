@@ -55,6 +55,7 @@
             <telerik:RadGridView x:Name="dgICPPresentationsList"
                                  ItemsSource="{Binding ICPresentationOverviewInfo}"
                                  Grid.Row="1" Margin="0,2,0,0"
+                                 FrozenColumnsSplitterVisibility="Collapsed"
                                  telerik:StyleManager.Theme="Metro"
                                  CanUserReorderColumns ="False" 
                                  CanUserSelect="True"

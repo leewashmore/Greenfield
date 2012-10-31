@@ -112,6 +112,7 @@
             <Grid Grid.Column="1">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" Grid.Row="1">
                     <telerik:RadGridView x:Name="dgConsensusEstimate"
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                  AutoGenerateColumns="False"
                                  ShowColumnFooters="False"
                                  ShowGroupPanel="False"

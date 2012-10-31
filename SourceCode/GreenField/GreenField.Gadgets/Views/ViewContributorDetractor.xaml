@@ -50,6 +50,7 @@
 
                 <!--Grid to display data-->
                 <telerik:RadGridView Name="dgContributorDetractor" 
+                                     FrozenColumnsSplitterVisibility="Collapsed"
                                      AutoGenerateColumns="False" 
                                      CanUserDeleteRows="False" 
                                      CanUserInsertRows="False" 

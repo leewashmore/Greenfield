@@ -172,6 +172,7 @@
                     <Grid>
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                             <telerik:RadGridView Name="dgScatterGraph" 
+                                                 FrozenColumnsSplitterVisibility="Collapsed"
                                                  AutoGenerateColumns="False" 
                                                  ItemsSource="{Binding RatioComparisonInfo}" 
                                                  CanUserSelect="False"

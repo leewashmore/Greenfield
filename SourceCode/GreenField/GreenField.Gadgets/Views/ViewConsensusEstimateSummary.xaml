@@ -26,6 +26,7 @@
                                            DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                 <telerik:RadGridView Grid.Row="0" Name="dgConsensusEstimatesSummary" 
+                                     FrozenColumnsSplitterVisibility="Collapsed"
                                          AutoGenerateColumns="False" 
                                          ItemsSource="{Binding ConsensusSummaryInfo}"
                                          CanUserSelect="False" 

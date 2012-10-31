@@ -101,7 +101,7 @@
             <Grid x:Name="grdRadGridView" Visibility="Collapsed">
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}" >
-                    <telerik:RadGridView Name="dgChartExtension" AutoGenerateColumns="False"
+                    <telerik:RadGridView Name="dgChartExtension" AutoGenerateColumns="False" FrozenColumnsSplitterVisibility="Collapsed"
                                          ItemsSource="{Binding ChartExtensionPlottedData}"  CanUserSelect="True" CanUserReorderColumns="False" 
                                          SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                          CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="ElementExportingEvent"

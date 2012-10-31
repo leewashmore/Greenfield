@@ -58,6 +58,7 @@
             <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <telerik:RadGridView x:Name="dgTerminalValueCalculations" 
                                          ShowGroupPanel="False" 
+                                     FrozenColumnsSplitterVisibility="Collapsed"
                                          AutoGenerateColumns="False" 
                                          ItemsSource="{Binding TerminalValueCalculationsDisplayData}"
                                          CanUserFreezeColumns="False" 

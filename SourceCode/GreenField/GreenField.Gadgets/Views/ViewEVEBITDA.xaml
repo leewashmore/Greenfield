@@ -169,6 +169,7 @@
                 <!--grid containing data for the gadget-->
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadGridView Name="dgEVEBITDA" 
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                          Background="{StaticResource GridView_GridLinesItemBorder}"
                                          AutoGenerateColumns="False" 
                                          AlternationCount="2"                                         

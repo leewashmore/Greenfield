@@ -61,6 +61,7 @@
                 <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
                     <telerik:RadGridView x:Name="dgDCFSensitivity" 
                                          ShowGroupPanel="False" 
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                          AutoGenerateColumns="False" 
                                          ItemsSource="{Binding SensitivityDisplayData}"
                                          CanUserFreezeColumns="False" 

@@ -151,6 +151,14 @@ namespace GreenField.DashboardModule.Views
         {
             try
             {
+                foreach (RadTileViewItem rtvitem in this.rtvDashboard.Items)
+                {
+                    if ((rtvitem.Header as Telerik.Windows.Controls.HeaderedContentControl).Content as string == param.DashboardTileHeader && 
+                        rtvitem.Content.GetType().Name == param.DashboardTileObject.GetType().Name)
+                    {
+                        return;
+                    }
+                }
                 RadTileViewItem item = new RadTileViewItem();
                 item.RestoredHeight = 300;                
                 item.Header = new Telerik.Windows.Controls.HeaderedContentControl 
@@ -253,6 +261,14 @@ namespace GreenField.DashboardModule.Views
 
         private void InsertGadget(string displayName, string gadgetViewClassName, string gadgetViewModelClassName, int gadgetPosition, object viewModelObject = null, String tileState = "Restored")
         {
+            foreach (RadTileViewItem item in this.rtvDashboard.Items)
+            {
+                if ((item.Header as Telerik.Windows.Controls.HeaderedContentControl).Content as string == displayName &&
+                        item.Content.GetType().Name == gadgetViewClassName)
+                {
+                    return;
+                }
+            }
             RadTileViewItem radTileViewItem = new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl 

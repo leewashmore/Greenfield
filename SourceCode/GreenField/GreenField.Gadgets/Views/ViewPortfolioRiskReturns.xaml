@@ -67,7 +67,7 @@
             <TextBlock Grid.Row="0" Text="Risk/Return" HorizontalAlignment="Center" VerticalAlignment="Top" Height="15"/>
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Grid.Row="1"
                                   Style="{StaticResource BusyIndicatorStyle}">
-                <telerik:RadGridView  Name="dgPortfolioRiskReturn"  AutoGenerateColumns="False" 
+                <telerik:RadGridView  Name="dgPortfolioRiskReturn"  AutoGenerateColumns="False" FrozenColumnsSplitterVisibility="Collapsed"
                                      ItemsSource="{Binding PortfolioRiskReturnPeriodInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True"

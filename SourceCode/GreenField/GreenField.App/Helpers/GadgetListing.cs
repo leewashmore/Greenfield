@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using GreenField.Common;
 using GreenField.Gadgets.ViewModels;
@@ -153,6 +154,7 @@ namespace GreenField.App.Helpers
                     info.Add(new GadgetInfo(GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON, typeof(ViewClosingPriceChart), typeof(ViewModelClosingPriceChart)));
                     info.Add(new GadgetInfo(GadgetNames.SECURITY_REFERENCE_UNREALIZED_GAIN_LOSS, typeof(ViewUnrealizedGainLoss), typeof(ViewModelUnrealizedGainLoss)));
                 }
+                info = info.OrderBy(record => record.DisplayName).ToList();
                 return info;
             }
         }        

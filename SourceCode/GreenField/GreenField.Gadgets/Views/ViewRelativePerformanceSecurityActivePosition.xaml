@@ -32,7 +32,7 @@
             
             <!--grid to display data-->
             <telerik:RadGridView Name="dgRelativePerformance" 
-                                 Grid.Row="1"
+                                 Grid.Row="1" FrozenColumnsSplitterVisibility="Collapsed"
                                  AutoGenerateColumns="False" 
                                  IsFilteringAllowed="True" 
                                  ItemsSource="{Binding RelativePerformanceActivePositionInfo}"

@@ -24,6 +24,7 @@
             
             <!--Radgrid view-->
             <telerik:RadGridView Name="dgRelativePerformance" 
+                                 FrozenColumnsSplitterVisibility="Collapsed"
                                  AutoGenerateColumns="False" 
                                  IsFilteringAllowed="True" 
                                  ItemsSource="{Binding RelativePerformanceActivePositionInfo}"

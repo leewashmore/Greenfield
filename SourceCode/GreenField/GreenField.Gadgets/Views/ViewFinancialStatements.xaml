@@ -177,7 +177,7 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" >
-                                <telerik:RadGridView Name="dgFinancialReport" AutoGenerateColumns="False" 
+                                <telerik:RadGridView Name="dgFinancialReport" AutoGenerateColumns="False" FrozenColumnsSplitterVisibility="Collapsed"
                                                      ItemsSource="{Binding FinancialStatementDisplayInfo}" 
                                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False"
                                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="RealTime"
@@ -271,7 +271,7 @@
                         </Grid>
                         <Grid Grid.Row="2" Visibility="{Binding ExternalResearchVisibility}">
                             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" Grid.Row="1">
-                                <telerik:RadGridView Name="dgFinancialReportExt" AutoGenerateColumns="False"
+                                <telerik:RadGridView Name="dgFinancialReportExt" AutoGenerateColumns="False" FrozenColumnsSplitterVisibility="Collapsed"
                                                      ItemsSource="{Binding FinancialStatementExtDisplayInfo}" 
                                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" 
                                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="RealTime"

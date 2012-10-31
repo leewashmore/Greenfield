@@ -31,6 +31,7 @@
             </telerik:RadButton>
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" Grid.Row="2" Style="{StaticResource BusyIndicatorStyle}"  IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                 <telerik:RadGridView  Name="dgTopTenSecurities"  
+                                      FrozenColumnsSplitterVisibility="Collapsed"
                                      AutoGenerateColumns="False" 
                                      ShowColumnFooters="True"
                                      ItemsSource="{Binding TopBenchmarkSecuritiesInfo}" 

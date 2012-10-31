@@ -304,6 +304,7 @@
                     <Grid x:Name="grdRadGridView" >
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                             <telerik:RadGridView Name="dgCOASpecific" 
+                                                 FrozenColumnsSplitterVisibility="Collapsed"
                                                  AutoGenerateColumns="False"
                                                  CanUserSelect="False" 
                                                  CanUserReorderColumns="False" 

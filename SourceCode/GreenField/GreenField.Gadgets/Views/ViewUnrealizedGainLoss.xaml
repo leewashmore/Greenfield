@@ -230,6 +230,7 @@
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" Style="{StaticResource BusyIndicatorStyle}" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadGridView Name="dgUnrealizedGainLoss"
+                                             FrozenColumnsSplitterVisibility="Collapsed"
                                              AutoGenerateColumns="False"
                                              ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
                                              CanUserDeleteRows="False" IsReadOnly="True"

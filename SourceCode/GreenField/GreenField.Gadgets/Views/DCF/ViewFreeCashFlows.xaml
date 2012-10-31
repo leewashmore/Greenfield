@@ -60,6 +60,7 @@
                                      AutoGenerateColumns="false" 
                                      ItemsSource="{Binding FreeCashFlowsOutputData}" 
                                      CanUserSelect="False" 
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                      CanUserReorderColumns="False" 
                                      CanUserInsertRows="False" 
                                      telerik:StyleManager.Theme="Metro"

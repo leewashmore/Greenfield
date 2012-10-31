@@ -83,7 +83,7 @@
                     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0"
                                               Style="{StaticResource BusyIndicatorStyle}">
                         <telerik:RadGridView Name="dgHoldingsPercentageSector" AutoGenerateColumns="False" Visibility="Collapsed" 
-                                     ItemsSource="{Binding HoldingsPercentageInfo}"
+                                     ItemsSource="{Binding HoldingsPercentageInfo}" FrozenColumnsSplitterVisibility="Collapsed"
                                      CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True"

@@ -79,6 +79,7 @@
                     <telerik:RadGridView x:Name="dgDCFSensitivity" 
                                          ShowGroupPanel="False" 
                                          AutoGenerateColumns="False" 
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                          ItemsSource="{Binding SensitivityBPS}"
                                          CanUserFreezeColumns="False" 
                                          CanUserDeleteRows="False"

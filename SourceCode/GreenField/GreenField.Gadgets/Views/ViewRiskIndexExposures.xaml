@@ -129,6 +129,7 @@
                 <!--grid containing data for the gadget-->
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadGridView Name="dgRelativeRisk" 
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                          Background="White"
                                          AutoGenerateColumns="False" 
                                          AlternationCount="2"

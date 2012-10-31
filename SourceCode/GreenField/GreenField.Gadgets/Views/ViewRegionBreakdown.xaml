@@ -84,6 +84,7 @@
             <!--grid containing data for the gadget-->
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" BorderBrush="#e4e5e5">
                     <telerik:RadGridView Name="dgRegionBreakdown" 
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                          Background="White"
                                          AutoGenerateColumns="False" 
                                          AlternationCount="2"

@@ -79,7 +79,7 @@
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                             <telerik:RadGridView Name="dgPerformanceGadget" AutoGenerateColumns="False"
                                  ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
-                                 CanUserDeleteRows="False" IsReadOnly="True"
+                                 CanUserDeleteRows="False" IsReadOnly="True" FrozenColumnsSplitterVisibility="Collapsed"
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                  Visibility="Visible" 

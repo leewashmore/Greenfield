@@ -57,7 +57,8 @@
         <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Grid.Row="1" Style="{StaticResource BusyIndicatorStyle}">
             <telerik:RadGridView  Name="dgAttribution"  AutoGenerateColumns="False"
                                   ItemsSource="{Binding PeriodAttributionInfo}"                                   
-                                  CanUserReorderColumns="False"                                   
+                                  CanUserReorderColumns="False"   
+                                  FrozenColumnsSplitterVisibility="Collapsed"
                                   CanUserInsertRows="False"                              
                                   CanUserDeleteRows="False" 
                                   IsReadOnly="True"

@@ -618,6 +618,7 @@
                     <!--data grid-->
                     <telerik:RadGridView x:Name="dgSelectedFieldsList"
                                  ItemsSource="{Binding SelectedFieldsDataList}"
+                                         FrozenColumnsSplitterVisibility="Collapsed"
                                  telerik:StyleManager.Theme="Metro"
                                  CanUserReorderColumns ="False" 
                                  CanUserSelect="True"

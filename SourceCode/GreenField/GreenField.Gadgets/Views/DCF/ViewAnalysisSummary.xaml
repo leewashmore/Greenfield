@@ -58,6 +58,7 @@
 
             <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <telerik:RadGridView x:Name="dgDCFAnalysisSummary" 
+                                     FrozenColumnsSplitterVisibility="Collapsed"
                                          ShowGroupPanel="False" 
                                          AutoGenerateColumns="False" 
                                          ItemsSource="{Binding AnalysisSummaryDisplayData}"
