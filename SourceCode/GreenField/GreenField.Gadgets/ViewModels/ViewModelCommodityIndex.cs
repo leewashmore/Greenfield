@@ -73,9 +73,8 @@ namespace GreenField.Gadgets.ViewModels
             }
             if (commodityID != null && IsActive)
             {
-                dbInteractivity.RetrieveCommoditySelectionData(RetrieveCommodityDataCallbackMethod);
-            }
                 CallingWebMethod();
+            }               
         }
         #endregion
 
@@ -147,15 +146,14 @@ namespace GreenField.Gadgets.ViewModels
         #region EventHandler
         public void HandleCommodityReferenceSet(string commodityId)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
+                Logging.LogMethodParameter(logger, methodNamespace, commodityID, 1);
+                commodityID = commodityId;
                 if (commodityID != null && IsActive)
                 {
-                    Logging.LogMethodParameter(logger, methodNamespace, commodityID, 1);
-                    commodityID = commodityId;
                     CallingWebMethod();
                 }
                 else
@@ -168,7 +166,10 @@ namespace GreenField.Gadgets.ViewModels
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+            }
         }
         #endregion
        
@@ -186,12 +187,10 @@ namespace GreenField.Gadgets.ViewModels
                 CommodityGridVisibility = Visibility.Collapsed;
                 if (result != null && result.Count > 0)
                 {
-
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     CommodityGridVisibility = Visibility.Visible;
                     CommodityData = result;
                     RetrieveCommodityDataCompleteEvent(new RetrieveCommodityDataCompleteEventArgs() { CommodityInfo = result });
-
                 }
                 else
                 {
@@ -204,15 +203,18 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
             }
-            finally { IsBusyIndicatorStatus = false; }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally 
+            {
+                IsBusyIndicatorStatus = false;
+                Logging.LogEndMethod(logger, methodNamespace);
+            }            
         }
         #endregion
 
         #region WEB METHOD CALL
         private void CallingWebMethod()
         {
-            if (IsActive)
+            if (IsActive && commodityID != null)
             {
                 dbInteractivity.RetrieveCommodityData(commodityID, RetrieveCommodityDataCallbackMethod);
                 IsBusyIndicatorStatus = true;
