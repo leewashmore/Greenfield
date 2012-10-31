@@ -99,8 +99,7 @@
 
                                         <telerikCharting:ChartArea.AxisY>
                                             <telerikCharting:AxisY AutoRange="True"  
-                                                                   IsZeroBased="False"  
-                                                                   DefaultLabelFormat="#VAL{n1}">
+                                                                   IsZeroBased="False" >
                                                 <telerikCharting:AxisY.AxisStyles>
                                                     <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                 </telerikCharting:AxisY.AxisStyles>
@@ -127,7 +126,7 @@
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="FCF Yield : #Y{p1} "/>
+                                                                      ItemToolTipFormat="FCF Yield : #Y{p2} "/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="PRevenueVal" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -137,7 +136,7 @@
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel"
-                                                                      ItemToolTipFormat="Average : #Y{n1}"/>
+                                                                      ItemToolTipFormat="Average : #Y{n2}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="Average" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -147,7 +146,7 @@
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="StdDev+ : #Y{n1}"/>
+                                                                      ItemToolTipFormat="StdDev+ : #Y{n2}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="StdDevPlus" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -157,7 +156,7 @@
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="StdDev- : #Y{n1}"/>
+                                                                      ItemToolTipFormat="StdDev- : #Y{n2}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="StdDevMinus" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -205,28 +204,28 @@
                                                         TextAlignment="Left"/>
                             <telerik:GridViewDataColumn Header="FCF Yield" 
                                                         DataMemberBinding="{Binding PRevenueVal}"
-                                                        DataFormatString="{}{0:p1}"
+                                                        DataFormatString="{}{0:p2}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Average" 
                                                         DataMemberBinding="{Binding Average}" 
-                                                        DataFormatString="{}{0:n1}" 
+                                                        DataFormatString="{}{0:n2}" 
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="StdDevPlus" 
                                                         DataMemberBinding="{Binding StdDevPlus}" 
-                                                        DataFormatString="{}{0:n1}" 
+                                                        DataFormatString="{}{0:n2}" 
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="StdDevMinus" 
                                                         DataMemberBinding="{Binding StdDevMinus}" 
-                                                        DataFormatString="{}{0:n1}" 
+                                                        DataFormatString="{}{0:n2}" 
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"

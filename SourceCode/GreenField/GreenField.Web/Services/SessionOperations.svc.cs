@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+using System.Resources;
 using System.ServiceModel;
-using System.Text;
 using System.ServiceModel.Activation;
-using GreenField.DataContracts;
 using System.Web;
+using GreenField.DataContracts;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
-using System.Resources;
 
 namespace GreenField.Web.Services
 {
@@ -39,7 +35,7 @@ namespace GreenField.Web.Services
         public Session GetSession()
         {
             try
-            {
+            {               
                 return System.Web.HttpContext.Current.Session["Session"] as Session;
             }
             catch (Exception ex)

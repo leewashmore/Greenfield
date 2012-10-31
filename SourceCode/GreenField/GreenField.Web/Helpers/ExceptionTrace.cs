@@ -36,7 +36,9 @@ namespace GreenField.Web.Helpers
             }
 
             if (userName == null)
-                throw new InvalidOperationException();
+            {
+                userName = "Null";
+            }
 
             loggingOperations.LogToFile("|User[(" + userName.Replace(Environment.NewLine, " ")
                 + ")]|Type[(Exception"

@@ -21,6 +21,7 @@ using GreenField.Gadgets.Views;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.UserSession;
+using System.Reflection;
 
 namespace GreenField.App.ViewModel
 {
@@ -83,6 +84,7 @@ namespace GreenField.App.ViewModel
                 eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Subscribe(HandleMarketPerformanceSnapshotActionCompletionEvent);
                 eventAggregator.GetEvent<ToolboxUpdateEvent>().Subscribe(HandleToolboxUpdateEvent);
             }
+
             if (manageSessions != null)
             {
                 BusyIndicatorNotification(true, "Retrieving session information...");
@@ -115,6 +117,24 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.UserName);
             }
         }
+
+        private String version;
+        public String Version
+        {
+            get 
+            {
+                if (version == null)
+                {
+                    version = GetAssemblyVersion();
+                }
+                return version;                
+            }
+            set
+            {
+                version = value;
+                RaisePropertyChanged(() => this.Version);
+            }
+        }        
 
         private Boolean roleIsICAdmin = false;
         public Boolean RoleIsICAdmin
@@ -4301,6 +4321,21 @@ namespace GreenField.App.ViewModel
             }
             activeCallCount = isBusyIndicatorVisible ? activeCallCount + 1 : activeCallCount - 1;
             IsBusyIndicatorBusy = activeCallCount != 0;
+        }
+
+        private string GetAssemblyVersion()
+        {
+            var assemblyName = new AssemblyName(System.Windows.Application.Current.GetType().Assembly.FullName);
+            if (assemblyName == null)
+            {
+                return string.Empty;
+            }
+            Version v = assemblyName.Version;
+            if (v == null)
+            {
+                return string.Empty;
+            }
+            return v.ToString();
         }
         #endregion
 

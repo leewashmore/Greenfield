@@ -95,7 +95,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.IssueRatioComparisonInfo);
                 MissingSecurityDataNotificationVisibility = value != null
                     ? (value.Count == 1 ? Visibility.Collapsed : Visibility.Visible)
-                    : Visibility.Visible;
+                    : Visibility.Collapsed;
             }
         }
 
