@@ -18,6 +18,9 @@ using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View-Model for Closing Price chart
+    /// </summary>
     public class ViewModelClosingPriceChart : NotificationObject
     {
         /// <summary>

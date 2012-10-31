@@ -206,13 +206,13 @@
                                              HorizontalAlignment="Right" 
                                              TextSearchMode="Contains"
                                              IsTextSearchEnabled="False"
-                                              Style="{StaticResource RadComboBoxStyle}"
+                                             Style="{StaticResource RadComboBoxStyle}"
                                              DropDownOpened="cmbAddSeries_DropDownOpened">
-                            <telerik:RadComboBox.ItemsPanel>
+                            <!--<telerik:RadComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
                                 </ItemsPanelTemplate>
-                            </telerik:RadComboBox.ItemsPanel>
+                            </telerik:RadComboBox.ItemsPanel>-->
                         </telerik:RadComboBox>
                         <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
                 Command="{Binding AddCommand}" Width="20" Height="20" Background="White">
@@ -331,7 +331,7 @@
                                                         TextAlignment="Right"
                                                         DataMemberBinding="{Binding AdjustedDollarPrice,StringFormat=c}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Display Price" DataMemberBinding="{Binding IndexedPrice}" HeaderTextAlignment="Right" 
+                            <telerik:GridViewDataColumn Header="Display Price" DataMemberBinding="{Binding IndexedPrice,StringFormat=c}" HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"
                                                         DataFormatString="{}{0:n4}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
