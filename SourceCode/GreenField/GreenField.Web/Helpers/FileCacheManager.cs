@@ -50,19 +50,7 @@ namespace GreenField.Web.Helpers
         /// <param name="key">key</param>
         /// <param name="value">value</param>
         public void SetCacheItem(string key, string value)
-        {
-            bool cacheFileExists = false;
-
-            //Check if cache file exists
-            if (!File.Exists(CacheFilePath))
-            {
-                cacheFileExists = CreateCacheFile(CacheFilePath);
-            }
-            else
-            {
-                cacheFileExists = true;
-            }
-
+        {           
             AddItemToFile(CacheFilePath, key, value);
         }
 
@@ -146,32 +134,7 @@ namespace GreenField.Web.Helpers
                     cacheFile = null;
                 }
             }
-        }
-
-        private bool CreateCacheFile(string cacheFilePath)
-        {
-            try
-            {
-                if (!String.IsNullOrEmpty(cacheFilePath) && Directory.Exists(Path.GetDirectoryName(cacheFilePath)))
-                {
-                    if (!File.Exists(cacheFilePath))
-                    {
-                        File.Create(cacheFilePath);
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-            catch (UnauthorizedAccessException)
-            {
-                throw;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        }        
 
         /// <summary>
         /// Get Value for the Key
