@@ -2241,6 +2241,8 @@ namespace GreenField.Web.Services
                     EMSummaryMarketData obj = new EMSummaryMarketData();
                     obj.Region = row.RegionName;
                     obj.Country = row.CountryName;
+                    obj.BenchmarkId = benId;
+                    obj.PortfolioDate = lastBusinessDate;
                     if (emBenchData != null)
                     {
                         obj.BenchmarkWeight = emBenchData.Where(t => t.CountryCode == row.CountryCode).Select(t => t.BenWeight)
