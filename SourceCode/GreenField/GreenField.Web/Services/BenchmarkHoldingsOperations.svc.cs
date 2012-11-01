@@ -1265,7 +1265,7 @@ namespace GreenField.Web.Services
             {
                 List<SecurityBaseviewData> securityData = new List<SecurityBaseviewData>();
                 securityData = RetrieveSecurityReferenceData();
-                ExternalResearchEntities entity = new ExternalResearchEntities();
+                ExternalResearchEntities entity = new ExternalResearchEntities() { CommandTimeout = 5000 };
                 List<string> securityNames = portfolioDetailsData.Select(a => a.IssueName).ToList();
                 List<PortfolioDetailsExternalData> externalData = new List<PortfolioDetailsExternalData>();
                 List<FAIR_VALUE> fairValueData = new List<FAIR_VALUE>();

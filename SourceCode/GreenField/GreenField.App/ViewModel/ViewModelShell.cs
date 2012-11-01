@@ -349,12 +349,12 @@ namespace GreenField.App.ViewModel
                     if (value != null)
                     {
                         SelectorPayload.PortfolioSelectionData = value;
-                        eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
                         if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
                         {
                             BusyIndicatorNotification(true, "Retrieving reference data...", false);
                             dbInteractivity.RetrieveFilterSelectionData(value, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                         }
+                        eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);                        
                     }
                 }
             }
@@ -420,12 +420,12 @@ namespace GreenField.App.ViewModel
                 if (value != null)
                 {
                     SelectorPayload.EffectiveDate = Convert.ToDateTime(value);
-                    eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
                     if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving reference data...", false);
                         dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, value, RetrieveFilterSelectionDataCallbackMethod);
                     }
+                    eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));                    
                 }
             }
         }
@@ -873,9 +873,6 @@ namespace GreenField.App.ViewModel
                         SelectorPayload.FilterSelectionData = filterSelData;
                         IsExCashSecurity = false;
                         eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
-                        //this.FilterVisibility = Visibility.Collapsed;
-
-
                     }
                     else
                     {

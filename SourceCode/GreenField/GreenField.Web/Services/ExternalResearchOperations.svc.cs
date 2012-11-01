@@ -1117,7 +1117,7 @@ namespace GreenField.Web.Services
                 List<PRevenueData> result = new List<PRevenueData>();
                 List<GetPRevenueData_Result> resultDB = new List<GetPRevenueData_Result>();
                 List<GetEV_EBITDAData_Result> resultDB_EV_EBITDA = new List<GetEV_EBITDAData_Result>();
-                ExternalResearchEntities extResearch = new ExternalResearchEntities();
+                ExternalResearchEntities extResearch = new ExternalResearchEntities() { CommandTimeout = 5000 };
 
                 if (entitySelectionData == null)
                     return null;

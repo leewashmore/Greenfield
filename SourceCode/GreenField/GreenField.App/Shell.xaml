@@ -99,7 +99,7 @@
                 </Grid.ColumnDefinitions>
 
 
-                <telerik:RadExpander Grid.Column="0" VerticalAlignment="Stretch" Header="AIMS Menu" HorizontalAlignment="Left" FontFamily="Arial" FontSize="10"
+                <telerik:RadExpander Grid.Column="0" VerticalAlignment="Stretch" Header="AIMS Menu" HorizontalAlignment="Left" FontFamily="Arial" FontSize="10" HorizontalHeaderAlignment="Center"
                                      x:Name="menuExpander" ExpandDirection="Right" Background="#dbddda" IsExpanded="{Binding IsApplicationMenuExpanded, Mode=TwoWay}">
                     <telerik:RadExpander.Content>
                         <Grid>
