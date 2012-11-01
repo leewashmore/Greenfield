@@ -188,16 +188,16 @@
   <xs:complexType name="ConsensusEstimatesValuations">
     <xs:sequence>
       <xs:element minOccurs="0" name="Actual" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AshmoreEmmAmount" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DataSourceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DataSourceDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EstimateId" type="xs:int" />
-      <xs:element minOccurs="0" name="High" type="xs:decimal" />
+      <xs:element minOccurs="0" name="High" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Low" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Low" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="NumberOfEstimates" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />

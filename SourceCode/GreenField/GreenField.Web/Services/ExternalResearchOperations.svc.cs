@@ -2294,65 +2294,103 @@ namespace GreenField.Web.Services
                             }
                         }
                     }
-                    obj.PECurYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
-                        && t.CountryCode == row.CountryCode)
-                        .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.PECurYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C" 
-                        && t.CountryCode == row.CountryCode)
-                        .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.PENextYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "W" 
-                        && t.CountryCode == row.CountryCode)
-                        .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.PENextYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "C" 
-                        && t.CountryCode == row.CountryCode)
-                        .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.USDEarCurYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
-                        && t.CountryCode == row.CountryCode)
-                      .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.USDEarCurYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C" 
-                        && t.CountryCode == row.CountryCode)
-                        .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.USDEarNextYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType 
-                        == "W" && t.CountryCode == row.CountryCode)
-                        .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.USDEarNextYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType 
-                        == "C" && t.CountryCode == row.CountryCode)
-                        .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.PBVCurYear = emFinalData.Where(t => t.DataId == 164 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
-                        && t.CountryCode == row.CountryCode)
-                      .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.DYCurYear = emFinalData.Where(t => t.DataId == 192 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
-                        && t.CountryCode == row.CountryCode)
-                        .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.ROECurYear = emFinalData.Where(t => t.DataId == 133 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
-                        && t.CountryCode == row.CountryCode)
-                        .Select(t => t.HarmonicMean).FirstOrDefault();
-                    obj.FxY1Q1 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
-                        && t.FX_DATE == dateQ1Year1).
-                        Select(t => t.FX_RATE).FirstOrDefault();
-                    obj.FxY1Q2 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
-                        && t.FX_DATE == dateQ2Year1).
-                        Select(t => t.FX_RATE).FirstOrDefault();
-                    obj.FxY1Q3 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
-                        && t.FX_DATE == dateQ3Year1).
-                        Select(t => t.FX_RATE).FirstOrDefault();
-                    obj.FxY1Q4 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
-                        && t.FX_DATE == dateQ4Year1).
-                        Select(t => t.FX_RATE).FirstOrDefault();
-                    obj.FxY2Q1 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
-                        && t.FX_DATE == dateQ1Year2).
-                        Select(t => t.FX_RATE).FirstOrDefault();
-                    obj.FxY2Q2 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
-                        && t.FX_DATE == dateQ2Year2).
-                        Select(t => t.FX_RATE).FirstOrDefault();
-                    obj.FxY2Q3 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
-                        && t.FX_DATE == dateQ3Year2).
-                        Select(t => t.FX_RATE).FirstOrDefault();
-                    obj.FxY2Q4 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower() 
-                        && t.FX_DATE == dateQ4Year2).
-                        Select(t => t.FX_RATE).FirstOrDefault();
-
-                    resultList.Add(obj);
+                    if (emFinalData != null)
+                    {
+                        obj.PECurYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
+                            && t.CountryCode == row.CountryCode)
+                            .Select(t => t.HarmonicMean).FirstOrDefault();
+                        obj.PECurYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C"
+                            && t.CountryCode == row.CountryCode)
+                            .Select(t => t.HarmonicMean).FirstOrDefault();
+                        obj.PENextYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "W"
+                            && t.CountryCode == row.CountryCode)
+                            .Select(t => t.HarmonicMean).FirstOrDefault();
+                        obj.PENextYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "C"
+                            && t.CountryCode == row.CountryCode)
+                            .Select(t => t.HarmonicMean).FirstOrDefault();
+                        obj.USDEarCurYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
+                            && t.CountryCode == row.CountryCode)
+                          .Select(t => t.HarmonicMean).FirstOrDefault();
+                        obj.USDEarCurYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C"
+                            && t.CountryCode == row.CountryCode)
+                            .Select(t => t.HarmonicMean).FirstOrDefault();
+                        obj.USDEarNextYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType
+                            == "W" && t.CountryCode == row.CountryCode)
+                            .Select(t => t.HarmonicMean).FirstOrDefault();
+                        obj.USDEarNextYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType
+                            == "C" && t.CountryCode == row.CountryCode)
+                            .Select(t => t.HarmonicMean).FirstOrDefault();
+                        obj.PBVCurYear = emFinalData.Where(t => t.DataId == 164 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
+                            && t.CountryCode == row.CountryCode)
+                          .Select(t => t.HarmonicMean).FirstOrDefault();
+                        obj.DYCurYear = emFinalData.Where(t => t.DataId == 192 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
+                            && t.CountryCode == row.CountryCode)
+                            .Select(t => t.HarmonicMean).FirstOrDefault();
+                        obj.ROECurYear = emFinalData.Where(t => t.DataId == 133 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
+                            && t.CountryCode == row.CountryCode)
+                            .Select(t => t.HarmonicMean).FirstOrDefault();
+                    }
+                    if (fxData != null)
+                    {
+                        obj.FxY1Q1 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                            && t.FX_DATE == dateQ1Year1).
+                            Select(t => t.FX_RATE).FirstOrDefault();
+                        obj.FxY1Q2 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                            && t.FX_DATE == dateQ2Year1).
+                            Select(t => t.FX_RATE).FirstOrDefault();
+                        obj.FxY1Q3 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                            && t.FX_DATE == dateQ3Year1).
+                            Select(t => t.FX_RATE).FirstOrDefault();
+                        obj.FxY1Q4 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                            && t.FX_DATE == dateQ4Year1).
+                            Select(t => t.FX_RATE).FirstOrDefault();
+                        obj.FxY2Q1 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                            && t.FX_DATE == dateQ1Year2).
+                            Select(t => t.FX_RATE).FirstOrDefault();
+                        obj.FxY2Q2 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                            && t.FX_DATE == dateQ2Year2).
+                            Select(t => t.FX_RATE).FirstOrDefault();
+                        obj.FxY2Q3 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                            && t.FX_DATE == dateQ3Year2).
+                            Select(t => t.FX_RATE).FirstOrDefault();
+                        obj.FxY2Q4 = fxData.Where(t => t.COUNTRY_CODE.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                            && t.FX_DATE == dateQ4Year2).
+                            Select(t => t.FX_RATE).FirstOrDefault();
+                    }
+                    if (macroData != null)
+                    {
+                        obj.GdpY0 = macroData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                            && t.Year1 == DateTime.Now.Year - 1 && t.Field.Trim() == "REAL_GDP_GROWTH_RATE")
+                            .Select(t => t.Value).FirstOrDefault();
+                        obj.GdpY1 = macroData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                           && t.Year1 == DateTime.Now.Year && t.Field.Trim() == "REAL_GDP_GROWTH_RATE")
+                           .Select(t => t.Value).FirstOrDefault();
+                        obj.GdpY2 = macroData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                           && t.Year1 == DateTime.Now.Year + 1 && t.Field.Trim() == "REAL_GDP_GROWTH_RATE")
+                           .Select(t => t.Value).FirstOrDefault();
+                        obj.InflationY0 = macroData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                           && t.Year1 == DateTime.Now.Year - 1 && t.Field.Trim() == "INFLATION_PCT")
+                           .Select(t => t.Value).FirstOrDefault();
+                        obj.InflationY1 = macroData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                           && t.Year1 == DateTime.Now.Year && t.Field.Trim() == "INFLATION_PCT")
+                           .Select(t => t.Value).FirstOrDefault();
+                        obj.InflationY2 = macroData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                           && t.Year1 == DateTime.Now.Year + 1 && t.Field.Trim() == "INFLATION_PCT")
+                           .Select(t => t.Value).FirstOrDefault();
+                        obj.StInterestY0 = macroData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                           && t.Year1 == DateTime.Now.Year - 1 && t.Field.Trim() == "ST_INTEREST_RATE")
+                           .Select(t => t.Value).FirstOrDefault();
+                        obj.StInterestY1 = macroData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                           && t.Year1 == DateTime.Now.Year && t.Field.Trim() == "ST_INTEREST_RATE")
+                           .Select(t => t.Value).FirstOrDefault();
+                        obj.CurrAccountY0 = macroData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                           && t.Year1 == DateTime.Now.Year - 1 && t.Field.Trim() == "CURRENT_ACCOUNT_PCT_GDP")
+                           .Select(t => t.Value).FirstOrDefault();
+                        obj.CurrAccountY1 = macroData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()
+                           && t.Year1 == DateTime.Now.Year && t.Field.Trim() == "CURRENT_ACCOUNT_PCT_GDP")
+                           .Select(t => t.Value).FirstOrDefault();
+                        resultList.Add(obj);
+                    }
                 }
                 foreach (String group in groupData.Select(t => t.CountryName).Distinct())
                 {

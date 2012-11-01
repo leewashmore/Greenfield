@@ -59,7 +59,7 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = null;//new ViewEMSummaryMarketData(new ViewModelEMSummaryMarketData(param));
+            this.cctrDashboardContent.Content = null;// new ViewEMSummaryMarketData(new ViewModelEMSummaryMarketData(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

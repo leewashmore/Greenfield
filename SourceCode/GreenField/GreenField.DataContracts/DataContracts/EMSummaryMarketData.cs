@@ -164,12 +164,6 @@ namespace GreenField.DataContracts.DataContracts
         public decimal? StInterestY1 { get; set; }
 
         /// <summary>
-        /// ST Interest rate last year
-        /// </summary>
-        [DataMember]
-        public decimal? StInterestY2 { get; set; }
-
-        /// <summary>
         /// Current Account PCT last year
         /// </summary>
         [DataMember]
@@ -180,11 +174,5 @@ namespace GreenField.DataContracts.DataContracts
         /// </summary>
         [DataMember]
         public decimal? CurrAccountY1 { get; set; }
-
-        /// <summary>
-        /// Current Account PCT last year
-        /// </summary>
-        [DataMember]
-        public decimal? CurrAccountY2 { get; set; }
     }
 }
