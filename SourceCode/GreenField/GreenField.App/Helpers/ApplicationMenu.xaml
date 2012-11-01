@@ -31,8 +31,8 @@
                                                  Command="{Binding DashboardMarketsSnapshotSummaryCommand}" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem x:Name="rmItemmarketPerf" Header="Market Performance" HorizontalAlignment="Stretch"
                                                  Command="{Binding DashboardMarketsSnapshotMarketPerformanceCommand}" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemInternalVModelValuation" Header="Internal Vs Model Valuation" HorizontalAlignment="Stretch"
-                                                 Command="{Binding DashboardMarketsSnapshotInternalModelValuationCommand}" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!--<telerik:RadMenuItem x:Name="rmItemInternalVModelValuation" Header="Internal Vs Model Valuation" HorizontalAlignment="Stretch"
+                                                 Command="{Binding DashboardMarketsSnapshotInternalModelValuationCommand}" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem Header="Macro-Economic" x:Name="rmItemMacroEconomic">
                         <telerik:RadMenuItem x:Name="rmItemEsMSummary" Header="EM Summary" 
@@ -78,15 +78,15 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem x:Name="rmItemModels" Header="Models">
+                    <telerik:RadMenuItem x:Name="rmItemModels" Header="Targeting"> <!--Header="Models"-->
                         <telerik:RadMenuItem Header="Asset Allocation" x:Name="rmItemAssetAllocation"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem Header="Stock Selection" x:Name="rmItemStockSelection"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem Header="Bottom Up" x:Name="rmItemBottomUp"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Direct Overlay" x:Name="rmItemDirectOverlay"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!--<telerik:RadMenuItem Header="Direct Overlay" x:Name="rmItemDirectOverlay"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                     </telerik:RadMenuItem>
                 </telerik:RadMenu>
             </telerik:RadPanelBarItem>
