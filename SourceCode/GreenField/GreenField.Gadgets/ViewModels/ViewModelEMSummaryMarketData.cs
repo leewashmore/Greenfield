@@ -51,7 +51,10 @@ namespace GreenField.Gadgets.ViewModels
         public ViewModelEMSummaryMarketData(DashboardGadgetParam param)
         {
             this.dbInteractivity = param.DBInteractivity;
-            dbInteractivity.RetrieveEMSummaryMarketData("ABPEQ", RetrieveEMSummaryDataCallbackMethod);
+            if (eventAggregator != null)
+            {
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);                
+            }
         }
         #endregion
 
@@ -217,5 +220,15 @@ namespace GreenField.Gadgets.ViewModels
             }
             IsBusyIndicatorBusy = isBusyIndicatorVisible;
         }
+
+        #region Dispose Method
+        /// <summary>
+        /// method to dispose all subscribed events
+        /// </summary>
+        public void Dispose()
+        {
+            eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);            
+        }
+        #endregion
     }
 }

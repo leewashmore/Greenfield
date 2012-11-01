@@ -43,7 +43,7 @@ namespace GreenField.DashboardModule.Views
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
-            this.tbHeader.Text = GadgetNames.MODELS_FX_MACRO_ECONOMICS_EM_DATA_REPORT;
+            this.tbHeader.Text = null;
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)

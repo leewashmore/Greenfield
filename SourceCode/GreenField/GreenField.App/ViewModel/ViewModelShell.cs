@@ -352,7 +352,7 @@ namespace GreenField.App.ViewModel
                         eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
                         if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
                         {
-                            BusyIndicatorNotification(true, "Retrieving reference data...");
+                            BusyIndicatorNotification(true, "Retrieving reference data...", false);
                             dbInteractivity.RetrieveFilterSelectionData(value, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                         }
                     }
@@ -423,7 +423,7 @@ namespace GreenField.App.ViewModel
                     eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
                     if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
                     {
-                        BusyIndicatorNotification(true, "Retrieving reference data...");
+                        BusyIndicatorNotification(true, "Retrieving reference data...", false);
                         dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, value, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
@@ -959,7 +959,7 @@ namespace GreenField.App.ViewModel
                 {
                     if (dbInteractivity != null && SelectedEffectiveDateInfo != null)
                     {
-                        BusyIndicatorNotification(true, "Retrieving reference data...");
+                        BusyIndicatorNotification(true, "Retrieving reference data...", false);
                         dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
@@ -1414,6 +1414,20 @@ namespace GreenField.App.ViewModel
             {
                 isBusyIndicatorBusy = value;
                 RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
+            }
+        }
+
+        /// <summary>
+        /// Displays/Hides busy indicator to notify user of the on going process
+        /// </summary>
+        private bool isFilterBusyIndicatorBusy = false;
+        public bool IsFilterBusyIndicatorBusy
+        {
+            get { return isFilterBusyIndicatorBusy; }
+            set
+            {
+                isFilterBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsFilterBusyIndicatorBusy);
             }
         }
 
@@ -4019,7 +4033,7 @@ namespace GreenField.App.ViewModel
             finally
             {
                 Logging.LogEndMethod(logger, methodNamespace);
-                BusyIndicatorNotification();
+                BusyIndicatorNotification(isAppLevel: false);
             }
         }
 
@@ -4318,14 +4332,22 @@ namespace GreenField.App.ViewModel
         /// </summary>
         /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
         /// <param name="message">Content message for indicator; default null</param>
-        private void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
+        private void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null, Boolean isAppLevel = true)
         {
             if (message != null)
             {
                 BusyIndicatorContent = message;
             }
-            activeCallCount = isBusyIndicatorVisible ? activeCallCount + 1 : activeCallCount - 1;
-            IsBusyIndicatorBusy = activeCallCount != 0;
+            if (isAppLevel)
+            {
+                activeCallCount = isBusyIndicatorVisible ? activeCallCount + 1 : activeCallCount - 1;
+                IsBusyIndicatorBusy = activeCallCount != 0;
+            }
+            else
+            {
+                IsFilterBusyIndicatorBusy = isBusyIndicatorVisible;
+            }
+            
         }
 
         private string GetAssemblyVersion()

@@ -32,41 +32,6 @@ namespace GreenField.Gadgets.ViewModels
         
         #endregion
 
-        #region Constructor
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="param">DashboardGadgetParam</param>
-        public ViewModelRelativePerformance(DashboardGadgetParam param)
-        {
-            //MEF singleton initialization
-            eventAggregator = param.EventAggregator;
-            dbInteractivity = param.DBInteractivity;
-            logger = param.LoggerFacade;
-
-            //selection data initialization
-            portfolioSelectionDataInfo = param.DashboardGadgetPayload.PortfolioSelectionData;
-            EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-            periodInfo = param.DashboardGadgetPayload.PeriodSelectionData;
-
-            //service call to retrieve sector data relating fund selection data/ benchmark selection data and effective date
-            if (effectiveDateInfo != null && portfolioSelectionDataInfo != null && Period != null && IsActive)
-            {
-                dbInteractivity.RetrieveRelativePerformanceSectorData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),
-                    RetrieveRelativePerformanceSectorDataCallbackMethod);
-                BusyIndicatorStatus = true;
-            }
-
-            if (eventAggregator != null)
-            {
-                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
-                eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
-                eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
-                eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Subscribe(HandleRelativePerformanceGridCountrySectorClickEvent);
-            }
-        } 
-        #endregion
-
         #region Properties
         /// <summary>
         /// Effective date selected
@@ -75,7 +40,7 @@ namespace GreenField.Gadgets.ViewModels
         public DateTime? EffectiveDate
         {
             get { return effectiveDateInfo; }
-            set 
+            set
             {
                 if (effectiveDateInfo != value)
                 {
@@ -108,7 +73,7 @@ namespace GreenField.Gadgets.ViewModels
         private bool isActive;
         public bool IsActive
         {
-            get{ return isActive; }
+            get { return isActive; }
             set
             {
                 if (isActive != value)
@@ -156,9 +121,44 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => SecurityDetails);
                 }
             }
-        }        
+        }
 
         #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashboardGadgetParam</param>
+        public ViewModelRelativePerformance(DashboardGadgetParam param)
+        {
+            //MEF singleton initialization
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+
+            //selection data initialization
+            portfolioSelectionDataInfo = param.DashboardGadgetPayload.PortfolioSelectionData;
+            EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            periodInfo = param.DashboardGadgetPayload.PeriodSelectionData;
+
+            //service call to retrieve sector data relating fund selection data/ benchmark selection data and effective date
+            if (effectiveDateInfo != null && portfolioSelectionDataInfo != null && Period != null && IsActive)
+            {
+                dbInteractivity.RetrieveRelativePerformanceSectorData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),
+                    RetrieveRelativePerformanceSectorDataCallbackMethod);
+                BusyIndicatorStatus = true;
+            }
+
+            if (eventAggregator != null)
+            {
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+                eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
+                eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Subscribe(HandleRelativePerformanceGridCountrySectorClickEvent);
+            }
+        } 
+        #endregion        
 
         #region Events
         /// <summary>
