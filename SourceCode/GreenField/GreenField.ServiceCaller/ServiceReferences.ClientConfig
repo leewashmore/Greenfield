@@ -77,10 +77,10 @@
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
-    <binding name="ExternalResearchOperations1" maxBufferSize="2147483647"
+    <!--<binding name="ExternalResearchOperations1" maxBufferSize="2147483647"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
-    </binding>
+    </binding>-->
    </basicHttpBinding>
   </bindings>
 
@@ -132,7 +132,7 @@
     binding="basicHttpBinding" bindingConfiguration="DCFOperations"
     contract="DCFDefinitions.DCFOperations" name="DCFOperations" />
    <endpoint address="http://localhost:59430/Services/ExternalResearchOperations.svc"
-    binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations1"
+    binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations"
     contract="ExternalResearchDefinitions.ExternalResearchOperations"
     name="ExternalResearchOperations" />
   </client>

@@ -150,10 +150,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                Logging.LogMethodParameter(logger, methodNamespace, commodityID, 1);
                 commodityID = commodityId;
                 if (commodityID != null && IsActive)
                 {
+                    Logging.LogMethodParameter(logger, methodNamespace, commodityID, 1);
                     CallingWebMethod();
                 }
                 else

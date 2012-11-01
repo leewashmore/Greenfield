@@ -79,6 +79,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     IssueRatioComparisonInfo = value.Where(record => record.ISSUE_NAME == EntitySelectionInfo.LongName).ToList();
                 }
+                else
+                {                    
+                    MissingSecurityDataNotificationVisibility = Visibility.Collapsed;
+                }
             }
         }
 
