@@ -257,7 +257,7 @@ namespace GreenField.Gadgets.ViewModels
             //RetrieveEntitySelectionData Service Call
             if (SelectionData.EntitySelectionData != null && EntitySelectionInfo == null)
             {
-                BusyIndicatorNotification(true, "Retrieving Entity Selection Data ...");
+                BusyIndicatorNotification(true, "Retrieving reference data...");
                 RetrieveEntitySelectionDataCallbackMethod(SelectionData.EntitySelectionData);
             }
             //Subscribe to MarketPerformanceSnapshotNameReferenceSetEvent to receive snapshot selection from shell
@@ -332,12 +332,16 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 //cases Where EntitySelectionInfo data asychronous call thread is still active
-                if (EntitySelectionInfo == null)
+                if (SelectionData.EntitySelectionData == null && EntitySelectionInfo == null)
                 {
                     if (SelectionData.EntitySelectionData != null)
                         RetrieveEntitySelectionDataCallbackMethod(SelectionData.EntitySelectionData);
                     Prompt.ShowDialog("Entity Selection data is being retrieved");
                     return;
+                }
+                if (SelectionData.EntitySelectionData != null && EntitySelectionInfo == null)
+                {
+                    EntitySelectionInfo = SelectionData.EntitySelectionData;
                 }
                 //get all group names present in the snapshot
                 List<string> snapshotGroupNames = new List<string>();
@@ -465,13 +469,17 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                //Cases Where EntitySelectionInfo Data Asychronous call thread is still active
-                if (EntitySelectionInfo == null)
+                //cases Where EntitySelectionInfo data asychronous call thread is still active
+                if (SelectionData.EntitySelectionData == null && EntitySelectionInfo == null)
                 {
                     if (SelectionData.EntitySelectionData != null)
                         RetrieveEntitySelectionDataCallbackMethod(SelectionData.EntitySelectionData);
                     Prompt.ShowDialog("Entity Selection data is being retrieved");
                     return;
+                }
+                if (SelectionData.EntitySelectionData != null && EntitySelectionInfo == null)
+                {
+                    EntitySelectionInfo = SelectionData.EntitySelectionData;
                 }
                 ChildViewInsertEntity childViewModelInsertEntity
                     = new ChildViewInsertEntity(EntitySelectionInfo, DbInteractivity, logger, SelectedMarketSnapshotPerformanceInfo.MarketSnapshotPreferenceInfo.GroupName);

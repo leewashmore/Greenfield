@@ -14,6 +14,8 @@ using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Controls;
 using GreenField.Common;
 using GreenField.DataContracts.DataContracts;
+using GreenField.ServiceCaller;
+using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Views
 {
@@ -23,6 +25,7 @@ namespace GreenField.Gadgets.Views
         public ViewEMSummaryMarketData(ViewModelEMSummaryMarketData dataContextSource)
         {
             InitializeComponent();
+            this.txtCurrDate.Text = DateTime.Today.ToString("MMMM dd, yyyy");
             this.DataContext = dataContextSource;
             dataContextSource.RetrieveEMSummaryDataCompletedEvent += new
                 RetrieveEMSummaryDataCompleteEventHandler(dataContextSource_RetrieveEMSummaryDataCompletedEvent);
@@ -73,5 +76,118 @@ namespace GreenField.Gadgets.Views
 
             }
         }
+
+        #region Export
+
+        /// <summary>
+        /// Event for Grid Export
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ElementExportingEvent(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if (this.dgEMSummaryMarketData.Visibility == Visibility.Visible)
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = this.dgEMSummaryMarketData.Tag.ToString()
+                        , Element = this.dgEMSummaryMarketData, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+
+                //else if (this.dgEMSummaryMarketSSRData.Visibility == Visibility.Visible)
+                //    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = this.dgEMSummaryMarketSSRData.Tag.ToString()
+                //        ,Element = this.dgEMSummaryMarketSSRData, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER});
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " 
+                    + GadgetNames.MODELS_FX_MACRO_ECONOMICS_EM_DATA_REPORT);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
+
+        #endregion
+
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgEMSummaryMarketData.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgEMSummaryMarketData, 12);
+                }
+                //else if (this.dgEMSummaryMarketSSRData.Visibility == Visibility.Visible)
+                //{
+                //    PDFExporter.btnExportPDF_Click(this.dgEMSummaryMarketSSRData, 12);
+                //}
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);                
+            }
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgEMSummaryMarketData.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(this.dgEMSummaryMarketData, 12);
+                    }));
+                }
+                //else if (this.dgEMSummaryMarketSSRData.Visibility == Visibility.Visible)
+                //{
+                //    Dispatcher.BeginInvoke((Action)(() =>
+                //    {
+                //        RichTextBox.Document = PDFExporter.Print(this.dgEMSummaryMarketSSRData, 12);
+                //    }));                    
+                //}
+                this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);                
+            }
+        }
+
+
+        #region Flipping
+
+        /// <summary>
+        /// Flipping between Grid & Chart
+        /// Using the method FlipItem in class Flipper.cs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFlip_Click(object sender, RoutedEventArgs e)
+        {
+            //if (this.chEVEBITDA.Visibility == System.Windows.Visibility.Visible)
+            //{
+            //    Flipper.FlipItem(this.chEVEBITDA, this.dgEVEBITDA);
+            //}
+            //else
+            //{
+            //    Flipper.FlipItem(this.dgEVEBITDA, this.chEVEBITDA);
+            //}
+        }
+
+        #endregion
+
     }
 }

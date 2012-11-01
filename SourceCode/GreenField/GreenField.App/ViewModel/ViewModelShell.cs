@@ -294,7 +294,7 @@ namespace GreenField.App.ViewModel
             {
                 securitySelectorVisibility = value;
                 RaisePropertyChanged(() => this.SecuritySelectorVisibility);
-                if (value == Visibility.Visible && (EntitySelectionInfo == null || EntitySelectionInfo.Count == 0))
+                if (value == Visibility.Visible && dbInteractivity != null && (EntitySelectionInfo == null || EntitySelectionInfo.Count == 0))
                 {
                     BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
@@ -2571,6 +2571,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
+                if (dbInteractivity != null && (EntitySelectionInfo == null || EntitySelectionInfo.Count == 0))
+                {
+                    BusyIndicatorNotification(true, "Retrieving reference data...");
+                    dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
+                }
                 eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.MARKETS_SNAPSHOT_MARKET_PERFORMANCE);
                 UpdateToolBoxSelectorVisibility();

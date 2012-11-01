@@ -143,7 +143,7 @@ namespace GreenField.Common
         #region Markets
         #region Snapshot
         #region Snapshot Summary
-        public const string MODELS_FX_MACRO_ECONOMICS_EM_DATA_REPORT = "Emerging Markets Data Report Models, FX and Macro Economic Data 4.6";
+        public const string MODELS_FX_MACRO_ECONOMICS_EM_DATA_REPORT = "Emerging Markets Data Report";
         #endregion
 
         #region Snapshot Market Performance

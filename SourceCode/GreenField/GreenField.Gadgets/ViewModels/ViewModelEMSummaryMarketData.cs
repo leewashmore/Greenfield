@@ -50,12 +50,32 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param">MEF Eventaggrigator instance</param>
         public ViewModelEMSummaryMarketData(DashboardGadgetParam param)
         {
-            dbInteractivity = param.DBInteractivity;
+            this.dbInteractivity = param.DBInteractivity;
             dbInteractivity.RetrieveEMSummaryMarketData("ABPEQ", RetrieveEMSummaryDataCallbackMethod);
         }
         #endregion
 
         #region Properties
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool isActive;
+        public bool IsActive
+        {
+            get { return isActive; }
+            set
+            {
+                isActive = value;
+                if (SelectedPortfolio != null && dbInteractivity != null && value)
+                {
+                    BusyIndicatorNotification(true, "Retrieving market summary report data...");
+                    dbInteractivity.RetrieveEMSummaryMarketData(SelectedPortfolio.PortfolioId, RetrieveEMSummaryDataCallbackMethod);
+                }
+            }
+        }
+
+        public PortfolioSelectionData SelectedPortfolio { get; set; }
+
         /// <summary>
         /// Property that stores the data from the web service
         /// </summary>
@@ -77,12 +97,77 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
+        #region Busy Indicator Notification
+        /// <summary>
+        /// Displays/Hides busy indicator to notify user of the on going process
+        /// </summary>
+        private bool isBusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
+        {
+            get { return isBusyIndicatorBusy; }
+            set
+            {
+                isBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
+            }
+        }
+
+        /// <summary>
+        /// Stores the message displayed over the busy indicator to notify user of the on going process
+        /// </summary>
+        private string busyIndicatorContent;
+        public string BusyIndicatorContent
+        {
+            get { return busyIndicatorContent; }
+            set
+            {
+                busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+        #endregion
+        #endregion
+
+        #region Event Handlers
+        /// <summary>
+        /// Event Handler to subscribed event 'PortfolioReferenceSetEvent'
+        /// </summary>
+        /// <param name="result">PortfolioSelectionData</param>
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    SelectedPortfolio = result;
+                    if (SelectedPortfolio != null && dbInteractivity != null && IsActive)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving market summary report data...");
+                        dbInteractivity.RetrieveEMSummaryMarketData(SelectedPortfolio.PortfolioId, RetrieveEMSummaryDataCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            Logging.LogEndMethod(logger, methodNamespace);
+        }
         #endregion
 
         #region CallbackMethod
         public void RetrieveEMSummaryDataCallbackMethod(List<EMSummaryMarketData> result)
-        {
-           
+        {           
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
             try
@@ -99,13 +184,16 @@ namespace GreenField.Gadgets.ViewModels
                     RetrieveEMSummaryDataCompletedEvent(new RetrieveEMSummaryDataCompleteEventArgs() { EMSummaryInfo = result });
                 }
             }
-
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
         #endregion
 
@@ -115,5 +203,19 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public event RetrieveEMSummaryDataCompleteEventHandler RetrieveEMSummaryDataCompletedEvent;     
         #endregion
+
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
+        /// <param name="message">Content message for indicator; default null</param>
+        private void BusyIndicatorNotification(bool isBusyIndicatorVisible = false, String message = null)
+        {
+            if (message != null)
+            {
+                BusyIndicatorContent = message;
+            }
+            IsBusyIndicatorBusy = isBusyIndicatorVisible;
+        }
     }
 }
