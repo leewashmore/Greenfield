@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using GreenField.ServiceCaller;
+using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Views
 {
@@ -112,5 +114,64 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        #region Excel Export
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgConsensusEstimatesSummary.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
+                    {                  
+                        new RadExportOptions() { ElementName = "Comparison with consensus", Element = this.dgConsensusEstimatesSummary, 
+                                                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                    };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " +
+                        GadgetNames.INTERNAL_RESEARCH_CONSESUS_ESTIMATE_SUMMARY);
+                    childExportOptions.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+        #endregion
+
+        #region PDFExport
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        {
+            PDFExporter.btnExportPDF_Click(this.dgConsensusEstimatesSummary);
+        }
+        #endregion
+
+        //#region Printing the DataGrid
+        ///// <summary>
+        ///// Printing the DataGrid
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void btnPrint_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Dispatcher.BeginInvoke((Action)(() =>
+        //    {
+        //        RichTextBox.Document = PDFExporter.Print(dgConsensusEstimatesSummary, 6);
+        //    }));
+
+        //    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+        //    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+        //}
+        //#endregion
     }
 }

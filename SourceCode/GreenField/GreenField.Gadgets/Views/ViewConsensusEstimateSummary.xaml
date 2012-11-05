@@ -19,13 +19,28 @@
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>       
-            <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+        </Grid.RowDefinitions>
+        <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                   Margin="0,0,40,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
+            <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+        </telerik:RadButton>
+        <telerik:RadButton Grid.Row="0" HorizontalAlignment="Right" Height="15" Width="15" IsEnabled="True"
+                                   Margin="0,0,20,0" VerticalAlignment="Center" ToolTipService.ToolTip="Export Results to PDF"
+                                   HorizontalContentAlignment="Center" Name="btnExportPDF" Click="btnExportPDF_Click">
+            <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+        </telerik:RadButton>
+        <!--<telerik:RadButton  Grid.Row="0" HorizontalAlignment="Right" Height="15" Width="15" IsEnabled="True" VerticalAlignment="Center"
+                            ToolTipService.ToolTip="Send Results to a Printer"
+                                    HorizontalContentAlignment="Center" Name="btnPrint" Click="btnPrint_Click">
+            <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+        </telerik:RadButton>-->
+        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                            DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadGridView Grid.Row="0" Name="dgConsensusEstimatesSummary" 
+                <telerik:RadGridView Grid.Row="1" Name="dgConsensusEstimatesSummary" 
                                      FrozenColumnsSplitterVisibility="Collapsed"
                                          AutoGenerateColumns="False" 
                                          ItemsSource="{Binding ConsensusSummaryInfo}"
@@ -54,42 +69,36 @@
                                                     IsFilterable="False" 
                                                     DataMemberBinding="{Binding NetIncome}"                                                    
                                                     HeaderTextAlignment="Left" 
-                                                    TextAlignment="Left"
+                                                    TextAlignment="Left"                                                   
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>                        
                         <telerik:GridViewDataColumn x:Name="dgcYear1"                                                     
-                                                    DataMemberBinding="{Binding YEAR1}" 
-                                                    
+                                                    DataMemberBinding="{Binding YEAR1}"                                                    
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                   
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcYear2"                                                     
-                                                    DataMemberBinding="{Binding YEAR2}"                                                     
+                                                    DataMemberBinding="{Binding YEAR2}"
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-
                         <telerik:GridViewDataColumn x:Name="dgcYear3"                                                     
-                                                    DataMemberBinding="{Binding YEAR3}" 
-                                                    
+                                                    DataMemberBinding="{Binding YEAR3}"                                                    
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-
                         <telerik:GridViewDataColumn x:Name="dgcYear4"                                                 
-                                                    DataMemberBinding="{Binding YEAR4}" 
-                                                    
+                                                    DataMemberBinding="{Binding YEAR4}"                                                    
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-
                         <telerik:GridViewDataColumn x:Name="dgcYear5"                                                    
                                                     DataMemberBinding="{Binding YEAR5}"                                                     
-                                                    HeaderTextAlignment="Right" 
+                                                    HeaderTextAlignment="Right"                                                    
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>             
