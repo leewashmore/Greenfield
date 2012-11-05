@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace GreenField.Gadgets.Helpers
 {
-    public class AggregateFunctionEMDataSummary : EnumerableSelectorAggregateFunction
+    public class AggregateFunctionPercentageEMDataSummary : EnumerableSelectorAggregateFunction
     {
         protected override string AggregateMethodName
         {
@@ -30,6 +30,24 @@ namespace GreenField.Gadgets.Helpers
         public override string ResultFormatString
         {
             get { return "{0:n1}%"; }
+        }
+    }
+
+    public class AggregateFunctionEMDataSummary : EnumerableSelectorAggregateFunction
+    {
+        protected override string AggregateMethodName
+        {
+            get { return "GetAggregate"; }
+        }
+
+        protected override Type ExtensionMethodsType
+        {
+            get { return typeof(MyAggregates); }
+        }
+
+        public override string ResultFormatString
+        {
+            get { return "{0:n1}"; }
         }
     }
 

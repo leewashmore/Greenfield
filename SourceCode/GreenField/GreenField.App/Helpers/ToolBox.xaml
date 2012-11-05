@@ -406,9 +406,9 @@
 
                 <!--Value Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding FilterValueVisibility}" Grid.Column="6">
-                    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" Style="{StaticResource BusyIndicatorStyle}" MaxHeight="{StaticResource DefaultControlMinHeight}" 
+                    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" Style="{StaticResource BusyIndicatorStyle}" MaxHeight="16" 
                                               BusyContent="{Binding BusyIndicatorContent}" IsBusy="{Binding IsFilterBusyIndicatorBusy}"
-                                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" VerticalContentAlignment="Top">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <TextBlock Text="Value" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
                                         Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
