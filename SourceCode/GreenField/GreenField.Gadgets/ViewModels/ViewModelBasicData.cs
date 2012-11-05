@@ -71,10 +71,15 @@ namespace GreenField.Gadgets.ViewModels
                 if (_basicDataInfo != value)
                 {
                     _basicDataInfo = value;
+                    PopulateBasicDataDictionary();
                     RaisePropertyChanged(() => this.BasicDataInfo);
                 }
             }
         }
+       
+        /// <summary>
+        /// Sets the visibility for Basic Data Gadget
+        /// </summary>
         public Visibility BasicDataGadgetVisibility
         {
             get { return _basicDataGadgetVisibility; }
@@ -99,6 +104,26 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Holds the Basci Data points and corresponding values
+        /// </summary>
+        private List<KeyValuePair<String, String>> basicDataDataList;
+        public List<KeyValuePair<String, String>> BasicDataDataList
+        {
+            get
+            {
+                if (basicDataDataList == null)
+                {
+                    basicDataDataList = new List<KeyValuePair<string,string>>();
+                }                
+                return basicDataDataList;
+            }
+            set
+            {
+                basicDataDataList = value;
+                RaisePropertyChanged(() => this.BasicDataDataList);
+            }
+        }
         #endregion
 
         #region CONSTRUCTOR
@@ -220,6 +245,45 @@ namespace GreenField.Gadgets.ViewModels
         public void Dispose()
         {
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+        }
+        #endregion
+
+        #region private methods
+        private void PopulateBasicDataDictionary()
+        {
+            if (BasicDataInfo != null)
+            {
+                Dictionary<String, String> basicDataValues = new Dictionary<string, string>();
+
+                string weekRange52weekLow = BasicDataInfo.WeekRange52Low.HasValue
+                    ? ((decimal)(BasicDataInfo.WeekRange52Low)).ToString("N2") : String.Empty;
+                string weekRange52weekHigh = BasicDataInfo.WeekRange52High.HasValue
+                    ? ((decimal)(BasicDataInfo.WeekRange52High)).ToString("N2") : String.Empty;
+                basicDataValues.Add("52 Week Range", String.Format("{0}-{1}",
+                    weekRange52weekLow, weekRange52weekHigh));
+
+                string averageVolumne = BasicDataInfo.AverageVolume.HasValue
+                    ? ((decimal)(BasicDataInfo.AverageVolume)).ToString("N0") : String.Empty;
+                basicDataValues.Add("Average Volume – 6 Month", averageVolumne);
+
+                string marketCapitalization = BasicDataInfo.MarketCapitalization.HasValue
+                    ? ((decimal)(BasicDataInfo.MarketCapitalization)).ToString("N0") : String.Empty;
+                basicDataValues.Add("Market Capitalization", marketCapitalization);
+
+                string enterpriseValue = BasicDataInfo.EnterpriseValue.HasValue
+                    ? ((decimal)(BasicDataInfo.EnterpriseValue)).ToString("N0") : String.Empty;
+                basicDataValues.Add("Enterprise Value", enterpriseValue);
+
+                string sharesOutstanding = BasicDataInfo.SharesOutstanding.HasValue
+                   ? ((decimal)(BasicDataInfo.SharesOutstanding)).ToString("N0") : String.Empty;
+                basicDataValues.Add("Shares Outstanding", sharesOutstanding);
+
+                string betaValue = BasicDataInfo.Beta.HasValue
+                   ? ((decimal)(BasicDataInfo.Beta)).ToString("N2") : String.Empty;
+                basicDataValues.Add(String.Format("Beta({0})", BasicDataInfo.BetaSource), betaValue);
+
+                BasicDataDataList.AddRange(basicDataValues);
+            }
         }
         #endregion
 

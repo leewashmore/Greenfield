@@ -1,5 +1,4 @@
-﻿
-<helpers:ViewBaseUserControl xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="GreenField.Gadgets.Views.ViewBasicData"
+﻿<helpers:ViewBaseUserControl xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="GreenField.Gadgets.Views.ViewBasicData"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,87 +8,63 @@
     d:DesignHeight="300" d:DesignWidth="400">
 
     <helpers:ViewBaseUserControl.Resources>
-        <ResourceDictionary>            
+        <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
-
+    <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0"
+                                  Style="{StaticResource BusyIndicatorStyle}">
         <Grid x:Name="LayoutRoot" Background="White" Visibility="{Binding BasicDataGadgetVisibility, Mode=TwoWay}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-                
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.2*"/>
-                <ColumnDefinition Width="0.4*"/>
-            </Grid.ColumnDefinitions>
-            <!--<Border  Background="#e4e5e5" Grid.Row="0" Grid.Column="0">
-                <TextBlock Text="Basic Data"  HorizontalAlignment="Left" VerticalAlignment="Center" 
-                Style="{StaticResource TextBlockStyle}" />
-            </Border>
-            <Border Background="#e4e5e5" Grid.Row="0" Grid.Column="1">
-                <TextBlock Text=""  HorizontalAlignment="Right" VerticalAlignment="Center" 
-                Foreground="{StaticResource GridView_GridLinesItemBorder}" Style="{StaticResource TextBlockStyle}" />
-            </Border>-->
-            <!--52 Week Range-->
-            <Border Grid.Row="0" Grid.Column="0">
-                <TextBlock  Margin="2,0,0,0" Text="52 Week Range"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-            </Border>
-            <Border Grid.Row="0" Grid.Column="1">
-                <StackPanel Grid.Row="0" Grid.Column="1" Margin="2,0,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.WeekRange52Low, StringFormat=\{0:n2\}}"  Style="{StaticResource TextBlockStyle}"  />
-                    <TextBlock Text=" - " Style="{StaticResource TextBlockStyle}"   />
-                    <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.WeekRange52High, StringFormat=\{0:n2\}}" Style="{StaticResource TextBlockStyle}"   />
-                </StackPanel>
-            </Border>
-            <!--Average Volume – 6 Month-->
-            <Border Grid.Row="1" Grid.Column="0" Background="#f3f6fc">
-                <TextBlock  Margin="2,0,0,0" Text="Average Volume – 6 Month"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-            </Border>
-            <Border Grid.Row="1" Grid.Column="1" Background="#f3f6fc">
-                <TextBlock Grid.Row="2" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.AverageVolume,StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-            </Border>
-            <!--Market Capitalization-->
-            <Border Grid.Row="2" Grid.Column="0">
-                <TextBlock  Margin="2,0,0,0" Text="Market Capitalization"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-            </Border>
-            <Border Grid.Row="2" Grid.Column="1">
-                <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.MarketCapitalization, Mode=TwoWay, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-            </Border>
-
-            <!--Enterprise Value-->
-            <Border Grid.Row="3" Grid.Column="0"  Background="#f3f6fc">
-                <TextBlock  Margin="2,0,0,0" Text="Enterprise Value"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-            </Border>
-            <Border Grid.Row="3" Grid.Column="1"  Background="#f3f6fc">
-                <TextBlock Grid.Row="4" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.EnterpriseValue, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-            </Border>
-            <!--Shares Outstanding-->
-            <Border Grid.Row="4" Grid.Column="0">
-                <TextBlock  Margin="2,0,0,0" Text="Shares Outstanding"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-            </Border>
-            <Border Grid.Row="4" Grid.Column="1">
-                <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.SharesOutstanding, Mode=TwoWay, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-            </Border>
-
-            <!--Beta-->
-            <StackPanel Grid.Row="5" Grid.Column="0" Margin="2,0,0,0" Orientation="Horizontal"   Background="#f3f6fc">
-                <TextBlock Text="Beta ("  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-                <TextBlock Text="{Binding BasicDataInfo.BetaSource, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-                <TextBlock Text=")" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-            </StackPanel>
-            <Border  Grid.Row="6" Grid.Column="1"  Background="#f3f6fc">
-                <TextBlock Grid.Row="5" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.Beta, StringFormat=\{0:n2\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
-            </Border>            
+            <TextBlock Grid.Row="0" Text="Market Data" HorizontalAlignment="Center" VerticalAlignment="Top"  Height="15"/>
+            <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Margin="0,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
+                <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </telerik:RadButton>
+            <telerik:RadGridView Grid.Row="1"  Name="dgBasicData"  AutoGenerateColumns="False" FrozenColumnsSplitterVisibility="Collapsed"
+                                     ItemsSource="{Binding BasicDataDataList}" CanUserSelect="True" CanUserReorderColumns="False" 
+                                     SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
+                                     CanUserDeleteRows="False" IsReadOnly="True"
+                                     CanUserSortColumns="False" ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 
+                                     ShowGroupPanel="False" telerik:StyleManager.Theme="Metro"
+                                     UseLayoutRounding="True"                                     
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}"                                     
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                     GridLinesVisibility="None"
+                                     AlternationCount="2"
+                                     ElementExporting="dgBasicData_ElementExporting"
+                                  EnableRowVirtualization="false"
+                                  ShowColumnHeaders="False">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Header="" 
+                                                    DataMemberBinding="{Binding Key}"  
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    Width="*" 
+                                                    IsFilterable="False"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left">
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Header="" 
+                                                    DataMemberBinding="{Binding Value}"                                                     
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    Width="Auto"     
+                                                    IsFilterable="False"                                                    
+                                                    HeaderTextAlignment="Right"
+                                                    TextAlignment="Right">
+                    </telerik:GridViewDataColumn>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

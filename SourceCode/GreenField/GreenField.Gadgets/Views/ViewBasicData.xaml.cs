@@ -80,9 +80,46 @@ namespace GreenField.Gadgets.Views
         void DataContextSourceBasicDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
+                this.busyIndicatorGrid.IsBusy = true;
             else
-                this.gridBusyIndicator.IsBusy = false;
+                this.busyIndicatorGrid.IsBusy = false;
+        }
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgBasicData.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
+                    {
+                          new RadExportOptions() { ElementName = "Market Data", Element = this.dgBasicData, 
+                              ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                    };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " +
+                        GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES);
+                    childExportOptions.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Styles added to export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgBasicData_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
         }
         #endregion
     }
