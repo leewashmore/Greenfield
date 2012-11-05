@@ -1,27 +1,22 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Common;
-using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.Logging;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
-using System.Collections.Generic;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View model class for ViewEMSummaryMarketData
+    /// </summary>
     public class ViewModelEMSummaryMarketData : NotificationObject
     {
-        #region PrivateMembers
+        #region Fields
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
@@ -35,30 +30,11 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade logger;
-
-        /// <summary>
-        /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
-        /// </summary>
-        private PortfolioSelectionData portfolioSelectionData;        
-        #endregion
-
-        #region Constructor
-        /// <summary>
-        /// Constructor of the class that initializes various objects
-        /// </summary>
-        /// <param name="param">MEF Eventaggrigator instance</param>
-        public ViewModelEMSummaryMarketData(DashboardGadgetParam param)
-        {
-            this.dbInteractivity = param.DBInteractivity;
-            if (eventAggregator != null)
-            {
-                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);                
-            }
-        }
+        private ILoggerFacade logger;          
         #endregion
 
         #region Properties
+        #region IsActive
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -75,8 +51,13 @@ namespace GreenField.Gadgets.ViewModels
                     dbInteractivity.RetrieveEMSummaryMarketData(SelectedPortfolio.PortfolioId, RetrieveEMSummaryDataCallbackMethod);
                 }
             }
-        }
+        } 
+        #endregion
 
+        #region Binded
+        /// <summary>
+        /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
+        /// </summary>
         public PortfolioSelectionData SelectedPortfolio { get; set; }
 
         /// <summary>
@@ -99,7 +80,8 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => this.EmSummaryMarketDataInfo);
                 }
             }
-        }
+        } 
+        #endregion
 
         #region Busy Indicator Notification
         /// <summary>
@@ -130,6 +112,23 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor of the class that initializes various objects
+        /// </summary>
+        /// <param name="param">MEF Eventaggrigator instance</param>
+        public ViewModelEMSummaryMarketData(DashboardGadgetParam param)
+        {
+            this.dbInteractivity = param.DBInteractivity;
+            this.eventAggregator = param.EventAggregator;
+            this.logger = param.LoggerFacade;
+            if (eventAggregator != null)
+            {
+                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);                
+            }
+        }
         #endregion
 
         #region Event Handlers
@@ -169,6 +168,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region CallbackMethod
+        /// <summary>
+        /// RetrieveEMSummaryData callback method
+        /// </summary>
+        /// <param name="result">List of EMSummaryMarketData class objects</param>
         public void RetrieveEMSummaryDataCallbackMethod(List<EMSummaryMarketData> result)
         {           
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -178,13 +181,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null && result.Count > 0)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
-                    EmSummaryMarketDataInfo = result;
-                    RetrieveEMSummaryDataCompletedEvent(new RetrieveEMSummaryDataCompleteEventArgs() { EMSummaryInfo = result });
+                    EmSummaryMarketDataInfo = result;                    
                 }
                 else
                 {
-                    EmSummaryMarketDataInfo = new List<EMSummaryMarketData>();
-                    RetrieveEMSummaryDataCompletedEvent(new RetrieveEMSummaryDataCompleteEventArgs() { EMSummaryInfo = result });
+                    EmSummaryMarketDataInfo = new List<EMSummaryMarketData>();                    
                 }
             }
             catch (Exception ex)
@@ -200,13 +201,7 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-        #region Events
-        /// <summary>
-        /// Event for the Retrieval of Data 
-        /// </summary>
-        public event RetrieveEMSummaryDataCompleteEventHandler RetrieveEMSummaryDataCompletedEvent;     
-        #endregion
-
+        #region Helper Methods
         /// <summary>
         /// Display/Hide Busy Indicator
         /// </summary>
@@ -220,8 +215,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             IsBusyIndicatorBusy = isBusyIndicatorVisible;
         }
-
-        #region Dispose Method
+        
         /// <summary>
         /// method to dispose all subscribed events
         /// </summary>

@@ -830,6 +830,14 @@ namespace GreenField.Web.Services
             List<ConsensusEstimateMedianData> data = new List<ConsensusEstimateMedianData>();
             try
             {
+                if (issuerId == null)
+                {
+                    return new List<ConsensusEstimateMedian>();
+                }
+                if (currency == null)
+                {
+                    return new List<ConsensusEstimateMedian>();
+                }
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
                 decimal previousYearQuarterAmount;
                 ExternalResearchEntities entity = new ExternalResearchEntities();
@@ -939,6 +947,18 @@ namespace GreenField.Web.Services
             List<ConsensusEstimateValuation> data = new List<ConsensusEstimateValuation>();
             try
             {
+                if (issuerId == null)
+                {
+                    return new List<ConsensusEstimatesValuations>();
+                }
+                if (longName == null)
+                {
+                    return new List<ConsensusEstimatesValuations>();
+                }
+                if (currency == null)
+                {
+                    return new List<ConsensusEstimatesValuations>();
+                }
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
                 decimal? previousYearQuarterAmount;
                 ExternalResearchEntities entity = new ExternalResearchEntities();

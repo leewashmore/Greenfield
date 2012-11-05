@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.ServiceCaller.DCFDefinitions;
 
 namespace Greenfield.ServiceCaller.UnitTest
 {
@@ -294,7 +295,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             bool islookthruenabled = false;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
 
-            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude,islookthruenabled, (List<TopHoldingsData> resultSet) =>
+            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude, islookthruenabled, (List<TopHoldingsData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Top 10 Holdings Data Not Available");
                 EnqueueTestComplete();
@@ -313,7 +314,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
             bool islookthruenabled = false;
-            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude,islookthruenabled, (List<TopHoldingsData> resultSet) =>
+            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude, islookthruenabled, (List<TopHoldingsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Top 10 Holdings Should Be Empty");
                 EnqueueTestComplete();
@@ -336,7 +337,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
             bool islookthruenabled = false;
-            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude,islookthruenabled, (List<TopHoldingsData> resultSet) =>
+            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude, islookthruenabled, (List<TopHoldingsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Top 10 Holdings Should Be Empty");
                 EnqueueTestComplete();
@@ -359,7 +360,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
             bool islookthruenabled = false;
-            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude,islookthruenabled, (List<TopHoldingsData> resultSet) =>
+            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude, islookthruenabled, (List<TopHoldingsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Top 10 Holdings Should Be Empty");
                 EnqueueTestComplete();
@@ -381,7 +382,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool islookthruenabled = false;
-            instance.RetrieveIndexConstituentsData(portfolio, effectiveDate,islookthruenabled, (List<IndexConstituentsData> resultSet) =>
+            instance.RetrieveIndexConstituentsData(portfolio, effectiveDate, islookthruenabled, (List<IndexConstituentsData> resultSet) =>
                 {
                     Assert.IsNotNull(resultSet, "Index constituent Data Not Available");
                     EnqueueTestComplete();
@@ -420,7 +421,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = null;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool islookthruenabled = false;
-            instance.RetrieveIndexConstituentsData(portfolio, effectiveDate,islookthruenabled, (List<IndexConstituentsData> resultSet) =>
+            instance.RetrieveIndexConstituentsData(portfolio, effectiveDate, islookthruenabled, (List<IndexConstituentsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Index constituent Should Be Empty");
                 EnqueueTestComplete();
@@ -441,7 +442,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool islookthruenabled = false;
-            instance.RetrieveIndexConstituentsData(portfolio, effectiveDate,islookthruenabled, (List<IndexConstituentsData> resultSet) =>
+            instance.RetrieveIndexConstituentsData(portfolio, effectiveDate, islookthruenabled, (List<IndexConstituentsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Index constituent Should Be Empty");
                 EnqueueTestComplete();
@@ -628,7 +629,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                 EnqueueTestComplete();
             });
         }
-        #endregion       
+        #endregion
 
         #region Sector Breakdown Gadget
         /// <summary>
@@ -643,7 +644,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
             bool islookthruenabled = false;
-            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, isCashExclude,islookthruenabled, (List<SectorBreakdownData> resultSet) =>
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, isCashExclude, islookthruenabled, (List<SectorBreakdownData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Sector Breakdown Data Not Available");
                 EnqueueTestComplete();
@@ -662,7 +663,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
             bool islookthruenabled = false;
-            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, isCashExclude,islookthruenabled, (List<SectorBreakdownData> resultSet) =>
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, isCashExclude, islookthruenabled, (List<SectorBreakdownData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Sector Breakdown Should Be Empty");
                 EnqueueTestComplete();
@@ -685,7 +686,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
             bool islookthruenabled = false;
-            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, isCashExclude,islookthruenabled, (List<SectorBreakdownData> resultSet) =>
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, isCashExclude, islookthruenabled, (List<SectorBreakdownData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Sector Breakdown Should Be Empty");
                 EnqueueTestComplete();
@@ -1645,7 +1646,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                     EnqueueTestComplete();
                 });
             });
-        } 
+        }
         #endregion
 
         #region RetrieveMarketSnapshotPreference
@@ -1701,7 +1702,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                 Assert.AreNotEqual<int>(0, resultSet.Count, "MarketSnapshotSelectionData should not be empty");
                 EnqueueTestComplete();
             });
-        } 
+        }
         #endregion
 
         #region RetrieveMarketPerformanceSnapshotData
@@ -1860,7 +1861,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                 Assert.AreNotEqual<int>(0, resultSet.Count, "MarketPerformanceSnapshotData should not be empty");
                 EnqueueTestComplete();
             });
-        } 
+        }
         #endregion
 
         #region SaveMarketSnapshotPreference
@@ -1930,7 +1931,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                 Assert.IsNotNull(resultSet, "MarketSnapshotPreference should not be null");
                 EnqueueTestComplete();
             });
-        } 
+        }
         #endregion
 
         #region SaveAsMarketSnapshotPreference
@@ -2096,7 +2097,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             String filterType = "Region";
             String filterValue = "AFRICA";
-            instance.RetrieveHoldingsPercentageData(portfolio, effectiveDate, filterType, filterValue,false, (List<HoldingsPercentageData> resultSet) =>
+            instance.RetrieveHoldingsPercentageData(portfolio, effectiveDate, filterType, filterValue, false, (List<HoldingsPercentageData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Holdings Pie chart for sector Not Available");
                 EnqueueTestComplete();
@@ -2115,7 +2116,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             String filterType = "Region";
             String filterValue = "AFRICA";
-            instance.RetrieveHoldingsPercentageData(portfolio, effectiveDate, filterType, filterValue,false, (List<HoldingsPercentageData> resultSet) =>
+            instance.RetrieveHoldingsPercentageData(portfolio, effectiveDate, filterType, filterValue, false, (List<HoldingsPercentageData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Holdings Pie chart for Sector Should Be Empty");
                 EnqueueTestComplete();
@@ -2137,7 +2138,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             String filterType = "Region";
             String filterValue = "AFRICA";
-            instance.RetrieveHoldingsPercentageData(portfolio, effectiveDate, filterType, filterValue,false, (List<HoldingsPercentageData> resultSet) =>
+            instance.RetrieveHoldingsPercentageData(portfolio, effectiveDate, filterType, filterValue, false, (List<HoldingsPercentageData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Holdings Pie chart for Sector Should Be Empty");
                 EnqueueTestComplete();
@@ -2158,7 +2159,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             String filterType = "Region";
             String filterValue = "AFRICA";
-            instance.RetrieveHoldingsPercentageData(portfolio, effectiveDate, filterType, filterValue,false, (List<HoldingsPercentageData> resultSet) =>
+            instance.RetrieveHoldingsPercentageData(portfolio, effectiveDate, filterType, filterValue, false, (List<HoldingsPercentageData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Holdings Pie chart for Sector Should Be Empty");
                 EnqueueTestComplete();
@@ -2181,7 +2182,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             String filterType = "Region";
             String filterValue = "AFRICA";
-            instance.RetrieveHoldingsPercentageDataForRegion(portfolio, effectiveDate, filterType, filterValue,false, (List<HoldingsPercentageData> resultSet) =>
+            instance.RetrieveHoldingsPercentageDataForRegion(portfolio, effectiveDate, filterType, filterValue, false, (List<HoldingsPercentageData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Holdings Pie chart for Region Not Available");
                 EnqueueTestComplete();
@@ -2200,7 +2201,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             String filterType = "Region";
             String filterValue = "AFRICA";
-            instance.RetrieveHoldingsPercentageDataForRegion(portfolio, effectiveDate, filterType, filterValue,false, (List<HoldingsPercentageData> resultSet) =>
+            instance.RetrieveHoldingsPercentageDataForRegion(portfolio, effectiveDate, filterType, filterValue, false, (List<HoldingsPercentageData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Holdings Pie chart for Region Should Be Empty");
                 EnqueueTestComplete();
@@ -2222,7 +2223,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             String filterType = "Region";
             String filterValue = "AFRICA";
-            instance.RetrieveHoldingsPercentageDataForRegion(portfolio, effectiveDate, filterType, filterValue,false, (List<HoldingsPercentageData> resultSet) =>
+            instance.RetrieveHoldingsPercentageDataForRegion(portfolio, effectiveDate, filterType, filterValue, false, (List<HoldingsPercentageData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Holdings Pie chart for Region Should Be Empty");
                 EnqueueTestComplete();
@@ -2243,7 +2244,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             String filterType = "Region";
             String filterValue = "AFRICA";
-            instance.RetrieveHoldingsPercentageDataForRegion(portfolio, effectiveDate, filterType, filterValue,false, (List<HoldingsPercentageData> resultSet) =>
+            instance.RetrieveHoldingsPercentageDataForRegion(portfolio, effectiveDate, filterType, filterValue, false, (List<HoldingsPercentageData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Holdings Pie chart for Region Should Be Empty");
                 EnqueueTestComplete();
@@ -2266,7 +2267,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             String nodeName = "Country";
             DateTime effectiveDate = new DateTime(2012, 2, 29);
 
-            instance.RetrieveAttributionData(portfolio, effectiveDate,nodeName, (List<AttributionData> resultSet) =>
+            instance.RetrieveAttributionData(portfolio, effectiveDate, nodeName, (List<AttributionData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Attribution Data Not Available");
                 EnqueueTestComplete();
@@ -2284,7 +2285,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "UBEF" };
             DateTime effectiveDate = new DateTime(2012, 2, 29);
             String nodeName = "Country";
-            instance.RetrieveAttributionData(portfolio, effectiveDate,nodeName, (List<AttributionData> resultSet) =>
+            instance.RetrieveAttributionData(portfolio, effectiveDate, nodeName, (List<AttributionData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Attribution Data Should Be Empty");
                 EnqueueTestComplete();
@@ -2304,7 +2305,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = null;
             DateTime effectiveDate = new DateTime(2012, 2, 29);
             String nodeName = "Country";
-            instance.RetrieveAttributionData(portfolio, effectiveDate,nodeName, (List<AttributionData> resultSet) =>
+            instance.RetrieveAttributionData(portfolio, effectiveDate, nodeName, (List<AttributionData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Attribution Data Should Be Empty");
                 EnqueueTestComplete();
@@ -2324,7 +2325,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
             DateTime effectiveDate = new DateTime(2012, 2, 29);
             String nodeName = "Country";
-            instance.RetrieveAttributionData(portfolio, effectiveDate,nodeName, (List<AttributionData> resultSet) =>
+            instance.RetrieveAttributionData(portfolio, effectiveDate, nodeName, (List<AttributionData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Attribution Data Should Be Empty");
                 EnqueueTestComplete();
@@ -2345,7 +2346,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
 
-            instance.RetrievePerformanceGridData(portfolio, effectiveDate,"Colombia", (List<PerformanceGridData> resultSet) =>
+            instance.RetrievePerformanceGridData(portfolio, effectiveDate, "Colombia", (List<PerformanceGridData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "PerformanceGrid Data Not Available");
                 EnqueueTestComplete();
@@ -2362,7 +2363,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "UBEF" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrievePerformanceGridData(portfolio, effectiveDate,"Colombia", (List<PerformanceGridData> resultSet) =>
+            instance.RetrievePerformanceGridData(portfolio, effectiveDate, "Colombia", (List<PerformanceGridData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "PerformanceGrid Data Not Available");
                 EnqueueTestComplete();
@@ -2382,7 +2383,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = null;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
 
-            instance.RetrievePerformanceGridData(portfolio, effectiveDate,"Colombia", (List<PerformanceGridData> resultSet) =>
+            instance.RetrievePerformanceGridData(portfolio, effectiveDate, "Colombia", (List<PerformanceGridData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "PerformanceGrid Data Not Available");
                 EnqueueTestComplete();
@@ -2401,7 +2402,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
             DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrievePerformanceGridData(portfolio, effectiveDate,"Colombia", (List<PerformanceGridData> resultSet) =>
+            instance.RetrievePerformanceGridData(portfolio, effectiveDate, "Colombia", (List<PerformanceGridData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "PerformanceGrid Data Not Available");
                 EnqueueTestComplete();
@@ -2422,7 +2423,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
 
-            instance.RetrievePerformanceGraphData(portfolio, effectiveDate,"YTD", "Peru", (List<PerformanceGraphData> resultSet) =>
+            instance.RetrievePerformanceGraphData(portfolio, effectiveDate, "YTD", "Peru", (List<PerformanceGraphData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "PerformanceGraph Data Not Available");
                 EnqueueTestComplete();
@@ -2563,7 +2564,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                 EnqueueTestComplete();
             });
         }
-       #endregion
+        #endregion
 
         #region Heat Map Gadget
         /// <summary>
@@ -2577,7 +2578,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
 
-            instance.RetrieveHeatMapData(portfolio, effectiveDate,"YTD", (List<HeatMapData> resultSet) =>
+            instance.RetrieveHeatMapData(portfolio, effectiveDate, "YTD", (List<HeatMapData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "HeatMap Data Not Available");
                 EnqueueTestComplete();
@@ -2637,7 +2638,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                 Assert.AreEqual<int>(0, resultSet.Count, "HeatMap Data Not Available");
                 EnqueueTestComplete();
             });
-        }       
+        }
 
         #endregion
 
@@ -2717,7 +2718,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             });
         }
         #endregion
-       
+
         #endregion
 
         #region Commodity
@@ -2765,7 +2766,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             string CommodityId = null;
             instance.RetrieveCommodityData(CommodityId, (List<FXCommodityData> resultset) =>
             {
-                Assert.AreEqual<int>(0,resultset.Count, "Commodity Data should be empty");
+                Assert.AreEqual<int>(0, resultset.Count, "Commodity Data should be empty");
                 EnqueueTestComplete();
             });
         }
@@ -2785,7 +2786,477 @@ namespace Greenfield.ServiceCaller.UnitTest
                 EnqueueTestComplete();
             });
         }
-        #endregion        
+        #endregion
+
+        #region ExternalResearch
+
+        #region ConsensusGadgets
+
+        /// <summary>
+        /// RetrieveTargetPriceData Test Method - Null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Consensus")]
+        public void GetTargetPriceDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = null;
+
+            instance.RetrieveTargetPriceData(entitySelectionData, (List<TargetPriceCEData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "TargetPriceCEData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveTargetPriceData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Consensus")]
+        public void GetTargetPriceDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+            instance.RetrieveTargetPriceData(entitySelectionData, (List<TargetPriceCEData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "TargetPriceCEData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveConsensusEstimatesMedianData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Consensus")]
+        public void RetrieveConsensusEstimatesMedianDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string issuerId = null;
+            FinancialStatementPeriodType periodType = FinancialStatementPeriodType.ANNUAL;
+            string currency = null;
+            instance.RetrieveConsensusEstimatesMedianData(issuerId, periodType, currency, (List<ConsensusEstimateMedian> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "ConsensusEstimateMedian should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveConsensusEstimatesMedianData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Consensus")]
+        public void RetrieveConsensusEstimatesMedianDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string issuerId = "A";
+            FinancialStatementPeriodType periodType = FinancialStatementPeriodType.ANNUAL;
+            string currency = "X";
+            instance.RetrieveConsensusEstimatesMedianData(issuerId, periodType, currency, (List<ConsensusEstimateMedian> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "ConsensusEstimateMedian should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveConsensusEstimatesValuationsData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Consensus")]
+        public void RetrieveConsensusEstimatesValuationDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string issuerId = null;
+            FinancialStatementPeriodType periodType = FinancialStatementPeriodType.ANNUAL;
+            string currency = null;
+            string longName = null;
+            instance.RetrieveConsensusEstimatesValuationsData(issuerId, longName, periodType, currency, (List<ConsensusEstimatesValuations> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "ConsensusEstimateMedian should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveConsensusEstimatesValuationsData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Consensus")]
+        public void RetrieveConsensusEstimatesValuationDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string issuerId = "A";
+            FinancialStatementPeriodType periodType = FinancialStatementPeriodType.ANNUAL;
+            string currency = "X";
+            string longName = "A";
+            instance.RetrieveConsensusEstimatesValuationsData(issuerId, longName, periodType, currency, (List<ConsensusEstimatesValuations> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "ConsensusEstimateMedian should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        #endregion
+
+        #endregion
+
+        #region DCF
+
+        /// <summary>
+        /// RetrieveDCFAnalysisDataDummy Test Method - Null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveDCFAnalysisDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = null;
+            instance.RetrieveDCFAnalysisData(entitySelectionData, (List<DCFAnalysisSummaryData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "DCFAnalysisSummaryData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveDCFAnalysisDataDummy Test Method - Dummy
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveDCFAnalysisDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+            instance.RetrieveDCFAnalysisData(entitySelectionData, (List<DCFAnalysisSummaryData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "DCFAnalysisSummaryData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveTerminalValueCalculationsData Test Method - Null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveTerminalValueCalculationsDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = null;
+            instance.RetrieveDCFTerminalValueCalculationsData(entitySelectionData, (List<DCFTerminalValueCalculationsData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "DCFAnalysisSummaryData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveTerminalValueCalculationsData Test Method - Dummy
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveTerminalValueCalculationsDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+            instance.RetrieveDCFTerminalValueCalculationsData(entitySelectionData, (List<DCFTerminalValueCalculationsData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "DCFAnalysisSummaryData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveCashFlows Test Method - Null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveCashFlowsDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = null;
+            instance.RetrieveCashFlows(entitySelectionData, (List<DCFCashFlowData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "DCFCashFlowData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveCashFlows Test Method - Dummy
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveCashFlowsDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+            instance.RetrieveCashFlows(entitySelectionData, (List<DCFCashFlowData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "DCFCashFlowData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveDCFSummaryData Test Method - Null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveDCFSummaryDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = null;
+            instance.RetrieveDCFSummaryData(entitySelectionData, (List<DCFSummaryData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "DCFSummaryData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveDCFSummaryData Test Method - Dummy
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveDCFSummaryDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+            instance.RetrieveDCFSummaryData(entitySelectionData, (List<DCFSummaryData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "DCFSummaryData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveCurrentPriceData Test Method - Null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveCurrentPriceDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = null;
+            instance.RetrieveDCFCurrentPrice(entitySelectionData, (decimal? resultSet) =>
+            {
+                Assert.AreEqual<decimal?>(0, resultSet, "Price should be 0");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveCurrentPriceData Test Method - Dummy
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveCurrentPriceDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+            instance.RetrieveDCFCurrentPrice(entitySelectionData, (decimal? resultSet) =>
+            {
+                Assert.AreEqual<decimal?>(0, resultSet, "Price should be 0");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// FetchDCFCountryName Test Method - Null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveCountryNameNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = null;
+            instance.FetchDCFCountryName(entitySelectionData, (string resultSet) =>
+            {
+                Assert.AreEqual<string>(string.Empty, resultSet, "Country should be Blank");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// FetchDCFCountryName Test Method - Dummy
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveCountryNameDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+            instance.FetchDCFCountryName(entitySelectionData, (string resultSet) =>
+            {
+                Assert.AreEqual<string>(string.Empty, resultSet, "Country should be Blank");
+                EnqueueTestComplete();
+            });
+        }
+
+
+        /// <summary>
+        /// FetchDCFCountryName Test Method - Null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveDCFFairValueDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = null;
+            instance.RetrieveDCFFairValueData(entitySelectionData, (List<PERIOD_FINANCIALS> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "PERIOD_FINANCIALS should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// FetchDCFCountryName Test Method - Dummy
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void RetrieveDCFFairValueDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+            instance.RetrieveDCFFairValueData(entitySelectionData, (List<PERIOD_FINANCIALS> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "PERIOD_FINANCIALS should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// InsertDCFFairValueData Test Method - Null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void InsertDCFFairValueDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = null;
+            string valueType = string.Empty;
+            int? fvMeasure = null;
+            decimal? fvbuy = null;
+            decimal? fvSell = null;
+            decimal? currentMeasureValue = null;
+            decimal? upside = null;
+            DateTime? updated = null;
+            instance.InsertDCFFairValueData(entitySelectionData, valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated, (bool resultSet) =>
+            {
+                Assert.AreEqual<bool>(false, resultSet, "False should be returned");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// InsertDCFFairValueData Test Method - Dummy
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void InsertDCFFairValueDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+            string valueType = "A";
+            int? fvMeasure = 1;
+            decimal? fvbuy = 1;
+            decimal? fvSell = 1;
+            decimal? currentMeasureValue = 1;
+            decimal? upside = 1;
+            DateTime? updated = DateTime.Now;
+            instance.InsertDCFFairValueData(entitySelectionData, valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated, (bool resultSet) =>
+            {
+                Assert.AreEqual<bool>(false, resultSet, "False should be returned");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// DeleteDCFFairValue Test Method - Null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void DeleteDCFFairValueDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = null;
+            instance.DeleteDCFFairValue(entitySelectionData, (bool resultSet) =>
+            {
+                Assert.AreEqual<bool>(false, resultSet, "False should be returned");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// DeleteDCFFairValue Test Method - Dummy
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("DCF")]
+        public void DeleteDCFFairValueDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+            instance.DeleteDCFFairValue(entitySelectionData, (bool resultSet) =>
+            {
+                Assert.AreEqual<bool>(false, resultSet, "False should be returned");
+                EnqueueTestComplete();
+            });
+        }
+
+
+        #endregion
+
+        #region ExcelModel
+
+        ///// <summary>
+        ///// RetrieveDocumentsData - null Check
+        ///// </summary>
+        //[TestMethod]
+        //[Asynchronous]
+        //[Tag("ExcelModel")]
+        //public void RetrieveStatementData()
+        //{
+        //    DBInteractivity instance = new DBInteractivity();
+        //    EntitySelectionData entitySelectionData = new EntitySelectionData() { InstrumentID = "A", LongName = "B", SecurityType = "A", ShortName = "C", SortOrder = 1, Type = "A" };
+        //    instance.RetrieveDocumentsData(entitySelectionData, (byte[] resultSet) =>
+        //    {
+        //        Assert.AreEqual<byte[]>(byte[1], resultSet, "False should be returned");
+        //        EnqueueTestComplete();
+        //    });
+        //}
+
+
+        #endregion
+
 
     }
 }
