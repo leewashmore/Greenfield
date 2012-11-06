@@ -681,7 +681,9 @@ namespace GreenField.Web.Services
                 List<GetBasicData_Result> resultDB = new List<GetBasicData_Result>();
                 ExternalResearchEntities extResearch = new ExternalResearchEntities();
                 if (entitySelectionData == null)
+                {
                     return null;
+                }
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
 
@@ -689,7 +691,9 @@ namespace GreenField.Web.Services
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
+                {
                     throw new Exception("Services are not available");
+                }
 
                 //Retrieving data from security view
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
@@ -700,13 +704,16 @@ namespace GreenField.Web.Services
                     .FirstOrDefault();
 
                 if (data == null)
+                {
                     return null;
+                }
 
                 BasicData basicData = new BasicData();
                 basicData.WeekRange52Low = data.FIFTYTWO_WEEK_LOW;
                 basicData.WeekRange52High = data.FIFTYTWO_WEEK_HIGH;
                 basicData.AverageVolume = data.SECURITY_VOLUME_AVG_6M;
                 basicData.SharesOutstanding = data.SHARES_OUTSTANDING;
+
                 if (data.BARRA_BETA != null)
                 {
                     basicData.Beta = data.BARRA_BETA;
@@ -716,11 +723,11 @@ namespace GreenField.Web.Services
                 {
                     decimal convertedString;
                     basicData.BetaSource = "BLOOMBERG";
-                    //if (data.BETA != null && data.BETA != string.Empty)
-                    //{
+                    
                     if (decimal.TryParse(data.BETA, out convertedString))
+                    {
                         basicData.Beta = convertedString;
-
+                    }
                     else
                     {
                         basicData.Beta = null;
@@ -740,10 +747,8 @@ namespace GreenField.Web.Services
                 }
 
                 ////Retrieving data from Period Financials table
-                resultDB = extResearch.ExecuteStoreQuery<GetBasicData_Result>("exec GetBasicData @SecurityID={0}", Convert.ToString(data.SECURITY_ID)).ToList();
-
-
-
+                resultDB = extResearch.ExecuteStoreQuery<GetBasicData_Result>("exec GetBasicData @SecurityID={0}", 
+                    Convert.ToString(data.SECURITY_ID)).ToList();
                 basicData.MarketCapitalization = resultDB[0].MARKET_CAPITALIZATION;
                 basicData.EnterpriseValue = resultDB[0].ENTERPRISE_VALUE;
                 result.Add(basicData);
