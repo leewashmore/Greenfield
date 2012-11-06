@@ -2171,6 +2171,7 @@ namespace GreenField.Web.Services
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 research.CommandTimeout = 5000;
                 Decimal? benchmarkWeight = 0;
+                String benId = null;
                 List<String> benchmarkIds = new List<string>();
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -2189,9 +2190,8 @@ namespace GreenField.Web.Services
                     {
                         lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
                     }
-                }
-                String benId = lastBusinessRecord.BENCHMARK_ID;
-
+                 benId = lastBusinessRecord.BENCHMARK_ID;
+                }    
                 //gathering the data from GF_BENCHMARK_HOLDINGS
                 List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
                 dataBenchmarkHoldings = dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
