@@ -11,24 +11,7 @@ using System.Windows.Shapes;
 using System.Collections.Generic;
 
 namespace GreenField.Gadgets.Helpers
-{
-    //public class MeasuresList
-    //{
-    //    private string _measures;
-    //    public string Measures
-    //    {
-    //        get { return _measures; }
-    //        set { _measures = value; }
-    //    }
-
-    //    private int _dataId;
-    //    public int DataId
-    //    {
-    //        get { return _dataId; }
-    //        set { _dataId = value; }
-    //    }
-    //}
-
+{   
     public class CurrentFairValueMeasures
     {
         public Dictionary<string, int> MeasureList;

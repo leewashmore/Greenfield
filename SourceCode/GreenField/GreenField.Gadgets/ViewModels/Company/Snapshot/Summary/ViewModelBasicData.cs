@@ -105,7 +105,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Holds the Basci Data points and corresponding values
+        /// Holds the Basic Data points and corresponding values
         /// </summary>
         private List<KeyValuePair<String, String>> basicDataDataList;
         public List<KeyValuePair<String, String>> BasicDataDataList

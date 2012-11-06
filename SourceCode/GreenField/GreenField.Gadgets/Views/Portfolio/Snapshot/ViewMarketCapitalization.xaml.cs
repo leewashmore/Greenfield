@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller;
 
 
 namespace GreenField.Gadgets.Views
@@ -41,9 +42,12 @@ namespace GreenField.Gadgets.Views
             set
             {
                 if (value != null)
-                dataContextSource = value;
+                {
+                    dataContextSource = value;
+                }
             }
         }
+
         private bool isActive;
         public override bool IsActive
         {
@@ -52,11 +56,14 @@ namespace GreenField.Gadgets.Views
             {
                 isActive = value;
                 if (DataContextSource != null) //DataContext instance
+                {
                     DataContextSource.IsActive = isActive;
+                }
             }
         }
 
         #endregion
+
         #region Event
         /// <summary>
         /// event to handle RadBusyIndicator
@@ -65,9 +72,50 @@ namespace GreenField.Gadgets.Views
         void DataContextSourceMarketCapitalizationLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             if (e.ShowBusy)
+            {
                 this.gridBusyIndicator.IsBusy = true;
+            }
             else
+            {
                 this.gridBusyIndicator.IsBusy = false;
+            }
+        }
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgMarketCapData.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
+                    {
+                          new RadExportOptions() { ElementName = "Market Capitalization", Element = this.dgMarketCapData, 
+                              ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                    };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " +
+                        GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES);
+                    childExportOptions.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Styles added to export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgMarketCapData_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
         }
         #endregion
     }
