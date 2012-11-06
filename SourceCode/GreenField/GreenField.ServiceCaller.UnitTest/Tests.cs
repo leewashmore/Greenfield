@@ -2719,6 +2719,100 @@ namespace Greenfield.ServiceCaller.UnitTest
         }
         #endregion
 
+        #region Risk Index Exposures Gadget
+        /// <summary>
+        /// RetrieveRiskIndexExposuresData Test Method - Sample Data
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("RiskIndexExposures")]
+        public void RetrieveRiskIndexExposuresDataTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+            bool isCashExclude = false;
+            bool islookthruenabled = false;
+            string filterType = "Sector";
+            string filterValue = "Utilities";
+            instance.RetrieveRiskIndexExposuresData(portfolio, effectiveDate, isCashExclude, islookthruenabled, filterType, filterValue,
+                (List<RiskIndexExposuresData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "RiskIndexExposures Data Not Available");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveRiskIndexExposuresData Test Method - Sample Data Which Does Not Retrieves Any Data - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("RiskIndexExposures")]
+        public void RetrieveRiskIndexExposuresDataNotAvailableTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+            bool isCashExclude = false;
+            bool islookthruenabled = false;
+            string filterType = "Sector";
+            string filterValue = "XYZ";
+            instance.RetrieveRiskIndexExposuresData(portfolio, effectiveDate, isCashExclude, islookthruenabled, filterType, filterValue,
+                (List<RiskIndexExposuresData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "RiskIndexExposures Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveRiskIndexExposuresData Test Method - portfolioIdentifiers as null - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("RiskIndexExposures")]
+        public void RetrieveRiskIndexExposuresDataPortfolioIdentifierNullTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = null;
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+            bool isCashExclude = false;
+            bool islookthruenabled = false;
+            string filterType = "Sector";
+            string filterValue = "Utilities";
+            instance.RetrieveRiskIndexExposuresData(portfolio, effectiveDate, isCashExclude, islookthruenabled, filterType, filterValue,
+                (List<RiskIndexExposuresData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "RiskIndexExposures Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveRiskIndexExposuresData Test Method - portfolioIdentifiers as Empty - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("RiskIndexExposures")]
+        public void RetrieveRiskIndexExposuresDataPortfolioIdentifierEmptyTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData();
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+            bool isCashExclude = false;
+            bool islookthruenabled = false;
+            string filterType = "Sector";
+            string filterValue = "Utilities";
+            instance.RetrieveRiskIndexExposuresData(portfolio, effectiveDate, isCashExclude, islookthruenabled, filterType, filterValue,
+                (List<RiskIndexExposuresData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "RiskIndexExposures Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+        #endregion
+
         #endregion
 
         #region Commodity
@@ -2904,6 +2998,94 @@ namespace Greenfield.ServiceCaller.UnitTest
                 EnqueueTestComplete();
             });
         }
+
+        /// <summary>
+        /// RetrieveConsensusEstimateDetailedData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Consensus")]
+        public void RetrieveConsensusEstimateDetailedDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string issuerId = null;
+            FinancialStatementPeriodType periodType = FinancialStatementPeriodType.ANNUAL;
+            string currency = null;
+            instance.RetrieveConsensusEstimateDetailedData(issuerId, periodType, currency, (List<ConsensusEstimateDetail> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "ConsensusEstimateDetail should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveConsensusEstimateDetailData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Consensus")]
+        public void RetrieveConsensusEstimateDetailDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string issuerId = "A";
+            FinancialStatementPeriodType periodType = FinancialStatementPeriodType.ANNUAL;
+            string currency = "X";
+            instance.RetrieveConsensusEstimateDetailedData(issuerId, periodType, currency, (List<ConsensusEstimateDetail> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "ConsensusEstimateDetail should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        #endregion
+
+        #region Finstat Gadget
+
+        /// <summary>
+        /// RetrieveFinstatData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Finstat")]
+        public void RetrieveFinstatDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string issuerId = null;
+            string securityId = null;
+            FinancialStatementDataSource dataSource = FinancialStatementDataSource.REUTERS;
+            FinancialStatementFiscalType fiscalType = FinancialStatementFiscalType.FISCAL;
+            string currency = null;
+            Int32 yearRangeStart = 0;
+            instance.RetrieveFinstatDetailData(issuerId, securityId, dataSource, fiscalType, currency, yearRangeStart,
+                (List<FinstatDetailData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "FinstatDetailData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+
+        /// <summary>
+        /// RetrieveFinstatData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Finstat")]
+        public void RetrieveFinstatDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string issuerId = "A";
+            string securityId = "B";
+            FinancialStatementDataSource dataSource = FinancialStatementDataSource.REUTERS;
+            FinancialStatementFiscalType fiscalType = FinancialStatementFiscalType.FISCAL;
+            string currency = "X";
+            Int32 yearRangeStart = 2009;
+            instance.RetrieveFinstatDetailData(issuerId, securityId, dataSource, fiscalType, currency, yearRangeStart,
+                (List<FinstatDetailData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "FinstatDetailData should be Empty");
+                    EnqueueTestComplete();
+                });
+        } 
 
         #endregion
 
@@ -3115,7 +3297,6 @@ namespace Greenfield.ServiceCaller.UnitTest
             });
         }
 
-
         /// <summary>
         /// FetchDCFCountryName Test Method - Null
         /// </summary>
@@ -3232,7 +3413,6 @@ namespace Greenfield.ServiceCaller.UnitTest
             });
         }
 
-
         #endregion
 
         #region ExcelModel
@@ -3254,9 +3434,119 @@ namespace Greenfield.ServiceCaller.UnitTest
         //    });
         //}
 
+        #endregion
+
+        #region Custom Screening Tool
+
+        #region Composite Fund Gadget
+
+        /// <summary>
+        /// RetrieveCompositeFundData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Composite Fund")]
+        public void RetrieveCompositeFundDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entityIdentifiers = null;
+            PortfolioSelectionData portfolio = null;
+            instance.RetrieveCompositeFundData(entityIdentifiers, portfolio, (List<CompositeFundData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "CompositeFundData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+
+        /// <summary>
+        /// RetrieveCompositeFundData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Composite Fund")]
+        public void RetrieveCompositeFundDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entityIdentifiers = new EntitySelectionData()
+            {
+                InstrumentID = "BRPETROBRE",
+                LongName = "PETROBRAS - PETROLEO BRAS",
+                ShortName = "PETR3 BZ",
+                SecurityType = "EQUITY"
+            };
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
+            instance.RetrieveCompositeFundData(entityIdentifiers, portfolio, (List<CompositeFundData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "CompositeFundData should be Empty");
+                EnqueueTestComplete();
+            });
+        } 
 
         #endregion
 
+        #region Custom Screening Tool
 
+        /// <summary>
+        /// RetrieveSecurityData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Custom Screening Tool")]
+        public void RetrieveSecurityDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData benchmark = null;
+            PortfolioSelectionData portfolio = null;
+            String region = null;
+            String country = null;
+            String sector = null;
+            String industry = null;
+            List<CSTUserPreferenceInfo> userPreference = null;
+            instance.RetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, userPreference, (List<CustomScreeningSecurityData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "CustomScreeningToolData should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveSecurityData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Custom Screening Tool")]
+        public void RetrieveSecurityDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData benchmark = new EntitySelectionData()
+            {
+                InstrumentID = "BRPETROBRE",
+                LongName = "PETROBRAS - PETROLEO BRAS",
+                ShortName = "PETR3 BZ",
+                SecurityType = "EQUITY"
+            };
+            PortfolioSelectionData portfolio = null;
+            String region = null;
+            String country = null;
+            String sector = null;
+            String industry = null;
+            List<CSTUserPreferenceInfo> userPreference = new List<CSTUserPreferenceInfo>();
+            userPreference.Add(new CSTUserPreferenceInfo()
+            {
+                UserName = "ABC",
+                ListName = "XYZ",
+                Accessibility = "Private",
+                ScreeningId = "REF017",
+            });
+            instance.RetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, userPreference, (List<CustomScreeningSecurityData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "CustomScreeningToolData should be Empty");
+                EnqueueTestComplete();
+            });
+        } 
+
+        #endregion
+
+        #endregion
     }
 }
