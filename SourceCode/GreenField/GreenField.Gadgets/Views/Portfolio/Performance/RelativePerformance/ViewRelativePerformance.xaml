@@ -1,0 +1,196 @@
+﻿<helpers:ViewBaseUserControl xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+                             x:Class="GreenField.Gadgets.Views.ViewRelativePerformance"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                <ResourceDictionary>
+                    <ControlTemplate x:Key="GridViewFooterCellTemplate" TargetType="telerik:GridViewFooterCell">
+                        <Border x:Name="PART_FooterCellBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" MouseLeftButtonDown="FooterCellBorder_MouseLeftButtonDown" >
+                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
+                                  Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                    <SolidColorBrush x:Key="ControlOuterBorder" Color="#FF848484"/>
+                    <Style x:Key="GridViewCustomFooterCellStyle" TargetType="telerik:GridViewFooterCell">
+                        <Setter Property="Template" Value="{StaticResource GridViewFooterCellTemplate}"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource ControlOuterBorder}"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                        <Setter Property="Padding" Value="5,0,3,0"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="FontSize" Value="9"/>
+                        <Setter Property="Height" Value="18"/>
+                    </Style>
+                    <!--GridViewHeaderCellStyle for dynamically created columns -->
+                    <ControlTemplate x:Key="GridViewHeaderCellTemplate" TargetType="telerik:GridViewHeaderCell">
+                        <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" 
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                    <Style TargetType="telerik:GridViewHeaderCell" x:Key="GridViewHeaderCellClickable">
+                        <Setter Property="Template" Value="{StaticResource GridViewHeaderCellTemplate}"/>
+                        <Setter Property="Background" Value="#e4e5e5" />
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="Height" Value="18"/>
+                        <Setter Property="FontSize" Value="9"/>
+                        <Setter Property="FontFamily" Value="Arial"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                    </Style>
+
+                    <!--GridViewCellStyle-->
+                    <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
+                        <Setter Property="Height" Value="18"/>
+                        <Setter Property="FontFamily" Value="Arial"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="FontSize" Value="9"/>
+                    </Style>
+
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <helpers:BasisPointsConverter x:Key="basisPointsConverter"/>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}" DisplayAfter="0" 
+                              IsBusy="{Binding BusyIndicatorStatus}">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
+
+            <!--Export Row-->
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <telerik:RadButton x:Name="btnExportExcel" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   ToolTipService.ToolTip="Export to Excel" Click="btnExportExcel_Click">
+                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </telerik:RadButton>
+                    <telerik:RadButton x:Name="btnExportPDF" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Margin="2,0,0,0" ToolTipService.ToolTip="Export to Pdf" Click="btnExportToPdf_Click">
+                        <Image Source="/GreenField.Gadgets;component/Images/PDF.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </telerik:RadButton>
+                    <telerik:RadButton x:Name="btnPrint" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Margin="2,0,0,0" ToolTipService.ToolTip="Print" Click="btnPrint_Click">
+                        <Image Source="/GreenField.Gadgets;component/Images/Print.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </telerik:RadButton>
+                </StackPanel>
+            </Grid>
+
+            <!--Grid Row-->
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <telerik:RadGridView Name="dgRelativePerformance" 
+                                     Grid.Row="0"
+                                     AutoGenerateColumns="False" 
+                                     IsFilteringAllowed="True" 
+                                     FrozenColumnCount="1"
+                                     CanUserSelect="True" 
+                                     CanUserReorderColumns="False" 
+                                     CanUserInsertRows="False" 
+                                     SelectionMode="Single"
+                                     CanUserDeleteRows="False" 
+                                     IsReadOnly="True" 
+                                     CanUserSortColumns="False" 
+                                     ScrollMode="RealTime" 
+                                     ShowGroupFooters="True"
+                                     RowIndicatorVisibility="Collapsed" 
+                                     ShowGroupPanel="False" 
+                                     ShowColumnFooters="True" 
+                                     AlternationCount="2" 
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                     SelectionUnit="Cell" 
+                                     ElementExporting="dgRelativePerformance_ElementExporting"
+                                     GridLinesVisibility="None"
+                                     RowLoaded="dgRelativePerformance_RowLoaded"
+                                     SelectedCellsChanged="dgRelativePerformance_SelectedCellsChanged"
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     EnableRowVirtualization="False">
+
+                    <telerik:RadGridView.Columns>
+                        <!--CountryID Column-->
+                        <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                     HeaderTextAlignment="Left" TextAlignment="Left" UniqueName="CountryId"
+                                                    FooterCellStyle="{Binding GridViewCustomFooterCellStyle}" Footer="Totals">
+                            <telerik:GridViewDataColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding CountryId}" Foreground="Black"/>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellTemplate>                
+                        </telerik:GridViewDataColumn>
+                        <!--Totals Column-->
+                        <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total" FooterTextAlignment="Right" HeaderTextAlignment="Right"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
+                                                    UniqueName="Total" >
+                            <telerik:GridViewDataColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding AggregateCountryAlpha, Converter={StaticResource basisPointsConverter}}" Foreground="Black">
+                                         <ToolTipService.ToolTip> 
+                                         <ToolTip Content="{Binding AggregateCountryActivePosition}"/>
+                                         </ToolTipService.ToolTip>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellTemplate>
+                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                <telerik:SumFunction x:Name="AggregateCountryAlphaSumFunction" SourceField="AggregateCountryAlpha"/>
+                            </telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:GridViewDataColumn.Footer>
+                                <telerik:AggregateResultsList ItemsSource="{Binding}" VerticalAlignment="Center">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock VerticalAlignment="Center"
+                                                           Text="{Binding FormattedValue, Converter={StaticResource basisPointsConverter}}" 
+                                                           TextAlignment="Right"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </telerik:AggregateResultsList>
+                            </telerik:GridViewDataColumn.Footer>
+                        </telerik:GridViewDataColumn>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+                <Grid x:Name="grdTopActivePositionSecurity" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <Border x:Name="brdTopActivePositionSecurity" >
+                        <toolkit:DockPanel x:Name="dpTopActivePositionSecurity" telerik:StyleManager.Theme="Metro"/>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <telerik:RadRichTextBox x:Name="RichTextBox" Width="0">
+                    <!--For Printing the grid-->
+                </telerik:RadRichTextBox>
+            </Grid>
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+</helpers:ViewBaseUserControl>

@@ -245,13 +245,13 @@
     <Compile Include="Views\Company\Charting\ViewDashboardCompanyChartingUnrealizedGain.xaml.cs">
       <DependentUpon>ViewDashboardCompanyChartingUnrealizedGain.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesComparison.xaml.cs">
+    <Compile Include="Views\Company\Estimates\Consensus\ViewDashboardCompanyEstimatesComparison.xaml.cs">
       <DependentUpon>ViewDashboardCompanyEstimatesComparison.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesConsensus.xaml.cs">
+    <Compile Include="Views\Company\Estimates\Consensus\ViewDashboardCompanyEstimatesConsensus.xaml.cs">
       <DependentUpon>ViewDashboardCompanyEstimatesConsensus.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesDetailed.xaml.cs">
+    <Compile Include="Views\Company\Estimates\Consensus\ViewDashboardCompanyEstimatesDetailed.xaml.cs">
       <DependentUpon>ViewDashboardCompanyEstimatesDetailed.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotCompanyProfile.xaml.cs">
@@ -470,15 +470,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesComparison.xaml">
+    <Page Include="Views\Company\Estimates\Consensus\ViewDashboardCompanyEstimatesComparison.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesConsensus.xaml">
+    <Page Include="Views\Company\Estimates\Consensus\ViewDashboardCompanyEstimatesConsensus.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesDetailed.xaml">
+    <Page Include="Views\Company\Estimates\Consensus\ViewDashboardCompanyEstimatesDetailed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
