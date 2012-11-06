@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Documents.Model;
 using GreenField.Common;
-using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ViewPRevenue
+    /// </summary>
     public partial class ViewPRevenue : ViewBaseUserControl
     {
-
-        #region Variables
-
+        #region Fields
         /// <summary>
         /// Export Types
         /// </summary>
@@ -32,12 +26,9 @@ namespace GreenField.Gadgets.Views
             public const string P_Revenue = "P/Revenue";
             public const string P_Revenue_DATA = "P/Revenue Data";
         }
-
-
         #endregion
 
-        #region PropertyDeclaration
-
+        #region Properties
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
@@ -71,6 +62,10 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">ViewModelPRevenue</param>
         public ViewPRevenue(ViewModelPRevenue dataContextSource)
         {
             InitializeComponent();
@@ -82,10 +77,16 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region EVENT
+        #region Event Handlers
+        #region Data Load
+        /// <summary>
+        /// chPRevenue Loaded event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chPRevenue_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
             if (chPRevenue.DefaultView.ChartLegend.Items.Count != 0)
             {
                 ChartLegendItem var = this.chPRevenue.DefaultView.ChartLegend.Items[0];
@@ -94,17 +95,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region HELPER METHOD
-        private void ApplyChartStyles()
-        {
-            this.chPRevenue.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            this.chPRevenue.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chPRevenue.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-        }
-        #endregion
-
         #region Export
-
         /// <summary>
         /// Event for Grid Export
         /// </summary>
@@ -121,20 +112,20 @@ namespace GreenField.Gadgets.Views
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
-        {                       
+        {
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
                 if (chPRevenue.Visibility == Visibility.Visible)
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_Revenue, Element = this.chPRevenue, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
-                  
+
                 else if (dgPRevenue.Visibility == Visibility.Visible)
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_Revenue_DATA, Element = this.dgPRevenue, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                
+
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PREVENUE);
                 childExportOptions.Show();
-                
+
             }
             catch (Exception ex)
             {
@@ -142,24 +133,54 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        #endregion
-
-        #region EventsUnsubscribe
-
         /// <summary>
-        /// UnSubscribing the Events
+        /// Printing the DataGrid
         /// </summary>
-        public override void Dispose()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            this.DataContextPRevenue.Dispose();
-            this.DataContextPRevenue = null;
-            this.DataContext = null;
+            try
+            {
+                if (this.dgPRevenue.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(this.dgPRevenue, 6);
+                    }));
+
+                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
         }
 
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgPRevenue.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgPRevenue);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
         #endregion
 
         #region Flipping
-
         /// <summary>
         /// Flipping between Grid & Chart
         /// Using the method FlipItem in class Flipper.cs
@@ -178,6 +199,26 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #endregion 
         #endregion
+
+        #region Helper Methods
+        private void ApplyChartStyles()
+        {
+            this.chPRevenue.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+            this.chPRevenue.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chPRevenue.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+        }
+        
+        /// <summary>
+        /// UnSubscribing the Events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextPRevenue.Dispose();
+            this.DataContextPRevenue = null;
+            this.DataContext = null;
+        }
+        #endregion        
     }
 }

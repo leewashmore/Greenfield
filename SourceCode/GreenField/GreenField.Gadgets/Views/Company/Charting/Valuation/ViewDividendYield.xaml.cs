@@ -1,30 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Documents.Model;
 using GreenField.Common;
-using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 
-
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ViewDividendYield
+    /// </summary>
     public partial class ViewDividendYield : ViewBaseUserControl
     {
-
-        #region Variables
-
+        #region Fields
         /// <summary>
         /// Export Types
         /// </summary>
@@ -33,12 +25,9 @@ namespace GreenField.Gadgets.Views
             public const string Dividend_Yield = "Dividend Yield";
             public const string Dividend_Yield_Data = "Dividend Yield Data";
         }
-
-
         #endregion
 
-        #region PropertyDeclaration
-
+        #region Properties
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
@@ -71,6 +60,11 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">ViewModelDividendYield</param>
         public ViewDividendYield(ViewModelDividendYield dataContextSource)
         {
             InitializeComponent();
@@ -79,11 +73,16 @@ namespace GreenField.Gadgets.Views
             dataContextSource.ChartArea = this.chDividendYield.DefaultView.ChartArea;
             this.chDividendYield.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();
-        }
-        private void dgDividendYield_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-           
-        }
+        } 
+        #endregion
+
+        #region Event Handlers
+        #region Data Load
+        /// <summary>
+        /// chDividendYield Loaded event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chDividendYield_Loaded(object sender, RoutedEventArgs e)
         {
             if (chDividendYield.DefaultView.ChartLegend.Items.Count != 0)
@@ -91,17 +90,10 @@ namespace GreenField.Gadgets.Views
                 ChartLegendItem var = this.chDividendYield.DefaultView.ChartLegend.Items[0];
                 this.chDividendYield.DefaultView.ChartLegend.Items.Remove(var);
             }
-        }      
-
-        private void ApplyChartStyles()
-        {
-            this.chDividendYield.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            this.chDividendYield.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chDividendYield.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
         }
+        #endregion
 
-        #region Export
-
+        #region Export/Print
         /// <summary>
         /// Event for Grid Export
         /// </summary>
@@ -138,24 +130,54 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        #endregion
-
-        #region EventsUnsubscribe
-
         /// <summary>
-        /// UnSubscribing the Events
+        /// Printing the DataGrid
         /// </summary>
-        public override void Dispose()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            this.DataContextDividendYield.Dispose();
-            this.DataContextDividendYield = null;
-            this.DataContext = null;
+            try
+            {
+                if (this.dgDividendYield.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(this.dgDividendYield, 6);
+                    }));
+
+                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
         }
 
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgDividendYield.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgDividendYield);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
         #endregion
 
         #region Flipping
-
         /// <summary>
         /// Flipping between Grid & Chart
         /// Using the method FlipItem in class Flipper.cs
@@ -174,6 +196,29 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #endregion 
         #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Apply chart styles
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            this.chDividendYield.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+            this.chDividendYield.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chDividendYield.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+        }
+
+        /// <summary>
+        /// UnSubscribing the Events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextDividendYield.Dispose();
+            this.DataContextDividendYield = null;
+            this.DataContext = null;
+        }
+        #endregion        
     }
 }

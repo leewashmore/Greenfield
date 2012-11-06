@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
-using System.IO;
-using GreenField.Common;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
-using Telerik.Windows.Controls.Primitives;
+using Telerik.Windows.Documents.Model;
+using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Controls.Charting;
 
 namespace GreenField.Gadgets.Views
 {
@@ -239,7 +230,7 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-        #region ExportToExcel
+        #region Export/Print
 
         /// <summary>
         /// Method to catch Click Event of Export to Excel
@@ -267,6 +258,58 @@ namespace GreenField.Gadgets.Views
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
                 childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextClosingPriceChart.logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextClosingPriceChart.logger, methodNamespace);
+            try
+            {
+                if (this.grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(this.dgPricing, 6);
+                    }));
+
+                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextClosingPriceChart.logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextClosingPriceChart.logger, methodNamespace);
+            try
+            {
+                if (this.grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgPricing);
+                }
             }
             catch (Exception ex)
             {

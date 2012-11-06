@@ -1,29 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Documents.Model;
 using GreenField.Common;
-using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ViewPE
+    /// </summary>
     public partial class ViewPE : ViewBaseUserControl
     {
-
-        #region Variables
-
+        #region Fields
         /// <summary>
         /// Export Types
         /// </summary>
@@ -32,45 +25,46 @@ namespace GreenField.Gadgets.Views
             public const string P_E = "P/E";
             public const string P_E_DATA = "P/E Data";
         }
-
-
         #endregion
 
-        #region PropertyDeclaration
-
+        #region Properties
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
-        private ViewModelPE _dataContextPE;
+        private ViewModelPE dataContextPE;
         public ViewModelPE DataContextPE
         {
             get
             {
-                return _dataContextPE;
+                return dataContextPE;
             }
             set
             {
-                _dataContextPE = value;
+                dataContextPE = value;
             }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextPE != null) //DataContext instance
-                    DataContextPE.IsActive = _isActive;
+                    DataContextPE.IsActive = isActive;
             }
         }
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">ViewModelPE</param>
         public ViewPE(ViewModelPE dataContextSource)
         {
             InitializeComponent();
@@ -82,7 +76,13 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region EVENT
+        #region Event Handler
+        #region Data load
+        /// <summary>
+        /// chPE Loaded event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chPE_Loaded(object sender, RoutedEventArgs e)
         {
             if (chPE.DefaultView.ChartLegend.Items.Count != 0)
@@ -90,20 +90,10 @@ namespace GreenField.Gadgets.Views
                 ChartLegendItem var = this.chPE.DefaultView.ChartLegend.Items[0];
                 this.chPE.DefaultView.ChartLegend.Items.Remove(var);
             }
-        }
-        #endregion
-
-        #region HELPER METHOD
-        private void ApplyChartStyles()
-        {
-            this.chPE.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            this.chPE.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chPE.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-        }
+        } 
         #endregion
 
         #region Export
-
         /// <summary>
         /// Event for Grid Export
         /// </summary>
@@ -140,20 +130,51 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        #endregion
-
-        #region EventsUnsubscribe
-
         /// <summary>
-        /// UnSubscribing the Events
+        /// Printing the DataGrid
         /// </summary>
-        public override void Dispose()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            this.DataContextPE.Dispose();
-            this.DataContextPE = null;
-            this.DataContext = null;
+            try
+            {
+                if (this.dgPE.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(this.dgPE, 6);
+                    }));
+
+                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
         }
 
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgPE.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgPE);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
         #endregion
 
         #region Flipping
@@ -176,6 +197,29 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #endregion
+        #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Apply Chart Styles
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            this.chPE.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+            this.chPE.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chPE.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+        }
+        
+        /// <summary>
+        /// UnSubscribing the Events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextPE.Dispose();
+            this.DataContextPE = null;
+            this.DataContext = null;
+        }
         #endregion
     }
 }

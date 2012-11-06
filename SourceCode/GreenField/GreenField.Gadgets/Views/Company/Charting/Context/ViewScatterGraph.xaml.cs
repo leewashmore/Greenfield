@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Documents.Model;
 using GreenField.Common;
 using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
@@ -81,7 +82,7 @@ namespace GreenField.Gadgets.Views
                         ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER
                     });
                 }
-                if (this.dgScatterGraph.Visibility == Visibility.Visible)
+                else if (this.dgScatterGraph.Visibility == Visibility.Visible)
                 {
                     radExportOptionsInfo.Add(new RadExportOptions()
                     {
@@ -97,6 +98,52 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgScatterGraph.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            RichTextBox.Document = PDFExporter.Print(this.dgScatterGraph, 6);
+                        }));
+
+                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgScatterGraph.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgScatterGraph);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
             }
         }
 

@@ -23,38 +23,57 @@
 
     <telerik:RadBusyIndicator x:Name="chartBusyIndicator" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
-
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <!--button to flip the gadget-->
-                    <telerik:RadButton x:Name="btnFlip" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                       Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
-                        <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                    </telerik:RadButton>
                     <!--button to export the grid to excel-->
-                    <telerik:RadButton Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20" Margin="2,0,0,0"
-                    Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export to Excel">
+                    <telerik:RadButton Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="15" Width="15" Margin="2,0,0,0"
+                    Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export to Excel"
+                                       Style="{StaticResource RadButtonStyle}">
                         <telerik:RadButton.Content>
                             <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" />
                         </telerik:RadButton.Content>
                     </telerik:RadButton>
-                    <telerik:RadButton x:Name="btnZoomIn" Grid.Column="5"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="2,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In">
-                        <Image Source="/GreenField.Gadgets;component/Images/zoom_in.png" Width="16" Height="16"  />
+                    <telerik:RadButton Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
                     </telerik:RadButton>
-                    <telerik:RadButton x:Name="btnZoomOut" Grid.Column="6"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="2,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out">
-                        <Image Source="/GreenField.Gadgets;component/Images/zoom_out.png" Width="16" Height="16" />
+                    <telerik:RadButton Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
+                    </telerik:RadButton>
+                    <Rectangle Margin="2,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
+                    <!--button to flip the gadget-->
+                    <telerik:RadButton x:Name="btnFlip" Height="15" Width="15" Margin="2,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Click="btnFlip_Click" ToolTipService.ToolTip="Flip" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg"/>
+                    </telerik:RadButton>
+                    <Rectangle Margin="2,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
+                    <!--button to zoom chart content-->
+                    <telerik:RadButton x:Name="btnZoomIn" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Margin="2,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In"
+                                       Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/zoom_in.png"/>
+                    </telerik:RadButton>
+                    <telerik:RadButton x:Name="btnZoomOut" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Margin="2,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out"
+                                       Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/zoom_out.png"/>
                     </telerik:RadButton>
                 </StackPanel>
             </Grid>
-
-            <Grid x:Name="grdRadChart" Grid.Row="1">
+            <Grid x:Name="grdRadChart" Grid.Row="1" Margin="0,2,0,0">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" Name="border1">
                     <telerikChart:RadChart VerticalAlignment="Top" 
@@ -73,7 +92,7 @@
                             <telerikCharting:ChartDefaultView>
                                 <telerikCharting:ChartDefaultView.ChartTitle>
                                     <telerikCharting:ChartTitle Content="EV/EBITDA" HorizontalAlignment="Center" FontFamily="Arial"
-                                                                FontSize="7" FontWeight="Bold"/>
+                                                                FontSize="9" FontWeight="Bold"/>
                                 </telerikCharting:ChartDefaultView.ChartTitle>
 
                                 <telerikCharting:ChartDefaultView.ChartArea>
@@ -236,6 +255,9 @@
 
                     </telerik:RadGridView>
                 </Border>
+            </Grid>
+            <Grid  Grid.Row="2">
+                <telerik:RadRichTextBox x:Name="RichTextBox" Width="0"/>
             </Grid>
         </Grid>
     </telerik:RadBusyIndicator>

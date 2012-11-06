@@ -97,26 +97,50 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Options" FontWeight="Bold" Style="{StaticResource TextBlockStyle}" />
                     <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
-                    <telerik:RadButton x:Name="btnFlip" Grid.Column="2" Height="20" Width="20" HorizontalAlignment="Center" 
-                                       VerticalAlignment="Center"
-                                       Margin="5,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip"><!--Text ="Chart Controls"-->
-                        <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
                     </telerik:RadButton>
-                    <telerik:RadButton x:Name="btnExportExcel" Grid.Column="3" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="5,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
-                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <telerik:RadButton Grid.Column="3" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
                     </telerik:RadButton>
-                    <Rectangle Margin="5,0,0,0" Grid.Column="4" Width="1" Stroke="Gray" Opacity="0.2"/>
-                    <telerik:RadButton x:Name="btnZoomIn" Grid.Column="5"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="5,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In">
-                        <Image Source="/GreenField.Gadgets;component/Images/zoom_in.png" Width="16" Height="16" Margin="3" />
+                    <telerik:RadButton Grid.Column="4" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
                     </telerik:RadButton>
-                    <telerik:RadButton x:Name="btnZoomOut" Grid.Column="6"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="5,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out">
-                        <Image Source="/GreenField.Gadgets;component/Images/zoom_out.png" Width="16" Height="16" Margin="3" />
+
+                    <Rectangle Margin="2,0,0,0" Grid.Column="5" Width="1" Stroke="Gray" Opacity="0.2"/>
+                    <telerik:RadButton x:Name="btnFlip" Grid.Column="6" Height="15" Width="15" HorizontalAlignment="Right" 
+                                       VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}"
+                                       Margin="2,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip"><!--Text ="Chart Controls"-->
+                        <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" />
+                    </telerik:RadButton>                    
+                    <Rectangle Margin="2,0,0,0" Grid.Column="7" Width="1" Stroke="Gray" Opacity="0.2"/>
+                    <telerik:RadButton x:Name="btnZoomIn" Grid.Column="8"  Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Margin="2,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In"
+                                       Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/zoom_in.png"/>
+                    </telerik:RadButton>
+                    <telerik:RadButton x:Name="btnZoomOut" Grid.Column="9"  Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Margin="2,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out"
+                                       Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/zoom_out.png"/>
                     </telerik:RadButton>
                 </Grid>
             </telerik:RadExpander.Header>
@@ -487,6 +511,9 @@
                         </telerik:RadChart>
                     </telerik:RadBusyIndicator>
                 </Border>
+            </Grid>
+            <Grid Height="0">
+                <telerik:RadRichTextBox x:Name="RichTextBox" Width="0"/>
             </Grid>
         </Grid>
     </Grid>

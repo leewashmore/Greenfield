@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Documents.Model;
 using GreenField.Common;
-using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ViewFCFYield
+    /// </summary>
     public partial class ViewFCFYield : ViewBaseUserControl
     {
-
-        #region Variables
-
+        #region Fields
         /// <summary>
         /// Export Types
         /// </summary>
@@ -32,12 +26,9 @@ namespace GreenField.Gadgets.Views
             public const string FCF_Yield = "FCF Yield";
             public const string FCF_Yield_DATA = "FCF Yield Data";
         }
-
-
         #endregion
 
-        #region PropertyDeclaration
-
+        #region Properties
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
@@ -70,6 +61,11 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">ViewModelFCFYield</param>
         public ViewFCFYield(ViewModelFCFYield dataContextSource)
         {
             InitializeComponent();
@@ -78,11 +74,16 @@ namespace GreenField.Gadgets.Views
             dataContextSource.ChartArea = this.chFCFYield.DefaultView.ChartArea;
             this.chFCFYield.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();
-        }
-        private void dgFCFYield_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-           
-        }
+        } 
+        #endregion
+
+        #region Event Handler
+        #region Data Load
+        /// <summary>
+        /// chFCFYield Loaded event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chFCFYield_Loaded(object sender, RoutedEventArgs e)
         {
             if (chFCFYield.DefaultView.ChartLegend.Items.Count != 0)
@@ -90,16 +91,10 @@ namespace GreenField.Gadgets.Views
                 ChartLegendItem var = this.chFCFYield.DefaultView.ChartLegend.Items[0];
                 this.chFCFYield.DefaultView.ChartLegend.Items.Remove(var);
             }
-        }       
-        private void ApplyChartStyles()
-        {
-            this.chFCFYield.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            this.chFCFYield.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chFCFYield.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
         }
+        #endregion
 
-        #region Export
-
+        #region Export/Print
         /// <summary>
         /// Event for Grid Export
         /// </summary>
@@ -136,24 +131,54 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        #endregion
-
-        #region EventsUnsubscribe
-
         /// <summary>
-        /// UnSubscribing the Events
+        /// Printing the DataGrid
         /// </summary>
-        public override void Dispose()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            this.DataContextFCFYield.Dispose();
-            this.DataContextFCFYield = null;
-            this.DataContext = null;
+            try
+            {
+                if (this.dgFCFYield.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(this.dgFCFYield, 6);
+                    }));
+
+                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
         }
 
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgFCFYield.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgFCFYield);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
         #endregion
 
         #region Flipping
-
         /// <summary>
         /// Flipping between Grid & Chart
         /// Using the method FlipItem in class Flipper.cs
@@ -171,9 +196,30 @@ namespace GreenField.Gadgets.Views
                 Flipper.FlipItem(this.dgFCFYield, this.chFCFYield);
             }
         }
-
+        #endregion 
         #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Apply Chart Styles
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            this.chFCFYield.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+            this.chFCFYield.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chFCFYield.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+        }
+
+        /// <summary>
+        /// UnSubscribing the Events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextFCFYield.Dispose();
+            this.DataContextFCFYield = null;
+            this.DataContext = null;
+        }
+
+        #endregion        
     }
 }
-    
-

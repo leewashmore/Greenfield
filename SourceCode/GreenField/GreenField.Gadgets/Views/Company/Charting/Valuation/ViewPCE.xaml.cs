@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Documents.Model;
 using GreenField.Common;
-using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ViewPCE
+    /// </summary>
     public partial class ViewPCE : ViewBaseUserControl
     {
-
-        #region Variables
-
+        #region Fields
         /// <summary>
         /// Export Types
         /// </summary>
@@ -32,12 +26,9 @@ namespace GreenField.Gadgets.Views
             public const string P_CE = "P/CE";
             public const string P_CE_DATA = "P/CE Data";
         }
-
-
         #endregion
 
-        #region PropertyDeclaration
-
+        #region Properties
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
@@ -70,8 +61,11 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region CONSTRUCTOR
-
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">ViewModelPCE</param>
         public ViewPCE(ViewModelPCE dataContextSource)
         {
             InitializeComponent();
@@ -83,7 +77,8 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region EVENT
+        #region Event Handlers
+        #region Data Load
         /// <summary>
         /// Chart laoded event
         /// </summary>
@@ -96,20 +91,10 @@ namespace GreenField.Gadgets.Views
                 ChartLegendItem var = this.chPCE.DefaultView.ChartLegend.Items[0];
                 this.chPCE.DefaultView.ChartLegend.Items.Remove(var);
             }
-        }
+        } 
         #endregion
 
-        #region Helper Methods
-        private void ApplyChartStyles()
-        {
-            this.chPCE.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            this.chPCE.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chPCE.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-        }
-        #endregion
-
-        #region Export
-
+        #region Export/Print
         /// <summary>
         /// Event for Grid Export
         /// </summary>
@@ -146,20 +131,51 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        #endregion
-
-        #region EventsUnsubscribe
-
         /// <summary>
-        /// UnSubscribing the Events
+        /// Printing the DataGrid
         /// </summary>
-        public override void Dispose()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            this.DataContextPCE.Dispose();
-            this.DataContextPCE = null;
-            this.DataContext = null;
+            try
+            {
+                if (this.dgPCE.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(this.dgPCE, 6);
+                    }));
+
+                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
         }
 
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgPCE.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgPCE);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
         #endregion
 
         #region Flipping
@@ -182,6 +198,29 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #endregion
+        #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Apply Chart Styles
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            this.chPCE.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+            this.chPCE.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chPCE.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+        }
+        
+        /// <summary>
+        /// UnSubscribing the Events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextPCE.Dispose();
+            this.DataContextPCE = null;
+            this.DataContext = null;
+        }
         #endregion
     }
 }

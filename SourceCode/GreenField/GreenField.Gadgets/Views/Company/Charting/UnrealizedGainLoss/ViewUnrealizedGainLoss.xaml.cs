@@ -14,6 +14,7 @@ using GreenField.Common;
 using GreenField.ServiceCaller;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Views
 {
@@ -22,6 +23,7 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewUnrealizedGainLoss : ViewBaseUserControl
     {
+        #region Fields
         /// <summary>
         /// Export Types to be passed to the ExportOptions class
         /// </summary>
@@ -29,8 +31,10 @@ namespace GreenField.Gadgets.Views
         {
             public const string UNREALIZED_GAINLOSS_CHART = "Unrealized Gain/Loss Chart";
             public const string UNREALIZED_GAINLOSS_DATA = "Unrealized Gain/Loss Data";
-        }        
+        }      
+        #endregion   
 
+        #region Properties
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
@@ -56,8 +60,10 @@ namespace GreenField.Gadgets.Views
         {
             get { return dataContextUnrealizedGainLossChart; }
             set { dataContextUnrealizedGainLossChart = value; }
-        }
+        } 
+        #endregion
 
+        #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
@@ -74,20 +80,10 @@ namespace GreenField.Gadgets.Views
             this.grdRadChart.Visibility = Visibility.Visible;
             this.grdRadGridView.Visibility = Visibility.Collapsed;
             ApplyChartStyles();
-        }
+        } 
+        #endregion        
 
-        /// <summary>
-        /// Formatting the chart
-        /// </summary>
-        private void ApplyChartStyles()
-        {
-            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
-            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisY.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
-            this.chUnrealizedGainLoss.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;           
-        }
-
+        #region Event Handlers
         /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
@@ -163,6 +159,52 @@ namespace GreenField.Gadgets.Views
         }
 
         /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(this.dgUnrealizedGainLoss, 6);
+                    }));
+
+                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgUnrealizedGainLoss);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
+
+        /// <summary>
         /// Method to be called when the selection is changed in Frequency Comco box
         /// </summary>
         /// <param name="sender"></param>
@@ -227,9 +269,22 @@ namespace GreenField.Gadgets.Views
         private void dgUnrealizedGainLoss_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e);
+        } 
+        #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Formatting the chart
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
+            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisY.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
+            this.chUnrealizedGainLoss.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;
         }
 
-        #region RemoveEvents
         /// <summary>
         /// Disposing events
         /// </summary>

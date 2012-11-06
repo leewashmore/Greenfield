@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Documents.Model;
 using GreenField.Common;
-using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code behind for ViewPBV
+    /// </summary>
     public partial class ViewPBV : ViewBaseUserControl
     {
-
-        #region Variables
-
+        #region Fields
         /// <summary>
         /// Export Types
         /// </summary>
@@ -32,12 +26,9 @@ namespace GreenField.Gadgets.Views
             public const string P_BV = "P/BV";
             public const string P_BV_DATA = "P/BV Data";
         }
-
-
         #endregion
 
-        #region PropertyDeclaration
-
+        #region Properties
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
@@ -70,7 +61,11 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region CONSTRUCTOR
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">ViewModelPBV</param>
         public ViewPBV(ViewModelPBV dataContextSource)
         {
             InitializeComponent();
@@ -82,8 +77,13 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region Event
-
+        #region Event Handlers
+        #region Data Load
+        /// <summary>
+        /// chPBV Loaded event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chPBV_Loaded(object sender, RoutedEventArgs e)
         {
             if (chPBV.DefaultView.ChartLegend.Items.Count != 0)
@@ -94,19 +94,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region Helper Methods
-
-        private void ApplyChartStyles()
-        {
-            this.chPBV.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            this.chPBV.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chPBV.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-        }
-
-        #endregion
-
         #region Export
-
         /// <summary>
         /// Event for Grid Export
         /// </summary>
@@ -143,24 +131,54 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        #endregion
-
-        #region EventsUnsubscribe
-
         /// <summary>
-        /// UnSubscribing the Events
+        /// Printing the DataGrid
         /// </summary>
-        public override void Dispose()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            this.DataContextPBV.Dispose();
-            this.DataContextPBV = null;
-            this.DataContext = null;
+            try
+            {
+                if (this.dgPBV.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(this.dgPBV, 6);
+                    }));
+
+                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
         }
 
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgPBV.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgPBV);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
         #endregion
 
         #region Flipping
-
         /// <summary>
         /// Flipping between Grid & Chart
         /// Using the method FlipItem in class Flipper.cs
@@ -178,7 +196,29 @@ namespace GreenField.Gadgets.Views
                 Flipper.FlipItem(this.dgPBV, this.chPBV);
             }
         }
-
+        #endregion 
         #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Apply Chart Styles
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            this.chPBV.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+            this.chPBV.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chPBV.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+        }
+
+        /// <summary>
+        /// UnSubscribing the Events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextPBV.Dispose();
+            this.DataContextPBV = null;
+            this.DataContext = null;
+        }
+        #endregion        
     }
 }
