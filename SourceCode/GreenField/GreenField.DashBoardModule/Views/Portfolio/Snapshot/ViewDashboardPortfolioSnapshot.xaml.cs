@@ -49,6 +49,7 @@ namespace GreenField.DashboardModule.Views
         /// <param name="logger">ILoggerFacade</param>
         /// <param name="eventAggregator">IEventAggregator</param>
         /// <param name="dbInteractivity">IDBInteractivity</param>
+        /// <param name="regionManager">IRegionManager</param>
         [ImportingConstructor]
         public ViewDashboardPortfolioSnapshot(ILoggerFacade logger, IEventAggregator eventAggregator,
             IDBInteractivity dbInteractivity,IRegionManager regionManager)
@@ -225,7 +226,9 @@ namespace GreenField.DashboardModule.Views
             {
                 ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
                 if (control != null)
+                {
                     control.IsActive = value;
+                }
             }
         } 
         #endregion

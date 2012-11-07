@@ -2280,12 +2280,12 @@ namespace GreenField.Web.Services
                     }
                     if (emSummaryData != null)
                     {
-                        foreach (int dataId in emSummaryData.Select(t => t.DataId).ToList())
+                        foreach (int dataId in emSummaryData.Select(t => t.DataId).Distinct().ToList())
                         {
-                            foreach (int year in emSummaryData.Where(t => t.DataId == dataId).Select(t => t.DataYear).ToList())
+                            foreach (int year in emSummaryData.Where(t => t.DataId == dataId).Select(t => t.DataYear).Distinct().ToList())
                             {
                                 foreach (String d in emSummaryData.Where(t => t.DataId == dataId && t.DataYear == year).
-                                    Select(t => t.DataType).ToList())
+                                    Select(t => t.DataType).Distinct().ToList())
                                 {
                                     List<EMSummHarmonicData> emHarmonicData = new List<EMSummHarmonicData>();
                                     List<EMData> emFilteredData = new List<EMData>();
@@ -2432,12 +2432,12 @@ namespace GreenField.Web.Services
                     obj.BenchmarkWeight = benchmarkWeight;
                     tempResultListForGroups.Add(obj);
                 }
-                foreach (int dataId in emSummaryData.Select(t => t.DataId).ToList())
+                foreach (int dataId in emSummaryData.Select(t => t.DataId).Distinct().ToList())
                 {
-                    foreach (int year in emSummaryData.Where(t => t.DataId == dataId).Select(t => t.DataYear).ToList())
+                    foreach (int year in emSummaryData.Where(t => t.DataId == dataId).Select(t => t.DataYear).Distinct().ToList())
                     {
                         foreach (String d in emSummaryData.Where(t => t.DataId == dataId && t.DataYear == year).
-                            Select(t => t.DataType).ToList())
+                            Select(t => t.DataType).Distinct().ToList())
                         {
                             List<EMSummHarmonicData> emHarmonicData = new List<EMSummHarmonicData>();
                             List<EMData> emFilteredData = new List<EMData>();

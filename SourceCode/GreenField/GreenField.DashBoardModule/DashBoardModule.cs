@@ -1,22 +1,10 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+﻿using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.MefExtensions.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using System.ComponentModel.Composition;
-using GreenField.DashboardModule.Views;
-using GreenField.Common;
 using Microsoft.Practices.Prism.Modularity;
-using GreenField.Gadgets.Views;
+using Microsoft.Practices.Prism.Regions;
+using GreenField.Common;
+using GreenField.DashboardModule.Views;
 using GreenField.DashBoardModule.Views.Screening;
-using GreenField.DashBoardModule;
 
 namespace GreenField.DashboardModule
 {
@@ -30,7 +18,6 @@ namespace GreenField.DashboardModule
         {
             _regionManager = regionManager;
         }
-
         public void Initialize()
         {
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboard));
@@ -145,7 +132,6 @@ namespace GreenField.DashboardModule
             #region Admin
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardAdminInvestmentCommitteeChangeDate));
             #endregion
-
         }
     }
 }

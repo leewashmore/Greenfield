@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Windows.Resources;
 using System.Reflection;
+using System.Windows;
+using System.Windows.Resources;
 
 namespace GreenField.DashboardModule.Helpers
 {
@@ -24,14 +16,18 @@ namespace GreenField.DashboardModule.Helpers
         public static Type GetAssemblyType(string className)
         {
             if (String.IsNullOrEmpty(className))
+            {
                 throw new ArgumentNullException();
+            }
 
             Type type = null;
             foreach (AssemblyPart part in Deployment.Current.Parts)
             {
                 type = GetSpecificAssemblyType(part.Source, className);
                 if (type != null)
+                {
                     break;
+                }
             }
             return type;
         }
@@ -45,14 +41,13 @@ namespace GreenField.DashboardModule.Helpers
         public static Type GetSpecificAssemblyType(string assemblyName, string className)
         {
             if (String.IsNullOrEmpty(className) || String.IsNullOrEmpty(assemblyName))
+            {
                 throw new ArgumentNullException();
-
+            }
             Type type = null;
-
             StreamResourceInfo info = Application.GetResourceStream(new Uri(assemblyName, UriKind.Relative));
             Assembly assembly = new AssemblyPart().Load(info.Stream);
             type = assembly.GetType(className);
-
             return type;
         }
         #endregion
@@ -66,17 +61,19 @@ namespace GreenField.DashboardModule.Helpers
         public static Assembly GetAssembly(String className)
         {
             if (String.IsNullOrEmpty(className))
+            {
                 throw new ArgumentNullException();
-
+            }
             Assembly assembly = null;
 
             foreach (AssemblyPart part in Deployment.Current.Parts)
             {
                 assembly = GetSpecificAssembly(part.Source, className);
                 if (assembly != null)
+                {
                     break;
+                }
             }
-
             return assembly;
         }
 
@@ -89,16 +86,17 @@ namespace GreenField.DashboardModule.Helpers
         public static Assembly GetSpecificAssembly(string assemblyName, string className)
         {
             if (String.IsNullOrEmpty(className) || String.IsNullOrEmpty(assemblyName))
+            {
                 throw new ArgumentNullException();
-
+            }
             Assembly assembly = null;
-
             StreamResourceInfo info = Application.GetResourceStream(new Uri(assemblyName, UriKind.Relative));
             assembly = new AssemblyPart().Load(info.Stream);
             Type type = assembly.GetType(className);
             if (type == null)
+            {
                 assembly = null;
-
+            }
             return assembly;
         } 
         #endregion
@@ -112,7 +110,9 @@ namespace GreenField.DashboardModule.Helpers
         public static string GetTypeFullName(object obj)
         {
             if (obj == null)
+            {
                 throw new ArgumentNullException();
+            }
             return obj.GetType().FullName;
         }
 
@@ -126,7 +126,9 @@ namespace GreenField.DashboardModule.Helpers
             try
             {
                 if (obj == null)
+                {
                     throw new ArgumentNullException();
+                }
                 return obj.GetType().GetProperty("DataContext").GetValue(obj, new object[] { }).ToString();
             }
             catch (NullReferenceException)
@@ -147,7 +149,9 @@ namespace GreenField.DashboardModule.Helpers
             try
             {
                 if (type == null || argumentTypes == null || argumentValues == null)
+                {
                     throw new ArgumentNullException();
+                }
                 return type.GetConstructor(argumentTypes).Invoke(argumentValues);                
             }
             catch

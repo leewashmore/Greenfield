@@ -1,98 +1,108 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.Gadgets.Views;
-using GreenField.Gadgets.ViewModels;
+﻿using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.ServiceCaller;
+using Microsoft.Practices.Prism.Regions;
 using GreenField.Common;
 using GreenField.Common.Helper;
-using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
-using GreenField.DataContracts;
+using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Views;
+using GreenField.ServiceCaller;
 
 
 namespace GreenField.DashboardModule.Views
 {
+    /// <summary>
+    /// Code behind for ViewDashboardAdminInvestmentCommitteeChangeDate
+    /// </summary>
     [Export]
     public partial class ViewDashboardAdminInvestmentCommitteeChangeDate : ViewBaseUserControl, INavigationAware
     {
         #region Fields
-        private IEventAggregator _eventAggregator;
-        private ILoggerFacade _logger;
-        private IDBInteractivity _dBInteractivity;
-        private IRegionManager _regionManager;
-        private ViewPresentations _view;
-        private ViewModelPresentations _viewModel;
-        private ViewModelICPresentationNew _viewModelNew;
-        private ViewICPresentationNew _viewNew;
+        /// <summary>
+        /// MEF event aggreagator instance
+        /// </summary>
+        private IEventAggregator eventAggregator;
+        /// <summary>
+        /// Logging instance
+        /// </summary>
+        private ILoggerFacade logger;
+        /// <summary>
+        /// Service caller instance
+        /// </summary>
+        private IDBInteractivity dBInteractivity;
+        /// <summary>
+        /// Region Manager
+        /// </summary>
+        private IRegionManager regionManager;
+        private ViewPresentations view;
+        private ViewModelPresentations viewModel;
+        private ViewModelICPresentationNew viewModelNew;
+        private ViewICPresentationNew viewNew;
         #endregion
 
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="logger1">ILoggerFacade</param>
+        /// <param name="eventAggregator1">IEventAggregator</param>
+        /// <param name="dbInteractivity1">IDBInteractivity</param>
+        /// <param name="regionManager1">IRegionManager</param>
         [ImportingConstructor]
-        public ViewDashboardAdminInvestmentCommitteeChangeDate(ILoggerFacade logger, IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity, IRegionManager regionManager)
+        public ViewDashboardAdminInvestmentCommitteeChangeDate(ILoggerFacade logger1, IEventAggregator eventAggregator1,
+            IDBInteractivity dbInteractivity1, IRegionManager regionManager1)
         {
             InitializeComponent();
-
-            _eventAggregator = eventAggregator;
-            _logger = logger;
-            _dBInteractivity = dbInteractivity;
-            _regionManager = regionManager;
-
-            _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-
+            eventAggregator = eventAggregator1;
+            logger = logger1;
+            dBInteractivity = dbInteractivity1;
+            regionManager = regionManager1;
+            eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
             this.tbHeader.Text = GadgetNames.ADMIN_CHANGE_DATE;
         }
+        #endregion
 
+        #region Event Handler
+        /// <summary>
+        /// DashboardGadgetLoad Event Handler
+        /// </summary>
+        /// <param name="payload">DashboardGadgetPayload</param>
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
         {
             if (this.cctrDashboardContent.Content != null)
+            {
                 return;
-
+            }
             DashboardGadgetParam param = new DashboardGadgetParam()
             {
                 DashboardGadgetPayload = payload,
-                DBInteractivity = _dBInteractivity,
-                EventAggregator = _eventAggregator,
-                LoggerFacade = _logger,
-                RegionManager = _regionManager
-            };
-
-            ////for accessing the gadgets data 
-            //_viewModel = new ViewModelPresentations(param);
-            //_view = new ViewPresentations(_viewModel);
-
-            //if (_viewModel.NavigationInfo.ViewPluginFlagEnumerationObject == ViewPluginFlagEnumeration.Create)
-            //{
-            //    _viewModelNew = new ViewModelICPresentationNew(param);
-            //    _viewNew = new ViewICPresentationNew(_viewModelNew);
-            //    this.cctrDashboardContent.Content = _viewNew;
-            //}
-            //else
-            //{               
-            //    this.cctrDashboardContent.Content = _view;
-            //}
+                DBInteractivity = dBInteractivity,
+                EventAggregator = eventAggregator,
+                LoggerFacade = logger,
+                RegionManager = regionManager
+            };          
             this.cctrDashboardContent.Content = new ViewMeetingConfigurationSchedule(new ViewModelMeetingConfigSchedule(param));
         }
+        #endregion
 
+        #region INavigationAware methods
+        /// <summary>
+        /// Returns true if satisfies requisite condition
+        /// </summary>
+        /// <param name="navigationContext">NavigationContext</param>
+        /// <returns>True/False</returns>
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             return true;
         }
 
+        /// <summary>
+        /// Executed on navigation from this view
+        /// </summary>
+        /// <param name="navigationContext">NavigationContext</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-           // navigationContext.NavigationService.Region.Context = _viewModel.NavigationInfo;
+        {           
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
@@ -100,14 +110,18 @@ namespace GreenField.DashboardModule.Views
             }
         }
 
+        /// <summary>
+        /// Executed on navigation to this view
+        /// </summary>
+        /// <param name="navigationContext">NavigationContext</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-         //   _viewModel.ManageMeetingsServiceCalls();
+        {         
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
                 control.IsActive = true;
             }
         }
+        #endregion
     }
 }

@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using System.Reflection;
-using GreenField.DashboardModule.Helpers;
-using GreenField.Common;
+using System.Windows;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.DataContracts;
+using GreenField.Common;
+using GreenField.DashboardModule.Helpers;
 using GreenField.ServiceCaller;
 using GreenField.UserSession;
 
@@ -32,10 +23,11 @@ namespace GreenField.DashBoardModule.Helpers
             , string gadgetViewModelClassName, DashboardGadgetParam param)
         {
             if (gadgetViewClassName == null || gadgetViewModelClassName == null || param == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             object content = null;
-
             try
             {
                 Assembly assembly = TypeResolution.GetAssembly(gadgetViewClassName);
@@ -52,12 +44,11 @@ namespace GreenField.DashBoardModule.Helpers
             }
             catch (Exception ex)
             {
-                param.LoggerFacade.Log("User : " + SessionManager.SESSION.UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
+                param.LoggerFacade.Log("User : " + SessionManager.SESSION.UserName + "\nMessage: " + ex.Message + "\nStackTrace: " +
+                    ex.StackTrace, Category.Exception, Priority.Medium);
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
             }
-
             return content;
-
         }
     }
 }
