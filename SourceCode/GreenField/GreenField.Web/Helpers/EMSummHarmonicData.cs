@@ -13,7 +13,7 @@ namespace GreenField.Web.Helpers
        
         public string Country { get; set; }
 
-        public Decimal? BenWeight { get; set; }
+        public Decimal BenWeight { get; set; }
 
         public Decimal Amount { get; set; }
 

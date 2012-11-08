@@ -2306,8 +2306,9 @@ namespace GreenField.Web.Services
                                         summHarDataObj.DataId = dataId;
                                         summHarDataObj.Country = row.CountryCode;
                                         summHarDataObj.DataType = d;
-                                        summHarDataObj.BenWeight = emBenchData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower() &&
-                                            t.AsecShortName == asecShrtName).Select(t => t.BenWeight).FirstOrDefault();
+                                        summHarDataObj.BenWeight = Convert.ToDecimal(emBenchData
+                                            .Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower() &&
+                                            t.AsecShortName == asecShrtName).Select(t => t.BenWeight).FirstOrDefault());
                                         summHarDataObj.Amount = emData.Amount;
                                         summHarDataObj.InvAmount = emData.Amount != 0 ? (1 / emData.Amount) : 0;
                                         emHarmonicData.Add(summHarDataObj);
@@ -2462,8 +2463,8 @@ namespace GreenField.Web.Services
                                         summHarDataObj.DataId = dataId;
                                         summHarDataObj.Country = cou;
                                         summHarDataObj.DataType = d;
-                                        summHarDataObj.BenWeight = emBenchData.Where(t => t.CountryCode.Trim().ToLower() == cou.Trim().ToLower() &&
-                                            t.AsecShortName == asecShrtName).Select(t => t.BenWeight).FirstOrDefault();
+                                        summHarDataObj.BenWeight = Convert.ToDecimal(emBenchData.Where(t => t.CountryCode.Trim().ToLower() == cou.Trim().ToLower() &&
+                                            t.AsecShortName == asecShrtName).Select(t => t.BenWeight).FirstOrDefault());
                                         summHarDataObj.Amount = emData.Amount;
                                         summHarDataObj.InvAmount = emData.Amount != 0 ? (1 / emData.Amount) : 0;
                                         emHarmonicData.Add(summHarDataObj);
