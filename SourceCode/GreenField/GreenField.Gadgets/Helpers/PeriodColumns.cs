@@ -709,6 +709,7 @@ namespace GreenField.Gadgets.Helpers
 
                 //Description and left navigation columns of period column gadgets ignored
                 gridView.Columns[i + navigatingColumnStartIndex].Header = e.PeriodColumnHeader[i];
+                gridView.Columns[i + navigatingColumnStartIndex].UniqueName = e.PeriodColumnHeader[i];
 
                 //update column visibility if quarterly data display is implemented
                 if (isQuarterImplemented)

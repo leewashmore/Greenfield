@@ -60,15 +60,32 @@ namespace GreenField.Gadgets.Helpers
         {
             string returnVal = null;
             Decimal amount = 0;
-            List<string> values = (from i in source
-                                   select Convert.ToString(selector(i)).ToLower()).ToList();
 
-            if (values != null && values.Count > 0)
+            IEnumerable<PeriodColumnDisplayData> groupedData = source as IEnumerable<PeriodColumnDisplayData>;
+            if (groupedData != null)
             {
-                amount = decimal.TryParse(values[0], out amount) ? amount : 0;
-            }
+                List<string> values = (from i in source.Where(record => (record as PeriodColumnDisplayData).SUB_DATA_DESC == "Amount")
+                                       select Convert.ToString(selector(i)).ToLower()).ToList();
 
-            returnVal = amount == 0 ? null : Convert.ToDecimal(amount).ToString("N2");
+                if (values != null && values.Count > 0)
+                {
+                    amount = decimal.TryParse(values[0], out amount) ? amount : 0;
+                }
+
+                returnVal = amount == 0 ? null : Convert.ToDecimal(amount).ToString("N2");
+            }
+            else
+            {
+                List<string> values = (from i in source
+                                       select Convert.ToString(selector(i)).ToLower()).ToList();
+
+                if (values != null && values.Count > 0)
+                {
+                    amount = decimal.TryParse(values[0], out amount) ? amount : 0;
+                }
+
+                returnVal = amount == 0 ? null : Convert.ToDecimal(amount).ToString("N2");
+            }
 
             return returnVal;
         }

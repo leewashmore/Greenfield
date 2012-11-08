@@ -85,10 +85,13 @@ namespace GreenField.App.ViewModel
                 eventAggregator.GetEvent<ToolboxUpdateEvent>().Subscribe(HandleToolboxUpdateEvent);
             }
 
+            //SessionManager.SESSION = new Session() { UserName = "rvig", Roles = new List<string>() };
+            //UserName = SessionManager.SESSION.UserName;
+
             if (manageSessions != null)
             {
                 BusyIndicatorNotification(true, "Retrieving session information...");
-                manageSessions.GetSession(GetSessionCallbackMethod);                                        
+                manageSessions.GetSession(GetSessionCallbackMethod);
             }
         }
         #endregion

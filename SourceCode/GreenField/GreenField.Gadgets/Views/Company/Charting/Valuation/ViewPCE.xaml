@@ -200,7 +200,7 @@
                                          CanUserFreezeColumns="False"
                                          CanUserDeleteRows="False" 
                                          IsReadOnly="True" 
-                                         CanUserSortColumns="False" 
+                                         CanUserSortColumns="True" 
                                          ScrollMode="RealTime"
                                          RowIndicatorVisibility="Collapsed" 
                                          ShowGroupPanel="False" 

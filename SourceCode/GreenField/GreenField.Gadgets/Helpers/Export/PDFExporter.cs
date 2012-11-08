@@ -14,6 +14,7 @@ using Telerik.Windows.Data;
 using Telerik.Windows.Documents.FormatProviders.Pdf;
 using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Media.Imaging;
+using Telerik.Windows.Documents.Layout;
 
 
 namespace GreenField.Gadgets.Helpers
@@ -42,7 +43,7 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public static void btnExportPDF_Click(RadGridView dataGrid, int fontSize = 6, DocumentLayoutMode layoutMode = DocumentLayoutMode.Paged,
-            PageOrientation orientation = PageOrientation.Portrait)
+            PageOrientation orientation = PageOrientation.Portrait, List<int> skipColumnDisplayIndex = null)
         {
             try
             {
@@ -54,7 +55,7 @@ namespace GreenField.Gadgets.Helpers
 
                 if (dialog.ShowDialog() == true)
                 {
-                    RadDocument document = CreateDocument(dataGrid);
+                    RadDocument document = CreateDocument(dataGrid, skipColumnDisplayIndex);
 
                     document.LayoutMode = layoutMode;
                     document.SectionDefaultPageOrientation = orientation;
@@ -145,11 +146,18 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="grid"></param>
         /// <returns></returns>
-        public static RadDocument CreateDocument(RadGridView grid)
+        public static RadDocument CreateDocument(RadGridView grid, List<int> skipColumnDisplayIndex = null)
         {
+            if (skipColumnDisplayIndex == null)
+            {
+                skipColumnDisplayIndex = new List<int>();
+            }
+
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
                                                      orderby c.DisplayIndex
                                                      select c).ToList();
+            columns = columns.Where(g => g.IsVisible == true && (!skipColumnDisplayIndex.Contains(g.DisplayIndex))).ToList();
+
 
             Table table = new Table();
             RadDocument document = new RadDocument();
@@ -162,7 +170,7 @@ namespace GreenField.Gadgets.Helpers
                 TableRow headerRow = new TableRow();
                 if (grid.GroupDescriptors.Count() > 0)
                 {
-                    TableCell indentCell = new TableCell();
+                    TableCell indentCell = new TableCell() { VerticalAlignment = RadVerticalAlignment.Center };
                     indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 20);
                     indentCell.Background = Colors.Gray;
                     headerRow.Cells.Add(indentCell);
@@ -170,7 +178,7 @@ namespace GreenField.Gadgets.Helpers
 
                 for (int i = 0; i < columns.Count(); i++)
                 {
-                    TableCell cell = new TableCell();
+                    TableCell cell = new TableCell() { VerticalAlignment = RadVerticalAlignment.Center };
                     cell.Background = Color.FromArgb(255, 228, 229, 229);
                     AddCellValue(cell, columns[i].UniqueName);
                     cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
@@ -321,6 +329,7 @@ namespace GreenField.Gadgets.Helpers
             if (level > 0)
             {
                 TableCell cell = new TableCell();
+                cell.VerticalAlignment = RadVerticalAlignment.Center;
                 cell.PreferredWidth = new TableWidthUnit(level * 20);
                 cell.Background = Colors.Red;
                 row.Cells.Add(cell);
@@ -364,7 +373,7 @@ namespace GreenField.Gadgets.Helpers
             Telerik.Windows.Documents.Model.Paragraph paragraph = new Telerik.Windows.Documents.Model.Paragraph();
             cell.Blocks.Add(paragraph);
             Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span();
-            if (value == "")
+            if (value == null || value == "")
                 value = " ";
             span.Text = value;
             span.FontFamily = new System.Windows.Media.FontFamily("Arial");

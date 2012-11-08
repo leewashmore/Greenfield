@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.Helpers;
-using GreenField.Gadgets.ViewModels;
+using Telerik.Windows.Documents.Model;
 using GreenField.Common;
-using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
@@ -83,10 +77,8 @@ namespace GreenField.Gadgets.Views
             get { return dataContextEstimates; }
             set { dataContextEstimates = value; }
         }
-
        
-        private bool _periodIsYearly = true;
-
+        private bool periodIsYearly = true;
         #endregion
 
         #region GridMovementHandlers
@@ -139,8 +131,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region EventsUnsusbcribe
-        
+        #region EventsUnsusbcribe        
         /// <summary>
         /// Dispose method to unsubscribe Events
         /// </summary>
@@ -149,11 +140,9 @@ namespace GreenField.Gadgets.Views
             (this.DataContext as ViewModelEstimates).Dispose();
             this.DataContext = null;
         }
-
         #endregion
 
         #region Export
-
         /// <summary>
         /// Excel exporting EventHandler
         /// </summary>
@@ -177,8 +166,8 @@ namespace GreenField.Gadgets.Views
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
                 String elementName = "Consensus Estimate - " + (this.DataContextEstimates.EntitySelectionInfo).LongName + " (" + (this.DataContextEstimates.EntitySelectionInfo).ShortName + ") " +
-                    (_periodIsYearly ? this.dgConsensusEstimate.Columns[2].Header : this.dgConsensusEstimate.Columns[6].Header) + " - " +
-                    (_periodIsYearly ? this.dgConsensusEstimate.Columns[7].Header : this.dgConsensusEstimate.Columns[11].Header);
+                    (periodIsYearly ? this.dgConsensusEstimate.Columns[2].Header : this.dgConsensusEstimate.Columns[6].Header) + " - " +
+                    (periodIsYearly ? this.dgConsensusEstimate.Columns[7].Header : this.dgConsensusEstimate.Columns[11].Header);
                 RadExportOptionsInfo.Add(new RadExportOptions()
                 {
                     ElementName = elementName,
@@ -196,6 +185,58 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextEstimates.Logger, methodNamespace);
+            try
+            {
+                if (this.dgConsensusEstimate.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(this.dgConsensusEstimate, 6);
+                    }));
+
+                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextEstimates.Logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextEstimates.Logger, methodNamespace);
+            try
+            {
+                if (this.dgConsensusEstimate.Visibility == Visibility.Visible)
+                {
+                    PDFExporter.btnExportPDF_Click(this.dgConsensusEstimate, orientation: PageOrientation.Landscape,
+                    skipColumnDisplayIndex: new List<int> { 1, 12 });
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextEstimates.Logger, ex);
+            }
+        }
         #endregion
     }
 }

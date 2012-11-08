@@ -1,26 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Common;
-using GreenField.Common.Helper;
 using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
-
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -417,7 +407,6 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region HelperMethods
-
         /// <summary>
         /// Arrange data according to Period Columns
         /// </summary>
@@ -450,24 +439,43 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private void RetrieveConsensusEstimatesMedianData()
         {
-            if (IssuerReferenceInfo != null)
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
             {
-                if (SelectedCurrency != null)
+                if (IssuerReferenceInfo != null)
                 {
-                    if (IssuerReferenceInfo.IssuerId != null)
+                    if (SelectedCurrency != null)
                     {
+                        if (IssuerReferenceInfo.IssuerId == null)
+                        {
+                            throw new Exception("Unable to retrieve issuer reference data for the selected security");
+                        }
+
                         dbInteractivity.RetrieveConsensusEstimatesMedianData
-                            (IssuerReferenceInfo.IssuerId, SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
+                                (IssuerReferenceInfo.IssuerId, SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
                         BusyIndicatorNotification(true, "Updating information based on selected Security");
                     }
+                    else
+                    {
+                        throw new Exception("Currency not specified");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Issuer reference data not specified");
                 }
             }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
-
         #endregion
 
         #region EventHandlers
-
         /// <summary>
         /// Security Change event Handler
         /// </summary>
@@ -501,7 +509,6 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(logger, methodNamespace);
         }
-
         #endregion
 
         #region Callback Methods
@@ -522,17 +529,22 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + 
+                    Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName +
                         " (" + EntitySelectionInfo.ShortName + " : " + EntitySelectionInfo.InstrumentID + ")");
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
+                BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);                
+            }
         }
 
         /// <summary>
@@ -563,10 +575,9 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 BusyIndicatorNotification();
-            }
-            Logging.LogEndMethod(logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
+            }            
         }
-
         #endregion
 
         #region EventsUnsubscribe

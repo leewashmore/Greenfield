@@ -559,25 +559,37 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private void RetrieveConsensusEstimatesValuationData()
         {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (IssuerReferenceInfo != null)
                 {
                     if (SelectedCurrency != null)
                     {
-                        if (IssuerReferenceInfo.IssuerId != null)
+                        if (IssuerReferenceInfo.IssuerId == null)
                         {
-                            dbInteractivity.RetrieveConsensusEstimatesValuationsData
-                                (IssuerReferenceInfo.IssuerId, Convert.ToString(EntitySelectionInfo.LongName), SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
-                            BusyIndicatorNotification(true, "Updating information based on selected Security");
+                            throw new Exception("Unable to retrieve issuer reference data for the selected security");
                         }
+                        dbInteractivity.RetrieveConsensusEstimatesValuationsData
+                            (IssuerReferenceInfo.IssuerId, Convert.ToString(EntitySelectionInfo.LongName), SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
+                        BusyIndicatorNotification(true, "Updating information based on selected Security");
                     }
+                    else
+                    {
+                        throw new Exception("Currency not specified");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Issuer reference data not specified");
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(logger, ex);
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
             }
         }
 
