@@ -2238,7 +2238,7 @@ namespace GreenField.Web.Services
                     obj.IssuerId = benchData.Where(t => t.AsecShortName == asec).Select(t => t.IssuerId).FirstOrDefault();
                     obj.IssueName = benchData.Where(t => t.AsecShortName == asec).Select(t => t.IssueName).FirstOrDefault();
                     obj.CountryCode = benchData.Where(t => t.AsecShortName == asec).Select(t => t.Country).FirstOrDefault();
-                    obj.BenWeight = benchData.Where(t => t.AsecShortName == asec).Select(t => t.Weight).FirstOrDefault();
+                    obj.BenWeight = Convert.ToDecimal(benchData.Where(t => t.AsecShortName == asec).Select(t => t.Weight).FirstOrDefault());
                     emBenchData.Add(obj);
                 }
                 //calling the stored procedure from the database
@@ -2429,8 +2429,8 @@ namespace GreenField.Web.Services
                     obj.Country = group;
                     foreach (String cou in groupData.Where(t => t.CountryName == group).Select(t => t.CountryCode).Distinct())
                     {
-                        benchmarkWeight = benchmarkWeight + emBenchData.Where(t => t.CountryCode.Trim().ToLower() == cou.Trim().ToLower()).Select(t => t.BenWeight)
-                              .FirstOrDefault();
+                        benchmarkWeight = benchmarkWeight + emBenchData.Where(t => t.CountryCode.Trim().ToLower() == cou.Trim().ToLower())
+                            .Sum(t => t.BenWeight);                              
                     }
                     obj.BenchmarkWeight = benchmarkWeight;
                     tempResultListForGroups.Add(obj);

@@ -26,6 +26,6 @@ namespace GreenField.Web.Helpers
         /// <summary>
         /// Benchmark Weight
         /// </summary>
-        public Decimal? BenWeight { get; set; }                                                             
+        public Decimal BenWeight { get; set; }                                                             
     }
 }
