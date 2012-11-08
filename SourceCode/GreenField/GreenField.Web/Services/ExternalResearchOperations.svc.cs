@@ -2270,13 +2270,15 @@ namespace GreenField.Web.Services
                     obj.PortfolioDate = lastBusinessDate;
                     if (emBenchData != null)
                     {
-                        obj.BenchmarkWeight = emBenchData.Where(t => t.CountryCode == row.CountryCode).Select(t => t.BenWeight)
-                            .FirstOrDefault();
+                        obj.BenchmarkWeight = emBenchData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower()).
+                            Sum(t => t.BenWeight);
+                            
                     }
                     if (attributionData != null)
                     {
-                        obj.YTDReturns = attributionData.Where(t => t.COUNTRY == row.CountryCode).Select(t => t.BM1_RC_TWR_YTD)
-                            .FirstOrDefault();
+                        obj.YTDReturns = attributionData.Where(t => t.COUNTRY.Trim().ToLower() == row.CountryCode.Trim().ToLower()).
+                            Sum(t => t.BM1_RC_TWR_YTD);
+                            
                     }
                     if (emSummaryData != null)
                     {
@@ -2304,7 +2306,7 @@ namespace GreenField.Web.Services
                                         summHarDataObj.DataId = dataId;
                                         summHarDataObj.Country = row.CountryCode;
                                         summHarDataObj.DataType = d;
-                                        summHarDataObj.BenWeight = emBenchData.Where(t => t.CountryCode == row.CountryCode &&
+                                        summHarDataObj.BenWeight = emBenchData.Where(t => t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower() &&
                                             t.AsecShortName == asecShrtName).Select(t => t.BenWeight).FirstOrDefault();
                                         summHarDataObj.Amount = emData.Amount;
                                         summHarDataObj.InvAmount = emData.Amount != 0 ? (1 / emData.Amount) : 0;
@@ -2324,37 +2326,37 @@ namespace GreenField.Web.Services
                     if (emFinalData != null)
                     {
                         obj.PECurYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
-                            && t.CountryCode == row.CountryCode)
+                            && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                             .Select(t => t.HarmonicMean).FirstOrDefault();
                         obj.PECurYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C"
-                            && t.CountryCode == row.CountryCode)
+                            && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                             .Select(t => t.HarmonicMean).FirstOrDefault();
                         obj.PENextYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "W"
-                            && t.CountryCode == row.CountryCode)
+                            && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                             .Select(t => t.HarmonicMean).FirstOrDefault();
                         obj.PENextYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "C"
-                            && t.CountryCode == row.CountryCode)
+                            && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                             .Select(t => t.HarmonicMean).FirstOrDefault();
                         obj.USDEarCurYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
-                            && t.CountryCode == row.CountryCode)
+                            && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                           .Select(t => t.HarmonicMean).FirstOrDefault();
                         obj.USDEarCurYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C"
-                            && t.CountryCode == row.CountryCode)
+                            && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                             .Select(t => t.HarmonicMean).FirstOrDefault();
                         obj.USDEarNextYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType
-                            == "W" && t.CountryCode == row.CountryCode)
+                            == "W" && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                             .Select(t => t.HarmonicMean).FirstOrDefault();
                         obj.USDEarNextYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType
-                            == "C" && t.CountryCode == row.CountryCode)
+                            == "C" && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                             .Select(t => t.HarmonicMean).FirstOrDefault();
                         obj.PBVCurYear = emFinalData.Where(t => t.DataId == 164 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
-                            && t.CountryCode == row.CountryCode)
+                            && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                           .Select(t => t.HarmonicMean).FirstOrDefault();
                         obj.DYCurYear = emFinalData.Where(t => t.DataId == 192 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
-                            && t.CountryCode == row.CountryCode)
+                            && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                             .Select(t => t.HarmonicMean).FirstOrDefault();
                         obj.ROECurYear = emFinalData.Where(t => t.DataId == 133 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
-                            && t.CountryCode == row.CountryCode)
+                            && t.CountryCode.Trim().ToLower() == row.CountryCode.Trim().ToLower())
                             .Select(t => t.HarmonicMean).FirstOrDefault();
                     }
                     if (fxData != null)
@@ -2426,7 +2428,7 @@ namespace GreenField.Web.Services
                     obj.Country = group;
                     foreach (String cou in groupData.Where(t => t.CountryName == group).Select(t => t.CountryCode).Distinct())
                     {
-                        benchmarkWeight = benchmarkWeight + emBenchData.Where(t => t.CountryCode == cou).Select(t => t.BenWeight)
+                        benchmarkWeight = benchmarkWeight + emBenchData.Where(t => t.CountryCode.Trim().ToLower() == cou.Trim().ToLower()).Select(t => t.BenWeight)
                               .FirstOrDefault();
                     }
                     obj.BenchmarkWeight = benchmarkWeight;
@@ -2460,7 +2462,7 @@ namespace GreenField.Web.Services
                                         summHarDataObj.DataId = dataId;
                                         summHarDataObj.Country = cou;
                                         summHarDataObj.DataType = d;
-                                        summHarDataObj.BenWeight = emBenchData.Where(t => t.CountryCode == cou &&
+                                        summHarDataObj.BenWeight = emBenchData.Where(t => t.CountryCode.Trim().ToLower() == cou.Trim().ToLower() &&
                                             t.AsecShortName == asecShrtName).Select(t => t.BenWeight).FirstOrDefault();
                                         summHarDataObj.Amount = emData.Amount;
                                         summHarDataObj.InvAmount = emData.Amount != 0 ? (1 / emData.Amount) : 0;
@@ -2480,38 +2482,38 @@ namespace GreenField.Web.Services
                 }
                 foreach (EMSummaryMarketData row in tempResultListForGroups)
                 {
-                    row.PECurYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
-                        && t.CountryCode == row.Country)
+                    row.PECurYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
+                        && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                        .Select(t => t.HarmonicMean).FirstOrDefault();
-                    row.PECurYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C" 
-                        && t.CountryCode == row.Country)
+                    row.PECurYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C"
+                        && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                         .Select(t => t.HarmonicMean).FirstOrDefault();
-                    row.PENextYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "W" 
-                        && t.CountryCode == row.Country)
+                    row.PENextYear = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "W"
+                        && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                         .Select(t => t.HarmonicMean).FirstOrDefault();
-                    row.PENextYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "C" 
-                        && t.CountryCode == row.Country)
+                    row.PENextYearCon = emFinalData.Where(t => t.DataId == 166 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "C"
+                        && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                         .Select(t => t.HarmonicMean).FirstOrDefault();
-                    row.USDEarCurYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
-                        && t.CountryCode == row.Country)
+                    row.USDEarCurYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
+                        && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                       .Select(t => t.HarmonicMean).FirstOrDefault();
-                    row.USDEarCurYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C" 
-                        && t.CountryCode == row.Country)
+                    row.USDEarCurYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year && t.DataType == "C"
+                        && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                         .Select(t => t.HarmonicMean).FirstOrDefault();
                     row.USDEarNextYear = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType == "W"
-                        && t.CountryCode == row.Country)
+                        && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                         .Select(t => t.HarmonicMean).FirstOrDefault();
                     row.USDEarNextYearCon = emFinalData.Where(t => t.DataId == 177 && t.PeriodYear == DateTime.Now.Year + 1 && t.DataType ==
-                        "C" && t.CountryCode == row.Country)
+                        "C" && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                         .Select(t => t.HarmonicMean).FirstOrDefault();
-                    row.PBVCurYear = emFinalData.Where(t => t.DataId == 164 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
-                        && t.CountryCode == row.Country)
+                    row.PBVCurYear = emFinalData.Where(t => t.DataId == 164 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
+                        && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                       .Select(t => t.HarmonicMean).FirstOrDefault();
-                    row.DYCurYear = emFinalData.Where(t => t.DataId == 192 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
-                        && t.CountryCode == row.Country)
+                    row.DYCurYear = emFinalData.Where(t => t.DataId == 192 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
+                        && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                         .Select(t => t.HarmonicMean).FirstOrDefault();
-                    row.ROECurYear = emFinalData.Where(t => t.DataId == 133 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W" 
-                        && t.CountryCode == row.Country)
+                    row.ROECurYear = emFinalData.Where(t => t.DataId == 133 && t.PeriodYear == DateTime.Now.Year && t.DataType == "W"
+                        && t.CountryCode.Trim().ToLower() == row.Country.Trim().ToLower())
                         .Select(t => t.HarmonicMean).FirstOrDefault();
                     resultList.Add(row);
                 }
