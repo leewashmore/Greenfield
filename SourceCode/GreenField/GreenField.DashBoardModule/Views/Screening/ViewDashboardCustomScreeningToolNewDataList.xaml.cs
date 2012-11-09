@@ -78,7 +78,8 @@ namespace GreenField.DashBoardModule.Views.Screening
                 DashboardGadgetPayload = payload,
                 DBInteractivity = dbInteractivity,
                 EventAggregator = eventAggregator,
-                LoggerFacade = logger
+                LoggerFacade = logger,
+                RegionManager = regionManager
             };
             this.cctrDashboardContent.Content = new ViewCSTDataFieldSelector(new ViewModelCSTDataFieldSelector(param));
         }
