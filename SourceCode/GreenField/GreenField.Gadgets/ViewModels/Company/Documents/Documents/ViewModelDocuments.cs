@@ -11,6 +11,7 @@ using GreenField.Common;
 using GreenField.DataContracts;
 using GreenField.Gadgets.Views.Documents;
 using GreenField.ServiceCaller;
+using GreenField.UserSession;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -91,7 +92,7 @@ namespace GreenField.Gadgets.ViewModels
                 isActive = value;
                 if (value)
                 {
-                    if (DbInteractivity != null && IsActive)
+                    if (DbInteractivity != null && IsActive && SessionManager.SESSION != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving document meta-tag information...");
                         DbInteractivity.GetDocumentsMetaTags(GetDocumentsMetaTagsCallBackMethod);

@@ -131,7 +131,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region EventsUnsusbcribe        
+        #region EventsUnsusbcribe
         /// <summary>
         /// Dispose method to unsubscribe Events
         /// </summary>
@@ -227,8 +227,7 @@ namespace GreenField.Gadgets.Views
             {
                 if (this.dgConsensusEstimate.Visibility == Visibility.Visible)
                 {
-                    PDFExporter.btnExportPDF_Click(this.dgConsensusEstimate, orientation: PageOrientation.Landscape,
-                    skipColumnDisplayIndex: new List<int> { 1, 12 });
+                    PDFExporter.btnExportPDF_Click(this.dgConsensusEstimate, skipColumnDisplayIndex: new List<int> { 1, 12 });
                 }
             }
             catch (Exception ex)

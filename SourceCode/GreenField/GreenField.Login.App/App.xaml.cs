@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Net.Browser;
 
 namespace GreenField.Login.App
 {
@@ -31,8 +32,7 @@ namespace GreenField.Login.App
         }
 
         private void Application_Exit(object sender, EventArgs e)
-        {
-
+        {            
         }
 
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)

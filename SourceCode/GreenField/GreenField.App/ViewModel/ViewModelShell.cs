@@ -88,11 +88,21 @@ namespace GreenField.App.ViewModel
             //SessionManager.SESSION = new Session() { UserName = "rvig", Roles = new List<string>() };
             //UserName = SessionManager.SESSION.UserName;
 
-            if (manageSessions != null)
+            BusyIndicatorNotification(true, "Retrieving session information...");
+            ServiceClientFactory.ReadCookies((result) =>
             {
-                BusyIndicatorNotification(true, "Retrieving session information...");
-                manageSessions.GetSession(GetSessionCallbackMethod);
-            }
+                SessionManager.SESSION = new Session();
+                SessionManager.SESSION.UserName = CookieEncription.Decript(result[CookieEncription.Encript("UserName")]);
+                String[] userRolesEncrypted = result[CookieEncription.Encript("Roles")].Split('|');
+                SessionManager.SESSION.Roles = userRolesEncrypted.Select(g => CookieEncription.Decript(g)).ToList();
+                BusyIndicatorNotification();
+            });
+
+            //if (manageSessions != null)
+            //{
+            //    BusyIndicatorNotification(true, "Retrieving session information...");
+            //    manageSessions.GetSession(GetSessionCallbackMethod);
+            //}
         }
         #endregion
 

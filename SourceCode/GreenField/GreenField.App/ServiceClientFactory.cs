@@ -92,7 +92,7 @@ namespace GreenField.App
         /// <summary>
         /// Read cookies from the browser into a local store.
         /// </summary>
-        public static void ReadCookies()
+        public static void ReadCookies(Action<IDictionary<string, string>> result)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
@@ -101,7 +101,7 @@ namespace GreenField.App
 
                 // Get the cookies from the browser. It returns it in a single, semicolon-delimited string.
                 string cookies = HtmlPage.Document.Cookies;
-                string[] cookieSplit = cookies.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                string[] cookieSplit = cookies.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string cookie in cookieSplit)
                 {
                     string[] keyAndValue = cookie.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries);
@@ -114,6 +114,8 @@ namespace GreenField.App
                         m_Cookies.Add(cookieKey, cookieValue);
                     }
                 }
+
+                result(Cookies);
             });
         }
     }

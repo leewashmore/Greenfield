@@ -15,5 +15,6 @@ namespace GreenField.UserSession
     public static class SessionManager
     {
         public static Session SESSION { get; set; }
+        public static CookieContainer CookieContainer { get; set; }
     }
 }

@@ -116,6 +116,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CookieEncription.cs" />
     <Compile Include="EnumUtils.cs" />
     <Compile Include="Helper\Common.cs" />
     <Compile Include="ContainerEvents.cs" />

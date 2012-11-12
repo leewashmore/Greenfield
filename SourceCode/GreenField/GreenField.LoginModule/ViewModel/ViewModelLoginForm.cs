@@ -97,7 +97,7 @@ namespace GreenField.LoginModule.ViewModel
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogLoginException(_logger, ex);
-            }         
+            }
         }
         #endregion
 
@@ -721,7 +721,7 @@ namespace GreenField.LoginModule.ViewModel
                 Session sessionVariable = new Session
                     {
                         UserName = LoginIdText.ToLower(),
-                        Roles=UserRoles
+                        Roles = UserRoles
                     };
 
                 _manageSessions.SetSession(sessionVariable, (result) =>
@@ -733,7 +733,11 @@ namespace GreenField.LoginModule.ViewModel
                     {
                         if (result != null)
                         {
-                            HtmlPage.Document.SetProperty("cookie", "UserName=" + LoginIdText.ToLower());
+                            String cookie = String.Format("{0}={1}", CookieEncription.Encript("UserName"), CookieEncription.Encript(LoginIdText.ToLower()));
+                            List<String> roles = UserRoles.Select(g => CookieEncription.Encript(g)).ToList();
+                            cookie = UserRoles.Count == 0 ? cookie : String.Format("{0},{1}={2}", cookie, CookieEncription.Encript("Roles"), String.Join("|", roles));
+                            HtmlPage.Document.Cookies = cookie;                            
+                            //HtmlPage.Document.SetProperty("cookie", "UserName=" + LoginIdText.ToLower());
                             if ((bool)result) HtmlPage.Window.Navigate(new Uri(@"HomePage.aspx", UriKind.Relative));
                         }
                         else
@@ -757,7 +761,7 @@ namespace GreenField.LoginModule.ViewModel
             }
         }
         #endregion
-        
+
         #region Helper Methods
         /// <summary>
         /// Remove all Error notifications
