@@ -16,7 +16,6 @@ using System.Net.Security;
 
 namespace GreenField.Web.Services
 {
-    
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class TargetingOperations : TopDown.FacingClient.Facade
     {
