@@ -36,11 +36,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.UserSession", "G
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targering", "Targering", "{3ED827C9-3896-4F5C-AC9A-7516D531C209}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aims.Expressions", "..\..\..\..\kill-me-now\top-down\TopDown.Expressions\Aims.Expressions.csproj", "{9FC437D2-362D-4898-8C9B-408B16406A0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopDown.Core", "..\..\..\top-down\TopDown.Core\TopDown.Core.csproj", "{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopDown.Core", "..\..\..\..\kill-me-now\top-down\TopDown.Core\TopDown.Core.csproj", "{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopDown.FacingClient", "..\..\..\top-down\TopDown.FacingClient\TopDown.FacingClient.csproj", "{6E829E28-5519-4627-960D-12DD9162D156}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopDown.FacingClient", "..\..\..\..\kill-me-now\top-down\TopDown.FacingClient\TopDown.FacingClient.csproj", "{6E829E28-5519-4627-960D-12DD9162D156}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aims.Expressions", "..\..\..\top-down\TopDown.Expressions\Aims.Expressions.csproj", "{9FC437D2-362D-4898-8C9B-408B16406A0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -202,16 +202,6 @@ Global
 		{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}.Release|x86.ActiveCfg = Release|Any CPU
-		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Release|x86.ActiveCfg = Release|Any CPU
 		{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59}.Debug|Mixed Platforms.Build.0 = Debug|x86
@@ -232,13 +222,23 @@ Global
 		{6E829E28-5519-4627-960D-12DD9162D156}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6E829E28-5519-4627-960D-12DD9162D156}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6E829E28-5519-4627-960D-12DD9162D156}.Release|x86.ActiveCfg = Release|Any CPU
+		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9FC437D2-362D-4898-8C9B-408B16406A0F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{9FC437D2-362D-4898-8C9B-408B16406A0F} = {3ED827C9-3896-4F5C-AC9A-7516D531C209}
 		{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59} = {3ED827C9-3896-4F5C-AC9A-7516D531C209}
 		{6E829E28-5519-4627-960D-12DD9162D156} = {3ED827C9-3896-4F5C-AC9A-7516D531C209}
+		{9FC437D2-362D-4898-8C9B-408B16406A0F} = {3ED827C9-3896-4F5C-AC9A-7516D531C209}
 	EndGlobalSection
 EndGlobal

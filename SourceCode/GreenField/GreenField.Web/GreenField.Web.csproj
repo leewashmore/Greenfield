@@ -268,7 +268,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\kill-me-now\top-down\TopDown.FacingClient\TopDown.FacingClient.csproj">
+    <ProjectReference Include="..\..\..\..\top-down\TopDown.FacingClient\TopDown.FacingClient.csproj">
       <Project>{6E829E28-5519-4627-960D-12DD9162D156}</Project>
       <Name>TopDown.FacingClient</Name>
     </ProjectReference>
