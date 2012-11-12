@@ -45,6 +45,7 @@ namespace GreenField.App.ViewModel
         }
 
         #region Dashboard
+        
         #region Company
         #region Snapshot
         private void DashboardCompanySnapshotSummaryCommandMethod(object param)
@@ -1845,7 +1846,7 @@ namespace GreenField.App.ViewModel
 
         private void TargetingBottomUpCommandMethod(Object whatever)
         {
-            this.WatchMe(this.GetMethodSignature("TargetingBroadGlobalActiveCommandMethod"), delegate
+            this.WatchMe(this.GetMethodSignature("TargetingBottomUpCommandMethod"), delegate
             {
                 throw new NotImplementedException("Handler for targeting: bottom up hasn't been implemented yet.");
             });
@@ -1853,7 +1854,7 @@ namespace GreenField.App.ViewModel
 
         private void TargetingBasketTargetsCommandMethod(Object whatever)
         {
-            this.WatchMe(this.GetMethodSignature("TargetingBroadGlobalActiveCommandMethod"), delegate
+            this.WatchMe(this.GetMethodSignature("TargetingBasketTargetsCommandMethod"), delegate
             {
                 throw new NotImplementedException("Handler for targeting: basket targets hasn't been implemented yet.");
             });
