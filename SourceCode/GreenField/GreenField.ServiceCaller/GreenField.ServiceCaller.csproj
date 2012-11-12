@@ -164,6 +164,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\TargetingDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -624,6 +629,16 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\TargetingDefinitions\GreenField.ServiceCaller.TargetingDefinitions.RootModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TargetingDefinitions\TargetingOperations.disco" />
+    <None Include="Service References\TargetingDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\TargetingDefinitions\configuration.svcinfo" />
+    <None Include="Service References\TargetingDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
@@ -685,6 +700,16 @@
     <None Include="Service References\SessionDefinitions\SessionOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\TargetingDefinitions\TargetingOperations.wsdl" />
+    <None Include="Service References\TargetingDefinitions\TargetingOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TargetingDefinitions\TargetingOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TargetingDefinitions\TargetingOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\AlertDefinitions\" />
@@ -702,6 +727,7 @@
     <WCFMetadataStorage Include="Service References\PerformanceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SecurityReferenceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SessionDefinitions\" />
+    <WCFMetadataStorage Include="Service References\TargetingDefinitions\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Helper\Prompt\Message.xaml">

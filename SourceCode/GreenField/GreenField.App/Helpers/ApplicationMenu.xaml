@@ -8,233 +8,244 @@
     d:DesignHeight="300" d:DesignWidth="400">
 
 
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/GreenField.App;component/Assets/Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/GreenField.App;component/Assets/Styles.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</UserControl.Resources>
 
 
-    <Grid x:Name="LayoutRoot" Background="White">
-        <telerik:RadPanelBar Name="pbMainMenu" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible">
+	<Grid x:Name="LayoutRoot" Background="White">
+		<telerik:RadPanelBar Name="pbMainMenu" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible">
 
-            <!--Markets SubMenu-->
-            <telerik:RadPanelBarItem Header="Markets" x:Name="pbItemMarkets" HorizontalAlignment="Stretch"
+			<!--Markets SubMenu-->
+			<telerik:RadPanelBarItem Header="Markets" x:Name="pbItemMarkets" HorizontalAlignment="Stretch"
                                      Style="{StaticResource PanelBarItemStyle}">
-                <telerik:RadMenu x:Name="radMenuMarkets" ClickToOpen="False" Orientation="Vertical"  
+				<telerik:RadMenu x:Name="radMenuMarkets" ClickToOpen="False" Orientation="Vertical"
                                  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Style="{StaticResource RadMenuStyle}" >
 
-                    <telerik:RadMenuItem x:Name="rmItemSnapshot" Header="Snapshot" HorizontalAlignment="Stretch">
-                        <telerik:RadMenuItem x:Name="rmItemSummary" Header="Summary" HorizontalAlignment="Stretch" 
+					<telerik:RadMenuItem x:Name="rmItemSnapshot" Header="Snapshot" HorizontalAlignment="Stretch">
+						<telerik:RadMenuItem x:Name="rmItemSummary" Header="Summary" HorizontalAlignment="Stretch"
                                                  Command="{Binding DashboardMarketsSnapshotSummaryCommand}" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemmarketPerf" Header="Market Performance" HorizontalAlignment="Stretch"
+						<telerik:RadMenuItem x:Name="rmItemmarketPerf" Header="Market Performance" HorizontalAlignment="Stretch"
                                                  Command="{Binding DashboardMarketsSnapshotMarketPerformanceCommand}" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <!--<telerik:RadMenuItem x:Name="rmItemInternalVModelValuation" Header="Internal Vs Model Valuation" HorizontalAlignment="Stretch"
+						<!--<telerik:RadMenuItem x:Name="rmItemInternalVModelValuation" Header="Internal Vs Model Valuation" HorizontalAlignment="Stretch"
                                                  Command="{Binding DashboardMarketsSnapshotInternalModelValuationCommand}" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Header="Macro-Economic" x:Name="rmItemMacroEconomic">
-                        <telerik:RadMenuItem x:Name="rmItemEsMSummary" Header="EM Summary" 
+					</telerik:RadMenuItem>
+					<telerik:RadMenuItem Header="Macro-Economic" x:Name="rmItemMacroEconomic">
+						<telerik:RadMenuItem x:Name="rmItemEsMSummary" Header="EM Summary"
                                                  Command="{Binding DashboardMarketsMacroEconomicsEMSummaryCommand}" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemCosuntrySummary" Header="Country Summary" 
+						<telerik:RadMenuItem x:Name="rmItemCosuntrySummary" Header="Country Summary"
                                                  Command="{Binding DashboardMarketsMacroEconomicsCountrySummaryCommand}" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem x:Name="rmItemCommodsities" Header="Commodities">
-                        <telerik:RadMenuItem Header="Summary" x:Name="rmItesmCommoSummary" 
+					</telerik:RadMenuItem>
+					<telerik:RadMenuItem x:Name="rmItemCommodsities" Header="Commodities">
+						<telerik:RadMenuItem Header="Summary" x:Name="rmItesmCommoSummary"
                                                  Command="{Binding DashboardMarketsCommoditiesSummaryCommand}" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                    </telerik:RadMenuItem>
+					</telerik:RadMenuItem>
 
-                </telerik:RadMenu>
-            </telerik:RadPanelBarItem>
+				</telerik:RadMenu>
+			</telerik:RadPanelBarItem>
 
-            <!--Portfolio SubMenu-->
-            <telerik:RadPanelBarItem Header="Portfolio" x:Name="pbItemPortfolio" Style="{StaticResource PanelBarItemStyle}">
-                <telerik:RadMenu x:Name="radMenuPortfolio" ClickToOpen="False" Orientation="Vertical"  
+			<!--Portfolio SubMenu-->
+			<telerik:RadPanelBarItem Header="Portfolio" x:Name="pbItemPortfolio" Style="{StaticResource PanelBarItemStyle}">
+				<telerik:RadMenu x:Name="radMenuPortfolio" ClickToOpen="False" Orientation="Vertical"
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
 
-                    <telerik:RadMenuItem x:Name="rmItemPortfolioSnapshot" Header="Snapshot" Command="{Binding DashboardPortfolioSnapshotCommand}" />
+					<telerik:RadMenuItem x:Name="rmItemPortfolioSnapshot" Header="Snapshot" Command="{Binding DashboardPortfolioSnapshotCommand}" />
 
-                    <telerik:RadMenuItem x:Name="rmItemHoldings" Header="Holdings" Command="{Binding DashboardPortfolioHoldingsCommand}" />
+					<telerik:RadMenuItem x:Name="rmItemHoldings" Header="Holdings" Command="{Binding DashboardPortfolioHoldingsCommand}" />
 
-                    <telerik:RadMenuItem x:Name="rmItemPerformance" Header="Performance">
-                        <telerik:RadMenuItem x:Name="rmItemPortfolioSummary" Header="Summary" 
+					<telerik:RadMenuItem x:Name="rmItemPerformance" Header="Performance">
+						<telerik:RadMenuItem x:Name="rmItemPortfolioSummary" Header="Summary"
                                              Command="{Binding DashboardPortfolioPerformanceSummaryCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemAttribution" Header="Attribution"  
+						<telerik:RadMenuItem x:Name="rmItemAttribution" Header="Attribution"
                                              Command="{Binding DashboardPortfolioPerformanceAttributionCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemRelativePerformance" Header="Relative Performance" 
+						<telerik:RadMenuItem x:Name="rmItemRelativePerformance" Header="Relative Performance"
                                              Command="{Binding DashboardPortfolioPerformanceRelativePerformanceCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                    </telerik:RadMenuItem>
+					</telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Header="Benchmark" x:Name="rmItemBenchmark">
-                        <telerik:RadMenuItem x:Name="rmItemBenchmarkSummary" Header="Summary"
+					<telerik:RadMenuItem Header="Benchmark" x:Name="rmItemBenchmark">
+						<telerik:RadMenuItem x:Name="rmItemBenchmarkSummary" Header="Summary"
                                              Command="{Binding DashboardPortfolioBenchmarkSummaryCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemComposition" Header="Composition"
+						<telerik:RadMenuItem x:Name="rmItemComposition" Header="Composition"
                                              Command="{Binding DashboardPortfolioBenchmarkComponentsCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                    </telerik:RadMenuItem>
+					</telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem x:Name="rmItemModels" Header="Targeting"> <!--Header="Models"-->
-                        <telerik:RadMenuItem Header="Asset Allocation" x:Name="rmItemAssetAllocation"
+					<telerik:RadMenuItem x:Name="rmItemModels" Header="Targeting">
+						<!--Header="Models"-->
+						<telerik:RadMenuItem Header="Asset Allocation" x:Name="rmItemAssetAllocation"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Stock Selection" x:Name="rmItemStockSelection"
+						<telerik:RadMenuItem Header="Stock Selection" x:Name="rmItemStockSelection"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Bottom Up" x:Name="rmItemBottomUp"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <!--<telerik:RadMenuItem Header="Direct Overlay" x:Name="rmItemDirectOverlay"
+						<!--<telerik:RadMenuItem Header="Bottom Up" x:Name="rmItemBottomUp"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                    </telerik:RadMenuItem>
-                </telerik:RadMenu>
-            </telerik:RadPanelBarItem>
+						<!--<telerik:RadMenuItem Header="Direct Overlay" x:Name="rmItemDirectOverlay"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
+					</telerik:RadMenuItem>
+				</telerik:RadMenu>
+			</telerik:RadPanelBarItem>
 
-            <!--Company SubMenu-->
-            <telerik:RadPanelBarItem Header="Company" x:Name="pbItemCompany" Style="{StaticResource PanelBarItemStyle}">
-                <telerik:RadMenu x:Name="radMenuCompany" ClickToOpen="False" Orientation="Vertical"  
+			<!--Company SubMenu-->
+			<telerik:RadPanelBarItem Header="Company" x:Name="pbItemCompany" Style="{StaticResource PanelBarItemStyle}">
+				<telerik:RadMenu x:Name="radMenuCompany" ClickToOpen="False" Orientation="Vertical"
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
 
-                    <telerik:RadMenuItem x:Name="rmItemCompanySnapshot" Header="Snapshot">
-                        <telerik:RadMenuItem x:Name="rmItemCompanySummary" Header="Summary" Command="{Binding DashboardCompanySnapshotSummaryCommand}"
+					<telerik:RadMenuItem x:Name="rmItemCompanySnapshot" Header="Snapshot">
+						<telerik:RadMenuItem x:Name="rmItemCompanySummary" Header="Summary" Command="{Binding DashboardCompanySnapshotSummaryCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}" />
-                        <!--<telerik:RadMenuItem x:Name="rmItemCompanyProfile" Header="Company Profile"
+						<!--<telerik:RadMenuItem x:Name="rmItemCompanyProfile" Header="Company Profile"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                        <!--<telerik:RadMenuItem x:Name="rmItemTearSheet" Header="Tear Sheet"
+						<!--<telerik:RadMenuItem x:Name="rmItemTearSheet" Header="Tear Sheet"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                    </telerik:RadMenuItem>
+					</telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem x:Name="rmItemFinancials" Header="Financials">
-                        <telerik:RadMenuItem Header="Summary" x:Name="rmItemFinancialsSummary"
+					<telerik:RadMenuItem x:Name="rmItemFinancials" Header="Financials">
+						<telerik:RadMenuItem Header="Summary" x:Name="rmItemFinancialsSummary"
                                              Command="{Binding DashboardCompanyFinancialsSummaryCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Income Statement" x:Name="rmItemIncomeStatement"
+						<telerik:RadMenuItem Header="Income Statement" x:Name="rmItemIncomeStatement"
                                              Command="{Binding DashboardCompanyFinancialsIncomeStatementCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Balance Sheet" x:Name="rmItemBalanceSheet"
+						<telerik:RadMenuItem Header="Balance Sheet" x:Name="rmItemBalanceSheet"
                                              Command="{Binding DashboardCompanyFinancialsBalanceSheetCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Cash Flow" x:Name="rmItemCashFlow"
+						<telerik:RadMenuItem Header="Cash Flow" x:Name="rmItemCashFlow"
                                              Command="{Binding DashboardCompanyFinancialsCashFlowCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="FinStat" x:Name="rmItemFinStat"
+						<telerik:RadMenuItem Header="FinStat" x:Name="rmItemFinStat"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}" Command="{Binding DashboardCompanyFinstatCommand}"/>
-                        <!--<telerik:RadMenuItem Header="Peer Comparison" x:Name="rmItemPeerComparison"
+						<!--<telerik:RadMenuItem Header="Peer Comparison" x:Name="rmItemPeerComparison"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                    </telerik:RadMenuItem>
+					</telerik:RadMenuItem>
 
 
-                    <telerik:RadMenuItem x:Name="rmItemEstimates" Header="Estimates">
-                        <telerik:RadMenuItem x:Name="rmItemConsensus" Header="Consensus"
+					<telerik:RadMenuItem x:Name="rmItemEstimates" Header="Estimates">
+						<telerik:RadMenuItem x:Name="rmItemConsensus" Header="Consensus"
                                              Command="{Binding DashboardCompanyEstimatesConsensusCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemDetailed" Header="Detailed"
+						<telerik:RadMenuItem x:Name="rmItemDetailed" Header="Detailed"
                                              Command="{Binding DashboardCompanyEstimatesDetailedCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <!--<telerik:RadMenuItem x:Name="rmItemComparison" Header="Comparison"
+						<!--<telerik:RadMenuItem x:Name="rmItemComparison" Header="Comparison"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                    </telerik:RadMenuItem>
+					</telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Header="Valuation" x:Name="rmItemValuation">
-                        <telerik:RadMenuItem x:Name="rmItemFairValue" Header="Fair Value" Command="{Binding DashboardCompanyValuationFairValueCommand}"
+					<telerik:RadMenuItem Header="Valuation" x:Name="rmItemValuation">
+						<telerik:RadMenuItem x:Name="rmItemFairValue" Header="Fair Value" Command="{Binding DashboardCompanyValuationFairValueCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemDCF" Header="Discounted Cash Flows" Command="{Binding DashboardCompanyValuationDiscountedCashFlowCommand}"
+						<telerik:RadMenuItem x:Name="rmItemDCF" Header="Discounted Cash Flows" Command="{Binding DashboardCompanyValuationDiscountedCashFlowCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Header="Documents" x:Name="rmItemDocument">
-                        <telerik:RadMenuItem x:Name="rmItemDocuments" Header="Documents" Command="{Binding DashboardCompanyDocumentsCommand}"
+					</telerik:RadMenuItem>
+					<telerik:RadMenuItem Header="Documents" x:Name="rmItemDocument">
+						<telerik:RadMenuItem x:Name="rmItemDocuments" Header="Documents" Command="{Binding DashboardCompanyDocumentsCommand}"
                                              Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemLoadModel" Header="Load Models" Command="{Binding DashboardCompanyDocumentsLoadModelCommand}"
+						<telerik:RadMenuItem x:Name="rmItemLoadModel" Header="Load Models" Command="{Binding DashboardCompanyDocumentsLoadModelCommand}"
                                              Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem x:Name="rmItemCharting" Header="Charting">
-                        <telerik:RadMenuItem Header="Price/Comparison" x:Name="rmItemPriceComparison"
+					</telerik:RadMenuItem>
+					<telerik:RadMenuItem x:Name="rmItemCharting" Header="Charting">
+						<telerik:RadMenuItem Header="Price/Comparison" x:Name="rmItemPriceComparison"
                                              Command="{Binding DashboardCompanyChartingClosingPriceCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Unrealised Gain/Loss" x:Name="rmItemUnrealisedGainLoss"
+						<telerik:RadMenuItem Header="Unrealised Gain/Loss" x:Name="rmItemUnrealisedGainLoss"
                                              Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Context" x:Name="rmItemContext"
+						<telerik:RadMenuItem Header="Context" x:Name="rmItemContext"
                                              Command="{Binding DashboardCompanyChartingContextCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Valuation" x:Name="rmItemChartingValuation"
+						<telerik:RadMenuItem Header="Valuation" x:Name="rmItemChartingValuation"
                                              Command="{Binding DashboardCompanyChartingValuationCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                    </telerik:RadMenuItem>
+					</telerik:RadMenuItem>
 
-                    <!--<telerik:RadMenuItem Header="Corporate Governance" x:Name="rmItemCorporateGovernance">
+					<!--<telerik:RadMenuItem Header="Corporate Governance" x:Name="rmItemCorporateGovernance">
                         <telerik:RadMenuItem x:Name="rmItemQuestionnaire" Header="Questionnaire"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem x:Name="rmItemReport" Header="Report"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>-->
 
-                </telerik:RadMenu>
-            </telerik:RadPanelBarItem>
+				</telerik:RadMenu>
+			</telerik:RadPanelBarItem>
 
-            <!--Screening SubMenu-->
-            <telerik:RadPanelBarItem Header="Screening" x:Name="pbItemScreening" Style="{StaticResource PanelBarItemStyle}">
-                <telerik:RadMenu x:Name="radMenuScreening" ClickToOpen="False" Orientation="Vertical"  
+			<!--Screening SubMenu-->
+			<telerik:RadPanelBarItem Header="Screening" x:Name="pbItemScreening" Style="{StaticResource PanelBarItemStyle}">
+				<telerik:RadMenu x:Name="radMenuScreening" ClickToOpen="False" Orientation="Vertical"
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
-                    <telerik:RadMenuItem x:Name="rmItemStock" Header="Stock" Command="{Binding DashboardCustomScreeningToolCommand}"
+					<telerik:RadMenuItem x:Name="rmItemStock" Header="Stock" Command="{Binding DashboardCustomScreeningToolCommand}"
                                                />
-                    <telerik:RadMenuItem x:Name="rmItemQuarterlyComparison" Header="Quarterly Comparison"
+					<telerik:RadMenuItem x:Name="rmItemQuarterlyComparison" Header="Quarterly Comparison"
                                          Command="{Binding DashboardQuarterlyResultsComparisonCommand}"
                                                />
-                </telerik:RadMenu>
-            </telerik:RadPanelBarItem>
+				</telerik:RadMenu>
+			</telerik:RadPanelBarItem>
 
-            <!--InvestmentCommittee SubMenu-->
-            <telerik:RadPanelBarItem Header="Investment Committee" x:Name="pbItemInvestmentCommittee" Style="{StaticResource PanelBarItemStyle}"
+			<!--InvestmentCommittee SubMenu-->
+			<telerik:RadPanelBarItem Header="Investment Committee" x:Name="pbItemInvestmentCommittee" Style="{StaticResource PanelBarItemStyle}"
                                      IsEnabled="{Binding RoleIsIC}">
-                <telerik:RadMenu x:Name="radMenuInvestmentCommittee" ClickToOpen="False" Orientation="Vertical"  
+				<telerik:RadMenu x:Name="radMenuInvestmentCommittee" ClickToOpen="False" Orientation="Vertical"
                                  VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
-                    <telerik:RadMenuItem x:Name="rmItemCreateEdit" Header="Create/Edit"
+					<telerik:RadMenuItem x:Name="rmItemCreateEdit" Header="Create/Edit"
                                                 Command="{Binding DashboardInvestmentCommitteeCreateEditCommand}"
                                                />
-                    <!--<telerik:RadMenuItem x:Name="rmItemVote" Header="Vote" Command="{Binding DashboardInvestmentCommitteeVoteCommand}"/>-->
-                    <!--<telerik:RadMenuItem x:Name="rmItemPreMeetingReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Pre-Meeting Report" Command="{Binding DashboardInvestmentCommitteePreMeetingReportCommand}"/>-->
-                    <telerik:RadMenuItem x:Name="rmItemMeetingMinutes" IsEnabled="{Binding RoleIsICAdmin}" Header="Meeting Minutes" Command="{Binding DashboardInvestmentCommitteeMeetingMinutesCommand}"/>
-                    <telerik:RadMenuItem x:Name="rmItemSummaryReport" Header="Summary Report" Command="{Binding DashboardInvestmentCommitteeSummaryReportCommand}"/>
-                    <!--<telerik:RadMenuItem x:Name="rmItemMetricsReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Metrics Report" Command="{Binding DashboardInvestmentCommitteeMetricsReportCommand}"/>-->
-                </telerik:RadMenu>
-            </telerik:RadPanelBarItem>
+					<!--<telerik:RadMenuItem x:Name="rmItemVote" Header="Vote" Command="{Binding DashboardInvestmentCommitteeVoteCommand}"/>-->
+					<!--<telerik:RadMenuItem x:Name="rmItemPreMeetingReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Pre-Meeting Report" Command="{Binding DashboardInvestmentCommitteePreMeetingReportCommand}"/>-->
+					<telerik:RadMenuItem x:Name="rmItemMeetingMinutes" IsEnabled="{Binding RoleIsICAdmin}" Header="Meeting Minutes" Command="{Binding DashboardInvestmentCommitteeMeetingMinutesCommand}"/>
+					<telerik:RadMenuItem x:Name="rmItemSummaryReport" Header="Summary Report" Command="{Binding DashboardInvestmentCommitteeSummaryReportCommand}"/>
+					<!--<telerik:RadMenuItem x:Name="rmItemMetricsReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Metrics Report" Command="{Binding DashboardInvestmentCommitteeMetricsReportCommand}"/>-->
+				</telerik:RadMenu>
+			</telerik:RadPanelBarItem>
 
-            <!--Admin SubMenu-->
-            <telerik:RadPanelBarItem Header="Admin" x:Name="pbItemAdmin" Style="{StaticResource PanelBarItemStyle}">
-                <telerik:RadMenu x:Name="radMenuAdmin" ClickToOpen="False" Orientation="Vertical"  
+			<!--Admin SubMenu-->
+			<telerik:RadPanelBarItem Header="Admin" x:Name="pbItemAdmin" Style="{StaticResource PanelBarItemStyle}">
+				<telerik:RadMenu x:Name="radMenuAdmin" ClickToOpen="False" Orientation="Vertical"
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
-                    <telerik:RadMenuItem x:Name="rmItemInvestmentCommittee" Header="Investment Committee">
-                        <!--<telerik:RadMenuItem x:Name="rmItemViewAgenda" Header="View Agenda" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                        <telerik:RadMenuItem x:Name="rmItemEditDate" IsEnabled="{Binding RoleIsICAdmin}" Header="Edit Date" Style="{StaticResource RadSecondLevelMenuItemStyle}"
+					<telerik:RadMenuItem x:Name="rmItemInvestmentCommittee" Header="Investment Committee">
+						<!--<telerik:RadMenuItem x:Name="rmItemViewAgenda" Header="View Agenda" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
+						<telerik:RadMenuItem x:Name="rmItemEditDate" IsEnabled="{Binding RoleIsICAdmin}" Header="Edit Date" Style="{StaticResource RadSecondLevelMenuItemStyle}"
                                              Command="{Binding DashboardAdminInvestmentCommitteeChangeDateCommand}"/>
-                        <!--<telerik:RadMenuItem x:Name="rmItemMeetingDetails" Header="Meeting Details" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem x:Name="rmItemBrokerResearch" Header="Broker Research"/>
-                </telerik:RadMenu>
-            </telerik:RadPanelBarItem>
+						<!--<telerik:RadMenuItem x:Name="rmItemMeetingDetails" Header="Meeting Details" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
+					</telerik:RadMenuItem>
+					<telerik:RadMenuItem x:Name="rmItemBrokerResearch" Header="Broker Research"/>
+				</telerik:RadMenu>
+			</telerik:RadPanelBarItem>
 
-            <!--Gadgets SubMenu-->
-            <telerik:RadPanelBarItem Header="Dashboard" x:Name="pbItemDashboard" Style="{StaticResource PanelBarItemStyle}"
+			<!--Gadgets SubMenu-->
+			<telerik:RadPanelBarItem Header="Dashboard" x:Name="pbItemDashboard" Style="{StaticResource PanelBarItemStyle}"
                                      Command="{Binding MyDashboardCommand}">
-                <!--<telerik:RadMenu x:Name="radMenuGadgets" ClickToOpen="False" Orientation="Vertical"  
+				<!--<telerik:RadMenu x:Name="radMenuGadgets" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
                 </telerik:RadMenu>-->
-            </telerik:RadPanelBarItem>
+			</telerik:RadPanelBarItem>
 
-            <!--Others SubMenu-->
-            <telerik:RadPanelBarItem Header="Others" x:Name="pbItemOthers" Style="{StaticResource PanelBarItemStyle}">
-                <telerik:RadMenu x:Name="radMenuOthers" ClickToOpen="False" Orientation="Vertical"  
+
+			<telerik:RadPanelBarItem Header="Targeting" x:Name="pbItemTargeting" Style="{StaticResource PanelBarItemStyle}">
+				<telerik:RadMenu x:Name="radMenuTargeting" ClickToOpen="False" Orientation="Vertical"
+                                 VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
+					<telerik:RadMenuItem x:Name="rmItemBroadGlobalActive" Header="Broad Global Active" Command="{Binding DashboardInvestmentCommitteeMeetingMinutesCommand}"/>
+					<telerik:RadMenuItem x:Name="rmItemBottomUp" Header="Bottom-Up" Command="{Binding DashboardInvestmentCommitteeSummaryReportCommand}"/>
+					<telerik:RadMenuItem x:Name="rmItemBasketTargets" Header="Basket Targets" Command="{Binding DashboardInvestmentCommitteeSummaryReportCommand}"/>
+				</telerik:RadMenu>
+			</telerik:RadPanelBarItem>
+
+			<!--Others SubMenu-->
+			<telerik:RadPanelBarItem Header="Others" x:Name="pbItemOthers" Style="{StaticResource PanelBarItemStyle}">
+				<telerik:RadMenu x:Name="radMenuOthers" ClickToOpen="False" Orientation="Vertical"
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
-                    <telerik:RadMenuItem Header="User Management"  Command="{Binding UserManagementCommand}" />
-                    <telerik:RadMenuItem  Header="Role Management" Command="{Binding RoleManagementCommand}" />
-                </telerik:RadMenu>
-            </telerik:RadPanelBarItem>
+					<telerik:RadMenuItem Header="User Management"  Command="{Binding UserManagementCommand}" />
+					<telerik:RadMenuItem  Header="Role Management" Command="{Binding RoleManagementCommand}" />
+				</telerik:RadMenu>
+			</telerik:RadPanelBarItem>
 
-        </telerik:RadPanelBar>
+		</telerik:RadPanelBar>
 
-    </Grid>
+	</Grid>
 
 </UserControl>
 
