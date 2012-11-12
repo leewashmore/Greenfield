@@ -228,9 +228,9 @@
 			<telerik:RadPanelBarItem Header="Targeting" x:Name="pbItemTargeting" Style="{StaticResource PanelBarItemStyle}">
 				<telerik:RadMenu x:Name="radMenuTargeting" ClickToOpen="False" Orientation="Vertical"
                                  VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
-					<telerik:RadMenuItem x:Name="rmItemBroadGlobalActive" Header="Broad Global Active" Command="{Binding DashboardInvestmentCommitteeMeetingMinutesCommand}"/>
-					<telerik:RadMenuItem x:Name="rmItemBottomUp" Header="Bottom-Up" Command="{Binding DashboardInvestmentCommitteeSummaryReportCommand}"/>
-					<telerik:RadMenuItem x:Name="rmItemBasketTargets" Header="Basket Targets" Command="{Binding DashboardInvestmentCommitteeSummaryReportCommand}"/>
+                    <telerik:RadMenuItem x:Name="rmItemBroadGlobalActive" Header="Broad Global Active" Command="{Binding TargetingBroadGlobalActiveCommand}"/>
+                    <telerik:RadMenuItem x:Name="rmItemBottomUp" Header="Bottom-Up" Command="{Binding TargetingBottomUpCommand}"/>
+                    <telerik:RadMenuItem x:Name="rmItemBasketTargets" Header="Basket Targets" Command="{Binding TargetingBasketTargetsCommand}"/>
 				</telerik:RadMenu>
 			</telerik:RadPanelBarItem>
 

@@ -1832,22 +1832,63 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(logger, methodNamespace);
         }
 
-        
+
         // targeting
 
         private void TargetingBroadGlobalActiveCommandMethod(Object whatever)
         {
-            throw new NotImplementedException("Handler for targeting: broad global active hasn't been implemented yet.");
+            this.WatchMe(this.GetMethodSignature("TargetingBroadGlobalActiveCommandMethod"), delegate
+            {
+                throw new NotImplementedException("Handler for targeting: broad global active hasn't been implemented yet.");
+            });
         }
 
         private void TargetingBottomUpCommandMethod(Object whatever)
         {
-            throw new NotImplementedException("Handler for targeting: bottom up hasn't been implemented yet.");
+            this.WatchMe(this.GetMethodSignature("TargetingBroadGlobalActiveCommandMethod"), delegate
+            {
+                throw new NotImplementedException("Handler for targeting: bottom up hasn't been implemented yet.");
+            });
         }
 
         private void TargetingBasketTargetsCommandMethod(Object whatever)
         {
-            throw new NotImplementedException("Handler for targeting: basket targets hasn't been implemented yet.");
+            this.WatchMe(this.GetMethodSignature("TargetingBroadGlobalActiveCommandMethod"), delegate
+            {
+                throw new NotImplementedException("Handler for targeting: basket targets hasn't been implemented yet.");
+            });
+        }
+
+        
+        // helper methods
+
+        protected String GetMethodSignature(MethodInfo method)
+        {
+            var signature = this.GetMethodSignature(method.Name);
+            return signature;
+        }
+        protected String GetMethodSignature(String methodName)
+        {
+            var signature = String.Format("{0}.{1}", GetType().FullName, methodName);
+            return signature;
+        }
+        
+        /// <summary>
+        /// Takes care of exception logging.
+        /// </summary>
+        protected virtual void WatchMe(String signature, Action anything)
+        {
+            Logging.LogBeginMethod(logger, signature);
+            try
+            {
+                anything();
+            }
+            catch (Exception exception)
+            {
+                Prompt.ShowDialog("Message: " + exception.Message + "\nStackTrace: " + Logging.StackTraceToString(exception), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, exception);
+            }
+            Logging.LogEndMethod(logger, signature);
         }
     }
 }
