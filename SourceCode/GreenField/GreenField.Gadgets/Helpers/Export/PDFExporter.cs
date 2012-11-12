@@ -335,8 +335,8 @@ namespace GreenField.Gadgets.Helpers
                     cell.Background = Colors.White;
                     row.Cells.Add(cell);
                 }
-
-                table.Rows.Add(row);
+                //table.Rows.Add(row);
+                table.AddRow(row);                
             }
         }
 

@@ -91,11 +91,37 @@ namespace GreenField.App.ViewModel
             BusyIndicatorNotification(true, "Retrieving session information...");
             ServiceClientFactory.ReadCookies((result) =>
             {
-                SessionManager.SESSION = new Session();
-                SessionManager.SESSION.UserName = CookieEncription.Decript(result[CookieEncription.Encript("UserName")]);
-                String[] userRolesEncrypted = result[CookieEncription.Encript("Roles")].Split('|');
-                SessionManager.SESSION.Roles = userRolesEncrypted.Select(g => CookieEncription.Decript(g)).ToList();
-                BusyIndicatorNotification();
+                string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                Logging.LogBeginMethod(logger, methodNamespace);
+
+                try
+                {
+                    if (result != null)
+                    {
+                        SessionManager.SESSION = new Session();
+                        SessionManager.SESSION.UserName = CookieEncription.Decript(result[CookieEncription.Encript("UserName")]);
+                        SessionManager.SESSION.Roles = new List<string>();
+                        if (result.Keys.Contains(CookieEncription.Encript("Roles")))
+                        {
+                            String[] userRolesEncrypted = result[CookieEncription.Encript("Roles")].Split('|');
+                            SessionManager.SESSION.Roles = userRolesEncrypted.Select(g => CookieEncription.Decript(g)).ToList(); 
+                        }
+                    }
+                    else
+                    {
+                        Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                    Logging.LogException(logger, ex);
+                }
+                finally
+                {
+                    Logging.LogEndMethod(logger, methodNamespace);
+                    BusyIndicatorNotification();
+                }
             });
 
             //if (manageSessions != null)
