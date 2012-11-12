@@ -236,6 +236,9 @@
     <Compile Include="Views\Screening\ViewDashboardQuarterlyResultsComparison.xaml.cs">
       <DependentUpon>ViewDashboardQuarterlyResultsComparison.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Targeting\ViewDashboardTargetingBroadGlobalActive.xaml.cs">
+      <DependentUpon>ViewDashboardTargetingBroadGlobalActive.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewDashBoard.xaml.cs">
       <DependentUpon>ViewDashBoard.xaml</DependentUpon>
     </Compile>
@@ -457,6 +460,10 @@
     <Page Include="Views\Screening\ViewDashboardQuarterlyResultsComparison.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Targeting\ViewDashboardTargetingBroadGlobalActive.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewDashBoard.xaml">
       <SubType>Designer</SubType>

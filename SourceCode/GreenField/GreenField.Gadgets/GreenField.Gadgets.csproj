@@ -256,6 +256,7 @@
     <Compile Include="ViewModels\Company\Charting\UnrealizedGainLoss\ViewModelUnrealizedGainLoss.cs" />
     <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelValuationQualityGrowth.cs" />
     <Compile Include="Helpers\Converters\BasisPointsConverter.cs" />
+    <Compile Include="ViewModels\Targeting\ViewModelTargetingBroadGlobalActive.cs" />
     <Compile Include="Views\Screening\Stock\ChildViewCSTDataListSave.xaml.cs">
       <DependentUpon>ChildViewCSTDataListSave.xaml</DependentUpon>
     </Compile>
@@ -501,6 +502,9 @@
     </Compile>
     <Compile Include="Views\Portfolio\Snapshot\ViewValuationQualityGrowth.xaml.cs">
       <DependentUpon>ViewValuationQualityGrowth.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Targeting\ViewTargetingBroadGlobalActive.xaml.cs">
+      <DependentUpon>ViewTargetingBroadGlobalActive.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -839,6 +843,10 @@
     <Page Include="Views\Portfolio\Snapshot\ViewValuationQualityGrowth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Targeting\ViewTargetingBroadGlobalActive.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

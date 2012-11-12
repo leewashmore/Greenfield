@@ -45,7 +45,7 @@ namespace GreenField.App.ViewModel
         }
 
         #region Dashboard
-        
+
         #region Company
         #region Snapshot
         private void DashboardCompanySnapshotSummaryCommandMethod(object param)
@@ -1840,7 +1840,8 @@ namespace GreenField.App.ViewModel
         {
             this.WatchMe(this.GetMethodSignature("TargetingBroadGlobalActiveCommandMethod"), delegate
             {
-                throw new NotImplementedException("Handler for targeting: broad global active hasn't been implemented yet.");
+                // the XAML view is at: .\GreenField.DashBoardModule\Views\Targeting
+                this.NavigateFromMenu(DashboardCategoryType.Targeting_BroadGlobalActive, RegionNames.MAIN_REGION, "ViewDashboardTargetingBroadGlobalActive");
             });
         }
 
@@ -1860,8 +1861,19 @@ namespace GreenField.App.ViewModel
             });
         }
 
-        
+
         // helper methods
+        protected void NavigateFromMenu(DashboardCategoryType dashboardCategoryType, String regionName, String relativeUrl)
+        {
+            this.NavigateFromMenu(dashboardCategoryType, regionName, new Uri(relativeUrl, UriKind.Relative));
+        }
+        protected void NavigateFromMenu(DashboardCategoryType dashboardCategoryType, String regionName, Uri uri)
+        {
+            this.eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+            ToolBoxSelecter.SetToolBoxItemVisibility(dashboardCategoryType);
+            this.UpdateToolBoxSelectorVisibility();
+            this.regionManager.RequestNavigate(regionName, uri);
+        }
 
         protected String GetMethodSignature(MethodInfo method)
         {
@@ -1873,7 +1885,7 @@ namespace GreenField.App.ViewModel
             var signature = String.Format("{0}.{1}", GetType().FullName, methodName);
             return signature;
         }
-        
+
         /// <summary>
         /// Takes care of exception logging.
         /// </summary>

@@ -132,6 +132,9 @@ namespace GreenField.DashboardModule
             #region Admin
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardAdminInvestmentCommitteeChangeDate));
             #endregion
+
+
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardTargetingBroadGlobalActive));
         }
     }
 }

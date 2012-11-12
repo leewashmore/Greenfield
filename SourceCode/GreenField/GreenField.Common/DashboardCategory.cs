@@ -69,6 +69,11 @@ namespace GreenField.Common
         ADMIN_BROKER_RESEARCH,
         USER_DASHBOARD,
         MKT_CAP,
-        COMPANY_SNAPSHOT_BASICDATA_SUMMARY        
+        COMPANY_SNAPSHOT_BASICDATA_SUMMARY,
+
+        // targeting
+        Targeting_BroadGlobalActive,
+        Targeting_BottomUp,
+        Targeting_BasketTargets
     }
 }
