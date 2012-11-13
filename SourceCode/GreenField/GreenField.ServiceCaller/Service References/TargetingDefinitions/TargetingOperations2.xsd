@@ -6,6 +6,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="targetingTypeId" type="xs:int" />
         <xs:element minOccurs="0" name="bgaPortfolioId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="benchmarkDate" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

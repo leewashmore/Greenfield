@@ -13,7 +13,7 @@ namespace GreenField.ServiceCaller
     /// <summary>
     /// Service Caller Interface for Security Reference Data and Holdings, Benchmark & Performance Data.
     /// </summary>
-    public interface IDBInteractivity
+    public partial interface IDBInteractivity
     {
         #region Build1
 
@@ -560,6 +560,5 @@ namespace GreenField.ServiceCaller
         #endregion
 
         void RetrieveCompanyData(Action<List<String>> callback);
-
     }
 }

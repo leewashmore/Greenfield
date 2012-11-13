@@ -26,7 +26,7 @@ namespace GreenField.ServiceCaller
     /// Service Caller class for Security Reference Data and Holdings, Benchmark & Performance Data.
     /// </summary>
     [Export(typeof(IDBInteractivity))]
-    public class DBInteractivity : IDBInteractivity
+    public partial class DBInteractivity : IDBInteractivity
     {
         #region Fields
 

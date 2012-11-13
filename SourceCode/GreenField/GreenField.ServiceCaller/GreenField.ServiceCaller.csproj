@@ -72,9 +72,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationException.cs" />
     <Compile Include="DBInteractivity.cs" />
+    <Compile Include="DBInteractivity_Targeting.cs" />
     <Compile Include="Helper\ServiceFault.cs" />
     <Compile Include="IDBInteractivity.cs" />
+    <Compile Include="IDBInteractivity_Targeting.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IManageDashboard.cs" />
     <Compile Include="IManageLogins.cs" />
@@ -708,6 +711,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\TargetingDefinitions\TargetingOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TargetingDefinitions\TargetingOperations3.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

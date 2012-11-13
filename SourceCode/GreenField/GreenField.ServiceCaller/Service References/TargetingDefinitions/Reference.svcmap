@@ -23,11 +23,12 @@
     <MetadataSource Address="http://localhost:59430/Services/TargetingOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="TargetingOperations.xsd" MetadataType="Schema" ID="1b7104e6-dca9-45ed-a3fc-4c0de3fa392c" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd1" />
-    <MetadataFile FileName="TargetingOperations.disco" MetadataType="Disco" ID="89942efb-8724-4f54-86f9-b730a075cd01" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?disco" />
+    <MetadataFile FileName="TargetingOperations3.xsd" MetadataType="Schema" ID="6c7e19c4-76db-4e85-9875-251c582ad0e4" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="TargetingOperations2.xsd" MetadataType="Schema" ID="b535eeb6-f36a-4400-8c90-8c0b96f0ae22" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd0" />
     <MetadataFile FileName="TargetingOperations.wsdl" MetadataType="Wsdl" ID="fc07a082-9bdf-403f-977c-4fe9cd1f3c08" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?wsdl" />
     <MetadataFile FileName="TargetingOperations1.xsd" MetadataType="Schema" ID="b576f3f4-058d-481d-8705-352576aaee9c" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd2" />
-    <MetadataFile FileName="TargetingOperations2.xsd" MetadataType="Schema" ID="b535eeb6-f36a-4400-8c90-8c0b96f0ae22" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="TargetingOperations.disco" MetadataType="Disco" ID="89942efb-8724-4f54-86f9-b730a075cd01" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?disco" />
+    <MetadataFile FileName="TargetingOperations.xsd" MetadataType="Schema" ID="1b7104e6-dca9-45ed-a3fc-4c0de3fa392c" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

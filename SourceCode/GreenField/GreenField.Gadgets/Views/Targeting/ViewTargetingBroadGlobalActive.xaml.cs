@@ -1,157 +1,155 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Telerik.Windows.Controls;
+using Microsoft.Practices.Prism.ViewModel;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
 using GreenField.Common;
-using GreenField.DataContracts;
-using GreenField.Gadgets.Helpers;
-using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.ModelFXDefinitions;
+using System.Collections.Generic;
+using GreenField.Common.Helper;
+using GreenField.DataContracts;
+using GreenField.ServiceCaller.TargetingDefinitions;
 
 
-
-namespace GreenField.Gadgets.Views
+namespace GreenField.Gadgets.ViewModels
 {
-    public partial class ViewTargetingBroadGlobalActive : ViewBaseUserControl
+    public class ViewTargetingBroadGlobalActive : NotificationObject
     {
-        # region PRIVATE FIELDS
+        private IDBInteractivity repository;
+        private IEventAggregator eventAggregator;
+        private ILoggerFacade logger;
+        private List<FXCommodityData> commodityData;
+        private Visibility commodityGridVisibility = Visibility.Collapsed;
+        private Boolean isBusyIndicatorStatus;
+
+        public ViewTargetingBroadGlobalActive(DashboardGadgetParam param)
+        {
+            this.eventAggregator = param.EventAggregator;
+            this.repository = param.DBInteractivity;
+            this.logger = param.LoggerFacade;
+            this.eventAggregator.GetEvent<CommoditySelectionSetEvent>().Subscribe(ListenToTargetingTypeSet);
+        }
 
         /// <summary>
-        /// Private variable to hold data
+        /// Stores Commodity Data
         /// </summary>
-        private List<FXCommodityData> commodityInfo;
-
-        /// <summary>
-        /// Private variable to hold next year's value
-        /// </summary>
-        private int nextYear = DateTime.Now.Year + 1;
-
-        /// <summary>
-        /// Private variable to hold next to next year's value
-        /// </summary>
-        private int twoYearsFuture = DateTime.Now.Year + 2;
-
-        #endregion
-
-        #region PROPERTIES
-        /// <summary>
-        /// Private variable to hold ViewModel property
-        /// </summary>
-        private ViewModelCommodityIndex dataContextSource = null;        
-        public ViewModelCommodityIndex DataContextSource
+        public List<FXCommodityData> CommodityData
         {
             get
             {
-                return dataContextSource;
+                return commodityData;
             }
             set
             {
-                if (value != null)
-                {
-                    dataContextSource = value;
-                }
+                commodityData = value;
+                this.RaisePropertyChanged(() => this.CommodityData);
             }
         }
         /// <summary>
-        /// Private variable to hold IsActive property of parent user control
+        /// Stores visibility of grid
         /// </summary>
-        private bool isActive;
-        public override bool IsActive
+        public Visibility CommodityGridVisibility
+        {
+            get { return commodityGridVisibility; }
+            set
+            {
+                commodityGridVisibility = value;
+                this.RaisePropertyChanged(() => this.CommodityGridVisibility);
+            }
+        }
+
+        /// <summary>
+        /// sets BusyIndicator visibilty
+        /// </summary>
+        public Boolean IsBusyIndicatorStatus
+        {
+            get { return this.isBusyIndicatorStatus; }
+            set
+            {
+                this.isBusyIndicatorStatus = value;
+                this.RaisePropertyChanged(() => this.IsBusyIndicatorStatus);
+            }
+        }
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private Boolean isActive;
+        public Boolean IsActive
         {
             get { return isActive; }
             set
             {
                 isActive = value;
-                if (DataContextSource != null)
-                {
-                    DataContextSource.IsActive = isActive;
-                }
+                CallingWebMethod();
             }
         }
 
-        #endregion
-
-        #region CONSTRUCTOR
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="dataContextSource"></param>
-        public ViewTargetingBroadGlobalActive(ViewModelCommodityIndex dataContextSource)
+        public void ListenToTargetingTypeSet(String commodityId)
         {
-            InitializeComponent();
-            this.DataContext = dataContextSource;
-            this.DataContextSource = dataContextSource;
-            dataContextSource.RetrieveCommodityDataCompleteEvent += new RetrieveCommodityDataCompleteEventHandler(RetrieveCommodityDataCompletedEvent);
-
-        }
-
-        #endregion
-        #region Event
-        /// <summary>
-        /// Data completed Event
-        /// </summary>
-        /// <param name="e"></param>
-        public void RetrieveCommodityDataCompletedEvent(RetrieveCommodityDataCompleteEventArgs e)
-        {
-            commodityInfo = e.CommodityInfo;
-            if (commodityInfo != null)
-            {                
-                dgCommodity.Columns[5].Header = "Price(" + nextYear.ToString() + ")";
-                dgCommodity.Columns[6].Header = "Price(" + twoYearsFuture.ToString() + ")";
-            }
-        }
-        #endregion
-
-        private void dgCommodity_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-           
-        }
-        #region ExportToExcel
-
-        /// <summary>
-        /// Method to catch Click Event of Export to Excel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
-        {
+            String methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-
-                if (LayoutRoot.Visibility == Visibility.Visible)
+                commodityID = commodityId;
+                if (commodityID != null && IsActive)
                 {
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Commodity Data", Element = this.dgCommodity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                    return;
+                    Logging.LogMethodParameter(logger, methodNamespace, commodityID, 1);
+                    CallingWebMethod();
                 }
-
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.MODELS_FX_MACRO_ECONOMICS_COMMODITY_INDEX_RETURN);
-                childExportOptions.Show();
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                }
             }
             catch (Exception ex)
             {
-                Prompt.ShowDialog(ex.Message);
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
             }
         }
 
-        /// <summary>
-        /// Event for Grid Export
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ElementExportingEvent(object sender, GridViewElementExportingEventArgs e)
+        public void RequestData(Int32 targetingTypeId, String broadGlobalActivePortfolioId)
         {
-            RadGridView_ElementExport.ElementExporting(e);
+            if (!this.IsActive) return;
+            this.repository.GetBgaModel(targetingTypeId, broadGlobalActivePortfolioId, this.TakeData);
+            this.IsBusyIndicatorStatus = true;
         }
 
-        #endregion
+
+        protected void TakeData(RootModel data)
+        {
+            if (data == null) throw new ApplicationException("No data has arrived.");
+
+            this.TakeDataUnsafe(data);
+            this.RetrieveCommodityDataCompleteEvent(new RetrieveCommodityDataCompleteEventArgs { CommodityInfo = data });
+
+            this.IsBusyIndicatorStatus = false;
+        }
+
+        protected void TakeDataUnsafe(RootModel data)
+        {
+            this.CommodityGridVisibility = Visibility.Visible;
+            this.CommodityData = data;
+            this.CommodityGridVisibility = Visibility.Collapsed;
+        }
+
+        public void Dispose()
+        {
+            this.eventAggregator.GetEvent<CommoditySelectionSetEvent>().Unsubscribe(this.ListenToTargetingTypeSet);
+        }
     }
 }
