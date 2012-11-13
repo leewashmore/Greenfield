@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Greenfield.Targeting.App
+namespace GreenField.Targeting.App
 {
     public partial class App : Application
     {
@@ -26,7 +26,10 @@ namespace Greenfield.Targeting.App
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.RootVisual = new MainPage();
+            //WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
+            //ServiceClientFactory.ReadCookies();
+            Bootstrapper bootStrapper = new Bootstrapper();
+            bootStrapper.Run();
         }
 
         private void Application_Exit(object sender, EventArgs e)
@@ -37,8 +40,8 @@ namespace Greenfield.Targeting.App
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             // If the app is running outside of the debugger then report the exception using
-            // the browser's exception mechanism. On IE this will display it a yellow alert 
-            // icon in the status bar and Firefox will display a script error.
+            // the browser's exception mechanism. On IE this will display it propertyName yellow alert 
+            // icon in the status bar and Firefox will display propertyName script error.
             if (!System.Diagnostics.Debugger.IsAttached)
             {
 
@@ -47,6 +50,7 @@ namespace Greenfield.Targeting.App
                 // For production applications this error handling should be replaced with something that will 
                 // report the error to the website and stop the application.
                 e.Handled = true;
+                //Prompt.ShowDialog(e.ExceptionObject.Message);
                 Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
             }
         }
