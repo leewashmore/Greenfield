@@ -58,7 +58,9 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = this.logger
             };
 
-            this.cctrDashboardContent.Content = new ViewTargetingBroadGolbalActive(new ViewModelTargetingBroadGlobalActive(param));
+            var viewModel = new ViewModelTargetingBroadGlobalActive(param);
+            var view = new ViewTargetingBroadGlobalActive();
+            this.cctrDashboardContent.Content = view;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

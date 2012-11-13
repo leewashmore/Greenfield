@@ -45,6 +45,22 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Targeting|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Targeting\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>Bin\Debug\GreenField.Gadgets.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <NoConfig>true</NoConfig>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\Lib\Microsoft.Expression.Interactions.dll</HintPath>
@@ -257,6 +273,7 @@
     <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelValuationQualityGrowth.cs" />
     <Compile Include="Helpers\Converters\BasisPointsConverter.cs" />
     <Compile Include="ViewModels\Targeting\ViewModelTargetingBroadGlobalActive.cs" />
+    <Compile Include="ViewModels\Targeting\ViewModelTargetingTypeWithBgaPortfolioPicker.cs" />
     <Compile Include="Views\Screening\Stock\ChildViewCSTDataListSave.xaml.cs">
       <DependentUpon>ChildViewCSTDataListSave.xaml</DependentUpon>
     </Compile>
@@ -502,6 +519,9 @@
     </Compile>
     <Compile Include="Views\Portfolio\Snapshot\ViewValuationQualityGrowth.xaml.cs">
       <DependentUpon>ViewValuationQualityGrowth.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Targeting\ViewTargetingTypeWithBgaPortfolioPicker.xaml.cs">
+      <DependentUpon>ViewTargetingTypeWithBgaPortfolioPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Targeting\ViewTargetingBroadGlobalActive.xaml.cs">
       <DependentUpon>ViewTargetingBroadGlobalActive.xaml</DependentUpon>
@@ -841,6 +861,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Portfolio\Snapshot\ViewValuationQualityGrowth.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Targeting\ViewTargetingTypeWithBgaPortfolioPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

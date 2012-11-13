@@ -37,10 +37,10 @@
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">                   
                     <!--button to export the grid to excel-->
-                    <telerik:RadButton x:Name="btnExportExcel" Grid.Column="3" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    <!--<telerik:RadButton x:Name="btnExportExcel" Grid.Column="3" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
                                        Margin="5,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
                         <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    </telerik:RadButton>
+                    </telerik:RadButton>-->
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
