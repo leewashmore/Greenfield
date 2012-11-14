@@ -13,7 +13,7 @@
     <RootNamespace>GreenField.Web</RootNamespace>
     <AssemblyName>GreenField.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SilverlightApplicationList>{F914419C-A86A-487F-9757-8DF5151FAA77}|..\GreenField.App\GreenField.App.csproj|ClientBin|False,{52101286-444F-49E8-ADC8-28F884471DB7}|..\GreenField.Login.App\GreenField.Login.App.csproj|ClientBin|False,{7C2FBBA3-4BA9-48E5-994E-CE763526D9B8}|..\Greenfield.Targeting.App\Greenfield.Targeting.App.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{F914419C-A86A-487F-9757-8DF5151FAA77}|..\GreenField.App\GreenField.App.csproj|ClientBin|False,{52101286-444F-49E8-ADC8-28F884471DB7}|..\GreenField.Login.App\GreenField.Login.App.csproj|ClientBin|False,{7C2FBBA3-4BA9-48E5-994E-CE763526D9B8}|..\Greenfield.Targeting.App\GreenField.Targeting.App.csproj|ClientBin|False</SilverlightApplicationList>
     <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -89,10 +89,10 @@
     <Content Include="ClientAccessPolicy.xml" />
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
-    <Content Include="ClientBin\Greenfield.Targeting.App.xap" />
+    <Content Include="ClientBin\GreenField.Targeting.App.xap" />
     <Content Include="crossdomain.xml" />
-    <Content Include="Greenfield.Targeting.AppTestPage.aspx" />
-    <Content Include="Greenfield.Targeting.AppTestPage.html" />
+    <Content Include="GreenField.Targeting.AppTestPage.aspx" />
+    <Content Include="GreenField.Targeting.AppTestPage.html" />
     <Content Include="Services\TargetingOperations.svc" />
     <Content Include="Services\CustomScreeningToolOperations.svc" />
     <Content Include="Services\DocumentWorkSpaceOperations.svc" />

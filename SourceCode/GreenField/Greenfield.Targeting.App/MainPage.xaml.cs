@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Greenfield.Targeting.App
+namespace GreenField.Targeting.App
 {
     public partial class MainPage : UserControl
     {

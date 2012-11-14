@@ -42,7 +42,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopDown.FacingClient", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aims.Expressions", "..\..\..\top-down\TopDown.Expressions\Aims.Expressions.csproj", "{9FC437D2-362D-4898-8C9B-408B16406A0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenfield.Targeting.App", "Greenfield.Targeting.App\Greenfield.Targeting.App.csproj", "{7C2FBBA3-4BA9-48E5-994E-CE763526D9B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Targeting.App", "Greenfield.Targeting.App\GreenField.Targeting.App.csproj", "{7C2FBBA3-4BA9-48E5-994E-CE763526D9B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
