@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.TargetingDefinitions;
 using Microsoft.Practices.Prism.Commands;
 
-namespace GreenField.Gadgets.ViewModels.Targeting
+namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelTargetingTypeWithBgaPortfolioPicker
     {

@@ -32,6 +32,10 @@ namespace GreenField.Targeting.App
         [Import]
         public ViewModelShell DataContextSource
         {
+            get
+            {
+                return this.DataContext as ViewModelShell;
+            }
             set
             {
                 this.DataContext = value;

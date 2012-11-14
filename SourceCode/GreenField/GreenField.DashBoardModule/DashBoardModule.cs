@@ -18,6 +18,7 @@ namespace GreenField.DashboardModule
         {
             _regionManager = regionManager;
         }
+
         public void Initialize()
         {
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboard));

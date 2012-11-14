@@ -18,15 +18,17 @@ using System.Collections.Generic;
 using GreenField.Common.Helper;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller.TargetingDefinitions;
+using GreenField.Gadgets.ViewModels;
 
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewTargetingBroadGlobalActive : Helpers.ViewBaseUserControl
     {
-        public ViewTargetingBroadGlobalActive()
+        public ViewTargetingBroadGlobalActive(ViewModelTargetingBroadGlobalActive viewModel)
         {
             this.InitializeComponent();
+            this.DataContext = viewModel;
         }
     }
 }

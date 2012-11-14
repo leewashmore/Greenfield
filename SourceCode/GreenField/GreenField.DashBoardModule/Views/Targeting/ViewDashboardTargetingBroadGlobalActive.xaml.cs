@@ -42,7 +42,6 @@ namespace GreenField.DashboardModule.Views
             this.dbInteractivity = dbInteractivity;
 
             this.eventAgregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            //this.tbHeader.Text = GadgetNames.MODELS_FX_MACRO_ECONOMICS_INTERNAL_MODELS_EVALUATION_REPORT;
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -59,7 +58,7 @@ namespace GreenField.DashboardModule.Views
             };
 
             var viewModel = new ViewModelTargetingBroadGlobalActive(param);
-            var view = new ViewTargetingBroadGlobalActive();
+            var view = new ViewTargetingBroadGlobalActive(viewModel);
             this.cctrDashboardContent.Content = view;
         }
 

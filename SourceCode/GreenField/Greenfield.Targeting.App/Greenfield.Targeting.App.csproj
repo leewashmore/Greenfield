@@ -157,6 +157,10 @@
       <Project>{46F8DB66-D3C6-4F12-B31B-60744ED3D840}</Project>
       <Name>GreenField.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GreenField.DashBoardModule\GreenField.DashboardModule.csproj">
+      <Project>{BEFDA960-2EED-4D30-A2A6-36C0E899516E}</Project>
+      <Name>GreenField.DashboardModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GreenField.ServiceCaller\GreenField.ServiceCaller.csproj">
       <Project>{F46363AA-C93C-4396-8C99-3C513EF3A875}</Project>
       <Name>GreenField.ServiceCaller</Name>

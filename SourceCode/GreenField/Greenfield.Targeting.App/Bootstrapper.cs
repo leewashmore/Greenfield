@@ -28,6 +28,7 @@ namespace GreenField.Targeting.App
 
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Bootstrapper).Assembly));
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.ServiceCaller.DBInteractivity).Assembly));
+            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.DashboardModule.DashboardModule).Assembly));
         }
 
         protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
@@ -41,10 +42,20 @@ namespace GreenField.Targeting.App
             return this.Container.GetExportedValue<Shell>();
         }
 
+        // 1. Create a shell
         protected override void InitializeShell()
         {
             base.InitializeShell();
-            Application.Current.RootVisual = (UIElement) this.Shell;
+            var shell = (Shell) this.Shell;
+            Application.Current.RootVisual = shell;
+        }
+
+        // 2. Run
+        protected override void InitializeModules()
+        {
+            base.InitializeModules();
+            var shell = (Shell)this.Shell;
+            shell.DataContextSource.Run();
         }
 
         protected override void ConfigureContainer()
@@ -52,5 +63,7 @@ namespace GreenField.Targeting.App
             base.ConfigureContainer();
             this.Container.ComposeExportedValue<ILoggerFacade>(this.Logger);
         }
+
+        
     }
 }
