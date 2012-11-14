@@ -46,7 +46,7 @@ namespace GreenField.Gadgets.Views
             dataContextSource.holdingsPieChartDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartDataLoadedEvent);
             this.crtHoldingsPercentageSector.Visibility = Visibility.Visible;
-            this.dgHoldingsPercentageSector.Visibility = Visibility.Collapsed;        
+            this.dgHoldingsPercentageSector.Visibility = Visibility.Collapsed;
         }
         #endregion
 
@@ -153,10 +153,75 @@ namespace GreenField.Gadgets.Views
                 Prompt.ShowDialog(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+
+                if (this.crtHoldingsPercentageSector.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID, Element = this.dgHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                }
+                else if (this.dgHoldingsPercentageSector.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_CHART, Element = this.crtHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
+                }
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                if (this.crtHoldingsPercentageSector.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID, Element = this.dgHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                }
+                else if (this.dgHoldingsPercentageSector.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_CHART, Element = this.crtHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
+                }
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+            }
+        }
+
         #endregion
 
         /// <summary>
-        /// Dispose events
+        /// Dispose
         /// </summary>
         #region RemoveEvents
         public override void Dispose()
@@ -166,6 +231,6 @@ namespace GreenField.Gadgets.Views
             this.DataContextHoldingsPieChart = null;
             this.DataContext = null;
         }
-        #endregion        
+        #endregion
     }
 }

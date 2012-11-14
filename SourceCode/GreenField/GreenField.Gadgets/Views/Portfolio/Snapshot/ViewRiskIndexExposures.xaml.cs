@@ -117,6 +117,97 @@ namespace GreenField.Gadgets.Views
         }
 
         /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
+            try
+            {
+                if (this.chartRelativerisk.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>{ new RadExportOptions()
+                    {
+                        ElementName =  "Relative Risk Data",
+                        Element = this.chartRelativerisk, 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER 
+                    },};
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
+                    childExportOptions.Show();
+                }
+                else
+                {
+                    if (this.dgRelativeRisk.Visibility == Visibility.Visible)
+                    {
+                        ChildExportOptions childExportOptions = new ChildExportOptions(new List<RadExportOptions>
+                        { new RadExportOptions() 
+                             {
+                                Element = this.dgRelativeRisk,
+                                ElementName = "Relative Risk Data",
+                                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER
+                             }
+                        }, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
+                        childExportOptions.Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
+            try
+            {
+
+                if (this.chartRelativerisk.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>{ new RadExportOptions()
+                    {
+                        ElementName =  "Relative Risk Data",
+                        Element = this.chartRelativerisk, 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER 
+                    },};
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
+                    childExportOptions.Show();
+                }
+                else
+                {
+                    if (this.dgRelativeRisk.Visibility == Visibility.Visible)
+                    {
+                        ChildExportOptions childExportOptions = new ChildExportOptions(new List<RadExportOptions>
+                        { new RadExportOptions() 
+                             {
+                                Element = this.dgRelativeRisk,
+                                ElementName = "Relative Risk Data",
+                                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER
+                             }
+                        }, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
+                        childExportOptions.Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+            }
+        }
+
+        /// <summary>
         /// Handles element exporting while export to excel
         /// </summary>
         /// <param name="sender"></param>

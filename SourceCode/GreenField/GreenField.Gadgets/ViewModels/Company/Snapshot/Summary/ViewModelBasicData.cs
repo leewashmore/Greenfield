@@ -40,7 +40,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
+        public ILoggerFacade _logger;
         
         /// <summary>
         /// Private member to store basic data

@@ -164,28 +164,6 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region PDFExport
-        /// <summary>
-        /// Event handler when user wants to Export the Grid to PDF
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            try
-            {
-                PDFExporter.btnExportPDF_Click(this.dgAttribution);
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog(ex.Message);
-            }
-        }
-        #endregion
-
-        #region Printing the DataGrid
-
         /// <summary>
         /// Printing the DataGrid
         /// </summary>
@@ -194,21 +172,99 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
             try
             {
-                Dispatcher.BeginInvoke((Action)(() =>
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    RichTextBox.Document = PDFExporter.Print(dgAttribution, 6);
-                }));
-                this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                    ElementName = ExportTypes.PerformanceAttributionUI,
+                    Element = this.dgAttribution,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                    //RichTextBox = this.RichTextBox
+                });
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                childExportOptions.Show();
+
             }
             catch (Exception ex)
             {
-                Prompt.ShowDialog(ex.Message);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
-        #endregion
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
+            try
+            {
+
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PerformanceAttributionUI, Element = this.dgAttribution, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+            }
+        }
+
+        //#region PDFExport
+        ///// <summary>
+        ///// Event handler when user wants to Export the Grid to PDF
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+        //    try
+        //    {
+        //        PDFExporter.btnExportPDF_Click(this.dgAttribution);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Prompt.ShowDialog(ex.Message);
+        //    }
+        //}
+        //#endregion
+
+        //#region Printing the DataGrid
+
+        ///// <summary>
+        ///// Printing the DataGrid
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void btnPrint_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+        //    try
+        //    {
+        //        Dispatcher.BeginInvoke((Action)(() =>
+        //        {
+        //            RichTextBox.Document = PDFExporter.Print(dgAttribution, 6);
+        //        }));
+        //        this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+        //        RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Prompt.ShowDialog(ex.Message);
+        //    }
+        //}
+        //#endregion
         #endregion
     }
 }

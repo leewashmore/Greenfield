@@ -116,6 +116,101 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
+            try
+            {
+                if (this.crtSectorBreakdown.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>{ new RadExportOptions()
+                    {
+                        ElementName = "Sector Breakdown Data",
+                        Element = this.crtSectorBreakdown, 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER 
+                    },              
+                };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_SECTOR_BREAKDOWN);
+                    childExportOptions.Show();
+                }
+                else
+                {
+                    if (this.dgSectorBreakdown.Visibility == Visibility.Visible)
+                    {
+                        ChildExportOptions childExportOptions = new ChildExportOptions(new List<RadExportOptions>
+                        {
+                            new RadExportOptions()
+                            {
+                                Element = this.dgSectorBreakdown,
+                                ElementName = "Sector Breakdown Data",
+                                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER
+                            }
+                        }, "Export Options: " + GadgetNames.HOLDINGS_SECTOR_BREAKDOWN);
+                        childExportOptions.Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
+            try
+            {
+
+                if (this.crtSectorBreakdown.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>{ new RadExportOptions()
+                    {
+                        ElementName = "Sector Breakdown Data",
+                        Element = this.crtSectorBreakdown, 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER 
+                    },              
+                };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_SECTOR_BREAKDOWN);
+                    childExportOptions.Show();
+                }
+                else
+                {
+                    if (this.dgSectorBreakdown.Visibility == Visibility.Visible)
+                    {
+                        ChildExportOptions childExportOptions = new ChildExportOptions(new List<RadExportOptions>
+                        {
+                            new RadExportOptions()
+                            {
+                                Element = this.dgSectorBreakdown,
+                                ElementName = "Sector Breakdown Data",
+                                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER
+                            }
+                        }, "Export Options: " + GadgetNames.HOLDINGS_SECTOR_BREAKDOWN);
+                        childExportOptions.Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+            }
+        }
+
         private void dgSectorBreakdown_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: true, aggregatedColumnIndex: new List<int> { 1, 2, 3 });

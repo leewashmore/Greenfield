@@ -36,7 +36,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
+        public ILoggerFacade _logger;
         private String defaultGadgetDesc;
         #endregion
 

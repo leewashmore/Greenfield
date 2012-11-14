@@ -29,7 +29,7 @@ namespace GreenField.Gadgets.Views
             public const string CHART_EXTENSION = "Chart Extension";
             public const string CHART_EXTENSION_DATA = "Chart Extension Data";
         }
-        
+
         #endregion
 
         #region PropertyDeclaration
@@ -176,8 +176,46 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        ///// <summary>
+        ///// Print the Grid/Chart
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void btnPrint_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+        //    Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
+        //    try
+        //    {
+        //        if (grdRadGridView.Visibility == Visibility.Visible)
+        //        {
+        //            Dispatcher.BeginInvoke((Action)(() =>
+        //            {
+        //                RichTextBox.Document = PDFExporter.Print(dgChartExtension, 10);
+        //            }));
+
+        //            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+        //        }
+        //        else if (grdRadChart.Visibility == Visibility.Visible)
+        //        {
+        //            Dispatcher.BeginInvoke((Action)(() =>
+        //            {
+        //                RichTextBox.Document = PDFExporter.PrintChart(chChartExtension);
+        //                RichTextBox.ChangeSectionPageOrientation(PageOrientation.Landscape);
+        //            }));
+
+        //            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+        //        Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+        //    }
+        //}
+
         /// <summary>
-        /// Print the Grid/Chart
+        /// Printing the DataGrid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -187,25 +225,20 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
-                if (grdRadGridView.Visibility == Visibility.Visible)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        RichTextBox.Document = PDFExporter.Print(dgChartExtension, 10);
-                    }));
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
-                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
-                }
-                else if (grdRadChart.Visibility == Visibility.Visible)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        RichTextBox.Document = PDFExporter.PrintChart(chChartExtension);
-                        RichTextBox.ChangeSectionPageOrientation(PageOrientation.Landscape);
-                    }));
 
-                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                if (grdRadChart.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION, Element = this.chChartExtension, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
                 }
+                else if (grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION_DATA, Element = this.dgChartExtension, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
+                }
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -213,6 +246,38 @@ namespace GreenField.Gadgets.Views
                 Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                if (grdRadChart.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION, Element = this.chChartExtension, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                }
+                else if (grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION_DATA, Element = this.dgChartExtension, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
+                }
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+            }
+        }
+
 
         #endregion
 

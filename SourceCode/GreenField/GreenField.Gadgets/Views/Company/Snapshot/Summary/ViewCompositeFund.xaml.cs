@@ -1,5 +1,6 @@
 ﻿using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
+using System.Collections.Generic;
 
 namespace GreenField.Gadgets.Views
 {
@@ -59,5 +60,6 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+                
     }
 }

@@ -158,29 +158,57 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region PDFExport
-        /// <summary>
-        /// Event handler when user wants to Export the Grid to PDF
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
-            try
-            {
-                PDFExporter.btnExportPDF_Click(this.dgPortfolioDetails);
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
-            }
-        }
-        #endregion
+        //#region PDFExport
+        ///// <summary>
+        ///// Event handler when user wants to Export the Grid to PDF
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+        //    Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
+        //    try
+        //    {
+        //        PDFExporter.btnExportPDF_Click(this.dgPortfolioDetails);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+        //        Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
+        //    }
+        //}
+        //#endregion
 
-        #region Printing the DataGrid
+        //#region Printing the DataGrid
+
+        ///// <summary>
+        ///// Printing the DataGrid
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void btnPrint_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+        //    Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
+        //    try
+        //    {
+        //        Dispatcher.BeginInvoke((Action)(() =>
+        //            {
+        //                RichTextBox.Document = PDFExporter.Print(dgPortfolioDetails, 6);
+        //            }));
+
+        //        this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+        //        RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+        //        Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
+        //    }
+        //}
+
+        //#endregion
 
         /// <summary>
         /// Printing the DataGrid
@@ -190,25 +218,53 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
+            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
             try
             {
-                Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        RichTextBox.Document = PDFExporter.Print(dgPortfolioDetails, 6);
-                    }));
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = "Portfolio Risk Return",
+                    Element = this.dgPortfolioDetails,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                    //RichTextBox = this.RichTextBox
+                });
 
-                this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                childExportOptions.Show();
+
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
+                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
+            try
+            {
+
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Portfolio Risk Return", Element = this.dgPortfolioDetails, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+            }
+        }
 
         #endregion
 
