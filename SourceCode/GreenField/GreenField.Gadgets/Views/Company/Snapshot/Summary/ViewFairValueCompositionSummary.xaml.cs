@@ -73,14 +73,6 @@ namespace GreenField.Gadgets.Views
 
         #region ExcelExport
         /// <summary>
-        /// Static class storing string types
-        /// </summary>
-        private static class ExportTypes
-        {
-            public const string DCF_FREE_CASH_FLOWS_DATA = "DCF - Free Cash Flows Data";
-        }
-
-        /// <summary>
         /// Method to catch Click Event of Export to Excel
         /// </summary>
         /// <param name="sender"></param>
@@ -95,9 +87,9 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                                new RadExportOptions() { ElementName = ExportTypes.DCF_FREE_CASH_FLOWS_DATA, Element = this.dgFairValueCompositionSummary, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
+                                new RadExportOptions() { ElementName = "Fair Value Composition", Element = this.dgFairValueCompositionSummary, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                         };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.DCF_FREE_CASH_FLOWS_DATA);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Fair Value Composition");
                     childExportOptions.Show();
                 }
             }
@@ -189,13 +181,13 @@ namespace GreenField.Gadgets.Views
 
                 RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    ElementName = ExportTypes.DCF_FREE_CASH_FLOWS_DATA,
+                    ElementName = "Fair Value Composition",
                     Element = this.dgFairValueCompositionSummary,
                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
                     RichTextBox = this.RichTextBox
                 });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Fair Value Composition");
                 childExportOptions.Show();
             }
             catch (Exception ex)
@@ -210,7 +202,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(this.DataContextFairValueCompositionSummary.logger, methodNamespace);
@@ -219,9 +211,14 @@ namespace GreenField.Gadgets.Views
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
 
-                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.DCF_FREE_CASH_FLOWS_DATA, Element = this.dgFairValueCompositionSummary, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                RadExportOptionsInfo.Add(new RadExportOptions() 
+                { 
+                    ElementName = "Fair Value Composition", 
+                    Element = this.dgFairValueCompositionSummary, 
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER
+                });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Fair Value Composition");
                 childExportOptions.Show();
             }
             catch (Exception ex)

@@ -1,7 +1,9 @@
-﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewMacroDBKeyAnnualReport"
+﻿<helpers:ViewBaseUserControl 
+    x:Class="GreenField.Gadgets.Views.ViewMacroDBKeyAnnualReport"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:common="clr-namespace:GreenField.Common;assembly=GreenField.Common"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
@@ -13,18 +15,20 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
                 <ResourceDictionary>
+                    <helpers:ReportedCurrencyConverter x:Key="ReportedCurrencyConverter"/>
+                    <common:EnumDisplayConverter x:Key="EnumDisplayConverter"/>
                     <!--GRID Buttons-->
-
                     <!--LeftButton-->
                     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellLeftButtonStyle">
+                        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
                         <Setter Property="ContentTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Button  Command="{Binding RightNavigationClick}" Click="LeftButton_Click" Height="15" >
-                                        <Button.Content>
-                                            <Image Source="/GreenField.Gadgets;component/Images/LeftArrow.png"/>
-                                        </Button.Content>
-                                    </Button>
+                                    <Image Source="/GreenField.Gadgets;component/Images/MoveBackward.png" MouseLeftButtonDown="LeftNavigation_MouseLeftButtonDown" Width="15"/>
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
@@ -32,14 +36,15 @@
 
                     <!--Right Button-->
                     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellRightButtonStyle">
+                        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
                         <Setter Property="ContentTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <Button Command="{Binding RightNavigationClick}" Click="RightButton_Click" Height="15"  >
-                                        <Button.Content>
-                                            <Image Source="/GreenField.Gadgets;component/Images/AddToChart.png"/>
-                                        </Button.Content>
-                                    </Button>
+                                    <Image Source="/GreenField.Gadgets;component/Images/MoveForward.png" MouseLeftButtonDown="RightNavigation_MouseLeftButtonDown" Width="15"/>
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
@@ -53,22 +58,43 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Macro Database Key Annual Data Report" HorizontalAlignment="Center" VerticalAlignment="Top"  Height="15"/>
-        <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                       Margin="0,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
-            <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        </telerik:RadButton>
-        <!--<telerik:RadButton x:Name="btnMoveRight" Grid.Row="0" Height="20" Width="20" HorizontalAlignment="Right"  VerticalAlignment="Center"
-                                       Margin="5,0,0,0"  ToolTipService.ToolTip="Move Right One Year"  Command="{Binding MoveRightCommand}">
-            <Image Source="/GreenField.Gadgets;component/Images/AddToChart.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        </telerik:RadButton>
-        <telerik:RadButton x:Name="btnMoveLeft" Grid.Row="0" Height="20" Width="20" HorizontalAlignment="Right"  VerticalAlignment="Center"
-                                       Margin="5,0,20,0"  ToolTipService.ToolTip="Move Left One Year"  Command="{Binding MoveLeftCommand}">
-            <Image Source="/GreenField.Gadgets;component/Images/LeftArrow.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        </telerik:RadButton>-->
-        <Grid Grid.Row="1">
+        <TextBlock Grid.Row="0" Text="Macro Database Key Annual Data Report" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+        <Grid Grid.Row="0" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <telerik:RadButton Grid.Column="0" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                </ToolTipService.ToolTip>
+            </telerik:RadButton>
+            <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                </ToolTipService.ToolTip>
+            </telerik:RadButton>
+            <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                </ToolTipService.ToolTip>
+            </telerik:RadButton>
+        </Grid>
+        
+        <Grid Grid.Row="1" Margin="0,2,0,0">
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                            DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
@@ -81,7 +107,8 @@
                                          telerik:StyleManager.Theme="Metro"
                                          CanUserDeleteRows="False" 
                                          IsReadOnly="True" 
-                                         CanUserSortColumns="False" 
+                                         CanUserSortColumns="True"
+                                         IsFilteringAllowed="True"
                                          ScrollMode="RealTime"
                                          RowIndicatorVisibility="Collapsed" 
                                          ShowGroupPanel="False" 
@@ -102,7 +129,7 @@
                         
                         <telerik:GridViewDataColumn x:Name="dgcDescription" 
                                                     Header="Description" 
-                                                    IsFilterable="False" 
+                                                    IsFilterable="True"
                                                     DataMemberBinding="{Binding DESCRIPTION}" 
                                                    
                                                     HeaderTextAlignment="Left" 
@@ -187,6 +214,10 @@
                     </telerik:RadGridView>
                 </Border>
             </telerik:RadBusyIndicator>
+        </Grid>
+
+        <Grid  Grid.Column="2">
+            <telerik:RadRichTextBox x:Name="RichTextBox" Height="0"/>
         </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>

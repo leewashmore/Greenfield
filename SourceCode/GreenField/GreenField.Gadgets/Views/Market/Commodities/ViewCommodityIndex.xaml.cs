@@ -106,6 +106,9 @@ namespace GreenField.Gadgets.Views
             {                
                 dgCommodity.Columns[5].Header = "Price(" + nextYear.ToString() + ")";
                 dgCommodity.Columns[6].Header = "Price(" + twoYearsFuture.ToString() + ")";
+
+                dgCommodity.Columns[5].UniqueName = "Price(" + nextYear.ToString() + ")";
+                dgCommodity.Columns[6].UniqueName = "Price(" + twoYearsFuture.ToString() + ")";
             }
         }
         #endregion
@@ -159,8 +162,6 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
@@ -169,7 +170,7 @@ namespace GreenField.Gadgets.Views
                     ElementName = "Commodity Data",
                     Element = this.dgCommodity,
                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
-                    //RichTextBox = this.RichTextBox
+                    RichTextBox = this.RichTextBox
                 });
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
@@ -178,8 +179,7 @@ namespace GreenField.Gadgets.Views
             }
             catch (Exception ex)
             {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);                
             }
         }
 
@@ -191,12 +191,11 @@ namespace GreenField.Gadgets.Views
         private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
 
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Commodity Data", Element = this.dgCommodity, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Commodity Data", Element = this.dgCommodity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
                 childExportOptions.Show();
@@ -204,7 +203,6 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 

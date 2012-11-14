@@ -17,11 +17,13 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewConsensusEstimatesDetails : ViewBaseUserControl
     {
+        #region Fields
         /// <summary>
         /// private fields
         /// </summary>
         private IEventAggregator eventAggregator;
-        private ILoggerFacade logger;
+        private ILoggerFacade logger; 
+        #endregion
 
         #region Properties
         /// <summary>
@@ -75,6 +77,7 @@ namespace GreenField.Gadgets.Views
             });
 
             dgConsensusEstimate.Columns[0].Header = "Median Estimates in " + dataContextSource.SelectedCurrency.ToString() + "(Millions)";
+            dgConsensusEstimate.Columns[0].UniqueName = "Median Estimates in " + dataContextSource.SelectedCurrency.ToString() + "(Millions)";
 
             PeriodColumns.PeriodColumnUpdate += (e) =>
             {
@@ -148,7 +151,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region Export to excel
+        #region Export/Print
         /// <summary>
         /// handles element exporting when exported to excel
         /// </summary>
@@ -179,6 +182,66 @@ namespace GreenField.Gadgets.Views
                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                 });
                 ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: Consensus Estimate Detail");
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextConsensusEstimatesDetails.logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextConsensusEstimatesDetails.logger, methodNamespace);
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = "Consensus Estimate Detail",
+                    Element = this.dgConsensusEstimate,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                    RichTextBox = this.RichTextBox,
+                    SkipColumnDisplayIndex = new List<int> { 1, 12 }
+                });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Consensus Estimate Detail");
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextConsensusEstimatesDetails.logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextConsensusEstimatesDetails.logger, methodNamespace);
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = "Consensus Estimate Detail",
+                    Element = this.dgConsensusEstimate,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                    RichTextBox = this.RichTextBox,
+                    SkipColumnDisplayIndex = new List<int> { 1, 12 }
+                });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Consensus Estimate Detail");
                 childExportOptions.Show();
             }
             catch (Exception ex)

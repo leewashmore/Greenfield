@@ -9,6 +9,7 @@ using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -251,6 +252,63 @@ namespace GreenField.Gadgets.Views
             ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " 
                 + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
             childExportOptions.Show();
+        }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = "Market Performance Snapshot",
+                    Element = this.radGridSnapshot,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                    RichTextBox = this.RichTextBox
+                });
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Market Performance Snapshot");
+                childExportOptions.Show();
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            try
+            {
+
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = "MacroDB Key Annual Report",
+                    Element = this.radGridSnapshot,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER
+                });
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Market Performance Snapshot");
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
         }
 
         /// <summary>

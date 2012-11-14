@@ -141,7 +141,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void LeftButton_Click(object sender, RoutedEventArgs e)
+        public void LeftNavigation_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)
             {
@@ -154,7 +154,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void RightButton_Click(object sender, RoutedEventArgs e)
+        public void RightNavigation_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)
             {
@@ -175,6 +175,15 @@ namespace GreenField.Gadgets.Views
             dgMacroDBKeyReport.Columns[6].Header = (currentYear + 1).ToString();
             dgMacroDBKeyReport.Columns[7].Header = (currentYear + 2).ToString();
             dgMacroDBKeyReport.Columns[9].Header = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
+
+            dgMacroDBKeyReport.Columns[0].UniqueName = "Description";
+            dgMacroDBKeyReport.Columns[2].UniqueName = (currentYear - 3).ToString();
+            dgMacroDBKeyReport.Columns[3].UniqueName = (currentYear - 2).ToString();
+            dgMacroDBKeyReport.Columns[4].UniqueName = (currentYear - 1).ToString();
+            dgMacroDBKeyReport.Columns[5].UniqueName = (currentYear).ToString();
+            dgMacroDBKeyReport.Columns[6].UniqueName = (currentYear + 1).ToString();
+            dgMacroDBKeyReport.Columns[7].UniqueName = (currentYear + 2).ToString();
+            dgMacroDBKeyReport.Columns[9].UniqueName = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
         }      
 
         /// <summary>
@@ -190,9 +199,14 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                     {                  
-                        new RadExportOptions() { ElementName = "MacroDB Key Annual Report", Element = this.dgMacroDBKeyReport, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
+                        new RadExportOptions() 
+                        {
+                            ElementName = "MacroDB Key Annual Report", 
+                            Element = this.dgMacroDBKeyReport, 
+                            ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER 
+                        }
                     };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.MODELS_FX_MACRO_ECONOMICS_MACRO_DATABASE_KEY_ANNUAL_DATA_REPORT);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: MacroDB Key Annual Report");
                     childExportOptions.Show();
                 }
             }
@@ -210,7 +224,6 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
@@ -219,17 +232,17 @@ namespace GreenField.Gadgets.Views
                     ElementName = "MacroDB Key Annual Report",
                     Element = this.dgMacroDBKeyReport,
                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
-                    //RichTextBox = this.RichTextBox
+                    SkipColumnDisplayIndex = new List<int> { 1, 8 },
+                    RichTextBox = this.RichTextBox
                 });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: MacroDB Key Annual Report");
                 childExportOptions.Show();
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
@@ -241,20 +254,24 @@ namespace GreenField.Gadgets.Views
         private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
 
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "MacroDB Key Annual Report", Element = this.dgMacroDBKeyReport, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                RadExportOptionsInfo.Add(new RadExportOptions() 
+                { 
+                    ElementName = "MacroDB Key Annual Report", 
+                    Element = this.dgMacroDBKeyReport, 
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                    SkipColumnDisplayIndex = new List<int> { 1, 8 }
+                });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: MacroDB Key Annual Report");
                 childExportOptions.Show();
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 

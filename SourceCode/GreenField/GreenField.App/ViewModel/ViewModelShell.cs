@@ -106,6 +106,13 @@ namespace GreenField.App.ViewModel
                             String[] userRolesEncrypted = result[CookieEncription.Encript("Roles")].Split('|');
                             SessionManager.SESSION.Roles = userRolesEncrypted.Select(g => CookieEncription.Decript(g)).ToList(); 
                         }
+                        if (SessionManager.SESSION.Roles != null)
+                        {
+                            RoleIsICAdmin = SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN);
+                            RoleIsIC = SessionManager.SESSION.Roles.Any(record => record == MemberGroups.IC_ADMIN
+                                || record == MemberGroups.IC_CHIEF_EXECUTIVE || record == MemberGroups.IC_VOTING_MEMBER
+                                || record == MemberGroups.IC_NON_VOTING_MEMBER);
+                        }
                     }
                     else
                     {

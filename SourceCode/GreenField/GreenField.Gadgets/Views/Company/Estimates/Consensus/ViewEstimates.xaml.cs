@@ -43,6 +43,7 @@ namespace GreenField.Gadgets.Views
                     PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimate, e);
                     this.btnExportExcel.IsEnabled = true;
                     this.dgConsensusEstimate.Columns[0].Header = "Median Estimates in " + this.DataContextEstimates.SelectedCurrency + "(Millions)";
+                    this.dgConsensusEstimate.Columns[0].UniqueName = "Median Estimates in " + this.DataContextEstimates.SelectedCurrency + "(Millions)";
                 }
             };
         }
@@ -196,16 +197,20 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextEstimates.Logger, methodNamespace);
             try
             {
-                if (this.dgConsensusEstimate.Visibility == Visibility.Visible)
+                String elementName = "Consensus Estimate - " + (this.DataContextEstimates.EntitySelectionInfo).LongName + " (" + (this.DataContextEstimates.EntitySelectionInfo).ShortName + ") " +
+                    (periodIsYearly ? this.dgConsensusEstimate.Columns[2].Header : this.dgConsensusEstimate.Columns[6].Header) + " - " +
+                    (periodIsYearly ? this.dgConsensusEstimate.Columns[7].Header : this.dgConsensusEstimate.Columns[11].Header);
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        RichTextBox.Document = PDFExporter.Print(this.dgConsensusEstimate, 6);
-                    }));
-
-                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
-                }
+                    ElementName = elementName,
+                    Element = this.dgConsensusEstimate,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                    RichTextBox = this.RichTextBox,
+                    SkipColumnDisplayIndex = new List<int> { 1, 12 }
+                });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -225,10 +230,20 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextEstimates.Logger, methodNamespace);
             try
             {
-                if (this.dgConsensusEstimate.Visibility == Visibility.Visible)
+                String elementName = "Consensus Estimate - " + (this.DataContextEstimates.EntitySelectionInfo).LongName + " (" + (this.DataContextEstimates.EntitySelectionInfo).ShortName + ") " +
+                    (periodIsYearly ? this.dgConsensusEstimate.Columns[2].Header : this.dgConsensusEstimate.Columns[6].Header) + " - " +
+                    (periodIsYearly ? this.dgConsensusEstimate.Columns[7].Header : this.dgConsensusEstimate.Columns[11].Header);
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    PDFExporter.btnExportPDF_Click(this.dgConsensusEstimate, skipColumnDisplayIndex: new List<int> { 1, 12 });
-                }
+                    ElementName = elementName,
+                    Element = this.dgConsensusEstimate,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                    RichTextBox = this.RichTextBox,
+                    SkipColumnDisplayIndex = new List<int> { 1, 12 }
+                });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
+                childExportOptions.Show();                
             }
             catch (Exception ex)
             {

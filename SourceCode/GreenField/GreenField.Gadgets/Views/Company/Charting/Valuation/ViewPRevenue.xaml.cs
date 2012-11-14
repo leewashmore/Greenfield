@@ -142,16 +142,30 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.dgPRevenue.Visibility == Visibility.Visible)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        RichTextBox.Document = PDFExporter.Print(this.dgPRevenue, 6);
-                    }));
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
-                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                if (chPRevenue.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.P_Revenue,
+                        Element = this.chPRevenue,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
+                else if (dgPRevenue.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.P_Revenue_DATA,
+                        Element = this.dgPRevenue,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PREVENUE);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -168,10 +182,30 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.dgPRevenue.Visibility == Visibility.Visible)
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if (chPRevenue.Visibility == Visibility.Visible)
                 {
-                    PDFExporter.btnExportPDF_Click(this.dgPRevenue);
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.P_Revenue,
+                        Element = this.chPRevenue,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
+                else if (dgPRevenue.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.P_Revenue_DATA,
+                        Element = this.dgPRevenue,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PREVENUE);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {

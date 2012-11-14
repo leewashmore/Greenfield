@@ -117,9 +117,18 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
-            PDFExporter.btnExportPDF_Click(this.dgFinstat);
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            {
+                ElementName = "Finstat Report",
+                Element = this.dgFinstat,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                RichTextBox = this.RichTextBox
+            });
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Finstat Report");
+            childExportOptions.Show();
         }
         #endregion
 
@@ -131,12 +140,16 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            Dispatcher.BeginInvoke((Action)(() =>
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
             {
-                RichTextBox.Document = PDFExporter.Print(dgFinstat, 6);
-            }));
-            this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                ElementName = "Finstat Report",
+                Element = this.dgFinstat,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                RichTextBox = this.RichTextBox
+            });
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Finstat Report");
+            childExportOptions.Show();
         }
         #endregion       
         #endregion

@@ -140,16 +140,30 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.dgEVEBITDA.Visibility == Visibility.Visible)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        RichTextBox.Document = PDFExporter.Print(this.dgEVEBITDA, 6);
-                    }));
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
-                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                if (chEVEBITDA.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.EV_EBITDA,
+                        Element = this.chEVEBITDA,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
+                else if (dgEVEBITDA.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.EV_EBITDA_DATA,
+                        Element = this.dgEVEBITDA,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_EVEBITDA);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -166,10 +180,30 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.dgEVEBITDA.Visibility == Visibility.Visible)
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if (chEVEBITDA.Visibility == Visibility.Visible)
                 {
-                    PDFExporter.btnExportPDF_Click(this.dgEVEBITDA);
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.EV_EBITDA,
+                        Element = this.chEVEBITDA,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
+                else if (dgEVEBITDA.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.EV_EBITDA_DATA,
+                        Element = this.dgEVEBITDA,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_EVEBITDA);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {

@@ -125,7 +125,7 @@ namespace GreenField.Gadgets.Views
         } 
         #endregion
 
-        #region Export
+        #region Export/Print
         /// <summary>
         /// dgFinancialReport ElementExporting EventHandler
         /// </summary>
@@ -162,8 +162,15 @@ namespace GreenField.Gadgets.Views
 
             RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Financial Statement Data"
                 , Element = this.dgFinancialReport, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER });
-            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "External Research Data"
-                , Element = this.dgFinancialReportExt, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER });
+            if (DataContextSource.ExternalResearchVisibility == Visibility.Visible)
+            {
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = "External Research Data",
+                    Element = this.dgFinancialReportExt,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
+                }); 
+            }
 
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Financial Statements");
             childExportOptions.Show();        
@@ -178,16 +185,28 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.dgFinancialReportExt.Visibility == Visibility.Visible)
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        RichTextBox.Document = PDFExporter.Print(this.dgFinancialReportExt, 6);
-                    }));
-
-                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                    ElementName = "Financial Statement Data",
+                    Element = this.dgFinancialReport,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                    RichTextBox = this.RichTextBox,
+                    SkipColumnDisplayIndex = new List<int> { 1, 14 }
+                });
+                if (DataContextSource.ExternalResearchVisibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                            {
+                                ElementName = "External Research Data",
+                                Element = this.dgFinancialReportExt,
+                                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                                RichTextBox = this.RichTextBox,
+                                SkipColumnDisplayIndex = new List<int> { 1, 14 }
+                            }); 
                 }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Financial Statements");
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -204,10 +223,28 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.dgFinancialReportExt.Visibility == Visibility.Visible)
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    PDFExporter.btnExportPDF_Click(this.dgFinancialReportExt, skipColumnDisplayIndex: new List<int> { 1, 14 });
+                    ElementName = "Financial Statement Data",
+                    Element = this.dgFinancialReport,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                    RichTextBox = this.RichTextBox,
+                    SkipColumnDisplayIndex = new List<int> { 1, 14 }
+                });
+                if (DataContextSource.ExternalResearchVisibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                            {
+                                ElementName = "External Research Data",
+                                Element = this.dgFinancialReportExt,
+                                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                                RichTextBox = this.RichTextBox,
+                                SkipColumnDisplayIndex = new List<int> { 1, 14 }
+                            }); 
                 }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Financial Statements");
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {

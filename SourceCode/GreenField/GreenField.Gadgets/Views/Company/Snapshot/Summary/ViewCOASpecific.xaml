@@ -75,10 +75,10 @@
                                     <Setter.Value>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock FontWeight="Bold" FontSize="7" FontFamily="Arial" Text="{Binding LongName}" />
-                                                <TextBlock Text=" (" FontSize="7" FontFamily="Arial" />
-                                                <TextBlock Text="{Binding ShortName}" FontSize="7" FontFamily="Arial" />
-                                                <TextBlock Text=")" FontSize="7" FontFamily="Arial" />
+                                                <TextBlock FontWeight="Bold" FontSize="9" FontFamily="Arial" Text="{Binding LongName}" />
+                                                <TextBlock Text=" (" FontSize="9" FontFamily="Arial" />
+                                                <TextBlock Text="{Binding ShortName}" FontSize="9" FontFamily="Arial" />
+                                                <TextBlock Text=")" FontSize="9" FontFamily="Arial" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </Setter.Value>
@@ -121,6 +121,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
             <!--Issue Header-->
             <!--<Grid Grid.Row="0">
@@ -148,19 +149,41 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Data Options" FontWeight="Bold" VerticalAlignment="Center"/>
-                                <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/> <!-- Text="Gadget Controls"-->
-
-                                <telerik:RadButton Grid.Column="2" Click="btnExportExcel_Click" HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="True"
-                                               Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export">
+                                <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Options" FontWeight="Bold" Style="{StaticResource TextBlockStyle}" />
+                                <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
+                                <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
                                     <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                                    <ToolTipService.ToolTip>
+                                        <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                                    </ToolTipService.ToolTip>
                                 </telerik:RadButton>
-                                <telerik:RadButton x:Name="btnFlip" Grid.Column="3" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                        Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
-                                    <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                <telerik:RadButton Grid.Column="3" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                                    <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                                    <ToolTipService.ToolTip>
+                                        <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                                    </ToolTipService.ToolTip>
+                                </telerik:RadButton>
+                                <telerik:RadButton Grid.Column="4" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                                    <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                                    <ToolTipService.ToolTip>
+                                        <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                                    </ToolTipService.ToolTip>
                                 </telerik:RadButton>
 
+                                <Rectangle Margin="2,0,0,0" Grid.Column="5" Width="1" Stroke="Gray" Opacity="0.2"/>
+                                <telerik:RadButton x:Name="btnFlip" Grid.Column="6" Height="15" Width="15" HorizontalAlignment="Right" 
+                                       VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}"
+                                       Margin="2,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
+                                    <!--Text ="Chart Controls"-->
+                                    <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" />
+                                </telerik:RadButton>                                                                
                             </Grid>
                         </telerik:RadExpander.Header>
                         <telerik:RadExpander.Content>
@@ -311,7 +334,8 @@
                                                  CanUserInsertRows="False"                                                  
                                                  CanUserDeleteRows="False" 
                                                  IsReadOnly="True" 
-                                                 CanUserSortColumns="False" 
+                                                 CanUserSortColumns="True" 
+                                                 IsFilteringAllowed="True"
                                                  ScrollMode="Deferred" 
                                                  RowIndicatorVisibility="Collapsed" 
                                                  ShowGroupPanel="False" 
@@ -329,15 +353,15 @@
                                                  RowLoaded="dgCOASpecific_RowLoaded"
                                                  GridLinesVisibility="None">
                                 <telerik:RadGridView.Columns>
-                                    <telerik:GridViewDataColumn x:Name="dgvcDataType" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="200" CellStyle="{StaticResource GridViewCellStyle}"/>
-                                    <telerik:GridViewDataColumn x:Name="dgcLeftClick" HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}" IsSortable="False" IsFilterable="False"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcYearOne" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcYearTwo" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_TWO, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcYearThree" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_THREE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcYearFour" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_FOUR, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcYearFive" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_FIVE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcYearSix" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_SIX, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
-                                    <telerik:GridViewDataColumn x:Name="dgcRightClick" HeaderCellStyle="{StaticResource GridViewHeaderCellRightButtonStyle}" IsSortable="False" IsFilterable="False" Width="*"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcDataType" HeaderTextAlignment="Left" TextAlignment="Left" Header="Description" UniqueName="Description" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="True" IsFilterable="True" Width="Auto" MinWidth="200" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                    <telerik:GridViewDataColumn x:Name="dgcLeftClick" HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}" IsSortable="True" IsFilterable="True" Width="Auto"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcYearOne" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="True" IsFilterable="True" Width="Auto" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcYearTwo" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_TWO, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="True" IsFilterable="True" Width="Auto" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcYearThree" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_THREE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="True" IsFilterable="True" Width="Auto" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcYearFour" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_FOUR, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="True" IsFilterable="True" Width="Auto" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcYearFive" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_FIVE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="True" IsFilterable="True" Width="Auto" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcYearSix" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_SIX, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="True" IsFilterable="True" Width="Auto" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                    <telerik:GridViewDataColumn x:Name="dgcRightClick" HeaderCellStyle="{StaticResource GridViewHeaderCellRightButtonStyle}" IsSortable="True" IsFilterable="True" Width="Auto"/>
                                 </telerik:RadGridView.Columns>
                                 <telerik:RadGridView.GroupDescriptors>
                                     <telerik:GroupDescriptor Member="SUB_DATA_DESC"/>
@@ -430,6 +454,9 @@
                         </Grid>
                     </Grid>
                 </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <telerik:RadRichTextBox Width="0" x:Name="RichTextBox"/>
             </Grid>
         </Grid>
     </telerik:RadBusyIndicator>

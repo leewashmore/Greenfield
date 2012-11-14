@@ -33,29 +33,30 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Height="15" Width="15" Grid.Column="0"
-                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center"
-                        Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
+                <telerik:RadButton Grid.Column="0" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
                     <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
-
-                </Button>
-                <Button Height="15" Width="15" Grid.Column="1"
-                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnExportPDF"
-                        Margin="5,0,0,0" Click="btnExportPDF_Click">
-                    <Image Source="/GreenField.Gadgets;component/Images/PDF.png"/>
-
-                </Button>
-                <Button Height="15" Width="15" Grid.Column="2"
-                        BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
-                        Margin="5,0,0,0" Click="btnPrint_Click">
-                    <Image Source="/GreenField.Gadgets;component/Images/Print.png"/>
-                </Button>
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
             </Grid>
 
-            <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,2,0,0">
                 <telerik:RadGridView x:Name="dgTerminalValueCalculations" 
                                          ShowGroupPanel="False" 
                                      FrozenColumnsSplitterVisibility="Collapsed"
@@ -64,10 +65,10 @@
                                          CanUserFreezeColumns="False" 
                                          CanUserDeleteRows="False"
                                          CanUserInsertRows="False"
-                                         IsFilteringAllowed="False"
+                                         IsFilteringAllowed="True"
                                          IsReadOnly="True"
                                          CanUserReorderColumns="False" 
-                                         CanUserSortColumns="False"
+                                         CanUserSortColumns="True"
                                          RowIndicatorVisibility="Collapsed" 
                                          UseLayoutRounding="True" 
                                          ColumnWidth="Auto" ShowColumnFooters="False"

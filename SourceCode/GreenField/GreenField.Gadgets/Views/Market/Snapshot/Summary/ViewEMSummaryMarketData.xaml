@@ -40,28 +40,44 @@
                     <TextBlock x:Name="txtCurrDate" HorizontalAlignment="Center" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Text=")" HorizontalAlignment="Center" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <!--button to flip the gadget-->
-                    <telerik:RadButton x:Name="btnFlip" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                       Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
-                        <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <Grid Grid.Row="0" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <telerik:RadButton Grid.Column="0" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
                     </telerik:RadButton>
-                    <!--button to export the grid to excel-->
-                    <telerik:RadButton Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20" Margin="2,0,0,0"
-                    Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export to Excel">
-                        <telerik:RadButton.Content>
-                            <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" />
-                        </telerik:RadButton.Content>
+                    <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
                     </telerik:RadButton>
-                    <telerik:RadButton x:Name="btnExportPdf" Grid.Column="5"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="2,0,0,0" Click="btnExportPdf_Click" ToolTipService.ToolTip="Export to Pdf">
-                        <Image Source="/GreenField.Gadgets;component/Images/PDF.png" Width="16" Height="16"  />
+                    <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
                     </telerik:RadButton>
-                    <telerik:RadButton x:Name="btnPrint" Grid.Column="6"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="2,0,0,0" Click="btnPrint_Click" ToolTipService.ToolTip="Print">
-                        <Image Source="/GreenField.Gadgets;component/Images/Print.png" Width="16" Height="16" />
+
+                    <Rectangle Margin="2,0,0,0" Grid.Column="3" Width="1" Stroke="Gray" Opacity="0.2"/>
+                    <telerik:RadButton x:Name="btnFlip" Grid.Column="4" Height="15" Width="15" HorizontalAlignment="Right" 
+                                       VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}"
+                                       Margin="2,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
+                        <!--Text ="Chart Controls"-->
+                        <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" />
                     </telerik:RadButton>
-                </StackPanel>
+                </Grid>
             </Grid>
             <Grid Grid.Row="1" Margin="0,2,0,0">                
                 <Grid>

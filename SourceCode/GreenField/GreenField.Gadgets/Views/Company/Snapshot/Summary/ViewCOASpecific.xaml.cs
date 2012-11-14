@@ -26,6 +26,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            DataContextSource = dataContextSource;
             //Update column headers and visibility
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(0, 3, 4, 6, false);
             PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, new PeriodColumnUpdateEventArg()
@@ -148,16 +149,29 @@ namespace GreenField.Gadgets.Views
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-
-                RadExportOptionsInfo.Add(new RadExportOptions()
+                if (this.grdRadGridView.Visibility == Visibility.Visible)
                 {
-                    ElementName = ExportTypes.COA_SPECIFIC,
-                    Element = this.dgCOASpecific,
-                    ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER,
-                    //RichTextBox = this.RichTextBox
-                });
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.COA_SPECIFIC_GRID,
+                        Element = this.dgCOASpecific,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox,
+                        SkipColumnDisplayIndex = new List<int> { 1, 8 }
+                    });
+                }
+                else if (this.grdRadChart.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.COA_SPECIFIC_CHART,
+                        Element = this.chCOASpecific,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
                 childExportOptions.Show();
             }
             catch (Exception ex)
@@ -169,7 +183,8 @@ namespace GreenField.Gadgets.Views
 
         private static class ExportTypes
         {
-            public const string COA_SPECIFIC = "COA Specific";
+            public const string COA_SPECIFIC_CHART = "COA specific chart";
+            public const string COA_SPECIFIC_GRID = "COA specific data";
         }
         
         /// <summary>
@@ -184,9 +199,29 @@ namespace GreenField.Gadgets.Views
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.COA_SPECIFIC, Element = this.dgCOASpecific, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
+                if (this.grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.COA_SPECIFIC_GRID,
+                        Element = this.dgCOASpecific,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox,
+                        SkipColumnDisplayIndex = new List<int> { 1, 8 }
+                    });
+                }
+                else if (this.grdRadChart.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.COA_SPECIFIC_CHART,
+                        Element = this.chCOASpecific,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
                 childExportOptions.Show();
             }
             catch (Exception ex)

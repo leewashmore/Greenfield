@@ -16,52 +16,60 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="0"/>
-        </Grid.RowDefinitions>
+    <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
+                              DisplayAfter="0"  IsBusy="{Binding BusyIndicatorStatus}">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
-            <TextBlock Text="Relative Performance UI" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" 
-                       Style="{StaticResource TextBlockStyle}"/>
-        </Grid>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
+                <!--<TextBlock Text="Relative Performance UI" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" 
+                       Style="{StaticResource TextBlockStyle}"/>-->
+            </Grid>
 
-        <!--Export Controls-->
-        <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+            <!--Export Controls-->
+            <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Button Height="15" Width="15" Grid.Column="1"
-                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center"
-                        Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
-                <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" />
-            </Button>
+                <telerik:RadButton Grid.Column="0" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+            </Grid>
 
-            <Button Height="15" Width="15" Grid.Column="3"
-                        BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
-                        Margin="5,0,0,0" Click="btnPrint_Click">
-                <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
-            </Button>
-        </Grid>
 
-
-        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
-                                              DisplayAfter="0" Grid.Row="1" IsBusy="{Binding BusyIndicatorStatus}">
-            <telerik:RadGridView x:Name="dgRelativePerformanceUI" 
+            <telerik:RadGridView x:Name="dgRelativePerformanceUI" Grid.Row="1" Margin="0,2,0,0"
                                  ItemsSource="{Binding RelativePerformanceReturnData}" 
                                  AutoGenerateColumns="False" 
                                  CanUserSelect="False" FrozenColumnsSplitterVisibility="Collapsed"
                                  CanUserReorderColumns="False" 
                                  CanUserInsertRows="False" ColumnWidth="*"                                 
-                                 CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
+                                 CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="True" ScrollMode="Deferred"
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
@@ -90,8 +98,9 @@
                                                  HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
-        </telerik:RadBusyIndicator>
 
-        <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Grid.Row="2"/>
-    </Grid>
+
+            <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Grid.Row="2"/>
+        </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

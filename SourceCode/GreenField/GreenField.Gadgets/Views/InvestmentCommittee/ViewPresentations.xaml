@@ -28,6 +28,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
             <!--Filters-->
             <Grid Grid.Row="0">
@@ -49,6 +50,36 @@
                         </telerik:RadComboBox.ItemTemplate>
                     </telerik:RadComboBox>
                 </StackPanel>
+                <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <telerik:RadButton Grid.Column="0" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
+                    </telerik:RadButton>
+                    <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
+                    </telerik:RadButton>
+                    <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                        <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
+                    </telerik:RadButton>
+                </Grid>
             </Grid>
 
             <!--Data Grid-->
@@ -59,7 +90,7 @@
                                  telerik:StyleManager.Theme="Metro"
                                  CanUserReorderColumns ="False" 
                                  CanUserSelect="True"
-                                 CanUserSortColumns="true"
+                                 CanUserSortColumns="True"
                                  AutoGenerateColumns="False"
                                  CanUserInsertRows="False"
                                  CanUserDeleteRows="False"
@@ -73,6 +104,7 @@
                                  GridLinesVisibility="None"
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  AlternationCount="2" 
+                                 ElementExporting="dgICPPresentationsList_ElementExporting"
                                  EnableRowVirtualization="False"
                                  EnableColumnVirtualization="False"                             
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
@@ -83,6 +115,7 @@
                                                 DataFormatString="{}{0:MMMM dd, yyyy}"
                                                 Width="Auto"
                                                 Header="Presentation Date"
+                                                UniqueName="Presentation Date"
                                                 DataMemberBinding="{Binding MeetingDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
@@ -93,6 +126,7 @@
                                                 DataFormatString="{}{0:h:mm tt}"
                                                 Width="Auto"
                                                 Header="Meeting Time"
+                                                UniqueName="Meeting Time"
                                                 DataMemberBinding="{Binding MeetingDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
@@ -103,6 +137,7 @@
                                                 DataFormatString="{}{0:MM/dd/yyyy h:mm tt}"
                                                 Width="Auto"
                                                 Header="Submit Deadline"
+                                                UniqueName="Submit Deadline"
                                                 DataMemberBinding="{Binding MeetingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
@@ -113,6 +148,7 @@
                                                 DataFormatString="{}{0:MM/dd/yyyy h:mm tt}"
                                                 Width="Auto"
                                                 Header="Voting Deadline"
+                                                UniqueName="Voting Deadline"
                                                 DataMemberBinding="{Binding MeetingVotingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
@@ -122,6 +158,7 @@
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListStatus"
                                                 Width="Auto"
                                                 Header="Status"
+                                                UniqueName="Status"
                                                 DataMemberBinding="{Binding StatusType}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
@@ -131,6 +168,7 @@
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListPresenter"
                                                 Width="Auto"
                                                 Header="Presenter"
+                                                UniqueName="Presenter"
                                                 DataMemberBinding="{Binding Presenter}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
@@ -140,6 +178,7 @@
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListCompany"
                                                 Width="Auto"
                                                 Header="Security"
+                                                UniqueName="Security"
                                                 DataMemberBinding="{Binding SecurityName}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
@@ -149,6 +188,7 @@
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListTicker"
                                                 Width="Auto"
                                                 Header="Ticker"
+                                                UniqueName="Ticker"
                                                 DataMemberBinding="{Binding SecurityTicker}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
@@ -158,6 +198,7 @@
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListCountry"
                                                 Width="Auto"
                                                 Header="Country"
+                                                UniqueName="Country"
                                                 DataMemberBinding="{Binding SecurityCountry}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
@@ -167,6 +208,7 @@
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListIndustru"
                                                 Width="Auto"
                                                 Header="Industry"
+                                                UniqueName="Industry"
                                                 DataMemberBinding="{Binding SecurityIndustry}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
@@ -240,7 +282,8 @@
                                    HorizontalAlignment="Left"
                                    Content="DECISION ENTRY"/>
             </Grid>
-
+            
+            <telerik:RadRichTextBox x:Name="RichTextBox" Grid.Row="3" Width="0"/>
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

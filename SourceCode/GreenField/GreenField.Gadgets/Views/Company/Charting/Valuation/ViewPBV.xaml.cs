@@ -94,7 +94,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region Export
+        #region Export/Print
         /// <summary>
         /// Event for Grid Export
         /// </summary>
@@ -140,16 +140,30 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.dgPBV.Visibility == Visibility.Visible)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        RichTextBox.Document = PDFExporter.Print(this.dgPBV, 6);
-                    }));
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
-                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                if (chPBV.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.P_BV,
+                        Element = this.chPBV,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
+                else if (dgPBV.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.P_BV_DATA,
+                        Element = this.dgPBV,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PBV);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -166,10 +180,30 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.dgPBV.Visibility == Visibility.Visible)
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if (chPBV.Visibility == Visibility.Visible)
                 {
-                    PDFExporter.btnExportPDF_Click(this.dgPBV);
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.P_BV,
+                        Element = this.chPBV,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
+                else if (dgPBV.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.P_BV_DATA,
+                        Element = this.dgPBV,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PBV);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {

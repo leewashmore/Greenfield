@@ -150,12 +150,12 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="grid"></param>
         /// <param name="fontSize"></param>
         /// <returns></returns>
-        public static RadDocument PrintGrid(RadGridView grid)
+        public static RadDocument PrintGrid(RadGridView grid, List<int> skipColumnDisplayIndex = null)
         {
             try
             {
                 fontSizePDF = 8;
-                return CreateDocument(grid);
+                return CreateDocument(grid, skipColumnDisplayIndex);
             }
             catch (Exception ex)
             {
@@ -185,11 +185,21 @@ namespace GreenField.Gadgets.Helpers
             columns = columns.Where(g => g.IsVisible == true && (!skipColumnDisplayIndex.Contains(g.DisplayIndex))).ToList();
 
             List<int> aggregateLog = new List<int>();
-            foreach (GridViewDataColumn column in grid.Columns)
+            foreach (var column in grid.Columns)
             {
-                if (column.AggregateFunctions.Count != 0)
+                if (column is GridViewDataColumn)
                 {
-                    aggregateLog.Add(column.DisplayIndex); 
+                    if ((column as GridViewDataColumn).AggregateFunctions.Count != 0)
+                    {
+                        aggregateLog.Add(column.DisplayIndex);
+                    }
+                }
+                if (column is GridViewComboBoxColumn)
+                {
+                    if ((column as GridViewComboBoxColumn).AggregateFunctions.Count != 0)
+                    {
+                        aggregateLog.Add(column.DisplayIndex);
+                    }
                 }
             }
             List<int> visibleAggregateResultIndex = new List<int>();
@@ -432,9 +442,10 @@ namespace GreenField.Gadgets.Helpers
                 {
                     TableCell aggregatesCell = new TableCell() { VerticalAlignment = RadVerticalAlignment.Center };
                     aggregatesCell.Background = Color.FromArgb(255, 228, 229, 229);
-                    AddCellValue(aggregatesCell, group.AggregateResults[i].FormattedValue != null
-                        ? group.AggregateResults[i].FormattedValue.ToString() : string.Empty);
+                    AddCellValue(aggregatesCell, group.AggregateResults[j].FormattedValue != null
+                        ? group.AggregateResults[j].FormattedValue.ToString() : string.Empty);
                     aggregateRow.Cells.Add(aggregatesCell);
+                    j++;
                 }
             }            
             table.Rows.Add(aggregateRow);

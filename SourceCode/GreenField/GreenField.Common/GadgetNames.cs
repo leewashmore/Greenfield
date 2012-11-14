@@ -157,11 +157,11 @@ namespace GreenField.Common
 
         #region MacroEconomics
         #region MacroEconomics EM Summary
-        public const string MODELS_FX_MACRO_ECONOMICS_MACRO_DATABASE_KEY_DATA_REPORT = "Summary of Macro Database Key Data Report Models, FX and Macro Economic Data 4.4";
+        public const string MODELS_FX_MACRO_ECONOMICS_MACRO_DATABASE_KEY_DATA_REPORT = "Macro Database Key Annual Data Report EM Summary";
         #endregion
 
         #region MacroEconomics Country Summary
-        public const string MODELS_FX_MACRO_ECONOMICS_MACRO_DATABASE_KEY_ANNUAL_DATA_REPORT = "Summary of Macro Database Key Annual Data Report Models, FX and Macro Economic Data 4.3";
+        public const string MODELS_FX_MACRO_ECONOMICS_MACRO_DATABASE_KEY_ANNUAL_DATA_REPORT = "Macro Database Key Annual Data Report EM Summary";
         #endregion 
         #endregion
 

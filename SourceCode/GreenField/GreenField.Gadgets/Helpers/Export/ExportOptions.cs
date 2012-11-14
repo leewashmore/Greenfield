@@ -303,6 +303,11 @@ namespace GreenField.Gadgets.Helpers
         /// RadRichTextBox from visual tree for printing
         /// </summary>
         public RadRichTextBox RichTextBox { get; set; }
+
+        /// <summary>
+        /// Indexes in columns to skip in export
+        /// </summary>
+        public List<int> SkipColumnDisplayIndex { get; set; }
     }
 
     /// <summary>
@@ -316,7 +321,7 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="filterIndex">defines the index of filter specified for extension of file exported to</param>
         /// <param name="exportOption">RadExportOptions</param>
         /// <param name="stream">Stream</param>
-        public static void ExportStream(int filterIndex, RadExportOptions exportOption, Stream stream)
+        public static void ExportStream(int filterIndex, RadExportOptions exportOption, Stream stream, List<int> skipColumnDisplayIndex = null)
         {
             switch (exportOption.ExportFilterOption)
             {
@@ -362,7 +367,7 @@ namespace GreenField.Gadgets.Helpers
                     }
                     break;
                 case RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER:
-                    RadExport.ExportRadGridViewPDF(exportOption.Element, stream);
+                    RadExport.ExportRadGridViewPDF(exportOption.Element, stream, skipColumnDisplayIndex);
                     break;
                 case RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER:
                     RadExport.ExportRadChartPDF(exportOption.Element, stream);
@@ -482,9 +487,9 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="element">UIElement</param>
         /// <param name="stream">Stream</param>
-        private static void ExportRadGridViewPDF(UIElement element, Stream stream)
+        private static void ExportRadGridViewPDF(UIElement element, Stream stream, List<int> skipColumnDisplayIndex = null)
         {
-            PDFExporter.btnExportPDF_Click(element as RadGridView, stream: stream); 
+            PDFExporter.btnExportPDF_Click(element as RadGridView, stream: stream, skipColumnDisplayIndex: skipColumnDisplayIndex); 
         }
     }
 

@@ -1,23 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Telerik.Windows.Documents.Model;
-using Telerik.Windows.Controls;
 using Telerik.Windows;
+using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
+using Telerik.Windows.Documents.Model;
+using GreenField.Common;
 using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
-using GreenField.Common;
 using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
@@ -225,13 +217,22 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(this.DataContextFairValueComposition.logger, methodNamespace);
             try
             {
-                PDFExporter.btnExportPDF_Click(this.dgFairValueComposition);
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = ExportTypes.DCF_FREE_CASH_FLOWS_DATA,
+                    Element = this.dgFairValueComposition,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                    RichTextBox = this.RichTextBox
+                });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.DCF_FREE_CASH_FLOWS_DATA);
+                childExportOptions.Show();                
             }
             catch (Exception ex)
             {
@@ -254,13 +255,16 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextFairValueComposition.logger, methodNamespace);
             try
             {
-                Dispatcher.BeginInvoke((Action)(() =>
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    RichTextBox.Document = PDFExporter.Print(dgFairValueComposition, 6);
-                }));
-
-                this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                    ElementName = ExportTypes.DCF_FREE_CASH_FLOWS_DATA,
+                    Element = this.dgFairValueComposition,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                    RichTextBox = this.RichTextBox
+                });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.DCF_FREE_CASH_FLOWS_DATA);
+                childExportOptions.Show(); 
             }
             catch (Exception ex)
             {

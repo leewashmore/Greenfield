@@ -48,20 +48,45 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="0"/>
                 </Grid.RowDefinitions>
 
                 <!--gadget header-->
                 <Grid Grid.Row="0">
                     <TextBlock Text="{Binding MorningSnapshotHeader}" HorizontalAlignment="Center" x:Name="txtHeader"
-                               VerticalAlignment="Center" FontSize="11" FontWeight="Bold"/>
-                    <telerik:RadButton Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15" IsEnabled="True" Margin="1"
-                                       Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export">
-                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
-                    </telerik:RadButton>
+                               VerticalAlignment="Center" FontSize="11" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <Grid HorizontalAlignment="Right">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>                            
+                        </Grid.ColumnDefinitions>
+                        <telerik:RadButton Grid.Column="0" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                            <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                            <ToolTipService.ToolTip>
+                                <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                            </ToolTipService.ToolTip>
+                        </telerik:RadButton>
+                        <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                            <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                            <ToolTipService.ToolTip>
+                                <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                            </ToolTipService.ToolTip>
+                        </telerik:RadButton>
+                        <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                            <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                            <ToolTipService.ToolTip>
+                                <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                            </ToolTipService.ToolTip>
+                        </telerik:RadButton>
+                    </Grid>
                 </Grid>
 
                 <!--grid containing benchmark data-->
-                <telerik:RadGridView Name="radGridSnapshot" IsReadOnly="true" AlternationCount="2"
+                <telerik:RadGridView Name="radGridSnapshot" IsReadOnly="true" AlternationCount="2" CanUserSortColumns="False" Margin="0,2,0,0"
                                      ShowGroupPanel="False" Grid.Row="1" CanUserFreezeColumns="False" RowIndicatorVisibility="Collapsed"
                                      AutoGenerateColumns="False" CanUserDeleteRows="True" SelectionMode="Single" CanUserInsertRows="true"                                  
                                      AutoExpandGroups="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
@@ -179,6 +204,8 @@
                                                     Reordered="ReorderBehavior_Reordered" Reordering="ReorderBehavior_Reordering"/>
                     </i:Interaction.Behaviors>
                 </telerik:RadGridView>
+
+                <telerik:RadRichTextBox Grid.Row="2" Width="0" x:Name="RichTextBox" />
             </Grid>
         </Grid>
     </telerik:RadBusyIndicator>

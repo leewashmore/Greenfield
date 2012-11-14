@@ -110,16 +110,30 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.dgScatterGraph.Visibility == Visibility.Visible)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                        {
-                            RichTextBox.Document = PDFExporter.Print(this.dgScatterGraph, 6);
-                        }));
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
-                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                if (chScatter.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = "Scatter Graph Chart",
+                        Element = this.chScatter,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
+                else if (dgScatterGraph.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = "Scatter Graph Data",
+                        Element = this.dgScatterGraph,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Scatter Graph");
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -136,10 +150,30 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.dgScatterGraph.Visibility == Visibility.Visible)
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if (chScatter.Visibility == Visibility.Visible)
                 {
-                    PDFExporter.btnExportPDF_Click(this.dgScatterGraph);
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = "Scatter Graph Chart",
+                        Element = this.chScatter,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
+                else if (dgScatterGraph.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = "Scatter Graph Data",
+                        Element = this.dgScatterGraph,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Scatter Graph");
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {

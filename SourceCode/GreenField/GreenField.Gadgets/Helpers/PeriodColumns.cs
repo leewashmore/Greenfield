@@ -890,21 +890,39 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="periodYear">PeriodYear column value</param>
         /// <param name="periodType">PeriodType column value</param>
         /// <returns>Generic Type record matching criterion or null</returns>
-        private static T GetPeriodData<T>(List<T> data, string description, string periodYear, string periodType, String groupDescription, bool uniqueByGroupDesc = false)
+        private static T GetPeriodData<T>(List<T> data, String description, String periodYear, String periodType, String groupDescription, bool uniqueByGroupDesc = false)
         {
-            T yearData = uniqueByGroupDesc
-                ? data.Where(record =>
-                    record.GetType().GetProperty("GroupDescription").GetValue(record, null).ToString().ToUpper().Trim() == groupDescription.ToString().ToUpper().Trim() &&
-                    record.GetType().GetProperty("Description").GetValue(record, null).ToString().ToUpper().Trim() == description.ToString().ToUpper().Trim() &&
-                    record.GetType().GetProperty("PeriodYear").GetValue(record, null).ToString().ToUpper().Trim() == periodYear.ToString().ToUpper().Trim() &&
-                    record.GetType().GetProperty("PeriodType").GetValue(record, null).ToString().ToUpper().Trim() == periodType.ToString().ToUpper().Trim())
-                    .FirstOrDefault()
-                : data.Where(record =>
-                    record.GetType().GetProperty("Description").GetValue(record, null).ToString().ToUpper().Trim() == description.ToString().ToUpper().Trim() &&
-                    record.GetType().GetProperty("PeriodYear").GetValue(record, null).ToString().ToUpper().Trim() == periodYear.ToString().ToUpper().Trim() &&
-                    record.GetType().GetProperty("PeriodType").GetValue(record, null).ToString().ToUpper().Trim() == periodType.ToString().ToUpper().Trim())
-                    .FirstOrDefault();
-            return yearData;
+            try
+            {
+                if (data == null || description == null || periodYear == null || periodType == null || groupDescription == null)
+                {
+                    throw new ArgumentNullException();
+                }
+                T yearData = uniqueByGroupDesc
+                    ? data.Where(record =>
+                        record.GetType().GetProperty("GroupDescription").GetValue(record, null) != null &&
+                        record.GetType().GetProperty("GroupDescription").GetValue(record, null).ToString().ToUpper().Trim() == groupDescription.ToString().ToUpper().Trim() &&
+                        record.GetType().GetProperty("Description").GetValue(record, null) != null &&
+                        record.GetType().GetProperty("Description").GetValue(record, null).ToString().ToUpper().Trim() == description.ToString().ToUpper().Trim() &&
+                        record.GetType().GetProperty("PeriodYear").GetValue(record, null) != null &&
+                        record.GetType().GetProperty("PeriodYear").GetValue(record, null).ToString().ToUpper().Trim() == periodYear.ToString().ToUpper().Trim() &&
+                        record.GetType().GetProperty("PeriodType").GetValue(record, null) != null &&
+                        record.GetType().GetProperty("PeriodType").GetValue(record, null).ToString().ToUpper().Trim() == periodType.ToString().ToUpper().Trim())
+                        .FirstOrDefault()
+                    : data.Where(record =>
+                        record.GetType().GetProperty("Description").GetValue(record, null) != null &&
+                        record.GetType().GetProperty("Description").GetValue(record, null).ToString().ToUpper().Trim() == description.ToString().ToUpper().Trim() &&
+                        record.GetType().GetProperty("PeriodYear").GetValue(record, null) != null &&
+                        record.GetType().GetProperty("PeriodYear").GetValue(record, null).ToString().ToUpper().Trim() == periodYear.ToString().ToUpper().Trim() &&
+                        record.GetType().GetProperty("PeriodType").GetValue(record, null) != null &&
+                        record.GetType().GetProperty("PeriodType").GetValue(record, null).ToString().ToUpper().Trim() == periodType.ToString().ToUpper().Trim())
+                        .FirstOrDefault();
+                return yearData;
+            }
+            catch (Exception ex)
+            {
+                return default(T);
+            }
         }
 
         /// <summary>

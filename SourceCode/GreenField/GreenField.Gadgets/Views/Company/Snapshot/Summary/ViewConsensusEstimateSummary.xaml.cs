@@ -40,6 +40,13 @@ namespace GreenField.Gadgets.Views
             this.dgConsensusEstimatesSummary.Columns[3].Header = (currentYear + 1).ToString();
             this.dgConsensusEstimatesSummary.Columns[4].Header = (currentYear + 2).ToString();
             this.dgConsensusEstimatesSummary.Columns[5].Header = (currentYear + 3).ToString();
+
+            this.dgConsensusEstimatesSummary.Columns[0].UniqueName = "Net Income (Millions)";
+            this.dgConsensusEstimatesSummary.Columns[1].UniqueName = (currentYear - 1).ToString();
+            this.dgConsensusEstimatesSummary.Columns[2].UniqueName = (currentYear).ToString();
+            this.dgConsensusEstimatesSummary.Columns[3].UniqueName = (currentYear + 1).ToString();
+            this.dgConsensusEstimatesSummary.Columns[4].UniqueName = (currentYear + 2).ToString();
+            this.dgConsensusEstimatesSummary.Columns[5].UniqueName = (currentYear + 3).ToString();
         }        
         #endregion
 
@@ -150,28 +157,28 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             PDFExporter.btnExportPDF_Click(this.dgConsensusEstimatesSummary);
         }
         #endregion
 
-        //#region Printing the DataGrid
-        ///// <summary>
-        ///// Printing the DataGrid
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void btnPrint_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Dispatcher.BeginInvoke((Action)(() =>
-        //    {
-        //        RichTextBox.Document = PDFExporter.Print(dgConsensusEstimatesSummary, 6);
-        //    }));
+        #region Printing the DataGrid
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                RichTextBox.Document = PDFExporter.Print(dgConsensusEstimatesSummary, 6);
+            }));
 
-        //    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-        //    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
-        //}
-        //#endregion
+            this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+        }
+        #endregion
     }
 }

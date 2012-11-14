@@ -125,8 +125,6 @@ namespace GreenField.Gadgets.Views
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-
-
                 RadExportOptionsInfo.Add(new RadExportOptions()
                 {
                     ElementName = ExportTypes.RELATIVE_PERFORMANCE_UI,
@@ -135,7 +133,7 @@ namespace GreenField.Gadgets.Views
                     RichTextBox = this.RichTextBox
                 });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_RELATIVE_PERFORMANCE);
                 childExportOptions.Show();
             }
             catch (Exception ex)
@@ -159,9 +157,9 @@ namespace GreenField.Gadgets.Views
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
 
-                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.RELATIVE_PERFORMANCE_UI, Element = this.dgRelativePerformanceUI, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.RELATIVE_PERFORMANCE_UI, Element = this.dgRelativePerformanceUI, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_RELATIVE_PERFORMANCE);
                 childExportOptions.Show();
             }
             catch (Exception ex)

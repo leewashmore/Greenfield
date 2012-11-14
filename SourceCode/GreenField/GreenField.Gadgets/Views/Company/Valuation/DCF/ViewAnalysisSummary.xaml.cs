@@ -134,13 +134,22 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
-                PDFExporter.btnExportPDF_Click(this.dgDCFAnalysisSummary, 12);
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = ExportTypes.Analysis_Summary,
+                    Element = this.dgDCFAnalysisSummary,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                    RichTextBox = this.RichTextBox
+                });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.Analysis_Summary);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -163,13 +172,16 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
-                Dispatcher.BeginInvoke((Action)(() =>
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    RichTextBox.Document = PDFExporter.Print(dgDCFAnalysisSummary, 12);
-                }));
-
-                this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                    ElementName = ExportTypes.Analysis_Summary,
+                    Element = this.dgDCFAnalysisSummary,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                    RichTextBox = this.RichTextBox
+                });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.Analysis_Summary);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -187,15 +199,23 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgDCFAnalysisSummary_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
         {
-            int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Cell.ParentRow.Item);
-            if (Index != 3)
-            {
-                e.Cancel = true;
-            }
-            else
+            if ((e.Row.DataContext as DCFDisplayData).PropertyName == "Stock Specific Discount")
             {
                 e.Cell.Value = "";
             }
+            else
+            {
+                e.Cancel = true;
+            }
+            //int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Cell.ParentRow.Item);
+            //if (Index != 3)
+            //{
+            //    e.Cancel = true;
+            //}
+            //else
+            //{
+            //    e.Cell.Value = "";
+            //}
         }
 
         #endregion
@@ -261,6 +281,10 @@ namespace GreenField.Gadgets.Views
                     if ((e.Row.DataContext as DCFDisplayData).PropertyName == "Stock Specific Discount")
                     {
                         e.Row.Background = new SolidColorBrush(Colors.Yellow);
+                    }
+                    else
+                    {                        
+                        e.Row.Background = new SolidColorBrush(Colors.White);
                     }
                 }
             }

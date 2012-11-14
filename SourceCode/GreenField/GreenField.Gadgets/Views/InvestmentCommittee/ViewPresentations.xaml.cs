@@ -1,5 +1,10 @@
 ﻿using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
+using System.Windows;
+using System;
+using GreenField.ServiceCaller;
+using System.Collections.Generic;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -47,6 +52,102 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextViewModelPresentations = dataContextSource;
+        }
+        #endregion
+
+        #region Event Handlers
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = "Presentation Overview",
+                    Element = this.dgICPPresentationsList, 
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
+                });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Presentation Overview");
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                try
+                {
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = "Presentation Overview",
+                        Element = this.dgICPPresentationsList,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Presentation Overview");
+                    childExportOptions.Show();
+                }
+                catch (Exception ex)
+                {
+                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = "Presentation Overview",
+                    Element = this.dgICPPresentationsList,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                    RichTextBox = this.RichTextBox
+                });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Presentation Overview");
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
+
+        /// <summary>
+        /// Element Exporting for Export to excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">event object</param>
+        private void dgICPPresentationsList_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
         }
         #endregion
 
