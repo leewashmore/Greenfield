@@ -176,7 +176,7 @@ namespace GreenField.Gadgets.Views
                 {
                     ElementName = "Consensus Estimate Detail",
                     Element = this.dgConsensusEstimate,
-                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                 });
                 ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: Consensus Estimate Detail");
                 childExportOptions.Show();

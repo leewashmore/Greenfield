@@ -40,17 +40,33 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public static void btnExportPDF_Click(RadGridView dataGrid, int fontSize = 6, DocumentLayoutMode layoutMode = DocumentLayoutMode.Paged,
-            PageOrientation orientation = PageOrientation.Portrait, List<int> skipColumnDisplayIndex = null)
+            PageOrientation orientation = PageOrientation.Portrait, List<int> skipColumnDisplayIndex = null, Stream stream = null)
         {
             try
             {
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.DefaultExt = "*.pdf";
-                dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
+                if (stream == null)
+                {
+                    SaveFileDialog dialog = new SaveFileDialog();
+                    dialog.DefaultExt = "*.pdf";
+                    dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
 
-                fontSizePDF = fontSize;
+                    fontSizePDF = fontSize;
 
-                if (dialog.ShowDialog() == true)
+                    if (dialog.ShowDialog() == true)
+                    {
+                        RadDocument document = CreateDocument(dataGrid, skipColumnDisplayIndex);
+                        document.LayoutMode = layoutMode;
+                        document.SectionDefaultPageOrientation = orientation;
+                        document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+                        document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+                        PdfFormatProvider provider = new PdfFormatProvider();
+                        using (Stream output = dialog.OpenFile())
+                        {
+                            provider.Export(document, output);
+                        }
+                    }
+                }
+                else
                 {
                     RadDocument document = CreateDocument(dataGrid, skipColumnDisplayIndex);
                     document.LayoutMode = layoutMode;
@@ -58,10 +74,7 @@ namespace GreenField.Gadgets.Helpers
                     document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
                     document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
                     PdfFormatProvider provider = new PdfFormatProvider();
-                    using (Stream output = dialog.OpenFile())
-                    {
-                        provider.Export(document, output);
-                    }
+                    provider.Export(document, stream);
                 }
             }
             catch (Exception ex)
@@ -131,6 +144,25 @@ namespace GreenField.Gadgets.Helpers
             }
         }
 
+        /// <summary>
+        /// Printing the Grid
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="fontSize"></param>
+        /// <returns></returns>
+        public static RadDocument PrintGrid(RadGridView grid)
+        {
+            try
+            {
+                fontSizePDF = 8;
+                return CreateDocument(grid);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                return null;
+            }
+        }
         #endregion
 
         #region Helper Methods
@@ -330,7 +362,7 @@ namespace GreenField.Gadgets.Helpers
                     TableCell cell = new TableCell();
 
                     object value = columns[j].GetValueForItem(items[i]);
-                    AddCellValue(cell, value != null ? value.ToString() : String.Empty);
+                    AddCellValue(cell, value == null || value.ToString().Trim() == String.Empty ? "-" : value.ToString());
                     cell.PreferredWidth = new TableWidthUnit((float)columns[j].ActualWidth);
                     cell.Background = Colors.White;
                     row.Cells.Add(cell);
@@ -415,17 +447,16 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="value"></param>
         private static void AddCellValue(TableCell cell, string value)
         {
-            //ell.Blocks.Add(
-
             Telerik.Windows.Documents.Model.Paragraph paragraph = new Telerik.Windows.Documents.Model.Paragraph();
             Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span();
 
-            if (value == null || value == "")
-                value = " ";
-            span.Text = value;            
-            span.FontFamily = new System.Windows.Media.FontFamily("Arial");
-            span.FontSize = fontSizePDF;
-            paragraph.Inlines.Add(span);
+            if (value != null && value != "")
+            {
+                span.Text = value;
+                span.FontFamily = new System.Windows.Media.FontFamily("Arial");
+                span.FontSize = fontSizePDF;
+                paragraph.Inlines.Add(span);
+            }
             cell.Blocks.Add(paragraph);
         }
 
@@ -484,6 +515,29 @@ namespace GreenField.Gadgets.Helpers
         #region Chart
 
         #region PrintChart
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void btnExportChartPDF_Click(RadChart chart, Stream stream, DocumentLayoutMode layoutMode = DocumentLayoutMode.Paged,
+            PageOrientation orientation = PageOrientation.Landscape)
+        {
+            try
+            {
+                RadDocument document = PrintChart(chart);
+                document.LayoutMode = layoutMode;
+                document.SectionDefaultPageOrientation = orientation;
+                document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+                document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+                PdfFormatProvider provider = new PdfFormatProvider();
+                provider.Export(document, stream);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
 
         /// <summary>
         /// Method to Print Chart

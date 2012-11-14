@@ -17,9 +17,17 @@ namespace GreenField.Gadgets.Helpers
     public enum RadExportFilterOption
     {
         [DescriptionAttribute("Excel Workbook (*.xls)|*.xls|PNG (*.png)|*.png|BMP (*.bmp)|*.bmp")]
-        RADCHART_EXPORT_FILTER = 0,
+        RADCHART_EXCEL_EXPORT_FILTER = 0,
         [DescriptionAttribute("Excel Workbook (*.xls)|*.xls|XML (*.xml)|*.xml|CSV (Comma delimited)|*.csv|Word Document (*.doc)|*.doc")]
-        RADGRIDVIEW_EXPORT_FILTER = 1
+        RADGRIDVIEW_EXCEL_EXPORT_FILTER = 1,
+        [DescriptionAttribute("PDF (*.pdf)|*.pdf")]
+        RADCHART_PDF_EXPORT_FILTER = 2,
+        [DescriptionAttribute("PDF (*.pdf)|*.pdf")]
+        RADGRIDVIEW_PDF_EXPORT_FILTER = 3,
+        [DescriptionAttribute("")]
+        RADCHART_PRINT_FILTER = 4,
+        [DescriptionAttribute("")]
+        RADGRIDVIEW_PRINT_FILTER = 5
     }
 
     public class ExportElementOptions
@@ -290,6 +298,11 @@ namespace GreenField.Gadgets.Helpers
         /// Filter option based on the UIElement being exported
         /// </summary>
         public RadExportFilterOption ExportFilterOption { get; set; }
+
+        /// <summary>
+        /// RadRichTextBox from visual tree for printing
+        /// </summary>
+        public RadRichTextBox RichTextBox { get; set; }
     }
 
     /// <summary>
@@ -307,7 +320,7 @@ namespace GreenField.Gadgets.Helpers
         {
             switch (exportOption.ExportFilterOption)
             {
-                case RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER:
+                case RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER:
                     {
                         switch (filterIndex)
                         {
@@ -329,7 +342,7 @@ namespace GreenField.Gadgets.Helpers
                         }
                     }
                     break;
-                case RadExportFilterOption.RADCHART_EXPORT_FILTER:
+                case RadExportFilterOption.RADCHART_EXCEL_EXPORT_FILTER:
                     {
                         switch (filterIndex)
                         {
@@ -347,6 +360,12 @@ namespace GreenField.Gadgets.Helpers
                                 break;
                         }
                     }
+                    break;
+                case RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER:
+                    RadExport.ExportRadGridViewPDF(exportOption.Element, stream);
+                    break;
+                case RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER:
+                    RadExport.ExportRadChartPDF(exportOption.Element, stream);
                     break;
                 default:
                     break;
@@ -382,6 +401,16 @@ namespace GreenField.Gadgets.Helpers
         private static void ExportRadChartBMP(UIElement element, Stream stream)
         {
             (element as RadChart).ExportToImage(stream, new Telerik.Windows.Media.Imaging.BmpBitmapEncoder());
+        }
+
+        /// <summary>
+        /// Exports RadChart image to .pdf extension file
+        /// </summary>
+        /// <param name="element">UIElement</param>
+        /// <param name="stream">Stream</param>
+        private static void ExportRadChartPDF(UIElement element, Stream stream)
+        {
+            PDFExporter.btnExportChartPDF_Click(element as RadChart, stream: stream);
         }
 
         /// <summary>
@@ -446,6 +475,16 @@ namespace GreenField.Gadgets.Helpers
                 ShowColumnHeaders = true,
                 ShowGroupFooters = true
             });
+        }
+                
+        /// <summary>
+        /// Exports RadGridView data to .pdf extension file
+        /// </summary>
+        /// <param name="element">UIElement</param>
+        /// <param name="stream">Stream</param>
+        private static void ExportRadGridViewPDF(UIElement element, Stream stream)
+        {
+            PDFExporter.btnExportPDF_Click(element as RadGridView, stream: stream); 
         }
     }
 

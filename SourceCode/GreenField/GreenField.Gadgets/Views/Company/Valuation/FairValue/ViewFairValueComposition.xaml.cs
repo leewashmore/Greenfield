@@ -190,7 +190,7 @@ namespace GreenField.Gadgets.Views
                                 { 
                                     ElementName = ExportTypes.DCF_FREE_CASH_FLOWS_DATA, 
                                     Element = this.dgFairValueComposition, 
-                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER 
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER 
                                 }
                         };
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + ExportTypes.DCF_FREE_CASH_FLOWS_DATA);

@@ -108,9 +108,9 @@ namespace GreenField.Gadgets.Views
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                 {
                     new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_CHART, Element = this.chMultiLineBenchmarkChart, 
-                        ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
+                        ExportFilterOption = RadExportFilterOption.RADCHART_EXCEL_EXPORT_FILTER },
                     new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_GRID, Element = this.dgBenchmarkUI,
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER },
                 };
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
                 childExportOptions.Show();                

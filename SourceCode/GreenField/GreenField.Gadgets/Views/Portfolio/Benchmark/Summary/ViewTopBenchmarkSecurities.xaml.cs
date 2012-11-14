@@ -109,7 +109,7 @@ namespace GreenField.Gadgets.Views
                     {
                         Element = this.dgTopTenSecurities,
                         ElementName = "Top Ten Benchmark Securities",
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                     } 
                 }, "Export Options: " + GadgetNames.BENCHMARK_TOP_TEN_CONSTITUENTS);
             childExportOptions.Show();

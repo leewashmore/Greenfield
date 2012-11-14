@@ -132,10 +132,10 @@ namespace GreenField.Gadgets.Views
                 if (this.grdRadChart.Visibility == Visibility.Visible)
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {                  
-                    new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_CHART, Element = this.chUnrealizedGainLoss, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                   
-                    
-                };
+                    {                  
+                        new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_CHART
+                            , Element = this.chUnrealizedGainLoss, ExportFilterOption = RadExportFilterOption.RADCHART_EXCEL_EXPORT_FILTER },                                       
+                    };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_UNREALIZED_GAIN_LOSS);
                     childExportOptions.Show();
                 }
@@ -145,7 +145,7 @@ namespace GreenField.Gadgets.Views
                     {
                         List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                            new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_DATA, Element = this.dgUnrealizedGainLoss, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                            new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_DATA, Element = this.dgUnrealizedGainLoss, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                         };
                         ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_UNREALIZED_GAIN_LOSS);
                         childExportOptions.Show();
@@ -167,16 +167,30 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.grdRadGridView.Visibility == Visibility.Visible)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        RichTextBox.Document = PDFExporter.Print(this.dgUnrealizedGainLoss, 6);
-                    }));
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
-                    this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                if (grdRadChart.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.UNREALIZED_GAINLOSS_CHART,
+                        Element = this.chUnrealizedGainLoss,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
+                else if (grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.UNREALIZED_GAINLOSS_DATA,
+                        Element = this.dgUnrealizedGainLoss,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+                }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_UNREALIZED_GAIN_LOSS);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -193,10 +207,29 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (this.grdRadGridView.Visibility == Visibility.Visible)
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if (grdRadChart.Visibility == Visibility.Visible)
                 {
-                    PDFExporter.btnExportPDF_Click(this.dgUnrealizedGainLoss);
+                    RadExportOptionsInfo.Add(new RadExportOptions() 
+                    {
+                        ElementName = ExportTypes.UNREALIZED_GAINLOSS_CHART,
+                        Element = this.chUnrealizedGainLoss,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER
+                    });                    
                 }
+
+                if (grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    { 
+                        ElementName = ExportTypes.UNREALIZED_GAINLOSS_DATA,
+                        Element = this.dgUnrealizedGainLoss,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER
+                    });
+                }
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_UNREALIZED_GAIN_LOSS);
+                childExportOptions.Show();                
             }
             catch (Exception ex)
             {

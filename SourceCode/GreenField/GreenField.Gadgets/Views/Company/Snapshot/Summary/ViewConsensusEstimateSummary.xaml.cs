@@ -130,7 +130,7 @@ namespace GreenField.Gadgets.Views
                     List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                     {                  
                         new RadExportOptions() { ElementName = "Comparison with consensus", Element = this.dgConsensusEstimatesSummary, 
-                                                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                     };
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " +
                         GadgetNames.INTERNAL_RESEARCH_CONSESUS_ESTIMATE_SUMMARY);

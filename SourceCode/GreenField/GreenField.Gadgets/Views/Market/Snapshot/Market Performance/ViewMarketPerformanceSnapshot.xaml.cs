@@ -246,7 +246,7 @@ namespace GreenField.Gadgets.Views
             {
                 ElementName = this.txtHeader.Text,
                 Element = this.radGridSnapshot,
-                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
             });
             ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " 
                 + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);

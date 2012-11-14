@@ -185,7 +185,7 @@ namespace GreenField.Gadgets.Views
                 {
                     ElementName = elementName,
                     Element = this.dgConsensusEstimateValuations,
-                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                 });
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
                 childExportOptions.Show();

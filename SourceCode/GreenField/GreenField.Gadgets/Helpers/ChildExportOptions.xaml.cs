@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using System.IO;
 using System.Collections.ObjectModel;
+using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Helpers
 {
@@ -115,29 +116,53 @@ namespace GreenField.Gadgets.Helpers
         void cbExportOptions_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
             ExportOption = this.cbExportOptions.SelectedValue as RadExportOptions;
-            this.brdOptions.Visibility = ExportOption.ExportFilterOption == RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER ? Visibility.Visible : Visibility.Collapsed;
+            this.brdOptions.Visibility = ExportOption.ExportFilterOption == RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER ? Visibility.Visible : Visibility.Collapsed;
             InitializeExportElementOptions();
             this.OKButton.IsEnabled = true;
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-
-            SaveFileDialog dialog = new SaveFileDialog()
+            if (ExportOption.ExportFilterOption == RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER)
             {
-                DefaultExt = ".xls",
-                Filter = RadExportFilterOptionDesc.GetEnumDescription(ExportOption.ExportFilterOption)
-            };
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    ExportOption.RichTextBox.Document = PDFExporter.PrintGrid(ExportOption.Element as RadGridView);
+                }));
 
-            if (dialog.ShowDialog() == true)
+                ExportOption.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                ExportOption.RichTextBox.Print(ExportOption.ElementName, Telerik.Windows.Documents.UI.PrintMode.Native);                
+                this.DialogResult = true;
+            }
+            else if (ExportOption.ExportFilterOption == RadExportFilterOption.RADCHART_PRINT_FILTER)
             {
-                RadGridView_ElementExport.ExportElementOptions = ExportElementOptionsInfo;
-                RadExport.ExportStream(dialog.FilterIndex, ExportOption, dialog.OpenFile());
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    ExportOption.RichTextBox.Document = PDFExporter.PrintChart(ExportOption.Element as RadChart);
+                }));
+
+                ExportOption.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                ExportOption.RichTextBox.Print(ExportOption.ElementName, Telerik.Windows.Documents.UI.PrintMode.Native);
                 this.DialogResult = true;
             }
             else
             {
-                this.DialogResult = false;
+                SaveFileDialog dialog = new SaveFileDialog()
+                {
+                    DefaultExt = ".xls",
+                    Filter = RadExportFilterOptionDesc.GetEnumDescription(ExportOption.ExportFilterOption)
+                };
+
+                if (dialog.ShowDialog() == true)
+                {
+                    RadGridView_ElementExport.ExportElementOptions = ExportElementOptionsInfo;
+                    RadExport.ExportStream(dialog.FilterIndex, ExportOption, dialog.OpenFile());
+                    this.DialogResult = true;
+                }
+                else
+                {
+                    this.DialogResult = false;
+                }
             }
         }
 

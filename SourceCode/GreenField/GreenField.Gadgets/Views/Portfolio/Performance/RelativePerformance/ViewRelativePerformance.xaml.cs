@@ -434,7 +434,7 @@ namespace GreenField.Gadgets.Views
                     {
                         Element = this.dgRelativePerformance,
                         ElementName = "Relative Performace Data",
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                     } 
                 }, "Export Options: " + GadgetNames.BENCHMARK_RELATIVE_PERFORMANCE);
             childExportOptions.Show();

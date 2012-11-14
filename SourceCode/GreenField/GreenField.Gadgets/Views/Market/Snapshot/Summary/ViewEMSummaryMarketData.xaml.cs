@@ -125,7 +125,7 @@ namespace GreenField.Gadgets.Views
                     {
                         ElementName = this.dgEMSummaryMarketData.Tag.ToString(),
                         Element = this.dgEMSummaryMarketData,
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                     });
 
                 else if (this.dgEMSummaryMarketSSRData.Visibility == Visibility.Visible)
@@ -133,7 +133,7 @@ namespace GreenField.Gadgets.Views
                     {
                         ElementName = this.dgEMSummaryMarketSSRData.Tag.ToString(),
                         Element = this.dgEMSummaryMarketSSRData,
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                     });
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: "

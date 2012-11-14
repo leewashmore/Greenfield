@@ -66,7 +66,7 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                     {
-                        new RadExportOptions() { ElementName = "Portfolio Risk Return", Element = this.dgPortfolioRiskReturn, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                        new RadExportOptions() { ElementName = "Portfolio Risk Return", Element = this.dgPortfolioRiskReturn, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                     };
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RISK_RETURN);
                     childExportOptions.Show();

@@ -89,7 +89,7 @@ namespace GreenField.Gadgets.Views
                     {
                         ElementName = "Region Breakdown Data",
                         Element = this.crtRegionBreakdown, 
-                        ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_EXCEL_EXPORT_FILTER 
                     },                 
                 };
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
@@ -105,7 +105,7 @@ namespace GreenField.Gadgets.Views
                                 {
                                     Element = this.dgRegionBreakdown,
                                     ElementName = "Region Breakdown Data",
-                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                                 }
                             }, "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
                         childExportOptions.Show();

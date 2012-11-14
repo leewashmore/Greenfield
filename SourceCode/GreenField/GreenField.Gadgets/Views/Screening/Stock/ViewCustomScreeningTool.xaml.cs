@@ -199,7 +199,7 @@ namespace GreenField.Gadgets.Views
                     List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                     {                  
                         new RadExportOptions() { ElementName = "Custom Screening Tool", Element = this.dgCustomSecurity, 
-                                                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                     };
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.CUSTOM_SCREENING_TOOL);
                     childExportOptions.Show();

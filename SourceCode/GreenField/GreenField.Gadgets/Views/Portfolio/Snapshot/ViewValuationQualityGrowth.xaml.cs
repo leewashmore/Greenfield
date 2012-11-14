@@ -85,7 +85,7 @@ namespace GreenField.Gadgets.Views
                     List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                     {
                           new RadExportOptions() { ElementName = "Valuation,Quality and Growth", Element = this.dgValuation, 
-                              ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                              ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                     };
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + 
                         GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES);

@@ -89,7 +89,7 @@ namespace GreenField.Gadgets.Views
                     {
                         ElementName =  "Relative Risk Data",
                         Element = this.chartRelativerisk, 
-                        ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_EXCEL_EXPORT_FILTER 
                     },};
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
                     childExportOptions.Show();
@@ -103,7 +103,7 @@ namespace GreenField.Gadgets.Views
                              {
                                 Element = this.dgRelativeRisk,
                                 ElementName = "Relative Risk Data",
-                                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                              }
                         }, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
                         childExportOptions.Show();

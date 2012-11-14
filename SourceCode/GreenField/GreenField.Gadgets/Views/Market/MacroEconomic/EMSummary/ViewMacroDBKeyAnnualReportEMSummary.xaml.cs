@@ -196,7 +196,7 @@ namespace GreenField.Gadgets.Views
                     List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                     {
                         new RadExportOptions() { ElementName = "MacroDB Key Annual Report EM Summary", 
-                            Element = this.dgMacroDBKeyReport, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                            Element = this.dgMacroDBKeyReport, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                     };
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + 
                         GadgetNames.MODELS_FX_MACRO_ECONOMICS_MACRO_DATABASE_KEY_DATA_REPORT);

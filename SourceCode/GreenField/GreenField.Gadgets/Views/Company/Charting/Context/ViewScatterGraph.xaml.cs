@@ -79,7 +79,7 @@ namespace GreenField.Gadgets.Views
                         ElementName = "Scatter Graph Chart",
                         Element = this.chScatter
                         ,
-                        ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER
+                        ExportFilterOption = RadExportFilterOption.RADCHART_EXCEL_EXPORT_FILTER
                     });
                 }
                 else if (this.dgScatterGraph.Visibility == Visibility.Visible)
@@ -89,7 +89,7 @@ namespace GreenField.Gadgets.Views
                         ElementName = "Scatter Graph Data",
                         Element = this.dgScatterGraph
                         ,
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                     });
                 }
                 ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: Scatter Graph");

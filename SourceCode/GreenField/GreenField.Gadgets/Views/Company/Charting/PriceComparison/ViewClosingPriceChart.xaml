@@ -315,7 +315,6 @@
                                          GroupPanelBackground="#e4e5e5"
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         ColumnWidth="*" 
                                          EnableColumnVirtualization="False"
                                          EnableRowVirtualization="False"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"

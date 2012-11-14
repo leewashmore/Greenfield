@@ -65,7 +65,7 @@ namespace GreenField.Gadgets.Views
                     {
                         Element = this.dgTopHoldings,
                         ElementName = "Top 10 Holdings Data",
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                     } 
                 }, "Export Options: " + GadgetNames.HOLDINGS_TOP_TEN_HOLDINGS);
             childExportOptions.Show();

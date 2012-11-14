@@ -71,7 +71,7 @@ namespace GreenField.Gadgets.Views
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
                                 new RadExportOptions() { ElementName = ExportTypes.Sensitivity, Element = this.dgDCFSensitivity, 
-                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                         };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.Sensitivity);
                     childExportOptions.Show();

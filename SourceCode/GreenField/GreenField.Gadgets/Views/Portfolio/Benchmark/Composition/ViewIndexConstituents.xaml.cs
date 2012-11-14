@@ -62,7 +62,7 @@ namespace GreenField.Gadgets.Views
                     {
                         Element = this.dgIndexConstituents,
                         ElementName = "Index Constituent Data",
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                     } 
                 }, "Export Options: " + GadgetNames.BENCHMARK_INDEX_CONSTITUENTS);
             childExportOptions.Show();

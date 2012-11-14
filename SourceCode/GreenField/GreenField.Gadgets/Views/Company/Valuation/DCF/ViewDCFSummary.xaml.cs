@@ -107,7 +107,7 @@ namespace GreenField.Gadgets.Views
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
                                 new RadExportOptions() { ElementName = ExportTypes.DCF_Summary, Element = this.dgDCFSummary, 
-                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                         };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.DCF_Summary);
                     childExportOptions.Show();

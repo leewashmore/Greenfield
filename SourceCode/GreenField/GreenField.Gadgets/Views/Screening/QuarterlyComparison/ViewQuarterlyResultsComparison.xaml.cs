@@ -95,7 +95,7 @@ namespace GreenField.Gadgets.Views
                     {
                         Element = this.dgQuarterlyComparison,
                         ElementName = "Quarterly Comparison Results",
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER
                     } 
                 }, "Export Options: " + GadgetNames.QUARTERLY_RESULTS_COMPARISON);
             childExportOptions.Show();

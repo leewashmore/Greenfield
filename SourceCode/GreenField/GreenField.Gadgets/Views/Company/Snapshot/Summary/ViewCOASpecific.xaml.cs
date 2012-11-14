@@ -116,7 +116,7 @@ namespace GreenField.Gadgets.Views
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
                 RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", 
-                    Element = this.chCOASpecific, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                    Element = this.chCOASpecific, ExportFilterOption = RadExportFilterOption.RADCHART_EXCEL_EXPORT_FILTER });
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + 
                     GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
                 childExportOptions.Show();
@@ -127,7 +127,7 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", 
-                        Element = this.dgCOASpecific, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                        Element = this.dgCOASpecific, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER });
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + 
                         GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
                     childExportOptions.Show();

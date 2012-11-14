@@ -161,9 +161,9 @@ namespace GreenField.Gadgets.Views
             List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
             RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Financial Statement Data"
-                , Element = this.dgFinancialReport, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                , Element = this.dgFinancialReport, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER });
             RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "External Research Data"
-                , Element = this.dgFinancialReportExt, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                , Element = this.dgFinancialReportExt, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER });
 
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Financial Statements");
             childExportOptions.Show();        

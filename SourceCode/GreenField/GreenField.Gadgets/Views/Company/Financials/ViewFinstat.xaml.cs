@@ -104,7 +104,7 @@ namespace GreenField.Gadgets.Views
             { 
                 ElementName = "Finstat Report",
                 Element = this.dgFinstat,
-                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER 
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER 
             });
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Finstat Report");
             childExportOptions.Show(); 

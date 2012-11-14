@@ -112,7 +112,7 @@ namespace GreenField.Gadgets.Views
                     List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                 {                  
                     new RadExportOptions() { ElementName = ExportTypes.PerformanceGadgetChart, Element = this.chPerformanceGadget, ExportFilterOption = 
-                        RadExportFilterOption.RADCHART_EXPORT_FILTER },                   
+                        RadExportFilterOption.RADCHART_EXCEL_EXPORT_FILTER },                   
             
                 };
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRAPH);
@@ -125,7 +125,7 @@ namespace GreenField.Gadgets.Views
                         List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
                             new RadExportOptions() { ElementName = ExportTypes.PerformanceGadgetData, Element = this.dgPerformanceGadget, ExportFilterOption = 
-                                RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                         };
                         ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRAPH);
                         childExportOptions.Show();
