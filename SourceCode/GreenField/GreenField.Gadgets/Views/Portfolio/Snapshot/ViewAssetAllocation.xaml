@@ -17,40 +17,77 @@
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0"/>
+        </Grid.RowDefinitions>
+
+        <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <telerik:RadButton Grid.Column="0" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                </ToolTipService.ToolTip>
+            </telerik:RadButton>
+            <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                </ToolTipService.ToolTip>
+            </telerik:RadButton>
+            <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                </ToolTipService.ToolTip>
+            </telerik:RadButton>
+        </Grid>
+        <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" Grid.Row="1" Margin="0,2,0,0">
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                 <telerik:RadGridView Name="dgAssetAllocation" AutoGenerateColumns="False" ItemsSource="{Binding AssetAllocationData}" 
                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False"
-                                     FrozenColumnsSplitterVisibility="Collapsed"
-                                     CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
+                                     FrozenColumnsSplitterVisibility="Collapsed" IsFilteringAllowed="True"
+                                     CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="True" ScrollMode="Deferred"
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"                                                                
                                      AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                      GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
-                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="ExcelElementExporting"
                                      EnableRowVirtualization="False">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left" 
-                                                DataMemberBinding="{Binding Country}" Width="*" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" UniqueName="Country" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left" 
+                                                DataMemberBinding="{Binding Country}" Width="Auto" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcPortfolioWeight" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Header="Portfolio %" TextAlignment="Right"
+                                                Header="Portfolio %" TextAlignment="Right" UniqueName="Portfolio %"
                                                 DataMemberBinding="{Binding PortfolioWeight, StringFormat=\{0:n2\}%}" 
                                                 Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcModelWeight" Header="Model %" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                DataMemberBinding="{Binding ModelWeight, StringFormat=\{0:n2\}%}" TextAlignment="Right"
+                                                DataMemberBinding="{Binding ModelWeight, StringFormat=\{0:n2\}%}" TextAlignment="Right" UniqueName="Model %"
                                                 Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcBenchmarkWeight" Header="Benchmark %" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                DataMemberBinding="{Binding BenchmarkWeight, StringFormat=\{0:n2\}%}" TextAlignment="Right"
+                                                DataMemberBinding="{Binding BenchmarkWeight, StringFormat=\{0:n2\}%}" TextAlignment="Right" UniqueName="Benchmark %"
                                                 Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="ActivePosition (Model)" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" TextAlignment="Right"
+                                                DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" TextAlignment="Right" UniqueName="ActivePosition (Model)"
                                                 Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </telerik:RadBusyIndicator>
         </Border>
+
+        <telerik:RadRichTextBox x:Name="RichTextBox" Grid.Row="2" Width="0"/>
     </Grid>
 </helpers:ViewBaseUserControl>

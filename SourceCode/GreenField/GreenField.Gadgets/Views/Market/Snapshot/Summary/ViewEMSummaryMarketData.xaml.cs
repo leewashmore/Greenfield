@@ -155,14 +155,27 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
                 if (this.dgEMSummaryMarketData.Visibility == Visibility.Visible)
-                {
-                    PDFExporter.btnExportPDF_Click(this.dgEMSummaryMarketData, 12);
-                }
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = this.dgEMSummaryMarketData.Tag.ToString(),
+                        Element = this.dgEMSummaryMarketData,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER
+                    });
+
                 else if (this.dgEMSummaryMarketSSRData.Visibility == Visibility.Visible)
-                {
-                    PDFExporter.btnExportPDF_Click(this.dgEMSummaryMarketSSRData, 12);
-                }
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = this.dgEMSummaryMarketSSRData.Tag.ToString(),
+                        Element = this.dgEMSummaryMarketSSRData,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER
+                    });
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: "
+                    + GadgetNames.MODELS_FX_MACRO_ECONOMICS_EM_DATA_REPORT);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -179,22 +192,29 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
                 if (this.dgEMSummaryMarketData.Visibility == Visibility.Visible)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
+                    RadExportOptionsInfo.Add(new RadExportOptions()
                     {
-                        RichTextBox.Document = PDFExporter.Print(this.dgEMSummaryMarketData, 12);
-                    }));
-                }
+                        ElementName = this.dgEMSummaryMarketData.Tag.ToString(),
+                        Element = this.dgEMSummaryMarketData,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+
                 else if (this.dgEMSummaryMarketSSRData.Visibility == Visibility.Visible)
-                {
-                    Dispatcher.BeginInvoke((Action)(() =>
+                    RadExportOptionsInfo.Add(new RadExportOptions()
                     {
-                        RichTextBox.Document = PDFExporter.Print(this.dgEMSummaryMarketSSRData, 12);
-                    }));
-                }
-                this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                        ElementName = this.dgEMSummaryMarketSSRData.Tag.ToString(),
+                        Element = this.dgEMSummaryMarketSSRData,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: "
+                    + GadgetNames.MODELS_FX_MACRO_ECONOMICS_EM_DATA_REPORT);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {

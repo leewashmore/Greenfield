@@ -82,30 +82,63 @@ namespace GreenField.Gadgets.Views
         }
 
         /// <summary>
-        /// Method to catch Click Event of Export to Excel
+        /// catches export to excel button click
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            try
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
             {
-                if (this.dgMarketCapData.Visibility == Visibility.Visible)
-                {
-                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
-                    {
-                          new RadExportOptions() { ElementName = "Market Capitalization", Element = this.dgMarketCapData, 
-                              ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
-                    };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " +
-                        GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES);
-                    childExportOptions.Show();
-                }
-            }
-            catch (Exception ex)
+                ElementName = GadgetNames.HOLDINGS_MARKET_CAPITALIZATION,
+                Element = this.dgMarketCapData,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER,
+                RichTextBox = this.RichTextBox
+            });
+
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_MARKET_CAPITALIZATION);
+            childExportOptions.Show();
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
             {
-                Prompt.ShowDialog(ex.Message);
-            }
+                ElementName = GadgetNames.HOLDINGS_MARKET_CAPITALIZATION,
+                Element = this.dgMarketCapData,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                RichTextBox = this.RichTextBox
+            });
+
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_MARKET_CAPITALIZATION);
+            childExportOptions.Show();
+        }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            {
+                ElementName = GadgetNames.HOLDINGS_MARKET_CAPITALIZATION,
+                Element = this.dgMarketCapData,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                RichTextBox = this.RichTextBox
+            });
+
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_MARKET_CAPITALIZATION);
+            childExportOptions.Show();
         }
 
         /// <summary>

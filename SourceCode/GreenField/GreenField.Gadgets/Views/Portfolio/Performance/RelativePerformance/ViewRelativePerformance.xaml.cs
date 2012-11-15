@@ -401,7 +401,8 @@ namespace GreenField.Gadgets.Views
                                 + " (" + (Convert.ToDecimal(securityName.SecurityAlpha) * 10000).ToString("n0") + ")",  //Needs to be displayed in basis points - Lane - 2012-09-25
                             FontSize = 9,
                             FontWeight = FontWeights.Normal,
-                            FontFamily = new FontFamily("Arial")
+                            FontFamily = new FontFamily("Arial"),
+                            Margin = new Thickness(2)
                         };
                         txtSecurityName.SetValue(Grid.ColumnProperty, sectorNum);
                         txtSecurityName.SetValue(Grid.RowProperty, securityNum);
@@ -571,26 +572,19 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnExportToPdf_Click(object sender, RoutedEventArgs e)
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.DefaultExt = "*.pdf";
-            dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
-
-            if (dialog.ShowDialog() == true)
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
             {
-                RadDocument document = CreateDocument(dgRelativePerformance);
+                ElementName = "Excess Contribution",
+                Element = this.dgRelativePerformance,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                RichTextBox = this.RichTextBox
+            });
 
-                document.LayoutMode = DocumentLayoutMode.Paged;
-                document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
-                document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
-
-                PdfFormatProvider provider = new PdfFormatProvider();
-                using (Stream output = dialog.OpenFile())
-                {
-                    provider.Export(document, output);
-                }
-            }
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Excess Contribution");
+            childExportOptions.Show();
         }
 
         /// <summary>
@@ -600,13 +594,17 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            Dispatcher.BeginInvoke((Action)(() =>
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
             {
-                RichTextBox.Document = CreateDocument(dgRelativePerformance);
-            }));
+                ElementName = "Excess Contribution",
+                Element = this.dgRelativePerformance,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                RichTextBox = this.RichTextBox
+            });
 
-            this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Excess Contribution");
+            childExportOptions.Show();
         }
 
         /// <summary>
@@ -667,7 +665,7 @@ namespace GreenField.Gadgets.Views
                 {
                     TableCell cell = new TableCell();
                     cell.Background = Colors.Gray;
-                    string value = ((columns[i].Footer) as TextBlock).Text.ToString();
+                    string value = ((columns[i].Footer) as TextBlock) != null ? ((columns[i].Footer) as TextBlock).Text.ToString() : columns[i].Footer.ToString();
                     AddCellValue(cell, value != null ? value.ToString() : string.Empty);
                     cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
                     footerRow.Cells.Add(cell);

@@ -18,18 +18,44 @@
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height= "Auto" />
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Top 10 Benchmark Securities" HorizontalAlignment="Center" VerticalAlignment="Top"  Height="15"/>
-            <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                       Margin="0,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
-                <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </telerik:RadButton>
-            <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" Grid.Row="2" Style="{StaticResource BusyIndicatorStyle}"  IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+            <TextBlock Grid.Row="0" Text="Top 10 Benchmark Securities" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+            <Grid Grid.Row="0" HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <telerik:RadButton Grid.Column="0" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+            </Grid>
+            <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" Margin="0,2,0,0" Grid.Row="2" Style="{StaticResource BusyIndicatorStyle}"  IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                 <telerik:RadGridView  Name="dgTopTenSecurities"  
                                       FrozenColumnsSplitterVisibility="Collapsed"
                                      AutoGenerateColumns="False" 
@@ -54,7 +80,7 @@
                                      EnableRowVirtualization="false"
                                       GridLinesVisibility="None">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn Header="Security Name" 
+                        <telerik:GridViewDataColumn Header="Security Name" UniqueName="Security Name" 
                                                     DataMemberBinding="{Binding IssuerName}"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"
@@ -67,7 +93,7 @@
                                 </Style>
                             </telerik:GridViewDataColumn.FooterCellStyle>
                         </telerik:GridViewDataColumn>
-                        <telerik:GridViewDataColumn Header="Weight" 
+                        <telerik:GridViewDataColumn Header="Weight" UniqueName="Weight" 
                                                     DataMemberBinding="{Binding Weight}" 
                                                     DataFormatString="{}{0:n2}%"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -79,7 +105,7 @@
                                 <telerik:SumFunction SourceField="Weight" ResultFormatString="{}{0:n2}%"/>
                             </telerik:GridViewDataColumn.AggregateFunctions>
                         </telerik:GridViewDataColumn>
-                        <telerik:GridViewDataColumn Header="One Day Return"                                                     
+                        <telerik:GridViewDataColumn Header="One Day Return" UniqueName="One Day Return"                                                     
                                                  DataMemberBinding="{Binding OneDayReturn}"                                                     
                                                  DataFormatString="{}{0:n1}%"                                                     
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -87,7 +113,7 @@
                                                     IsFilterable="True" IsSortable="True"                                 
                                                  HeaderTextAlignment="Right"                                                    
                                                  TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn Header="WTD" 
+                        <telerik:GridViewDataColumn Header="WTD" UniqueName="WTD" 
                                                 DataMemberBinding="{Binding WTD}" 
                                                 DataFormatString="{}{0:n1}%"  
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
@@ -95,7 +121,7 @@
                                                 IsFilterable="True" IsSortable="True"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn Header="MTD" 
+                        <telerik:GridViewDataColumn Header="MTD" UniqueName="MTD" 
                                                 DataMemberBinding="{Binding MTD}"
                                                 DataFormatString="{}{0:n1}%"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -103,7 +129,7 @@
                                                IsFilterable="True" IsSortable="True"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn Header="QTD" 
+                        <telerik:GridViewDataColumn Header="QTD" UniqueName="QTD" 
                                                 DataMemberBinding="{Binding QTD}" 
                                                 DataFormatString="{}{0:n1}%"  
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -111,7 +137,7 @@
                                                 IsFilterable="True" IsSortable="True"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn Header="YTD" 
+                        <telerik:GridViewDataColumn Header="YTD" UniqueName="YTD" 
                                                 DataMemberBinding="{Binding YTD}" 
                                                 DataFormatString="{}{0:n1}%"  
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -123,5 +149,6 @@
                 </telerik:RadGridView>
             </telerik:RadBusyIndicator>
         </Grid>
+        <telerik:RadRichTextBox x:Name="RichTextBox" Grid.Column="1" Height="0"/>
     </Grid>
 </helpers:ViewBaseUserControl>

@@ -79,6 +79,7 @@
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                      RowStyle="{StaticResource GridViewRowStyle}"                                    
                                      AlternationCount="2"
+                                         ElementExporting="ElementExportingEvent"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                      AlternateRowStyle ="{StaticResource GridViewAlternateRowStyle}">
                         <telerik:RadGridView.Columns>

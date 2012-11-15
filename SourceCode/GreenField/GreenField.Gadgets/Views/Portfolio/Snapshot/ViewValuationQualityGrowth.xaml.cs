@@ -10,7 +10,7 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewValuationQualityGrowth : ViewBaseUserControl
     {
-          #region Constructor
+        #region Constructor
         /// <summary>
         /// Constructor for the class having ViewModelPerformanceGadget as its data context
         /// </summary>
@@ -23,9 +23,9 @@ namespace GreenField.Gadgets.Views
             dataContextSource.ValuationQualityGrowthDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_valuationQualityGrowthDataLoadedEvent);
         }
-         #endregion
+        #endregion
 
-          #region Properties
+        #region Properties
         /// <summary>
         /// True is gadget is currently on display
         /// </summary>
@@ -54,7 +54,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-          #region Events
+        #region Event Handlers
         /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
@@ -87,7 +87,7 @@ namespace GreenField.Gadgets.Views
                           new RadExportOptions() { ElementName = "Valuation,Quality and Growth", Element = this.dgValuation, 
                               ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
                     };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + 
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " +
                         GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES);
                     childExportOptions.Show();
                 }
@@ -106,26 +106,24 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
                 RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    ElementName = "Portfolio Risk Return",
+                    ElementName = GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES,
                     Element = this.dgValuation,
                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
-                    //RichTextBox = this.RichTextBox
+                    RichTextBox = this.RichTextBox
                 });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES);
                 childExportOptions.Show();
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
@@ -137,20 +135,24 @@ namespace GreenField.Gadgets.Views
         private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
-
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Portfolio Risk Return", Element = this.dgValuation, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES,
+                    Element = this.dgValuation,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                    RichTextBox = this.RichTextBox
+                });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES);
                 childExportOptions.Show();
+
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 

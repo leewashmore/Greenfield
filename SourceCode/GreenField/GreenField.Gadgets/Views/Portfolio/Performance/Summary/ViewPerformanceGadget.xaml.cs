@@ -146,7 +146,6 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
             try
             {
                 if (this.grdRadChart.Visibility == Visibility.Visible)
@@ -154,7 +153,7 @@ namespace GreenField.Gadgets.Views
                     List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                 {                  
                     new RadExportOptions() { ElementName = ExportTypes.PerformanceGadgetChart, Element = this.chPerformanceGadget, ExportFilterOption = 
-                        RadExportFilterOption.RADCHART_PRINT_FILTER },                   
+                        RadExportFilterOption.RADCHART_PRINT_FILTER, RichTextBox = this.RichTextBox },                   
             
                 };
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRAPH);
@@ -167,7 +166,7 @@ namespace GreenField.Gadgets.Views
                         List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
                             new RadExportOptions() { ElementName = ExportTypes.PerformanceGadgetData, Element = this.dgPerformanceGadget, ExportFilterOption = 
-                                RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER }
+                                RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER, RichTextBox = this.RichTextBox }
                         };
                         ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRAPH);
                         childExportOptions.Show();
@@ -177,7 +176,6 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
@@ -189,7 +187,6 @@ namespace GreenField.Gadgets.Views
         private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
 
@@ -221,7 +218,6 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
         

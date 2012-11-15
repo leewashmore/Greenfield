@@ -87,7 +87,7 @@ namespace GreenField.Gadgets.Views
                 {                   
                     new RadExportOptions()
                     {
-                        ElementName = "Region Breakdown Data",
+                        ElementName = "Region Breakdown Chart",
                         Element = this.crtRegionBreakdown, 
                         ExportFilterOption = RadExportFilterOption.RADCHART_EXCEL_EXPORT_FILTER 
                     },                 
@@ -126,7 +126,6 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
             try
             {
                 if (this.crtRegionBreakdown.Visibility == Visibility.Visible)
@@ -135,10 +134,11 @@ namespace GreenField.Gadgets.Views
                 {                   
                     new RadExportOptions()
                     {
-                        ElementName = "Region Breakdown Data",
+                        ElementName = "Region Breakdown Chart",
                         Element = this.crtRegionBreakdown, 
-                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER 
-                    },                 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    }
                 };
                     ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
                     childExportOptions.Show();
@@ -153,7 +153,8 @@ namespace GreenField.Gadgets.Views
                                 {
                                     Element = this.dgRegionBreakdown,
                                     ElementName = "Region Breakdown Data",
-                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                                    RichTextBox = this.RichTextBox
                                 }
                             }, "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
                         childExportOptions.Show();
@@ -163,7 +164,6 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
@@ -175,7 +175,6 @@ namespace GreenField.Gadgets.Views
         private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
 
@@ -185,12 +184,13 @@ namespace GreenField.Gadgets.Views
                 {                   
                     new RadExportOptions()
                     {
-                        ElementName = "Region Breakdown Data",
+                        ElementName = "Region Breakdown Chart",
                         Element = this.crtRegionBreakdown, 
                         ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER 
                     },                 
                 };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: "
+                        + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
                     childExportOptions.Show();
                 }
                 else
@@ -213,7 +213,6 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 

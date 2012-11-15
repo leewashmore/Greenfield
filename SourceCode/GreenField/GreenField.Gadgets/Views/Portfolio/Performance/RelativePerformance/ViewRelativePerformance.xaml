@@ -76,25 +76,38 @@
             </Grid.RowDefinitions>
 
             <!--Export Row-->
-            <Grid Grid.Row="0">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <telerik:RadButton x:Name="btnExportExcel" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   ToolTipService.ToolTip="Export to Excel" Click="btnExportExcel_Click">
-                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    </telerik:RadButton>
-                    <telerik:RadButton x:Name="btnExportPDF" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Margin="2,0,0,0" ToolTipService.ToolTip="Export to Pdf" Click="btnExportToPdf_Click">
-                        <Image Source="/GreenField.Gadgets;component/Images/PDF.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    </telerik:RadButton>
-                    <telerik:RadButton x:Name="btnPrint" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Margin="2,0,0,0" ToolTipService.ToolTip="Print" Click="btnPrint_Click">
-                        <Image Source="/GreenField.Gadgets;component/Images/Print.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    </telerik:RadButton>
-                </StackPanel>
+            <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <telerik:RadButton Grid.Column="0" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
             </Grid>
 
             <!--Grid Row-->
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="0,2,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
@@ -111,7 +124,7 @@
                                      SelectionMode="Single"
                                      CanUserDeleteRows="False" 
                                      IsReadOnly="True" 
-                                     CanUserSortColumns="False" 
+                                     CanUserSortColumns="True" 
                                      ScrollMode="RealTime" 
                                      ShowGroupFooters="True"
                                      RowIndicatorVisibility="Collapsed" 
@@ -131,7 +144,7 @@
                     <telerik:RadGridView.Columns>
                         <!--CountryID Column-->
                         <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                     HeaderTextAlignment="Left" TextAlignment="Left" UniqueName="CountryId"
+                                                     HeaderTextAlignment="Left" TextAlignment="Left" UniqueName="Country Id"
                                                     FooterCellStyle="{Binding GridViewCustomFooterCellStyle}" Footer="Totals">
                             <telerik:GridViewDataColumn.CellTemplate>
                                 <DataTemplate>

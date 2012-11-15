@@ -10,6 +10,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     d:DesignHeight="150" d:DesignWidth="347">
 
+    <controls:ChildWindow.Resources>
+        <ResourceDictionary>
+            <helpers:PercentageValueConverter x:Key="ConvertPercentageValue"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </controls:ChildWindow.Resources>
+    
     <Grid x:Name="LayoutRoot" Margin="2" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -55,17 +64,16 @@
 
         <StackPanel Grid.Row="3"
                     Orientation="Horizontal"
-                    HorizontalAlignment="left"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Center">
-            <Button x:Name="btnSave" 
+            <telerik:RadButton x:Name="btnSave" 
                     Content="Save"
-                    Margin="50,0,0,0"
                     Width="75" Height="23" IsEnabled="True"
                     HorizontalAlignment="Right" Click="btnSave_Click" />
-            <Button x:Name="btnCancel" 
+            <telerik:RadButton x:Name="btnCancel" 
                     Content="Cancel"
-                    Width="75" Height="23"
-                    Margin="50,0,0,0" Click="btnCancel_Click" />
+                    Width="75" Style="{StaticResource RadButtonStyle}"
+                    Margin="5,0,0,0" Click="btnCancel_Click" />
         </StackPanel>
     </Grid>
 </controls:ChildWindow>

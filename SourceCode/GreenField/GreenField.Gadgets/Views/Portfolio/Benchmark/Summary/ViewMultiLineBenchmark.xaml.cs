@@ -112,12 +112,68 @@ namespace GreenField.Gadgets.Views
                     new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_GRID, Element = this.dgBenchmarkUI,
                         ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER },
                 };
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: "
+                    + GadgetNames.BENCHMARKS_MULTILINE_BENCHMARK);
                 childExportOptions.Show();                
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                    new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_CHART, Element = this.chMultiLineBenchmarkChart, 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER, RichTextBox = this.RichTextBox },
+                    new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_GRID, Element = this.dgBenchmarkUI,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER, RichTextBox = this.RichTextBox },
+                };
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: "
+                    + GadgetNames.BENCHMARKS_MULTILINE_BENCHMARK);
+                childExportOptions.Show();                
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            }
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                    new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_CHART, Element = this.chMultiLineBenchmarkChart, 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.MULTI_LINE_GRID, Element = this.dgBenchmarkUI,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER },
+                };
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: "
+                    + GadgetNames.BENCHMARKS_MULTILINE_BENCHMARK);
+                childExportOptions.Show();                
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
             }
         }
 
@@ -146,6 +202,13 @@ namespace GreenField.Gadgets.Views
             dgBenchmarkUI.Columns[5].Header = DateTime.Today.AddYears(-1).Year.ToString();
             dgBenchmarkUI.Columns[6].Header = DateTime.Today.AddYears(-2).Year.ToString();
 
+            dgBenchmarkUI.Columns[0].UniqueName = "Issue Name";
+            dgBenchmarkUI.Columns[1].UniqueName = "MTD";
+            dgBenchmarkUI.Columns[2].UniqueName = "QTD";
+            dgBenchmarkUI.Columns[3].UniqueName = "YTD";
+            dgBenchmarkUI.Columns[4].UniqueName = DateTime.Today.Year.ToString();
+            dgBenchmarkUI.Columns[5].UniqueName = DateTime.Today.AddYears(-1).Year.ToString();
+            dgBenchmarkUI.Columns[6].UniqueName = DateTime.Today.AddYears(-2).Year.ToString();
         }
 
         /// <summary>

@@ -162,28 +162,37 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
             try
             {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-
-
+                List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>();
                 if (this.crtHoldingsPercentageSector.Visibility == Visibility.Visible)
                 {
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID, Element = this.dgHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                    radExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.HOLDINGS_PIE_CHART,
+                        Element = this.crtHoldingsPercentageSector,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
                 else if (this.dgHoldingsPercentageSector.Visibility == Visibility.Visible)
                 {
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_CHART, Element = this.crtHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
+                    radExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.HOLDINGS_PIE_GRID,
+                        Element = this.dgHoldingsPercentageSector,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: "
+                    + GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART);
                 childExportOptions.Show();
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
@@ -195,29 +204,49 @@ namespace GreenField.Gadgets.Views
         private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>();
                 if (this.crtHoldingsPercentageSector.Visibility == Visibility.Visible)
                 {
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID, Element = this.dgHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                    radExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.HOLDINGS_PIE_CHART,
+                        Element = this.crtHoldingsPercentageSector,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
                 else if (this.dgHoldingsPercentageSector.Visibility == Visibility.Visible)
                 {
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_CHART, Element = this.crtHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
+                    radExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.HOLDINGS_PIE_GRID,
+                        Element = this.dgHoldingsPercentageSector,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                        RichTextBox = this.RichTextBox
+                    });
                 }
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: "
+                    + GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART);
                 childExportOptions.Show();
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
+        /// <summary>
+        /// dgHoldingsPercentageSector ElementExporting event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgHoldingsPercentageSector_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
         #endregion
 
         /// <summary>
@@ -232,5 +261,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        
     }
 }

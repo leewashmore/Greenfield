@@ -191,20 +191,29 @@
                     <Rectangle Margin="2,0,0,0" Grid.Column="5" Width="1" Stroke="Gray" Opacity="0.2"/>
                     <telerik:RadButton x:Name="btnFlip" Grid.Column="6" Height="15" Width="15" HorizontalAlignment="Right" 
                                        VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}"
-                                       Margin="2,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
+                                       Margin="2,0,0,0" Click="btnFlip_Click">
                         <!--Text ="Chart Controls"-->
                         <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" />
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Flip" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
                     </telerik:RadButton>
                     <Rectangle Margin="2,0,0,0" Grid.Column="7" Width="1" Stroke="Gray" Opacity="0.2"/>
                     <telerik:RadButton x:Name="btnZoomIn" Grid.Column="8"  Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                       Margin="2,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In"
+                                       Margin="2,0,0,0" Command="{Binding ZoomInCommand}" 
                                        Style="{StaticResource RadButtonStyle}">
                         <Image Source="/GreenField.Gadgets;component/Images/zoom_in.png"/>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Zoom In" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
                     </telerik:RadButton>
                     <telerik:RadButton x:Name="btnZoomOut" Grid.Column="9"  Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="2,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out"
+                                       Margin="2,0,0,0" Command="{Binding ZoomOutCommand}"
                                        Style="{StaticResource RadButtonStyle}">
                         <Image Source="/GreenField.Gadgets;component/Images/zoom_out.png"/>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="Zoom Ou" Style="{StaticResource TextBlockStyle}"/>
+                        </ToolTipService.ToolTip>
                     </telerik:RadButton>
                 </Grid>
             </telerik:RadExpander.Header>

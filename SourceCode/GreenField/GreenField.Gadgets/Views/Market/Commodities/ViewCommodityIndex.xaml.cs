@@ -129,12 +129,13 @@ namespace GreenField.Gadgets.Views
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-
-                if (LayoutRoot.Visibility == Visibility.Visible)
+                RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Commodity Data", Element = this.dgCommodity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER });
-                    return;
-                }
+                    ElementName = "Commodity Data",
+                    Element = this.dgCommodity,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER,
+                    RichTextBox = this.RichTextBox
+                });
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.MODELS_FX_MACRO_ECONOMICS_COMMODITY_INDEX_RETURN);
                 childExportOptions.Show();
@@ -173,7 +174,7 @@ namespace GreenField.Gadgets.Views
                     RichTextBox = this.RichTextBox
                 });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.MODELS_FX_MACRO_ECONOMICS_COMMODITY_INDEX_RETURN);
                 childExportOptions.Show();
 
             }
@@ -197,7 +198,7 @@ namespace GreenField.Gadgets.Views
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
                 RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Commodity Data", Element = this.dgCommodity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.MODELS_FX_MACRO_ECONOMICS_COMMODITY_INDEX_RETURN);
                 childExportOptions.Show();
             }
             catch (Exception ex)

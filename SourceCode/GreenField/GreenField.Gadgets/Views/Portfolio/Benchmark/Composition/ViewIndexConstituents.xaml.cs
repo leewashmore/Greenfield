@@ -98,10 +98,10 @@ namespace GreenField.Gadgets.Views
                     ElementName = ExportTypes.INDEX_CONSTITUENT,
                     Element = this.dgIndexConstituents,
                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
-                    //RichTextBox = this.RichTextBox
+                    RichTextBox = this.RichTextBox
                 });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_INDEX_CONSTITUENTS);
                 childExportOptions.Show();
             }
             catch (Exception ex)
@@ -121,9 +121,9 @@ namespace GreenField.Gadgets.Views
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.INDEX_CONSTITUENT, Element = this.dgIndexConstituents, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.INDEX_CONSTITUENT, Element = this.dgIndexConstituents, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_INDEX_CONSTITUENTS);
                 childExportOptions.Show();
             }
             catch (Exception ex)

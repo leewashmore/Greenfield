@@ -99,7 +99,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dgPortfolioDetails_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        private void ExcelElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
         }
@@ -113,7 +113,6 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextHoldingsPieChart.logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
@@ -122,17 +121,16 @@ namespace GreenField.Gadgets.Views
                     ElementName = ExportTypes.PerformanceAttributionUI,
                     Element = this.dgContributorDetractor,
                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
-                    //RichTextBox = this.RichTextBox
+                    RichTextBox = this.RichTextBox
                 });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_CONTRIBUTOR_DETRACTOR);
                 childExportOptions.Show();
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
 
@@ -144,20 +142,24 @@ namespace GreenField.Gadgets.Views
         private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            //Logging.LogBeginMethod(this.DataContextSlice1ChartExtension.logger, methodNamespace);
             try
             {
-
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PerformanceAttributionUI, Element = this.dgContributorDetractor, ExportFilterOption = RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER });
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = ExportTypes.PerformanceAttributionUI,
+                    Element = this.dgContributorDetractor,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                    RichTextBox = this.RichTextBox
+                });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_CONTRIBUTOR_DETRACTOR);
                 childExportOptions.Show();
+
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                //Logging.LogException(this.DataContextSlice1ChartExtension.logger, ex);
             }
         }
                 

@@ -21,67 +21,91 @@
     <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" Style="{StaticResource BusyIndicatorStyle}" IsEnabled="True" DisplayAfter="0"
                               IsBusy="{Binding BusyIndicatorStatus}">
         <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <!--button to flip the gadget-->
-            <telerik:RadButton x:Name="btnFlip" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                       Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
-                <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </telerik:RadButton>
-                
-                <!--button to export the grid to excel-->
-                <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"
-                    Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click">
-                    <Button.Content>
-                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" />
-                    </Button.Content>
-                </Button>
-            </StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <telerik:RadButton Grid.Column="0" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+
+                <Rectangle Margin="2,0,0,0" Grid.Column="3" Width="1" Stroke="Gray" Opacity="0.2"/>
+                <telerik:RadButton x:Name="btnFlip" Grid.Column="4" Height="15" Width="15" HorizontalAlignment="Right" 
+                                       VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}"
+                                       Margin="2,0,0,0" Click="btnFlip_Click">
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Flip" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                    <Image Source="/GreenField.Gadgets;component/Images/flipIcon.jpg" />
+                </telerik:RadButton>
             </Grid>
 
-            <Grid Grid.Row="1">
-            <!--doughnut chart-->
+            <Grid Grid.Row="1" Margin="0,2,0,0">
+                <!--doughnut chart-->
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" BorderBrush="#e4e5e5">
-                <telerik:RadChart x:Name="crtRegionBreakdown" ItemsSource="{Binding RegionSpecificInfo}" 
+                    <telerik:RadChart x:Name="crtRegionBreakdown" ItemsSource="{Binding RegionSpecificInfo}" 
                                   telerik:StyleManager.Theme="Metro" 
                                       Visibility="Collapsed">
-                    <telerik:RadChart.DefaultView>
-                        <telerikCharting:ChartDefaultView>
-                            <telerik:ChartDefaultView.ChartLegend>
-                                <telerik:ChartLegend x:Name="crtRegionBreakdownLegend" Visibility="Collapsed"/>
-                            </telerik:ChartDefaultView.ChartLegend>
-                            <telerikCharting:ChartDefaultView.ChartArea>
-                                <telerikCharting:ChartArea SmartLabelsEnabled="True"></telerikCharting:ChartArea>
-                            </telerikCharting:ChartDefaultView.ChartArea>
-                        </telerikCharting:ChartDefaultView>
-                    </telerik:RadChart.DefaultView>
-                    <telerik:RadChart.SeriesMappings>
-                        <telerik:SeriesMapping>
-                            <telerik:SeriesMapping.SeriesDefinition>
-                                <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
+                        <telerik:RadChart.DefaultView>
+                            <telerikCharting:ChartDefaultView>
+                                <telerik:ChartDefaultView.ChartLegend>
+                                    <telerik:ChartLegend x:Name="crtRegionBreakdownLegend" Visibility="Collapsed"/>
+                                </telerik:ChartDefaultView.ChartLegend>
+                                <telerikCharting:ChartDefaultView.ChartArea>
+                                    <telerikCharting:ChartArea SmartLabelsEnabled="True"></telerikCharting:ChartArea>
+                                </telerikCharting:ChartDefaultView.ChartArea>
+                            </telerikCharting:ChartDefaultView>
+                        </telerik:RadChart.DefaultView>
+                        <telerik:RadChart.SeriesMappings>
+                            <telerik:SeriesMapping>
+                                <telerik:SeriesMapping.SeriesDefinition>
+                                    <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                   LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}%" ItemToolTipFormat="#XCAT:#Y{n2}%(#X{n2}%)">
-                                    <telerik:DoughnutSeriesDefinition.InteractivitySettings>
-                                        <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single" />
-                                    </telerik:DoughnutSeriesDefinition.InteractivitySettings>
-                                    <telerikCharting:DoughnutSeriesDefinition.LabelSettings>
-                                        <telerikCharting:RadialLabelSettings SpiderModeEnabled="True"
+                                        <telerik:DoughnutSeriesDefinition.InteractivitySettings>
+                                            <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single" />
+                                        </telerik:DoughnutSeriesDefinition.InteractivitySettings>
+                                        <telerikCharting:DoughnutSeriesDefinition.LabelSettings>
+                                            <telerikCharting:RadialLabelSettings SpiderModeEnabled="True"
                                                      ShowConnectors="True" />
-                                    </telerikCharting:DoughnutSeriesDefinition.LabelSettings>
-                                </telerik:DoughnutSeriesDefinition>
-                            </telerik:SeriesMapping.SeriesDefinition>
-                            <telerik:ItemMapping FieldName="PortfolioShare" DataPointMember="YValue"/>
-                            <telerik:ItemMapping FieldName="Region" DataPointMember="XCategory" />
-                            <telerik:ItemMapping FieldName="BenchmarkShare" DataPointMember="XValue"/>
-                        </telerik:SeriesMapping>
-                    </telerik:RadChart.SeriesMappings>
-                </telerik:RadChart>
-            </Border>
-            
-            <!--grid containing data for the gadget-->
+                                        </telerikCharting:DoughnutSeriesDefinition.LabelSettings>
+                                    </telerik:DoughnutSeriesDefinition>
+                                </telerik:SeriesMapping.SeriesDefinition>
+                                <telerik:ItemMapping FieldName="PortfolioShare" DataPointMember="YValue"/>
+                                <telerik:ItemMapping FieldName="Region" DataPointMember="XCategory" />
+                                <telerik:ItemMapping FieldName="BenchmarkShare" DataPointMember="XValue"/>
+                            </telerik:SeriesMapping>
+                        </telerik:RadChart.SeriesMappings>
+                    </telerik:RadChart>
+                </Border>
+
+                <!--grid containing data for the gadget-->
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" BorderBrush="#e4e5e5">
                     <telerik:RadGridView Name="dgRegionBreakdown" 
                                          FrozenColumnsSplitterVisibility="Collapsed"
@@ -96,7 +120,8 @@
                                          CanUserFreezeColumns="False"
                                          CanUserDeleteRows="False" 
                                          IsReadOnly="True" 
-                                         CanUserSortColumns="False" 
+                                         CanUserSortColumns="True" 
+                                         IsFilteringAllowed="True"
                                          ScrollMode="RealTime"
                                          RowIndicatorVisibility="Collapsed" 
                                          ShowGroupPanel="False" 
@@ -111,7 +136,7 @@
                                          EnableRowVirtualization="False"
                                          GridLinesVisibility="None">
                         <telerik:RadGridView.Columns>
-                            <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" DataMemberBinding="{Binding Security}" 
+                            <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" UniqueName="Security" IsFilterable="True" DataMemberBinding="{Binding Security}" 
                                                         Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         MinWidth="150" CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Left"
                                                         Footer="Totals">
@@ -121,25 +146,25 @@
                                     </Style>
                                 </telerik:GridViewDataColumn.FooterCellStyle>
                             </telerik:GridViewDataColumn>
-                            <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" IsFilterable="False" 
+                            <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" UniqueName="Portfolio %" IsFilterable="True" 
                                                         DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
-                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        Width="Auto" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         FooterTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <telerik:SumFunction SourceField="PortfolioShare" ResultFormatString="{}{0:n2}%" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
-                            <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" IsFilterable="False" 
+                            <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" UniqueName="Benchmark %" IsFilterable="True" 
                                                         DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" 
-                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        Width="Auto" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         FooterTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <telerik:SumFunction SourceField="BenchmarkShare" ResultFormatString="{}{0:n2}%" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
-                            <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="Active Position" IsFilterable="False"
+                            <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="Active Position" UniqueName="Active Position" IsFilterable="True"
                                                         DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
-                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        Width="Auto" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         FooterTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <telerik:SumFunction SourceField="ActivePosition" ResultFormatString="{}{0:n2}%"/>
@@ -151,8 +176,10 @@
                             <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>
                         </telerik:RadGridView.GroupDescriptors>
                     </telerik:RadGridView>
-            </Border>
+                </Border>
+            </Grid>
+
+            <telerik:RadRichTextBox x:Name="RichTextBox" Grid.Row="2" Width="0"/>
         </Grid>
-    </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

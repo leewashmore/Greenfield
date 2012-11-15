@@ -70,6 +70,78 @@ namespace GreenField.Gadgets.Views
         
         #endregion
 
+        #region Event Handlers
+        /// <summary>
+        /// catches export to excel button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            {
+                ElementName = GadgetNames.HOLDINGS_ASSET_ALLOCATION,
+                Element = this.dgAssetAllocation,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER,
+                RichTextBox = this.RichTextBox
+            });
+
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_ASSET_ALLOCATION);
+            childExportOptions.Show();
+        }
+
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            {
+                ElementName = GadgetNames.HOLDINGS_ASSET_ALLOCATION,
+                Element = this.dgAssetAllocation,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                RichTextBox = this.RichTextBox
+            });
+
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_ASSET_ALLOCATION);
+            childExportOptions.Show();
+        }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            {
+                ElementName = GadgetNames.HOLDINGS_ASSET_ALLOCATION,
+                Element = this.dgAssetAllocation,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                RichTextBox = this.RichTextBox
+            });
+
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_ASSET_ALLOCATION);
+            childExportOptions.Show();
+        }
+
+        /// <summary>
+        /// handles element exporting for grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExcelElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
+        #endregion
+
         #region EventUnsubscribe
         public override void Dispose()
         {

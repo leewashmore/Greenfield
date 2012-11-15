@@ -308,15 +308,15 @@ namespace GreenField.Gadgets.Helpers
                 table.Rows.Add(headerRow);
             }
 
-            if (grid.ShowColumnHeaders)
-            {
-                TableRow headerRow = new TableRow();
+            //if (grid.ShowColumnHeaders)
+            //{
+                TableRow colHeaderRow = new TableRow();
                 if (grid.GroupDescriptors.Count() > 0)
                 {
                     TableCell indentCell = new TableCell();
                     indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 30);
                     indentCell.Background = Colors.Gray;
-                    headerRow.Cells.Add(indentCell);
+                    colHeaderRow.Cells.Add(indentCell);
                 }
 
                 for (int i = 0; i < columns.Count(); i++)
@@ -325,11 +325,11 @@ namespace GreenField.Gadgets.Helpers
                     cell.Background = Color.FromArgb(255, 228, 229, 229);
                     AddCellValue(cell, columns[i].UniqueName);
                     cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
-                    headerRow.Cells.Add(cell);
+                    colHeaderRow.Cells.Add(cell);
                 }
 
-                table.Rows.Add(headerRow);
-            }
+                table.Rows.Add(colHeaderRow);
+            //}
 
             if (grid.Items.Groups != null)
             {
@@ -389,25 +389,26 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="group"></param>
         /// <param name="columns"></param>
         /// <param name="grid"></param>
-        private static void AddGroupRow(Table table, QueryableCollectionViewGroup group, IList<GridViewBoundColumnBase> columns, RadGridView grid, List<int> visibleAggregateIndex)
+        private static void AddGroupRow(Table table, QueryableCollectionViewGroup group, IList<GridViewBoundColumnBase> columns
+            , RadGridView grid, List<int> visibleAggregateIndex)
         {
             TableRow row = new TableRow();
 
             int level = GetGroupLevel(group);
-            if (level > 0)
-            {
-                TableCell cell = new TableCell();
-                cell.VerticalAlignment = RadVerticalAlignment.Center;
-                cell.PreferredWidth = new TableWidthUnit(level * 20);
-                cell.Background = Colors.Red;
-                row.Cells.Add(cell);
-            }
+            //if (level > 0)
+            //{
+            //    TableCell cell = new TableCell();
+            //    cell.VerticalAlignment = RadVerticalAlignment.Center;
+            //    cell.PreferredWidth = new TableWidthUnit(level * 20);
+            //    cell.Background = Colors.Red;
+            //    row.Cells.Add(cell);
+            //}
 
             TableCell groupHeaderCell = new TableCell();
             groupHeaderCell.TextAlignment = RadTextAlignment.Center;
             groupHeaderCell.VerticalAlignment = RadVerticalAlignment.Center;
             groupHeaderCell.Padding = new Padding(0, 5, 5, 0);
-            groupHeaderCell.Background = Color.FromArgb(255, 228, 229, 229);
+            groupHeaderCell.Background = level > 0 ? Color.FromArgb(255, 228, 229, 229) : Color.FromArgb(255, 198, 200, 200);
             groupHeaderCell.ColumnSpan = columns.Count();// +(grid.GroupDescriptors.Count() > 0 ? 1 : 0) - (level > 0 ? 1 : 0);
             AddCellValue(groupHeaderCell, group.Key != null ? group.Key.ToString() : string.Empty);
             row.Cells.Add(groupHeaderCell);
@@ -467,7 +468,7 @@ namespace GreenField.Gadgets.Helpers
                 span.FontFamily = new System.Windows.Media.FontFamily("Arial");
                 span.FontSize = fontSizePDF;
                 paragraph.Inlines.Add(span);
-            }
+            }            
             cell.Blocks.Add(paragraph);
         }
 

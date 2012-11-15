@@ -19,25 +19,43 @@
                               IsBusy="{Binding BusyIndicatorStatus}">
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
+            <Grid Grid.Row="0" HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <HyperlinkButton Content="Details" Foreground="Black" VerticalAlignment="Center" Grid.Column="0"
+                                     HorizontalAlignment="Left" Command="{Binding DetailsCommand}"/>
+                <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                       Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+                <telerik:RadButton Grid.Column="3" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                                               Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
+                    <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Print" Style="{StaticResource TextBlockStyle}"/>
+                    </ToolTipService.ToolTip>
+                </telerik:RadButton>
+            </Grid>           
 
-            <Grid Grid.Row="0">
-                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
-                    <HyperlinkButton Content="Details" HorizontalAlignment="Right" Command="{Binding DetailsCommand}"/>
-
-                    <!--button to export the grid to excel-->
-                    <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"
-                    Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click">
-                        <Button.Content>
-                            <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" />
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="0,2,0,0">
                 <!--grid containing data for the gadget-->
                 <telerik:RadGridView Name="dgTopHoldings" 
                                      FrozenColumnsSplitterVisibility="Collapsed"
@@ -66,7 +84,7 @@
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                      EnableRowVirtualization="False">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="auto" HeaderTextAlignment="Right" 
+                        <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" UniqueName="Ticker" DataMemberBinding="{Binding Ticker}" Width="Auto" HeaderTextAlignment="Right" 
                                                     TextAlignment="Left" IsFilterable="True" IsSortable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}" >
                             <telerik:GridViewDataColumn.Footer>
@@ -75,28 +93,28 @@
                                 </Border>
                             </telerik:GridViewDataColumn.Footer>
                         </telerik:GridViewDataColumn>
-                        <telerik:GridViewDataColumn x:Name="dgcName" Header="" DataMemberBinding="{Binding Holding}" Width="*" HeaderTextAlignment="Right" 
+                        <telerik:GridViewDataColumn x:Name="dgcName" Header="" UniqueName="Holding" DataMemberBinding="{Binding Holding}" Width="Auto" HeaderTextAlignment="Right" 
                                                     TextAlignment="Left" IsFilterable="True" IsSortable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}" />
-                        <telerik:GridViewDataColumn x:Name="dgcMarketValue" Header="Mkt Value" DataMemberBinding="{Binding MarketValue}" 
-                                                    Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" 
+                        <telerik:GridViewDataColumn x:Name="dgcMarketValue" Header="Mkt Value" UniqueName="Mkt Value" DataMemberBinding="{Binding MarketValue}" 
+                                                    Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" 
                                                     CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     DataFormatString="{}{0:n0}" IsFilterable="True" IsSortable="True" />
-                        <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare,StringFormat=\{0:n2\}%}"
+                        <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" UniqueName="Portfolio %" DataMemberBinding="{Binding PortfolioShare,StringFormat=\{0:n2\}%}"
                                                     Width="auto" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" IsFilterable="True" IsSortable="True"
                                                     CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">
                             <telerik:GridViewDataColumn.AggregateFunctions>
                                 <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="PortfolioShare"/>
                             </telerik:GridViewDataColumn.AggregateFunctions>
                         </telerik:GridViewDataColumn>
-                        <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare,StringFormat=\{0:n2\}%}"
+                        <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" UniqueName="Benchmark %" DataMemberBinding="{Binding BenchmarkShare,StringFormat=\{0:n2\}%}"
                                                     Width="auto" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" IsFilterable="True" IsSortable="True"
                                                     CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" >
                             <telerik:GridViewDataColumn.AggregateFunctions>
                                 <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="BenchmarkShare"/>
                             </telerik:GridViewDataColumn.AggregateFunctions>
                         </telerik:GridViewDataColumn>
-                        <telerik:GridViewDataColumn x:Name="dgcBet" Header="Active Position" DataMemberBinding="{Binding ActivePosition,StringFormat=\{0:n2\}%}" 
+                        <telerik:GridViewDataColumn x:Name="dgcBet" Header="Active Position" UniqueName="Active Position" DataMemberBinding="{Binding ActivePosition,StringFormat=\{0:n2\}%}" 
                                                     Width="auto" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" IsFilterable="True" IsSortable="True"
                                                     CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" >
                             <telerik:GridViewDataColumn.AggregateFunctions>
@@ -106,6 +124,7 @@
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Grid>
+            <telerik:RadRichTextBox x:Name="RichTextBox" Grid.Row="2" Width="0"/>
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>
