@@ -40,7 +40,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the EntitySelectionData class for storing Entity Selection Data
         /// </summary>
-        private EntitySelectionData entitySelectionData; 
+        private EntitySelectionData entitySelectionData1; 
         #endregion
 
         #region Constructor
@@ -53,15 +53,15 @@ namespace GreenField.Gadgets.ViewModels
             dbInteractivity = param.DBInteractivity;
             logger = param.LoggerFacade;
             eventAggregator = param.EventAggregator;
-            entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            entitySelectionData1 = param.DashboardGadgetPayload.EntitySelectionData;
             eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
-            if (entitySelectionData != null)
+            if (entitySelectionData1 != null)
             {
                 if (null != unrealizedGainLossDataLoadedEvent)
                 {
                     unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                 }
-                RetrieveUnrealizedGainLossData(entitySelectionData);
+                RetrieveUnrealizedGainLossData(entitySelectionData1);
             }
         }
         #endregion
@@ -120,8 +120,8 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 isActive = value;
-                if (entitySelectionData != null && isActive)
-                    RetrieveUnrealizedGainLossData(entitySelectionData);
+                if (entitySelectionData1 != null && isActive)
+                    RetrieveUnrealizedGainLossData(entitySelectionData1);
             }
         }
 
@@ -162,8 +162,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (selectedTimeRange != value)
                 {
                     selectedTimeRange = value;
-                    if (entitySelectionData != null)
-                        RetrieveUnrealizedGainLossData(entitySelectionData);
+                    if (entitySelectionData1 != null)
+                        RetrieveUnrealizedGainLossData(entitySelectionData1);
                     RaisePropertyChanged(() => this.SelectedTimeRange);
                 }
             }
@@ -181,8 +181,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (selectedFrequencyRange != value)
                 {
                     selectedFrequencyRange = value;
-                    if (entitySelectionData != null)
-                        RetrieveUnrealizedGainLossData(entitySelectionData);
+                    if (entitySelectionData1 != null)
+                        RetrieveUnrealizedGainLossData(entitySelectionData1);
                     RaisePropertyChanged(() => this.SelectedFrequencyRange);
                 }
             }
@@ -433,7 +433,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (entitySelectionData != null)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, entitySelectionData, 1);
-                  //  _entitySelectionData = entitySelectionData;
+                    entitySelectionData1 = entitySelectionData;
                     RetrieveUnrealizedGainLossData(entitySelectionData);
                 }
                 else

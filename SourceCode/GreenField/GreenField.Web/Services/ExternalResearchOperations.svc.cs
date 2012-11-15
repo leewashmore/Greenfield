@@ -1110,6 +1110,7 @@ namespace GreenField.Web.Services
                 List<QuarterlyResultsData> result = new List<QuarterlyResultsData>();
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 ExternalResearchEntities research = new ExternalResearchEntities();
+                research.CommandTimeout = 3000;
                 if (fieldValue == "Revenue")
                     dataID = 11;
                 else
