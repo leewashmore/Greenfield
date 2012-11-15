@@ -14,15 +14,16 @@ CREATE procedure [dbo].[AIMS_Calc_247](
 ,	@CALC_LOG			char		= 'Y'			-- write calculation errors to the log table
 )
 as
-
+print 'In calc_247'
 	-- Get the data
 	select pf.* 
 	  into #A
 	  from dbo.PERIOD_FINANCIALS pf 
 	 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = pf.SECURITY_ID
 	 where DATA_ID = 198					
-	   and sb.ISSUER_ID = @ISSUER_ID
+	   and sb.ISSUER_ID = @ISSUER_ID;
 
+select 'Calc_247 #A' as A, * from #A
 	select bf.*, sb.SECURITY_ID
 	  into #B
 	  from dbo.BENCHMARK_NODE_FINANCIALS bf
@@ -32,7 +33,8 @@ as
 	   and bf.BENCHMARK_ID = 'MSCI EM NET'
 	   and bf.NODE_NAME1 = 'INDUSTRY'
 	   and bf.NODE_NAME2 is null
-	   and bf.PERIOD_TYPE = 'C' 
+	   and bf.PERIOD_TYPE = 'C' ;
+select 'Calc_247 #B' as B, * from #B
 	    
 
 	-- Add the data to the table
@@ -48,11 +50,10 @@ as
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
-	 inner join	#B b on b.SECURITY_ID = a.SECURITY_ID
-					and b.PERIOD_TYPE = a.PERIOD_TYPE					
+	 inner join	#B b on b.PERIOD_TYPE = a.PERIOD_TYPE					
 					and b.CURRENCY = a.CURRENCY
 	 where 1=1 	  
-	  and isnull(b.AMOUNT, 0.0) <> 0.0	-- Data validation	
+	  and isnull(b.AMOUNT, 0.0) <> 0.0	-- Data validation	;
 
 	if @CALC_LOG = 'Y'
 		BEGIN	
@@ -64,8 +65,7 @@ as
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
 				, 'ERROR calculating 247: Forward EV/EBITDA Relative to Industry.  Forward EV/EBITDA Relative to Industry is NULL or ZERO'
 			   from #A a
-			 inner join	#B b on b.SECURITY_ID = a.SECURITY_ID
-							and b.PERIOD_TYPE = a.PERIOD_TYPE					
+			 inner join	#B b on b.PERIOD_TYPE = a.PERIOD_TYPE					
 							and b.CURRENCY = a.CURRENCY	 
 			 where isnull(b.AMOUNT, 0.0) = 0.0	-- Data error	  
 			-- Error conditions - missing data 
@@ -74,10 +74,9 @@ as
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
 				, 'ERROR calculating  247: Forward EV/EBITDA Relative to Industry is missing' as TXT
 			   from #A a
-			 left join	#B b on b.SECURITY_ID = a.SECURITY_ID
-							and b.PERIOD_TYPE = a.PERIOD_TYPE					
+			 left join	#B b on b.PERIOD_TYPE = a.PERIOD_TYPE					
 							and b.CURRENCY = a.CURRENCY
-			 where 1=1 and b.ISSUER_ID is NULL	 
+			 where 1=1 and b.AMOUNT is NULL	 
 			) union	(
 			-- Error conditions - missing data 
 			select GETDATE() as LOG_DATE, 247 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
@@ -106,3 +105,4 @@ as
 	drop table #A
 	drop table #B
 
+-- exec aims_calc_247 '13849318'

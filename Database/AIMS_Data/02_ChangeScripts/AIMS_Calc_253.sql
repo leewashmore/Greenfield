@@ -47,9 +47,8 @@ as
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
-	 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = a.SECURITY_ID
-	 inner join	#B b on b.ISSUER_ID = sb.ISSUER_ID 					
-					and b.PERIOD_TYPE = a.PERIOD_TYPE					
+--	 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = a.SECURITY_ID
+	 inner join	#B b on b.PERIOD_TYPE = a.PERIOD_TYPE					
 					and b.CURRENCY = a.CURRENCY
 	 where 1=1 	  
 	   and isnull(b.AMOUNT, 0.0) <> 0.0	-- Data validation	
@@ -64,16 +63,15 @@ as
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
 				, 'ERROR calculating 253: Forward P/E Relative to Industry.  Forward P/E Relative to Industry is NULL or ZERO'
 			  from #A a
-			 where isnull(b.AMOUNT, 0.0) = 0.0	-- Data error	  
+			 where isnull(a.AMOUNT, 0.0) = 0.0	-- Data error	  
 			-- Error conditions - missing data 
 			) union (	
 			select GETDATE() as LOG_DATE, 253 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
 				, 'ERROR calculating  253: Forward P/E Relative to Industry . Forward P/E data missing' as TXT
 			  from #A a
-			 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = a.SECURITY_ID
-			  left join	#B b on b.ISSUER_ID = a.ISSUER_ID 					
-							and b.PERIOD_TYPE = a.PERIOD_TYPE					
+--			 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = a.SECURITY_ID
+			  left join	#B b on b.PERIOD_TYPE = a.PERIOD_TYPE					
 							and b.CURRENCY = a.CURRENCY
 			 where 1=1 and b.ISSUER_ID is NULL	 
 			) union	(
@@ -82,9 +80,8 @@ as
 				,  a.PERIOD_YEAR,  a.PERIOD_END_DATE,  a.FISCAL_TYPE,  a.CURRENCY
 				, 'ERROR calculating 253: Forward P/E Relative to Industry.  DATA_ID:187 is missing'
 			  from #B b
-			 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.ISSUER_ID = b.ISSUER_ID
-			 left join	#A a on b.SECURITY_ID = sb.SECURITY_ID
-							and b.PERIOD_TYPE = a.PERIOD_TYPE					
+--			 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.ISSUER_ID = b.ISSUER_ID
+			 left join	#A a on b.PERIOD_TYPE = a.PERIOD_TYPE					
 							and b.CURRENCY = a.CURRENCY
 			 where 1=1 and a.ISSUER_ID is NULL	  
 			) union	(

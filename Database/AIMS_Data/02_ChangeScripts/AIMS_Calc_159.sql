@@ -37,8 +37,8 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  159 as DATA_ID							-- DATA_ID:159 Days Inventory
-		,  a.AMOUNT /( b.AMOUNT * 365) as AMOUNT			-- AITL/ SCOR * 365
-		,  'AITL(' + CAST(a.AMOUNT as varchar(32)) + ') / (SCOR('  + CAST(b.AMOUNT as varchar(32))  + ') * 365 '   as CALCULATION_DIAGRAM
+		,  (a.AMOUNT / b.AMOUNT) * 365 as AMOUNT			-- AITL/ SCOR * 365
+		,  '(AITL(' + CAST(a.AMOUNT as varchar(32)) + ') / SCOR('  + CAST(b.AMOUNT as varchar(32))  + ')) * 365 '   as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a

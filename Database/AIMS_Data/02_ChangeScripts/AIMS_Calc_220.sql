@@ -33,14 +33,14 @@ as
 	   and pf.PERIOD_TYPE= 'A'
 	   order by PERIOD_YEAR
 
-	select pf.PERIOD_YEAR + 1 as PRIOR_YEAR, pf.PERIOD_YEAR as PERIOD_YEAR,pf.CURRENCY,pf.COA_TYPE,pf.DATA_SOURCE,pf.FISCAL_TYPE,pf.PERIOD_TYPE,pf.ISSUER_ID,pf.AMOUNT,pf.PERIOD_END_DATE
+/*	select pf.PERIOD_YEAR + 1 as PRIOR_YEAR, pf.PERIOD_YEAR as PERIOD_YEAR,pf.CURRENCY,pf.COA_TYPE,pf.DATA_SOURCE,pf.FISCAL_TYPE,pf.PERIOD_TYPE,pf.ISSUER_ID,pf.AMOUNT,pf.PERIOD_END_DATE
 	  into #C
 	  from dbo.PERIOD_FINANCIALS pf 
 	 where DATA_ID = 75					-- ATOT
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE= 'A'
 	   order by PERIOD_YEAR
-
+*/
 
 	-- Add the data to the table
 	insert into PERIOD_FINANCIALS(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
@@ -59,9 +59,9 @@ as
 					and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
 					and b.PERIOD_YEAR = a.PERIOD_YEAR and b.FISCAL_TYPE = a.FISCAL_TYPE
 					and b.CURRENCY = a.CURRENCY
-	 inner join	#C c on c.ISSUER_ID = a.ISSUER_ID 
+	 inner join	#B c on c.ISSUER_ID = a.ISSUER_ID 
 					and c.DATA_SOURCE = a.DATA_SOURCE and c.PERIOD_TYPE = a.PERIOD_TYPE
-					and c.PERIOD_YEAR = a.PERIOD_YEAR and c.FISCAL_TYPE = a.FISCAL_TYPE
+					and c.PERIOD_YEAR+1 = a.PERIOD_YEAR and c.FISCAL_TYPE = a.FISCAL_TYPE
 					and c.CURRENCY = a.CURRENCY
 	 where 1=1 
 	   and isnull(b.AMOUNT, 0.0) <> 0.0	-- Data validation
@@ -115,18 +115,18 @@ as
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
 				, 'ERROR calculating 220:Asset Turnover.  DATA_ID:75 ATOT no data' as TXT
 			  from (select COUNT(*) CNT from #B having COUNT(*) = 0) z
-			) union (
+/*			) union (
 			select GETDATE() as LOG_DATE, 220 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
 				, 'ERROR calculating 220:Asset Turnover.  DATA_ID:75 ATOT no data for prior' as TXT
 			  from (select COUNT(*) CNT  from #C having COUNT(*) = 0) z
-			)
+*/			)
 		END
 		
 	-- Clean up
 	drop table #A
 	drop table #B
-	drop table #C
+--	drop table #C
 
 
 

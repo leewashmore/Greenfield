@@ -27,7 +27,7 @@ as
 	   
  ---- Total amount for all the fiscal quarters within an year --- 
 
-	select sum(f.amount)as AMOUNT, f.ISSUER_ID,f.FISCAL_TYPE,f.COA_TYPE,f.DATA_SOURCE,f.CURRENCY,datepart(year,getdate())as current_year 
+/*	select sum(f.amount)as AMOUNT, f.ISSUER_ID,f.FISCAL_TYPE,f.COA_TYPE,f.DATA_SOURCE,f.CURRENCY,datepart(year,getdate())as current_year 
 	into #B         
          from (select * 
 				 from dbo.PERIOD_FINANCIALS pf
@@ -40,7 +40,17 @@ as
 			  ) f
         group by f.issuer_id, f.FISCAL_TYPE, f.COA_TYPE, f.DATA_SOURCE, f.CURRENCY
 	having count(distinct PERIOD_TYPE) = 4   
+*/
 
+	select distinct pf.* 
+	  into #B
+	  from dbo.PERIOD_FINANCIALS pf  
+	 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = pf.SECURITY_ID
+	 where DATA_ID = 290		-- Earnings
+	   and sb.ISSUER_ID = @ISSUER_ID
+	   and pf.PERIOD_TYPE = 'A'
+	   and pf.PERIOD_END_DATE > GETDATE()                                      -- previous quarter from today
+	   and pf.PERIOD_END_DATE < DATEADD( month, 12, getdate())   -- only 4 quarters
 	
 	-- Add the data to the table
 	-- When dealing with 'C'urrent PERIOD_TYPE there should be only one value... the current one.  
@@ -53,7 +63,7 @@ as
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  187 as DATA_ID										-- DATA_ID:187 Forward P/E 
 		,  a.AMOUNT /b.AMOUNT as AMOUNT						-- Current Market Cap* / Sum of next 4 quarters NINC**
-		,  'Mktcap(' + CAST(a.AMOUNT as varchar(32)) + ') / sum of 4 quarters(' + CAST(b.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
+		,  'Mktcap(' + CAST(a.AMOUNT as varchar(32)) + ') / Earnings(' + CAST(b.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a

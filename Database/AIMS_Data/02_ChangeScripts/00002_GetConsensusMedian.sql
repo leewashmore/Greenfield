@@ -158,18 +158,19 @@ SET @netIncomeType =   CASE @earnings
 				    and pf.FISCAL_TYPE = @FISCAL_TYPE
 				    and pf.CURRENCY = @CURRENCY
 				    and pf.ISSUER_ID = @ISSUER_ID
-				 ) b on b.ISSUER_ID = a.ISSUER_ID
-					and (   (b.DATA_ID =  11 and a.ESTIMATE_ID = 17)		-- Revenue
-						 or (b.DATA_ID = 130 and a.ESTIMATE_ID = 7)			-- EBITDA
-						 or (b.DATA_ID =  44 and a.ESTIMATE_ID in(11,12,13))-- Net Income
-						 or (b.DATA_ID = 131 and a.ESTIMATE_ID in(8,9,5))	-- EPS
-						 or (b.DATA_ID = 132 and a.ESTIMATE_ID = 18)		-- ROA
-						 or (b.DATA_ID = 133 and a.ESTIMATE_ID = 19)		-- ROE
+				 ) b on b.ISSUER_ID = ae.ISSUER_ID
+					and (   (b.DATA_ID =  11 and ae.ESTIMATE_ID = 17)		-- Revenue
+						 or (b.DATA_ID = 130 and ae.ESTIMATE_ID = 7)			-- EBITDA
+						 or (b.DATA_ID =  44 and ae.ESTIMATE_ID in(11,12,13))-- Net Income
+						 or (b.DATA_ID = 131 and ae.ESTIMATE_ID in(8,9,5))	-- EPS
+						 or (b.DATA_ID = 132 and ae.ESTIMATE_ID = 18)		-- ROA
+						 or (b.DATA_ID = 133 and ae.ESTIMATE_ID = 19)		-- ROE
 						)
-				    and substring(b.PERIOD_TYPE,1,1) = @PERIOD_TYPE
-					and b.FISCAL_TYPE = @FISCAL_TYPE
-					and b.CURRENCY = @CURRENCY
-					and b.AMOUNT_TYPE = 'ESTIMATE'
+				    and b.PERIOD_YEAR = ae.PERIOD_YEAR
+--				    and substring(b.PERIOD_TYPE,1,1) = @PERIOD_TYPE
+--					and b.FISCAL_TYPE = @FISCAL_TYPE
+--					and b.CURRENCY = @CURRENCY
+--					and b.AMOUNT_TYPE = 'ESTIMATE'
 		;
 
 	-- Clean up

@@ -55,11 +55,11 @@ as
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
-	 inner join	#B b on b.ISSUER_ID = a.ISSUER_ID 
+	  left join	#B b on b.ISSUER_ID = a.ISSUER_ID 
 					and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
 					and b.PERIOD_YEAR = a.PERIOD_YEAR and b.FISCAL_TYPE = a.FISCAL_TYPE
 					and b.CURRENCY = a.CURRENCY
-	 inner join	#C c on c.ISSUER_ID = a.ISSUER_ID 
+	  left join	#C c on c.ISSUER_ID = a.ISSUER_ID 
 					and c.DATA_SOURCE = a.DATA_SOURCE and c.PERIOD_TYPE = a.PERIOD_TYPE
 					and c.PERIOD_YEAR = a.PERIOD_YEAR and c.FISCAL_TYPE = a.FISCAL_TYPE
 					and c.CURRENCY = a.CURRENCY     

@@ -36,15 +36,15 @@ as
 	into #B         
          from (select * 
                        from dbo.PERIOD_FINANCIALS pf
-                      where pf.DATA_ID = 44 --NINC
+                      where pf.DATA_ID = 290 -- Earnings
                         and pf.FISCAL_TYPE = 'FISCAL'
-                        and pf.PERIOD_TYPE like 'Q%'
+                        and pf.PERIOD_TYPE = 'A'
                         and pf.PERIOD_END_DATE > GETDATE()                                      -- previous quarter from today
-                        and pf.PERIOD_END_DATE < DATEADD( month, 12, getdate())   -- only 4 quarters
+                        and pf.PERIOD_END_DATE < DATEADD( month, 12, getdate())   
 					    and pf.ISSUER_ID = @ISSUER_ID
                      ) f
      group by f.issuer_id, f.FISCAL_TYPE, f.COA_TYPE, f.DATA_SOURCE, f.CURRENCY
-	having count(distinct PERIOD_TYPE) = 4   
+	having count(distinct PERIOD_TYPE) = 1
 		
 
 	-- Add the data to the table

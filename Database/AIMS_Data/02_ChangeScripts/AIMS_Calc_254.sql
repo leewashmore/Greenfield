@@ -52,9 +52,7 @@ as
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
-	 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = a.SECURITY_ID
-	 inner join	#B b on b.ISSUER_ID = sb.ISSUER_ID 					
-					and b.PERIOD_TYPE = a.PERIOD_TYPE					
+	 inner join	#B b on b.PERIOD_TYPE = a.PERIOD_TYPE					
 					and b.CURRENCY = a.CURRENCY
 	 where 1=1 	  
 	  and isnull(b.AMOUNT, 0.0) <> 0.0	-- Data validation	
@@ -69,7 +67,7 @@ as
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
 				, 'ERROR calculating 254  Forward P/E Relative to Country Industry.  Forward P/E is NULL or ZERO'
 			   from #A a
-			 where isnull(b.AMOUNT, 0.0) = 0.0	-- Data error	  
+			 where isnull(a.AMOUNT, 0.0) = 0.0	-- Data error	  
 			) union (	
 
 			-- Error conditions - missing data 

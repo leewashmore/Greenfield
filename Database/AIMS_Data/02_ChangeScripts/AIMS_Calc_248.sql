@@ -51,8 +51,7 @@ as
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
-	 inner join	#B b on b.SECURITY_ID = a.SECURITY_ID
-					and b.PERIOD_TYPE = a.PERIOD_TYPE					
+	 inner join	#B b on b.PERIOD_TYPE = a.PERIOD_TYPE					
 					and b.CURRENCY = a.CURRENCY
 	 where 1=1 	  
 	  and isnull(b.AMOUNT, 0.0) <> 0.0	-- Data validation	
@@ -67,8 +66,7 @@ as
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
 				, 'ERROR calculating 248: Forward EV/EBITDA Relative to Country Industry.  Forward EV/EBITDA is NULL or ZERO'
 			   from #A a
-			 inner join	#B b on b.SECURITY_ID = a.SECURITY_ID
-							and b.PERIOD_TYPE = a.PERIOD_TYPE					
+			 inner join	#B b on b.PERIOD_TYPE = a.PERIOD_TYPE					
 							and b.CURRENCY = a.CURRENCY	 
 			 where isnull(b.AMOUNT, 0.0) = 0.0	-- Data error	  
 			-- Error conditions - missing data 
@@ -77,10 +75,9 @@ as
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
 				, 'ERROR calculating  248: Forward EV/EBITDA Relative to Country Industry  Forward EV/EBITDA is missing' as TXT
 			   from #A a
-			 left join	#B b on b.SECURITY_ID = a.SECURITY_ID
-							and b.PERIOD_TYPE = a.PERIOD_TYPE					
+			 left join	#B b on b.PERIOD_TYPE = a.PERIOD_TYPE					
 							and b.CURRENCY = a.CURRENCY
-			 where 1=1 and b.ISSUER_ID is NULL	 
+			 where 1=1 and b.AMOUNT is NULL	 
 			) union	(
 			-- Error conditions - missing data 
 			select GETDATE() as LOG_DATE, 248 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE

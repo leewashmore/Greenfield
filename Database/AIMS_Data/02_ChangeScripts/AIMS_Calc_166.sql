@@ -27,7 +27,7 @@ as
 	select pf.* 
 	  into #B
 	  from dbo.PERIOD_FINANCIALS pf  
-	 where DATA_ID = 44			--NINC
+	 where DATA_ID = 290			-- Earnings
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
 
@@ -61,14 +61,14 @@ as
 			(
 			select GETDATE() as LOG_DATE, 166 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 166 P/E  .  DATA_ID:44 NINC is NULL or ZERO'
+				, 'ERROR calculating 166 P/E  .  DATA_ID:290 Earnings is NULL or ZERO'
 			  from #B a
 			 where isnull(a.AMOUNT, 0.0) = 0.0	-- Data error	
 			) union (	
 			-- Error conditions - missing data 
 			select GETDATE() as LOG_DATE, 166 as DATA_ID, sb.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 166 P/E  .  DATA_ID:44 NINC is missing' as TXT
+				, 'ERROR calculating 166 P/E  .  DATA_ID:290 Earnings is missing' as TXT
 			  from #A a
 			 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = a.SECURITY_ID
 			  left join	#B b on b.ISSUER_ID = sb.ISSUER_ID 
@@ -102,7 +102,7 @@ as
 
 			select GETDATE() as LOG_DATE, 166 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 166 P/E  .  DATA_ID:44 no data' as TXT
+				, 'ERROR calculating 166 P/E  .  DATA_ID:290 Earnings no data' as TXT
 			  from (select COUNT(*) CNT from #B having COUNT(*) = 0) z
 			)
 		END

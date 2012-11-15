@@ -31,17 +31,19 @@ as
 	print ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	set @START = GETDATE()
 
+	-- Get the sub query data into a temp table
+	select issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE, MAX(PERIOD_END_DATE) as PERIOD_END_DATE 
+	  into #Bb
+	  from PERIOD_FINANCIALS 
+     where DATA_ID = 90					-- STLD
+	   and PERIOD_TYPE = 'A'
+	and ISSUER_ID = @ISSUER_ID
+	
+	  group by issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE
 	select pf.* 
 	  into #B
 	  from dbo.PERIOD_FINANCIALS pf 
-	 inner join (select issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE, MAX(PERIOD_END_DATE) as PERIOD_END_DATE 
-				   from PERIOD_FINANCIALS 
-	              where DATA_ID = 90					-- STLD
-				    and PERIOD_TYPE = 'A'
---					and AMOUNT_TYPE = 'ACTUAL'	                          
-					and ISSUER_ID = @ISSUER_ID
-				  group by issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE
-	            ) a on a.ISSUER_ID = pf.ISSUER_ID 
+	 inner join #Bb a on a.ISSUER_ID = pf.ISSUER_ID 
 					and a.PERIOD_TYPE = pf.PERIOD_TYPE and a.CURRENCY = pf.CURRENCY
 					and a.DATA_SOURCE = pf.DATA_SOURCE and a.PERIOD_END_DATE = pf.PERIOD_END_DATE
 	 where DATA_ID = 90					-- STLD
@@ -52,17 +54,21 @@ as
 	print ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	set @START = GETDATE()
 
+	-- Get the sub-query data into a temp table
+	select issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE, MAX(PERIOD_END_DATE) as PERIOD_END_DATE 
+	  into #Cc
+	  from PERIOD_FINANCIALS 
+     where DATA_ID = 92					-- STLD
+	   and PERIOD_TYPE = 'A'
+--				and AMOUNT_TYPE = 'ACTUAL'	                          
+	   and ISSUER_ID = @ISSUER_ID
+	 group by issuer_id, PERIOD_YEAR, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE
+	 
+	 
 	 select pf.* 
 	  into #C
 	  from dbo.PERIOD_FINANCIALS pf 
-	 inner join (select issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE, MAX(PERIOD_END_DATE) as PERIOD_END_DATE 
-				   from PERIOD_FINANCIALS 
-	              where DATA_ID = 92					-- STLD
-				    and PERIOD_TYPE = 'A'
---					and AMOUNT_TYPE = 'ACTUAL'	                          
-					and ISSUER_ID = @ISSUER_ID
-				  group by issuer_id, PERIOD_YEAR, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE
-	            ) a on a.ISSUER_ID = pf.ISSUER_ID 
+	 inner join #Cc a on a.ISSUER_ID = pf.ISSUER_ID 
 					and a.PERIOD_TYPE = pf.PERIOD_TYPE and a.CURRENCY = pf.CURRENCY
 					and a.DATA_SOURCE = pf.DATA_SOURCE and a.PERIOD_END_DATE = pf.PERIOD_END_DATE
 	 where DATA_ID = 92				-- LMIN
@@ -73,17 +79,19 @@ as
 	print ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	set @START = GETDATE()
 
+	-- Get the sub-query intoa temp table
+	select issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE, MAX(PERIOD_END_DATE) as PERIOD_END_DATE 
+	  into #Dd
+	  from PERIOD_FINANCIALS 
+     where DATA_ID = 51					-- SCSI
+	   and PERIOD_TYPE = 'A'
+	   and ISSUER_ID = @ISSUER_ID
+	 group by issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE
+	 
 	  select pf.* 
 	  into #D
 	  from dbo.PERIOD_FINANCIALS pf 
-	 inner join (select issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE, MAX(PERIOD_END_DATE) as PERIOD_END_DATE 
-				   from PERIOD_FINANCIALS 
-	              where DATA_ID = 51					-- SCSI
-				    and PERIOD_TYPE = 'A'
---					and AMOUNT_TYPE = 'ACTUAL'	                          
-					and ISSUER_ID = @ISSUER_ID
-				  group by issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE
-	            ) a on a.ISSUER_ID = pf.ISSUER_ID 
+	 inner join #Dd a on a.ISSUER_ID = pf.ISSUER_ID 
 					and a.PERIOD_TYPE = pf.PERIOD_TYPE and a.CURRENCY = pf.CURRENCY
 					and a.DATA_SOURCE = pf.DATA_SOURCE and a.PERIOD_END_DATE = pf.PERIOD_END_DATE
 	 where DATA_ID = 51				
@@ -196,6 +204,9 @@ as
 	drop table #B
 	drop table #C
 	drop table #D
+	drop table #Bb
+	drop table #Cc
+	drop table #Dd
 	
 	print ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	set @START = GETDATE()
@@ -246,6 +257,20 @@ print 'ANNUAL logic for Calc 186'
 	print ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	set @START = GETDATE()
 
+
+	  select pf.* 
+	  into #E1
+	  from dbo.PERIOD_FINANCIALS pf 
+	 where DATA_ID = 69				-- SINV
+	   and pf.ISSUER_ID = @ISSUER_ID
+	   and pf.PERIOD_TYPE = 'A'
+
+	   
+	print ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	set @START = GETDATE()
+
+
+
 	-- Add the data to the table
 	insert into PERIOD_FINANCIALS(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
 		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
@@ -254,13 +279,13 @@ print 'ANNUAL logic for Calc 186'
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  186 as DATA_ID										-- DATA_ID:186 Enterprise Value
-		,  (a.AMOUNT + isnull(b.AMOUNT, 0.0) + isnull(c.AMOUNT, 0.0) - isnull(d.AMOUNT, 0.0)) as AMOUNT						-- 185 + STLD + LMIN –SCSI
-		,  '185(' + CAST(a.AMOUNT as varchar(32)) + ') + STLD (' + CAST(isnull(b.AMOUNT, 0.0) as varchar(32)) + ') + LMIN (' + CAST(isnull(c.AMOUNT, 0.0) as varchar(32)) + ') - SCSI (' + CAST(isnull(d.AMOUNT, 0.0) as varchar(32)) + ')' as CALCULATION_DIAGRAM
+		,  (a.AMOUNT + isnull(b.AMOUNT, 0.0) + isnull(c.AMOUNT, 0.0) - isnull(d.AMOUNT, 0.0) - isnull(e.AMOUNT, 0.0)) as AMOUNT						-- 185 + STLD + LMIN –SCSI
+		,  '185(' + CAST(a.AMOUNT as varchar(32)) + ') + STLD (' + CAST(isnull(b.AMOUNT, 0.0) as varchar(32)) + ') + LMIN (' + CAST(isnull(c.AMOUNT, 0.0) as varchar(32)) + ') - SCSI (' + CAST(isnull(d.AMOUNT, 0.0) as varchar(32)) + ') - SINV(' + CAST(isnull(e.AMOUNT, 0.0) as varchar(32)) + ')' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A1 a																			-- Must be one Issuer level Data item
 	 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = a.SECURITY_ID
-	  left join	#B1 b on b.ISSUER_ID = sb.ISSUER_ID and b.CURRENCY = a.CURRENCY		-- Must be a 185
+	 inner join	#B1 b on b.ISSUER_ID = sb.ISSUER_ID and b.CURRENCY = a.CURRENCY		-- Must be a 185
 					and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
 					and b.PERIOD_YEAR = a.PERIOD_YEAR and b.FISCAL_TYPE = a.FISCAL_TYPE
 	  left join	#C1 c on c.ISSUER_ID = sb.ISSUER_ID and c.CURRENCY = b.CURRENCY
@@ -269,6 +294,9 @@ print 'ANNUAL logic for Calc 186'
 	  left join	#D1 d on d.ISSUER_ID = sb.ISSUER_ID and d.CURRENCY = b.CURRENCY					
 					and d.DATA_SOURCE = b.DATA_SOURCE and d.PERIOD_TYPE = b.PERIOD_TYPE
 					and d.PERIOD_YEAR = b.PERIOD_YEAR and d.FISCAL_TYPE = b.FISCAL_TYPE
+	  left join	#E1 e on e.ISSUER_ID = sb.ISSUER_ID and e.CURRENCY = b.CURRENCY					
+					and e.DATA_SOURCE = b.DATA_SOURCE and e.PERIOD_TYPE = b.PERIOD_TYPE
+					and e.PERIOD_YEAR = b.PERIOD_YEAR and e.FISCAL_TYPE = b.FISCAL_TYPE
 	 where 1=1 	  
 --	 order by a.ISSUER_ID, a.PERIOD_TYPE, a.PERIOD_YEAR,  a.DATA_SOURCE, a.FISCAL_TYPE, a.CURRENCY
 
@@ -375,5 +403,6 @@ print 'ANNUAL logic for Calc 186'
 	drop table #B1
 	drop table #C1
 	drop table #D1
+	drop table #E1
 
 -- exec AIMS_Calc_186 182896, 'N'

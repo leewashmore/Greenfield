@@ -557,7 +557,7 @@ as
 	  into #A172
 	  from dbo.CURRENT_CONSENSUS_ESTIMATES cce 
 	 where cce.ESTIMATE_ID = 166
-	   and (@ISSUER_ID is null or @ISSUER_ID = cce.ISSUER_ID)
+	   and @ISSUER_ID = cce.ISSUER_ID
 	   and cce.PERIOD_TYPE = 'A'
 
 	print '172 - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
@@ -568,7 +568,7 @@ as
 	  from dbo.CURRENT_CONSENSUS_ESTIMATES cce 
 	 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = cce.SECURITY_ID
 	 where cce.ESTIMATE_ID = 177
-	   and (@ISSUER_ID is null or @ISSUER_ID = sb.ISSUER_ID)
+	   and @ISSUER_ID = sb.ISSUER_ID
 	   and cce.PERIOD_TYPE = 'A'
 
 	print '172 - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)

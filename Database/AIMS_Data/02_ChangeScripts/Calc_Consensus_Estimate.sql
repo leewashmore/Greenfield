@@ -10,37 +10,46 @@ create procedure Calc_Consensus_Estimates
 	@ISSUER_ID	varchar(20)		-- This is a required parameter, NULL is not allowed.
 as
 
-	declare @XREF varchar(9)
-	select @XREF = cast(cast(XREF as integer) as varchar(9))from GF_SECURITY_BASEVIEW where ISSUER_ID = @ISSUER_ID
-	print 'XREF = ' + @XREF
-
 	declare @START		datetime		-- the time the calc starts
-	Set @START = getdate()
+	set @START = GETDATE()
 
 	-- remove the rows that will be reinserted.
 	delete from CURRENT_CONSENSUS_ESTIMATES
-	 where (@ISSUER_ID is not null and @ISSUER_ID = ISSUER_ID)
-	    or (@ISSUER_ID is NULL and ISSUER_ID in (select ISSUER_ID from dbo.GF_SECURITY_BASEVIEW));
+	 where @ISSUER_ID = ISSUER_ID
 
-	print 'After first delete' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	Set @START = getdate()
+	print 'After Delete CURRENT_CONSENSUS_ESTIMATES for ISSUER_ID' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	set @START = GETDATE()
+
 
 	delete from CURRENT_CONSENSUS_ESTIMATES
-	 where (@ISSUER_ID is not null and SECURITY_ID in (select SECURITY_ID from GF_SECURITY_BASEVIEW where ISSUER_ID = @ISSUER_ID))
-	    or (@ISSUER_ID is NULL and SECURITY_ID in (select SECURITY_ID from dbo.GF_SECURITY_BASEVIEW));
+	 where SECURITY_ID in (select SECURITY_ID from GF_SECURITY_BASEVIEW where ISSUER_ID = @ISSUER_ID)
 
-	print 'After second delete' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	Set @START = getdate()
+	print 'After Delete CURRENT_CONSENSUS_ESTIMATES for SECURITY_ID' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	set @START = GETDATE()
 
-	-- Prepare the Cross reference table
-	select distinct ISSUER_ID, ReportNumber 
-	  into #XREF
-	  from dbo.GF_SECURITY_BASEVIEW;
-	create index XREF_idx1 on #XREF(ISSUER_ID);
-	create index XREF_idx2 on #XREF(ReportNumber);
+	-- Make Country and Currency a variable instead of a join for this single issuer.
+	declare @ISO_COUNTRY_CODE	varchar(3)
+	declare @CURRENCY_CODE		varchar(3)
+	select @ISO_COUNTRY_CODE = max(ISO_COUNTRY_CODE)
+	  from dbo.GF_SECURITY_BASEVIEW 
+	 where ISSUER_ID = @ISSUER_ID
+	select @CURRENCY_CODE = CURRENCY_CODE
+	  from dbo.Country_Master 
+	 where COUNTRY_CODE = @ISO_COUNTRY_CODE
 
-	print 'After Prepare the Cross reference table' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	Set @START = getdate()
+	-- Make XREF and ReportNumber constants instead of a table for a single Issuer.
+	declare @XREF varchar(20)
+	declare @ReportNumber varchar(20)
+	select @XREF = XRef, @ReportNumber = ReportNumber
+	  from dbo.GF_SECURITY_BASEVIEW
+	 where ISSUER_ID = @ISSUER_ID;
+
+	-- Make COAType a constant instead of using a join for a single Issuer.
+	declare @COAType varchar(4)
+	select @COAType = COAType
+	  from Reuters.dbo.tblStdCompanyInfo 
+	 where ReportNumber = @ReportNumber
+
 
 
 -------------------------------------------------------------------------------------
@@ -54,10 +63,20 @@ as
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 
+	-- collect a list of the most recent entries, because we cannot count on expirationDate being null
+	-- Making this a temp table instead of a subselect in the next query saves huge time.
+	select Xref, PeriodEndDate, fPeriodEnd, EstimateType, PeriodType, MAX(StartDate) as StartDate
+	  into #CE
+	  from Reuters.dbo.tblConsensusEstimate 
+	 where XRef = @XREF
+	 group by Xref, PeriodEndDate, fPeriodEnd, EstimateType, PeriodType 
+
+	print 'After collect most recent entries' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	Set @START = getdate()
 
 	-- Gather the Annual and quarterly data
-	select	rx.ISSUER_ID 
-		,	cty. CURRENCY_CODE as Local_Currency 
+	select	@ISSUER_ID as ISSUER_ID
+		,	@CURRENCY_CODE as Local_Currency 
 		,	ce.XREF
 		,	Left(ce.fYearEnd,4) as PeriodYear
 		,	ce.EstimateType
@@ -84,33 +103,36 @@ as
 	  into #CONSENSUS_EXTRACT
 	  from Reuters.dbo.tblConsensusEstimate ce
 	 inner join Reuters.dbo.tblCompanyInfo ci on ci.XRef = ce.XRef
-	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = ci.ReportNumber
+--	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = ci.ReportNumber
 	 inner join dbo.CONSENSUS_MASTER cm on cm.ESTIMATE_TYPE = ce.EstimateType
-	 inner join #XREF rx on rx.ReportNumber = ci.ReportNumber
-	 inner join (select ISSUER_ID, max(ISO_COUNTRY_CODE) as ISO_COUNTRY_CODE 
+--	 inner join #XREF rx on rx.ReportNumber = ci.ReportNumber
+/*	 inner join (select ISSUER_ID, max(ISO_COUNTRY_CODE) as ISO_COUNTRY_CODE 
 				   from dbo.GF_SECURITY_BASEVIEW 
 				  where ISSUER_ID = @ISSUER_ID
 				  group by ISSUER_ID) sb on sb.ISSUER_ID = rx.ISSUER_ID
 	 inner join dbo.Country_Master cty on cty.COUNTRY_CODE = sb.ISO_COUNTRY_CODE
+*/
 	 -- this next inner join makes sure there are no duplicates coming from the Consensus Estimates table
-	 INNER JOIN (select Xref, PeriodEndDate, fPeriodEnd, EstimateType, PeriodType, MAX(StartDate) as StartDate
+/*	 INNER JOIN (select Xref, PeriodEndDate, fPeriodEnd, EstimateType, PeriodType, MAX(StartDate) as StartDate
 				   from Reuters.dbo.tblConsensusEstimate 
 				  where XRef = @XREF
 				  group by Xref, PeriodEndDate, fPeriodEnd, EstimateType, PeriodType ) a
+*/	 inner join #CE a
 				on a.XRef = ce.XRef and  a.PeriodEndDate = ce.PeriodEndDate 
 				and  a.fPeriodEnd = ce.fPeriodEnd and  a.EstimateType = ce.EstimateType 
 				and  a.PeriodType = ce.PeriodType and a.StartDate = ce.StartDate
 	  left join dbo.FX_RATES fx on fx.CURRENCY = ce.Currency and fx.FX_DATE = ce.PeriodEndDate
-	 where sb.ISSUER_ID = @ISSUER_ID
+	 where 1=1 --sb.ISSUER_ID = @ISSUER_ID
+	   and ce.XRef = @XREF
 	   and ce.expirationDate is null
-	   and (   (sci.COAType = 'IND' and cm.INDUSTRIAL = 'Y')
-			or (sci.COAType = 'FIN' and cm.INSURANCE = 'Y')
-			or (sci.COAType = 'UTL' and cm.UTILITY = 'Y') 
-			or (sci.COAType = 'BNK' and cm.BANK = 'Y') )
+	   and (   (@COAType = 'IND' and cm.INDUSTRIAL = 'Y')
+			or (@COAType = 'FIN' and cm.INSURANCE = 'Y')
+			or (@COAType = 'UTL' and cm.UTILITY = 'Y') 
+			or (@COAType = 'BNK' and cm.BANK = 'Y') )
 	   and ce.PeriodType in ('A', 'Q1', 'Q2', 'Q3', 'Q4')
-	 order by ce.Xref, ce.PeriodEndDate, ce.fYearEnd, ce.EstimateType, ce.PeriodType, ce.StartDate
+--	 order by ce.Xref, ce.PeriodEndDate, ce.fYearEnd, ce.EstimateType, ce.PeriodType, ce.StartDate
 
-	print 'After Gather the Annual and quarterly data' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After Gather the Annual and quarterly data' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
@@ -120,8 +142,8 @@ as
 	------------------------------------------------------------------------------
 
 	-- Collect the Semi-annual data	
-	select	rx.ISSUER_ID 
-		,	cty. CURRENCY_CODE as Local_Currency 
+	select	@ISSUER_ID as ISSUER_ID
+		,	@CURRENCY_CODE as Local_Currency 
 		,	ce.XREF
 		,	Left(ce.fYearEnd,4) as PeriodYear
 		,	ce.EstimateType
@@ -149,15 +171,15 @@ as
 	  into #CONSENSUS_EXTRACT_SEMI
 	  from Reuters.dbo.tblConsensusEstimate ce
 	 inner join Reuters.dbo.tblCompanyInfo ci on ci.XRef = ce.XRef
-	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = ci.ReportNumber
+--	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = ci.ReportNumber
 	 inner join dbo.CONSENSUS_MASTER cm on cm.ESTIMATE_TYPE = ce.EstimateType
-	 inner join #XREF rx on rx.ReportNumber = ci.ReportNumber 
-	 inner join (select ISSUER_ID, max(ISO_COUNTRY_CODE) as ISO_COUNTRY_CODE 
+--	 inner join #XREF rx on rx.ReportNumber = ci.ReportNumber 
+/*	 inner join (select ISSUER_ID, max(ISO_COUNTRY_CODE) as ISO_COUNTRY_CODE 
 				   from dbo.GF_SECURITY_BASEVIEW 
 				  where ISSUER_ID = @ISSUER_ID
 				  group by ISSUER_ID) sb on sb.ISSUER_ID = rx.ISSUER_ID
 	 inner join dbo.Country_Master cty on cty.COUNTRY_CODE = sb.ISO_COUNTRY_CODE
-	 -- this next inner join makes sure there are no duplicates coming from the Consensus Estimates table
+*/	 -- this next inner join makes sure there are no duplicates coming from the Consensus Estimates table
 	 INNER JOIN (select Xref, PeriodEndDate, fPeriodEnd, EstimateType, PeriodType, MAX(StartDate) as StartDate
 				   from Reuters.dbo.tblConsensusEstimate 
 				  where Xref = @XREF 
@@ -166,17 +188,18 @@ as
 				and  a.fPeriodEnd = ce.fPeriodEnd and  a.EstimateType = ce.EstimateType 
 				and  a.PeriodType = ce.PeriodType and a.StartDate = ce.StartDate
 	  left join dbo.FX_RATES fx on fx.CURRENCY = ce.Currency and fx.FX_DATE = ce.PeriodEndDate
-	 where sb.ISSUER_ID = @ISSUER_ID
+	 where 1=1 --sb.ISSUER_ID = @ISSUER_ID
+	   and ce.XRef = @XREF
 	   and ce.expirationDate is null
-	   and (   (sci.COAType = 'IND' and cm.INDUSTRIAL = 'Y')
-			or (sci.COAType = 'FIN' and cm.INSURANCE = 'Y')
-			or (sci.COAType = 'UTL' and cm.UTILITY = 'Y') 
-			or (sci.COAType = 'BNK' and cm.BANK = 'Y') )
+	   and (   (@COAType = 'IND' and cm.INDUSTRIAL = 'Y')
+			or (@COAType = 'FIN' and cm.INSURANCE = 'Y')
+			or (@COAType = 'UTL' and cm.UTILITY = 'Y') 
+			or (@COAType = 'BNK' and cm.BANK = 'Y') )
 	   and ce.PeriodType = 'S'
 	 order by ce.Xref, ce.PeriodEndDate, ce.fYearEnd, ce.EstimateType, ce.PeriodType, ce.StartDate
 
 
-	print 'After Collect the Semi-annual data	' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After Collect the Semi-annual data	' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
@@ -188,7 +211,7 @@ as
 							 else 999999 end										-- incorrect combo
 	 where EstimateID in (8, 9, 5)
 	
-	print 'After update 8 9 5 SEMI' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After update 8 9 5 SEMI' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	update #CONSENSUS_EXTRACT
@@ -199,7 +222,7 @@ as
 	 where EstimateID in (8, 9, 5)
 
 
-	print 'After update 8 9 5' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After update 8 9 5' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	-- Modify the Net Income type 
@@ -210,7 +233,7 @@ as
 							 else 999999 end										-- incorrect combo
 	 where EstimateID in (11, 12, 13)
 	
-	print 'After update 11 12 13 SEMI' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After update 11 12 13 SEMI' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	update #CONSENSUS_EXTRACT
@@ -220,7 +243,7 @@ as
 							 else 999999 end										-- incorrect combo
 	 where EstimateID in (11, 12, 13)
 
-	print 'After update 11 12 13' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After update 11 12 13' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	-- Modify the Income Before Tax type 
@@ -231,7 +254,7 @@ as
 							 else 999999 end										-- incorrect combo
 	 where EstimateID in (14, 16, 15)
 	
-	print 'After update 14 16 15 SEMI' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After update 14 16 15 SEMI' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	update #CONSENSUS_EXTRACT
@@ -241,19 +264,19 @@ as
 							 else 999999 end										-- incorrect combo
 	 where EstimateID in (14, 16, 15)
 
-	print 'After Update 14 16 15' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After Update 14 16 15' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
 	-- remove incorrect rows
 	delete #CONSENSUS_EXTRACT
 	 where EstimateID = 999999
-	print 'remove incorrect rows EXTRACT' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'remove incorrect rows EXTRACT' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 	delete #CONSENSUS_EXTRACT_SEMI
 	 where EstimateID = 999999
 	
-	print 'remove incorrect rows SEMI' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'remove incorrect rows SEMI' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
@@ -289,7 +312,7 @@ as
 	 where	fYearEnd <> fPeriodEnd
 	   and ce.ISSUER_ID is null
 
-	print 'After Create the first quarter results' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After Create the first quarter results' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
@@ -324,7 +347,7 @@ as
 	 where	fYearEnd <> fPeriodEnd
 	   and ce.ISSUER_ID is null
 
-	print 'After Create the second quarter results' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After Create the second quarter results' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
@@ -359,7 +382,7 @@ as
 	 where	fYearEnd = fPeriodEnd
 	   and ce.ISSUER_ID is null
 
-	print 'After Create the third quarter results' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After Create the third quarter results' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
@@ -394,7 +417,7 @@ as
 	 where	fYearEnd = fPeriodEnd
 	   and ce.ISSUER_ID is null
 
-	print 'After Create the forth quarter retults' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After Create the forth quarter retults' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
@@ -435,7 +458,7 @@ as
 	 where not (FXConversionType = 'AVG' and isnull(AVG12MonthRate, 0.0) = 0.0)
 	   and not (FXConversionType = 'PIT' and isnull(FXRate, 0.0) = 0.0)
   
-	print 'After Insert the amounts for the currency USD' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After Insert the amounts for the currency USD' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
@@ -462,7 +485,7 @@ as
 	  from #CONSENSUS_EXTRACT
 
 
-	print 'After Insert the amounts for the local currency' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After Insert the amounts for the local currency' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
@@ -483,8 +506,8 @@ as
 
 
 	-- Gather the Annual and quarterly data
-	select	rx.ISSUER_ID 
-		,	cty.CURRENCY_CODE as Local_Currency 
+	select	@ISSUER_ID as ISSUER_ID 
+		,	@CURRENCY_CODE as Local_Currency 
 		,	ce.XREF
 		,	Left(ce.fYearEnd,4) as PeriodYear
 		,	ce.EstimateType
@@ -503,16 +526,16 @@ as
 		,	'ORIG' as TXT1
 	  into #ACTUAL_EXTRACT
 	  from Reuters.dbo.tblActual ce
-	 inner join Reuters.dbo.tblCompanyInfo ci on ci.XRef = ce.XRef
-	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = ci.ReportNumber
+--	 inner join Reuters.dbo.tblCompanyInfo ci on ci.XRef = ce.XRef
+--	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = ci.ReportNumber
 	 inner join dbo.CONSENSUS_MASTER cm on cm.ESTIMATE_TYPE = ce.EstimateType
-	 inner join #XREF rx on rx.ReportNumber = ci.ReportNumber 
-	 inner join (select ISSUER_ID, max(ISO_COUNTRY_CODE) as ISO_COUNTRY_CODE 
+--	 inner join #XREF rx on rx.ReportNumber = ci.ReportNumber 
+/*	 inner join (select ISSUER_ID, max(ISO_COUNTRY_CODE) as ISO_COUNTRY_CODE 
 				   from dbo.GF_SECURITY_BASEVIEW 
 				  where ISSUER_ID = @ISSUER_ID
 				  group by ISSUER_ID) sb on sb.ISSUER_ID = rx.ISSUER_ID
 	 inner join dbo.Country_Master cty on cty.COUNTRY_CODE = sb.ISO_COUNTRY_CODE
-	 -- this next inner join makes sure there are no duplicates coming from the Consensus Estimates table
+*/	 -- this next inner join makes sure there are no duplicates coming from the Consensus Estimates table
 	 INNER JOIN (select Xref, PeriodEndDate, fPeriodEnd, EstimateType, PeriodType, MAX(UpdateDate) as UpdateDate
 				   from Reuters.dbo.tblActual
 				  where XRef = @XREF
@@ -521,17 +544,17 @@ as
 				and  a.fPeriodEnd = ce.fPeriodEnd and  a.EstimateType = ce.EstimateType 
 				and  a.PeriodType = ce.PeriodType and a.UpdateDate = ce.UpdateDate
 	  left join dbo.FX_RATES fx on fx.CURRENCY = ce.Currency and fx.FX_DATE = ce.PeriodEndDate
-	 where (   (@ISSUER_ID is not null and @ISSUER_ID = rx.ISSUER_ID)
-			or (@ISSUER_ID is NULL and rx.ISSUER_ID in (select ISSUER_ID from dbo.GF_SECURITY_BASEVIEW)))
-	   and (   (sci.COAType = 'IND' and cm.INDUSTRIAL = 'Y')
-			or (sci.COAType = 'FIN' and cm.INSURANCE = 'Y')
-			or (sci.COAType = 'UTL' and cm.UTILITY = 'Y') 
-			or (sci.COAType = 'BNK' and cm.BANK = 'Y') )
+	 where 1=1 --@ISSUER_ID = ISSUER_ID
+	   and ce.XRef = @XREF
+	   and (   (@COAType = 'IND' and cm.INDUSTRIAL = 'Y')
+			or (@COAType = 'FIN' and cm.INSURANCE = 'Y')
+			or (@COAType = 'UTL' and cm.UTILITY = 'Y') 
+			or (@COAType = 'BNK' and cm.BANK = 'Y') )
 	   and ce.PeriodType in ('A', 'Q1', 'Q2', 'Q3', 'Q4')
-	 order by ce.Xref, ce.PeriodEndDate, ce.fYearEnd, ce.EstimateType, ce.PeriodType, ce.UpdateDate
+--	 order by ce.Xref, ce.PeriodEndDate, ce.fYearEnd, ce.EstimateType, ce.PeriodType, ce.UpdateDate
 
 
-	print 'After gather annual and quarterly' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After gather annual and quarterly' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 
@@ -540,8 +563,8 @@ as
 	------------------------------------------------------------------------------
 
 	-- Collect the Semi-annual data	
-	select	rx.ISSUER_ID 
-		,	cty.CURRENCY_CODE as Local_Currency 
+	select	@ISSUER_ID  as ISSUER_ID 
+		,	@CURRENCY_CODE as Local_Currency 
 		,	ce.XREF
 		,	Left(ce.fYearEnd,4) as PeriodYear
 		,	ce.EstimateType
@@ -564,34 +587,36 @@ as
 	 inner join Reuters.dbo.tblCompanyInfo ci on ci.XRef = ce.XRef
 	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = ci.ReportNumber
 	 inner join dbo.CONSENSUS_MASTER cm on cm.ESTIMATE_TYPE = ce.EstimateType
-	 inner join #XREF rx on rx.ReportNumber = ci.ReportNumber 
-	 inner join (select ISSUER_ID, max(ISO_COUNTRY_CODE) as ISO_COUNTRY_CODE 
+--	 inner join #XREF rx on rx.ReportNumber = ci.ReportNumber 
+/*	 inner join (select ISSUER_ID, max(ISO_COUNTRY_CODE) as ISO_COUNTRY_CODE 
 				   from dbo.GF_SECURITY_BASEVIEW 
+				  where ISSUER_ID = @ISSUER_ID	-- Added 20121106
 				  group by ISSUER_ID) sb on sb.ISSUER_ID = rx.ISSUER_ID
 	 inner join dbo.Country_Master cty on cty.COUNTRY_CODE = sb.ISO_COUNTRY_CODE
-	 -- this next inner join makes sure there are no duplicates coming from the Consensus Estimates table
+*/	 -- this next inner join makes sure there are no duplicates coming from the Consensus Estimates table
 	 INNER JOIN (select Xref, PeriodEndDate, fPeriodEnd, EstimateType, PeriodType, MAX(UpdateDate) as UpdateDate
 				   from Reuters.dbo.tblActual
+				  where XRef = @XREF			-- Added 20121106
 				  group by Xref, PeriodEndDate, fPeriodEnd, EstimateType, PeriodType ) a
 				on a.XRef = ce.XRef and  a.PeriodEndDate = ce.PeriodEndDate 
 				and  a.fPeriodEnd = ce.fPeriodEnd and  a.EstimateType = ce.EstimateType 
 				and  a.PeriodType = ce.PeriodType and a.UpdateDate = ce.UpdateDate
 	  left join dbo.FX_RATES fx on fx.CURRENCY = ce.Currency and fx.FX_DATE = ce.PeriodEndDate
-	 where (   (@ISSUER_ID is not null and @ISSUER_ID = rx.ISSUER_ID)
-			or (@ISSUER_ID is NULL and rx.ISSUER_ID in (select ISSUER_ID from dbo.GF_SECURITY_BASEVIEW)))
-	   and (   (sci.COAType = 'IND' and cm.INDUSTRIAL = 'Y')
-			or (sci.COAType = 'FIN' and cm.INSURANCE = 'Y')
-			or (sci.COAType = 'UTL' and cm.UTILITY = 'Y') 
-			or (sci.COAType = 'BNK' and cm.BANK = 'Y') )
+	 where 1=1 --@ISSUER_ID = rx.ISSUER_ID
+	   and ce.XRef = @XREF
+	   and (   (@COAType = 'IND' and cm.INDUSTRIAL = 'Y')
+			or (@COAType = 'FIN' and cm.INSURANCE = 'Y')
+			or (@COAType = 'UTL' and cm.UTILITY = 'Y') 
+			or (@COAType = 'BNK' and cm.BANK = 'Y') )
 	   and ce.PeriodType = 'S'
-	 order by ce.Xref, ce.PeriodEndDate, ce.fYearEnd, ce.EstimateType, ce.PeriodType, ce.UpdateDate
+--	 order by ce.Xref, ce.PeriodEndDate, ce.fYearEnd, ce.EstimateType, ce.PeriodType, ce.UpdateDate
 
-	print 'After collect semi- annual' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After collect semi- annual' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	-- Create the first quarter retults
 	insert into #ACTUAL_EXTRACT
-	select	ces.ISSUER_ID 
+	select	@ISSUER_ID  as ISSUER_ID 
 		,	ces.Local_Currency 
 		,	ces.XREF
 		,	ces.PeriodYear
@@ -614,7 +639,7 @@ as
 	 where	fYearEnd <> fPeriodEnd
 	   and ce.ISSUER_ID is null
 
-	print 'After first quarter results ++' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After first quarter results ++' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	-- Create the first quarter retults
@@ -642,7 +667,7 @@ as
 	 where	fYearEnd <> fPeriodEnd
 	   and ce.ISSUER_ID is null
 
-	print 'After after first quarter results, +++' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After after first quarter results, +++' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	-- Create the third quarter results
@@ -670,7 +695,7 @@ as
 	 where	fYearEnd = fPeriodEnd
 	   and ce.ISSUER_ID is null
 
-	print 'After third quarter results' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After third quarter results' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	-- Create the forth quarter retults
@@ -698,7 +723,7 @@ as
 	 where	fYearEnd = fPeriodEnd
 	   and ce.ISSUER_ID is null
 
-	print 'After forth quarter results' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After forth quarter results' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	-----------------------------------------------
@@ -731,7 +756,7 @@ as
 	 where not (FXConversionType = 'AVG' and isnull(AVG12MonthRate, 0.0) = 0.0)
 	   and not (FXConversionType = 'PIT' and isnull(FXRate, 0.0) = 0.0)
 
-	print 'After inserting USD 2' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After inserting USD 2' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	print 'Inserting Local'
@@ -758,11 +783,11 @@ as
 	  from #ACTUAL_EXTRACT
 
 
-	print 'After insert local' + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	print 'After insert local' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	Set @START = getdate()
 
 	-- Clean up the temp table
-	drop table #XREF;
+--	drop table #XREF;
 	drop table #CONSENSUS_EXTRACT;
 	drop table #CONSENSUS_EXTRACT_SEMI;
 	drop table #ACTUAL_EXTRACT;
