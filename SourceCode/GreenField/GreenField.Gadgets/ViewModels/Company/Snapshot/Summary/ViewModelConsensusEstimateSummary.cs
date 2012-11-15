@@ -55,12 +55,11 @@ namespace GreenField.Gadgets.ViewModels
             entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
             if (entitySelectionData !=null && IsActive)
             {
-                dbInteractivity.RetrieveConsensusEstimatesSummaryData(entitySelectionData, 
-                    RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);
+                HandleSecurityReferenceSet(entitySelectionData);
             }
             if (eventAggregator != null)
             {
-                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet,false);               
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);               
             } 
         }
         #endregion
@@ -137,16 +136,20 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (entSelectionData != null && IsActive)
+                if (entSelectionData != null)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, entSelectionData, 1);
                     entitySelectionData = entSelectionData;
-                    if (null != ConsensusEstimatesSummaryDataLoadedEvent)
+                    if (entitySelectionData != null && IsActive)
                     {
-                        ConsensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        if (null != ConsensusEstimatesSummaryDataLoadedEvent)
+                        {
+                            ConsensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() 
+                            { ShowBusy = true });
+                        }
+                        dbInteractivity.RetrieveConsensusEstimatesSummaryData(entitySelectionData,
+                            RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);
                     }
-                    dbInteractivity.RetrieveConsensusEstimatesSummaryData(entitySelectionData, 
-                        RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);
                 }
                 else
                 {

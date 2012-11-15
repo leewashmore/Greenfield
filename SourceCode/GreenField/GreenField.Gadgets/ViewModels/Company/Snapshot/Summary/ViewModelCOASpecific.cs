@@ -56,7 +56,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
             }
-            if (EntitySelectionInfo != null)
+            if (EntitySelectionInfo != null && IsActive)
             {
                 HandleSecurityReferenceSetEvent(EntitySelectionInfo);
             }
