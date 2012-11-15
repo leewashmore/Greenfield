@@ -894,10 +894,13 @@ namespace GreenField.Gadgets.Helpers
         {
             try
             {
-                if (data == null || description == null || periodYear == null || periodType == null || groupDescription == null)
+                Boolean isArgumentInvalid = data == null || description == null || periodYear == null || periodType == null || 
+                    (uniqueByGroupDesc ? groupDescription == null : false);
+                if (isArgumentInvalid)
                 {
                     throw new ArgumentNullException();
                 }
+
                 T yearData = uniqueByGroupDesc
                     ? data.Where(record =>
                         record.GetType().GetProperty("GroupDescription").GetValue(record, null) != null &&
@@ -1011,7 +1014,7 @@ namespace GreenField.Gadgets.Helpers
 
             Decimal result;
             Int32 decimalPlaces = Convert.ToInt32(decimals);
-            String formattedValue = Decimal.TryParse(value.ToString(), out result) ? String.Format("{0:n" + decimalPlaces.ToString() + "}", result) 
+            String formattedValue = Decimal.TryParse(value.ToString(), out result) ? String.Format("{0:n" + decimalPlaces.ToString() + "}", result)
                                                                                        : value.ToString();
             if (percentage == true)
                 formattedValue = formattedValue + " %";
