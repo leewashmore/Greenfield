@@ -1,16 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.ManagingBga" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.ManagingBga" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient" />
-  <xs:complexType name="RootModel">
+  <xs:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="BgaRootModel">
     <xs:sequence>
       <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/TopDown.FacingClient" minOccurs="0" name="BroadGlobalActiveProtfolio" nillable="true" type="q1:BroadGlobalActivePortfolioModel" />
-      <xs:element minOccurs="0" name="Factors" nillable="true" type="tns:FactorModel" />
+      <xs:element minOccurs="0" name="Cash" nillable="true" type="tns:CashModel" />
+      <xs:element minOccurs="0" name="Factors" nillable="true" type="tns:BgaFactorModel" />
+      <xs:element minOccurs="0" name="Globe" nillable="true" type="tns:GlobeModel" />
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/TopDown.FacingClient" minOccurs="0" name="TargetingType" nillable="true" type="q2:TargetingTypeModel" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="RootModel" nillable="true" type="tns:RootModel" />
-  <xs:complexType name="FactorModel">
+  <xs:element name="BgaRootModel" nillable="true" type="tns:BgaRootModel" />
+  <xs:complexType name="CashModel">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/TopDown.FacingClient" minOccurs="0" name="Base" nillable="true" type="q3:ExpressionModel" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/TopDown.FacingClient" minOccurs="0" name="Scaled" nillable="true" type="q4:ExpressionModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CashModel" nillable="true" type="tns:CashModel" />
+  <xs:complexType name="BgaFactorModel">
     <xs:sequence />
   </xs:complexType>
-  <xs:element name="FactorModel" nillable="true" type="tns:FactorModel" />
+  <xs:element name="BgaFactorModel" nillable="true" type="tns:BgaFactorModel" />
+  <xs:complexType name="GlobeModel">
+    <xs:sequence>
+      <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Residents" nillable="true" type="q5:ArrayOfanyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GlobeModel" nillable="true" type="tns:GlobeModel" />
+  <xs:complexType name="BasketRegionModel">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="BasketRegionModel" nillable="true" type="tns:BasketRegionModel" />
+  <xs:complexType name="OtherModel">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="OtherModel" nillable="true" type="tns:OtherModel" />
+  <xs:complexType name="RegionModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RegionModel" nillable="true" type="tns:RegionModel" />
 </xs:schema>

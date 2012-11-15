@@ -39,7 +39,7 @@ namespace GreenField.Web.Services
         public TargetingOperations()
             : base(
                 CreateFacade(ConfigurationSettings.AimsConnectionString, ConfigurationSettings.ShouldDropRepositoriesOnEachReload),
-                new TopDown.FacingClient.ManagingBga.Serializer()
+                new TopDown.FacingClient.BroadGlobalActive.Serializer(new TopDown.FacingClient.Serializer())
             )
         {
         }

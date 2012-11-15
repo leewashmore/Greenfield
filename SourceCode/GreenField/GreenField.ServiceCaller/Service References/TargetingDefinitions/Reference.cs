@@ -17,12 +17,16 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RootModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.ManagingBga")]
-    public partial class RootModel : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="BgaRootModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class BgaRootModel : object, System.ComponentModel.INotifyPropertyChanged {
         
         private GreenField.ServiceCaller.TargetingDefinitions.BroadGlobalActivePortfolioModel BroadGlobalActiveProtfolioField;
         
-        private GreenField.ServiceCaller.TargetingDefinitions.FactorModel FactorsField;
+        private GreenField.ServiceCaller.TargetingDefinitions.CashModel CashField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.BgaFactorModel FactorsField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.GlobeModel GlobeField;
         
         private GreenField.ServiceCaller.TargetingDefinitions.TargetingTypeModel TargetingTypeField;
         
@@ -40,7 +44,20 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.TargetingDefinitions.FactorModel Factors {
+        public GreenField.ServiceCaller.TargetingDefinitions.CashModel Cash {
+            get {
+                return this.CashField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CashField, value) != true)) {
+                    this.CashField = value;
+                    this.RaisePropertyChanged("Cash");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.BgaFactorModel Factors {
             get {
                 return this.FactorsField;
             }
@@ -48,6 +65,19 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
                 if ((object.ReferenceEquals(this.FactorsField, value) != true)) {
                     this.FactorsField = value;
                     this.RaisePropertyChanged("Factors");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.GlobeModel Globe {
+            get {
+                return this.GlobeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GlobeField, value) != true)) {
+                    this.GlobeField = value;
+                    this.RaisePropertyChanged("Globe");
                 }
             }
         }
@@ -83,8 +113,100 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FactorModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.ManagingBga")]
-    public partial class FactorModel : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="CashModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class CashModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel BaseField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel ScaledField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Base {
+            get {
+                return this.BaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
+                    this.BaseField = value;
+                    this.RaisePropertyChanged("Base");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Scaled {
+            get {
+                return this.ScaledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ScaledField, value) != true)) {
+                    this.ScaledField = value;
+                    this.RaisePropertyChanged("Scaled");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BgaFactorModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class BgaFactorModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GlobeModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BroadGlobalActivePortfolioModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.PortfolioModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.IssueModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.TargetingTypeModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<object>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaPortfolioPickerModel>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BgaPortfolioPickerModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.CashModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BgaFactorModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BasketRegionModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.OtherModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.RegionModel))]
+    public partial class GlobeModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Collections.ObjectModel.ObservableCollection<object> ResidentsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<object> Residents {
+            get {
+                return this.ResidentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ResidentsField, value) != true)) {
+                    this.ResidentsField = value;
+                    this.RaisePropertyChanged("Residents");
+                }
+            }
+        }
         
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
@@ -187,14 +309,276 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ExpressionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient")]
+    public partial class ExpressionModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel> IssuesField;
+        
+        private System.Nullable<decimal> ValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel> Issues {
+            get {
+                return this.IssuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuesField, value) != true)) {
+                    this.IssuesField = value;
+                    this.RaisePropertyChanged("Issues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((this.ValueField.Equals(value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="IssueModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient")]
+    public partial class IssueModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel> IssuesField;
+        
+        private string MessageField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel> Issues {
+            get {
+                return this.IssuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuesField, value) != true)) {
+                    this.IssuesField = value;
+                    this.RaisePropertyChanged("Issues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BgaTargetingTypePickerModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive.Pi" +
+        "cker")]
+    public partial class BgaTargetingTypePickerModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int IdField;
+        
+        private string NameField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaPortfolioPickerModel> PortfoliosField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaPortfolioPickerModel> Portfolios {
+            get {
+                return this.PortfoliosField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfoliosField, value) != true)) {
+                    this.PortfoliosField = value;
+                    this.RaisePropertyChanged("Portfolios");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BgaPortfolioPickerModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive.Pi" +
+        "cker")]
+    public partial class BgaPortfolioPickerModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string IdField;
+        
+        private string NameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BasketRegionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class BasketRegionModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OtherModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class OtherModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RegionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class RegionModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string NameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="TargetingDefinitions.IFacade")]
     public interface IFacade {
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/GetBgaModel", ReplyAction="http://tempuri.org/IFacade/GetBgaModelResponse")]
-        System.IAsyncResult BeginGetBgaModel(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/GetBroadGlobalActiveModel", ReplyAction="http://tempuri.org/IFacade/GetBroadGlobalActiveModelResponse")]
+        System.IAsyncResult BeginGetBroadGlobalActiveModel(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState);
         
-        GreenField.ServiceCaller.TargetingDefinitions.RootModel EndGetBgaModel(System.IAsyncResult result);
+        GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel EndGetBroadGlobalActiveModel(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/GetTargetingTypePortfolioPicker", ReplyAction="http://tempuri.org/IFacade/GetTargetingTypePortfolioPickerResponse")]
+        System.IAsyncResult BeginGetTargetingTypePortfolioPicker(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel> EndGetTargetingTypePortfolioPicker(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -203,19 +587,38 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GetBgaModelCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetBroadGlobalActiveModelCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public GetBgaModelCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public GetBroadGlobalActiveModelCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
-        public GreenField.ServiceCaller.TargetingDefinitions.RootModel Result {
+        public GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((GreenField.ServiceCaller.TargetingDefinitions.RootModel)(this.results[0]));
+                return ((GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetTargetingTypePortfolioPickerCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetTargetingTypePortfolioPickerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel>)(this.results[0]));
             }
         }
     }
@@ -224,11 +627,17 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class FacadeClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.TargetingDefinitions.IFacade>, GreenField.ServiceCaller.TargetingDefinitions.IFacade {
         
-        private BeginOperationDelegate onBeginGetBgaModelDelegate;
+        private BeginOperationDelegate onBeginGetBroadGlobalActiveModelDelegate;
         
-        private EndOperationDelegate onEndGetBgaModelDelegate;
+        private EndOperationDelegate onEndGetBroadGlobalActiveModelDelegate;
         
-        private System.Threading.SendOrPostCallback onGetBgaModelCompletedDelegate;
+        private System.Threading.SendOrPostCallback onGetBroadGlobalActiveModelCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetTargetingTypePortfolioPickerDelegate;
+        
+        private EndOperationDelegate onEndGetTargetingTypePortfolioPickerDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetTargetingTypePortfolioPickerCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -283,60 +692,106 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
             }
         }
         
-        public event System.EventHandler<GetBgaModelCompletedEventArgs> GetBgaModelCompleted;
+        public event System.EventHandler<GetBroadGlobalActiveModelCompletedEventArgs> GetBroadGlobalActiveModelCompleted;
+        
+        public event System.EventHandler<GetTargetingTypePortfolioPickerCompletedEventArgs> GetTargetingTypePortfolioPickerCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.TargetingDefinitions.IFacade.BeginGetBgaModel(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetBgaModel(targetingTypeId, bgaPortfolioId, benchmarkDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.TargetingDefinitions.IFacade.BeginGetBroadGlobalActiveModel(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetBroadGlobalActiveModel(targetingTypeId, bgaPortfolioId, benchmarkDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GreenField.ServiceCaller.TargetingDefinitions.RootModel GreenField.ServiceCaller.TargetingDefinitions.IFacade.EndGetBgaModel(System.IAsyncResult result) {
-            return base.Channel.EndGetBgaModel(result);
+        GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel GreenField.ServiceCaller.TargetingDefinitions.IFacade.EndGetBroadGlobalActiveModel(System.IAsyncResult result) {
+            return base.Channel.EndGetBroadGlobalActiveModel(result);
         }
         
-        private System.IAsyncResult OnBeginGetBgaModel(object[] inValues, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult OnBeginGetBroadGlobalActiveModel(object[] inValues, System.AsyncCallback callback, object asyncState) {
             int targetingTypeId = ((int)(inValues[0]));
             string bgaPortfolioId = ((string)(inValues[1]));
             System.DateTime benchmarkDate = ((System.DateTime)(inValues[2]));
-            return ((GreenField.ServiceCaller.TargetingDefinitions.IFacade)(this)).BeginGetBgaModel(targetingTypeId, bgaPortfolioId, benchmarkDate, callback, asyncState);
+            return ((GreenField.ServiceCaller.TargetingDefinitions.IFacade)(this)).BeginGetBroadGlobalActiveModel(targetingTypeId, bgaPortfolioId, benchmarkDate, callback, asyncState);
         }
         
-        private object[] OnEndGetBgaModel(System.IAsyncResult result) {
-            GreenField.ServiceCaller.TargetingDefinitions.RootModel retVal = ((GreenField.ServiceCaller.TargetingDefinitions.IFacade)(this)).EndGetBgaModel(result);
+        private object[] OnEndGetBroadGlobalActiveModel(System.IAsyncResult result) {
+            GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel retVal = ((GreenField.ServiceCaller.TargetingDefinitions.IFacade)(this)).EndGetBroadGlobalActiveModel(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnGetBgaModelCompleted(object state) {
-            if ((this.GetBgaModelCompleted != null)) {
+        private void OnGetBroadGlobalActiveModelCompleted(object state) {
+            if ((this.GetBroadGlobalActiveModelCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.GetBgaModelCompleted(this, new GetBgaModelCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.GetBroadGlobalActiveModelCompleted(this, new GetBroadGlobalActiveModelCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void GetBgaModelAsync(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate) {
-            this.GetBgaModelAsync(targetingTypeId, bgaPortfolioId, benchmarkDate, null);
+        public void GetBroadGlobalActiveModelAsync(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate) {
+            this.GetBroadGlobalActiveModelAsync(targetingTypeId, bgaPortfolioId, benchmarkDate, null);
         }
         
-        public void GetBgaModelAsync(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, object userState) {
-            if ((this.onBeginGetBgaModelDelegate == null)) {
-                this.onBeginGetBgaModelDelegate = new BeginOperationDelegate(this.OnBeginGetBgaModel);
+        public void GetBroadGlobalActiveModelAsync(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, object userState) {
+            if ((this.onBeginGetBroadGlobalActiveModelDelegate == null)) {
+                this.onBeginGetBroadGlobalActiveModelDelegate = new BeginOperationDelegate(this.OnBeginGetBroadGlobalActiveModel);
             }
-            if ((this.onEndGetBgaModelDelegate == null)) {
-                this.onEndGetBgaModelDelegate = new EndOperationDelegate(this.OnEndGetBgaModel);
+            if ((this.onEndGetBroadGlobalActiveModelDelegate == null)) {
+                this.onEndGetBroadGlobalActiveModelDelegate = new EndOperationDelegate(this.OnEndGetBroadGlobalActiveModel);
             }
-            if ((this.onGetBgaModelCompletedDelegate == null)) {
-                this.onGetBgaModelCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetBgaModelCompleted);
+            if ((this.onGetBroadGlobalActiveModelCompletedDelegate == null)) {
+                this.onGetBroadGlobalActiveModelCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetBroadGlobalActiveModelCompleted);
             }
-            base.InvokeAsync(this.onBeginGetBgaModelDelegate, new object[] {
+            base.InvokeAsync(this.onBeginGetBroadGlobalActiveModelDelegate, new object[] {
                         targetingTypeId,
                         bgaPortfolioId,
-                        benchmarkDate}, this.onEndGetBgaModelDelegate, this.onGetBgaModelCompletedDelegate, userState);
+                        benchmarkDate}, this.onEndGetBroadGlobalActiveModelDelegate, this.onGetBroadGlobalActiveModelCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.TargetingDefinitions.IFacade.BeginGetTargetingTypePortfolioPicker(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetTargetingTypePortfolioPicker(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel> GreenField.ServiceCaller.TargetingDefinitions.IFacade.EndGetTargetingTypePortfolioPicker(System.IAsyncResult result) {
+            return base.Channel.EndGetTargetingTypePortfolioPicker(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetTargetingTypePortfolioPicker(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.TargetingDefinitions.IFacade)(this)).BeginGetTargetingTypePortfolioPicker(callback, asyncState);
+        }
+        
+        private object[] OnEndGetTargetingTypePortfolioPicker(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel> retVal = ((GreenField.ServiceCaller.TargetingDefinitions.IFacade)(this)).EndGetTargetingTypePortfolioPicker(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetTargetingTypePortfolioPickerCompleted(object state) {
+            if ((this.GetTargetingTypePortfolioPickerCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetTargetingTypePortfolioPickerCompleted(this, new GetTargetingTypePortfolioPickerCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetTargetingTypePortfolioPickerAsync() {
+            this.GetTargetingTypePortfolioPickerAsync(null);
+        }
+        
+        public void GetTargetingTypePortfolioPickerAsync(object userState) {
+            if ((this.onBeginGetTargetingTypePortfolioPickerDelegate == null)) {
+                this.onBeginGetTargetingTypePortfolioPickerDelegate = new BeginOperationDelegate(this.OnBeginGetTargetingTypePortfolioPicker);
+            }
+            if ((this.onEndGetTargetingTypePortfolioPickerDelegate == null)) {
+                this.onEndGetTargetingTypePortfolioPickerDelegate = new EndOperationDelegate(this.OnEndGetTargetingTypePortfolioPicker);
+            }
+            if ((this.onGetTargetingTypePortfolioPickerCompletedDelegate == null)) {
+                this.onGetTargetingTypePortfolioPickerCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetTargetingTypePortfolioPickerCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetTargetingTypePortfolioPickerDelegate, null, this.onEndGetTargetingTypePortfolioPickerDelegate, this.onGetTargetingTypePortfolioPickerCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -415,18 +870,30 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginGetBgaModel(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginGetBroadGlobalActiveModel(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[3];
                 _args[0] = targetingTypeId;
                 _args[1] = bgaPortfolioId;
                 _args[2] = benchmarkDate;
-                System.IAsyncResult _result = base.BeginInvoke("GetBgaModel", _args, callback, asyncState);
+                System.IAsyncResult _result = base.BeginInvoke("GetBroadGlobalActiveModel", _args, callback, asyncState);
                 return _result;
             }
             
-            public GreenField.ServiceCaller.TargetingDefinitions.RootModel EndGetBgaModel(System.IAsyncResult result) {
+            public GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel EndGetBroadGlobalActiveModel(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                GreenField.ServiceCaller.TargetingDefinitions.RootModel _result = ((GreenField.ServiceCaller.TargetingDefinitions.RootModel)(base.EndInvoke("GetBgaModel", _args, result)));
+                GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel _result = ((GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel)(base.EndInvoke("GetBroadGlobalActiveModel", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetTargetingTypePortfolioPicker(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetTargetingTypePortfolioPicker", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel> EndGetTargetingTypePortfolioPicker(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel>)(base.EndInvoke("GetTargetingTypePortfolioPicker", _args, result)));
                 return _result;
             }
         }

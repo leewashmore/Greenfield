@@ -135,6 +135,7 @@
     <Compile Include="Helpers\GetDashboardTileContent.cs" />
     <Compile Include="Helpers\TypeResolution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Targeting\RootViewModel.cs" />
     <Compile Include="Views\Admin\InvestmentCommittee\EditDate\ViewDashboardAdminInvestmentCommitteeChangeDate.xaml.cs">
       <DependentUpon>ViewDashboardAdminInvestmentCommitteeChangeDate.xaml</DependentUpon>
     </Compile>

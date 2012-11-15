@@ -15,6 +15,26 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PortfolioModel" nillable="true" type="tns:PortfolioModel" />
+  <xs:complexType name="ExpressionModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExpressionModel" nillable="true" type="tns:ExpressionModel" />
+  <xs:complexType name="ArrayOfIssueModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="IssueModel" nillable="true" type="tns:IssueModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfIssueModel" nillable="true" type="tns:ArrayOfIssueModel" />
+  <xs:complexType name="IssueModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IssueModel" nillable="true" type="tns:IssueModel" />
   <xs:complexType name="TargetingTypeModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" type="xs:int" />

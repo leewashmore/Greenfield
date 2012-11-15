@@ -650,7 +650,10 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\TargetingDefinitions\GreenField.ServiceCaller.TargetingDefinitions.RootModel.datasource">
+    <None Include="Service References\TargetingDefinitions\GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TargetingDefinitions\GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\TargetingDefinitions\TargetingOperations.disco" />
@@ -732,6 +735,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\TargetingDefinitions\TargetingOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TargetingDefinitions\TargetingOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TargetingDefinitions\TargetingOperations5.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

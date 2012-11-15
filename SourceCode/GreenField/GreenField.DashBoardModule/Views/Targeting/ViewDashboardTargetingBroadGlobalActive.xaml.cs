@@ -19,9 +19,14 @@ using GreenField.Common;
 using GreenField.Common.Helper;
 using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
+using GreenField.DashBoardModule.ViewModels.Targeting;
+using GreenField.Gadgets.ViewModels.Targeting.BroadGlobalActive;
 
 namespace GreenField.DashboardModule.Views
 {
+    /// <summary>
+    /// Panel (title + content placeholder).
+    /// </summary>
     [Export]
     public partial class ViewDashboardTargetingBroadGlobalActive : UserControl, INavigationAware
     {
@@ -33,7 +38,8 @@ namespace GreenField.DashboardModule.Views
         public ViewDashboardTargetingBroadGlobalActive(
             ILoggerFacade logger,
             IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity)
+            IDBInteractivity dbInteractivity
+        )
         {
             InitializeComponent();
 
@@ -46,9 +52,6 @@ namespace GreenField.DashboardModule.Views
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
         {
-            if (this.cctrDashboardContent.Content != null)
-                return;
-
             DashboardGadgetParam param = new DashboardGadgetParam()
             {
                 DashboardGadgetPayload = payload,
@@ -57,32 +60,38 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = this.logger
             };
 
-            var viewModel = new ViewModelTargetingBroadGlobalActive(param);
-            var view = new ViewTargetingBroadGlobalActive(viewModel);
-            this.cctrDashboardContent.Content = view;
+            var editorViewModel = new EditorViewModel(param);
+            var pickerViewModel = new PickerViewModel(param.DBInteractivity);
+            var rootModel = new RootViewModel(
+                pickerViewModel,
+                editorViewModel
+            );
+            
+            this.DataContext = rootModel;
         }
 
-        public bool IsNavigationTarget(NavigationContext navigationContext)
+        public Boolean IsNavigationTarget(NavigationContext navigationContext)
         {
             return true;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            /*ViewBaseUserControl control = (ViewBaseUserControl)this.placeholder.Content;
             if (control != null)
             {
                 control.IsActive = false;
-            }
+            }*/
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            /*
+            ViewBaseUserControl control = (ViewBaseUserControl)this.placeholder.Content;
             if (control != null)
             {
-                control.IsActive = true; 
-            }
+                control.IsActive = true;
+            }*/
         }
     }
 }

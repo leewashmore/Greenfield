@@ -17,9 +17,9 @@ using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
 using GreenField.ServiceCaller.TargetingDefinitions;
 
-namespace GreenField.Gadgets.ViewModels
+namespace GreenField.Gadgets.ViewModels.Targeting.BroadGlobalActive
 {
-    public class ViewModelTargetingBroadGlobalActive : NotificationObject
+    public class EditorViewModel : NotificationObject
     {
         private IDBInteractivity repository;
         private IEventAggregator eventAggregator;
@@ -28,7 +28,7 @@ namespace GreenField.Gadgets.ViewModels
         private Visibility commodityGridVisibility = Visibility.Collapsed;
         private Boolean isBusyIndicatorStatus;
 
-        public ViewModelTargetingBroadGlobalActive(DashboardGadgetParam param)
+        public EditorViewModel(DashboardGadgetParam param)
         {
             this.eventAggregator = param.EventAggregator;
             this.repository = param.DBInteractivity;
@@ -69,26 +69,14 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
-        private Boolean isActive;
-        public Boolean IsActive
+        public void Initialize(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
         {
-            get { return isActive; }
-            set
-            {
-                isActive = value;
-            }
-        }
-
-        public void RequestData(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
-        {
-            if (!this.IsActive) return;
+            
             this.repository.GetBgaModel(targetingTypeId, broadGlobalActivePortfolioId, benchmarkDate, this.TakeData);
             this.IsBusyIndicatorStatus = true;
         }
 
-
-        protected void TakeData(RootModel data)
+        protected void TakeData(BgaRootModel data)
         {
             if (data == null) throw new ApplicationException("No data has arrived.");
 
@@ -96,12 +84,17 @@ namespace GreenField.Gadgets.ViewModels
             this.IsBusyIndicatorStatus = false;
         }
 
-        protected void TakeDataUnsafe(RootModel data)
+        protected void TakeDataUnsafe(BgaRootModel data)
         {
+            this.Data = data;
         }
 
         public void Dispose()
         {
         }
+
+        public BgaRootModel Data { get; set; }
+
+
     }
 }

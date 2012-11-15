@@ -21,14 +21,13 @@ using GreenField.ServiceCaller.TargetingDefinitions;
 using GreenField.Gadgets.ViewModels;
 
 
-namespace GreenField.Gadgets.Views
+namespace GreenField.Gadgets.Views.Targeting.BroadGlobalActive
 {
-    public partial class ViewTargetingBroadGlobalActive : Helpers.ViewBaseUserControl
+    public partial class Editor : Helpers.ViewBaseUserControl
     {
-        public ViewTargetingBroadGlobalActive(ViewModelTargetingBroadGlobalActive viewModel)
+        public Editor()
         {
             this.InitializeComponent();
-            this.DataContext = viewModel;
         }
     }
 }

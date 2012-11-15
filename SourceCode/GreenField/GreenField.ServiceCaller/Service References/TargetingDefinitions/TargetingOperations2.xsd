@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.ManagingBga" />
-  <xs:element name="GetBgaModel">
+  <xs:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive" />
+  <xs:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive.Picker" />
+  <xs:element name="GetBroadGlobalActiveModel">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="targetingTypeId" type="xs:int" />
@@ -10,10 +11,22 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetBgaModelResponse">
+  <xs:element name="GetBroadGlobalActiveModelResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.ManagingBga" minOccurs="0" name="GetBgaModelResult" nillable="true" type="q1:RootModel" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive" minOccurs="0" name="GetBroadGlobalActiveModelResult" nillable="true" type="q1:BgaRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTargetingTypePortfolioPicker">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTargetingTypePortfolioPickerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive.Picker" minOccurs="0" name="GetTargetingTypePortfolioPickerResult" nillable="true" type="q2:ArrayOfBgaTargetingTypePickerModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

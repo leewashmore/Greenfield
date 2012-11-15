@@ -272,8 +272,9 @@
     <Compile Include="ViewModels\Company\Charting\UnrealizedGainLoss\ViewModelUnrealizedGainLoss.cs" />
     <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelValuationQualityGrowth.cs" />
     <Compile Include="Helpers\Converters\BasisPointsConverter.cs" />
-    <Compile Include="ViewModels\Targeting\ViewModelTargetingBroadGlobalActive.cs" />
-    <Compile Include="ViewModels\Targeting\ViewModelTargetingTypeWithBgaPortfolioPicker.cs" />
+    <Compile Include="ViewModels\Targeting\BroadGlobalActive\PortfolioPickedEvent.cs" />
+    <Compile Include="ViewModels\Targeting\BroadGlobalActive\ViewModel, Editor.cs" />
+    <Compile Include="ViewModels\Targeting\BroadGlobalActive\ViewModel, Picker.cs" />
     <Compile Include="Views\Screening\Stock\ChildViewCSTDataListSave.xaml.cs">
       <DependentUpon>ChildViewCSTDataListSave.xaml</DependentUpon>
     </Compile>
@@ -520,11 +521,11 @@
     <Compile Include="Views\Portfolio\Snapshot\ViewValuationQualityGrowth.xaml.cs">
       <DependentUpon>ViewValuationQualityGrowth.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Targeting\ViewTargetingTypeWithBgaPortfolioPicker.xaml.cs">
-      <DependentUpon>ViewTargetingTypeWithBgaPortfolioPicker.xaml</DependentUpon>
+    <Compile Include="Views\Targeting\BroadGlobalActive\Picker.xaml.cs">
+      <DependentUpon>Picker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Targeting\ViewTargetingBroadGlobalActive.xaml.cs">
-      <DependentUpon>ViewTargetingBroadGlobalActive.xaml</DependentUpon>
+    <Compile Include="Views\Targeting\BroadGlobalActive\Editor.xaml.cs">
+      <DependentUpon>Editor.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -864,11 +865,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Targeting\ViewTargetingTypeWithBgaPortfolioPicker.xaml">
+    <Page Include="Views\Targeting\BroadGlobalActive\Picker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Targeting\ViewTargetingBroadGlobalActive.xaml">
+    <Page Include="Views\Targeting\BroadGlobalActive\Editor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

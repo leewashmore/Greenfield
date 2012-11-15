@@ -10,11 +10,11 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace GreenField.Gadgets.Views.Targeting
+namespace GreenField.Gadgets.Views.Targeting.BroadGlobalActive
 {
-    public partial class ViewTargetingTypeWithBgaPortfolioPicker : UserControl
+    public partial class Picker : UserControl
     {
-        public ViewTargetingTypeWithBgaPortfolioPicker()
+        public Picker()
         {
             InitializeComponent();
         }

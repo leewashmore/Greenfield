@@ -3,15 +3,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
+    xmlns:gadgets="clr-namespace:GreenField.Gadgets.Views.Targeting.BroadGlobalActive;assembly=GreenField.Gadgets"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400"
+>
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="tbHeader" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0">1234567</TextBlock>
-        <ContentControl x:Name="cctrDashboardContent" Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+        
+        <gadgets:Picker Grid.Row="0" DataContext="{Binding PickerViewModel}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PortfolioPicked">
+                    <i:InvokeCommandAction Command="{Binding PortfolioPickedCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </gadgets:Picker>
+        
+        <gadgets:Editor Grid.Row="1" DataContext="{Binding EditorViewModel}" />
     </Grid>
+    
 </UserControl>
