@@ -8,6 +8,7 @@
     xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
     xmlns:mine="clr-namespace:GreenField.Gadgets.ViewModels.Targeting.BroadGlobalActive"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -54,10 +55,13 @@
                 
                 <mine:NameCellTemplateSelector.RegionTemplate>
                     <DataTemplate>
-                        <TextBlock
-                            Text="{Binding Name}"
-                            Style="{StaticResource nameCellStyle}"
-                        />
+                        <HyperlinkButton Command="{Binding ToggleExpandedCommand}">
+                            <TextBlock
+                                Text="{Binding Name}"
+                                Style="{StaticResource nameCellStyle}"
+                            >
+                            </TextBlock>
+                        </HyperlinkButton>
                     </DataTemplate>
                 </mine:NameCellTemplateSelector.RegionTemplate>
                 
@@ -129,8 +133,11 @@
 
                             <!-- pseudo column needed to expand / collapse rows -->
                             <telerik:GridViewDataColumn Header="IsVisible" DataMemberBinding="{Binding IsVisible}" IsVisible="False"  />
-                            
-                            <telerik:GridViewDataColumn 
+
+                            <telerik:GridViewDataColumn Header="IsExpanded" DataMemberBinding="{Binding IsExpanded}" />
+
+                            <telerik:GridViewDataColumn
+                               
                                 Width="*"  
                                 Header="Name" 
                                 TextAlignment="Left"
@@ -183,8 +190,8 @@
                             />
 
                             <telerik:GridViewDataColumn
-                                Header="True Exposed"
-                                DataMemberBinding="{Binding TrueExposed.Value}"
+                                Header="True Exposure"
+                                DataMemberBinding="{Binding TrueExposure.Value}"
                                 IsReadOnly="True"
                             />
                             

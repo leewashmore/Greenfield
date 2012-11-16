@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace GreenField.ServiceCaller.TargetingDefinitions
 {
@@ -13,5 +14,6 @@ namespace GreenField.ServiceCaller.TargetingDefinitions
     public interface IExpandableModel : IParentModel
     {
         Boolean IsExpanded { get; set; }
+        ICommand ToggleExpandedCommand { get; }
     }
 }

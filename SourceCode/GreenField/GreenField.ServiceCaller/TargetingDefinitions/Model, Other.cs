@@ -9,11 +9,20 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.ServiceCaller.TargetingDefinitions
 {
     public partial class OtherModel : IExpandableModel
     {
+        public OtherModel()
+        {
+            this.ToggleExpandedCommand = new DelegateCommand<Object>(whatever => this.IsExpanded = !this.IsExpanded);
+        }
+
+        public ICommand ToggleExpandedCommand { get; private set; }
+
+
         private Boolean isExpanded;
         public Boolean IsExpanded
         {

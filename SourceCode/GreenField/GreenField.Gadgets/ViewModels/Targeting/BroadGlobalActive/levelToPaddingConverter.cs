@@ -18,7 +18,7 @@ namespace GreenField.Gadgets.ViewModels.Targeting.BroadGlobalActive
         public Object Convert(Object value, Type targetType, Object parameter, System.Globalization.CultureInfo culture)
         {
             var level = System.Convert.ToInt32(value);
-            var amplitude = System.Convert.ToInt32(value);
+            var amplitude = System.Convert.ToInt32(parameter);
             var result = new Thickness(level * amplitude, 0, 0, 0);
             return result;
         }

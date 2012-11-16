@@ -22,7 +22,10 @@ namespace GreenField.ServiceCaller.TargetingDefinitions
 
         public Int32 Level
         {
-            get { return 0; }
+            get { return -1; }
         }
+
+
+        public ICommand ToggleExpandedCommand { get { throw new NotSupportedException(); } }
     }
 }
