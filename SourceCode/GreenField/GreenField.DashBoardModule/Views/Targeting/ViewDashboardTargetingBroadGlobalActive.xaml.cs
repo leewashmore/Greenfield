@@ -60,7 +60,12 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = this.logger
             };
 
-            var editorViewModel = new EditorViewModel(param);
+            var modelTraverser = new ModelTraverser();
+            var editorViewModel = new EditorViewModel(
+                param,
+                modelTraverser,
+                new DefaultExpandCollapseStateSetter(modelTraverser)
+            );
             var pickerViewModel = new PickerViewModel(param.DBInteractivity);
             var rootModel = new RootViewModel(
                 pickerViewModel,

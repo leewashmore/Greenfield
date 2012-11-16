@@ -272,6 +272,11 @@
     <Compile Include="ViewModels\Company\Charting\UnrealizedGainLoss\ViewModelUnrealizedGainLoss.cs" />
     <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelValuationQualityGrowth.cs" />
     <Compile Include="Helpers\Converters\BasisPointsConverter.cs" />
+    <Compile Include="ViewModels\Targeting\BroadGlobalActive\DataTemplateSelector.cs" />
+    <Compile Include="ViewModels\Targeting\BroadGlobalActive\DefaultExpandCollapseStateSetter.cs" />
+    <Compile Include="ViewModels\Targeting\BroadGlobalActive\LevelToPaddingConverter.cs" />
+    <Compile Include="ViewModels\Targeting\BroadGlobalActive\ModelTraverser.cs" />
+    <Compile Include="ViewModels\Targeting\BroadGlobalActive\NameCellStyleSelector.cs" />
     <Compile Include="ViewModels\Targeting\BroadGlobalActive\PortfolioPickedEvent.cs" />
     <Compile Include="ViewModels\Targeting\BroadGlobalActive\ViewModel, Editor.cs" />
     <Compile Include="ViewModels\Targeting\BroadGlobalActive\ViewModel, Picker.cs" />

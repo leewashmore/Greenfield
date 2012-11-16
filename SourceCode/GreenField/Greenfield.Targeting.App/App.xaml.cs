@@ -42,7 +42,7 @@ namespace GreenField.Targeting.App
             // icon in the status bar and Firefox will display propertyName script error.
             if (!System.Diagnostics.Debugger.IsAttached)
             {
-
+                MessageBox.Show(e.ExceptionObject.ToString());
                 // NOTE: This will allow the application to continue running after an exception has been thrown
                 // but not handled. 
                 // For production applications this error handling should be replaced with something that will 

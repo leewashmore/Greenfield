@@ -116,12 +116,12 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="CashModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
     public partial class CashModel : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel BaseField;
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseField;
         
-        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel ScaledField;
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel ScaledField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Base {
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel Base {
             get {
                 return this.BaseField;
             }
@@ -134,7 +134,7 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Scaled {
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel Scaled {
             get {
                 return this.ScaledField;
             }
@@ -174,29 +174,12 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GlobeModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BroadGlobalActivePortfolioModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.PortfolioModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.IssueModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.TargetingTypeModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<object>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BgaTargetingTypePickerModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaPortfolioPickerModel>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BgaPortfolioPickerModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BgaRootModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.CashModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BgaFactorModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BasketRegionModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.OtherModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.RegionModel))]
     public partial class GlobeModel : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private System.Collections.ObjectModel.ObservableCollection<object> ResidentsField;
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.GlobeResident> ResidentsField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.ObjectModel.ObservableCollection<object> Residents {
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.GlobeResident> Residents {
             get {
                 return this.ResidentsField;
             }
@@ -311,8 +294,8 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ExpressionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient")]
-    public partial class ExpressionModel : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="NullableExpressionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient")]
+    public partial class NullableExpressionModel : object, System.ComponentModel.INotifyPropertyChanged {
         
         private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel> IssuesField;
         
@@ -385,6 +368,1098 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
                 if ((object.ReferenceEquals(this.MessageField, value) != true)) {
                     this.MessageField = value;
                     this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GlobeResident", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.UnsavedBasketCountryModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.RegionModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BasketRegionModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BgaCountryModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.BasketCountryModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.TargetingDefinitions.OtherModel))]
+    public partial class GlobeResident : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UnsavedBasketCountryModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class UnsavedBasketCountryModel : GreenField.ServiceCaller.TargetingDefinitions.GlobeResident {
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel BaseField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseActiveField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel BenchmarkField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.CountryModel CountryField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel OverlayField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel PortfolioAdjustmentField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioScaledField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueActiveField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueExposureField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel Base {
+            get {
+                return this.BaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
+                    this.BaseField = value;
+                    this.RaisePropertyChanged("Base");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseActive {
+            get {
+                return this.BaseActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
+                    this.BaseActiveField = value;
+                    this.RaisePropertyChanged("BaseActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.CountryModel Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel PortfolioAdjustment {
+            get {
+                return this.PortfolioAdjustmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
+                    this.PortfolioAdjustmentField = value;
+                    this.RaisePropertyChanged("PortfolioAdjustment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioScaled {
+            get {
+                return this.PortfolioScaledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
+                    this.PortfolioScaledField = value;
+                    this.RaisePropertyChanged("PortfolioScaled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueActive {
+            get {
+                return this.TrueActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
+                    this.TrueActiveField = value;
+                    this.RaisePropertyChanged("TrueActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueExposure {
+            get {
+                return this.TrueExposureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
+                    this.TrueExposureField = value;
+                    this.RaisePropertyChanged("TrueExposure");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RegionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class RegionModel : GreenField.ServiceCaller.TargetingDefinitions.GlobeResident {
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseActiveField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel BenchmarkField;
+        
+        private string NameField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel OverlayField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioAdjustmentField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioScaledField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.GlobeResident> ResidentsField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueActiveField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueExposureField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel Base {
+            get {
+                return this.BaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
+                    this.BaseField = value;
+                    this.RaisePropertyChanged("Base");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseActive {
+            get {
+                return this.BaseActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
+                    this.BaseActiveField = value;
+                    this.RaisePropertyChanged("BaseActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioAdjustment {
+            get {
+                return this.PortfolioAdjustmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
+                    this.PortfolioAdjustmentField = value;
+                    this.RaisePropertyChanged("PortfolioAdjustment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioScaled {
+            get {
+                return this.PortfolioScaledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
+                    this.PortfolioScaledField = value;
+                    this.RaisePropertyChanged("PortfolioScaled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.GlobeResident> Residents {
+            get {
+                return this.ResidentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ResidentsField, value) != true)) {
+                    this.ResidentsField = value;
+                    this.RaisePropertyChanged("Residents");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueActive {
+            get {
+                return this.TrueActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
+                    this.TrueActiveField = value;
+                    this.RaisePropertyChanged("TrueActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueExposure {
+            get {
+                return this.TrueExposureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
+                    this.TrueExposureField = value;
+                    this.RaisePropertyChanged("TrueExposure");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BasketRegionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class BasketRegionModel : GreenField.ServiceCaller.TargetingDefinitions.GlobeResident {
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel BaseField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseActiveField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.RegionBasketModel BasketField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel BenchmarkField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaCountryModel> CountriesField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel OverlayField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel PortfolioAdjustmentField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioScaledField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueActiveField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueExposureField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel Base {
+            get {
+                return this.BaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
+                    this.BaseField = value;
+                    this.RaisePropertyChanged("Base");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseActive {
+            get {
+                return this.BaseActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
+                    this.BaseActiveField = value;
+                    this.RaisePropertyChanged("BaseActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.RegionBasketModel Basket {
+            get {
+                return this.BasketField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BasketField, value) != true)) {
+                    this.BasketField = value;
+                    this.RaisePropertyChanged("Basket");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BgaCountryModel> Countries {
+            get {
+                return this.CountriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountriesField, value) != true)) {
+                    this.CountriesField = value;
+                    this.RaisePropertyChanged("Countries");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel PortfolioAdjustment {
+            get {
+                return this.PortfolioAdjustmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
+                    this.PortfolioAdjustmentField = value;
+                    this.RaisePropertyChanged("PortfolioAdjustment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioScaled {
+            get {
+                return this.PortfolioScaledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
+                    this.PortfolioScaledField = value;
+                    this.RaisePropertyChanged("PortfolioScaled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueActive {
+            get {
+                return this.TrueActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
+                    this.TrueActiveField = value;
+                    this.RaisePropertyChanged("TrueActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueExposure {
+            get {
+                return this.TrueExposureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
+                    this.TrueExposureField = value;
+                    this.RaisePropertyChanged("TrueExposure");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BgaCountryModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class BgaCountryModel : GreenField.ServiceCaller.TargetingDefinitions.GlobeResident {
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel BenchmarkExpressionField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.CountryModel CountryField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel OverlayExpressionField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel BenchmarkExpression {
+            get {
+                return this.BenchmarkExpressionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkExpressionField, value) != true)) {
+                    this.BenchmarkExpressionField = value;
+                    this.RaisePropertyChanged("BenchmarkExpression");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.CountryModel Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel OverlayExpression {
+            get {
+                return this.OverlayExpressionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayExpressionField, value) != true)) {
+                    this.OverlayExpressionField = value;
+                    this.RaisePropertyChanged("OverlayExpression");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BasketCountryModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class BasketCountryModel : GreenField.ServiceCaller.TargetingDefinitions.GlobeResident {
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel BaseField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseActiveField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.CountryBasketModel BasketField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel BenchmarkField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel OverlayField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel PortfolioAdjustmentField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioScaledField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueActiveField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueExposureField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel Base {
+            get {
+                return this.BaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
+                    this.BaseField = value;
+                    this.RaisePropertyChanged("Base");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseActive {
+            get {
+                return this.BaseActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
+                    this.BaseActiveField = value;
+                    this.RaisePropertyChanged("BaseActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.CountryBasketModel Basket {
+            get {
+                return this.BasketField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BasketField, value) != true)) {
+                    this.BasketField = value;
+                    this.RaisePropertyChanged("Basket");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.EditableExpressionModel PortfolioAdjustment {
+            get {
+                return this.PortfolioAdjustmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
+                    this.PortfolioAdjustmentField = value;
+                    this.RaisePropertyChanged("PortfolioAdjustment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioScaled {
+            get {
+                return this.PortfolioScaledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
+                    this.PortfolioScaledField = value;
+                    this.RaisePropertyChanged("PortfolioScaled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueActive {
+            get {
+                return this.TrueActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
+                    this.TrueActiveField = value;
+                    this.RaisePropertyChanged("TrueActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueExposure {
+            get {
+                return this.TrueExposureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
+                    this.TrueExposureField = value;
+                    this.RaisePropertyChanged("TrueExposure");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OtherModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
+    public partial class OtherModel : GreenField.ServiceCaller.TargetingDefinitions.GlobeResident {
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseActiveField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BasketCountryModel> BasketCountriesField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel BenchmarkField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel OverlayField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioAdjustmentField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioScaledField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueActiveField;
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueExposureField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.UnsavedBasketCountryModel> UnsavedBasketCountriesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel Base {
+            get {
+                return this.BaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
+                    this.BaseField = value;
+                    this.RaisePropertyChanged("Base");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel BaseActive {
+            get {
+                return this.BaseActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
+                    this.BaseActiveField = value;
+                    this.RaisePropertyChanged("BaseActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.BasketCountryModel> BasketCountries {
+            get {
+                return this.BasketCountriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BasketCountriesField, value) != true)) {
+                    this.BasketCountriesField = value;
+                    this.RaisePropertyChanged("BasketCountries");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioAdjustment {
+            get {
+                return this.PortfolioAdjustmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
+                    this.PortfolioAdjustmentField = value;
+                    this.RaisePropertyChanged("PortfolioAdjustment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel PortfolioScaled {
+            get {
+                return this.PortfolioScaledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
+                    this.PortfolioScaledField = value;
+                    this.RaisePropertyChanged("PortfolioScaled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueActive {
+            get {
+                return this.TrueActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
+                    this.TrueActiveField = value;
+                    this.RaisePropertyChanged("TrueActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.NullableExpressionModel TrueExposure {
+            get {
+                return this.TrueExposureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
+                    this.TrueExposureField = value;
+                    this.RaisePropertyChanged("TrueExposure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.UnsavedBasketCountryModel> UnsavedBasketCountries {
+            get {
+                return this.UnsavedBasketCountriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UnsavedBasketCountriesField, value) != true)) {
+                    this.UnsavedBasketCountriesField = value;
+                    this.RaisePropertyChanged("UnsavedBasketCountries");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EditableExpressionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient")]
+    public partial class EditableExpressionModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Nullable<decimal> DefaultValueField;
+        
+        private System.Nullable<decimal> EditedValueField;
+        
+        private System.Nullable<decimal> InitialValueField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel> IssuesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> DefaultValue {
+            get {
+                return this.DefaultValueField;
+            }
+            set {
+                if ((this.DefaultValueField.Equals(value) != true)) {
+                    this.DefaultValueField = value;
+                    this.RaisePropertyChanged("DefaultValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> EditedValue {
+            get {
+                return this.EditedValueField;
+            }
+            set {
+                if ((this.EditedValueField.Equals(value) != true)) {
+                    this.EditedValueField = value;
+                    this.RaisePropertyChanged("EditedValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> InitialValue {
+            get {
+                return this.InitialValueField;
+            }
+            set {
+                if ((this.InitialValueField.Equals(value) != true)) {
+                    this.InitialValueField = value;
+                    this.RaisePropertyChanged("InitialValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel> Issues {
+            get {
+                return this.IssuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuesField, value) != true)) {
+                    this.IssuesField = value;
+                    this.RaisePropertyChanged("Issues");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ExpressionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient")]
+    public partial class ExpressionModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel> IssuesField;
+        
+        private decimal ValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.IssueModel> Issues {
+            get {
+                return this.IssuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuesField, value) != true)) {
+                    this.IssuesField = value;
+                    this.RaisePropertyChanged("Issues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((this.ValueField.Equals(value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CountryModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient")]
+    public partial class CountryModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string IsoCodeField;
+        
+        private string NameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IsoCode {
+            get {
+                return this.IsoCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IsoCodeField, value) != true)) {
+                    this.IsoCodeField = value;
+                    this.RaisePropertyChanged("IsoCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RegionBasketModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient")]
+    public partial class RegionBasketModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.CountryModel> CountriesField;
+        
+        private int IdField;
+        
+        private string NameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.TargetingDefinitions.CountryModel> Countries {
+            get {
+                return this.CountriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountriesField, value) != true)) {
+                    this.CountriesField = value;
+                    this.RaisePropertyChanged("Countries");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CountryBasketModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient")]
+    public partial class CountryBasketModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private GreenField.ServiceCaller.TargetingDefinitions.CountryModel CountryField;
+        
+        private int IdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.TargetingDefinitions.CountryModel Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -482,66 +1557,6 @@ namespace GreenField.ServiceCaller.TargetingDefinitions {
                 }
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="BasketRegionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
-    public partial class BasketRegionModel : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="OtherModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
-    public partial class OtherModel : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RegionModel", Namespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient.BroadGlobalActive")]
-    public partial class RegionModel : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string NameField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string Name {

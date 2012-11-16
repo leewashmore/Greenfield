@@ -7,6 +7,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    xmlns:mine="clr-namespace:GreenField.Gadgets.ViewModels.Targeting.BroadGlobalActive"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -14,10 +15,69 @@
 
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
+
+            <mine:LevelToPaddingConverter x:Key="levelToPaddingConverter" />
+            
+            <!-- name cell style -->
+            <Style TargetType="TextBlock" x:Key="nameCellStyle">
+                <Setter Property="Padding" Value="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
+            </Style>
+                        
+            <!-- name template selector -->
+            <mine:NameCellTemplateSelector x:Key="nameCellTemplateSelector">
+                
+                <mine:NameCellTemplateSelector.DefaultTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Style="{StaticResource nameCellStyle}"
+                        />
+                    </DataTemplate>
+                </mine:NameCellTemplateSelector.DefaultTemplate>
+                
+                <mine:NameCellTemplateSelector.BasketRegionTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding Basket.Name}"
+                            Style="{StaticResource nameCellStyle}"
+                        />
+                    </DataTemplate>
+                </mine:NameCellTemplateSelector.BasketRegionTemplate>
+                
+                <mine:NameCellTemplateSelector.BasketCountryTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding Basket.Country.Name}"
+                            Style="{StaticResource nameCellStyle}"
+                        />
+                    </DataTemplate>
+                </mine:NameCellTemplateSelector.BasketCountryTemplate>
+                
+                <mine:NameCellTemplateSelector.RegionTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding Name}"
+                            Style="{StaticResource nameCellStyle}"
+                        />
+                    </DataTemplate>
+                </mine:NameCellTemplateSelector.RegionTemplate>
+                
+                <mine:NameCellTemplateSelector.CountryTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding Country.Name}"
+                            Style="{StaticResource nameCellStyle}"
+                        />
+                    </DataTemplate>
+                </mine:NameCellTemplateSelector.CountryTemplate>
+                
+            </mine:NameCellTemplateSelector>
+            
             <helpers:PercentageValueConverterOneDec x:Key="ConvertPercVAlOneDecPlace"/>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>        
     </helpers:ViewBaseUserControl.Resources>
 
@@ -29,37 +89,26 @@
         DisplayAfter="0"
         IsBusy="{Binding IsBusyIndicatorStatus}">
 
-        <Grid x:Name="LayoutRoot" Background="White" Visibility = "{Binding CommodityGridVisibility, Mode=TwoWay}">
+        <Grid x:Name="LayoutRoot" Background="White">
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
             <Grid Grid.Row="0">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">                   
-                    <!--button to export the grid to excel-->
-                    <!--<telerik:RadButton x:Name="btnExportExcel" Grid.Column="3" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="5,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
-                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    </telerik:RadButton>-->
-                </StackPanel>
-            </Grid>
-            
-            <Grid Grid.Row="1">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     
                     <telerik:RadGridView
                         FrozenColumnsSplitterVisibility="Collapsed"
                         AutoGenerateColumns="false" 
-                        ItemsSource="{Binding Data.Globe}" 
+                        ItemsSource="{Binding Residents}" 
                         CanUserSelect="False" 
                         CanUserReorderColumns="False" 
                         CanUserInsertRows="False" 
                         telerik:StyleManager.Theme="Metro"
                         CanUserDeleteRows="False" 
-                        IsReadOnly="True" 
                         CanUserSortColumns="False" 
-                        ScrollMode="Deferred"
+                        ScrollMode="RealTime"
                         RowIndicatorVisibility="Collapsed" 
                         ShowGroupPanel="False" 
                         UseLayoutRounding="True"                                     
@@ -67,30 +116,77 @@
                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                         RowStyle="{StaticResource GridViewRowStyle}"                                    
-                        AlternationCount="2"
                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                         AlternateRowStyle ="{StaticResource GridViewAlternateRowStyle}"
+                        AlternationCount="2"
                     >
-                        
+
+                        <telerik:RadGridView.FilterDescriptors>
+                            <telerik:FilterDescriptor Member="IsVisible" Operator="IsEqualTo" Value="True" IsCaseSensitive="False"/>
+                        </telerik:RadGridView.FilterDescriptors>
+
                         <telerik:RadGridView.Columns>
+
+                            <!-- pseudo column needed to expand / collapse rows -->
+                            <telerik:GridViewDataColumn Header="IsVisible" DataMemberBinding="{Binding IsVisible}" IsVisible="False"  />
                             
                             <telerik:GridViewDataColumn 
                                 Width="*"  
-                                Header="Commodity/Index" 
-                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"   
+                                Header="Name" 
                                 TextAlignment="Left"
-                                DataMemberBinding="{Binding CommodityID}" 
-                                HeaderTextAlignment="Left" 
-                                CellStyle="{StaticResource GridViewCellStyle}"/>
-                                <telerik:GridViewDataColumn 
-                                x:Name="dgcYTD" 
-                                Width="*" 
-                                Header="YTD" 
-                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                TextAlignment="Right"                       
-                                DataMemberBinding="{Binding YTD, Converter={StaticResource ConvertPercVAlOneDecPlace}}" 
-                                HeaderTextAlignment="Right" 
-                                CellStyle="{StaticResource GridViewCellStyle}"/>
+                                HeaderTextAlignment="Left"
+                                CellStyle="{StaticResource GridViewCellStyle}"
+                                CellTemplateSelector="{StaticResource nameCellTemplateSelector}"
+                                IsReadOnly="True"
+                            />
+                            
+                            <telerik:GridViewDataColumn
+                                Header="Benchmark"
+                                DataMemberBinding="{Binding Benchmark.Value}"
+                                IsReadOnly="True"
+                            />
+
+                            <telerik:GridViewDataColumn
+                                Header="Base"
+                                DataMemberBinding="{Binding Base.EditedValue}"
+                                IsReadOnly="False"
+                            />
+
+                            <telerik:GridViewDataColumn
+                                Header="Base Active"
+                                DataMemberBinding="{Binding BaseActive.Value}"
+                                IsReadOnly="True"
+                            />
+
+                            <telerik:GridViewDataColumn
+                                Header="Overlay"
+                                DataMemberBinding="{Binding Overlay.Value}"
+                                IsReadOnly="True"
+                            />
+
+                            <telerik:GridViewDataColumn
+                                Header="Portfolio Adj"
+                                DataMemberBinding="{Binding PortfolioAdjustment.EditedValue}"
+                                IsReadOnly="False"
+                            />
+
+                            <telerik:GridViewDataColumn
+                                Header="Portfolio Scaled"
+                                DataMemberBinding="{Binding PortfolioScaled.Value}"
+                                IsReadOnly="True"
+                            />
+
+                            <telerik:GridViewDataColumn
+                                Header="True Active"
+                                DataMemberBinding="{Binding TrueActive.Value}"
+                                IsReadOnly="True"
+                            />
+
+                            <telerik:GridViewDataColumn
+                                Header="True Exposed"
+                                DataMemberBinding="{Binding TrueExposed.Value}"
+                                IsReadOnly="True"
+                            />
                             
                         </telerik:RadGridView.Columns>
 

@@ -27,9 +27,17 @@ namespace GreenField.Gadgets.ViewModels.Targeting.BroadGlobalActive
         private List<FXCommodityData> commodityData;
         private Visibility commodityGridVisibility = Visibility.Collapsed;
         private Boolean isBusyIndicatorStatus;
+        private ModelTraverser traverser;
+        private DefaultExpandCollapseStateSetter defaultExpandCollapseStateSetter;
 
-        public EditorViewModel(DashboardGadgetParam param)
+        public EditorViewModel(
+            DashboardGadgetParam param,
+            ModelTraverser traverser,
+            DefaultExpandCollapseStateSetter defaultExpandCollapseStateSetter
+        )
         {
+            this.traverser = traverser;
+            this.defaultExpandCollapseStateSetter = defaultExpandCollapseStateSetter;
             this.eventAggregator = param.EventAggregator;
             this.repository = param.DBInteractivity;
             this.logger = param.LoggerFacade;
@@ -71,7 +79,7 @@ namespace GreenField.Gadgets.ViewModels.Targeting.BroadGlobalActive
 
         public void Initialize(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
         {
-            
+
             this.repository.GetBgaModel(targetingTypeId, broadGlobalActivePortfolioId, benchmarkDate, this.TakeData);
             this.IsBusyIndicatorStatus = true;
         }
@@ -86,14 +94,24 @@ namespace GreenField.Gadgets.ViewModels.Targeting.BroadGlobalActive
 
         protected void TakeDataUnsafe(BgaRootModel data)
         {
-            this.Data = data;
+            var model = data.Globe;
+            this.defaultExpandCollapseStateSetter.SetDefaultCollapseExpandState(model);
+            var residents = this.traverser.Traverse(model);
+            this.Residents = residents;
         }
+
+        private IEnumerable<IGlobeResident> residents;
+        public IEnumerable<IGlobeResident> Residents
+        {
+            get { return this.residents; }
+            set { this.residents = value; this.RaisePropertyChanged(() => this.Residents); }
+        }
+
 
         public void Dispose()
         {
         }
 
-        public BgaRootModel Data { get; set; }
 
 
     }
