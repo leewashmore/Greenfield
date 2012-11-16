@@ -198,10 +198,15 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                     {                  
-                        new RadExportOptions() { ElementName = "Custom Screening Tool", Element = this.dgCustomSecurity, 
-                                                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER }
+                        new RadExportOptions()
+                        {
+                            ElementName = "Custom Screening Tool", 
+                            Element = this.dgCustomSecurity, 
+                            ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXCEL_EXPORT_FILTER 
+                        }
                     };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.CUSTOM_SCREENING_TOOL);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: "
+                        + GadgetNames.CUSTOM_SCREENING_TOOL);
                     childExportOptions.Show();
                 }
             }
@@ -210,6 +215,11 @@ namespace GreenField.Gadgets.Views
                 Prompt.ShowDialog(ex.Message);
             }
         } 
+
+        private void ExcelElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
         #endregion
 
         #region PDFExport
@@ -218,9 +228,23 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        private void btnExportPdf_Click(object sender, RoutedEventArgs e)
         {
-            PDFExporter.btnExportPDF_Click(this.dgCustomSecurity);
+            if (this.dgCustomSecurity.Visibility == Visibility.Visible)
+            {
+                List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
+                    {                  
+                        new RadExportOptions()
+                        {
+                            ElementName = "Custom Screening Tool", 
+                            Element = this.dgCustomSecurity, 
+                            ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER 
+                        }
+                    };
+                ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: "
+                    + GadgetNames.CUSTOM_SCREENING_TOOL);
+                childExportOptions.Show();
+            }
         }
         #endregion
 
@@ -232,13 +256,22 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            Dispatcher.BeginInvoke((Action)(() =>
+            if (this.dgCustomSecurity.Visibility == Visibility.Visible)
             {
-                RichTextBox.Document = PDFExporter.Print(dgCustomSecurity, 6);
-            }));
-
-            this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
+                    {                  
+                        new RadExportOptions()
+                        {
+                            ElementName = "Custom Screening Tool", 
+                            Element = this.dgCustomSecurity, 
+                            ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
+                            RichTextBox = this.RichTextBox
+                        }
+                    };
+                ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: "
+                    + GadgetNames.CUSTOM_SCREENING_TOOL);
+                childExportOptions.Show();
+            }
         }
         #endregion
 

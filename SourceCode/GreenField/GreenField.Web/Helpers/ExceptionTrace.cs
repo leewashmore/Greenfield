@@ -27,7 +27,29 @@ namespace GreenField.Web.Helpers
         public static void LogException(Exception ex)
         {
             if (ex == null)
+            {
                 throw new ArgumentNullException();
+            }
+            string userName = null;
+
+            if (System.Web.HttpContext.Current.Session["Session"] != null)
+            {
+                userName = (System.Web.HttpContext.Current.Session["Session"] as Session).UserName;
+            }
+
+            if (userName == null)
+            {
+                userName = "Null";
+            }
+            loggingOperations.LogToFile("|User[(" + userName.Replace(Environment.NewLine, " ")
+                + ")]|Type[(Exception"
+                + ")]|Message[(" + ex.Message.Replace(Environment.NewLine, " ")
+                + ")]|StackTrace[(" + StackTraceToString(ex)
+                + ")]", "Exception", "Medium");
+        }
+
+        public static void LogInfo(string input, string type, string message)
+        {
             string userName = null;
 
             if (System.Web.HttpContext.Current.Session["Session"] != null)
@@ -41,12 +63,12 @@ namespace GreenField.Web.Helpers
             }
 
             loggingOperations.LogToFile("|User[(" + userName.Replace(Environment.NewLine, " ")
-                + ")]|Type[(Exception"
-                + ")]|Message[(" + ex.Message.Replace(Environment.NewLine, " ")
-                + ")]|StackTrace[(" + StackTraceToString(ex)
-                + ")]", "Exception", "Medium");
-
-        }  
+                + ")]|Type[(" + type.Replace(Environment.NewLine, " ")
+                + ")]|Message[(" + message.Replace(Environment.NewLine, " ")
+                + ")]|Input[(" + input.ToString().Replace(Environment.NewLine, " ")
+                + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
+                + ")]", "Debug", "None");
+        }
         #endregion
 
         #region Methods
@@ -70,4 +92,6 @@ namespace GreenField.Web.Helpers
         }        
         #endregion
     }
+
+    
 }

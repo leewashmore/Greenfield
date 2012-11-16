@@ -104,8 +104,8 @@ namespace GreenField.Gadgets.Views
                     rbtnPrivate.IsChecked = true;
                 }
             }
-        }        
-        #endregion        
+        }
+        #endregion
 
         #region Events
 
@@ -117,14 +117,18 @@ namespace GreenField.Gadgets.Views
         private void HandleCheck(object sender, RoutedEventArgs e)
         {
             RadioButton rb = sender as RadioButton;
-            if (Convert.ToBoolean(rbtnPublic.IsChecked))
+            if (rb != null)
             {
-                SelectedAccessibility = "Public";
+                SelectedAccessibility = rb.Content as String; 
             }
-            else if (Convert.ToBoolean(rbtnPrivate.IsChecked))
-            {
-                SelectedAccessibility = "Private";
-            }
+            //if (Convert.ToBoolean(rbtnPublic.IsChecked))
+            //{
+            //    SelectedAccessibility = "Public";
+            //}
+            //else if (Convert.ToBoolean(rbtnPrivate.IsChecked))
+            //{
+            //    SelectedAccessibility = "Private";
+            //}
         }
 
         /// <summary>
@@ -166,7 +170,7 @@ namespace GreenField.Gadgets.Views
                     return;
                 }
             }
-            this.DialogResult = true;            
+            this.DialogResult = true;
         }
 
         /// <summary>

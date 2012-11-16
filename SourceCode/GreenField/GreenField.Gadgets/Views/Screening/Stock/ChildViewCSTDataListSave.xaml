@@ -7,8 +7,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
     mc:Ignorable="d" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    d:DesignHeight="150" d:DesignWidth="347">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" >
 
     <controls:ChildWindow.Resources>
         <ResourceDictionary>
@@ -30,34 +29,27 @@
         <TextBlock x:Name="txtMessage" Grid.Row="0" FontFamily="Arial" FontSize="7" Foreground="Red" HorizontalAlignment="Left" 
                    VerticalAlignment="Center" Visibility="Collapsed"/>
         
-        <StackPanel Grid.Row="1" 
-                    Orientation="Horizontal"
-                    HorizontalAlignment="left"
-                    VerticalAlignment="Top">
-            <TextBlock Text="Name:" 
-                       Width="120" FontFamily="Arial"
-                       FontSize="11"
-                       FontWeight="Normal"/>
-            <TextBox x:Name="txtDataListName" 
-                       TextAlignment="Left"
-                        Margin="10,0,0,0"
-                       Width="194" FontFamily="Arial"
-                       FontSize="11"
-                       FontWeight="Normal"/>
-        </StackPanel>
+        <Grid Grid.Row="1" HorizontalAlignment="left" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Name:" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+            <TextBox x:Name="txtDataListName" Grid.Column="1" TextAlignment="Left" Margin="5,0,0,0"
+                     Style="{StaticResource TextBoxStyle}" Width="292" />
+        </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Margin="0,2,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10,10,10,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="2">
                 <RadioButton x:Name="rbtnPrivate" Content="Private" Margin="5,0,0,0" 
-                             GroupName="Accessbitlity" 
+                             GroupName="Accessbitlity" IsChecked="True" FontSize="9" FontFamily="Arial" VerticalContentAlignment="Center"
                              Checked="HandleCheck"/>
                 <RadioButton x:Name="rbtnPublic" Content="Public" Margin="5,0,0,0" 
-                             GroupName="Accessbitlity" 
+                             GroupName="Accessbitlity"  FontSize="9" FontFamily="Arial" VerticalContentAlignment="Center"
                              Checked="HandleCheck"/>
             </StackPanel>
         </Grid>
@@ -68,7 +60,7 @@
                     VerticalAlignment="Center">
             <telerik:RadButton x:Name="btnSave" 
                     Content="Save"
-                    Width="75" Height="23" IsEnabled="True"
+                    Width="75" IsEnabled="True" Style="{StaticResource RadButtonStyle}"
                     HorizontalAlignment="Right" Click="btnSave_Click" />
             <telerik:RadButton x:Name="btnCancel" 
                     Content="Cancel"

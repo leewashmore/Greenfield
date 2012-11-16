@@ -113,6 +113,8 @@ namespace GreenField.App.ViewModel
                                 || record == MemberGroups.IC_CHIEF_EXECUTIVE || record == MemberGroups.IC_VOTING_MEMBER
                                 || record == MemberGroups.IC_NON_VOTING_MEMBER);
                         }
+
+                        manageSessions.SetSession(SessionManager.SESSION, (s) => { });
                     }
                     else
                     {
