@@ -18,64 +18,86 @@
         <ResourceDictionary>
 
             <mine:LevelToPaddingConverter x:Key="levelToPaddingConverter" />
+            <mine:FormattedValueConverter x:Key="formattedValueConverter" />
             
             <!-- name cell style -->
             <Style TargetType="TextBlock" x:Key="nameCellStyle">
                 <Setter Property="Padding" Value="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
             </Style>
+
+            <Style TargetType="TextBox" x:Key="editableValueTextboxStyle">
+                <Setter Property="Width" Value="Auto" />
+            </Style>
+            
+            
+            
+            <DataTemplate x:Key="editableValueTemplate">
+                <TextBox
+                    Text="{Binding EditableValue, Converter={StaticResource formattedValueConverter}}"
+                    Style="{StaticResource editableValueTextboxStyle}"
+                />
+            </DataTemplate>
+            
+            <DataTemplate x:Key="valueTemplate">
+                <TextBlock Text="{Binding Value}" />
+            </DataTemplate>
                         
-            <!-- name template selector -->
-            <mine:NameCellTemplateSelector x:Key="nameCellTemplateSelector">
-                
-                <mine:NameCellTemplateSelector.DefaultTemplate>
+            <!-- name cell template selector -->
+            <mine:CellTemplateSelector x:Key="nameCellTemplateSelector">
+
+                <mine:CellTemplateSelector.DefaultTemplate>
                     <DataTemplate>
                         <TextBlock
                             Style="{StaticResource nameCellStyle}"
                         />
                     </DataTemplate>
-                </mine:NameCellTemplateSelector.DefaultTemplate>
-                
-                <mine:NameCellTemplateSelector.BasketRegionTemplate>
+                </mine:CellTemplateSelector.DefaultTemplate>
+
+                <mine:CellTemplateSelector.BasketRegionTemplate>
                     <DataTemplate>
                         <TextBlock
                             Text="{Binding Basket.Name}"
                             Style="{StaticResource nameCellStyle}"
                         />
                     </DataTemplate>
-                </mine:NameCellTemplateSelector.BasketRegionTemplate>
-                
-                <mine:NameCellTemplateSelector.BasketCountryTemplate>
+                </mine:CellTemplateSelector.BasketRegionTemplate>
+
+                <mine:CellTemplateSelector.BasketCountryTemplate>
                     <DataTemplate>
                         <TextBlock
                             Text="{Binding Basket.Country.Name}"
                             Style="{StaticResource nameCellStyle}"
                         />
                     </DataTemplate>
-                </mine:NameCellTemplateSelector.BasketCountryTemplate>
-                
-                <mine:NameCellTemplateSelector.RegionTemplate>
+                </mine:CellTemplateSelector.BasketCountryTemplate>
+
+                <mine:CellTemplateSelector.RegionTemplate>
                     <DataTemplate>
-                        <HyperlinkButton Command="{Binding ToggleExpandedCommand}">
-                            <TextBlock
-                                Text="{Binding Name}"
-                                Style="{StaticResource nameCellStyle}"
-                            >
-                            </TextBlock>
-                        </HyperlinkButton>
+                        <TextBlock
+                            Text="{Binding Name}"
+                            Style="{StaticResource nameCellStyle}"
+                        >
+                        </TextBlock>
                     </DataTemplate>
-                </mine:NameCellTemplateSelector.RegionTemplate>
-                
-                <mine:NameCellTemplateSelector.CountryTemplate>
+                </mine:CellTemplateSelector.RegionTemplate>
+
+                <mine:CellTemplateSelector.CountryTemplate>
                     <DataTemplate>
                         <TextBlock
                             Text="{Binding Country.Name}"
                             Style="{StaticResource nameCellStyle}"
                         />
                     </DataTemplate>
-                </mine:NameCellTemplateSelector.CountryTemplate>
-                
-            </mine:NameCellTemplateSelector>
+                </mine:CellTemplateSelector.CountryTemplate>
+
+            </mine:CellTemplateSelector>
             
+            <mine:CellTemplateSelector x:Key="editableCellTemplateSelector"
+                BasketCountryTemplate="{StaticResource editableValueTemplate}"
+                BasketRegionTemplate="{StaticResource editableValueTemplate}"
+                DefaultTemplate="{StaticResource valueTemplate}"
+            />
+
             <helpers:PercentageValueConverterOneDec x:Key="ConvertPercVAlOneDecPlace"/>
             
             <ResourceDictionary.MergedDictionaries>
@@ -134,8 +156,6 @@
                             <!-- pseudo column needed to expand / collapse rows -->
                             <telerik:GridViewDataColumn Header="IsVisible" DataMemberBinding="{Binding IsVisible}" IsVisible="False"  />
 
-                            <telerik:GridViewDataColumn Header="IsExpanded" DataMemberBinding="{Binding IsExpanded}" />
-
                             <telerik:GridViewDataColumn
                                
                                 Width="*"  
@@ -155,9 +175,13 @@
 
                             <telerik:GridViewDataColumn
                                 Header="Base"
-                                DataMemberBinding="{Binding Base.EditedValue}"
-                                IsReadOnly="False"
-                            />
+                                IsReadOnly="True">
+                                <telerik:GridViewDataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ContentControl DataContext="{Binding Base}" ContentTemplate="{StaticResource editableValueTemplate}" />
+                                    </DataTemplate>
+                                </telerik:GridViewDataColumn.CellTemplate>
+                            </telerik:GridViewDataColumn>
 
                             <telerik:GridViewDataColumn
                                 Header="Base Active"
@@ -173,8 +197,8 @@
 
                             <telerik:GridViewDataColumn
                                 Header="Portfolio Adj"
-                                DataMemberBinding="{Binding PortfolioAdjustment.EditedValue}"
-                                IsReadOnly="False"
+                                DataMemberBinding="{Binding PortfolioAdjustment}"
+                                CellTemplateSelector="{StaticResource editableCellTemplateSelector}"
                             />
 
                             <telerik:GridViewDataColumn

@@ -24,8 +24,5 @@ namespace GreenField.ServiceCaller.TargetingDefinitions
         {
             get { return -1; }
         }
-
-
-        public ICommand ToggleExpandedCommand { get { throw new NotSupportedException(); } }
     }
 }

@@ -14,6 +14,5 @@ namespace GreenField.ServiceCaller.TargetingDefinitions
     public interface IExpandableModel : IParentModel
     {
         Boolean IsExpanded { get; set; }
-        ICommand ToggleExpandedCommand { get; }
     }
 }

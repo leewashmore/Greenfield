@@ -274,6 +274,7 @@
     <Compile Include="Helpers\Converters\BasisPointsConverter.cs" />
     <Compile Include="ViewModels\Targeting\BroadGlobalActive\DataTemplateSelector.cs" />
     <Compile Include="ViewModels\Targeting\BroadGlobalActive\DefaultExpandCollapseStateSetter.cs" />
+    <Compile Include="ViewModels\Targeting\BroadGlobalActive\FormattedValueConverter.cs" />
     <Compile Include="ViewModels\Targeting\BroadGlobalActive\LevelToPaddingConverter.cs" />
     <Compile Include="ViewModels\Targeting\BroadGlobalActive\ModelTraverser.cs" />
     <Compile Include="ViewModels\Targeting\BroadGlobalActive\NameCellStyleSelector.cs" />

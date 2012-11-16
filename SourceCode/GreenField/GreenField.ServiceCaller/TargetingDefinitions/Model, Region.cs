@@ -14,34 +14,6 @@ namespace GreenField.ServiceCaller.TargetingDefinitions
 {
     public partial class RegionModel : IExpandableModel
     {
-        private class _ToggleExpandedCommand : ICommand
-        {
-            private RegionModel model;
-
-            public _ToggleExpandedCommand(RegionModel regionModel)
-            {
-                this.model = regionModel;
-            }
-
-            public Boolean CanExecute(Object parameter)
-            {
-                return true;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(Object parameter)
-            {
-                this.model.IsExpanded = !this.model.IsExpanded;
-            }
-        }
-
-        public RegionModel()
-        {
-            this.ToggleExpandedCommand = new _ToggleExpandedCommand(this);
-        }
-        
-        public ICommand ToggleExpandedCommand { get; private set; }
         public void ToggleExpanded()
         {
             var value = this.IsExpanded;

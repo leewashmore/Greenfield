@@ -15,7 +15,7 @@ using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.ViewModels.Targeting.BroadGlobalActive
 {
-    public class NameCellTemplateSelector : DataTemplateSelector
+    public class CellTemplateSelector : DataTemplateSelector
     {
         public DataTemplate BasketRegionTemplate { get; set; }
         public DataTemplate BasketCountryTemplate { get; set; }
@@ -36,9 +36,9 @@ namespace GreenField.Gadgets.ViewModels.Targeting.BroadGlobalActive
 
         private class SelectTemplate_IGlobeResidentResolver : IGlobeResidentResolver
         {
-            private NameCellTemplateSelector selector;
+            private CellTemplateSelector selector;
 
-            public SelectTemplate_IGlobeResidentResolver(NameCellTemplateSelector selector)
+            public SelectTemplate_IGlobeResidentResolver(CellTemplateSelector selector)
             {
                 this.selector = selector;
             }
