@@ -75,6 +75,12 @@ namespace GreenField.Gadgets.ViewModels
                     dataGrouping = new List<PeriodColumnGroupingDetail>();
                     dataGrouping.Add(new PeriodColumnGroupingDetail()
                     {
+                        GroupDisplayName = "Amount",
+                        GroupPropertyName = "Amount",
+                        GroupDataType = PeriodColumnGroupingType.DECIMAL
+                    });
+                    dataGrouping.Add(new PeriodColumnGroupingDetail()
+                    {
                         GroupDisplayName = "YOY",
                         GroupPropertyName = "YOYGrowth",
                         GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE

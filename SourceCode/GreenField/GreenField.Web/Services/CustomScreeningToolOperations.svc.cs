@@ -464,259 +464,178 @@ namespace GreenField.Web.Services
                 string _securityIds = StringBuilder(distinctSecurityId);
                 string _issuerIds = StringBuilder(distinctIssuerId);
 
-                #region Retrieving REF Data Items
+                #region Retrieving data Items
 
                 if (userPreference != null)
                 {
                     ExceptionTrace.LogInfo(";SecurityIds=" + (_securityIds == null ? "null" : _securityIds), "Start", "GetCustomScreeningREFData");
                     List<CustomScreeningREFData> data = cstEntity.GetCustomScreeningREFData(_securityIds).ToList();
-                    ExceptionTrace.LogInfo(";SecurityIds=" + (_securityIds == null ? "null" : _securityIds), "End", "GetCustomScreeningREFData");
+                    ExceptionTrace.LogInfo(";SecurityIds=" + (_securityIds == null ? "null" : _securityIds), "End", "GetCustomScreeningREFData");                    
                     foreach (CSTUserPreferenceInfo item in userPreference)
                     {
                         if (item.ScreeningId != null)
                         {
+                            SCREENING_DISPLAY_REFERENCE referenceData = cstEntity.SCREENING_DISPLAY_REFERENCE
+                                .Where(a => a.SCREENING_ID == item.ScreeningId).FirstOrDefault();
+                            //retrieving REF Data Items
                             if (item.ScreeningId.StartsWith("REF"))
                             {
                                 foreach (CustomScreeningREFData record in data)
                                 {
-                                    CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                                    CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();                                    
+
                                     fillData.SecurityId = record.SECURITY_ID;
                                     fillData.IssueName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.IssueName).FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId)
-                                        , "Start", "SCREENING_DISPLAY_REFERENCE_SelectTableColumn");
-                                    fillData.Type = cstEntity.SCREENING_DISPLAY_REFERENCE.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.TABLE_COLUMN)
-                                        .FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId)
-                                        , "Start", "SCREENING_DISPLAY_REFERENCE_SelectTableColumn");
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId)
-                                        , "Start", "SCREENING_DISPLAY_REFERENCE_SelectMultiplier");
-                                    fillData.Multiplier = cstEntity.SCREENING_DISPLAY_REFERENCE.Where(a => a.SCREENING_ID == item.ScreeningId)
-                                                        .Select(a => a.MULTIPLIER).FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId)
-                                        , "Start", "SCREENING_DISPLAY_REFERENCE_SelectMultiplier");
+                                    fillData.Type = referenceData.TABLE_COLUMN;                                    
+                                    fillData.Multiplier = referenceData.MULTIPLIER;
                                     object amount = fillData.Multiplier != null ? Convert.ToDecimal(record.GetType().GetProperty(fillData.Type)
                                         .GetValue(record, null)) * fillData.Multiplier : record.GetType().GetProperty(fillData.Type)
                                         .GetValue(record, null);
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId)
-                                        , "Start", "SCREENING_DISPLAY_REFERENCE_SelectDecimals");
-                                    fillData.Decimals = cstEntity.SCREENING_DISPLAY_REFERENCE.Where(a => a.SCREENING_ID == item.ScreeningId)
-                                        .Select(a => a.DECIMAL).FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId)
-                                        , "Start", "SCREENING_DISPLAY_REFERENCE_SelectDecimals");
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId)
-                                        , "Start", "SCREENING_DISPLAY_REFERENCE_SelectPercentage");
-                                    fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_REFERENCE.Where(a => a.SCREENING_ID == item.ScreeningId)
-                                        .Select(a => a.PERCENTAGE).FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId)
-                                        , "Start", "SCREENING_DISPLAY_REFERENCE_SelectPercentage");
+                                    fillData.Decimals = referenceData.DECIMAL;
+                                    fillData.IsPercentage = referenceData.PERCENTAGE;
                                     amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(amount), Convert.ToInt16(fillData.Decimals)) : amount;
                                     fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(amount) + "%" : Convert.ToString(amount)
                                                                                    : Convert.ToString(amount);
                                     result.Add(fillData);
                                 }
                             }
-                        }
-                    }
-                    ExceptionTrace.LogInfo(input, "End", "GetCustomScreeningREFData");
-                }
-
-                #endregion
-
-                #region Retrieving FIN Data Items
-
-                foreach (CSTUserPreferenceInfo item in userPreference)
-                {
-                    if (item.ScreeningId != null)
-                    {
-                        if (item.ScreeningId.StartsWith("FIN"))
-                        {
-                            List<CustomScreeningFINData> temp = new List<CustomScreeningFINData>();
-                            if (item.PeriodType != null)
+                            //retrieving FIN Data Items
+                            else if (item.ScreeningId.StartsWith("FIN"))
                             {
-                                if (item.PeriodType.StartsWith("A"))
+                                List<CustomScreeningFINData> temp = new List<CustomScreeningFINData>();
+                                if (item.PeriodType != null)
                                 {
-                                    cstEntity.CommandTimeout = 5000;
-                                    ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
-                                        + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                        + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
-                                        + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
-                                        + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
-                                        + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
-                                        + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
-                                        , "Start", "GetCustomScreeningREFData");
-                                    temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType.Substring(0, 1),
-                                        item.FromDate, item.YearType, item.DataSource).ToList();
-                                    ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
-                                        + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                        + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
-                                        + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
-                                        + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
-                                        + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
-                                        + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
-                                        , "End", "GetCustomScreeningREFData");
-                                }
-                                else
-                                {
-                                    cstEntity.CommandTimeout = 5000;
-                                    ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
-                                        + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                        + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
-                                        + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
-                                        + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
-                                        + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
-                                        + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
-                                        , "Start", "GetCustomScreeningFINData");
-                                    temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType, item.FromDate,
-                                        item.YearType, item.DataSource).ToList();
-                                    ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
-                                        + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                        + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
-                                        + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
-                                        + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
-                                        + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
-                                        + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
-                                        , "End", "GetCustomScreeningFINData");
-                                }
+                                    if (item.PeriodType.StartsWith("A"))
+                                    {
+                                        cstEntity.CommandTimeout = 5000;
+                                        ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
+                                            + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
+                                            + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                            + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
+                                            + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
+                                            + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
+                                            + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
+                                            , "Start", "GetCustomScreeningREFData");
+                                        temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType.Substring(0, 1),
+                                            item.FromDate, item.YearType, item.DataSource).ToList();
+                                        ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
+                                            + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
+                                            + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                            + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
+                                            + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
+                                            + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
+                                            + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
+                                            , "End", "GetCustomScreeningREFData");
+                                    }
+                                    else
+                                    {
+                                        cstEntity.CommandTimeout = 5000;
+                                        ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
+                                            + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
+                                            + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                            + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
+                                            + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
+                                            + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
+                                            + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
+                                            , "Start", "GetCustomScreeningFINData");
+                                        temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType, item.FromDate,
+                                            item.YearType, item.DataSource).ToList();
+                                        ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
+                                            + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
+                                            + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                            + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
+                                            + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
+                                            + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
+                                            + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
+                                            , "End", "GetCustomScreeningFINData");
+                                    }
 
-                                foreach (CustomScreeningFINData record in temp)
+                                    foreach (CustomScreeningFINData record in temp)
+                                    {
+                                        CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                                        fillData.SecurityId = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
+                                            .Select(a => a.SecurityId).FirstOrDefault(); ;
+                                        fillData.IssuerId = record.IssuerId;
+                                        fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
+                                            .Select(a => a.IssueName).FirstOrDefault();
+                                        fillData.Type = item.DataDescription;
+                                        fillData.Multiplier = referenceData.MULTIPLIER;
+                                        decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
+                                        fillData.DataSource = item.DataSource;
+                                        fillData.PeriodYear = record.PeriodYear;
+                                        fillData.PeriodType = item.PeriodType;
+                                        fillData.YearType = item.YearType;
+                                        fillData.Decimals = referenceData.DECIMAL;
+                                        fillData.IsPercentage = referenceData.PERCENTAGE;
+                                        _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
+                                        fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
+                                                                                        : Convert.ToString(_amount);
+                                        result.Add(fillData);
+                                    }
+                                }
+                            }
+                            //retrieving CUR Data Items
+                            else if (item.ScreeningId.StartsWith("CUR"))
+                            {
+                                List<CustomScreeningCURData> temp = new List<CustomScreeningCURData>();
+                                cstEntity.CommandTimeout = 5000;
+                                ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
+                                    + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
+                                    + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                    + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
+                                    , "Start", "GetCustomScreeningCURData");
+                                temp = cstEntity.GetCustomScreeningCURData(_issuerIds, _securityIds, item.DataID, item.DataSource).ToList();
+                                ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
+                                    + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
+                                    + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                    + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
+                                    , "End", "GetCustomScreeningCURData");
+                                foreach (CustomScreeningCURData record in temp)
                                 {
                                     CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
                                     fillData.SecurityId = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                        .Select(a => a.SecurityId).FirstOrDefault(); ;
+                                        .Select(a => a.SecurityId).FirstOrDefault();
                                     fillData.IssuerId = record.IssuerId;
                                     fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
                                         .Select(a => a.IssueName).FirstOrDefault();
                                     fillData.Type = item.DataDescription;
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "Start", "SCREENING_DISPLAY_PERIOD_SelectMultiplier");
-                                    fillData.Multiplier = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId)
-                                        .Select(a => a.MULTIPLIER).FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "End", "SCREENING_DISPLAY_PERIOD_SelectMultiplier");
+                                    fillData.Multiplier = referenceData.MULTIPLIER;
                                     decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
                                     fillData.DataSource = item.DataSource;
-                                    fillData.PeriodYear = record.PeriodYear;
-                                    fillData.PeriodType = item.PeriodType;
-                                    fillData.YearType = item.YearType;
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "Start", "SCREENING_DISPLAY_PERIOD_SelectDecimals");
-                                    fillData.Decimals = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.DECIMAL)
-                                        .FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "End", "SCREENING_DISPLAY_PERIOD_SelectDecimals");
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "Start", "SCREENING_DISPLAY_PERIOD_SelectPercentage");
-                                    fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId)
-                                        .Select(a => a.PERCENTAGE).FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "End", "SCREENING_DISPLAY_PERIOD_SelectPercentage");
+                                    fillData.Decimals = referenceData.DECIMAL;
+                                    fillData.IsPercentage = referenceData.PERCENTAGE;
                                     _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
                                     fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
-                                                                                    : Convert.ToString(_amount);
+                                                                                   : Convert.ToString(_amount);
                                     result.Add(fillData);
                                 }
                             }
-                        }
-                    }
-                }
-
-
-                #endregion
-
-                #region Retrieving CUR Data Items
-
-                foreach (CSTUserPreferenceInfo item in userPreference)
-                {
-                    if (item.ScreeningId != null)
-                    {
-                        if (item.ScreeningId.StartsWith("CUR"))
-                        {
-                            List<CustomScreeningCURData> temp = new List<CustomScreeningCURData>();
-                            cstEntity.CommandTimeout = 5000;
-                            ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
-                                + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
-                                + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
-                                , "Start", "GetCustomScreeningCURData");
-                            temp = cstEntity.GetCustomScreeningCURData(_issuerIds, _securityIds, item.DataID, item.DataSource).ToList();
-                            ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
-                                + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
-                                + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
-                                , "End", "GetCustomScreeningCURData");
-                            foreach (CustomScreeningCURData record in temp)
-                            {
-                                CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
-                                fillData.SecurityId = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                    .Select(a => a.SecurityId).FirstOrDefault();
-                                fillData.IssuerId = record.IssuerId;
-                                fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                    .Select(a => a.IssueName).FirstOrDefault();
-                                fillData.Type = item.DataDescription;
-                                ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "Start", "SCREENING_DISPLAY_CURRENT_SelectMultiplier");
-                                fillData.Multiplier = cstEntity.SCREENING_DISPLAY_CURRENT.Where(a => a.SCREENING_ID == item.ScreeningId)
-                                    .Select(a => a.MULTIPLIER).FirstOrDefault();
-                                ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "End", "SCREENING_DISPLAY_CURRENT_SelectMultiplier");
-                                decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
-                                fillData.DataSource = item.DataSource;
-                                ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "Start", "SCREENING_DISPLAY_CURRENT_SelectDecimals");
-                                fillData.Decimals = cstEntity.SCREENING_DISPLAY_CURRENT.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.DECIMAL)
-                                    .FirstOrDefault();
-                                ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "End", "SCREENING_DISPLAY_CURRENT_SelectDecimals");
-                                ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "Start", "SCREENING_DISPLAY_CURRENT_SelectPercentage");
-                                fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_CURRENT.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.PERCENTAGE)
-                                    .FirstOrDefault();
-                                ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "End", "SCREENING_DISPLAY_CURRENT_SelectPercentage");
-                                _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
-                                fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
-                                                                               : Convert.ToString(_amount);
-                                result.Add(fillData);
-                            }
-                        }
-                    }
-                }
-
-                #endregion
-
-                #region Retrieving FVA Data Items
-
-                if (userPreference != null)
-                {
-                    foreach (CSTUserPreferenceInfo item in userPreference)
-                    {
-                        if (item.ScreeningId != null)
-                        {
-                            if (item.ScreeningId.StartsWith("FVA"))
+                            //retrieving FVA Data Items
+                            else if (item.ScreeningId.StartsWith("FVA"))
                             {
                                 cstEntity.CommandTimeout = 5000;
                                 ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
                                     + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
                                     + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
                                     , "Start", "GetCustomScreeningFVAData");
-                                List<CustomScreeningFVAData> data = cstEntity.GetCustomScreeningFVAData(_securityIds, item.DataSource).ToList();
+                                List<CustomScreeningFVAData> fvaData = cstEntity.GetCustomScreeningFVAData(_securityIds, item.DataSource).ToList();
                                 ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
-                                    + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds) 
+                                    + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
                                     + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
                                     , "End", "GetCustomScreeningFVAData");
-                                foreach (CustomScreeningFVAData record in data)
+                                foreach (CustomScreeningFVAData record in fvaData)
                                 {
                                     CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
                                     fillData.SecurityId = record.SECURITY_ID;
                                     fillData.IssueName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.IssueName).FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "Start", "SCREENING_DISPLAY_FAIRVALUE_SelectTableColumn");
-                                    fillData.Type = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.TABLE_COLUMN)
-                                        .FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "End", "SCREENING_DISPLAY_FAIRVALUE_SelectTableColumn");
+                                    fillData.Type = referenceData.TABLE_COLUMN;
                                     fillData.DataSource = item.DataSource;
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "Start", "SCREENING_DISPLAY_FAIRVALUE_SelectMultiplier");
-                                    fillData.Multiplier = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId)
-                                                         .Select(a => a.MULTIPLIER).FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "End", "SCREENING_DISPLAY_FAIRVALUE_SelectMultiplier");
+                                    fillData.Multiplier = referenceData.MULTIPLIER;
                                     object amount = fillData.Multiplier != null ? Convert.ToDecimal(record.GetType().GetProperty(fillData.Type)
                                         .GetValue(record, null)) * fillData.Multiplier : record.GetType().GetProperty(fillData.Type)
                                         .GetValue(record, null);
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "Start", "SCREENING_DISPLAY_FAIRVALUE_SelectDecimal");
-                                    fillData.Decimals = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId)
-                                        .Select(a => a.DECIMAL).FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "End", "SCREENING_DISPLAY_FAIRVALUE_SelectDecimal");
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "Start", "SCREENING_DISPLAY_FAIRVALUE_SelectPercentage");
-                                    fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId)
-                                        .Select(a => a.PERCENTAGE).FirstOrDefault();
-                                    ExceptionTrace.LogInfo("ScreeningId=" + (item == null || item.ScreeningId == null ? "null" : item.ScreeningId), "End", "SCREENING_DISPLAY_FAIRVALUE_SelectPercentage");
+                                    fillData.Decimals = referenceData.DECIMAL;
+                                    fillData.IsPercentage = referenceData.PERCENTAGE;
                                     amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(amount), Convert.ToInt16(fillData.Decimals)) : amount;
                                     fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(amount) + "%" : Convert.ToString(amount)
                                                                                    : Convert.ToString(amount);
@@ -726,6 +645,7 @@ namespace GreenField.Web.Services
                             }
                         }
                     }
+                    ExceptionTrace.LogInfo(input, "End", "GetCustomScreeningREFData");
                 }
 
                 #endregion
@@ -746,8 +666,9 @@ namespace GreenField.Web.Services
                     }
                 }
 
-                #endregion
-
+                #endregion    
+            
+                ExceptionTrace.LogInfo(input, "End", "RetrieveSecurityData");
                 return result;
             }
             catch (Exception ex)
@@ -755,10 +676,6 @@ namespace GreenField.Web.Services
                 ExceptionTrace.LogException(ex);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-            finally
-            {
-                ExceptionTrace.LogInfo(input, "Start", "RetrieveSecurityData");
             }
         }
 

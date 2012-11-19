@@ -54,6 +54,7 @@ namespace GreenField.DashboardModule.Views
             logger = logger1;
             dBInteractivity = dbInteractivity;
             eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
+            this.tbHeader.Text = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_DETAIL;
         }
         #endregion
 
@@ -64,7 +65,7 @@ namespace GreenField.DashboardModule.Views
         /// <param name="payload">DashboardGadgetPayload</param>
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
         {
-            if (this.rtvDashboard.Items.Count > 0)
+            if (this.cctrDashboardContent.Content != null)
             {
                 return;
             }
@@ -75,14 +76,7 @@ namespace GreenField.DashboardModule.Views
                 EventAggregator = eventAggregator,
                 LoggerFacade = logger
             };
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
-
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_DETAIL, 
-                    Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 300,
-                Content = new ViewConsensusEstimatesDetails(new ViewModelConsensusEstimatesDetails(param))
-            });
+            this.cctrDashboardContent.Content = new ViewConsensusEstimatesDetails(new ViewModelConsensusEstimatesDetails(param));
         }
         #endregion
 
@@ -103,7 +97,11 @@ namespace GreenField.DashboardModule.Views
         /// <param name="navigationContext">NavigationContext</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            SetIsActiveOnDahsboardItems(false);
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            if (control != null)
+            {
+                control.IsActive = false;
+            }
         }
 
         /// <summary>
@@ -112,24 +110,10 @@ namespace GreenField.DashboardModule.Views
         /// <param name="navigationContext">NavigationContext</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            SetIsActiveOnDahsboardItems(true);
-        }
-        #endregion
-
-        #region Helper Methods
-        /// <summary>
-        /// Set IsActive property on Dashboard content
-        /// </summary>
-        /// <param name="value">IsActive value</param>
-        private void SetIsActiveOnDahsboardItems(bool value)
-        {
-            foreach (RadTileViewItem item in this.rtvDashboard.Items)
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            if (control != null)
             {
-                ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
-                if (control != null)
-                {
-                    control.IsActive = value;
-                }
+                control.IsActive = true;
             }
         }
         #endregion
