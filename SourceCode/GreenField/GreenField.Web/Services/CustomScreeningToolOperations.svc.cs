@@ -468,18 +468,20 @@ namespace GreenField.Web.Services
 
                 if (userPreference != null)
                 {
-                    ExceptionTrace.LogInfo(";SecurityIds=" + (_securityIds == null ? "null" : _securityIds), "Start", "GetCustomScreeningREFData");
-                    List<CustomScreeningREFData> data = cstEntity.GetCustomScreeningREFData(_securityIds).ToList();
-                    ExceptionTrace.LogInfo(";SecurityIds=" + (_securityIds == null ? "null" : _securityIds), "End", "GetCustomScreeningREFData");                    
                     foreach (CSTUserPreferenceInfo item in userPreference)
                     {
                         if (item.ScreeningId != null)
                         {
-                            SCREENING_DISPLAY_REFERENCE referenceData = cstEntity.SCREENING_DISPLAY_REFERENCE
-                                .Where(a => a.SCREENING_ID == item.ScreeningId).FirstOrDefault();
                             //retrieving REF Data Items
                             if (item.ScreeningId.StartsWith("REF"))
                             {
+                                SCREENING_DISPLAY_REFERENCE referenceData = cstEntity.SCREENING_DISPLAY_REFERENCE
+                                    .Where(a => a.SCREENING_ID == item.ScreeningId).FirstOrDefault();
+
+                                ExceptionTrace.LogInfo(";SecurityIds=" + (_securityIds == null ? "null" : _securityIds), "Start", "GetCustomScreeningREFData");
+                                List<CustomScreeningREFData> data = cstEntity.GetCustomScreeningREFData(_securityIds).ToList();
+                                ExceptionTrace.LogInfo(";SecurityIds=" + (_securityIds == null ? "null" : _securityIds), "End", "GetCustomScreeningREFData");                    
+
                                 foreach (CustomScreeningREFData record in data)
                                 {
                                     CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();                                    
@@ -502,6 +504,9 @@ namespace GreenField.Web.Services
                             //retrieving FIN Data Items
                             else if (item.ScreeningId.StartsWith("FIN"))
                             {
+                                SCREENING_DISPLAY_PERIOD referenceData = cstEntity.SCREENING_DISPLAY_PERIOD
+                                    .Where(a => a.SCREENING_ID == item.ScreeningId).FirstOrDefault();
+
                                 List<CustomScreeningFINData> temp = new List<CustomScreeningFINData>();
                                 if (item.PeriodType != null)
                                 {
@@ -577,6 +582,9 @@ namespace GreenField.Web.Services
                             //retrieving CUR Data Items
                             else if (item.ScreeningId.StartsWith("CUR"))
                             {
+                                SCREENING_DISPLAY_CURRENT referenceData = cstEntity.SCREENING_DISPLAY_CURRENT
+                                    .Where(a => a.SCREENING_ID == item.ScreeningId).FirstOrDefault();
+
                                 List<CustomScreeningCURData> temp = new List<CustomScreeningCURData>();
                                 cstEntity.CommandTimeout = 5000;
                                 ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
@@ -613,6 +621,8 @@ namespace GreenField.Web.Services
                             //retrieving FVA Data Items
                             else if (item.ScreeningId.StartsWith("FVA"))
                             {
+                                SCREENING_DISPLAY_FAIRVALUE referenceData = cstEntity.SCREENING_DISPLAY_FAIRVALUE
+                                    .Where(a => a.SCREENING_ID == item.ScreeningId).FirstOrDefault();
                                 cstEntity.CommandTimeout = 5000;
                                 ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
                                     + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
