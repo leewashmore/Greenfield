@@ -92,10 +92,8 @@
   <ItemGroup>
     <Compile Include="ApplicationException.cs" />
     <Compile Include="DBInteractivity.cs" />
-    <Compile Include="DBInteractivity_Targeting.cs" />
     <Compile Include="Helper\ServiceFault.cs" />
     <Compile Include="IDBInteractivity.cs" />
-    <Compile Include="IDBInteractivity_Targeting.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IManageDashboard.cs" />
     <Compile Include="IManageLogins.cs" />
@@ -190,16 +188,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="TargetingDefinitions\IExpandableModel.cs" />
-    <Compile Include="TargetingDefinitions\Model, BasketCountry.cs" />
-    <Compile Include="TargetingDefinitions\Model, BasketRegion.cs" />
-    <Compile Include="TargetingDefinitions\GlobalResident.cs" />
-    <Compile Include="TargetingDefinitions\IGlobeResident.cs" />
-    <Compile Include="TargetingDefinitions\Model, Country.cs" />
-    <Compile Include="TargetingDefinitions\Model, Globe.cs" />
-    <Compile Include="TargetingDefinitions\Model, Other.cs" />
-    <Compile Include="TargetingDefinitions\Model, Region.cs" />
-    <Compile Include="TargetingDefinitions\Model, UnsavedBasketCountry.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

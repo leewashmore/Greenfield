@@ -135,7 +135,7 @@ namespace GreenField.DashboardModule
             #endregion
 
 
-            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardTargetingBroadGlobalActive));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(GreenField.Targeting.Only.BroadGlobalActive.RootView));
         }
     }
 }

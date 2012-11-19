@@ -9,26 +9,22 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.MefExtensions;
 using System.ComponentModel.Composition.Hosting;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.Targeting.Only;
 
 namespace GreenField.Targeting.App
 {
     public class Bootstrapper : MefBootstrapper
     {
-        [Import]
-        public new ILogger Logger { get; set; }
-
         protected override void ConfigureAggregateCatalog()
         {
             base.ConfigureAggregateCatalog();
 
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Bootstrapper).Assembly));
-            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.ServiceCaller.DBInteractivity).Assembly));
-            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.DashboardModule.DashboardModule).Assembly));
+            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.Targeting.Only.GlobalSettings).Assembly));
         }
 
         protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
@@ -55,7 +51,26 @@ namespace GreenField.Targeting.App
         {
             base.InitializeModules();
             var shell = (Shell)this.Shell;
-            shell.DataContextSource.Run();
+
+            var targetingSettings = this.CreateTargetingSettings();
+            shell.DataContextSource.Run(targetingSettings);
+        }
+
+        private Targeting.Only.GlobalSettings CreateTargetingSettings()
+        {
+            var benchmarkDate = new DateTime(2012, 10, 17);
+            var clientFactory = new DefaultClientFactory();
+            var modelTraverser = new Only.BroadGlobalActive.ModelTraverser();
+            
+            var bgaSettings = new Targeting.Only.BroadGlobalActive.Settings(
+                clientFactory,
+                modelTraverser,
+                new Only.BroadGlobalActive.DefaultExpandCollapseStateSetter(modelTraverser),
+                benchmarkDate
+            );
+
+            var settings = new Targeting.Only.GlobalSettings(bgaSettings);
+            return settings;
         }
 
         protected override void ConfigureContainer()

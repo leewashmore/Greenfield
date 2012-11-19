@@ -1,0 +1,22 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="TargetingOperations"
+                    maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647"
+>
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:35583/Services/TargetingOperations.svc"
+                binding="basicHttpBinding"
+                bindingConfiguration="TargetingOperations"
+                contract="Backend.Targeting.IFacade"
+                name="TargetingOperations"
+            />
+        </client>
+    </system.serviceModel>
+</configuration>

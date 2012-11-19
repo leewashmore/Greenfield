@@ -13,8 +13,6 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.MefExtensions.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using System.ComponentModel.Composition;
-using GreenField.Common;
-using GreenField.ServiceCaller;
 using Telerik.Windows.Controls;
 using Microsoft.Practices.Prism.Events;
 
@@ -26,15 +24,15 @@ namespace GreenField.Targeting.App
         [ImportingConstructor]
         public Shell()
         {
-            InitializeComponent();            
+            this.InitializeComponent();            
         }
 
         [Import]
-        public ViewModelShell DataContextSource
+        public ShellViewModel DataContextSource
         {
             get
             {
-                return this.DataContext as ViewModelShell;
+                return this.DataContext as ShellViewModel;
             }
             set
             {

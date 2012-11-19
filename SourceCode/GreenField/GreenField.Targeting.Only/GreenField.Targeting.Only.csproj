@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{41FF9542-D13F-4F69-85B3-A435ADF58243}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreenField.Targeting.Only</RootNamespace>
+    <AssemblyName>GreenField.Targeting.Only</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.MefExtensions">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\Lib\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\Lib\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView">
+      <HintPath>..\Lib\Telerik.Windows.Controls.GridView.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationException.cs" />
+    <Compile Include="BroadGlobalActive\DataTemplateSelector.cs" />
+    <Compile Include="BroadGlobalActive\DefaultExpandCollapseStateSetter.cs" />
+    <Compile Include="BroadGlobalActive\Editor.xaml.cs">
+      <DependentUpon>Editor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BroadGlobalActive\FormattedValueConverter.cs" />
+    <Compile Include="BroadGlobalActive\RunEvent.cs" />
+    <Compile Include="BroadGlobalActive\Settings.cs" />
+    <Compile Include="DefaultClientFactory.cs" />
+    <Compile Include="GlobalSettings.cs" />
+    <Compile Include="BroadGlobalActive\RootViewModel.cs" />
+    <Compile Include="BroadGlobalActive\RootView.xaml.cs">
+      <DependentUpon>RootView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorCapableViewModel.cs" />
+    <Compile Include="IClientFactory.cs" />
+    <Compile Include="BroadGlobalActive\LevelToPaddingConverter.cs" />
+    <Compile Include="BroadGlobalActive\ModelTraverser.cs" />
+    <Compile Include="BroadGlobalActive\NameCellStyleSelector.cs" />
+    <Compile Include="BroadGlobalActive\Picker.xaml.cs">
+      <DependentUpon>Picker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BroadGlobalActive\PortfolioPickedEvent.cs" />
+    <Compile Include="BroadGlobalActive\EditorViewModel.cs" />
+    <Compile Include="BroadGlobalActive\PickerViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Backend\Targeting\GlobalResident.cs" />
+    <Compile Include="Backend\Targeting\IExpandableModel.cs" />
+    <Compile Include="Backend\Targeting\IGlobeResident.cs" />
+    <Compile Include="Backend\Targeting\Model, BasketCountry.cs" />
+    <Compile Include="Backend\Targeting\Model, BasketRegion.cs" />
+    <Compile Include="Backend\Targeting\Model, Country.cs" />
+    <Compile Include="Backend\Targeting\Model, Globe.cs" />
+    <Compile Include="Backend\Targeting\Model, Other.cs" />
+    <Compile Include="Backend\Targeting\Model, Region.cs" />
+    <Compile Include="Backend\Targeting\Model, UnsavedBasketCountry.cs" />
+    <Compile Include="Service References\Backend.Targeting\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Backend.Targeting\GreenField.Targeting.Only.Backend.Targeting.BgaRootModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Backend.Targeting\GreenField.Targeting.Only.Backend.Targeting.BgaTargetingTypePickerModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Backend.Targeting\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Backend.Targeting\configuration.svcinfo" />
+    <None Include="Service References\Backend.Targeting\configuration91.svcinfo" />
+    <None Include="Service References\Backend.Targeting\TargetingOperations.disco" />
+    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\Backend.Targeting\TargetingOperations.wsdl" />
+    <None Include="Service References\Backend.Targeting\TargetingOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Backend.Targeting\TargetingOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Assets\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BroadGlobalActive\Editor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BroadGlobalActive\RootView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="BroadGlobalActive\Picker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Backend.Targeting\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Backend.Targeting\TargetingOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Backend.Targeting\TargetingOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Backend.Targeting\TargetingOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

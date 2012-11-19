@@ -1,0 +1,1153 @@
+﻿<ResourceDictionary 
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:layout="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"
+    xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+    xmlns:primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Data"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    
+    mc:Ignorable="d">
+
+
+    <System:Double x:Key="DefaultControlHeaderFontSize">9</System:Double>
+    <System:Double x:Key="DefaultControlFontSize">9</System:Double>
+    <System:Double x:Key="DefaultControlMinHeight">18</System:Double>
+    <System:Double x:Key="DefaultGridViewCellHeight">18</System:Double>
+    <System:Double x:Key="DefaultGridViewRowHeight">18</System:Double>
+    <GridLength x:Key="DefaultGridViewRowHeightGridLength">18</GridLength>
+    <System:Double x:Key="DefaultGridViewHeaderRowHeight">18</System:Double>
+    <System:Double x:Key="DefaultGridViewHeaderRowMaxHeight">18</System:Double>
+    <System:Double x:Key="DefaultGridViewPanelHeight">10</System:Double>
+    <System:String x:Key="DefaultControlFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultControlFontWeight">Normal</FontWeight>
+    <SolidColorBrush x:Key="DefaultGridRowBackground">#f3f6fc</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultGridHeaderBackground">#e4e5e5</SolidColorBrush>
+    <Color x:Key="DefaultGridHeaderBackgroundColor">#e4e5e5</Color>
+    <SolidColorBrush x:Key="DefaultControlForeground">Black</SolidColorBrush>
+    <Color x:Key="DefaultControlForegroundColor">Black</Color>
+    <SolidColorBrush x:Key="GridViewRow_HeaderOuterBorder" Color="#e4e5e5"/>
+
+    <!--Grid Styles-->
+    <!--###########-->
+    <SolidColorBrush x:Key="ControlOuterBorder" Color="Transparent"/>
+    <SolidColorBrush x:Key="ControlInnerBorder" Color="Transparent"/>
+    <SolidColorBrush x:Key="GridView_GroupRowIndicator" Color="{StaticResource DefaultControlForegroundColor}"/>
+    <SolidColorBrush x:Key="GridView_RowIndicatorCellBackground" Color="{StaticResource DefaultGridHeaderBackgroundColor}"/>
+    <telerik:Office_BlackTheme x:Key="Theme"/>
+    <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    
+    <SolidColorBrush x:Key="GridView_GroupExpanderGridBackground" Color="DarkGray"/>
+    <DataTemplate x:Key="GroupHeaderTemplate">
+        <TextBlock Text="{Binding Header}" Foreground="{StaticResource DefaultControlForeground}" FontFamily="{StaticResource DefaultControlFontFamily}" 
+                   FontSize="{StaticResource DefaultControlFontSize}" FontWeight="Bold" Margin="5,0,5,0"/>
+    </DataTemplate>
+    <SolidColorBrush x:Key="GridView_GroupRowBackground" Color="{StaticResource DefaultGridHeaderBackgroundColor}"/>
+    <SolidColorBrush x:Key="GridView_GridLinesItemBorder" Color="White"/>
+    <SolidColorBrush x:Key="GridView_IndentCellBackground" Color="White"/>
+
+    <!--GridViewHeaderCellStyle-->
+    <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellStyleOld">
+        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}" />
+        <Setter Property="BorderBrush" Value="{StaticResource DefaultGridHeaderBackground}" />
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
+    <!--GridViewCellStyle-->
+    <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewCellHeight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+    </Style>
+
+    <!--GridViewGroupPanelStyle-->
+    <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyle">
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewPanelHeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}"/>
+    </Style>
+
+    <!--GroupPanelItemStyle-->
+    <Style TargetType="telerik:GridViewGroupPanelItem" x:Name="GridViewGroupPanelItemStyle">
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+    </Style>
+
+    <!--GridViewRowStyle-->
+    <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewRowHeight}"/>
+    </Style>
+
+    <!--GridViewRowStyle-->
+    <Style TargetType="telerik:GridViewRow" x:Name="GridViewAlternateRowStyle">
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewRowHeight}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridRowBackground}"/>
+    </Style>
+
+
+    <!--GridViewGroupPanelStyle-->
+    <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewPanelHeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}"/>
+    </Style>
+
+    <!--ToggleButtonStyling-->
+    <ControlTemplate x:Key="GridViewGroupToggleButtonTemplate" TargetType="ToggleButton">
+        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+            <ContentPresenter/>
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="GridViewGroupToggleButtonStyle" TargetType="ToggleButton">
+        <Setter Property="Template" Value="{StaticResource GridViewGroupToggleButtonTemplate}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="9,0,0,0"/>
+    </Style>
+
+    <!--GridViewGroupRowTemplate-->
+    <ControlTemplate x:Key="GridViewGroupRowTemplate" TargetType="telerik:GridViewGroupRow">
+        <Grid x:Name="PART_GroupExpanderGrid" Background="{TemplateBinding Background}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="PART_HeaderRow" MinHeight="25"/>
+                <RowDefinition x:Name="ContentRow"/>
+            </Grid.RowDefinitions>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="ExpandStateGroup">
+                    <VisualState x:Name="Expanded">
+
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                                           Storyboard.TargetName="aggregateResultsList">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Collapsed</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                                           Storyboard.TargetName="toggleButton">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                                           Storyboard.TargetName="PART_GridViewVirtualizingPanel">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                                           Storyboard.TargetName="Footer">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimation Duration="0" To="-1" 
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
+                                             Storyboard.TargetName="ExpanderButton" d:IsOptimized="True"/>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Row)" 
+                                                           Storyboard.TargetName="PART_GridViewVirtualizingPanel">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <System:Int32>0</System:Int32>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Row)" 
+                                                           Storyboard.TargetName="Footer">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <System:Int32>1</System:Int32>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" 
+                                                           Storyboard.TargetName="stackPanel">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Thickness>0</Thickness>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+
+                    </VisualState>
+                    <VisualState x:Name="Collapsed" />
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="ToggleButtonBorder" BorderBrush="{StaticResource ControlOuterBorder}" 
+                    BorderThickness="0,0,0,1" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" Grid.Column="2">
+                <Border x:Name="ToggleButtonInnerBorder" BorderBrush="{StaticResource ControlInnerBorder}" BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="2" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <telerik:AggregateResultsList x:Name="aggregateResultsList" 
+                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                          ItemsSource="{TemplateBinding AggregateResults}" 
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          Margin="5,0" Visibility="Collapsed">
+                                <telerik:AggregateResultsList.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </telerik:AggregateResultsList.ItemsPanel>
+                                <telerik:AggregateResultsList.ItemTemplate>
+                                    <DataTemplate>
+                                        <telerik:GridViewAggregateResultCell AggregateResult="{Binding}" 
+                                                                             telerik:StyleManager.Theme="{StaticResource Theme}"/>
+                                    </DataTemplate>
+                                </telerik:AggregateResultsList.ItemTemplate>
+                            </telerik:AggregateResultsList>
+                        </Grid>
+                        <Path x:Name="ExpanderButton" Grid.Column="0" 
+                              Data="M0,0L1,0 2,0 2,0.99999991 3,0.99999991 3,2 4,2 4,0.99999991 5,0.99999991 5,0 5.9999999,0 7,0 7,0.99999991 5.9999999,0.99999991 5.9999999,2 5,2 5,3 4,3 4,4 3,4 3,3 2,3 2,2 1,2 1,0.99999991 0,0.99999991z"
+                              Fill="{StaticResource GridView_GroupRowIndicator}" HorizontalAlignment="Center" Height="5"
+                              RenderTransformOrigin="0.5,0.5" Width="7" VerticalAlignment="Center" UseLayoutRounding="False">
+                            <Path.RenderTransform>
+                                <CompositeTransform/>
+                            </Path.RenderTransform>
+                        </Path>
+                        <ToggleButton x:Name="HeaderButton" Background="{TemplateBinding Background}" 
+                                      Grid.ColumnSpan="3" Grid.Column="0"
+                                      IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Opacity="0" telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"/>
+                        <ToggleButton x:Name="toggleButton" BorderBrush="{x:Null}" BorderThickness="0"
+                                      Background="{TemplateBinding Background}" Grid.Column="1" 
+                                      IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                      Padding="0,0,10,0" Style="{StaticResource GridViewGroupToggleButtonStyle}" 
+                                      telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" >
+                            <ContentPresenter ContentTemplate="{TemplateBinding GroupHeaderTemplate}" 
+                                              Content="{TemplateBinding GroupViewModel}" Grid.Column="1"
+                                              Margin="0,0,10,0" VerticalAlignment="Center"/>
+                        </ToggleButton>
+                    </Grid>
+                </Border>
+            </Border>
+            <Border x:Name="PART_IndicatorPresenter" BorderBrush="{StaticResource ControlOuterBorder}" 
+                    BorderThickness="0,0,1,1" Grid.Column="0" telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                    Visibility="{TemplateBinding RowIndicatorVisibility}" VerticalAlignment="Stretch" Width="25">
+                <Border BorderBrush="{StaticResource ControlInnerBorder}" BorderThickness="1" 
+                        Background="{StaticResource GridView_RowIndicatorCellBackground}"/>
+            </Border>
+            <telerik:IndentPresenter Background="{TemplateBinding Background}" Grid.Column="1" IndentLevel="{TemplateBinding Level}"
+                                     telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" 
+                                     telerik:StyleManager.Theme="{StaticResource Theme}"/>
+            <Border x:Name="Content" Grid.ColumnSpan="5" Grid.Column="0" Grid.Row="1">
+                <Grid x:Name="stackPanel" Margin="0,-25,0,0" VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <telerik:GridViewGroupFooterRow x:Name="Footer" telerik:StyleManager.Theme="{StaticResource Theme}" 
+                                                    Background="{x:Null}" BorderThickness="0,0,0,0"/>
+                    <telerik:GridViewVirtualizingPanel x:Name="PART_GridViewVirtualizingPanel" Visibility="Collapsed"
+                                                       VerticalAlignment="Bottom" Grid.Row="1"/>
+                </Grid>
+            </Border>
+            <Border x:Name="BottomBorder" BorderBrush="{StaticResource ControlOuterBorder}" BorderThickness="0,0,0,1" 
+                    Grid.Column="2" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Bottom"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!--GridViewGroupRowStyle-->
+    <Style x:Key="GridViewGroupRowStyle" TargetType="telerik:GridViewGroupRow">
+        <Setter Property="Template" Value="{StaticResource GridViewGroupRowTemplate}"/>
+        <Setter Property="GroupHeaderTemplate" Value="{StaticResource GroupHeaderTemplate}"/>
+        <Setter Property="Background" Value="{StaticResource GridView_GroupRowBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_GridLinesItemBorder}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="Padding" Value="0,0,0,0"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <!--GridViewGroupFooterIndentCellStyle-->
+    <Style TargetType="telerik:GridViewGroupFooterIndentCell">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:GridViewGroupFooterIndentCell">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            Padding="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Width="25">
+                        <Border BorderBrush="{StaticResource ControlInnerBorder}" BorderThickness="0" 
+                                Background="{TemplateBinding Background}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ControlOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+
+
+    <!--groupfooter style-->
+    <Style TargetType="telerik:GridViewGroupFooterCell">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+    </Style>
+
+    <!--footer style-->
+    <Style TargetType="telerik:GridViewFooterCell">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+    </Style>
+    <!--#####################################################################################################################-->
+
+    <!--Chart Item Label Style-->
+    <Style x:Key="ItemLabelStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="8" />
+        <Setter Property="FontStyle" Value="Normal" />
+    </Style>
+    
+    <!--RadChart Axis Title Styles-->
+    <Thickness x:Key="AxisTitleMargin">0.1,0.1,0.1,0.1</Thickness>
+    <Style x:Key="AxisTitleBorderStyle"
+            TargetType="Border">
+        <Setter Property="Margin"
+                Value="0,1,0,0" />
+        <Setter Property="CornerRadius"
+                Value="2" />
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                    StartPoint="0.5,0">
+                    <GradientStop Color="Transparent"
+                                  Offset="0.3" />
+                    <GradientStop Color="Orange"
+                                  Offset="0.7" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness"
+                Value="1,0,1,1" />
+    </Style>
+    <Style x:Key="AxisTitleInnerBorderStyle"
+           TargetType="Border">
+        <Setter Property="CornerRadius"
+                Value="1" />
+    </Style>
+
+
+    <Style x:Key="AxisTitleStyle" TargetType="telerik:AxisTitle">
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="Height" Value="9"/>
+        <Setter Property="Width" Value="9"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Margin"
+                Value="{StaticResource AxisTitleMargin}" />
+        <Setter Property="BorderStyle"
+                Value="{StaticResource AxisTitleBorderStyle}" />
+        <Setter Property="InnerBorderStyle"
+                Value="{StaticResource AxisTitleInnerBorderStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:AxisTitle">
+                    <Border Style="{TemplateBinding BorderStyle}">
+                        <Border Style="{TemplateBinding InnerBorderStyle}">
+                            <ContentControl Margin="0.1,0.1,0.1,0.1"
+                                            FontFamily="{StaticResource DefaultControlFontFamily}"
+                                            FontSize="7"
+                                            Foreground="{TemplateBinding Foreground}"
+                                            Content="{TemplateBinding Content}" />
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground"
+                Value="Black" />
+    </Style>
+
+    <!--RadChart Axis Title Styles END-->
+
+
+    <!--RadChart Legend Style-->
+
+    <LinearGradientBrush x:Key="LegendItemMarkerMask"
+                        EndPoint="0.5,1"
+                        StartPoint="0.5,0">
+        <GradientStop Color="#D8FFFFFF"
+                    Offset="0.009" />
+        <GradientStop Color="#66FFFFFF"
+                    Offset="1" />
+        <GradientStop Color="Transparent"
+                    Offset="0.43" />
+        <GradientStop Color="#7FFFFFFF"
+                    Offset="0.42" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="LegendForeground"
+                    Color="#FF000000" />
+    <LinearGradientBrush x:Key="LegendBackground"
+                        EndPoint="1.96,0.5"
+                        StartPoint="-0.96,0.5">
+        <GradientStop Color="#FFFFFF" />
+        <GradientStop Color="#FFFFFF"
+                    Offset="0.5" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="LegendItemMarkerMaskOpacityMask"
+                    Color="#FF000000" />
+    <SolidColorBrush x:Key="LegendItemMarkerMaskStroke"
+                    Color="White" />
+    <System:Double x:Key="LegendItemMarkerMaskStrokeThickness">1</System:Double>
+    <SolidColorBrush x:Key="LegendItemMarkerMask2"
+                    Color="Transparent" />
+    <Style x:Key="ChartLegendItemStyle"
+        TargetType="telerik:ChartLegendItem">
+        <Setter Property="Foreground"
+            Value="{StaticResource LegendForeground}" />
+        <Setter Property="Padding"
+            Value="0,0,0,0" />
+        <Setter Property="Margin"
+            Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:ChartLegendItem">
+                    <Grid x:Name="PART_MainContainer"
+                        Background="{TemplateBinding Background}"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="HoverStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0.00:00:00.15"
+                                                        To="1.0"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        Storyboard.TargetName="PART_MainContainer" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Hovered">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0.00:00:00.15"
+                                                        To="1.0"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        Storyboard.TargetName="PART_MainContainer" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Hidden">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0.00:00:00.15"
+                                                        To="0.15"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        Storyboard.TargetName="PART_MainContainer" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Duration="0.00:00:00.05"
+                                                                    Storyboard.TargetProperty="Stroke"
+                                                                    Storyboard.TargetName="PART_LegendItemMarker">
+                                            <DiscreteObjectKeyFrame KeyTime="0.00:00:00.0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="#B2000000" />
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Duration="0.00:00:00.05"
+                                                                    Storyboard.TargetProperty="StrokeThickness"
+                                                                    Storyboard.TargetName="PART_LegendItemMarker">
+                                            <DiscreteObjectKeyFrame KeyTime="0.00:00:00.0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <System:Double>2</System:Double>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Duration="0.00:00:00.05"
+                                                                    Storyboard.TargetProperty="StrokeThickness"
+                                                                    Storyboard.TargetName="PART_SelectedState">
+                                            <DiscreteObjectKeyFrame KeyTime="0.00:00:00.0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <System:Double>0</System:Double>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Path x:Name="PART_LegendItemMarker"
+                            Height="8"
+                            Margin="{TemplateBinding Margin}"
+                            Style="{TemplateBinding ItemStyle}"
+                            Stretch="Fill"
+                            StrokeThickness="{TemplateBinding MarkerStrokeThickness}"
+                            Width="8">
+                            <Path.Data>
+                                <PathGeometry x:Name="PART_ItemMarkerGeometry" />
+                            </Path.Data>
+                        </Path>
+                        <Path x:Name="PART_SelectedState"
+                            Fill="{StaticResource LegendItemMarkerMask}"
+                            Height="8"
+                            Margin="{TemplateBinding Margin}"
+                            OpacityMask="{StaticResource LegendItemMarkerMaskOpacityMask}"
+                            Stretch="Fill"
+                            Stroke="{StaticResource LegendItemMarkerMaskStroke}"
+                            StrokeThickness="{StaticResource LegendItemMarkerMaskStrokeThickness}"
+                            Width="8">
+                            <Path.Data>
+                                <PathGeometry x:Name="PART_ItemMarkerMaskGeometry" />
+                            </Path.Data>
+                        </Path>
+                        <Path Fill="{StaticResource LegendItemMarkerMask2}"
+                            Height="8"
+                            Margin="{TemplateBinding Margin}"
+                            Stretch="Fill"
+                            Width="8">
+                            <Path.Data>
+                                <PathGeometry x:Name="PART_ItemMarkerMaskGeometry2" />
+                            </Path.Data>
+                        </Path>
+                        <TextBlock x:Name="PART_TextBlock"
+                                Grid.Column="1" 
+                                Foreground="{TemplateBinding Foreground}"
+                                Margin="{TemplateBinding Margin}"
+                                Padding="{TemplateBinding Padding}"
+                                Text="{TemplateBinding Label}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <SolidColorBrush x:Key="LegendBorderBrush"
+                    Color="#FF848484" />
+    <Thickness x:Key="LegendBorderThickness">1</Thickness>
+    
+    <!--RadChart Legend Style End-->
+
+
+    <!--LegendItemStyle-->
+    <Style x:Key="CustomLegendItem" TargetType="telerik:ChartLegendItem">
+        <Setter Property="Padding" Value="5,0,5,0" />
+        <Setter Property="Margin" Value="0,3,0,2" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:ChartLegendItem">
+                    <Grid x:Name="PART_MainContainer" Background="{TemplateBinding Background}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Path x:Name="PART_LegendItemMarker" 
+                             Width="16"
+                             Height="16"
+                             Margin="{TemplateBinding Margin}"
+                             StrokeThickness="{TemplateBinding MarkerStrokeThickness}"
+                             Style="{TemplateBinding ItemStyle}"
+                             Stretch="Fill">
+                            <Path.Data>
+                                <PathGeometry x:Name="PART_ItemMarkerGeometry" />
+                            </Path.Data>
+                        </Path>
+
+                        <TextBlock x:Name="PART_TextBlock"
+                                   Grid.Column="1"
+                                   Padding="{TemplateBinding Padding}"
+                                   Margin="{TemplateBinding Margin}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   Text="{TemplateBinding Label}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--LegendItemStyleEnd-->
+
+
+    <!--#####################################################################################################################-->
+    <!--#####################################################################################################################-->
+    <!--#####################################################################################################################-->
+    <!--filtering icon styling-->
+    <ControlTemplate x:Key="DistinctFilterControlTemplate" TargetType="telerik:FilteringDropDown">
+        <Grid>
+            <Button x:Name="PART_DropDownButton">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter/>
+                    </ControlTemplate>
+                </Button.Template>
+                <Border Background="Transparent" Cursor="Hand" Padding="3,0,0,0">
+                    <Grid Cursor="Hand" Height="15" Width="15">
+                        <Path Data="F1M511.667,467.272C509.658,468.299 507.19,467.509 506.164,465.5C505.133,463.491 505.927,461.033 507.935,460C509.944,458.974 512.409,459.77 513.438,461.775C514.469,463.783 513.677,466.241 511.667,467.272M518.56,462.857L517.883,460.016L515.393,460.283C515.141,459.858 514.851,459.473 514.523,459.128L515.443,456.897L512.951,455.365L511.397,457.293C510.858,457.151 510.302,457.082 509.741,457.078L508.767,454.914L505.938,455.672L506.271,458.066C505.879,458.307 505.522,458.583 505.203,458.884L503.053,458L501.517,460.487L503.366,461.979C503.232,462.487 503.151,463.013 503.142,463.543L501.034,464.418L501.712,467.26L504.064,467.009C504.336,467.479 504.655,467.906 505.023,468.281L504.158,470.376L506.647,471.909L508.142,470.06C508.65,470.185 509.165,470.255 509.693,470.262L510.578,472.391L513.425,471.714L513.167,469.297C513.607,469.029 514.015,468.721 514.364,468.376L516.545,469.275L518.081,466.785L516.149,465.23C516.266,464.757 516.331,464.271 516.339,463.78z" 
+                              Fill="Black" Margin="1" Stretch="Fill">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <Path Data="F1M511.667,467.272C509.658,468.299 507.19,467.509 506.164,465.5C505.133,463.491 505.927,461.033 507.935,460C509.944,458.974 512.409,459.77 513.438,461.775C514.469,463.783 513.677,466.241 511.667,467.272M518.56,462.857L517.883,460.016L515.393,460.283C515.141,459.858 514.851,459.473 514.523,459.128L515.443,456.897L512.951,455.365L511.397,457.293C510.858,457.151 510.302,457.082 509.741,457.078L508.767,454.914L505.938,455.672L506.271,458.066C505.879,458.307 505.522,458.583 505.203,458.884L503.053,458L501.517,460.487L503.366,461.979C503.232,462.487 503.151,463.013 503.142,463.543L501.034,464.418L501.712,467.26L504.064,467.009C504.336,467.479 504.655,467.906 505.023,468.281L504.158,470.376L506.647,471.909L508.142,470.06C508.65,470.185 509.165,470.255 509.693,470.262L510.578,472.391L513.425,471.714L513.167,469.297C513.607,469.029 514.015,468.721 514.364,468.376L516.545,469.275L518.081,466.785L516.149,465.23C516.266,464.757 516.331,464.271 516.339,463.78z" 
+                              Fill="Black" Margin="1" Stretch="Fill" Visibility="{TemplateBinding FunnelFillVisibility}">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+                </Border>
+            </Button>
+            <Popup x:Name="PART_DropDownPopup"/>
+        </Grid>
+    </ControlTemplate>
+    <Style TargetType="telerik:FilteringDropDown" x:Key="FilteringDropDownStyle">
+        <Setter Property="Template" Value="{StaticResource DistinctFilterControlTemplate}"/>
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+
+    <!--BorderLess GridHeaderCellStyle-->
+    <SolidColorBrush x:Key="GridView_HeaderInnerBorder" Color="{StaticResource DefaultGridHeaderBackgroundColor}"/>
+    <SolidColorBrush x:Key="GridView_HeaderOuterBorder_Over" Color="Red"/>
+    <SolidColorBrush x:Key="GridView_HeaderInnerBorder_Over" Color="White"/>
+    <LinearGradientBrush x:Key="GridView_HeaderBackground_Over" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFFFFBA3" Offset="1"/>
+        <GradientStop Color="#FFFFFBDA" Offset="0"/>
+        <GradientStop Color="#FFFFD25A" Offset="0.43"/>
+        <GradientStop Color="#FFFEEBAE" Offset="0.42"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GridView_HeaderOuterBorder_Selected" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="Transparent" Offset="0"/>
+        <GradientStop Color="Transparent" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GridView_HeaderInnerBorder_Selected" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFB69A78"/>
+        <GradientStop Color="#FFFFE17A" Offset="0.126"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GridView_HeaderBackground_Selected" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFFFD74E" Offset="0.996"/>
+        <GradientStop Color="#FFFFDCAB" Offset="0.17"/>
+        <GradientStop Color="#FFFFB062" Offset="0.57"/>
+        <GradientStop Color="#FFFFD18F" Offset="0.56"/>
+        <GradientStop Color="#FFFFBA74"/>
+    </LinearGradientBrush>
+    <Style x:Key="StretchedContentControl" TargetType="ContentControl">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+    </Style>
+    <SolidColorBrush x:Key="GridView_SortIndicatorColor" Color="Black"/>
+    <telerik:Office_BlackTheme x:Key="ThemeB"/>
+    <Style x:Key="ColumnHeaderGripperStyle" TargetType="Thumb">
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            Padding="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="GridView_HeaderForeground_Selected" Color="Black"/>
+    <SolidColorBrush x:Key="GridView_HeaderOuterBorder" Color="#e4e5e5"/>
+    <ControlTemplate x:Key="GridViewHeaderCellTemplate" TargetType="telerik:GridViewHeaderCell">
+        <Grid x:Name="PART_HeaderCellGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualStateGroup.Transitions>
+                        <VisualTransition GeneratedDuration="00:00:00.2000000" To="Normal"/>
+                        <VisualTransition GeneratedDuration="00:00:00.2000000" To="MouseOver"/>
+                    </VisualStateGroup.Transitions>
+                    <VisualState x:Name="Normal"/>
+                    <VisualState x:Name="MouseOver">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Opacity" 
+                                                           Storyboard.TargetName="GridViewHeaderCell_Over">
+                                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground" 
+                                                           Storyboard.TargetName="ContentPresenter">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Ascending">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground" 
+                                                           Storyboard.TargetName="ContentPresenter">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PART_SortIndicator">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="GridViewHeaderCell_Selected">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Descending">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground"
+                                                           Storyboard.TargetName="ContentPresenter">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PART_SortIndicator">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform" Storyboard.TargetName="PART_SortIndicator">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="GridViewHeaderCell_Selected">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="GridViewHeaderCell" BorderBrush="{TemplateBinding BorderBrush}" Grid.ColumnSpan="2">
+                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder}" BorderThickness="1" Background="{TemplateBinding Background}"/>
+            </Border>
+            <Border x:Name="GridViewHeaderCell_Over" BorderBrush="{StaticResource GridView_HeaderOuterBorder_Over}" 
+                    BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" Opacity="0">
+                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder_Over}" BorderThickness="1" Background="#FF848484"/>
+            </Border>
+            <Border x:Name="GridViewHeaderCell_Selected" BorderBrush="{StaticResource GridView_HeaderOuterBorder_Selected}" 
+                    BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" Opacity="0">
+                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder_Selected}" BorderThickness="1" 
+                        Background="{StaticResource GridView_HeaderBackground_Selected}"/>
+            </Border>
+            <ContentControl x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
+                            Grid.Column="0" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            IsTabStop="{TemplateBinding IsTabStop}" Margin="{TemplateBinding Padding}"
+                            Style="{StaticResource StretchedContentControl}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            <Path x:Name="PART_SortIndicator" Grid.ColumnSpan="2" Data="M0,0 L1,0 2,0 3,0 4,0 5,0 5,1 4,1 4,2 3,2 3,3 2,3 2,2 1,2 1,1 0,1 0,0 z"
+                  Fill="{StaticResource GridView_SortIndicatorColor}" HorizontalAlignment="Center" Height="3" Margin="0,3,0,0" 
+                  Opacity="0" RenderTransformOrigin=".5,.5" Stretch="Fill" VerticalAlignment="Top" Width="5">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                        <SkewTransform AngleY="0" AngleX="0"/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform X="0" Y="0"/>
+                    </TransformGroup>
+                </Path.RenderTransform>
+            </Path>
+            <telerik:FilteringDropDown x:Name="PART_DistinctFilterControl" Grid.Column="1" Margin="0,0,8,0" 
+                                       telerik:StyleManager.Theme="Metro" Visibility="{TemplateBinding FilteringUIVisibility}"
+                                       Style="{StaticResource FilteringDropDownStyle}"/>
+            <Thumb x:Name="PART_LeftHeaderGripper" Grid.ColumnSpan="2" HorizontalAlignment="Left" IsTabStop="{TemplateBinding IsTabStop}" 
+                   Style="{StaticResource ColumnHeaderGripperStyle}"/>
+            <Thumb x:Name="PART_RightHeaderGripper" Grid.ColumnSpan="2" HorizontalAlignment="Right" IsTabStop="{TemplateBinding IsTabStop}" 
+                   Style="{StaticResource ColumnHeaderGripperStyle}"/>
+        </Grid>
+    </ControlTemplate>
+    <LinearGradientBrush x:Key="GridView_HeaderBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="{StaticResource DefaultGridHeaderBackgroundColor}" Offset="1"/>
+        <GradientStop Color="{StaticResource DefaultGridHeaderBackgroundColor}"/>
+        <GradientStop Color="{StaticResource DefaultGridHeaderBackgroundColor}" Offset="0.42"/>
+        <GradientStop Color="{StaticResource DefaultGridHeaderBackgroundColor}" Offset="0.43"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="GridView_HeaderForeground" Color="Black"/>
+
+    <!--GridViewHeaderCellStyle-->
+    <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellStyle">
+        <Setter Property="Template" Value="{StaticResource GridViewHeaderCellTemplate}"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="5,0,3,0"/>
+        <Setter Property="Foreground" Value="{StaticResource GridView_HeaderForeground}"/>
+    </Style>
+
+    <!--template for GridHeaderRowStyle-->
+    <SolidColorBrush x:Key="GridViewCommonHeader_BorderBrush" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridViewCommonHeader_Background" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridView_HeaderRowInnerBorder" Color="#e4e5e5"/>
+    <DataTemplate x:Key="GridViewHeaderIndentCellDataTemplate">
+        <telerik:GridViewHeaderIndentCell telerik:StyleManager.Theme="{StaticResource Theme}"/>
+    </DataTemplate>
+    <ControlTemplate x:Key="GridViewHeaderRowTemplate" TargetType="telerik:GridViewHeaderRow">
+        <telerik:SelectiveScrollingGrid>
+            <telerik:SelectiveScrollingGrid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </telerik:SelectiveScrollingGrid.ColumnDefinitions>
+            <telerik:SelectiveScrollingGrid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </telerik:SelectiveScrollingGrid.RowDefinitions>
+            <telerik:CommonHeaderPresenter x:Name="PART_CommonHeaderPresenter" Grid.Column="3" telerik:StyleManager.Theme="{StaticResource Theme}"/>
+            <Border x:Name="CommonHeaderIndent" BorderBrush="{StaticResource GridViewCommonHeader_BorderBrush}" BorderThickness="0,0,1,1"
+                    Background="{StaticResource GridViewCommonHeader_Background}" Grid.ColumnSpan="2" 
+                    telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" 
+                    Visibility="{Binding Visibility, ElementName=PART_CommonHeaderPresenter}"/>
+            <Grid Grid.ColumnSpan="4" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border x:Name="PART_GridViewHeaderRowBorder" BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                        Padding="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                    <Border BorderBrush="{StaticResource GridView_HeaderRowInnerBorder}" BorderThickness="1" Background="{TemplateBinding Background}"/>
+                </Border>
+                <Border x:Name="PART_FieldFilterPlaceholder" BorderBrush="{StaticResource ControlOuterBorder}"
+                        BorderThickness="0,0,1,1" Background="{StaticResource GridViewCommonHeader_Background}" 
+                        MinHeight="26" Grid.Row="1" Visibility="{TemplateBinding FieldFilterPlaceholderVisibility}"/>
+            </Grid>
+            <telerik:DataCellsPresenter x:Name="PART_DataCellsPresenter" Grid.Column="3" Grid.Row="1" 
+                                        telerik:StyleManager.Theme="{StaticResource Theme}"/>
+            <Border x:Name="PART_IndicatorPresenter" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,0,1,1" 
+                    Grid.Row="1" telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                    Visibility="{TemplateBinding RowIndicatorVisibility}" Width="25">
+                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder}" BorderThickness="1" 
+                        Background="{StaticResource GridView_HeaderBackground}"/>
+            </Border>
+            <telerik:IndentPresenter x:Name="PART_IndentPresenter" Grid.Column="1" ItemTemplate="{StaticResource GridViewHeaderIndentCellDataTemplate}" 
+                                     IndentLevel="{TemplateBinding IndentLevel}" MinHeight="{TemplateBinding MinHeight}" Grid.Row="1" 
+                                     telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                                     telerik:StyleManager.Theme="{StaticResource Theme}"/>
+            <Border x:Name="PART_HierarchyIndentPresenter" BorderBrush="{TemplateBinding BorderBrush}" 
+                    BorderThickness="0,0,1,1" Grid.Column="2" Grid.Row="1" telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                    Visibility="{Binding HasHierarchy, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource TemplatedParent}}" 
+                    Width="25">
+                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder}" BorderThickness="1" Background="{StaticResource GridView_HeaderBackground}"/>
+            </Border>
+        </telerik:SelectiveScrollingGrid>
+    </ControlTemplate>
+    <SolidColorBrush x:Key="GridView_HeaderRowBackground" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridView_HeaderRowOuterBorder" Color="#e4e5e5"/>
+
+    <!--GridViewHeaderRowStyle-->
+    <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
+        <Setter Property="Template" Value="{StaticResource GridViewHeaderRowTemplate}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderRowOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1,0,0,1"/>
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewHeaderRowHeight}"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderRowBackground}"/>
+        <Setter Property="MaxHeight" Value="{StaticResource DefaultGridViewHeaderRowMaxHeight}"/>
+        <Setter Property="IndentLevel" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <!--#####################################################################################################################-->
+    <!--#####################################################################################################################-->
+    <!--#####################################################################################################################-->
+
+
+    <!--TextBlock Style-->
+    <Style TargetType="TextBlock" x:Name="TextBlockStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+    </Style>
+
+    <!--RadContextMenu Style-->
+    <Style TargetType="telerik:RadContextMenu" x:Name="RadContextMenuStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+    </Style>
+
+    <!--RadRadioButton Style-->
+    <Style TargetType="telerik:RadRadioButton" x:Name="RadRadioButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+    </Style>
+
+    <!--TextBox Style-->
+    <Style TargetType="TextBox" x:Name="TextBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+    </Style>
+
+    <!--ItemsControl Style-->
+    <Style TargetType="ItemsControl" x:Name="ItemsControlStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
+    <!--HyperlinkButton Style-->
+    <Style TargetType="HyperlinkButton" x:Name="HyperlinkButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="Height" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+    <!--RadComboBox Style-->
+    <Style TargetType="telerik:RadComboBox" x:Name="RadComboBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="OpenDropDownOnFocus" Value="True" />
+    </Style>
+
+    <!--RadComboBox Style-->
+    <Style TargetType="telerik:RadComboBoxItem" x:Name="RadComboBoxItemStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
+    <!--RadListBoxStyle Style-->
+    <Style TargetType="telerik:RadListBox" x:Name="RadListBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
+    <!--CheckBox Style-->
+    <Style TargetType="CheckBox" x:Name="CheckBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--ComboBoxStyle-->
+    <Style TargetType="ComboBox" x:Name="ComboBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--RadButtonStyle-->
+    <Style TargetType="telerik:RadButton" x:Name="RadButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--RadButtonStyle-->
+    <Style TargetType="telerik:RadSplitButton" x:Name="RadSplitButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="telerik:RadNumericUpDown" x:Name="RadNumericUpDownStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+    </Style>
+
+    <!--RadDatePicker-->
+    <Style TargetType="telerik:RadDatePicker" x:Name="RadDatePickerStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
+    <!--RadCalendar-->
+    <Style TargetType="telerik:RadCalendar" x:Name="RadCalendarStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
+    <!--BusyIndicatorStyle-->
+    <Style TargetType="telerik:RadBusyIndicator" x:Key="BusyIndicatorStyle">
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <!--GridViewCellStyleBoldText-->
+    <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyleBoldText">
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewCellHeight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <!--GridViewCellStyleRedText-->
+    <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyleRedText">
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewCellHeight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="Foreground" Value="Red"/>
+    </Style>
+
+    <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewMergerHeaderRowStyle">
+        <Setter Property="Template" Value="{StaticResource GridViewHeaderRowTemplate}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderRowOuterBorder}"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="BorderThickness" Value="1,1,0,1"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderRowBackground}"/>
+        <Setter Property="IndentLevel" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <Style TargetType="telerik:CommonColumnHeader" x:Name="GridViewColumnGroupHeaderStyle_CenterAligned">
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForegroundColor}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderRowOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1,0,0,1"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="MinHeight" Value="15"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderRowBackground}"/>
+        <Setter Property="Padding" Value="0,0,0,0"/>
+    </Style>
+
+    <Style TargetType="telerik:CommonColumnHeader" x:Name="GridViewColumnGroupHeaderStyle_RightAligned">
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForegroundColor}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderRowOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1,0,1,0"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="MinHeight" Value="15"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderRowBackground}"/>
+        <Setter Property="Padding" Value="0,0,0,0"/>
+    </Style>
+
+    <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewMergedHeaderCellStyle">
+        <Setter Property="Template" Value="{StaticResource GridViewHeaderCellTemplate}"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1,0,0,1"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Height" Value="18"/>
+        <Setter Property="MinHeight" Value="18"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Foreground" Value="{StaticResource GridView_HeaderForeground}"/>
+    </Style>
+</ResourceDictionary>

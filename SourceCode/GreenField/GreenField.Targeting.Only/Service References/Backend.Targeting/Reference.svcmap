@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0bf8f36c-9b7e-4459-9c26-5e61b439fed8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:35583/Services/TargetingOperations.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TargetingOperations.xsd" MetadataType="Schema" ID="93affd8a-5c97-4dd4-b0b6-e1d57e4f505f" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="TargetingOperations1.xsd" MetadataType="Schema" ID="d550e6e0-87ca-4892-a1b5-088495cb895e" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="TargetingOperations2.xsd" MetadataType="Schema" ID="6b71e376-e78e-48fd-9cd0-3fccc3169e45" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd4" />
+    <MetadataFile FileName="TargetingOperations.disco" MetadataType="Disco" ID="879d1a71-96f1-478d-b3ec-57b482a992cf" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?disco" />
+    <MetadataFile FileName="TargetingOperations.wsdl" MetadataType="Wsdl" ID="f8087a68-e790-4e83-aef5-9df8fb0597f7" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?wsdl" />
+    <MetadataFile FileName="TargetingOperations3.xsd" MetadataType="Schema" ID="5341e551-ee58-4f4f-8c5e-c8a20cb0a5ec" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="TargetingOperations4.xsd" MetadataType="Schema" ID="88223de9-9938-4662-8396-40a73704b523" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

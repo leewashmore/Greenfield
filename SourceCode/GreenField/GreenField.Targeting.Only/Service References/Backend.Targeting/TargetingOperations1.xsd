@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/TopDown.FacingClient" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/TopDown.FacingClient" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="BroadGlobalActivePortfolioModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PortfolioModel">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BroadGlobalActivePortfolioModel" nillable="true" type="tns:BroadGlobalActivePortfolioModel" />
+  <xs:complexType name="PortfolioModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PortfolioModel" nillable="true" type="tns:PortfolioModel" />
+  <xs:complexType name="NullableExpressionModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NullableExpressionModel" nillable="true" type="tns:NullableExpressionModel" />
+  <xs:complexType name="ArrayOfIssueModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="IssueModel" nillable="true" type="tns:IssueModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfIssueModel" nillable="true" type="tns:ArrayOfIssueModel" />
+  <xs:complexType name="IssueModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IssueModel" nillable="true" type="tns:IssueModel" />
+  <xs:complexType name="EditableExpressionModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DefaultValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EditedValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="InitialValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EditableExpressionModel" nillable="true" type="tns:EditableExpressionModel" />
+  <xs:complexType name="RegionBasketModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Countries" nillable="true" type="tns:ArrayOfCountryModel" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RegionBasketModel" nillable="true" type="tns:RegionBasketModel" />
+  <xs:complexType name="ArrayOfCountryModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CountryModel" nillable="true" type="tns:CountryModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCountryModel" nillable="true" type="tns:ArrayOfCountryModel" />
+  <xs:complexType name="CountryModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsoCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CountryModel" nillable="true" type="tns:CountryModel" />
+  <xs:complexType name="ExpressionModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
+      <xs:element minOccurs="0" name="Value" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExpressionModel" nillable="true" type="tns:ExpressionModel" />
+  <xs:complexType name="CountryBasketModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Country" nillable="true" type="tns:CountryModel" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CountryBasketModel" nillable="true" type="tns:CountryBasketModel" />
+  <xs:complexType name="TargetingTypeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TargetingTypeModel" nillable="true" type="tns:TargetingTypeModel" />
+</xs:schema>

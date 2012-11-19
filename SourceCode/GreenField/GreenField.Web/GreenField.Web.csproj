@@ -13,7 +13,7 @@
     <RootNamespace>GreenField.Web</RootNamespace>
     <AssemblyName>GreenField.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SilverlightApplicationList>{F914419C-A86A-487F-9757-8DF5151FAA77}|..\GreenField.App\GreenField.App.csproj|ClientBin|False,{52101286-444F-49E8-ADC8-28F884471DB7}|..\GreenField.Login.App\GreenField.Login.App.csproj|ClientBin|False,{7C2FBBA3-4BA9-48E5-994E-CE763526D9B8}|..\Greenfield.Targeting.App\GreenField.Targeting.App.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{F914419C-A86A-487F-9757-8DF5151FAA77}|..\GreenField.App\GreenField.App.csproj|ClientBin|False,{52101286-444F-49E8-ADC8-28F884471DB7}|..\GreenField.Login.App\GreenField.Login.App.csproj|ClientBin|False</SilverlightApplicationList>
     <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -89,11 +89,7 @@
     <Content Include="ClientAccessPolicy.xml" />
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
-    <Content Include="ClientBin\GreenField.Targeting.App.xap" />
     <Content Include="crossdomain.xml" />
-    <Content Include="GreenField.Targeting.AppTestPage.aspx" />
-    <Content Include="GreenField.Targeting.AppTestPage.html" />
-    <Content Include="Services\TargetingOperations.svc" />
     <Content Include="Services\CustomScreeningToolOperations.svc" />
     <Content Include="Services\DocumentWorkSpaceOperations.svc" />
     <Content Include="HomePage.aspx" />
@@ -190,9 +186,6 @@
     <Compile Include="Helpers\PowerPoint\VQG.cs" />
     <Compile Include="Helpers\SecurityData.cs" />
     <Compile Include="Helpers\ConfigurationSettings.cs" />
-    <Compile Include="Services\TargetingOperations.svc.cs">
-      <DependentUpon>TargetingOperations.svc</DependentUpon>
-    </Compile>
     <Compile Include="Services\CustomScreeningToolOperations.svc.cs">
       <DependentUpon>CustomScreeningToolOperations.svc</DependentUpon>
     </Compile>
@@ -286,18 +279,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\top-down\TopDown.Core\TopDown.Core.csproj">
-      <Project>{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59}</Project>
-      <Name>TopDown.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\top-down\TopDown.Expressions\Aims.Expressions.csproj">
-      <Project>{9FC437D2-362D-4898-8C9B-408B16406A0F}</Project>
-      <Name>Aims.Expressions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\top-down\TopDown.FacingClient\TopDown.FacingClient.csproj">
-      <Project>{6E829E28-5519-4627-960D-12DD9162D156}</Project>
-      <Name>TopDown.FacingClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GreenField.DAL\GreenField.DAL.csproj">
       <Project>{602A785A-F8AC-47D5-9AA9-6DE52A97C74A}</Project>
       <Name>GreenField.DAL</Name>

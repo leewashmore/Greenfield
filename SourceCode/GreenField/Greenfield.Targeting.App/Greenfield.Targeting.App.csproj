@@ -72,6 +72,9 @@
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\Lib\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
     <Reference Include="Telerik.Windows.Controls">
@@ -103,15 +106,6 @@
       <HintPath>..\Lib\Telerik.Windows.Controls.RibbonView.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Windows.Data, Version=2012.2.709.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
-    <Reference Include="Telerik.Windows.Documents.FormatProviders.Pdf">
-      <HintPath>..\Lib\Telerik.Windows.Documents.FormatProviders.Pdf.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.PersistenceFramework">
-      <HintPath>..\Lib\Telerik.Windows.PersistenceFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Zip">
-      <HintPath>..\Lib\Telerik.Windows.Zip.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -119,14 +113,16 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="FlattenGroupConverter.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModelShell.cs" />
+    <Compile Include="ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -153,21 +149,13 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GreenField.Common\GreenField.Common.csproj">
-      <Project>{46F8DB66-D3C6-4F12-B31B-60744ED3D840}</Project>
-      <Name>GreenField.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GreenField.DashBoardModule\GreenField.DashboardModule.csproj">
-      <Project>{BEFDA960-2EED-4D30-A2A6-36C0E899516E}</Project>
-      <Name>GreenField.DashboardModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GreenField.ServiceCaller\GreenField.ServiceCaller.csproj">
-      <Project>{F46363AA-C93C-4396-8C99-3C513EF3A875}</Project>
-      <Name>GreenField.ServiceCaller</Name>
-    </ProjectReference>
+    <None Include="Properties\OutOfBrowserSettings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\OutOfBrowserSettings.xml" />
+    <ProjectReference Include="..\GreenField.Targeting.Only\GreenField.Targeting.Only.csproj">
+      <Project>{41FF9542-D13F-4F69-85B3-A435ADF58243}</Project>
+      <Name>GreenField.Targeting.Only</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

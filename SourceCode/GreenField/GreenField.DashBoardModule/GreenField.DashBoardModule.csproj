@@ -135,7 +135,6 @@
     <Compile Include="Helpers\GetDashboardTileContent.cs" />
     <Compile Include="Helpers\TypeResolution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\Targeting\RootViewModel.cs" />
     <Compile Include="Views\Admin\InvestmentCommittee\EditDate\ViewDashboardAdminInvestmentCommitteeChangeDate.xaml.cs">
       <DependentUpon>ViewDashboardAdminInvestmentCommitteeChangeDate.xaml</DependentUpon>
     </Compile>
@@ -253,9 +252,6 @@
     <Compile Include="Views\Screening\ViewDashboardQuarterlyResultsComparison.xaml.cs">
       <DependentUpon>ViewDashboardQuarterlyResultsComparison.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Targeting\ViewDashboardTargetingBroadGlobalActive.xaml.cs">
-      <DependentUpon>ViewDashboardTargetingBroadGlobalActive.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ViewDashBoard.xaml.cs">
       <DependentUpon>ViewDashBoard.xaml</DependentUpon>
     </Compile>
@@ -311,6 +307,10 @@
     <ProjectReference Include="..\GreenField.SessionManager\GreenField.UserSession.csproj">
       <Project>{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}</Project>
       <Name>GreenField.UserSession</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.Targeting.Only\GreenField.Targeting.Only.csproj">
+      <Project>{41FF9542-D13F-4F69-85B3-A435ADF58243}</Project>
+      <Name>GreenField.Targeting.Only</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -477,10 +477,6 @@
     <Page Include="Views\Screening\ViewDashboardQuarterlyResultsComparison.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Targeting\ViewDashboardTargetingBroadGlobalActive.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewDashBoard.xaml">
       <SubType>Designer</SubType>

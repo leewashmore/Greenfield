@@ -272,15 +272,6 @@
     <Compile Include="ViewModels\Company\Charting\UnrealizedGainLoss\ViewModelUnrealizedGainLoss.cs" />
     <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelValuationQualityGrowth.cs" />
     <Compile Include="Helpers\Converters\BasisPointsConverter.cs" />
-    <Compile Include="ViewModels\Targeting\BroadGlobalActive\DataTemplateSelector.cs" />
-    <Compile Include="ViewModels\Targeting\BroadGlobalActive\DefaultExpandCollapseStateSetter.cs" />
-    <Compile Include="ViewModels\Targeting\BroadGlobalActive\FormattedValueConverter.cs" />
-    <Compile Include="ViewModels\Targeting\BroadGlobalActive\LevelToPaddingConverter.cs" />
-    <Compile Include="ViewModels\Targeting\BroadGlobalActive\ModelTraverser.cs" />
-    <Compile Include="ViewModels\Targeting\BroadGlobalActive\NameCellStyleSelector.cs" />
-    <Compile Include="ViewModels\Targeting\BroadGlobalActive\PortfolioPickedEvent.cs" />
-    <Compile Include="ViewModels\Targeting\BroadGlobalActive\ViewModel, Editor.cs" />
-    <Compile Include="ViewModels\Targeting\BroadGlobalActive\ViewModel, Picker.cs" />
     <Compile Include="Views\Screening\Stock\ChildViewCSTDataListSave.xaml.cs">
       <DependentUpon>ChildViewCSTDataListSave.xaml</DependentUpon>
     </Compile>
@@ -526,12 +517,6 @@
     </Compile>
     <Compile Include="Views\Portfolio\Snapshot\ViewValuationQualityGrowth.xaml.cs">
       <DependentUpon>ViewValuationQualityGrowth.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Targeting\BroadGlobalActive\Picker.xaml.cs">
-      <DependentUpon>Picker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Targeting\BroadGlobalActive\Editor.xaml.cs">
-      <DependentUpon>Editor.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -870,14 +855,6 @@
     <Page Include="Views\Portfolio\Snapshot\ViewValuationQualityGrowth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Targeting\BroadGlobalActive\Picker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Targeting\BroadGlobalActive\Editor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
