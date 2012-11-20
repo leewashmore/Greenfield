@@ -25,6 +25,7 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
             this.ClientFactory = clientFactory;
             this.ModelTraverser = modelTraverser;
             this.DefaultExpandCollapseStateSetter = defaultExpandCollapseStateSetter;
+            this.BenchmarkDate = benchmarkDate;
         }
 
         public IClientFactory ClientFactory { get; private set; }

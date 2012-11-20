@@ -12,9 +12,9 @@ using System.Windows.Shapes;
 
 namespace GreenField.Targeting.Only.BroadGlobalActive
 {
-    public partial class Picker : UserControl
+    public partial class PickerView : UserControl
     {
-        public Picker()
+        public PickerView()
         {
             this.InitializeComponent();
         }

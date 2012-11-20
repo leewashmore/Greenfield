@@ -74,13 +74,16 @@
     <Reference Include="Telerik.Windows.Controls.GridView">
       <HintPath>..\Lib\Telerik.Windows.Controls.GridView.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\Lib\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationException.cs" />
     <Compile Include="BroadGlobalActive\DataTemplateSelector.cs" />
     <Compile Include="BroadGlobalActive\DefaultExpandCollapseStateSetter.cs" />
-    <Compile Include="BroadGlobalActive\Editor.xaml.cs">
-      <DependentUpon>Editor.xaml</DependentUpon>
+    <Compile Include="BroadGlobalActive\EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BroadGlobalActive\FormattedValueConverter.cs" />
     <Compile Include="BroadGlobalActive\RunEvent.cs" />
@@ -96,8 +99,8 @@
     <Compile Include="BroadGlobalActive\LevelToPaddingConverter.cs" />
     <Compile Include="BroadGlobalActive\ModelTraverser.cs" />
     <Compile Include="BroadGlobalActive\NameCellStyleSelector.cs" />
-    <Compile Include="BroadGlobalActive\Picker.xaml.cs">
-      <DependentUpon>Picker.xaml</DependentUpon>
+    <Compile Include="BroadGlobalActive\PickerView.xaml.cs">
+      <DependentUpon>PickerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BroadGlobalActive\PortfolioPickedEvent.cs" />
     <Compile Include="BroadGlobalActive\EditorViewModel.cs" />
@@ -150,7 +153,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="BroadGlobalActive\Editor.xaml">
+    <Page Include="BroadGlobalActive\EditorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -160,7 +163,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="BroadGlobalActive\Picker.xaml">
+    <Page Include="BroadGlobalActive\PickerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

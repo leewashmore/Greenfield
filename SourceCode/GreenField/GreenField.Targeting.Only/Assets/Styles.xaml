@@ -374,40 +374,6 @@
     </Style>
 
 
-    <Style x:Key="AxisTitleStyle" TargetType="telerik:AxisTitle">
-        <Setter Property="HorizontalAlignment"
-                Value="Center" />
-        <Setter Property="Height" Value="9"/>
-        <Setter Property="Width" Value="9"/>
-        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
-        <Setter Property="FontWeight" Value="Thin"/>
-        <Setter Property="VerticalAlignment"
-                Value="Center" />
-        <Setter Property="Margin"
-                Value="{StaticResource AxisTitleMargin}" />
-        <Setter Property="BorderStyle"
-                Value="{StaticResource AxisTitleBorderStyle}" />
-        <Setter Property="InnerBorderStyle"
-                Value="{StaticResource AxisTitleInnerBorderStyle}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="telerik:AxisTitle">
-                    <Border Style="{TemplateBinding BorderStyle}">
-                        <Border Style="{TemplateBinding InnerBorderStyle}">
-                            <ContentControl Margin="0.1,0.1,0.1,0.1"
-                                            FontFamily="{StaticResource DefaultControlFontFamily}"
-                                            FontSize="7"
-                                            Foreground="{TemplateBinding Foreground}"
-                                            Content="{TemplateBinding Content}" />
-                        </Border>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Foreground"
-                Value="Black" />
-    </Style>
-
     <!--RadChart Axis Title Styles END-->
 
 
@@ -441,132 +407,7 @@
     <System:Double x:Key="LegendItemMarkerMaskStrokeThickness">1</System:Double>
     <SolidColorBrush x:Key="LegendItemMarkerMask2"
                     Color="Transparent" />
-    <Style x:Key="ChartLegendItemStyle"
-        TargetType="telerik:ChartLegendItem">
-        <Setter Property="Foreground"
-            Value="{StaticResource LegendForeground}" />
-        <Setter Property="Padding"
-            Value="0,0,0,0" />
-        <Setter Property="Margin"
-            Value="0" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="telerik:ChartLegendItem">
-                    <Grid x:Name="PART_MainContainer"
-                        Background="{TemplateBinding Background}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="HoverStates">
-                                <VisualState x:Name="Normal">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0.00:00:00.15"
-                                                        To="1.0"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        Storyboard.TargetName="PART_MainContainer" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Hovered">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0.00:00:00.15"
-                                                        To="1.0"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        Storyboard.TargetName="PART_MainContainer" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Hidden">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0.00:00:00.15"
-                                                        To="0.15"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        Storyboard.TargetName="PART_MainContainer" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="SelectionStates">
-                                <VisualState x:Name="Unselected" />
-                                <VisualState x:Name="Selected">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Duration="0.00:00:00.05"
-                                                                    Storyboard.TargetProperty="Stroke"
-                                                                    Storyboard.TargetName="PART_LegendItemMarker">
-                                            <DiscreteObjectKeyFrame KeyTime="0.00:00:00.0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <SolidColorBrush Color="#B2000000" />
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Duration="0.00:00:00.05"
-                                                                    Storyboard.TargetProperty="StrokeThickness"
-                                                                    Storyboard.TargetName="PART_LegendItemMarker">
-                                            <DiscreteObjectKeyFrame KeyTime="0.00:00:00.0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <System:Double>2</System:Double>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Duration="0.00:00:00.05"
-                                                                    Storyboard.TargetProperty="StrokeThickness"
-                                                                    Storyboard.TargetName="PART_SelectedState">
-                                            <DiscreteObjectKeyFrame KeyTime="0.00:00:00.0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <System:Double>0</System:Double>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <Path x:Name="PART_LegendItemMarker"
-                            Height="8"
-                            Margin="{TemplateBinding Margin}"
-                            Style="{TemplateBinding ItemStyle}"
-                            Stretch="Fill"
-                            StrokeThickness="{TemplateBinding MarkerStrokeThickness}"
-                            Width="8">
-                            <Path.Data>
-                                <PathGeometry x:Name="PART_ItemMarkerGeometry" />
-                            </Path.Data>
-                        </Path>
-                        <Path x:Name="PART_SelectedState"
-                            Fill="{StaticResource LegendItemMarkerMask}"
-                            Height="8"
-                            Margin="{TemplateBinding Margin}"
-                            OpacityMask="{StaticResource LegendItemMarkerMaskOpacityMask}"
-                            Stretch="Fill"
-                            Stroke="{StaticResource LegendItemMarkerMaskStroke}"
-                            StrokeThickness="{StaticResource LegendItemMarkerMaskStrokeThickness}"
-                            Width="8">
-                            <Path.Data>
-                                <PathGeometry x:Name="PART_ItemMarkerMaskGeometry" />
-                            </Path.Data>
-                        </Path>
-                        <Path Fill="{StaticResource LegendItemMarkerMask2}"
-                            Height="8"
-                            Margin="{TemplateBinding Margin}"
-                            Stretch="Fill"
-                            Width="8">
-                            <Path.Data>
-                                <PathGeometry x:Name="PART_ItemMarkerMaskGeometry2" />
-                            </Path.Data>
-                        </Path>
-                        <TextBlock x:Name="PART_TextBlock"
-                                Grid.Column="1" 
-                                Foreground="{TemplateBinding Foreground}"
-                                Margin="{TemplateBinding Margin}"
-                                Padding="{TemplateBinding Padding}"
-                                Text="{TemplateBinding Label}" />
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+   
 
     <SolidColorBrush x:Key="LegendBorderBrush"
                     Color="#FF848484" />
@@ -574,44 +415,6 @@
     
     <!--RadChart Legend Style End-->
 
-
-    <!--LegendItemStyle-->
-    <Style x:Key="CustomLegendItem" TargetType="telerik:ChartLegendItem">
-        <Setter Property="Padding" Value="5,0,5,0" />
-        <Setter Property="Margin" Value="0,3,0,2" />
-        <Setter Property="Template" >
-            <Setter.Value>
-                <ControlTemplate TargetType="telerik:ChartLegendItem">
-                    <Grid x:Name="PART_MainContainer" Background="{TemplateBinding Background}"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Path x:Name="PART_LegendItemMarker" 
-                             Width="16"
-                             Height="16"
-                             Margin="{TemplateBinding Margin}"
-                             StrokeThickness="{TemplateBinding MarkerStrokeThickness}"
-                             Style="{TemplateBinding ItemStyle}"
-                             Stretch="Fill">
-                            <Path.Data>
-                                <PathGeometry x:Name="PART_ItemMarkerGeometry" />
-                            </Path.Data>
-                        </Path>
-
-                        <TextBlock x:Name="PART_TextBlock"
-                                   Grid.Column="1"
-                                   Padding="{TemplateBinding Padding}"
-                                   Margin="{TemplateBinding Margin}"
-                                   Foreground="{TemplateBinding Foreground}"
-                                   Text="{TemplateBinding Label}" />
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--LegendItemStyleEnd-->
 
 
     <!--#####################################################################################################################-->
@@ -917,13 +720,6 @@
 
     <!--TextBlock Style-->
     <Style TargetType="TextBlock" x:Name="TextBlockStyle">
-        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
-        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
-        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
-    </Style>
-
-    <!--RadContextMenu Style-->
-    <Style TargetType="telerik:RadContextMenu" x:Name="RadContextMenuStyle">
         <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
         <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
         <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
