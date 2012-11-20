@@ -17,14 +17,21 @@ namespace GreenField.Targeting.Only
     /// </summary>
     public class FractionToPercentConverter : IValueConverter
     {
+        public const String EmptyValue = "";
+        public const String ValueFormat = "#0.000";
         public Object Convert(Object value, Type targetType, Object parameter, System.Globalization.CultureInfo culture)
         {
             String result;
-            
-            var input = System.Convert.ToDecimal(value);
-            var output = Math.Round(input * 100000.0m) / 10000.0m * 100.00m;
-            result = output.ToString("#0.000");
-            
+            if (value == null)
+            {
+                result = EmptyValue;
+            }
+            else
+            {
+                var input = System.Convert.ToDecimal(value);
+                var output = Math.Round(input * 100000.0m) / 100000.0m * 100.00m;
+                result = output.ToString(ValueFormat);
+            }
             return result;
         }
 
