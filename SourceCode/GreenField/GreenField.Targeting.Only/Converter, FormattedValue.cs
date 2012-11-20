@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Data;
 
-namespace GreenField.Targeting.Only.BroadGlobalActive
+namespace GreenField.Targeting.Only
 {
     public class FormattedValueConverter : IValueConverter
     {

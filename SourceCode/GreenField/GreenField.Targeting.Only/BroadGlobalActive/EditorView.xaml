@@ -7,6 +7,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
     xmlns:mine="clr-namespace:GreenField.Targeting.Only.BroadGlobalActive"
+    xmlns:local="clr-namespace:GreenField.Targeting.Only"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d"
     d:DesignHeight="300"
@@ -16,8 +17,10 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
-            <mine:LevelToPaddingConverter x:Key="levelToPaddingConverter" />
-            <mine:FormattedValueConverter x:Key="formattedValueConverter" />
+            <local:LevelToPaddingConverter x:Key="levelToPaddingConverter" />
+            <local:FormattedValueConverter x:Key="formattedValueConverter" />
+            <local:FractionToPercentConverter x:Key="fractionToPercentConverter" />
+            <local:EchoConverter x:Key="echoConverter" />
             
             <!-- name cell style -->
             <Style TargetType="TextBlock" x:Key="nameCellStyle">
@@ -29,18 +32,22 @@
             </Style>
             
             
-            
             <DataTemplate x:Key="editableValueTemplate">
+                
                 <TextBox
                     Text="{Binding EditableValue, Converter={StaticResource formattedValueConverter}}"
                     Style="{StaticResource editableValueTextboxStyle}"
                 />
             </DataTemplate>
-            
+
             <DataTemplate x:Key="valueTemplate">
-                <TextBlock Text="{Binding Value}" />
+                <TextBlock Text="{Binding Value, Converter={StaticResource echoConverter}}" />
             </DataTemplate>
-                        
+
+            <DataTemplate x:Key="benchmarkTemplate">
+                <ContentControl Content="{Binding Benchmark}" ContentTemplate="{StaticResource valueTemplate}" />
+            </DataTemplate>
+            
             <!-- name cell template selector -->
             <mine:CellTemplateSelector x:Key="nameCellTemplateSelector">
 
@@ -154,7 +161,6 @@
                             <telerik:GridViewDataColumn Header="IsVisible" DataMemberBinding="{Binding IsVisible}" IsVisible="False"  />
 
                             <telerik:GridViewDataColumn
-                               
                                 Width="*"  
                                 Header="Name" 
                                 TextAlignment="Left"
@@ -166,7 +172,7 @@
                             
                             <telerik:GridViewDataColumn
                                 Header="Benchmark"
-                                DataMemberBinding="{Binding Benchmark.Value}"
+                                CellTemplate="{StaticResource benchmarkTemplate}"
                                 IsReadOnly="True"
                             />
 

@@ -44,20 +44,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EditableExpressionModel" nillable="true" type="tns:EditableExpressionModel" />
-  <xs:complexType name="RegionBasketModel">
+  <xs:complexType name="CountryBasketModel">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Countries" nillable="true" type="tns:ArrayOfCountryModel" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="tns:CountryModel" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="RegionBasketModel" nillable="true" type="tns:RegionBasketModel" />
-  <xs:complexType name="ArrayOfCountryModel">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="CountryModel" nillable="true" type="tns:CountryModel" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfCountryModel" nillable="true" type="tns:ArrayOfCountryModel" />
+  <xs:element name="CountryBasketModel" nillable="true" type="tns:CountryBasketModel" />
   <xs:complexType name="CountryModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsoCode" nillable="true" type="xs:string" />
@@ -72,13 +65,20 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ExpressionModel" nillable="true" type="tns:ExpressionModel" />
-  <xs:complexType name="CountryBasketModel">
+  <xs:complexType name="RegionBasketModel">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Country" nillable="true" type="tns:CountryModel" />
+      <xs:element minOccurs="0" name="Countries" nillable="true" type="tns:ArrayOfCountryModel" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="CountryBasketModel" nillable="true" type="tns:CountryBasketModel" />
+  <xs:element name="RegionBasketModel" nillable="true" type="tns:RegionBasketModel" />
+  <xs:complexType name="ArrayOfCountryModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CountryModel" nillable="true" type="tns:CountryModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCountryModel" nillable="true" type="tns:ArrayOfCountryModel" />
   <xs:complexType name="TargetingTypeModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" type="xs:int" />

@@ -80,15 +80,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationException.cs" />
+    <Compile Include="Backend\Targeting\Model, EditableExpression.cs" />
+    <Compile Include="Backend\Targeting\Model, Expression.cs" />
     <Compile Include="BroadGlobalActive\DataTemplateSelector.cs" />
     <Compile Include="BroadGlobalActive\DefaultExpandCollapseStateSetter.cs" />
     <Compile Include="BroadGlobalActive\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BroadGlobalActive\FormattedValueConverter.cs" />
+    <Compile Include="Converter, FormattedValue.cs" />
     <Compile Include="BroadGlobalActive\RunEvent.cs" />
     <Compile Include="BroadGlobalActive\Settings.cs" />
     <Compile Include="DefaultClientFactory.cs" />
+    <Compile Include="Converter, FractionToPercent.cs" />
+    <Compile Include="Converter, Echo.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="BroadGlobalActive\RootViewModel.cs" />
     <Compile Include="BroadGlobalActive\RootView.xaml.cs">
@@ -96,7 +100,7 @@
     </Compile>
     <Compile Include="ErrorCapableViewModel.cs" />
     <Compile Include="IClientFactory.cs" />
-    <Compile Include="BroadGlobalActive\LevelToPaddingConverter.cs" />
+    <Compile Include="Converter, LevelToPadding.cs" />
     <Compile Include="BroadGlobalActive\ModelTraverser.cs" />
     <Compile Include="BroadGlobalActive\NameCellStyleSelector.cs" />
     <Compile Include="BroadGlobalActive\PickerView.xaml.cs">

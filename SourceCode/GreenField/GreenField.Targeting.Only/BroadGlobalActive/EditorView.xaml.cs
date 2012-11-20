@@ -22,5 +22,6 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
         {
             this.InitializeComponent();
         }
+
     }
 }

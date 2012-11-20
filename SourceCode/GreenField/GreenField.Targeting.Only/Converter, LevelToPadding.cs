@@ -10,11 +10,13 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Data;
 
-namespace GreenField.Targeting.Only.BroadGlobalActive
+namespace GreenField.Targeting.Only
 {
+    /// <summary>
+    /// Converts the nesting depth level of regions in the broad active global view to the left-padding, so that the regions are indented according their position in the hierarchy.
+    /// </summary>
     public class LevelToPaddingConverter : IValueConverter
     {
-
         public Object Convert(Object value, Type targetType, Object parameter, System.Globalization.CultureInfo culture)
         {
             var level = System.Convert.ToInt32(value);
