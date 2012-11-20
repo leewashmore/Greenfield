@@ -2686,10 +2686,10 @@ namespace GreenField.Web.Services
                 {
                     case "YTD":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_YTD;
-                        Decimal? diff = data[i].ADJ_RTN_POR_RC_TWR_YTD - data[i].BM1_RC_TWR_YTD;
+                        entry.CountryYTD = data[i].POR_RC_TWR_YTD;
+                        Decimal? diff = data[i].POR_RC_TWR_YTD - data[i].BM1_RC_TWR_YTD;
                         CalculateHeatMapDiff(diff, ref entry);
-                        if (data[i].ADJ_RTN_POR_RC_TWR_YTD == null && data[i].BM1_RC_TWR_YTD == null)
+                        if (data[i].POR_RC_TWR_YTD == null && data[i].BM1_RC_TWR_YTD == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
@@ -2698,10 +2698,10 @@ namespace GreenField.Web.Services
                         break;
                     case "MTD":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_MTD;
-                        Decimal? diff1 = data[i].ADJ_RTN_POR_RC_TWR_MTD - data[i].BM1_RC_TWR_MTD;
+                        entry.CountryYTD = data[i].POR_RC_TWR_MTD;
+                        Decimal? diff1 = data[i].POR_RC_TWR_MTD - data[i].BM1_RC_TWR_MTD;
                         CalculateHeatMapDiff(diff1, ref entry);
-                        if (data[i].ADJ_RTN_POR_RC_TWR_MTD == null && data[i].BM1_RC_TWR_MTD == null)
+                        if (data[i].POR_RC_TWR_MTD == null && data[i].BM1_RC_TWR_MTD == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
@@ -2710,10 +2710,10 @@ namespace GreenField.Web.Services
                         break;
                     case "1D":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_1D;
-                        Decimal? diff2 = data[i].ADJ_RTN_POR_RC_TWR_1D - data[i].BM1_RC_TWR_1D;
+                        entry.CountryYTD = data[i].POR_RC_TWR_1D;
+                        Decimal? diff2 = data[i].POR_RC_TWR_1D - data[i].BM1_RC_TWR_1D;
                         CalculateHeatMapDiff(diff2, ref entry);
-                        if (data[i].ADJ_RTN_POR_RC_TWR_1D == null && data[i].BM1_RC_TWR_1D == null)
+                        if (data[i].POR_RC_TWR_1D == null && data[i].BM1_RC_TWR_1D == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
@@ -2722,10 +2722,10 @@ namespace GreenField.Web.Services
                         break;
                     case "1W":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_1W;
-                        Decimal? diff3 = data[i].ADJ_RTN_POR_RC_TWR_1W - data[i].BM1_RC_TWR_1W;
+                        entry.CountryYTD = data[i].POR_RC_TWR_1W;
+                        Decimal? diff3 = data[i].POR_RC_TWR_1W - data[i].BM1_RC_TWR_1W;
                         CalculateHeatMapDiff(diff3, ref entry);
-                        if (data[i].ADJ_RTN_POR_RC_TWR_1W == null && data[i].BM1_RC_TWR_1W == null)
+                        if (data[i].POR_RC_TWR_1W == null && data[i].BM1_RC_TWR_1W == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
@@ -2734,10 +2734,10 @@ namespace GreenField.Web.Services
                         break;
                     case "QTD":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_QTD;
-                        Decimal? diff4 = data[i].ADJ_RTN_POR_RC_TWR_QTD - data[i].BM1_RC_TWR_QTD;
+                        entry.CountryYTD = data[i].POR_RC_TWR_QTD;
+                        Decimal? diff4 = data[i].POR_RC_TWR_QTD - data[i].BM1_RC_TWR_QTD;
                         CalculateHeatMapDiff(diff4, ref entry);
-                        if (data[i].ADJ_RTN_POR_RC_TWR_QTD == null && data[i].BM1_RC_TWR_QTD == null)
+                        if (data[i].POR_RC_TWR_QTD == null && data[i].BM1_RC_TWR_QTD == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
@@ -2746,10 +2746,10 @@ namespace GreenField.Web.Services
                         break;
                     case "1Y":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_1Y;
-                        Decimal? diff5 = data[i].ADJ_RTN_POR_RC_TWR_1Y - data[i].BM1_RC_TWR_1Y;
+                        entry.CountryYTD = data[i].POR_RC_TWR_1Y;
+                        Decimal? diff5 = data[i].POR_RC_TWR_1Y - data[i].BM1_RC_TWR_1Y;
                         CalculateHeatMapDiff(diff5, ref entry);
-                        if (data[i].ADJ_RTN_POR_RC_TWR_1Y == null && data[i].BM1_RC_TWR_1Y == null)
+                        if (data[i].POR_RC_TWR_1Y == null && data[i].BM1_RC_TWR_1Y == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
