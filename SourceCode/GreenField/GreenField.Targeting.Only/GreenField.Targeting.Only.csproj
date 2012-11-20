@@ -88,7 +88,6 @@
     <Compile Include="BroadGlobalActive\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converter, FormattedValue.cs" />
     <Compile Include="BroadGlobalActive\RunEvent.cs" />
     <Compile Include="BroadGlobalActive\Settings.cs" />
     <Compile Include="DefaultClientFactory.cs" />

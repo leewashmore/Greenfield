@@ -37,7 +37,26 @@ namespace GreenField.Targeting.Only
 
         public Object ConvertBack(Object value, Type targetType, Object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            Decimal? result;
+            var casted = value as String;
+            if (String.IsNullOrEmpty(casted))
+            {
+                result = null;
+            }
+            else
+            {
+                Decimal parsed;
+                if (Decimal.TryParse(casted, out parsed))
+                {
+                    var scaled = parsed / 100.0m;
+                    result = scaled;
+                }
+                else
+                {
+                    result = null;
+                }
+            }
+            return result;
         }
     }
 }

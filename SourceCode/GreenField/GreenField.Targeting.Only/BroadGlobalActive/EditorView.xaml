@@ -23,7 +23,6 @@
             </ResourceDictionary.MergedDictionaries>
 
             <local:LevelToPaddingConverter x:Key="levelToPaddingConverter" />
-            <local:FormattedValueConverter x:Key="formattedValueConverter" />
             <local:FractionToPercentConverter x:Key="fractionToPercentConverter" />
             <local:EchoConverter x:Key="echoConverter" />
 
@@ -112,10 +111,11 @@
 
             <DataTemplate x:Key="editableValueTemplate">
                 <TextBox
-                    Text="{Binding EditedValue, Converter={StaticResource formattedValueConverter}, Mode=TwoWay}"
+                    Text="{Binding EditedValue, Converter={StaticResource fractionToPercentConverter}, Mode=TwoWay}"
                     Style="{StaticResource editableValueTextboxStyle}"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch"
+                    TextAlignment="Right"
                 />
             </DataTemplate>
 
@@ -125,7 +125,6 @@
                 DefaultTemplate="{StaticResource valueCellTemplate}"
             >
             </mine:GlobalResidentToDataTemplateConverter>
-
 
         </ResourceDictionary>
     </UserControl.Resources>
