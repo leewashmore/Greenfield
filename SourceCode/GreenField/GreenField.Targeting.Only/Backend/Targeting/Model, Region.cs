@@ -14,12 +14,6 @@ namespace GreenField.Targeting.Only.Backend.Targeting
 {
     public partial class RegionModel : IExpandableModel
     {
-        public void ToggleExpanded()
-        {
-            var value = this.IsExpanded;
-            this.IsExpanded = !value;
-        }
-
         private Boolean isExpanded;
         public Boolean IsExpanded
         {

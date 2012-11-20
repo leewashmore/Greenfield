@@ -44,6 +44,9 @@ namespace GreenField.Targeting.Only.Backend.Targeting
 
         protected void ParentChangedProperty(object sender, PropertyChangedEventArgs e)
         {
+            // parent has its IsExpanded property that can be changed at any moment
+            // we want to catch that moment and notify that the IsVisible property (which is based on the parent's IsExpanded property has also changed)
+            // but it's still not enough as the filtering is triggered by the CollectionChanged event of the collection that is bound to the gird!
             this.RaisePropertyChanged("IsVisible");
         }
 

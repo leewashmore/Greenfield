@@ -13,6 +13,7 @@ using Microsoft.Practices.Prism.Logging;
 using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Targeting.Only.Backend.Targeting;
+using System.Collections.ObjectModel;
 
 namespace GreenField.Targeting.Only.BroadGlobalActive
 {
@@ -78,12 +79,15 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
             var model = data.Globe;
             this.defaultExpandCollapseStateSetter.SetDefaultCollapseExpandState(model);
             var residents = this.traverser.Traverse(model);
-            this.Residents = residents;
+            
+            // we need an observable collection to make filtering (collapsing/expanding) work, because it is triggered by the CollectionChanged event
+            var observedResidents = new PokableObservableCollection<IGlobeResident>(residents);
+            this.Residents = observedResidents;
             this.IsBusyIndicatorStatus = false;
         }
 
-        private IEnumerable<IGlobeResident> residents;
-        public IEnumerable<IGlobeResident> Residents
+        private PokableObservableCollection<IGlobeResident> residents;
+        public PokableObservableCollection<IGlobeResident> Residents
         {
             get { return this.residents; }
             set { this.residents = value; this.RaisePropertyChanged(() => this.Residents); }

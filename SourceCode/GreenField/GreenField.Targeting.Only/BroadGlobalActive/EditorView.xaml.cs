@@ -12,6 +12,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
 using System.Collections.Generic;
+using GreenField.Targeting.Only.Backend.Targeting;
 
 
 namespace GreenField.Targeting.Only.BroadGlobalActive
@@ -21,6 +22,25 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
         public EditorView()
         {
             this.InitializeComponent();
+        }
+
+        private void Name_Clicked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button == null) return;
+            var expandable = button.DataContext as IExpandableModel;
+            if (expandable == null) return;
+            this.ToggleExpandable(expandable);
+        }
+
+        protected void ToggleExpandable(IExpandableModel expandable)
+        {
+            var before = expandable.IsExpanded;
+            var after = !before;
+            expandable.IsExpanded = after;
+
+            var model = RuntimeHelper.DataContextAs<EditorViewModel>(this);
+            model.Residents.Poke();
         }
 
     }
