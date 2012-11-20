@@ -17,6 +17,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Targeting.Only;component/Assets/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -25,7 +26,8 @@
             <local:FormattedValueConverter x:Key="formattedValueConverter" />
             <local:FractionToPercentConverter x:Key="fractionToPercentConverter" />
             <local:EchoConverter x:Key="echoConverter" />
-            
+
+
             <!-- name cell style -->
             <Style TargetType="TextBlock" x:Key="nameCellStyle">
                 <Setter Property="Padding" Value="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
@@ -34,27 +36,6 @@
             <Style TargetType="TextBox" x:Key="editableValueTextboxStyle">
                 <Setter Property="Width" Value="Auto" />
             </Style>
-
-           
-            
-            <DataTemplate x:Key="editableValueTemplate">
-                <TextBox
-                    Text="{Binding EditableValue, Converter={StaticResource formattedValueConverter}}"
-                    Style="{StaticResource editableValueTextboxStyle}"
-                />
-            </DataTemplate>
-
-            <Style x:Key="valueCellStyle" TargetType="k:GridViewCell" BasedOn="{StaticResource GridViewCellStyle}">
-                <Setter Property="HorizontalAlignment" Value="Right" />
-            </Style>
-
-            <Style x:Key="editableValueCellStyle" TargetType="k:GridViewCell" BasedOn="{StaticResource valueCellStyle}">
-                
-            </Style>
-
-            <DataTemplate x:Key="valueCellTemplate">
-                <TextBlock Text="{Binding Value, Converter={StaticResource fractionToPercentConverter}}" />
-            </DataTemplate>
 
             <!-- name cell template selector -->
             <mine:CellTemplateSelector x:Key="nameCellTemplateSelector">
@@ -106,16 +87,46 @@
                     </DataTemplate>
                 </mine:CellTemplateSelector.CountryTemplate>
 
+                <mine:CellTemplateSelector.OtherTemplate>
+                    <DataTemplate>
+                        <TextBlock><!-- just static text, feel free to change -->Other</TextBlock>
+                    </DataTemplate>
+                </mine:CellTemplateSelector.OtherTemplate>
+
             </mine:CellTemplateSelector>
-            
-            <mine:CellTemplateSelector x:Key="editableCellTemplateSelector"
+
+
+            <Style x:Key="valueCellStyle" TargetType="k:GridViewCell" BasedOn="{StaticResource GridViewCellStyle}">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+
+            <Style x:Key="editableValueCellStyle" TargetType="k:GridViewCell" BasedOn="{StaticResource valueCellStyle}">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Padding" Value="0" />
+            </Style>
+
+            <DataTemplate x:Key="valueCellTemplate">
+                <TextBlock Text="{Binding Value, Converter={StaticResource fractionToPercentConverter}}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="editableValueTemplate">
+                <TextBox
+                    Text="{Binding EditedValue, Converter={StaticResource formattedValueConverter}, Mode=TwoWay}"
+                    Style="{StaticResource editableValueTextboxStyle}"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                />
+            </DataTemplate>
+
+            <mine:GlobalResidentToDataTemplateConverter x:Key="templateSelector"
                 BasketCountryTemplate="{StaticResource editableValueTemplate}"
                 BasketRegionTemplate="{StaticResource editableValueTemplate}"
                 DefaultTemplate="{StaticResource valueCellTemplate}"
-            />
+            >
+            </mine:GlobalResidentToDataTemplateConverter>
 
-            
-            
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -132,10 +143,10 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
             <Grid Grid.Row="0">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                    
+
                     <k:RadGridView
                         x:Name="grid"
                         FrozenColumnsSplitterVisibility="Collapsed"
@@ -173,7 +184,7 @@
                                 CellStyle="{StaticResource GridViewCellStyle}"
                                 CellTemplateSelector="{StaticResource nameCellTemplateSelector}"
                             />
-                            
+
                             <k:GridViewDataColumn Header="Benchmark" IsReadOnly="True" CellStyle="{StaticResource valueCellStyle}">
                                 <k:GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -185,7 +196,12 @@
                             <k:GridViewDataColumn Header="Base" IsReadOnly="True" CellStyle="{StaticResource editableValueCellStyle}">
                                 <k:GridViewDataColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ContentControl Content="{Binding Base}" ContentTemplate="{StaticResource editableValueTemplate}" />
+                                        <ContentControl
+                                            Content="{Binding Base}"
+                                            ContentTemplate="{Binding Converter={StaticResource templateSelector}}"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch"
+                                        />
                                     </DataTemplate>
                                 </k:GridViewDataColumn.CellTemplate>
                             </k:GridViewDataColumn>
@@ -209,7 +225,12 @@
                             <k:GridViewDataColumn Header="Portfolio Adj" IsReadOnly="True"  CellStyle="{StaticResource editableValueCellStyle}">
                                 <k:GridViewDataColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ContentControl Content="{Binding PortfolioAdjustment}" ContentTemplate="{StaticResource editableValueTemplate}" />
+                                        <ContentControl
+                                            Content="{Binding PortfolioAdjustment}"
+                                            ContentTemplate="{Binding Converter={StaticResource templateSelector}}"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch"
+                                        />
                                     </DataTemplate>
                                 </k:GridViewDataColumn.CellTemplate>
                             </k:GridViewDataColumn>
@@ -237,7 +258,7 @@
                                     </DataTemplate>
                                 </k:GridViewColumn.CellTemplate>
                             </k:GridViewDataColumn>
-                            
+
                         </k:RadGridView.Columns>
 
                     </k:RadGridView>

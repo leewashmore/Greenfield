@@ -37,9 +37,15 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
         {
             var before = expandable.IsExpanded;
             var after = !before;
+            // this is what I though is enough to update the filter which is expected to show/hide the rows based on this property
             expandable.IsExpanded = after;
 
+            // it turned out however that the filter is triggered by the CollectionChanged event
+            // which we can only raise from the special method (see Poke below)
+            // because the event can only be raised from within the class it belongs to
+            // so we get to the view model (say goodbye to MVVM principles)
             var model = RuntimeHelper.DataContextAs<EditorViewModel>(this);
+            // and trigger that damn event
             model.Residents.Poke();
         }
 
