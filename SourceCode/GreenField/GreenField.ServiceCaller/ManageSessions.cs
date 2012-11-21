@@ -32,6 +32,7 @@ namespace GreenField.ServiceCaller
         public void GetSession(Action<Session> callback)
         {
             SessionOperationsClient client = new SessionOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetSessionAsync();
             client.GetSessionCompleted += (se, e) =>
             {
@@ -65,6 +66,7 @@ namespace GreenField.ServiceCaller
         public void SetSession(Session sessionVariable, Action<bool?> callback)
         {
             SessionOperationsClient client = new SessionOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SetSessionAsync(sessionVariable);
             client.SetSessionCompleted += (se, e) =>
             {
@@ -86,6 +88,39 @@ namespace GreenField.ServiceCaller
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Clears "Session" instance to CurrentSession
+        /// </summary>
+        /// <param name="callback">True/False</param>
+        public void ClearSession(Action<bool> callback)
+        {
+            SessionOperationsClient client = new SessionOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
+            client.ClearSessionAsync();
+            client.ClearSessionCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                        callback(e.Result);
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SessionDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SessionDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SessionDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
                 }
             };
         }

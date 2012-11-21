@@ -60,6 +60,12 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
         System.IAsyncResult BeginSetSession(GreenField.DataContracts.Session sessionVariable, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndSetSession(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SessionOperations/ClearSession", ReplyAction="http://tempuri.org/SessionOperations/ClearSessionResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SessionDefinitions.ServiceFault), Action="http://tempuri.org/SessionOperations/ClearSessionServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginClearSession(System.AsyncCallback callback, object asyncState);
+        
+        bool EndClearSession(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -106,6 +112,25 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ClearSessionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public ClearSessionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class SessionOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.SessionDefinitions.SessionOperations>, GreenField.ServiceCaller.SessionDefinitions.SessionOperations {
         
         private BeginOperationDelegate onBeginGetSessionDelegate;
@@ -119,6 +144,12 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
         private EndOperationDelegate onEndSetSessionDelegate;
         
         private System.Threading.SendOrPostCallback onSetSessionCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginClearSessionDelegate;
+        
+        private EndOperationDelegate onEndClearSessionDelegate;
+        
+        private System.Threading.SendOrPostCallback onClearSessionCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -176,6 +207,8 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
         public event System.EventHandler<GetSessionCompletedEventArgs> GetSessionCompleted;
         
         public event System.EventHandler<SetSessionCompletedEventArgs> SetSessionCompleted;
+        
+        public event System.EventHandler<ClearSessionCompletedEventArgs> ClearSessionCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -269,6 +302,50 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
             }
             base.InvokeAsync(this.onBeginSetSessionDelegate, new object[] {
                         sessionVariable}, this.onEndSetSessionDelegate, this.onSetSessionCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.SessionDefinitions.SessionOperations.BeginClearSession(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginClearSession(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.SessionDefinitions.SessionOperations.EndClearSession(System.IAsyncResult result) {
+            return base.Channel.EndClearSession(result);
+        }
+        
+        private System.IAsyncResult OnBeginClearSession(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.SessionDefinitions.SessionOperations)(this)).BeginClearSession(callback, asyncState);
+        }
+        
+        private object[] OnEndClearSession(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.SessionDefinitions.SessionOperations)(this)).EndClearSession(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnClearSessionCompleted(object state) {
+            if ((this.ClearSessionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ClearSessionCompleted(this, new ClearSessionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ClearSessionAsync() {
+            this.ClearSessionAsync(null);
+        }
+        
+        public void ClearSessionAsync(object userState) {
+            if ((this.onBeginClearSessionDelegate == null)) {
+                this.onBeginClearSessionDelegate = new BeginOperationDelegate(this.OnBeginClearSession);
+            }
+            if ((this.onEndClearSessionDelegate == null)) {
+                this.onEndClearSessionDelegate = new EndOperationDelegate(this.OnEndClearSession);
+            }
+            if ((this.onClearSessionCompletedDelegate == null)) {
+                this.onClearSessionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnClearSessionCompleted);
+            }
+            base.InvokeAsync(this.onBeginClearSessionDelegate, null, this.onEndClearSessionDelegate, this.onClearSessionCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -369,6 +446,18 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
             public System.Nullable<bool> EndSetSession(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("SetSession", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginClearSession(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("ClearSession", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndClearSession(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("ClearSession", _args, result)));
                 return _result;
             }
         }

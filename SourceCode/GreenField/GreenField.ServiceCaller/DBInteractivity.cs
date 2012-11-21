@@ -29,14 +29,12 @@ namespace GreenField.ServiceCaller
     public class DBInteractivity : IDBInteractivity
     {
         #region Fields
-
         /// <summary>
         /// Logging Service Instance
         /// </summary>
         /// 
         [Import]
         public ILoggerFacade LoggerFacade { get; set; }
-
         #endregion
 
         #region Build1
@@ -50,6 +48,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveSecurityReferenceDataAsync();
             client.RetrieveSecurityReferenceDataCompleted += (se, e) =>
             {
@@ -94,9 +93,10 @@ namespace GreenField.ServiceCaller
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
-                                                                                                                                    : "Unspecified");
+                : "Unspecified");
 
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveSecurityOverviewDataAsync(entitySelectionData);
             client.RetrieveSecurityOverviewDataCompleted += (se, e) =>
             {
@@ -134,6 +134,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveEntitySelectionDataAsync();
             client.RetrieveEntitySelectionDataCompleted += (se, e) =>
             {
@@ -175,6 +176,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveEntitySelectionWithBenchmarkDataAsync();
             client.RetrieveEntitySelectionWithBenchmarkDataCompleted += (se, e) =>
             {
@@ -226,6 +228,7 @@ namespace GreenField.ServiceCaller
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePricingReferenceDataAsync(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyInterval);
             client.RetrievePricingReferenceDataCompleted += (se, e) =>
             {
@@ -282,6 +285,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, frequencyInterval);
             client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
             {
@@ -328,6 +332,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePortfolioSelectionDataAsync();
             client.RetrievePortfolioSelectionDataCompleted += (se, e) =>
             {
@@ -369,6 +374,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveAvailableDatesInPortfoliosAsync();
             client.RetrieveAvailableDatesInPortfoliosCompleted += (se, e) =>
             {
@@ -412,6 +418,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveBenchmarkSelectionDataAsync();
             client.RetrieveBenchmarkSelectionDataCompleted += (se, e) =>
             {
@@ -462,6 +469,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveAssetAllocationDataAsync(fundSelectionData, effectiveDate, lookThru, excludeCash);
             client.RetrieveAssetAllocationDataCompleted += (se, e) =>
             {
@@ -516,6 +524,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                             : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled);
             client.RetrieveSectorBreakdownDataCompleted += (se, e) =>
             {
@@ -567,6 +576,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                                 : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled);
             client.RetrieveRegionBreakdownDataCompleted += (se, e) =>
             {
@@ -618,6 +628,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                     : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled);
             client.RetrieveTopHoldingsDataCompleted += (se, e) =>
             {
@@ -672,6 +683,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                     : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveIndexConstituentsDataAsync(portfolioSelectionData, effectiveDate, lookThruEnabled);
             client.RetrieveIndexConstituentsDataCompleted += (se, e) =>
             {
@@ -725,6 +737,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                                     : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRiskIndexExposuresDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled, filterType, filterValue);
             client.RetrieveRiskIndexExposuresDataCompleted += (se, e) =>
             {
@@ -774,6 +787,7 @@ namespace GreenField.ServiceCaller
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled);
             client.RetrieveHoldingsPercentageDataForRegionCompleted += (se, e) =>
             {
@@ -826,6 +840,7 @@ namespace GreenField.ServiceCaller
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled);
             client.RetrieveHoldingsPercentageDataCompleted += (se, e) =>
             {
@@ -873,6 +888,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveBenchmarkFilterSelectionDataAsync(benchmarkCode, BenchmarkName, filterType);
             client.RetrieveBenchmarkFilterSelectionDataCompleted += (se, e) =>
             {
@@ -919,6 +935,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveMarketSnapshotSelectionDataAsync(userName);
             client.RetrieveMarketSnapshotSelectionDataCompleted += (se, e) =>
             {
@@ -967,6 +984,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveMarketSnapshotPreferenceAsync(snapshotPreferenceId);
             client.RetrieveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
@@ -1013,6 +1031,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveMarketSnapshotPerformanceDataAsync(marketSnapshotPreference);
             client.RetrieveMarketSnapshotPerformanceDataCompleted += (se, e) =>
             {
@@ -1059,6 +1078,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SaveMarketSnapshotPreferenceAsync(updateXML);
             client.SaveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
@@ -1105,6 +1125,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SaveAsMarketSnapshotPreferenceAsync(updateXML);
             client.SaveAsMarketSnapshotPreferenceCompleted += (se, e) =>
             {
@@ -1139,6 +1160,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RemoveMarketSnapshotPreferenceAsync(userName, snapshotName);
             client.RemoveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
@@ -1180,6 +1202,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveFilterSelectionDataAsync(selectedPortfolio, effectiveDate);
             client.RetrieveFilterSelectionDataCompleted += (se, e) =>
             {
@@ -1228,6 +1251,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, lookThruEnabled, excludeCash, objGetBenchmark);
             client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
             {
@@ -1278,6 +1302,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveBenchmarkChartReturnDataAsync(objSelectedEntities);
             client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
             {
@@ -1328,6 +1353,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveBenchmarkGridReturnDataAsync(objSelectedEntites);
             client.RetrieveBenchmarkGridReturnDataCompleted += (se, e) =>
             {
@@ -1382,6 +1408,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveAttributionDataAsync(portfolioSelectionData, effectiveDate, nodeName);
             client.RetrieveAttributionDataCompleted += (se, e) =>
             {
@@ -1437,6 +1464,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveTopBenchmarkSecuritiesDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveTopBenchmarkSecuritiesDataCompleted += (se, e) =>
             {
@@ -1491,6 +1519,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePortfolioRiskReturnDataAsync(portfolioSelectionData, effectiveDate, effectiveDate);
             client.RetrievePortfolioRiskReturnDataCompleted += (se, e) =>
             {
@@ -1549,6 +1578,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveHeatMapDataAsync(fundSelectionData, effectiveDate, period);
             client.RetrieveHeatMapDataCompleted += (se, e) =>
             {
@@ -1605,6 +1635,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRelativePerformanceUIDataAsync(objSelectedEntity, objEffectiveDate);
             client.RetrieveRelativePerformanceUIDataCompleted += (se, e) =>
             {
@@ -1657,6 +1688,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveChartExtensionDataAsync(objSelectedEntities, objEffectiveDate);
             client.RetrieveChartExtensionDataCompleted += (se, e) =>
             {
@@ -1703,6 +1735,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCountrySelectionDataAsync();
             client.RetrieveCountrySelectionDataCompleted += (se, e) =>
             {
@@ -1752,6 +1785,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                                     : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRelativePerformanceDataAsync(portfolioSelectionData, effectiveDate, period);
             client.RetrieveRelativePerformanceDataCompleted += (se, e) =>
             {
@@ -1801,6 +1835,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                             : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRelativePerformanceSectorDataAsync(fundSelectionData, effectiveDate);
             client.RetrieveRelativePerformanceSectorDataCompleted += (se, e) =>
             {
@@ -1851,6 +1886,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                             : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRelativePerformanceSecurityDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
             client.RetrieveRelativePerformanceSecurityDataCompleted += (se, e) =>
             {
@@ -1901,6 +1937,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                                     : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRelativePerformanceCountryActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
             client.RetrieveRelativePerformanceCountryActivePositionDataCompleted += (se, e) =>
             {
@@ -1951,6 +1988,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                         : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRelativePerformanceSectorActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
             client.RetrieveRelativePerformanceSectorActivePositionDataCompleted += (se, e) =>
             {
@@ -2001,6 +2039,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                             : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRelativePerformanceSecurityActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
             client.RetrieveRelativePerformanceSecurityActivePositionDataCompleted += (se, e) =>
             {
@@ -2051,6 +2090,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, lookThruEnabled);
             client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
             {
@@ -2091,6 +2131,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePerformanceGraphDataAsync(fundSelectionData, effectiveDate, period, country);
             client.RetrievePerformanceGraphDataCompleted += (se, e) =>
             {
@@ -2143,6 +2184,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePerformanceGridDataAsync(portfolioSelectionData, effectiveDate, country);
             client.RetrievePerformanceGridDataCompleted += (se, e) =>
             {
@@ -2195,6 +2237,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCommodityDataAsync(commodityID);
             client.RetrieveCommodityDataCompleted += (se, e) =>
             {
@@ -2241,6 +2284,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveMacroDatabaseKeyAnnualReportDataAsync(countryName);
             client.RetrieveMacroDatabaseKeyAnnualReportDataCompleted += (se, e) =>
             {
@@ -2294,6 +2338,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(countryName, countryValues);
             client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompleted += (se, e) =>
             {
@@ -2340,6 +2385,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCommoditySelectionDataAsync();
             client.RetrieveCommoditySelectionDataCompleted += (se, e) =>
             {
@@ -2385,6 +2431,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRegionSelectionDataAsync();
             client.RetrieveRegionSelectionDataCompleted += (se, e) =>
             {
@@ -2434,6 +2481,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveIssuerReferenceDataAsync(entitySelectionData);
             client.RetrieveIssuerReferenceDataCompleted += (se, e) =>
             {
@@ -2469,6 +2517,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currency);
             client.RetrieveFinancialStatementCompleted += (se, e) =>
             {
@@ -2503,6 +2552,7 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
+
         /// <summary>
         /// Gets Basic data
         /// </summary>
@@ -2514,6 +2564,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveBasicDataAsync(entitySelectionData);
             client.RetrieveBasicDataCompleted += (se, e) =>
             {
@@ -2567,6 +2618,7 @@ namespace GreenField.ServiceCaller
                 SessionManager.SESSION.UserName : "Unspecified");
 
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCOASpecificDataAsync(issuerId, securityId, cSource, cFiscalType, cCurrency);
             client.RetrieveCOASpecificDataCompleted += (se, e) =>
             {
@@ -2623,6 +2675,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveValuationGrowthDataAsync(selectedPortfolio, effectiveDate, filterType, filterValue, lookThruEnabled);
             client.RetrieveValuationGrowthDataCompleted += (se, e) =>
             {
@@ -2671,6 +2724,7 @@ namespace GreenField.ServiceCaller
                 SessionManager.SESSION != null ?
                 SessionManager.SESSION.UserName : "Unspecified");
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveEmergingMarketDataAsync(selectedPortfolio);
             client.RetrieveEmergingMarketDataCompleted += (se, e) =>
             {
@@ -2723,6 +2777,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveTargetPriceDataAsync(entitySelectionData);
             client.RetrieveTargetPriceDataCompleted += (se, e) =>
             {
@@ -2769,6 +2824,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveConsensusEstimatesMedianData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateMedian>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveConsensusEstimatesMedianDataAsync(issuerId, periodType, currency);
             client.RetrieveConsensusEstimatesMedianDataCompleted += (se, e) =>
             {
@@ -2817,6 +2873,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveConsensusEstimatesValuationsData(string issuerId, string longName, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimatesValuations>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveConsensusEstimatesValuationDataAsync(issuerId, longName, periodType, currency);
             client.RetrieveConsensusEstimatesValuationDataCompleted += (se, e) =>
             {
@@ -2871,6 +2928,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                     : "Unspecified");
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveConsensusEstimateDetailedDataAsync(issuerId, periodType, currency);
             client.RetrieveConsensusEstimateDetailedDataCompleted += (se, e) =>
             {
@@ -2919,6 +2977,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveQuarterlyResultsDataAsync(fieldValue, yearValue);
             client.RetrieveQuarterlyResultsDataCompleted += (se, e) =>
             {
@@ -2962,6 +3021,7 @@ namespace GreenField.ServiceCaller
         public void RetrievePRevenueData(EntitySelectionData entitySelectionData, string chartTitle, Action<List<PRevenueData>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePRevenueDataAsync(entitySelectionData, chartTitle);
             client.RetrievePRevenueDataCompleted += (se, e) =>
             {
@@ -3001,6 +3061,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveRatioComparisonData(String contextSecurityXML, Action<List<RatioComparisonData>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRatioComparisonDataAsync(contextSecurityXML);
             client.RetrieveRatioComparisonDataCompleted += (se, e) =>
             {
@@ -3040,6 +3101,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveRatioSecurityReferenceData(ScatterGraphContext context, IssuerReferenceData issuerDetails, Action<List<GF_SECURITY_BASEVIEW>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveRatioSecurityReferenceDataAsync(context, issuerDetails);
             client.RetrieveRatioSecurityReferenceDataCompleted += (se, e) =>
             {
@@ -3093,6 +3155,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                  : "Unspecified");
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveFinstatDataAsync(issuerId, securityId, dataSource, fiscalType, currency, yearRange);
             client.RetrieveFinstatDataCompleted += (se, e) =>
             {
@@ -3143,6 +3206,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                             : "Unspecified");
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveConsensusEstimateDetailedBrokerDataAsync(issuerId, periodType, currency);
             client.RetrieveConsensusEstimateDetailedBrokerDataCompleted += (se, e) =>
             {
@@ -3194,6 +3258,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
                 SessionManager.SESSION.UserName : "Unspecified");
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveConsensusEstimatesSummaryDataAsync(entitySelectionData);
             client.RetrieveConsensusEstimatesSummaryDataCompleted += (se, e) =>
             {
@@ -3246,6 +3311,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                             : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCompositeFundDataAsync(entityIdentifiers, portfolio);
             client.RetrieveCompositeFundDataCompleted += (se, e) =>
             {
@@ -3291,6 +3357,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveMeetingInfoByPresentationStatusAsync(presentationStatus);
             client.RetrieveMeetingInfoByPresentationStatusCompleted += (se, e) =>
             {
@@ -3332,6 +3399,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveMeetingMinuteDetailsAsync(meetingID);
             client.RetrieveMeetingMinuteDetailsCompleted += (se, e) =>
             {
@@ -3373,6 +3441,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveMeetingAttachedFileDetailsAsync(meetingID);
             client.RetrieveMeetingAttachedFileDetailsCompleted += (se, e) =>
             {
@@ -3414,6 +3483,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdateMeetingMinuteDetailsAsync(userName, meetingInfo, meetingMinuteData);
             client.UpdateMeetingMinuteDetailsCompleted += (se, e) =>
             {
@@ -3448,6 +3518,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdateMeetingAttachedFileStreamDataAsync(userName, meetingId, fileMasterInfo, deletionFlag);
             client.UpdateMeetingAttachedFileStreamDataCompleted += (se, e) =>
             {
@@ -3482,6 +3553,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePresentationOverviewDataAsync();
             client.RetrievePresentationOverviewDataCompleted += (se, e) =>
             {
@@ -3523,6 +3595,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePresentationVoterDataAsync(presentationId, includeICAdminInfo);
             client.RetrievePresentationVoterDataCompleted += (se, e) =>
             {
@@ -3564,6 +3637,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveSecurityPFVMeasureCurrentPricesAsync(securityId, pfvTypeInfo);
             client.RetrieveSecurityPFVMeasureCurrentPricesCompleted += (se, e) =>
             {
@@ -3598,6 +3672,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdateDecisionEntryDetailsAsync(userName, presentationOverViewData, voterInfo);
             client.UpdateDecisionEntryDetailsCompleted += (se, e) =>
             {
@@ -3632,6 +3707,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.CreatePresentationAsync(userName, presentationOverviewData);
             client.CreatePresentationCompleted += (se, e) =>
             {
@@ -3666,6 +3742,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveSecurityDetailsAsync(entitySelectionData, presentationOverviewData, portfolioData);
             client.RetrieveSecurityDetailsCompleted += (se, e) =>
             {
@@ -3700,6 +3777,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetAvailablePresentationDatesAsync();
             client.GetAvailablePresentationDatesCompleted += (se, e) =>
             {
@@ -3741,6 +3819,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdateMeetingConfigScheduleAsync(userName, meetingConfigurationSchedule);
             client.UpdateMeetingConfigScheduleCompleted += (se, e) =>
             {
@@ -3775,6 +3854,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePresentationCommentsAsync(presentationId);
             client.RetrievePresentationCommentsCompleted += (se, e) =>
             {
@@ -3816,6 +3896,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SetPresentationCommentsAsync(userName, presentationId, comment);
             client.SetPresentationCommentsCompleted += (se, e) =>
             {
@@ -3857,6 +3938,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdatePreMeetingVoteDetailsAsync(userName, voterInfo);
             client.UpdatePreMeetingVoteDetailsCompleted += (se, e) =>
             {
@@ -3891,6 +3973,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SetMeetingPresentationStatusAsync(userName, meetingId, status);
             client.SetMeetingPresentationStatusCompleted += (se, e) =>
             {
@@ -3925,6 +4008,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdateMeetingPresentationDateAsync(userName, presentationId, meetingInfo);
             client.UpdateMeetingPresentationDateCompleted += (se, e) =>
             {
@@ -3959,6 +4043,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetMeetingConfigScheduleAsync();
             client.GetMeetingConfigScheduleCompleted += (se, e) =>
             {
@@ -3993,6 +4078,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePresentationAttachedFileDetailsAsync(presentationID);
             client.RetrievePresentationAttachedFileDetailsCompleted += (se, e) =>
             {
@@ -4034,6 +4120,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdatePresentationAttachedFileStreamDataAsync(userName, presentationId, fileMasterInfo, deletionFlag);
             client.UpdatePresentationAttachedFileStreamDataCompleted += (se, e) =>
             {
@@ -4068,6 +4155,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SetICPPresentationStatusAsync(userName, presentationId, status);
             client.SetICPPresentationStatusCompleted += (se, e) =>
             {
@@ -4102,6 +4190,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCurrentPFVMeasuresAsync(PFVTypeInfo, securityTicker);
             client.RetrieveCurrentPFVMeasuresCompleted += (se, e) =>
             {
@@ -4136,6 +4225,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetAllUsersAsync();
             client.GetAllUsersCompleted += (se, e) =>
             {
@@ -4177,6 +4267,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetUsersByNamesAsync(userNames);
             client.GetUsersByNamesCompleted += (se, e) =>
             {
@@ -4219,6 +4310,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SetMessageInfoAsync(emailTo, emailCc, emailSubject, emailMessageBody, emailAttachment, userName);
             client.SetMessageInfoCompleted += (se, e) =>
             {
@@ -4253,6 +4345,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GenerateMeetingMinutesReportAsync(meetingId);
             client.GenerateMeetingMinutesReportCompleted += (se, e) =>
             {
@@ -4287,6 +4380,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GeneratePreMeetingVotingReportAsync(presentationId);
             client.GeneratePreMeetingVotingReportCompleted += (se, e) =>
             {
@@ -4321,6 +4415,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveSummaryReportDataAsync(startDate, endDate);
             client.RetrieveSummaryReportDataCompleted += (se, e) =>
             {
@@ -4362,6 +4457,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GenerateICPacketReportAsync(presentationId);
             client.GenerateICPacketReportCompleted += (se, e) =>
             {
@@ -4396,6 +4492,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.ReSubmitPresentationAsync(userName, presentationOverviewData, sendAlert);
             client.ReSubmitPresentationCompleted += (se, e) =>
             {
@@ -4438,6 +4535,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DCFOperationsClient client = new DCFOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveDCFAnalysisDataAsync(entitySelectionData);
             client.RetrieveDCFAnalysisDataCompleted += (se, e) =>
             {
@@ -4481,6 +4579,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DCFOperationsClient client = new DCFOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveTerminalValueCalculationsDataAsync(entitySelectionData);
             client.RetrieveTerminalValueCalculationsDataCompleted += (se, e) =>
             {
@@ -4524,6 +4623,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DCFOperationsClient client = new DCFOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCashFlowsAsync(entitySelectionData);
             client.RetrieveCashFlowsCompleted += (se, e) =>
             {
@@ -4567,6 +4667,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DCFOperationsClient client = new DCFOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveSummaryDataAsync(entitySelectionData);
             client.RetrieveSummaryDataCompleted += (se, e) =>
             {
@@ -4610,6 +4711,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DCFOperationsClient client = new DCFOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCurrentPriceDataAsync(entitySelectionData);
             client.RetrieveCurrentPriceDataCompleted += (se, e) =>
             {
@@ -4653,6 +4755,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DCFOperationsClient client = new DCFOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveFreeCashFlowsDataAsync(entitySelectionData);
             client.RetrieveFreeCashFlowsDataCompleted += (se, e) =>
             {
@@ -4704,6 +4807,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DCFOperationsClient client = new DCFOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveFairValueAsync(entitySelectionData);
             client.RetrieveFairValueCompleted += (se, e) =>
             {
@@ -4762,6 +4866,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DCFOperationsClient client = new DCFOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.InsertFairValuesAsync(entitySelectionData, valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated);
             client.InsertFairValuesCompleted += (se, e) =>
             {
@@ -4813,6 +4918,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DCFOperationsClient client = new DCFOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCountryNameAsync(entitySelectionData);
             client.RetrieveCountryNameCompleted += (se, e) =>
             {
@@ -4863,6 +4969,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DCFOperationsClient client = new DCFOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.DeleteFairValuesAsync(entitySelectionData);
             client.DeleteFairValuesCompleted += (se, e) =>
             {
@@ -4911,6 +5018,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveDocumentsDataAsync(searchString);
             client.RetrieveDocumentsDataCompleted += (se, e) =>
             {
@@ -4952,6 +5060,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UploadDocumentAsync(fileName, fileByteStream, deleteFileUrl);
             client.UploadDocumentCompleted += (se, e) =>
             {
@@ -4993,6 +5102,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveDocumentAsync(fileName);
             client.RetrieveDocumentCompleted += (se, e) =>
             {
@@ -5035,6 +5145,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SetUploadFileInfoAsync(userName, Name, Location, CompanyName, SecurityName, SecurityTicker, Type, MetaTags, Comments);
             client.SetUploadFileInfoCompleted += (se, e) =>
             {
@@ -5069,6 +5180,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetDocumentsMetaTagsAsync(OnlyTags);
             client.GetDocumentsMetaTagsCompleted += (se, e) =>
             {
@@ -5110,6 +5222,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCompanyDataAsync();
             client.RetrieveCompanyDataCompleted += (se, e) =>
             {
@@ -5151,6 +5264,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveDocumentsDataForUserAsync(userName);
             client.RetrieveDocumentsDataForUserCompleted += (se, e) =>
             {
@@ -5192,6 +5306,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SetDocumentCommentAsync(userName, fileId, comment);
             client.SetDocumentCommentCompleted += (se, e) =>
             {
@@ -5226,6 +5341,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.DeleteDocumentAsync(fileName);
             client.DeleteDocumentCompleted += (se, e) =>
             {
@@ -5268,6 +5384,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdateDocumentsDataForUserAsync(fileId, fileName, userName, metaTags, companyInfo, categoryType, comment, overwriteStream);
             client.UpdateDocumentsDataForUserCompleted += (se, e) =>
             {
@@ -5302,6 +5419,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.DeleteFileMasterRecordAsync(fileId);
             client.DeleteFileMasterRecordCompleted += (se, e) =>
             {
@@ -5350,6 +5468,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                                     : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCustomControlsListAsync(parameter);
             client.RetrieveCustomControlsListCompleted += (se, e) =>
             {
@@ -5404,6 +5523,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                             : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveSecurityDataAsync(portfolio, benchmark, region, country, sector, industry, userPreference);
             client.RetrieveSecurityDataCompleted += (se, e) =>
             {
@@ -5450,6 +5570,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
                                                                                                                                 : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveSecurityReferenceTabDataPointsAsync();
             client.RetrieveSecurityReferenceTabDataPointsCompleted += (se, e) =>
             {
@@ -5496,6 +5617,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
                                                                                                                                         : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePeriodFinancialsTabDataPointsAsync();
             client.RetrievePeriodFinancialsTabDataPointsCompleted += (se, e) =>
             {
@@ -5542,6 +5664,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
                                                                                                                                 : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveCurrentFinancialsTabDataPointsAsync();
             client.RetrieveCurrentFinancialsTabDataPointsCompleted += (se, e) =>
             {
@@ -5588,6 +5711,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                             : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveFairValueTabDataPointsAsync();
             client.RetrieveFairValueTabDataPointsCompleted += (se, e) =>
             {
@@ -5636,6 +5760,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
                                                                                                                                             : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SaveUserDataPointsPreferenceAsync(userPreference, username);
             client.SaveUserDataPointsPreferenceCompleted += (se, e) =>
             {
@@ -5676,6 +5801,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                         : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetCustomScreeningUserPreferencesAsync(username);
             client.GetCustomScreeningUserPreferencesCompleted += (se, e) =>
             {
@@ -5728,6 +5854,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
                                                                                                                                         : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdateUserDataPointsPreferenceAsync(userPreference, username, existingListname, newListname, accessibility);
             client.UpdateUserDataPointsPreferenceCompleted += (se, e) =>
             {
@@ -5767,6 +5894,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
                                                                                                                                             : "Unspecified");
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveFairValueTabSourceAsync();
             client.RetrieveFairValueTabSourceCompleted += (se, e) =>
             {
@@ -5818,6 +5946,7 @@ namespace GreenField.ServiceCaller
                 SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveStatementDataAsync(selectedSecurity);
             client.RetrieveStatementDataCompleted += (se, e) =>
             {
@@ -5861,6 +5990,7 @@ namespace GreenField.ServiceCaller
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UploadExcelModelAsync(fileStream, userName);
             client.UploadExcelModelCompleted += (se, e) =>
             {
@@ -5910,6 +6040,7 @@ namespace GreenField.ServiceCaller
                 SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             FairValueOperationsClient client = new FairValueOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveFairValueCompostionSummaryAsync(entitySelectionData);
             client.RetrieveFairValueCompostionSummaryCompleted += (se, e) =>
             {
@@ -5965,6 +6096,7 @@ namespace GreenField.ServiceCaller
                 SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             FairValueOperationsClient client = new FairValueOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveFairValueDataWithNewUpsideAsync(entitySelectionData, editedFairValueData);
             client.RetrieveFairValueDataWithNewUpsideCompleted += (se, e) =>
             {
@@ -6020,6 +6152,7 @@ namespace GreenField.ServiceCaller
                 SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             FairValueOperationsClient client = new FairValueOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SaveUpdatedFairValueDataAsync(entitySelectionData, editedFairValueDataList);
             client.SaveUpdatedFairValueDataCompleted += (se, e) =>
             {
@@ -6073,6 +6206,7 @@ namespace GreenField.ServiceCaller
                 SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             FairValueOperationsClient client = new FairValueOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrieveFairValueCompostionSummaryDataAsync(entitySelectionData);
             client.RetrieveFairValueCompostionSummaryDataCompleted += (se, e) =>
             {

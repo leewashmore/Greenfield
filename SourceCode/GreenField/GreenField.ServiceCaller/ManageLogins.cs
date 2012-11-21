@@ -44,6 +44,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.ValidateUserAsync(username, password, callback);
             client.ValidateUserCompleted += (se, e) =>
             {
@@ -86,6 +87,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.CreateUserAsync(username, password, email, passwordQuestion, passwordAnswer, isApproved, callback);
             client.CreateUserCompleted += (se, e) =>
             {
@@ -125,6 +127,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.ChangePasswordAsync(username, oldPassword, newPassword, callback);
             client.ChangePasswordCompleted += (se, e) =>
             {
@@ -164,6 +167,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.ResetPasswordAsync(username, answer, callback);
             client.ResetPasswordCompleted += (se, e) =>
             {
@@ -202,6 +206,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdateApprovalForUserAsync(user, callback);
             client.UpdateApprovalForUserCompleted += (se, e) =>
             {
@@ -241,6 +246,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdateApprovalForUsersAsync(users, callback);
             client.UpdateApprovalForUsersCompleted += (se, e) =>
             {
@@ -279,6 +285,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UnlockUserAsync(userName);
             client.UnlockUserCompleted += (se, e) =>
             {
@@ -317,6 +324,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UnlockUsersAsync(userNames);
             client.UnlockUsersCompleted += (se, e) =>
             {
@@ -356,6 +364,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetUserAsync(username, userIsOnline);
             client.GetUserCompleted += (se, e) =>
             {
@@ -393,6 +402,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetAllUsersAsync();
             client.GetAllUsersCompleted += (se, e) =>
             {
@@ -441,6 +451,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.DeleteUserAsync(username);
             client.DeleteUserCompleted += (se, e) =>
             {
@@ -479,6 +490,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.DeleteUsersAsync(usernames);
             client.DeleteUsersCompleted += (se, e) =>
             {
@@ -519,6 +531,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.CreateRoleAsync(roleName, callback);
             client.CreateRoleCompleted += (se, e) =>
             {
@@ -556,6 +569,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetAllRolesAsync();
             client.GetAllRolesCompleted += (se, e) =>
             {
@@ -603,6 +617,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetRolesForUserAsync(userName);
             client.GetRolesForUserCompleted += (se, e) =>
             {
@@ -651,6 +666,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RemoveUsersFromRolesAsync(usernames, roleNames);
             client.RemoveUsersFromRolesCompleted += (se, e) =>
             {
@@ -690,6 +706,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.AddUsersToRolesAsync(usernames, roleNames);
             client.AddUsersToRolesCompleted += (se, e) =>
             {
@@ -729,6 +746,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.DeleteRoleAsync(username, throwOnPopulatedRole, callback);
             client.DeleteRoleCompleted += (se, e) =>
             {
@@ -769,6 +787,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.UpdateUserRolesAsync(userName, addRoleNames, deleteRoleNames);
             client.UpdateUserRolesCompleted += (se, e) =>
             {

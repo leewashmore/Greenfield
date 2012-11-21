@@ -406,7 +406,8 @@
 
                 <!--Value Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding FilterValueVisibility}" Grid.Column="6">
-                    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" Style="{StaticResource BusyIndicatorStyle}" MaxHeight="16" 
+                    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" Style="{StaticResource BusyIndicatorStyle}" 
+                                              MaxHeight="{StaticResource DefaultControlMinHeight}" VerticalAlignment="Top"
                                               BusyContent="{Binding BusyIndicatorContent}" IsBusy="{Binding IsFilterBusyIndicatorBusy}"
                                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" VerticalContentAlignment="Top">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -558,18 +559,17 @@
                     </StackPanel>
                 </Grid>
                 
-                <Grid Margin="5,0,0,0" Visibility="{Binding MktCapExCashSelectorVisibility}" Grid.Column="11">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <CheckBox Content="Cash/No Cash" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource CheckBoxStyle}" Height="20"
-                                  IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" Grid.Row="0" Name="chkExCashSecurity" ToolTipService.ToolTip="Check to Exclude Cash" />
-                    </StackPanel>
-
+                <Grid Margin="5,0,0,0" Visibility="{Binding MktCapExCashSelectorVisibility}" Grid.Column="11" VerticalAlignment="Center">
+                    <CheckBox Content="Cash/No Cash" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center"
+                              Style="{StaticResource CheckBoxStyle}" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+                              IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" 
+                              Name="chkExCashSecurity" ToolTipService.ToolTip="Check to Exclude Cash"/>
                 </Grid>                
                 
                 <Grid Margin="5,0,0,0" Visibility="{Binding LookThruSelectorVisibility}" Grid.Column="12">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <CheckBox Content="LookThru" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20"
-                                  Style="{StaticResource CheckBoxStyle}"
+                                  Style="{StaticResource CheckBoxStyle}" 
                           IsChecked="{Binding IsLookThruEnabled , Mode=TwoWay}" Grid.Row="0" Name="chkLookThruEnabled" ToolTipService.ToolTip="Check to Enable LookThru" />
                     </StackPanel>
                 </Grid>

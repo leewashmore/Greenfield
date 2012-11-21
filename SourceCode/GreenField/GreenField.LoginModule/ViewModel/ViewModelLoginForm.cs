@@ -67,37 +67,37 @@ namespace GreenField.LoginModule.ViewModel
             _regionManager = regionManager;
             _logger = logger;
 
-            try
-            {
-                if (_manageSessions != null)
-                {
-                    #region GetSession Service Call
-                    _manageSessions.GetSession((result) =>
-                    {
-                        string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                        if (result != null)
-                        {
-                            try
-                            {
-                                Session session = result as Session;
-                                Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1, result.UserName);
-                                Logging.LogSessionClose(_logger, result.UserName);
-                            }
-                            catch (Exception ex)
-                            {
-                                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                Logging.LogException(_logger, ex);
-                            }
-                        }
-                    });
-                    #endregion
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogLoginException(_logger, ex);
-            }
+            //try
+            //{
+            //    if (_manageSessions != null)
+            //    {
+            //        #region GetSession Service Call
+            //        _manageSessions.GetSession((result) =>
+            //        {
+            //            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            //            if (result != null)
+            //            {
+            //                try
+            //                {
+            //                    Session session = result as Session;
+            //                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1, result.UserName);
+            //                    Logging.LogSessionClose(_logger, result.UserName);
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            //                    Logging.LogException(_logger, ex);
+            //                }
+            //            }
+            //        });
+            //        #endregion
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+            //    Logging.LogLoginException(_logger, ex);
+            //}
         }
         #endregion
 
@@ -717,42 +717,48 @@ namespace GreenField.LoginModule.ViewModel
         {
             try
             {
-                //Session data posted to server creation
-                Session sessionVariable = new Session
-                    {
-                        UserName = LoginIdText.ToLower(),
-                        Roles = UserRoles
-                    };
+                String cookie = String.Format("{0}={1}", CookieEncription.Encript("UserName"), CookieEncription.Encript(LoginIdText.ToLower()));
+                List<String> roles = UserRoles.Select(g => CookieEncription.Encript(g)).ToList();
+                cookie = UserRoles.Count == 0 ? cookie : String.Format("{0},{1}={2}", cookie, CookieEncription.Encript("Roles"), String.Join("|", roles));
+                HtmlPage.Document.Cookies = cookie;                
+                HtmlPage.Window.Navigate(new Uri(@"HomePage.aspx", UriKind.Relative));
 
-                _manageSessions.SetSession(sessionVariable, (result) =>
-                {
-                    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                    Logging.LogLoginBeginMethod(_logger, methodNamespace, LoginIdText.ToLower());
+                ////Session data posted to server creation
+                //Session sessionVariable = new Session
+                //    {
+                //        UserName = LoginIdText.ToLower(),
+                //        Roles = UserRoles
+                //    };
 
-                    try
-                    {
-                        if (result != null)
-                        {
-                            String cookie = String.Format("{0}={1}", CookieEncription.Encript("UserName"), CookieEncription.Encript(LoginIdText.ToLower()));
-                            List<String> roles = UserRoles.Select(g => CookieEncription.Encript(g)).ToList();
-                            cookie = UserRoles.Count == 0 ? cookie : String.Format("{0},{1}={2}", cookie, CookieEncription.Encript("Roles"), String.Join("|", roles));
-                            HtmlPage.Document.Cookies = cookie;                            
-                            //HtmlPage.Document.SetProperty("cookie", "UserName=" + LoginIdText.ToLower());
-                            if ((bool)result) HtmlPage.Window.Navigate(new Uri(@"HomePage.aspx", UriKind.Relative));
-                        }
-                        else
-                        {
-                            Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText.ToLower());
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                        Logging.LogLoginException(_logger, ex);
-                    }
+                //_manageSessions.SetSession(sessionVariable, (result) =>
+                //{
+                //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                //    Logging.LogLoginBeginMethod(_logger, methodNamespace, LoginIdText.ToLower());
 
-                    Logging.LogLoginEndMethod(_logger, methodNamespace, LoginIdText.ToLower());
-                });
+                //    try
+                //    {
+                //        if (result == true)
+                //        {
+                //            //String cookie = String.Format("{0}={1}", CookieEncription.Encript("UserName"), CookieEncription.Encript(LoginIdText.ToLower()));
+                //            //List<String> roles = UserRoles.Select(g => CookieEncription.Encript(g)).ToList();
+                //            //cookie = UserRoles.Count == 0 ? cookie : String.Format("{0},{1}={2}", cookie, CookieEncription.Encript("Roles"), String.Join("|", roles));
+                //            //HtmlPage.Document.Cookies = cookie;
+                //            //HtmlPage.Document.SetProperty("cookie", "UserName=" + LoginIdText.ToLower());
+                //            HtmlPage.Window.Navigate(new Uri(@"HomePage.aspx", UriKind.Relative));
+                //        }
+                //        else
+                //        {
+                //            Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText.ToLower());
+                //        }
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                //        Logging.LogLoginException(_logger, ex);
+                //    }
+
+                //    Logging.LogLoginEndMethod(_logger, methodNamespace, LoginIdText.ToLower());
+                //});
             }
             catch (Exception ex)
             {

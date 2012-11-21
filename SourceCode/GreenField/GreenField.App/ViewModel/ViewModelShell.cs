@@ -85,27 +85,26 @@ namespace GreenField.App.ViewModel
                 eventAggregator.GetEvent<ToolboxUpdateEvent>().Subscribe(HandleToolboxUpdateEvent);
             }
 
-            //SessionManager.SESSION = new Session() { UserName = "rvig", Roles = new List<string>() };
-            //UserName = SessionManager.SESSION.UserName;
-
             BusyIndicatorNotification(true, "Retrieving session information...");
             ServiceClientFactory.ReadCookies((result) =>
             {
                 string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                Logging.LogBeginMethod(logger, methodNamespace);
-
                 try
                 {
                     if (result != null)
                     {
-                        SessionManager.SESSION = new Session();
-                        SessionManager.SESSION.UserName = CookieEncription.Decript(result[CookieEncription.Encript("UserName")]);
-                        SessionManager.SESSION.Roles = new List<string>();
-                        if (result.Keys.Contains(CookieEncription.Encript("Roles")))
+                        if ((!result.Keys.Contains(CookieEncription.Encript("UserName"))) ||
+                            (!result.Keys.Contains(CookieEncription.Encript("Roles"))))
                         {
-                            String[] userRolesEncrypted = result[CookieEncription.Encript("Roles")].Split('|');
-                            SessionManager.SESSION.Roles = userRolesEncrypted.Select(g => CookieEncription.Decript(g)).ToList(); 
+                            throw new AccessViolationException("Unable to set session credentials");
                         }
+
+                        SessionManager.SESSION = new Session();
+                        SessionManager.SESSION.Roles = new List<string>();
+
+                        SessionManager.SESSION.UserName = CookieEncription.Decript(result[CookieEncription.Encript("UserName")]);
+                        String[] userRolesEncrypted = result[CookieEncription.Encript("Roles")].Split('|');
+                        SessionManager.SESSION.Roles = userRolesEncrypted.Select(g => CookieEncription.Decript(g)).ToList();
                         if (SessionManager.SESSION.Roles != null)
                         {
                             RoleIsICAdmin = SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN);
@@ -114,30 +113,32 @@ namespace GreenField.App.ViewModel
                                 || record == MemberGroups.IC_NON_VOTING_MEMBER);
                         }
 
-                        manageSessions.SetSession(SessionManager.SESSION, (s) => { });
+                        manageSessions.SetSession(SessionManager.SESSION, (sessionSetResult) =>
+                        {
+                            if (sessionSetResult != true)
+                            {
+                                throw new AccessViolationException("Unable to set session credentials");
+                            }
+                        });
                     }
                     else
                     {
-                        Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                        throw new AccessViolationException("Invalid session credentials");
                     }
                 }
                 catch (Exception ex)
                 {
+                    if (ex is AccessViolationException)
+                    {
+                        HtmlPage.Window.Navigate(new Uri(@"Login.aspx", UriKind.Relative));
+                    }
                     Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                    Logging.LogException(logger, ex);
                 }
                 finally
                 {
-                    Logging.LogEndMethod(logger, methodNamespace);
                     BusyIndicatorNotification();
                 }
             });
-
-            //if (manageSessions != null)
-            //{
-            //    BusyIndicatorNotification(true, "Retrieving session information...");
-            //    manageSessions.GetSession(GetSessionCallbackMethod);
-            //}
         }
         #endregion
 
@@ -169,20 +170,20 @@ namespace GreenField.App.ViewModel
         private String version;
         public String Version
         {
-            get 
+            get
             {
                 if (version == null)
                 {
                     version = GetAssemblyVersion();
                 }
-                return version;                
+                return version;
             }
             set
             {
                 version = value;
                 RaisePropertyChanged(() => this.Version);
             }
-        }        
+        }
 
         private Boolean roleIsICAdmin = false;
         public Boolean RoleIsICAdmin
@@ -402,7 +403,7 @@ namespace GreenField.App.ViewModel
                             BusyIndicatorNotification(true, "Retrieving reference data...", false);
                             dbInteractivity.RetrieveFilterSelectionData(value, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                         }
-                        eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);                        
+                        eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
                     }
                 }
             }
@@ -473,7 +474,7 @@ namespace GreenField.App.ViewModel
                         BusyIndicatorNotification(true, "Retrieving reference data...", false);
                         dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, value, RetrieveFilterSelectionDataCallbackMethod);
                     }
-                    eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));                    
+                    eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
                 }
             }
         }
@@ -536,7 +537,7 @@ namespace GreenField.App.ViewModel
                 selectedEffectiveDateString = value;
                 RaisePropertyChanged(() => this.SelectedEffectiveDateString);
                 SelectedEffectiveDateInfo = Convert.ToDateTime(selectedEffectiveDateString);
-            } 
+            }
         }
 
         #endregion
@@ -1488,7 +1489,7 @@ namespace GreenField.App.ViewModel
                 busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
-        }        
+        }
         #endregion
         #endregion
 
@@ -2098,7 +2099,13 @@ namespace GreenField.App.ViewModel
         {
             try
             {
-                HtmlPage.Window.Navigate(new Uri(@"Login.aspx", UriKind.Relative));
+                ServiceClientFactory.Clear((clearResult) =>
+                {
+                    manageSessions.ClearSession((result) =>
+                    {
+                        HtmlPage.Window.Navigate(new Uri(@"Login.aspx", UriKind.Relative));
+                    });
+                });
             }
             catch (Exception ex)
             {
@@ -3904,8 +3911,6 @@ namespace GreenField.App.ViewModel
         private void GetSessionCallbackMethod(Session result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(logger, methodNamespace);
-
             try
             {
                 if (result != null)
@@ -3925,17 +3930,19 @@ namespace GreenField.App.ViewModel
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    throw new AccessViolationException("Unable to set session credentials");
                 }
             }
             catch (Exception ex)
             {
+                if (ex is AccessViolationException)
+                {
+                    HtmlPage.Window.Navigate(new Uri(@"Login.aspx", UriKind.Relative));
+                }
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
@@ -3956,7 +3963,7 @@ namespace GreenField.App.ViewModel
                     Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     EntitySelectionInfo = result.OrderBy(t => t.LongName).ToList();
                     SelectionData.EntitySelectionData = result.OrderBy(t => t.LongName).ToList();
-                    if(dbInteractivity != null)
+                    if (dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving reference data...");
                         dbInteractivity.RetrieveAvailableDatesInPortfolios(RetrieveAvailableDatesInPortfoliosCallbackMethod);
@@ -4025,7 +4032,7 @@ namespace GreenField.App.ViewModel
                 if (result != null)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
-                    MarketSnapshotSelectionInfo = result;                    
+                    MarketSnapshotSelectionInfo = result;
                 }
                 else
                 {
@@ -4156,7 +4163,7 @@ namespace GreenField.App.ViewModel
                 else
                 {
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -4285,7 +4292,7 @@ namespace GreenField.App.ViewModel
                 BusyIndicatorNotification();
             }
             finally
-            {                
+            {
                 Logging.LogEndMethod(logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             }
         }
@@ -4392,7 +4399,7 @@ namespace GreenField.App.ViewModel
             {
                 IsFilterBusyIndicatorBusy = isBusyIndicatorVisible;
             }
-            
+
         }
 
         private string GetAssemblyVersion()
@@ -4410,6 +4417,5 @@ namespace GreenField.App.ViewModel
             return v.ToString();
         }
         #endregion
-
     }
 }

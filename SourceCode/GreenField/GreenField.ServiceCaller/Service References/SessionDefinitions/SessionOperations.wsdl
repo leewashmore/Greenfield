@@ -27,6 +27,15 @@
   <wsdl:message name="SessionOperations_SetSession_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="SessionOperations_ClearSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClearSession" />
+  </wsdl:message>
+  <wsdl:message name="SessionOperations_ClearSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClearSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SessionOperations_ClearSession_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="SessionOperations">
     <wsdl:operation name="GetSession">
       <wsdl:input wsaw:Action="http://tempuri.org/SessionOperations/GetSession" message="tns:SessionOperations_GetSession_InputMessage" />
@@ -37,6 +46,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/SessionOperations/SetSession" message="tns:SessionOperations_SetSession_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/SessionOperations/SetSessionResponse" message="tns:SessionOperations_SetSession_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/SessionOperations/SetSessionServiceFaultFault" name="ServiceFaultFault" message="tns:SessionOperations_SetSession_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClearSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/SessionOperations/ClearSession" message="tns:SessionOperations_ClearSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/SessionOperations/ClearSessionResponse" message="tns:SessionOperations_ClearSession_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/SessionOperations/ClearSessionServiceFaultFault" name="ServiceFaultFault" message="tns:SessionOperations_ClearSession_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SessionOperations" type="tns:SessionOperations">
@@ -55,6 +69,18 @@
     </wsdl:operation>
     <wsdl:operation name="SetSession">
       <soap:operation soapAction="http://tempuri.org/SessionOperations/SetSession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ClearSession">
+      <soap:operation soapAction="http://tempuri.org/SessionOperations/ClearSession" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

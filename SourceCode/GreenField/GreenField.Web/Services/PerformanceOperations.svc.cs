@@ -1257,7 +1257,9 @@ namespace GreenField.Web.Services
             {
                 List<RelativePerformanceData> result = new List<RelativePerformanceData>();
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
-                { return result; }
+                {
+                    return result; 
+                }
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
@@ -1267,7 +1269,9 @@ namespace GreenField.Web.Services
                                                                    t.GICS_LVL1 != null &&
                                                                    t.SEC_INV_THEME == "EQUITY").ToList();
                 if (dailyData == null)
-                { return result; }
+                {
+                    return result; 
+                }
 
                 System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
                 dateInfo.ShortDatePattern = "dd/MM/yyyy";

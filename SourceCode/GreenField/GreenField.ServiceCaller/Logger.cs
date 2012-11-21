@@ -42,6 +42,7 @@ namespace GreenField.ServiceCaller
             if (LogLevel == DEFAULT_LEVEL)
             {
                 LoggingDefinitions.LoggingOperationsClient client = new LoggingDefinitions.LoggingOperationsClient();
+                client.Endpoint.Behaviors.Add(new CookieBehavior());
                 client.GetLoggingLevelAsync();
                 client.GetLoggingLevelCompleted += (s, ea) =>
                 {
@@ -86,6 +87,7 @@ namespace GreenField.ServiceCaller
         public void Log(string message, Category category, Priority priority)
         {
             LoggingDefinitions.LoggingOperationsClient client = new LoggingDefinitions.LoggingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
 
             #region Async Call
             //Async Call based on Category Type, LogLevel and Priority

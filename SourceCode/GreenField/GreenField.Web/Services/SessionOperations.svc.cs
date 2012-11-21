@@ -76,6 +76,29 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+        /// <summary>
+        /// Set static class "Session" to CurrentSession
+        /// </summary>
+        /// <param name="sessionVariable">Session</param>
+        /// <returns>True/False</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public bool ClearSession()
+        {
+            try
+            {
+                HttpContext.Current.Session["Session"] = null;
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
         #endregion
     }
 }

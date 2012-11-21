@@ -27,6 +27,8 @@ namespace GreenField.Login.App
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
+            WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
             Bootstrapper bootStrapper = new Bootstrapper();
             bootStrapper.Run();
         }
