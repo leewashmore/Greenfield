@@ -83,16 +83,24 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
             // we need an observable collection to make filtering (collapsing/expanding) work, because it is triggered by the CollectionChanged event
             var observedResidents = new PokableObservableCollection<IGlobeResident>(residents);
             this.Residents = observedResidents;
+            this.RootModel = data;
             this.IsBusyIndicatorStatus = false;
         }
 
         private PokableObservableCollection<IGlobeResident> residents;
+        /// <summary>
+        /// Residents of the globe model (from the root model) turned into a flat collection in order to get bound to the grid.
+        /// </summary>
         public PokableObservableCollection<IGlobeResident> Residents
         {
             get { return this.residents; }
-            set { this.residents = value; this.RaisePropertyChanged(() => this.Residents); }
+            protected set { this.residents = value; this.RaisePropertyChanged(() => this.Residents); }
         }
 
+        /// <summary>
+        /// Original model from the backend service.
+        /// </summary>
+        public BgaRootModel RootModel { get; protected set; }
 
         public void Dispose()
         {

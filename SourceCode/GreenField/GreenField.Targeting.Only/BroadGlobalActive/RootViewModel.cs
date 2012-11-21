@@ -18,7 +18,7 @@ namespace GreenField.DashBoardModule.ViewModels.Targeting
     /// <summary>
     /// Orchestrates communications between picker and editor.
     /// </summary>
-    
+
     [Export]
     public class RootViewModel : NotificationObject
     {
@@ -27,7 +27,7 @@ namespace GreenField.DashBoardModule.ViewModels.Targeting
             : this(pickerViewModel, editorViewModel, DateTime.Today.AddDays(-1))
         {
         }
-        
+
         public RootViewModel(PickerViewModel pickerViewModel, EditorViewModel editorViewModel, DateTime benchmarkDate)
         {
             this.editorViewModel = editorViewModel;
@@ -47,6 +47,21 @@ namespace GreenField.DashBoardModule.ViewModels.Targeting
         {
             get { return this.editorViewModel; }
             set { this.editorViewModel = value; this.RaisePropertyChanged(() => this.EditorViewModel); }
-        }        
+        }
+
+        /// <summary>
+        /// Safe check for modifications.
+        /// Takes into account that the view model may not be initialized by the time the check is done.
+        /// This property is not supposed to be bound, because it doesn't notify the view about getting changed.
+        /// The main purpose of this property is to be used in OnNavigateFrom of the RootView in order to get a confirmation about leaving unsaved modifications.
+        /// </summary>
+        public Boolean IsModified
+        {
+            get
+            {
+                var result = this.EditorViewModel != null && this.EditorViewModel.RootModel != null && this.EditorViewModel.RootModel.IsModified;
+                return result;
+            }
+        }
     }
 }

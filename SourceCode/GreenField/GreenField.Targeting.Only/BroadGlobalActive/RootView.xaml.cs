@@ -59,6 +59,15 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            var model = RuntimeHelper.DataContextAs<RootViewModel>(this);
+            if (true)//model.IsModified)
+            {
+                var result = MessageBox.Show("Discard changes? OK: Discard, Cancel: Continue editing", "There are unsaved changes", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    //navigationContext.NavigationService.
+                }
+            }
             /*ViewBaseUserControl control = (ViewBaseUserControl)this.placeholder.Content;
             if (control != null)
             {

@@ -38,6 +38,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -75,6 +76,9 @@
   <ItemGroup>
     <Compile Include="Helpers\ConfigurationSettings.cs" />
     <Compile Include="Helpers\SilverlightFaultBehavior.cs" />
+    <Compile Include="Helpers\TargetingInstanceProvider.cs" />
+    <Compile Include="Helpers\TargetingServiceHost.cs" />
+    <Compile Include="Helpers\TargetingServiceHostFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TargetingOperations.svc.cs">
       <DependentUpon>TargetingOperations.svc</DependentUpon>
