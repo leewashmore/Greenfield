@@ -14,12 +14,15 @@ using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.Events;
 using GreenField.Targeting.Only;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Targeting.App
 {
     [Export]
     public class ShellViewModel : NotificationObject
     {
+        public const String MainRegionName = "MainRegion";
+
         private IRegionManager regionManager;
         private IEventAggregator eventAggregator;
         private ILoggerFacade logger;
@@ -34,12 +37,40 @@ namespace GreenField.Targeting.App
             this.eventAggregator = eventAggregator;
             this.regionManager = regionManager;
             this.logger = logger;
+
+            this.InitializeCommands();
         }
 
-        public void Run(GlobalSettings settings)
+        private void InitializeCommands()
         {
-            this.regionManager.RequestNavigate("MainRegion", new Uri("ViewDashboardTargetingBroadGlobalActive", UriKind.Relative));
-            this.eventAggregator.GetEvent<Only.BroadGlobalActive.RunEvent>().Publish(settings.BgaSettings);
+            this.NavigateToTargetingBroadGlobalActiveCommand = new DelegateCommand(delegate
+            {
+                this.regionManager.RequestNavigate(MainRegionName, typeof(Targeting.Only.BroadGlobalActive.RootView).FullName);
+            });
+
+            this.NavigateToTargetingBottomUpCommand = new DelegateCommand(delegate
+            {
+                this.regionManager.RequestNavigate(MainRegionName, typeof(Targeting.Only.BottomUp.RootView).FullName);
+            });
+
+            this.NavigateToBasketTargetsCommand = new DelegateCommand(delegate
+            {
+                
+                this.regionManager.RequestNavigate(MainRegionName, typeof(Targeting.Only.BasketTargets.RootView).FullName);
+            });
+        }
+
+        // Navigation commands
+        public ICommand NavigateToTargetingBroadGlobalActiveCommand { get; private set; }
+        public ICommand NavigateToTargetingBottomUpCommand { get; private set; }
+        public ICommand NavigateToBasketTargetsCommand { get; private set; }
+
+        /// <summary>
+        /// Begins execution of the application.
+        /// </summary>
+        public void Start()
+        {
+            this.NavigateToTargetingBroadGlobalActiveCommand.Execute(new Object());
         }
     }
 }

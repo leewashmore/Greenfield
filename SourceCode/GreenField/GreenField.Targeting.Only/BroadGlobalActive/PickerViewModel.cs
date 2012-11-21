@@ -16,7 +16,7 @@ using GreenField.Targeting.Only.Backend.Targeting;
 
 namespace GreenField.Targeting.Only.BroadGlobalActive
 {
-    public class PickerViewModel : ErrorCapableViewModel
+    public class PickerViewModel : ViewModelBase
     {
         private IClientFactory clientFactory;
 
@@ -24,7 +24,6 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
         {
             this.clientFactory = clientFactory;
             this.TargetingTypes = new ObservableCollection<BgaTargetingTypePickerModel>();
-            this.Initialize();
         }
 
         public ObservableCollection<BgaTargetingTypePickerModel> TargetingTypes { get; private set; }
@@ -63,8 +62,9 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
 
         protected void RequestData()
         {
+            this.IsLoading = true;
             var client = this.clientFactory.CreateClient();
-            client.GetTargetingTypePortfolioPickerCompleted += (sender, args) => this.TakeCareOfResult("Getting data for the picker", args, x => x.Result, this.TakeData);
+            client.GetTargetingTypePortfolioPickerCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting data for the picker", args, x => x.Result, this.TakeData);
             client.GetTargetingTypePortfolioPickerAsync();
         }
 
@@ -75,6 +75,7 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
             {
                 this.TargetingTypes.Add(targetingType);
             }
+            this.IsLoading = false;
         }
 
         public event PortfolioPickedEventHandler PortfolioPicked;

@@ -17,7 +17,6 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Targeting.Only;component/Assets/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -129,13 +128,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <k:RadBusyIndicator
-        x:Name="gridBusyIndicator"
-        IsIndeterminate="True"
-        IsEnabled="True"
-        Style="{StaticResource BusyIndicatorStyle}"
-        DisplayAfter="0"
-        IsBusy="{Binding IsBusyIndicatorStatus}">
+    
 
         <Grid x:Name="LayoutRoot" Background="White">
 
@@ -264,6 +257,5 @@
                 </Border>
             </Grid>
         </Grid>
-    </k:RadBusyIndicator>
 
 </UserControl>

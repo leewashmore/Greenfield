@@ -13,76 +13,17 @@ using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Regions;
-using GreenField.DashBoardModule.ViewModels.Targeting;
 
 namespace GreenField.Targeting.Only.BroadGlobalActive
 {
-    /// <summary>
-    /// Picker + Editor
-    /// </summary>
     [Export]
-    public partial class RootView : UserControl, INavigationAware
+    public partial class RootView : UserControl
     {
-        private IEventAggregator eventAgregator;
-
         [ImportingConstructor]
-        public RootView(IEventAggregator eventAggregator)
+        public RootView(RootViewModel viewModel)
         {
             this.InitializeComponent();
-            this.eventAgregator = eventAggregator;
-            var @event = this.eventAgregator.GetEvent<RunEvent>().Subscribe(this.Initialize);
-        }
-
-        public void Initialize(Settings settings)
-        {
-            var modelTraverser = new ModelTraverser();
-            var editorViewModel = new EditorViewModel(
-                settings.ClientFactory,
-                settings.ModelTraverser,
-                settings.DefaultExpandCollapseStateSetter
-            );
-            var pickerViewModel = new PickerViewModel(settings.ClientFactory);
-
-            var rootModel = new RootViewModel(
-                pickerViewModel,
-                editorViewModel,
-                settings.BenchmarkDate
-            );
-            
-            this.DataContext = rootModel;
-        }
-
-        public Boolean IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            var model = RuntimeHelper.DataContextAs<RootViewModel>(this);
-            if (true)//model.IsModified)
-            {
-                var result = MessageBox.Show("Discard changes? OK: Discard, Cancel: Continue editing", "There are unsaved changes", MessageBoxButton.OKCancel);
-                if (result == MessageBoxResult.OK)
-                {
-                    //navigationContext.NavigationService.
-                }
-            }
-            /*ViewBaseUserControl control = (ViewBaseUserControl)this.placeholder.Content;
-            if (control != null)
-            {
-                control.IsActive = false;
-            }*/
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            /*
-            ViewBaseUserControl control = (ViewBaseUserControl)this.placeholder.Content;
-            if (control != null)
-            {
-                control.IsActive = true;
-            }*/
+            this.DataContext = viewModel;
         }
     }
 }

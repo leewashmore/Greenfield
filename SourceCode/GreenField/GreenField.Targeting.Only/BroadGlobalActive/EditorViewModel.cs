@@ -17,11 +17,9 @@ using System.Collections.ObjectModel;
 
 namespace GreenField.Targeting.Only.BroadGlobalActive
 {
-    public class EditorViewModel : ErrorCapableViewModel
+    public class EditorViewModel : ViewModelBase
     {
         private IClientFactory clientFactory;
-        private Visibility commodityGridVisibility = Visibility.Collapsed;
-        private Boolean isBusyIndicatorStatus;
         private ModelTraverser traverser;
         private DefaultExpandCollapseStateSetter defaultExpandCollapseStateSetter;
 
@@ -36,42 +34,23 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
             this.clientFactory = clientFactory;
         }
 
-        public Visibility CommodityGridVisibility
-        {
-            get { return commodityGridVisibility; }
-            set
-            {
-                commodityGridVisibility = value;
-                this.RaisePropertyChanged(() => this.CommodityGridVisibility);
-            }
-        }
-
-        public Boolean IsBusyIndicatorStatus
-        {
-            get { return this.isBusyIndicatorStatus; }
-            set
-            {
-                this.isBusyIndicatorStatus = value;
-                this.RaisePropertyChanged(() => this.IsBusyIndicatorStatus);
-            }
-        }
-
         public void Initialize(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
         {
             this.RequestData(targetingTypeId, broadGlobalActivePortfolioId, benchmarkDate);
-            this.IsBusyIndicatorStatus = true;
         }
 
         private void RequestData(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
         {
+            this.IsLoading = true;
             var client = this.clientFactory.CreateClient();
-            client.GetBroadGlobalActiveModelCompleted += (sender, args) => this.TakeCareOfResult("Getting data for the editor.", args, x => x.Result, this.TakeData);
+            client.GetBroadGlobalActiveModelCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting data for the editor.", args, x => x.Result, this.TakeData);
             client.GetBroadGlobalActiveModelAsync(targetingTypeId, broadGlobalActivePortfolioId, benchmarkDate);
         }
 
         protected void TakeData(BgaRootModel data)
         {
             this.TakeDataUnsafe(data);
+            this.IsLoading = false;
         }
 
         protected void TakeDataUnsafe(BgaRootModel data)
@@ -84,7 +63,6 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
             var observedResidents = new PokableObservableCollection<IGlobeResident>(residents);
             this.Residents = observedResidents;
             this.RootModel = data;
-            this.IsBusyIndicatorStatus = false;
         }
 
         private PokableObservableCollection<IGlobeResident> residents;

@@ -11,13 +11,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
 
-namespace GreenField.Targeting.Only.BroadGlobalActive
+namespace GreenField.Targeting.Only.BottomUp
 {
-    public partial class PickerView : UserControl
+    [Export]
+    public partial class RootView : UserControl//, INavigationAware
     {
-        public PickerView()
+        public RootView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

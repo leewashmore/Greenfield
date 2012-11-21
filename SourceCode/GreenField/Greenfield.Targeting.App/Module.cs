@@ -28,7 +28,9 @@ namespace GreenField.Targeting.App
 
         public void Initialize()
         {
-            this.regionManager.RegisterViewWithRegion("MainRegion", typeof(Targeting.Only.BroadGlobalActive.RootView));
+            this.regionManager.RegisterViewWithRegion(ShellViewModel.MainRegionName, typeof(Targeting.Only.BroadGlobalActive.RootView));
+            this.regionManager.RegisterViewWithRegion(ShellViewModel.MainRegionName, typeof(Targeting.Only.BottomUp.RootView));
+            this.regionManager.RegisterViewWithRegion(ShellViewModel.MainRegionName, typeof(Targeting.Only.BasketTargets.RootView));
         }
     }
 }

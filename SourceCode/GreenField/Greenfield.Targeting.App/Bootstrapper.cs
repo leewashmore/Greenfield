@@ -25,6 +25,9 @@ namespace GreenField.Targeting.App
 
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Bootstrapper).Assembly));
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.Targeting.Only.GlobalSettings).Assembly));
+            
+            // 
+            
         }
 
         protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
@@ -51,9 +54,21 @@ namespace GreenField.Targeting.App
         {
             base.InitializeModules();
             var shell = (Shell)this.Shell;
+            shell.DataContextSource.Start();
+        }
 
-            var targetingSettings = this.CreateTargetingSettings();
-            shell.DataContextSource.Run(targetingSettings);
+        // 3. Add known instance to the container so that they can be resolved later.
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+            // adding instances to the container
+            // these very instances are going to be used to resolve interfaces and other shit
+            // this is a logger
+            this.Container.ComposeExportedValue<ILoggerFacade>(this.Logger);
+
+            // this is the settings object that is used to initialize the targeting viewmodels
+            var settings = this.CreateTargetingSettings();
+            this.Container.ComposeExportedValue<Targeting.Only.BroadGlobalActive.Settings>(settings.BgaSettings);
         }
 
         private Targeting.Only.GlobalSettings CreateTargetingSettings()
@@ -61,7 +76,7 @@ namespace GreenField.Targeting.App
             var benchmarkDate = new DateTime(2012, 10, 17);
             var clientFactory = new DefaultClientFactory();
             var modelTraverser = new Only.BroadGlobalActive.ModelTraverser();
-            
+
             var bgaSettings = new Targeting.Only.BroadGlobalActive.Settings(
                 clientFactory,
                 modelTraverser,
@@ -72,13 +87,5 @@ namespace GreenField.Targeting.App
             var settings = new Targeting.Only.GlobalSettings(bgaSettings);
             return settings;
         }
-
-        protected override void ConfigureContainer()
-        {
-            base.ConfigureContainer();
-            this.Container.ComposeExportedValue<ILoggerFacade>(this.Logger);
-        }
-
-        
     }
 }

@@ -35,11 +35,18 @@
     >
         <Grid x:Name="LayoutRoot">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            
+            <StackPanel Orientation="Horizontal">
+                <HyperlinkButton Grid.Row="0" Command="{Binding NavigateToTargetingBroadGlobalActiveCommand}">Broad Global Active</HyperlinkButton>
+                <HyperlinkButton Grid.Row="0" Command="{Binding NavigateToTargetingBottomUpCommand}">Bottom Up</HyperlinkButton>
+                <HyperlinkButton Grid.Row="0" Command="{Binding NavigateToTargetingBottomUpCommand}">Basket Targets</HyperlinkButton>
+            </StackPanel>
 
             <ContentControl
-                Grid.Row="0"
+                Grid.Row="1"
                 VerticalContentAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
                 prism:RegionManager.RegionName="MainRegion"/>

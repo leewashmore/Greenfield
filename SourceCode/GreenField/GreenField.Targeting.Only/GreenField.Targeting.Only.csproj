@@ -83,13 +83,20 @@
     <Compile Include="ApplicationException.cs" />
     <Compile Include="Backend\Targeting\Model, EditableExpression.cs" />
     <Compile Include="Backend\Targeting\Model, Expression.cs" />
+    <Compile Include="BasketTargets\RootView.xaml.cs">
+      <DependentUpon>RootView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BottomUp\RootView.xaml.cs">
+      <DependentUpon>RootView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BroadGlobalActive\DataTemplateSelector.cs" />
     <Compile Include="BroadGlobalActive\DefaultExpandCollapseStateSetter.cs" />
     <Compile Include="BroadGlobalActive\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BroadGlobalActive\RunEvent.cs" />
     <Compile Include="BroadGlobalActive\Settings.cs" />
+    <Compile Include="IViewModel, ComeAndGo.cs" />
+    <Compile Include="ViewModelBase.cs" />
     <Compile Include="DefaultClientFactory.cs" />
     <Compile Include="Converter, FractionToPercent.cs" />
     <Compile Include="Converter, Echo.cs" />
@@ -98,7 +105,8 @@
     <Compile Include="BroadGlobalActive\RootView.xaml.cs">
       <DependentUpon>RootView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ErrorCapableViewModel.cs" />
+    <Compile Include="IViewModel, Dirty.cs" />
+    <Compile Include="ViewModelBase, Root.cs" />
     <Compile Include="IClientFactory.cs" />
     <Compile Include="Converter, LevelToPadding.cs" />
     <Compile Include="BroadGlobalActive\ModelTraverser.cs" />
@@ -159,6 +167,14 @@
     <Page Include="Assets\Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BasketTargets\RootView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BottomUp\RootView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BroadGlobalActive\EditorView.xaml">
       <Generator>MSBuild:Compile</Generator>

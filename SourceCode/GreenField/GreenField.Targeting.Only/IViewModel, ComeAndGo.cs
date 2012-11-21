@@ -8,11 +8,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Microsoft.Practices.Prism.Events;
 
-namespace GreenField.Targeting.Only.BroadGlobalActive
+namespace GreenField.Targeting.Only
 {
-    public class RunEvent : CompositePresentationEvent<Settings>
+    public interface IComeAndGoViewModel
     {
+        void Activate();
+        void Deactivate();
     }
 }

@@ -4,25 +4,45 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mine="clr-namespace:GreenField.Targeting.Only.BroadGlobalActive"
+    xmlns:local="clr-namespace:GreenField.Targeting.Only"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:k="http://schemas.telerik.com/2008/xaml/presentation"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
-    <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        <mine:PickerView Grid.Row="0" DataContext="{Binding PickerViewModel}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PortfolioPicked">
-                    <i:InvokeCommandAction Command="{Binding PortfolioPickedCommand}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </mine:PickerView>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Targeting.Only;component/Assets/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
-        <mine:EditorView Grid.Row="1" DataContext="{Binding EditorViewModel}" />
-        
-    </Grid>
-    
+    <k:RadBusyIndicator
+        x:Name="gridBusyIndicator"
+        IsIndeterminate="True"
+        IsEnabled="True"
+        Style="{StaticResource BusyIndicatorStyle}"
+        DisplayAfter="0"
+        IsBusy="{Binding IsLoading}">
+
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <mine:PickerView Grid.Row="0" DataContext="{Binding PickerViewModel}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PortfolioPicked">
+                        <i:InvokeCommandAction Command="{Binding PortfolioPickedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </mine:PickerView>
+
+            <mine:EditorView Grid.Row="1" DataContext="{Binding EditorViewModel}" />
+
+        </Grid>
+
+    </k:RadBusyIndicator>
+
 </UserControl>
