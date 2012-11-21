@@ -42,19 +42,28 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
 
             this.editorViewModel = editorViewModel;
             this.pickerViewModel = pickerViewModel;
+
+            this.RecalculateCommand = new DelegateCommand(delegate
+            {
+                this.Recalculate();
+            });
         }
+
+        
 
         // activating / deactivating
         public override void Activate()
         {
             this.pickerViewModel.Initialize();
         }
-
         public override void Deactivate()
         {
-            // do nothing
+            this.pickerViewModel.Reset();
+            this.editorViewModel.Reset();
         }
 
+        // commands
+        public ICommand RecalculateCommand { get; private set; }
 
         // taking care of the loading spinner
         private Int32 currentlyLoading;
@@ -69,6 +78,13 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
             this.IsLoading = total > 0;
         }
 
+        // reclaculating
+        // when anything changes we need to do a roundtrip to the server which will update a model for us according to these changes
+        public void Recalculate()
+        {
+            this.EditorViewModel.RequestRecalculating();
+        }
+
         // components
         private PickerViewModel pickerViewModel;
         public PickerViewModel PickerViewModel
@@ -78,7 +94,6 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
         }
 
         private EditorViewModel editorViewModel;
-
         public EditorViewModel EditorViewModel
         {
             get { return this.editorViewModel; }

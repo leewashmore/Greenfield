@@ -31,13 +31,16 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <mine:PickerView Grid.Row="0" DataContext="{Binding PickerViewModel}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PortfolioPicked">
-                        <i:InvokeCommandAction Command="{Binding PortfolioPickedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </mine:PickerView>
+            <StackPanel Grid.Row="0">
+                <mine:PickerView DataContext="{Binding PickerViewModel}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PortfolioPicked">
+                            <i:InvokeCommandAction Command="{Binding PortfolioPickedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </mine:PickerView>
+                <Button Command="{Binding RecalculateCommand}" Content="Recalculate" />
+            </StackPanel>
 
             <mine:EditorView Grid.Row="1" DataContext="{Binding EditorViewModel}" />
 

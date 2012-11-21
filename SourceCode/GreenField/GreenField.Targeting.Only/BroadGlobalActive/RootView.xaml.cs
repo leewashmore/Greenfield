@@ -19,7 +19,12 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
     [Export]
     public partial class RootView : UserControl
     {
+        /// <summary>
+        /// This constructor is not supposed to be called explicitly (only via MEF).
+        /// </summary>
+        /// <param name="viewModel">This view model is going to be constructed by MEF, so don't try to set in manually.</param>
         [ImportingConstructor]
+        [Obsolete("Don't call me.")]
         public RootView(RootViewModel viewModel)
         {
             this.InitializeComponent();

@@ -87,5 +87,11 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
                 handler(this, args);
             }
         }
+
+        public void Reset()
+        {
+            this.SelectedPortfolio = null;
+            this.SelectedTargetingType = null;
+        }
     }
 }

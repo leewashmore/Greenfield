@@ -34,18 +34,21 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
             this.clientFactory = clientFactory;
         }
 
-        public void Initialize(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
-        {
-            this.RequestData(targetingTypeId, broadGlobalActivePortfolioId, benchmarkDate);
-        }
-
-        private void RequestData(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
+        public void RequestData(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
         {
             this.IsLoading = true;
             var client = this.clientFactory.CreateClient();
             client.GetBroadGlobalActiveModelCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting data for the editor.", args, x => x.Result, this.TakeData);
             client.GetBroadGlobalActiveModelAsync(targetingTypeId, broadGlobalActivePortfolioId, benchmarkDate);
         }
+        
+        public void RequestRecalculating()
+        {
+            this.IsLoading = true;
+            var client = this.clientFactory.CreateClient();
+            client.RecalculateBroadGlobalActiveComplete +=
+        }
+
 
         protected void TakeData(BgaRootModel data)
         {
@@ -80,8 +83,18 @@ namespace GreenField.Targeting.Only.BroadGlobalActive
         /// </summary>
         public BgaRootModel RootModel { get; protected set; }
 
+        public void Reset()
+        {
+            this.Residents = null;
+            this.RootModel = null;
+        }
+
+
         public void Dispose()
         {
         }
+
+
+        
     }
 }
