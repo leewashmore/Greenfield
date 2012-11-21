@@ -330,24 +330,34 @@ namespace GreenField.Gadgets.Views
         {
             //entity description
             this.radGridSnapshot.Columns[0].Header = "Description";
+            this.radGridSnapshot.Columns[0].UniqueName = "Description";
             //entity return Type
             this.radGridSnapshot.Columns[1].Header = "Return";
+            this.radGridSnapshot.Columns[1].UniqueName = "Return";
             //market performance for last working date
             this.radGridSnapshot.Columns[2].Header = DateTime.Today.AddDays(-1).ToString("d");
+            this.radGridSnapshot.Columns[2].UniqueName = DateTime.Today.AddDays(-1).ToString("d");
             //market performance for week to date
             this.radGridSnapshot.Columns[3].Header = "WTD";
+            this.radGridSnapshot.Columns[3].UniqueName = "WTD";
             //market performance for month to date
             this.radGridSnapshot.Columns[4].Header = "MTD";
+            this.radGridSnapshot.Columns[4].UniqueName = "MTD";
             //market performance for quarter to date
             this.radGridSnapshot.Columns[5].Header = "QTD";
+            this.radGridSnapshot.Columns[5].UniqueName = "QTD";
             //market performance for year to date
             this.radGridSnapshot.Columns[6].Header = "YTD";
+            this.radGridSnapshot.Columns[6].UniqueName = "YTD";
             //market performance for last year
             this.radGridSnapshot.Columns[7].Header = DateTime.Today.AddYears(-1).Year.ToString();
+            this.radGridSnapshot.Columns[7].UniqueName = DateTime.Today.AddYears(-1).Year.ToString();
             //market performance for second last year
             this.radGridSnapshot.Columns[8].Header = DateTime.Today.AddYears(-2).Year.ToString();
+            this.radGridSnapshot.Columns[8].UniqueName = DateTime.Today.AddYears(-2).Year.ToString();
             //market performance for third last year
             this.radGridSnapshot.Columns[9].Header = DateTime.Today.AddYears(-3).Year.ToString();
+            this.radGridSnapshot.Columns[9].UniqueName = DateTime.Today.AddYears(-3).Year.ToString();
         }
 
         /// <summary>

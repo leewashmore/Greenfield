@@ -31,6 +31,12 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="sessionVariable">Session</param>
         /// <param name="callback">True/False</param>
-        void SetSession(Session sessionVariable, Action<bool?> callback);        
+        void SetSession(Session sessionVariable, Action<bool?> callback);
+
+        /// <summary>
+        /// Clears "Session" instance to CurrentSession
+        /// </summary>
+        /// <param name="callback">True/False</param>
+        void ClearSession(Action<bool> callback);
     }
 }

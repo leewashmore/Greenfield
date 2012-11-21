@@ -46,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -72,6 +73,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CookieBehavior.cs" />
+    <Compile Include="CookieClientMessageInspector.cs" />
     <Compile Include="DBInteractivity.cs" />
     <Compile Include="Helper\ServiceFault.cs" />
     <Compile Include="IDBInteractivity.cs" />

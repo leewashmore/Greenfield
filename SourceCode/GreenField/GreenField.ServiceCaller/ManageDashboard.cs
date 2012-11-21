@@ -51,6 +51,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(_logger, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION.UserName);
 
             DashboardOperationsClient client = new DashboardOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.GetDashboardPreferenceByUserNameAsync(userName);
             client.GetDashboardPreferenceByUserNameCompleted += (se, e) =>
             {
@@ -93,6 +94,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(_logger, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION.UserName);
 
             DashboardOperationsClient client = new DashboardOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.SetDashboardPreferenceAsync(dashBoardPreference, userName);
             client.SetDashboardPreferenceCompleted += (se, e) =>
             {

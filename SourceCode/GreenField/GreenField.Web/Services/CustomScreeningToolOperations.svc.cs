@@ -788,14 +788,14 @@ namespace GreenField.Web.Services
                
                 foreach (PORTFOLIO_SECURITY_TARGETS item in portfolioSecurityTargetsData)
                 {
+                    GF_SECURITY_BASEVIEW specificSecurity = entity.GF_SECURITY_BASEVIEW
+                        .Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault();
                     portfolioTargets.Add(new CompositeFundData()
                     {
                         SecurityId = item.SECURITY_ID,
                         Target = item.TARGET_PCT,
-                        IssuerId = entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault()!= null ?
-                                entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault().ISSUER_ID : null,
-                        CountryName = entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault() != null ?
-                                entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault().ISO_COUNTRY_CODE : null
+                        IssuerId = specificSecurity != null ? specificSecurity.ISSUER_ID : null,
+                        CountryName = specificSecurity != null ? specificSecurity.ISO_COUNTRY_CODE : null
                     });
                 } 
                

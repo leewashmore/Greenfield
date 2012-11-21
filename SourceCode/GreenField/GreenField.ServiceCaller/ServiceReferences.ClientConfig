@@ -3,82 +3,82 @@
 		<bindings>
    <basicHttpBinding>
     <binding name="DashboardOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647" enableHttpCookieContainer="true"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
     <binding name="LoggingOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647" enableHttpCookieContainer="true"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
-    <binding name="SecurityReferenceOperations" closeTimeout="00:50:00"
+    <binding name="SecurityReferenceOperations" closeTimeout="00:50:00" enableHttpCookieContainer="true"
      openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
      maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
     <binding name="SessionOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647" enableHttpCookieContainer="true"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
-    <binding name="ExternalResearchOperations" closeTimeout="00:50:00"
+    <binding name="ExternalResearchOperations" closeTimeout="00:50:00" enableHttpCookieContainer="true"
      openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
      maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
-    <binding name="PerformanceOperations" closeTimeout="00:50:00"
+    <binding name="PerformanceOperations" closeTimeout="00:50:00" enableHttpCookieContainer="true"
      openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
      maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
     <binding name="BasicHttpBinding_ModelFXOperations" closeTimeout="00:50:00"
-     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00" enableHttpCookieContainer="true"
      maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
     <binding name="LoginOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647" enableHttpCookieContainer="true"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
     <binding name="MeetingOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647" enableHttpCookieContainer="true"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="BasicHttpBinding_AlertOperations" closeTimeout="00:50:00" enableHttpCookieContainer="true"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="BenchmarkHoldingsOperations" closeTimeout="00:50:00" enableHttpCookieContainer="true"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="DocumentWorkspaceOperations" closeTimeout="00:50:00" enableHttpCookieContainer="true"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="DCFOperations" closeTimeout="00:50:00" openTimeout="00:50:00" enableHttpCookieContainer="true"
      receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
-    <binding name="BasicHttpBinding_AlertOperations" closeTimeout="00:50:00"
-     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-     <security mode="None" />
-    </binding>
-    <binding name="BenchmarkHoldingsOperations" closeTimeout="00:50:00"
-     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-     <security mode="None" />
-    </binding>
-    <binding name="DocumentWorkspaceOperations" closeTimeout="00:50:00"
-     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-     <security mode="None" />
-    </binding>
-    <binding name="DCFOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
-     maxReceivedMessageSize="2147483647">
-     <security mode="None" />
-    </binding>
-    <binding name="CustomScreeningToolOperations" closeTimeout="00:50:00"
+    <binding name="CustomScreeningToolOperations" closeTimeout="00:50:00" enableHttpCookieContainer="true"
      openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
      maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
     <binding name="FairValueOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647" enableHttpCookieContainer="true"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
     <binding name="ExternalResearchOperations1" closeTimeout="00:50:00" openTimeout="00:50:00"
-     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647" enableHttpCookieContainer="true"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
