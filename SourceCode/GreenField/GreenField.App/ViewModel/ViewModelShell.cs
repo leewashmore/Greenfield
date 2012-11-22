@@ -93,8 +93,7 @@ namespace GreenField.App.ViewModel
                 {
                     if (result != null)
                     {
-                        if ((!result.Keys.Contains(CookieEncription.Encript("UserName"))) ||
-                            (!result.Keys.Contains(CookieEncription.Encript("Roles"))))
+                        if (!result.Keys.Contains(CookieEncription.Encript("UserName")))
                         {
                             throw new AccessViolationException("Unable to set session credentials");
                         }
@@ -103,8 +102,11 @@ namespace GreenField.App.ViewModel
                         SessionManager.SESSION.Roles = new List<string>();
 
                         SessionManager.SESSION.UserName = CookieEncription.Decript(result[CookieEncription.Encript("UserName")]);
-                        String[] userRolesEncrypted = result[CookieEncription.Encript("Roles")].Split('|');
-                        SessionManager.SESSION.Roles = userRolesEncrypted.Select(g => CookieEncription.Decript(g)).ToList();
+                        if (result.Keys.Contains(CookieEncription.Encript("Roles")))
+                        {
+                            String[] userRolesEncrypted = result[CookieEncription.Encript("Roles")].Split('|');
+                            SessionManager.SESSION.Roles = userRolesEncrypted.Select(g => CookieEncription.Decript(g)).ToList(); 
+                        }
                         if (SessionManager.SESSION.Roles != null)
                         {
                             RoleIsICAdmin = SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN);
