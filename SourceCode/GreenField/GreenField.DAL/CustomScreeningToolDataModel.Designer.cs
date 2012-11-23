@@ -73,22 +73,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<SCREENING_DISPLAY_CURRENT> SCREENING_DISPLAY_CURRENT
-        {
-            get
-            {
-                if ((_SCREENING_DISPLAY_CURRENT == null))
-                {
-                    _SCREENING_DISPLAY_CURRENT = base.CreateObjectSet<SCREENING_DISPLAY_CURRENT>("SCREENING_DISPLAY_CURRENT");
-                }
-                return _SCREENING_DISPLAY_CURRENT;
-            }
-        }
-        private ObjectSet<SCREENING_DISPLAY_CURRENT> _SCREENING_DISPLAY_CURRENT;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<SCREENING_DISPLAY_FAIRVALUE> SCREENING_DISPLAY_FAIRVALUE
         {
             get
@@ -165,17 +149,25 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<UserListDataPointMappingInfo> _UserListDataPointMappingInfoes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SCREENING_DISPLAY_CURRENT> SCREENING_DISPLAY_CURRENT
+        {
+            get
+            {
+                if ((_SCREENING_DISPLAY_CURRENT == null))
+                {
+                    _SCREENING_DISPLAY_CURRENT = base.CreateObjectSet<SCREENING_DISPLAY_CURRENT>("SCREENING_DISPLAY_CURRENT");
+                }
+                return _SCREENING_DISPLAY_CURRENT;
+            }
+        }
+        private ObjectSet<SCREENING_DISPLAY_CURRENT> _SCREENING_DISPLAY_CURRENT;
 
         #endregion
         #region AddTo Methods
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the SCREENING_DISPLAY_CURRENT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToSCREENING_DISPLAY_CURRENT(SCREENING_DISPLAY_CURRENT sCREENING_DISPLAY_CURRENT)
-        {
-            base.AddObject("SCREENING_DISPLAY_CURRENT", sCREENING_DISPLAY_CURRENT);
-        }
     
         /// <summary>
         /// Deprecated Method for adding a new object to the SCREENING_DISPLAY_FAIRVALUE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
@@ -215,6 +207,14 @@ namespace GreenField.DAL
         public void AddToUserListDataPointMappingInfoes(UserListDataPointMappingInfo userListDataPointMappingInfo)
         {
             base.AddObject("UserListDataPointMappingInfoes", userListDataPointMappingInfo);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SCREENING_DISPLAY_CURRENT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSCREENING_DISPLAY_CURRENT(SCREENING_DISPLAY_CURRENT sCREENING_DISPLAY_CURRENT)
+        {
+            base.AddObject("SCREENING_DISPLAY_CURRENT", sCREENING_DISPLAY_CURRENT);
         }
 
         #endregion
@@ -579,13 +579,11 @@ namespace GreenField.DAL
         /// </summary>
         /// <param name="sCREENING_ID">Initial value of the SCREENING_ID property.</param>
         /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
-        /// <param name="eSTIMATE_ID">Initial value of the ESTIMATE_ID property.</param>
-        public static SCREENING_DISPLAY_CURRENT CreateSCREENING_DISPLAY_CURRENT(global::System.String sCREENING_ID, global::System.Int32 dATA_ID, global::System.Int32 eSTIMATE_ID)
+        public static SCREENING_DISPLAY_CURRENT CreateSCREENING_DISPLAY_CURRENT(global::System.String sCREENING_ID, global::System.Int32 dATA_ID)
         {
             SCREENING_DISPLAY_CURRENT sCREENING_DISPLAY_CURRENT = new SCREENING_DISPLAY_CURRENT();
             sCREENING_DISPLAY_CURRENT.SCREENING_ID = sCREENING_ID;
             sCREENING_DISPLAY_CURRENT.DATA_ID = dATA_ID;
-            sCREENING_DISPLAY_CURRENT.ESTIMATE_ID = eSTIMATE_ID;
             return sCREENING_DISPLAY_CURRENT;
         }
 
@@ -649,9 +647,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 ESTIMATE_ID
+        public Nullable<global::System.Int32> ESTIMATE_ID
         {
             get
             {
@@ -659,18 +657,15 @@ namespace GreenField.DAL
             }
             set
             {
-                if (_ESTIMATE_ID != value)
-                {
-                    OnESTIMATE_IDChanging(value);
-                    ReportPropertyChanging("ESTIMATE_ID");
-                    _ESTIMATE_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ESTIMATE_ID");
-                    OnESTIMATE_IDChanged();
-                }
+                OnESTIMATE_IDChanging(value);
+                ReportPropertyChanging("ESTIMATE_ID");
+                _ESTIMATE_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ESTIMATE_ID");
+                OnESTIMATE_IDChanged();
             }
         }
-        private global::System.Int32 _ESTIMATE_ID;
-        partial void OnESTIMATE_IDChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _ESTIMATE_ID;
+        partial void OnESTIMATE_IDChanging(Nullable<global::System.Int32> value);
         partial void OnESTIMATE_IDChanged();
     
         /// <summary>

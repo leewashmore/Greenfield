@@ -66,11 +66,10 @@
           <Key>
             <PropertyRef Name="SCREENING_ID" />
             <PropertyRef Name="DATA_ID" />
-            <PropertyRef Name="ESTIMATE_ID" />
           </Key>
           <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="DATA_ID" Type="int" Nullable="false" />
-          <Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
+          <Property Name="ESTIMATE_ID" Type="int" />
           <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
           <Property Name="DECIMAL" Type="int" />
           <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
@@ -226,7 +225,6 @@
 		<edmx:ConceptualModels>
 			<Schema Namespace="CustomScreeningToolModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
 				<EntityContainer Name="CustomScreeningToolEntities" annotation:LazyLoadingEnabled="true">
-					<EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" />
 					<EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" />
 					<EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" />
 					<FunctionImport Name="GetCustomScreeningFVAData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFVAData)">
@@ -278,20 +276,8 @@
           <FunctionImport Name="GetCustomScreeningMarketCap" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningMarketCap)">
           <Parameter Name="securityIdsList" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" />
 				</EntityContainer>
-				<EntityType Name="SCREENING_DISPLAY_CURRENT">
-					<Key>
-						<PropertyRef Name="SCREENING_ID" />
-						<PropertyRef Name="DATA_ID" />
-						<PropertyRef Name="ESTIMATE_ID" />
-					</Key>
-					<Property Name="SCREENING_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-					<Property Name="DATA_ID" Type="Int32" Nullable="false" />
-					<Property Name="ESTIMATE_ID" Type="Int32" Nullable="false" />
-					<Property Name="MULTIPLIER" Type="Decimal" Precision="32" Scale="6" />
-					<Property Name="DECIMAL" Type="Int32" />
-					<Property Name="PERCENTAGE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-				</EntityType>
 				<EntityType Name="SCREENING_DISPLAY_FAIRVALUE">
 					<Key>
 						<PropertyRef Name="SCREENING_ID" />
@@ -494,24 +480,24 @@
           <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
           <Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
         </ComplexType>
+        <EntityType Name="SCREENING_DISPLAY_CURRENT">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_ID" />
+          </Key>
+          <Property Type="String" Name="SCREENING_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="Int32" Name="ESTIMATE_ID" />
+          <Property Type="Decimal" Name="MULTIPLIER" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="DECIMAL" />
+          <Property Type="String" Name="PERCENTAGE" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
 		<edmx:Mappings>
 			<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
 				<EntityContainerMapping StorageEntityContainer="CustomScreeningToolModelStoreContainer" CdmEntityContainer="CustomScreeningToolEntities">
-					<EntitySetMapping Name="SCREENING_DISPLAY_CURRENT">
-						<EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT">
-							<MappingFragment StoreEntitySet="SCREENING_DISPLAY_CURRENT">
-								<ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
-								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-								<ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
-								<ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
-								<ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
-								<ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
 					<EntitySetMapping Name="SCREENING_DISPLAY_FAIRVALUE">
 						<EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE">
 							<MappingFragment StoreEntitySet="SCREENING_DISPLAY_FAIRVALUE">
@@ -724,6 +710,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="SCREENING_DISPLAY_CURRENT">
+            <EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT">
+              <MappingFragment StoreEntitySet="SCREENING_DISPLAY_CURRENT">
+                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+                <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
+                <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 				</EntityContainerMapping>
 			</Mapping>
 		</edmx:Mappings>
@@ -745,7 +743,6 @@
 		<!-- Diagram content (shape and connector positions) -->
 		<Diagrams>
 			<Diagram Name="CustomScreeningToolDataModel" ZoomLevel="97">
-				<EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" Width="2.375" PointX="0.5" PointY="4.75" Height="2.1725878906250102" IsExpanded="true" />
 				<EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" Width="2.375" PointX="5.375" PointY="0.5" Height="2.7494921875000102" IsExpanded="true" />
 				<EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" Width="2.25" PointX="8" PointY="0.625" Height="2.1725878906249996" />
 				<EntityTypeShape EntityType="CustomScreeningToolModel.UserCustomisedListInfo" Width="1.5" PointX="0.75" PointY="1.375" Height="2.5571907552083317" />
@@ -755,6 +752,7 @@
 					<ConnectorPoint PointX="2.25" PointY="2.6535953776041667" />
 					<ConnectorPoint PointX="3.125" PointY="2.6535953776041667" />
 				</AssociationConnector>
+        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" Width="2.5" PointX="0.75" PointY="4.75" Height="2.1725878906249996" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
