@@ -1081,7 +1081,7 @@ namespace GreenField.Web.Services
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 research.CommandTimeout = 5000;
                 result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>
-                    ("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
+                    ("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.InstrumentID).ToList();
                 return result;
             }
             catch (Exception ex)
