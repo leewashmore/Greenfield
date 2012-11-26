@@ -312,15 +312,37 @@ namespace GreenField.Gadgets.Views
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
             }
         }
-
+        private int itemIndex = -1;
         /// <summary>
         /// Grid Element Exporting
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void radGridSnapshot_ElementExporting(object sender, GridViewElementExportingEventArgs e)
-        {
-            RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+        {            
+            RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false, cellValueConverter: () =>
+            {
+                object result = e.Value;
+                if (e.Value == null && e.Element == ExportElement.Cell)
+                {
+                    GridViewDataColumn column = (e.Context as GridViewDataColumn);
+                    if (column != null)
+                    {
+                        if (column.DisplayIndex == 0)
+                        {
+                            MarketSnapshotPerformanceData data = column.DataControl.Items[++itemIndex] as MarketSnapshotPerformanceData;
+                            if (data != null)
+                            {
+                                result = string.Format("{0}{1}{2}", data.MarketSnapshotPreferenceInfo.EntityNodeValueName
+                                    , String.IsNullOrEmpty(data.MarketSnapshotPreferenceInfo.EntityNodeValueName) ? "" : " "
+                                    , data.MarketSnapshotPreferenceInfo.EntityName);
+                            }
+                        }
+                    }
+                }
+
+                return result;
+            });
         }
 
         private object radGridSnapshot_PdfElementExporting(int rowIndex, int columnIndex, object columnCollection, object itemCollection)

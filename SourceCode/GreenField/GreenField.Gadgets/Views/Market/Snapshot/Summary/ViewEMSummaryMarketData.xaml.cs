@@ -275,7 +275,21 @@ namespace GreenField.Gadgets.Views
 
             this.dgEMSummaryMarketData.Columns[13].Header = String.Format("{0}", DateTime.Now.Year - 2000);
             this.dgEMSummaryMarketData.Columns[14].Header = String.Format("{0}", DateTime.Now.Year - 2000);
-            this.dgEMSummaryMarketData.Columns[15].Header = String.Format("{0}", DateTime.Now.Year - 2000);            
+            this.dgEMSummaryMarketData.Columns[15].Header = String.Format("{0}", DateTime.Now.Year - 2000);
+
+            this.dgEMSummaryMarketData.Columns[5].UniqueName = String.Format("{0}", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketData.Columns[6].UniqueName = String.Format("{0} C", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketData.Columns[7].UniqueName = String.Format("{0}", DateTime.Now.Year - 1999);
+            this.dgEMSummaryMarketData.Columns[8].UniqueName = String.Format("{0} C", DateTime.Now.Year - 1999);
+
+            this.dgEMSummaryMarketData.Columns[9].UniqueName = String.Format("{0}", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketData.Columns[10].UniqueName = String.Format("{0} C", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketData.Columns[11].UniqueName = String.Format("{0}", DateTime.Now.Year - 1999);
+            this.dgEMSummaryMarketData.Columns[12].UniqueName = String.Format("{0} C", DateTime.Now.Year - 1999);
+
+            this.dgEMSummaryMarketData.Columns[13].UniqueName = String.Format("{0}", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketData.Columns[14].UniqueName = String.Format("{0}", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketData.Columns[15].UniqueName = String.Format("{0}", DateTime.Now.Year - 2000); 
             #endregion
 
             #region Update EMM Summary SSR report headers
@@ -299,7 +313,29 @@ namespace GreenField.Gadgets.Views
             this.dgEMSummaryMarketSSRData.Columns[17].Header = String.Format("-{0}e", DateTime.Now.Year - 2001);
             this.dgEMSummaryMarketSSRData.Columns[18].Header = String.Format("-{0}e", DateTime.Now.Year - 2000);
 
-            this.dgEMSummaryMarketSSRData.Columns[19].Header = String.Format("-{0}e", DateTime.Now.Year - 2000);            
+            this.dgEMSummaryMarketSSRData.Columns[19].Header = String.Format("-{0}e", DateTime.Now.Year - 2000);
+
+            this.dgEMSummaryMarketSSRData.Columns[3].UniqueName = String.Format("3/{0}e", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketSSRData.Columns[4].UniqueName = String.Format("6/{0}e", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketSSRData.Columns[5].UniqueName = String.Format("9/{0}e", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketSSRData.Columns[6].UniqueName = String.Format("12/{0}e", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketSSRData.Columns[7].UniqueName = String.Format("3/{0}e", DateTime.Now.Year - 1999);
+            this.dgEMSummaryMarketSSRData.Columns[8].UniqueName = String.Format("6/{0}e", DateTime.Now.Year - 1999);
+            this.dgEMSummaryMarketSSRData.Columns[9].UniqueName = String.Format("9/{0}e", DateTime.Now.Year - 1999);
+            this.dgEMSummaryMarketSSRData.Columns[10].UniqueName = String.Format("12/{0}e", DateTime.Now.Year - 1999);
+
+            this.dgEMSummaryMarketSSRData.Columns[11].UniqueName = String.Format("-{0}e", DateTime.Now.Year - 2001);
+            this.dgEMSummaryMarketSSRData.Columns[12].UniqueName = String.Format("-{0}e", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketSSRData.Columns[13].UniqueName = String.Format("-{0}e", DateTime.Now.Year - 1999);
+
+            this.dgEMSummaryMarketSSRData.Columns[14].UniqueName = String.Format("-{0}e", DateTime.Now.Year - 2001);
+            this.dgEMSummaryMarketSSRData.Columns[15].UniqueName = String.Format("-{0}e", DateTime.Now.Year - 2000);
+            this.dgEMSummaryMarketSSRData.Columns[16].UniqueName = String.Format("-{0}e", DateTime.Now.Year - 1999);
+
+            this.dgEMSummaryMarketSSRData.Columns[17].UniqueName = String.Format("-{0}e", DateTime.Now.Year - 2001);
+            this.dgEMSummaryMarketSSRData.Columns[18].UniqueName = String.Format("-{0}e", DateTime.Now.Year - 2000);
+
+            this.dgEMSummaryMarketSSRData.Columns[19].UniqueName = String.Format("-{0}e", DateTime.Now.Year - 2000);
             #endregion
         }
 
