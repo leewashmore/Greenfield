@@ -106,15 +106,18 @@ namespace GreenField.Gadgets.ViewModels
                     PortfolioSelectionVisibility = Visibility.Visible;
                     BenchmarkSelectionVisibility = Visibility.Collapsed;
                     CustomSelectionVisibility = Visibility.Collapsed;
+                    RaisePropertyChanged(() => this.SubmitCommand);
                     RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
                     RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
                     RaisePropertyChanged(() => this.CustomSelectionVisibility);
+                                        
                 }
                 else if (SelectedCriteria == SecuritySelectionType.BENCHMARK)
                 {
                     BenchmarkSelectionVisibility = Visibility.Visible;
                     PortfolioSelectionVisibility = Visibility.Collapsed;
                     CustomSelectionVisibility = Visibility.Collapsed;
+                    RaisePropertyChanged(() => this.SubmitCommand);
                     RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
                     RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
                     RaisePropertyChanged(() => this.CustomSelectionVisibility);
@@ -124,6 +127,7 @@ namespace GreenField.Gadgets.ViewModels
                     CustomSelectionVisibility = Visibility.Visible;
                     PortfolioSelectionVisibility = Visibility.Collapsed;
                     BenchmarkSelectionVisibility = Visibility.Collapsed;
+                    RaisePropertyChanged(() => this.SubmitCommand);
                     RaisePropertyChanged(() => this.CustomSelectionVisibility);
                     RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
                     RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
@@ -209,6 +213,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     selectedBenchmark = value;
                     RaisePropertyChanged(() => this.SelectedBenchmark);
+                    RaisePropertyChanged(() => this.SubmitCommand);
                     RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
                     if (selectedBenchmark != null)
                     {
@@ -254,6 +259,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     selectedRegion = value;
                     RaisePropertyChanged(() => this.SelectedRegion);
+                    RaisePropertyChanged(() => this.SubmitCommand);
                     RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
                     if (selectedRegion != null)
                     {
@@ -294,6 +300,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     selectedSector = value;
                     RaisePropertyChanged(() => this.SelectedSector);
+                    RaisePropertyChanged(() => this.SubmitCommand);
                     RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
                     if (selectedSector != null)
                     {
@@ -334,6 +341,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     selectedCountry = value;
                     RaisePropertyChanged(() => this.SelectedCountry);
+                    RaisePropertyChanged(() => this.SubmitCommand);
                     RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
                     if (selectedCountry != null)
                     {
@@ -374,6 +382,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     selectedIndustry = value;
                     RaisePropertyChanged(() => this.SelectedIndustry);
+                    RaisePropertyChanged(() => this.SubmitCommand);
                     RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
                     if (selectedIndustry != null)
                     {
@@ -706,7 +715,34 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param">object</param>
         private bool SubmitCommandValidationMethod(object param)
         {
-            return true;
+            if (SelectedCriteria == SecuritySelectionType.PORTFOLIO)
+            {
+                if (SelectedPortfolio != null)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else if (SelectedCriteria == SecuritySelectionType.BENCHMARK)
+            {
+                if (SelectedBenchmark != null)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else if (SelectedCriteria == SecuritySelectionType.CUSTOM)
+            {
+                if (SelectedCountry != null || selectedSector != null || SelectedRegion != null || SelectedIndustry != null)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else return false;
         }
 
         /// <summary>

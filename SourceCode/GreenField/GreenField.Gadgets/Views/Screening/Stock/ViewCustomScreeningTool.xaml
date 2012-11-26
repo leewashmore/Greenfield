@@ -133,7 +133,7 @@
                                        Width="75"
                                        Visibility="Visible"
                                        HorizontalAlignment="Center"
-                                       Content="Submit" Grid.Column="2"
+                                       Content="Submit" Grid.Column="2"                                       
                                        Style="{StaticResource RadButtonStyle}"/>
                 </Grid>
 
