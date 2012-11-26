@@ -1261,6 +1261,7 @@ namespace GreenField.Web.Services
                     return result; 
                 }
 
+                ExceptionTrace.LogInfo(null, null, "Data Retrieval Starts from Service for RetrieveRelativePerformanceData ");
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
@@ -1268,6 +1269,7 @@ namespace GreenField.Web.Services
                                                                    t.COUNTRY != null &&
                                                                    t.GICS_LVL1 != null &&
                                                                    t.SEC_INV_THEME == "EQUITY").ToList();
+                ExceptionTrace.LogInfo(null, null, "Data Retrieval Ends from Service RetrieveRelativePerformanceData");
                 if (dailyData == null)
                 {
                     return result; 
@@ -1392,6 +1394,7 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = new List<GF_PERF_DAILY_ATTRIBUTION>();
                 #region Fetching data
+                ExceptionTrace.LogInfo(null, null, "Data Retrieval Starts from Service for RetrieveRelativePerformanceCountryActivePositionData ");
                 if (countryID == null && sectorID == null)
                 {
                     data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
@@ -1422,6 +1425,7 @@ namespace GreenField.Web.Services
                                                                        t.AGG_LVL_1 == countryID &&
                                                                        t.GICS_LVL1 == sectorID).ToList();
                 }
+                ExceptionTrace.LogInfo(null, null, "Data Retrieval Ends from Service RetrieveRelativePerformanceCountryActivePositionData");
                 #endregion
 
                 if (data.Count.Equals(0))
@@ -1773,6 +1777,7 @@ namespace GreenField.Web.Services
             DimensionEntitiesService.Entities entity = DimensionEntity;
             List<GF_PERF_DAILY_ATTRIBUTION> dailyData = new List<GF_PERF_DAILY_ATTRIBUTION>();
             #region Fetching data
+            ExceptionTrace.LogInfo(null, null, "Data Retrieval Starts from Service for RetrieveRelativePerformanceData");
             if (country == null && sector == null)
             {
                 dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
@@ -1809,6 +1814,7 @@ namespace GreenField.Web.Services
                                                                    t.COUNTRY == country &&
                                                                    t.GICS_LVL1 == sector).ToList();
             }
+            ExceptionTrace.LogInfo(null, null, "Data Retrieval Starts from Service for RetrieveRelativePerformanceData");
             #endregion
             return dailyData;
         }
