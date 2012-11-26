@@ -45,6 +45,7 @@ namespace GreenField.Web.Helpers
                 + ")]|Type[(Exception"
                 + ")]|Message[(" + ex.Message.Replace(Environment.NewLine, " ")
                 + ")]|StackTrace[(" + StackTraceToString(ex)
+                + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                 + ")]", "Exception", "Medium");
         }
 

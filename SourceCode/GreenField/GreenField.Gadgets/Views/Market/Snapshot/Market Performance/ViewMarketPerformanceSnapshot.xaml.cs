@@ -10,6 +10,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller;
+using System.Collections;
 
 namespace GreenField.Gadgets.Views
 {
@@ -297,9 +298,10 @@ namespace GreenField.Gadgets.Views
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
                 RadExportOptionsInfo.Add(new RadExportOptions()
                 {
-                    ElementName = "MacroDB Key Annual Report",
+                    ElementName = "Market Performance Snapshot",
                     Element = this.radGridSnapshot,
-                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
+                    CellValueOverwrite = radGridSnapshot_PdfElementExporting
                 });
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Market Performance Snapshot");
@@ -319,6 +321,29 @@ namespace GreenField.Gadgets.Views
         private void radGridSnapshot_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+        }
+
+        private object radGridSnapshot_PdfElementExporting(int rowIndex, int columnIndex, object columnCollection, object itemCollection)
+        {
+            IList<GridViewBoundColumnBase> columns = columnCollection as IList<GridViewBoundColumnBase>;
+            IList items = itemCollection as IList;
+
+            if (columns == null || items == null)
+            {
+                return null;
+            }
+            object result = columns[columnIndex].GetValueForItem(items[rowIndex]);
+            if (columns[columnIndex].DataMemberBinding.Path.Path == "Description")
+            {
+                MarketSnapshotPerformanceData data = items[rowIndex] as MarketSnapshotPerformanceData;
+                if (data != null)
+                {
+                    result = string.Format("{0}{1}{2}", data.MarketSnapshotPreferenceInfo.EntityNodeValueName
+                            , String.IsNullOrEmpty(data.MarketSnapshotPreferenceInfo.EntityNodeValueName) ? "" : " "
+                            , data.MarketSnapshotPreferenceInfo.EntityName);
+                }
+            }
+            return result;
         }
         #endregion
 

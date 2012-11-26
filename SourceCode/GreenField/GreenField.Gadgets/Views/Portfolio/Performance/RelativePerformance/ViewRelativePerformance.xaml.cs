@@ -580,11 +580,72 @@ namespace GreenField.Gadgets.Views
                 ElementName = "Excess Contribution",
                 Element = this.dgRelativePerformance,
                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
-                RichTextBox = this.RichTextBox
+                RichTextBox = this.RichTextBox,
+                CellValueOverwrite = dgRelativePerformance_PdfElementExporting
             });
 
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Excess Contribution");
             childExportOptions.Show();
+        }        
+
+        private object dgRelativePerformance_PdfElementExporting(int rowIndex, int columnIndex, object columnCollection, object itemCollection)
+        {
+            IList<GridViewBoundColumnBase> columns = columnCollection as IList<GridViewBoundColumnBase>;
+            IList items = itemCollection as IList;
+
+            if (columns == null || items == null)
+            {
+                return null;
+            }
+
+            object result = columns[columnIndex].GetValueForItem(items[rowIndex]);
+
+            if (columns[columnIndex].DataMemberBinding.Path.Path != null)
+            {
+                if (columns[columnIndex].DataMemberBinding.Path.Path == "Country Id")
+                {
+                    RelativePerformanceData data = items[rowIndex] as RelativePerformanceData;
+                    if (data != null)
+                    {
+                        return data.CountryId;
+                    }
+                }
+                else if (columns[columnIndex].DataMemberBinding.Path.Path
+                    .Contains("RelativePerformanceCountrySpecificInfo"))
+                {
+                    int countrySpecificIndexStartIndex = columns[columnIndex].DataMemberBinding.Path.Path
+                        .IndexOf('[');
+                    int countrySpecificIndex = Convert.ToInt32(columns[columnIndex].DataMemberBinding.Path.Path
+                        .Substring(countrySpecificIndexStartIndex + 1, columns[columnIndex].DataMemberBinding.Path.Path.Length - countrySpecificIndexStartIndex - 2));
+                    RelativePerformanceData data = items[rowIndex] as RelativePerformanceData;
+                    if (data != null)
+                    {
+                        RelativePerformanceCountrySpecificData value = data.RelativePerformanceCountrySpecificInfo[countrySpecificIndex];
+                        if (value.Alpha != null)
+                        {
+                            decimal totalValue = 0M;
+
+                            String formattedValue = Decimal.TryParse(value.Alpha.ToString(), out totalValue) ?
+                                GetValueInBasisPoints(totalValue.ToString()) : String.Empty;
+                            return formattedValue;
+                        }
+                    }
+                }
+                else if (columns[columnIndex].DataMemberBinding.Path.Path == "Total")
+                {
+                    RelativePerformanceData data = items[rowIndex] as RelativePerformanceData;
+                    if (data != null)
+                    {
+                        decimal totalValue = 0M;
+
+                        string value = Decimal.TryParse(data.AggregateCountryAlpha.ToString(), out totalValue) ?
+                        GetValueInBasisPoints(totalValue.ToString()) : "Total";
+
+                        return value;
+                    }
+                }
+            }
+            return result;
         }
 
         /// <summary>

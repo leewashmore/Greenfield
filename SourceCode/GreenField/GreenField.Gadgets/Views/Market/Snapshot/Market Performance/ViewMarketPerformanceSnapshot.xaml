@@ -160,28 +160,28 @@
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <!--Entity Performance Return Columns-->
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding DateToDateReturn, StringFormat=\{0:n2\}}"
-                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    Width="Auto" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding WeekToDateReturn, StringFormat=\{0:n2\}}"
-                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    Width="Auto" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding MonthToDateReturn, StringFormat=\{0:n2\}}"
-                                                    Width="*" IsReadOnly="True" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    Width="Auto" IsReadOnly="True" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding QuarterToDateReturn, StringFormat=\{0:n2\}}"
-                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    Width="Auto" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding YearToDateReturn, StringFormat=\{0:n2\}}"
-                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    Width="Auto" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding LastYearReturn, StringFormat=\{0:n2\}}" 
-                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    Width="Auto" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding SecondLastYearReturn, StringFormat=\{0:n2\}}"  
-                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    Width="Auto" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding ThirdLastYearReturn, StringFormat=\{0:n2\}}"
-                                                    Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
+                                                    Width="Auto" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right" IsSortable="False"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                     </telerik:RadGridView.Columns>
 

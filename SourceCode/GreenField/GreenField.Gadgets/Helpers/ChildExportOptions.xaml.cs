@@ -156,7 +156,8 @@ namespace GreenField.Gadgets.Helpers
                 if (dialog.ShowDialog() == true)
                 {
                     RadGridView_ElementExport.ExportElementOptions = ExportElementOptionsInfo;
-                    RadExport.ExportStream(dialog.FilterIndex, ExportOption, dialog.OpenFile(), ExportOption.SkipColumnDisplayIndex);
+                    RadExport.ExportStream(dialog.FilterIndex, ExportOption, dialog.OpenFile(), ExportOption.SkipColumnDisplayIndex
+                        , ExportOption.CellValueOverwrite, ExportOption.ColumnAggregateOverwrite);
                     this.DialogResult = true;
                 }
                 else

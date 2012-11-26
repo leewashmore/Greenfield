@@ -29,7 +29,9 @@ namespace GreenField.Gadgets.ViewModels
         //Gadget Data
         private List<RelativePerformanceSectorData> relativePerformanceSectorInfo;
         private List<RelativePerformanceData> relativePerformanceInfo;
-        
+        private List<RelativePerformanceSecurityData> relativePerformanceSecurityInfo;
+
+        private int activeCalls = 0;
         #endregion
 
         #region Properties
@@ -83,7 +85,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         dbInteractivity.RetrieveRelativePerformanceSectorData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),
                             RetrieveRelativePerformanceSectorDataCallbackMethod);
-                        BusyIndicatorStatus = true;
+                        BusyIndicatorNotification(true);
                     }
                 }
             }
@@ -122,7 +124,6 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-
         #endregion
 
         #region Constructor
@@ -147,7 +148,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 dbInteractivity.RetrieveRelativePerformanceSectorData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),
                     RetrieveRelativePerformanceSectorDataCallbackMethod);
-                BusyIndicatorStatus = true;
+                BusyIndicatorNotification(true);
             }
 
             if (eventAggregator != null)
@@ -169,8 +170,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event handling for building grid shown on click over sector name in relative performance gadget grid  
         /// </summary>
-        public event RelativePerformanceToggledSectorGridBuildEventHandler RelativePerformanceToggledSectorGridBuildEvent;
-              
+        public event RelativePerformanceToggledSectorGridBuildEventHandler RelativePerformanceToggledSectorGridBuildEvent;              
         #endregion
 
         #region Event Handlers
@@ -193,7 +193,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         dbInteractivity.RetrieveRelativePerformanceSectorData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo), 
                             RetrieveRelativePerformanceSectorDataCallbackMethod);
-                        BusyIndicatorStatus = true;
+                        BusyIndicatorNotification(true);
                     }
                 }
                 else
@@ -227,7 +227,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         dbInteractivity.RetrieveRelativePerformanceSectorData(portfolioSelectionDataInfo,Convert.ToDateTime(effectiveDateInfo),
                             RetrieveRelativePerformanceSectorDataCallbackMethod);
-                        BusyIndicatorStatus = true;
+                        BusyIndicatorNotification(true);
                     }
                 }
                 else
@@ -261,7 +261,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         dbInteractivity.RetrieveRelativePerformanceSectorData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),
                             RetrieveRelativePerformanceSectorDataCallbackMethod);
-                        BusyIndicatorStatus = true;
+                        BusyIndicatorNotification(true);
                     }
                 }
                 else
@@ -302,7 +302,7 @@ namespace GreenField.Gadgets.ViewModels
                           dbInteractivity.RetrieveRelativePerformanceSecurityData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo), periodInfo,
                           RetrieveRelativePerformanceSecurityDataCallbackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
                         }
-                        BusyIndicatorStatus = true;
+                        BusyIndicatorNotification(true);
                     }
                 }
                 else
@@ -317,7 +317,6 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(logger, methodNamespace);
         }
-
         #endregion
 
         #region Callback Methods
@@ -335,21 +334,28 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     relativePerformanceSectorInfo = result;
-                    dbInteractivity.RetrieveRelativePerformanceData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),periodInfo,
-                        RetrieveRelativePerformanceDataCallbackMethod);                    
+                    dbInteractivity.RetrieveRelativePerformanceData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo), periodInfo,
+                        RetrieveRelativePerformanceDataCallbackMethod);
+                    BusyIndicatorNotification(true);
+                    dbInteractivity.RetrieveRelativePerformanceSecurityData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo)
+                        , periodInfo, RetrieveRelativePerformanceSecurityDataTopAlphaCallbackMethod);
+                    BusyIndicatorNotification(true);
                 }
                 else
                 {
-                    BusyIndicatorStatus = false;
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(logger, ex);
+                Logging.LogException(logger, ex);                
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         /// <summary>
@@ -366,22 +372,31 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     relativePerformanceInfo = result;
-
-                    dbInteractivity.RetrieveRelativePerformanceSecurityData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo)
-                        , periodInfo, RetrieveRelativePerformanceSecurityDataTopAlphaCallbackMethod);
+                    if (relativePerformanceSectorInfo != null && relativePerformanceInfo != null && relativePerformanceSecurityInfo != null)
+                    {
+                        RelativePerformanceGridBuildEvent.Invoke(new RelativePerformanceGridBuildEventArgs()
+                        {
+                            RelativePerformanceSectorInfo = relativePerformanceSectorInfo,
+                            RelativePerformanceInfo = relativePerformanceInfo,
+                            RelativePerformanceSecurityInfo = relativePerformanceSecurityInfo
+                        });
+                    }
                 }
                 else
                 {
-                    BusyIndicatorStatus = false;
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
-                }                
+                }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(logger, ex);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         /// <summary>
@@ -396,17 +411,21 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    RelativePerformanceGridBuildEvent.Invoke(new RelativePerformanceGridBuildEventArgs()
+                    relativePerformanceSecurityInfo = result;
+                    if (relativePerformanceSectorInfo != null && relativePerformanceInfo != null && relativePerformanceSecurityInfo != null)
                     {
-                        RelativePerformanceSectorInfo = relativePerformanceSectorInfo,
-                        RelativePerformanceInfo = relativePerformanceInfo,
-                        RelativePerformanceSecurityInfo = result
-                    });
+                        RelativePerformanceGridBuildEvent.Invoke(new RelativePerformanceGridBuildEventArgs()
+                        {
+                            RelativePerformanceSectorInfo = relativePerformanceSectorInfo,
+                            RelativePerformanceInfo = relativePerformanceInfo,
+                            RelativePerformanceSecurityInfo = relativePerformanceSecurityInfo
+                        }); 
+                    }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
-                }               
+                }
             }
             catch (Exception ex)
             {
@@ -415,9 +434,9 @@ namespace GreenField.Gadgets.ViewModels
             }
             finally
             {
-                BusyIndicatorStatus = false;
+                BusyIndicatorNotification();
+                Logging.LogEndMethod(logger, methodNamespace);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         /// <summary>
@@ -442,7 +461,7 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
-                }               
+                }
             }
             catch (Exception ex)
             {
@@ -451,13 +470,13 @@ namespace GreenField.Gadgets.ViewModels
             }
             finally
             {
-                BusyIndicatorStatus = false;
+                BusyIndicatorNotification();
+                Logging.LogEndMethod(logger, methodNamespace);
             }
-            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion         
 
-        #region Dispose Method
+        #region Helper Methods
         /// <summary>
         /// method to dispose all subscribed events
         /// </summary>
@@ -467,6 +486,16 @@ namespace GreenField.Gadgets.ViewModels
             eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
             eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
             eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Unsubscribe(HandleRelativePerformanceGridCountrySectorClickEvent);
+        }
+        
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="isBusyIndicatorVisible">True to display indicator; default false</param>
+        private void BusyIndicatorNotification(bool isBusyIndicatorVisible = false)
+        {
+            activeCalls = isBusyIndicatorVisible ? activeCalls + 1 : activeCalls - 1;
+            BusyIndicatorStatus = activeCalls != 0;
         }
         #endregion
     }

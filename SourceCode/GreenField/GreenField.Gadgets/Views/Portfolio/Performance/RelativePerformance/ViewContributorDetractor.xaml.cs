@@ -161,8 +161,7 @@ namespace GreenField.Gadgets.Views
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
             }
-        }
-                
+        }                
         #endregion
 
         #region Dispose Method

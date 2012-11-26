@@ -308,6 +308,13 @@ namespace GreenField.Gadgets.Helpers
         /// Indexes in columns to skip in export
         /// </summary>
         public List<int> SkipColumnDisplayIndex { get; set; }
+
+        /// <summary>
+        /// Implementation for overwritting cell value (used for pdf exports only)
+        /// </summary>
+        public Func<int, int, object, object, object> CellValueOverwrite { get; set; }
+
+        public Func<int, int, string> ColumnAggregateOverwrite { get; set; }
     }
 
     /// <summary>
@@ -321,7 +328,8 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="filterIndex">defines the index of filter specified for extension of file exported to</param>
         /// <param name="exportOption">RadExportOptions</param>
         /// <param name="stream">Stream</param>
-        public static void ExportStream(int filterIndex, RadExportOptions exportOption, Stream stream, List<int> skipColumnDisplayIndex = null)
+        public static void ExportStream(int filterIndex, RadExportOptions exportOption, Stream stream, List<int> skipColumnDisplayIndex = null
+            , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null)
         {
             switch (exportOption.ExportFilterOption)
             {
@@ -367,7 +375,8 @@ namespace GreenField.Gadgets.Helpers
                     }
                     break;
                 case RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER:
-                    RadExport.ExportRadGridViewPDF(exportOption.Element, stream, skipColumnDisplayIndex);
+                    RadExport.ExportRadGridViewPDF(exportOption.Element, stream, skipColumnDisplayIndex, cellValueOverwrite
+                        , columnAggregateOverWrite);
                     break;
                 case RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER:
                     RadExport.ExportRadChartPDF(exportOption.Element, stream);
@@ -487,9 +496,11 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="element">UIElement</param>
         /// <param name="stream">Stream</param>
-        private static void ExportRadGridViewPDF(UIElement element, Stream stream, List<int> skipColumnDisplayIndex = null)
+        private static void ExportRadGridViewPDF(UIElement element, Stream stream, List<int> skipColumnDisplayIndex = null
+            , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null)
         {
-            PDFExporter.btnExportPDF_Click(element as RadGridView, stream: stream, skipColumnDisplayIndex: skipColumnDisplayIndex); 
+            PDFExporter.btnExportPDF_Click(element as RadGridView, stream: stream, skipColumnDisplayIndex: skipColumnDisplayIndex
+                , cellValueOverwrite: cellValueOverwrite, columnAggregateOverWrite: columnAggregateOverWrite); 
         }
     }
 
