@@ -1084,7 +1084,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     CSTUserPreference = result;
                     // fetch disctinct saved data list names
-                    SavedDataListInfo = result.Select(a => a.ListName).Distinct().ToList();
+                    SavedDataListInfo = result.OrderBy(a => a.ListName).Select(a => a.ListName).Distinct().ToList();
                     BusyIndicatorNotification();
                 }
                 else
