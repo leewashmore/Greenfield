@@ -51,7 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>D:\Latest_Clone_17September\SourceCode\ICPSystemAlert\Lib\log4net.dll</HintPath>
+      <HintPath>..\..\GreenField\Lib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
