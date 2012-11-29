@@ -522,27 +522,34 @@ namespace GreenField.Web.Services
                 //Preparing Inflation and ST Interest Rate
                 foreach (FinstatEconomicMarketData item in economicData)
                 {
-                    FinstatDetailData tempData = new FinstatDetailData();
-                    tempData.GroupDescription = "Economic & Market Data";
-                    tempData.Description = Convert.ToString(item.FIELD)
-                        .Replace("INFLATION_PCT", "Inflation %")
-                        .Replace("ST_INTEREST_RATE", "ST Interest Rate");
-                    tempData.PeriodYear = Convert.ToInt32(item.YEAR1);
-                    tempData.AmountType = "A";
-                    tempData.PeriodType = "A";
-                    tempData.BoldFont = "N";
-                    tempData.IsPercentage = "Y";
-                    tempData.RootSource = _dataSource;
-                    tempData.RootSourceDate = DateTime.Now;
-                    tempData.Amount = Math.Round((Convert.ToDecimal(item.VALUE) * 100), 1);
-                    result.Add(tempData);
+                    if (item.FIELD != null)
+                    {
+                        FinstatDetailData tempData = new FinstatDetailData();
+                        tempData.GroupDescription = "Economic & Market Data";
+                        tempData.Description = Convert.ToString(item.FIELD)
+                            .Replace("INFLATION_PCT", "Inflation %")
+                            .Replace("ST_INTEREST_RATE", "ST Interest Rate");
+                        tempData.PeriodYear = Convert.ToInt32(item.YEAR1);
+                        tempData.AmountType = "A";
+                        tempData.PeriodType = "A";
+                        tempData.BoldFont = "N";
+                        tempData.IsPercentage = "Y";
+                        tempData.RootSource = _dataSource;
+                        tempData.RootSourceDate = DateTime.Now;
+                        tempData.Amount = Math.Round((Convert.ToDecimal(item.VALUE) * 100), 1);
+                        result.Add(tempData); 
+                    }
                 }
                 #endregion
 
                 #region Relative Analysis Data
                 List<FinstatRelativeAnalysisData> relativeData = entity.GetFinstatRelativeAnalysisData(issuerId, securityId, _dataSource, _fiscalType).ToList();
+                List<FinstatDetailData> relativeResultSet = new List<FinstatDetailData>();                
 
                 #region direct data
+                //inserting dummy data
+
+
                 foreach (FinstatRelativeAnalysisData item in relativeData)
                 {
                     FinstatDetailData tempData = new FinstatDetailData();
@@ -560,26 +567,35 @@ namespace GreenField.Web.Services
                         tempData.BoldFont = "Y";
                         tempData.Description = item.DATA_ID == 44 ? "Net Income" :
                                                    item.DATA_ID == 166 ? "P/E" : item.DATA_ID == 164 ? "P/BV" : item.DATA_ID == 133 ? "ROE" : "";
+                        tempData.SortOrder = item.DATA_ID == 44 ? 5000 :
+                                                   item.DATA_ID == 166 ? 5002 : item.DATA_ID == 164 ? 5008 : item.DATA_ID == 133 ? 5014 : 6000;
                     }
                     else if (item.VALUE == "step2")
                     {
                         tempData.BoldFont = "N";
                         tempData.Description = item.DATA_ID == 11 ? "Consensus Net Income" :
-                                             item.DATA_ID == 166 ? "Consensus P/E" : item.DATA_ID == 164 ? "Consensus P/BV" : item.DATA_ID == 19 ? "Consensus ROE" : "";
+                                             item.DATA_ID == 166 ? "Consensus P/E" : item.DATA_ID == 164 
+                                             ? "Consensus P/BV" : item.DATA_ID == 19 ? "Consensus ROE" : "";
+                        tempData.SortOrder = item.DATA_ID == 11 ? 5001 :
+                                             item.DATA_ID == 166 ? 5003 : item.DATA_ID == 164 ? 5009 : item.DATA_ID == 19 ? 5015 : 6000;
                     }
                     else if (item.VALUE == "step3")
                     {
                         tempData.BoldFont = "N";
                         tempData.Description = item.DATA_ID == 166 ? "Country P/E" :
                                                    item.DATA_ID == 164 ? "Country P/BV" : item.DATA_ID == 133 ? "Country ROE" : "";
+                        tempData.SortOrder = item.DATA_ID == 166 ? 5004 :
+                                                   item.DATA_ID == 164 ? 5010 : item.DATA_ID == 133 ? 5016 : 6000;
                     }
                     else if (item.VALUE == "step5")
                     {
                         tempData.BoldFont = "N";
                         tempData.Description = item.DATA_ID == 166 ? "Industry P/E" :
                                                    item.DATA_ID == 164 ? "Industry P/BV" : item.DATA_ID == 133 ? "Industry ROE" : "";
+                        tempData.SortOrder = item.DATA_ID == 166 ? 5006 :
+                                                   item.DATA_ID == 164 ? 5012 : item.DATA_ID == 133 ? 5018 : 6000;
                     }
-                    result.Add(tempData);
+                    relativeResultSet.Add(tempData);
                 }
                 #endregion
 
@@ -602,27 +618,41 @@ namespace GreenField.Web.Services
                     {
                         case 166:
                             record.Description = "Relative Country P/E";
-                            decimal countryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 166).Select(a => a.AMOUNT)
-                                .FirstOrDefault());
+                            decimal countryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 166
+                                && a.PERIOD_YEAR == item.PERIOD_YEAR).Select(a => a.AMOUNT).FirstOrDefault());
                             if (countryPE != 0)
-                            { record.Amount = Math.Round((item.AMOUNT / countryPE), 2); }
-                            result.Add(record);
+                            {
+                                record.SortOrder = 5005;
+                                record.Decimals = 2;
+                                record.Amount = Math.Round((item.AMOUNT / countryPE), 2);
+                                relativeResultSet.Add(record);
+                            }
+                            
                             break;
                         case 164:
                             record.Description = "Relative Country P/BV";
-                            decimal countryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 164).Select(a => a.AMOUNT)
-                                .FirstOrDefault());
+                            decimal countryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 164
+                                && a.PERIOD_YEAR == item.PERIOD_YEAR).Select(a => a.AMOUNT).FirstOrDefault());
                             if (countryPBV != 0)
-                            { record.Amount = Math.Round((item.AMOUNT / countryPBV), 2); }
-                            result.Add(record);
+                            {
+                                record.SortOrder = 5011;
+                                record.Decimals = 2;
+                                record.Amount = Math.Round((item.AMOUNT / countryPBV), 2);
+                                relativeResultSet.Add(record);
+                            }
+                            
                             break;
                         case 133:
                             record.Description = "Relative Country ROE";
-                            decimal countryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 133).Select(a => a.AMOUNT)
-                                .FirstOrDefault());
+                            decimal countryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 133
+                                && a.PERIOD_YEAR == item.PERIOD_YEAR).Select(a => a.AMOUNT).FirstOrDefault());
                             if (countryROE != 0)
-                            { record.Amount = Math.Round((item.AMOUNT / countryROE), 2); }
-                            result.Add(record);
+                            {
+                                record.SortOrder = 5017;
+                                record.Decimals = 2;
+                                record.Amount = Math.Round((item.AMOUNT / countryROE), 2);
+                                relativeResultSet.Add(record);
+                            }                            
                             break;
                         default:
                             break;
@@ -630,6 +660,7 @@ namespace GreenField.Web.Services
 
                 }
 
+                
                 foreach (FinstatRelativeAnalysisData item in step1Data)
                 {
                     FinstatDetailData record = new FinstatDetailData();
@@ -645,33 +676,68 @@ namespace GreenField.Web.Services
                     {
                         case 166:
                             record.Description = "Relative Industry P/E";
-                            decimal industryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 166).Select(a => a.AMOUNT)
-                                .FirstOrDefault());
+                            decimal industryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 166
+                                && a.PERIOD_YEAR == item.PERIOD_YEAR).Select(a => a.AMOUNT).FirstOrDefault());
                             if (industryPE != 0)
-                            { record.Amount = Math.Round((item.AMOUNT / industryPE), 2); }
-                            result.Add(record);
+                            {
+                                record.SortOrder = 5007;
+                                record.Decimals = 2;
+                                record.Amount = Math.Round((item.AMOUNT / industryPE), 2);
+                                relativeResultSet.Add(record);
+                            }
                             break;
                         case 164:
                             record.Description = "Relative Industry P/BV";
-                            decimal industryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 164).Select(a => a.AMOUNT)
-                                .FirstOrDefault());
+                            decimal industryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 164
+                                && a.PERIOD_YEAR == item.PERIOD_YEAR).Select(a => a.AMOUNT).FirstOrDefault());
                             if (industryPBV != 0)
-                            { record.Amount = Math.Round((item.AMOUNT / industryPBV), 2); }
-                            result.Add(record);
+                            {
+                                record.SortOrder = 5013;
+                                record.Decimals = 2;
+                                record.Amount = Math.Round((item.AMOUNT / industryPBV), 2);
+                                relativeResultSet.Add(record);
+                            }
                             break;
                         case 133:
                             record.Description = "Relative Industry ROE";
-                            decimal industryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 133).Select(a => a.AMOUNT)
-                                .FirstOrDefault());
+                            decimal industryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 133
+                                && a.PERIOD_YEAR == item.PERIOD_YEAR).Select(a => a.AMOUNT).FirstOrDefault());
                             if (industryROE != 0)
-                            { record.Amount = Math.Round((item.AMOUNT / industryROE), 2); }
-                            result.Add(record);
+                            {
+                                record.SortOrder = 5019;
+                                record.Decimals = 2;
+                                record.Amount = Math.Round((item.AMOUNT / industryROE), 2); 
+                                relativeResultSet.Add(record);
+                            }
                             break;
                         default:
                             break;
                     }
                 }
-                #endregion
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Net Income", _dataSource, 5000, "Y"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Consensus Net Income", _dataSource, 5001, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("P/E", _dataSource, 5002, "Y"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Consensus P/E", _dataSource, 5003, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Country P/E", _dataSource, 5004, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Relative Country P/E", _dataSource, 5005, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Industry P/E", _dataSource, 5006, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Relative Industry P/E", _dataSource, 5007, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("P/BV", _dataSource, 5008, "Y"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Consensus P/BV", _dataSource, 5009, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Country P/BV", _dataSource, 5010, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Relative Country P/BV", _dataSource, 5011, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Industry P/BV", _dataSource, 5012, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Relative Industry P/BV", _dataSource, 5013, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("ROE", _dataSource, 5014, "Y"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Consensus ROE", _dataSource, 5015, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Country ROE", _dataSource, 5016, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Relative Country ROE", _dataSource, 5017, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Industry ROE", _dataSource, 5018, "N"));
+                relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Relative Industry ROE", _dataSource, 5019, "N"));
+                relativeResultSet = relativeResultSet.OrderBy(g => g.SortOrder).ToList();
+                result.AddRange(relativeResultSet);
+                #endregion                
+
                 return result;
             }
             catch (Exception ex)
@@ -680,6 +746,25 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
+        }
+
+        private FinstatDetailData GetFinstatDetailRelativeSampleData(String description, String dataSource, int sortOrder
+            , String boldFont)
+        {
+            FinstatDetailData record = new FinstatDetailData();
+            record.GroupDescription = "Relative Analysis (in USD)";
+            record.Description = description;
+            record.AmountType = "A";
+            record.PeriodType = "A";
+            record.RootSource = dataSource;
+            record.RootSourceDate = DateTime.Now;
+            record.BoldFont = boldFont;
+            record.IsPercentage = "N";
+            record.Decimals = 2;
+            record.IsPercentage = "N";
+            record.PeriodYear = 2300;
+            record.SortOrder = sortOrder;
+            return record;
         }
 
         /// <summary>

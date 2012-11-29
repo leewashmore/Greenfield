@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Documents.Model;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
@@ -78,6 +79,16 @@ namespace GreenField.Gadgets.Views
             };           
         } 
         #endregion
+
+        /// <summary>
+        /// dgFinstat RowLoaded EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">RowLoadedEventArgs</param>
+        private void dgFinstat_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            PeriodColumns.RowDataCustomization(e, false);
+        } 
 
         #region Export/Pdf/Print
         #region ExportToExcel

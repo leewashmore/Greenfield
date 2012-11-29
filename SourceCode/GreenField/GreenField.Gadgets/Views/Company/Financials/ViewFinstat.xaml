@@ -246,6 +246,7 @@
                                              GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                              RowStyle="{StaticResource GridViewRowStyle}" 
                                              ElementExporting="dgFinstat_ElementExporting"
+                                             RowLoaded="dgFinstat_RowLoaded"
                                              AutoExpandGroups="True" 
                                              EnableColumnVirtualization="False" 
                                              EnableRowVirtualization="False">

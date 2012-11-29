@@ -726,7 +726,7 @@ namespace GreenField.Gadgets.Helpers
         /// Set Bold/Percentage formats on data and place tooltips
         /// </summary>
         /// <param name="e">RowLoadedEventArgs</param>
-        public static void RowDataCustomization(RowLoadedEventArgs e)
+        public static void RowDataCustomization(RowLoadedEventArgs e, Boolean isToolTipVisible = true)
         {
             if (e.Row is GridViewRow)
             {
@@ -738,36 +738,39 @@ namespace GreenField.Gadgets.Helpers
                     {
                         if (rowContext.DATA_BOLD != null)
                             row.FontWeight = Convert.ToBoolean(rowContext.DATA_BOLD) ? FontWeights.ExtraBold : FontWeights.Normal;
-                        foreach (GridViewCell cell in row.Cells)
+                        if (isToolTipVisible)
                         {
-                            //Null Check
-                            if (cell.Value == null)
+                            foreach (GridViewCell cell in row.Cells)
                             {
-                                continue;
-                            }
-                            //No toolTip service for Description and left navigation
-                            if (cell.Column.DisplayIndex <= 1)
-                            {
-                                continue;
-                            }
-                            //No toolTip service for right navigation column
-                            if (cell.Column.DisplayIndex == e.GridViewDataControl.Columns.Count - 1)
-                            {
-                                continue;
-                            }
-                            String toolTipContent = GetToolTipContent(rowContext, cell.DataColumn.DataMemberBinding.Path.Path);
-
-                            if (toolTipContent != null)
-                            {
-                                ToolTip toolTip = new ToolTip()
+                                //Null Check
+                                if (cell.Value == null)
                                 {
-                                    Content = toolTipContent,
-                                    FontSize = 7,
-                                    FontFamily = new FontFamily("Arial")
-                                };
+                                    continue;
+                                }
+                                //No toolTip service for Description and left navigation
+                                if (cell.Column.DisplayIndex <= 1)
+                                {
+                                    continue;
+                                }
+                                //No toolTip service for right navigation column
+                                if (cell.Column.DisplayIndex == e.GridViewDataControl.Columns.Count - 1)
+                                {
+                                    continue;
+                                }
+                                String toolTipContent = GetToolTipContent(rowContext, cell.DataColumn.DataMemberBinding.Path.Path);
 
-                                ToolTipService.SetToolTip(cell, toolTip);
-                            }
+                                if (toolTipContent != null)
+                                {
+                                    ToolTip toolTip = new ToolTip()
+                                    {
+                                        Content = toolTipContent,
+                                        FontSize = 7,
+                                        FontFamily = new FontFamily("Arial")
+                                    };
+
+                                    ToolTipService.SetToolTip(cell, toolTip);
+                                }
+                            } 
                         }
                     }
                 }
