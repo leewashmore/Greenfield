@@ -62,7 +62,7 @@ namespace GreenField.Gadgets.ViewModels
         } 
         #endregion
 
-        #region Properties       
+        #region Properties
         #region Security Information
         /// <summary>
         /// IssueName Property

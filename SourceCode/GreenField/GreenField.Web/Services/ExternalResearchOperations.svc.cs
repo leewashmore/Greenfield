@@ -392,15 +392,21 @@ namespace GreenField.Web.Services
 
                 #region DataSource group
                 List<int> distinctPeriodYear = data.Select(a => a.PERIOD_YEAR).Distinct().ToList();
-                List<FinstatDetail> distinctRootSource = data.Where(a => a.ROOT_SOURCE != null).OrderBy(a => a.PERIOD_YEAR).ThenBy(a => a.DATA_SOURCE).ToList();
+                List<FinstatDetail> distinctRootSource = data.Where(a => a.ROOT_SOURCE != null && a.DATA_SOURCE != null)
+                    .OrderBy(a => a.PERIOD_YEAR).ThenBy(a => a.DATA_SOURCE).ToList();
 
                 foreach (int item in distinctPeriodYear)
                 {
+                    
+
                     FinstatDetailData temp = new FinstatDetailData();
                     temp.GroupDescription = "Data Source";
                     temp.Description = "Source";
                     temp.PeriodType = "A";
-                    temp.Amount = _dataSource;
+                    List<string> isDataSourceMixed = distinctRootSource.Where(a => a.PERIOD_YEAR == item).Select(a => a.DATA_SOURCE).Distinct().ToList();
+                    temp.Amount = (isDataSourceMixed.Count > 1) ? "MIXED" : distinctRootSource.Where(a => a.PERIOD_YEAR == item)
+                        .Select(a => a.DATA_SOURCE).FirstOrDefault(); ;
+                    //temp.Amount = _dataSource;
                     temp.RootSource = _dataSource;
                     temp.RootSourceDate = DateTime.Now;
                     temp.PeriodYear = item;
@@ -414,7 +420,8 @@ namespace GreenField.Web.Services
                     tempData.Description = "Root Source";
                     tempData.PeriodType = "A";
                     List<string> isRootSourceMixed = distinctRootSource.Where(a => a.PERIOD_YEAR == item).Select(a => a.ROOT_SOURCE).Distinct().ToList();
-                    tempData.Amount = (isRootSourceMixed.Count > 1) ? "MIXED" : _dataSource;
+                    tempData.Amount = (isRootSourceMixed.Count > 1) ? "MIXED" : distinctRootSource.Where(a => a.PERIOD_YEAR == item)
+                        .Select(a => a.ROOT_SOURCE).FirstOrDefault();
                     tempData.RootSource = _dataSource;
                     tempData.RootSourceDate = DateTime.Now;
                     tempData.PeriodYear = item;
@@ -446,22 +453,22 @@ namespace GreenField.Web.Services
                     {
                         decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
 
-                        decimal year1Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 3
+                        decimal year1Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
                                                     && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year1 = (year1Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year1Value));
-                        decimal year2Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
+                        decimal year2Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 1
                                                     && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year2 = (year2Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year2Value));
-                        decimal year3Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 1
+                        decimal year3Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
                                                     && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year3 = (year3Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year3Value));
-                        decimal year4Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
+                        decimal year4Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 1
                                                     && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year4 = (year4Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year4Value));
-                        decimal year5Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 1
+                        decimal year5Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
                                                     && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year5 = (year5Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year5Value));
-                        decimal year6Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
+                        decimal year6Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 3
                                                     && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         year6 = (year6Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year6Value));
 
@@ -517,7 +524,9 @@ namespace GreenField.Web.Services
                 {
                     FinstatDetailData tempData = new FinstatDetailData();
                     tempData.GroupDescription = "Economic & Market Data";
-                    tempData.Description = Convert.ToString(item.FIELD);
+                    tempData.Description = Convert.ToString(item.FIELD)
+                        .Replace("INFLATION_PCT", "Inflation %")
+                        .Replace("ST_INTEREST_RATE", "ST Interest Rate");
                     tempData.PeriodYear = Convert.ToInt32(item.YEAR1);
                     tempData.AmountType = "A";
                     tempData.PeriodType = "A";
@@ -597,6 +606,7 @@ namespace GreenField.Web.Services
                                 .FirstOrDefault());
                             if (countryPE != 0)
                             { record.Amount = Math.Round((item.AMOUNT / countryPE), 2); }
+                            result.Add(record);
                             break;
                         case 164:
                             record.Description = "Relative Country P/BV";
@@ -604,6 +614,7 @@ namespace GreenField.Web.Services
                                 .FirstOrDefault());
                             if (countryPBV != 0)
                             { record.Amount = Math.Round((item.AMOUNT / countryPBV), 2); }
+                            result.Add(record);
                             break;
                         case 133:
                             record.Description = "Relative Country ROE";
@@ -611,10 +622,12 @@ namespace GreenField.Web.Services
                                 .FirstOrDefault());
                             if (countryROE != 0)
                             { record.Amount = Math.Round((item.AMOUNT / countryROE), 2); }
+                            result.Add(record);
                             break;
                         default:
                             break;
                     }
+
                 }
 
                 foreach (FinstatRelativeAnalysisData item in step1Data)
@@ -636,6 +649,7 @@ namespace GreenField.Web.Services
                                 .FirstOrDefault());
                             if (industryPE != 0)
                             { record.Amount = Math.Round((item.AMOUNT / industryPE), 2); }
+                            result.Add(record);
                             break;
                         case 164:
                             record.Description = "Relative Industry P/BV";
@@ -643,6 +657,7 @@ namespace GreenField.Web.Services
                                 .FirstOrDefault());
                             if (industryPBV != 0)
                             { record.Amount = Math.Round((item.AMOUNT / industryPBV), 2); }
+                            result.Add(record);
                             break;
                         case 133:
                             record.Description = "Relative Industry ROE";
@@ -650,6 +665,7 @@ namespace GreenField.Web.Services
                                 .FirstOrDefault());
                             if (industryROE != 0)
                             { record.Amount = Math.Round((item.AMOUNT / industryROE), 2); }
+                            result.Add(record);
                             break;
                         default:
                             break;

@@ -16,6 +16,8 @@ using GreenField.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
+using System.Linq.Expressions;
+
 
 namespace GreenField.Web.Services
 {
@@ -235,18 +237,37 @@ namespace GreenField.Web.Services
 
                 if (dimSvcSelectionViewData != null && dimSvcSelectionViewData.Count > 0)
                 {
+                    List<GF_PRICING_BASEVIEW> queryResultSet = new List<GF_PRICING_BASEVIEW>();
+
+                    Expression<Func<GF_PRICING_BASEVIEW, bool>> searchPredicate1 = p => p.FROMDATE == Convert.ToDateTime(Date1DayBack.ToString()).Date;
+                    searchPredicate1 = Utility.Or<GF_PRICING_BASEVIEW>(searchPredicate1, g => g.FROMDATE == Convert.ToDateTime(DateLastYearEnd.ToString()).Date);
+                    searchPredicate1 = Utility.Or<GF_PRICING_BASEVIEW>(searchPredicate1, g => g.FROMDATE == Convert.ToDateTime(Date12MonthsAgo.ToString()).Date);
+                    searchPredicate1 = Utility.Or<GF_PRICING_BASEVIEW>(searchPredicate1, g => g.FROMDATE == Convert.ToDateTime(Date36MonthsAgo.ToString()).Date);
+
+                    int recursionLimit = 10;
+
+                    for (int j = 0; j < dimSvcSelectionViewData.Count(); j = j + recursionLimit)
+                    {
+                        Expression<Func<GF_PRICING_BASEVIEW, bool>> searchPredicate2 = p => p.INSTRUMENT_ID.ToUpper() == dimSvcSelectionViewData[j].INSTRUMENT_ID.ToUpper();
+                        for (int i = j + 1; i < j + recursionLimit && i < dimSvcSelectionViewData.Count(); i++)
+                        {
+                            if (dimSvcSelectionViewData[i].INSTRUMENT_ID == null)
+                            {
+                                continue;
+                            }
+                            string comparisonInstrumentId = dimSvcSelectionViewData[i].INSTRUMENT_ID.ToUpper();
+                            searchPredicate2 = Utility.Or<GF_PRICING_BASEVIEW>(searchPredicate2, p => p.INSTRUMENT_ID.ToUpper() == comparisonInstrumentId);
+                        }
+
+                        Expression<Func<GF_PRICING_BASEVIEW, bool>> searchPredicate = Utility.And<GF_PRICING_BASEVIEW>(searchPredicate1, searchPredicate2);
+                        queryResultSet.AddRange(entity.GF_PRICING_BASEVIEW.Where(searchPredicate));
+                    }                    
+
                     foreach (DimensionEntitiesService.GF_SELECTION_BASEVIEW item in dimSvcSelectionViewData)
                     {
                         if (item.INSTRUMENT_ID != null && item.INSTRUMENT_ID != string.Empty)
                         {
-                            dimSvcPricingViewData = entity.GF_PRICING_BASEVIEW
-                                                    .Where(g => (g.INSTRUMENT_ID.ToUpper() == item.INSTRUMENT_ID.ToUpper())
-                                                        && ((g.FROMDATE == Convert.ToDateTime(Date1DayBack.ToString()).Date)
-                                                        || (g.FROMDATE == Convert.ToDateTime(DateLastYearEnd.ToString()).Date)
-                                                        || (g.FROMDATE == Convert.ToDateTime(Date12MonthsAgo.ToString()).Date)
-                                                        || (g.FROMDATE == Convert.ToDateTime(Date36MonthsAgo.ToString()).Date))
-                                                        )
-                                                    .ToList();                            
+                            dimSvcPricingViewData = queryResultSet.Where(g => (g.INSTRUMENT_ID.ToUpper() == item.INSTRUMENT_ID.ToUpper())).ToList();                            
                             if (dimSvcPricingViewData != null && dimSvcPricingViewData.Count > 0)
                             {
                                 List<FXCommodityData> resultView = new List<FXCommodityData>();
