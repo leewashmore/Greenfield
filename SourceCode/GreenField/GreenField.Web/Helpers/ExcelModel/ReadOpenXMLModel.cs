@@ -1567,34 +1567,37 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                string[] rowData = new string[8];
+                string[] rowData = new string[NumberOfYears + 2];
                 int i = 0;
                 foreach (Row r in sheetData.Elements<Row>())
                 {
                     if (r.RowIndex == 1)
                     {
-                        foreach (Cell c in r.Elements<Cell>())
+                        while (i < NumberOfYears + 2)
                         {
-                            if (c != null)
+                            foreach (Cell c in r.Elements<Cell>())
                             {
-                                rowData[i] = c.InnerText;
-                                if (c.DataType != null)
+                                if (c != null)
                                 {
-                                    if (c.DataType == CellValues.SharedString)
+                                    rowData[i] = c.InnerText;
+                                    if (c.DataType != null)
                                     {
-                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                        if (stringTable != null)
+                                        if (c.DataType == CellValues.SharedString)
                                         {
-                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i])).InnerText;
+                                            var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                            if (stringTable != null)
+                                            {
+                                                rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i])).InnerText;
+                                            }
                                         }
                                     }
                                 }
+                                else
+                                {
+                                    rowData[i] = "";
+                                }
+                                ++i;
                             }
-                            else
-                            {
-                                rowData[i] = "";
-                            }
-                            ++i;
                         }
                     }
                 }
@@ -1624,7 +1627,7 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                object[] rowData = new object[8];
+                object[] rowData = new object[NumberOfYears + 2];
                 double data;
                 int i = 0;
                 int j = 0;
@@ -1632,26 +1635,29 @@ namespace GreenField.Web.Helpers
                 {
                     if (r.RowIndex == 2)
                     {
-                        foreach (Cell c in r.Elements<Cell>())
+                        while (i < NumberOfYears + 2)
                         {
-                            if (c != null && j > 1)
+                            foreach (Cell c in r.Elements<Cell>())
                             {
-                                rowData[i] = c.InnerText;
-                                if (Double.TryParse((string)rowData[i], out data))
+                                if (c != null && j > 1)
                                 {
-                                    rowData[i] = DateTime.FromOADate(data);
+                                    rowData[i] = c.InnerText;
+                                    if (Double.TryParse((string)rowData[i], out data))
+                                    {
+                                        rowData[i] = DateTime.FromOADate(data);
+                                    }
+                                    else
+                                    {
+                                        rowData[i] = new DateTime(1900, 1, 31);
+                                    }
                                 }
                                 else
                                 {
                                     rowData[i] = new DateTime(1900, 1, 31);
                                 }
+                                ++i;
+                                ++j;
                             }
-                            else
-                            {
-                                rowData[i] = new DateTime(1900, 1, 31);
-                            }
-                            ++i;
-                            ++j;
                         }
                     }
                 }
@@ -1681,36 +1687,39 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                object[] rowData = new object[8];
+                object[] rowData = new object[NumberOfYears + 2];
                 int i = 0;
                 int j = 0;
                 foreach (Row r in sheetData.Elements<Row>())
                 {
                     if (r.RowIndex == 3)
                     {
-                        foreach (Cell c in r.Elements<Cell>())
+                        while (i < NumberOfYears + 2)
                         {
-                            if (c != null && j > 1)
+                            foreach (Cell c in r.Elements<Cell>())
                             {
-                                rowData[i] = c.InnerText;
-                                if (c.DataType != null)
+                                if (c != null && j > 1)
                                 {
-                                    if (c.DataType == CellValues.SharedString)
+                                    rowData[i] = c.InnerText;
+                                    if (c.DataType != null)
                                     {
-                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                        if (stringTable != null)
+                                        if (c.DataType == CellValues.SharedString)
                                         {
-                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                            var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                            if (stringTable != null)
+                                            {
+                                                rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            else
-                            {
-                                rowData[i] = null;
-                            }
-                            ++i;
-                            ++j;
+                                else
+                                {
+                                    rowData[i] = null;
+                                }
+                                ++i;
+                                ++j;
+                            } 
                         }
                     }
                 }
@@ -1740,36 +1749,39 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                object[] rowData = new object[8];
+                object[] rowData = new object[NumberOfYears + 2];
                 int i = 0;
                 int j = 0;
                 foreach (Row r in sheetData.Elements<Row>())
                 {
                     if (r.RowIndex == 4)
                     {
-                        foreach (Cell c in r.Elements<Cell>())
+                        while (i < NumberOfYears + 2)
                         {
-                            if (c != null && j > 1)
+                            foreach (Cell c in r.Elements<Cell>())
                             {
-                                rowData[i] = c.InnerText;
-                                if (c.DataType != null)
+                                if (c != null && j > 1)
                                 {
-                                    if (c.DataType == CellValues.SharedString)
+                                    rowData[i] = c.InnerText;
+                                    if (c.DataType != null)
                                     {
-                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                        if (stringTable != null)
+                                        if (c.DataType == CellValues.SharedString)
                                         {
-                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                            var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                            if (stringTable != null)
+                                            {
+                                                rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            else
-                            {
-                                rowData[i] = null;
-                            }
-                            ++i;
-                            ++j;
+                                else
+                                {
+                                    rowData[i] = null;
+                                }
+                                ++i;
+                                ++j;
+                            } 
                         }
                     }
                 }
@@ -1799,36 +1811,39 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                object[] rowData = new object[8];
+                object[] rowData = new object[NumberOfYears + 2];
                 int i = 0;
                 int j = 0;
                 foreach (Row r in sheetData.Elements<Row>())
                 {
                     if (r.RowIndex == 5)
                     {
-                        foreach (Cell c in r.Elements<Cell>())
+                        while (i < NumberOfYears + 2)
                         {
-                            if (c != null && j > 1)
+                            foreach (Cell c in r.Elements<Cell>())
                             {
-                                rowData[i] = c.InnerText;
-                                if (c.DataType != null)
+                                if (c != null && j > 1)
                                 {
-                                    if (c.DataType == CellValues.SharedString)
+                                    rowData[i] = c.InnerText;
+                                    if (c.DataType != null)
                                     {
-                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                        if (stringTable != null)
+                                        if (c.DataType == CellValues.SharedString)
                                         {
-                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                            var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                            if (stringTable != null)
+                                            {
+                                                rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            else
-                            {
-                                rowData[i] = null;
-                            }
-                            ++i;
-                            ++j;
+                                else
+                                {
+                                    rowData[i] = null;
+                                }
+                                ++i;
+                                ++j;
+                            } 
                         }
                     }
                 }
@@ -1858,36 +1873,39 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                object[] rowData = new object[8];
+                object[] rowData = new object[NumberOfYears + 2];
                 int i = 0;
                 int j = 0;
                 foreach (Row r in sheetData.Elements<Row>())
                 {
                     if (r.RowIndex == 6)
                     {
-                        foreach (Cell c in r.Elements<Cell>())
+                        while (i < NumberOfYears + 2)
                         {
-                            if (c != null && j > 1)
+                            foreach (Cell c in r.Elements<Cell>())
                             {
-                                rowData[i] = c.InnerText;
-                                if (c.DataType != null)
+                                if (c != null && j > 1)
                                 {
-                                    if (c.DataType == CellValues.SharedString)
+                                    rowData[i] = c.InnerText;
+                                    if (c.DataType != null)
                                     {
-                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                        if (stringTable != null)
+                                        if (c.DataType == CellValues.SharedString)
                                         {
-                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                            var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                            if (stringTable != null)
+                                            {
+                                                rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            else
-                            {
-                                rowData[i] = null;
-                            }
-                            ++i;
-                            ++j;
+                                else
+                                {
+                                    rowData[i] = null;
+                                }
+                                ++i;
+                                ++j;
+                            } 
                         }
                     }
                 }
@@ -2369,7 +2387,7 @@ namespace GreenField.Web.Helpers
                 isValid = FetchUserRole(UserName);
                 if (!isValid)
                 {
-                    
+
                     throw new Exception();
                 }
 
@@ -2708,7 +2726,7 @@ namespace GreenField.Web.Helpers
             try
             {
                 InvalidValue = "Issuer Id= " + issuerId;
-                ExternalResearchEntity.Get_Data(issuerId, calcLog,"Y");
+                ExternalResearchEntity.Get_Data(issuerId, calcLog, "Y");
             }
             catch (Exception ex)
             {
@@ -2765,7 +2783,7 @@ namespace GreenField.Web.Helpers
                 throw;
             }
         }
-        
+
         #endregion
 
         #region UpdateData- Service Methods
@@ -2881,7 +2899,7 @@ namespace GreenField.Web.Helpers
                     RootSource = "PRIMARY";
                     return true;
                 }
-                data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper() 
+                data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper()
                     && a.ISSUER_ID == ModelReferenceData.IssuerId).FirstOrDefault();
                 if (data != null)
                 {
@@ -3033,6 +3051,6 @@ namespace GreenField.Web.Helpers
 
         #endregion
 
-        #endregion        
+        #endregion
     }
 }
