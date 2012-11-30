@@ -41,6 +41,8 @@ namespace GreenField.ServiceCaller
 
         void RetrieveAvailableDatesInPortfolios(Action<List<DateTime>> callback);
 
+        void RequestMonthEndDates(Action<List<DateTime>> callback);
+
         void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback);
 
         void RetrieveMarketCapitalizationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, bool lookThruEnabled, Action<List<MarketCapitalizationData>> callback);

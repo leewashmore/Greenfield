@@ -38,6 +38,7 @@ namespace GreenField.App.Helpers
         public static Visibility SNAPSHOT_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility PORTFOLIO_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility EFFECTIVE_DATE_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility MONTHEND_DATE_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility PERIOD_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility COUNTRY_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility SECTOR_SELECTOR_VISIBILITY = Visibility.Collapsed;
@@ -61,6 +62,7 @@ namespace GreenField.App.Helpers
                 Visibility snapshotSelectorVisibility = Visibility.Collapsed,
                 Visibility portfolioSelectorVisibility = Visibility.Collapsed,
                 Visibility effectiveDateSelectorVisibility = Visibility.Collapsed,
+                Visibility monthEndDateSelectorVisibility = Visibility.Collapsed,
                 Visibility periodSelectorVisibility = Visibility.Collapsed,
                 Visibility countrySelectorVisibility = Visibility.Collapsed,
                 Visibility sectorSelectorVisibility = Visibility.Collapsed,
@@ -80,6 +82,7 @@ namespace GreenField.App.Helpers
             ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : snapshotSelectorVisibility;
             ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : portfolioSelectorVisibility;
             ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : effectiveDateSelectorVisibility;
+            ToolBoxItemVisibility.MONTHEND_DATE_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : monthEndDateSelectorVisibility;
             ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : periodSelectorVisibility;
             ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : countrySelectorVisibility;
             ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : sectorSelectorVisibility;
@@ -135,13 +138,13 @@ namespace GreenField.App.Helpers
                                                 lookThruVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_PERFORMANCE_SUMMARY:
-                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, monthEndDateSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_PERFORMANCE_ATTRIBUTION:
-                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible, nodeNameSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible, monthEndDateSelectorVisibility: Visibility.Visible, nodeNameSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_PERFORMANCE_RELATIVE_PERFORMANCE:
-                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible, monthEndDateSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_BENCHMARK_SUMMARY:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible,

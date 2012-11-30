@@ -6247,5 +6247,19 @@ namespace GreenField.ServiceCaller
 
         }
         #endregion
+
+
+        public void RequestMonthEndDates(Action<List<DateTime>> callback)
+        {
+            var client = new PerformanceOperationsClient();
+            client.GetLastDayOfMonthsCompleted += (s, e) =>
+            {
+
+#warning Left undone: take care of the exceptional situiation
+
+                callback(e.Result);
+            };
+            client.GetLastDayOfMonthsAsync();
+        }
     }
 }

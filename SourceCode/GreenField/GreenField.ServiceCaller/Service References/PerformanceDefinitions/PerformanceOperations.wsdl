@@ -186,6 +186,15 @@
   <wsdl:message name="PerformanceOperations_RetrievePerformanceGraphData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q18:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="PerformanceOperations_GetLastDayOfMonths_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLastDayOfMonths" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_GetLastDayOfMonths_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLastDayOfMonthsResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_GetLastDayOfMonths_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q19:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="PerformanceOperations">
     <wsdl:operation name="RetrieveRelativePerformanceUIData">
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceUIData" message="tns:PerformanceOperations_RetrieveRelativePerformanceUIData_InputMessage" />
@@ -284,6 +293,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphData" message="tns:PerformanceOperations_RetrievePerformanceGraphData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphDataResponse" message="tns:PerformanceOperations_RetrievePerformanceGraphData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrievePerformanceGraphData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastDayOfMonths">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/GetLastDayOfMonths" message="tns:PerformanceOperations_GetLastDayOfMonths_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/GetLastDayOfMonthsResponse" message="tns:PerformanceOperations_GetLastDayOfMonths_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/GetLastDayOfMonthsServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_GetLastDayOfMonths_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="PerformanceOperations" type="tns:PerformanceOperations">
@@ -512,6 +526,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrievePerformanceGraphData">
       <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastDayOfMonths">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/GetLastDayOfMonths" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

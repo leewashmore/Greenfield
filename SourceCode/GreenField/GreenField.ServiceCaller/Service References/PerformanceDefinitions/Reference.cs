@@ -627,6 +627,12 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         System.IAsyncResult BeginRetrievePerformanceGraphData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string country, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> EndRetrievePerformanceGraphData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/PerformanceOperations/GetLastDayOfMonths", ReplyAction="http://tempuri.org/PerformanceOperations/GetLastDayOfMonthsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault), Action="http://tempuri.org/PerformanceOperations/GetLastDayOfMonthsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginGetLastDayOfMonths(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<System.DateTime> EndGetLastDayOfMonths(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1015,6 +1021,25 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetLastDayOfMonthsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetLastDayOfMonthsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<System.DateTime> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<System.DateTime>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class PerformanceOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations>, GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations {
         
         private BeginOperationDelegate onBeginRetrieveRelativePerformanceUIDataDelegate;
@@ -1137,6 +1162,12 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrievePerformanceGraphDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginGetLastDayOfMonthsDelegate;
+        
+        private EndOperationDelegate onEndGetLastDayOfMonthsDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetLastDayOfMonthsCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -1229,6 +1260,8 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         public event System.EventHandler<RetrievePerformanceGridDataCompletedEventArgs> RetrievePerformanceGridDataCompleted;
         
         public event System.EventHandler<RetrievePerformanceGraphDataCompletedEventArgs> RetrievePerformanceGraphDataCompleted;
+        
+        public event System.EventHandler<GetLastDayOfMonthsCompletedEventArgs> GetLastDayOfMonthsCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -2222,6 +2255,50 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
                         country}, this.onEndRetrievePerformanceGraphDataDelegate, this.onRetrievePerformanceGraphDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginGetLastDayOfMonths(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetLastDayOfMonths(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<System.DateTime> GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.EndGetLastDayOfMonths(System.IAsyncResult result) {
+            return base.Channel.EndGetLastDayOfMonths(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetLastDayOfMonths(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginGetLastDayOfMonths(callback, asyncState);
+        }
+        
+        private object[] OnEndGetLastDayOfMonths(System.IAsyncResult result) {
+            System.Collections.Generic.List<System.DateTime> retVal = ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).EndGetLastDayOfMonths(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetLastDayOfMonthsCompleted(object state) {
+            if ((this.GetLastDayOfMonthsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetLastDayOfMonthsCompleted(this, new GetLastDayOfMonthsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetLastDayOfMonthsAsync() {
+            this.GetLastDayOfMonthsAsync(null);
+        }
+        
+        public void GetLastDayOfMonthsAsync(object userState) {
+            if ((this.onBeginGetLastDayOfMonthsDelegate == null)) {
+                this.onBeginGetLastDayOfMonthsDelegate = new BeginOperationDelegate(this.OnBeginGetLastDayOfMonths);
+            }
+            if ((this.onEndGetLastDayOfMonthsDelegate == null)) {
+                this.onEndGetLastDayOfMonthsDelegate = new EndOperationDelegate(this.OnEndGetLastDayOfMonths);
+            }
+            if ((this.onGetLastDayOfMonthsCompletedDelegate == null)) {
+                this.onGetLastDayOfMonthsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetLastDayOfMonthsCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetLastDayOfMonthsDelegate, null, this.onEndGetLastDayOfMonthsDelegate, this.onGetLastDayOfMonthsCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -2589,6 +2666,18 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             public System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> EndRetrievePerformanceGraphData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData>)(base.EndInvoke("RetrievePerformanceGraphData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetLastDayOfMonths(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetLastDayOfMonths", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<System.DateTime> EndGetLastDayOfMonths(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<System.DateTime> _result = ((System.Collections.Generic.List<System.DateTime>)(base.EndInvoke("GetLastDayOfMonths", _args, result)));
                 return _result;
             }
         }
