@@ -37,7 +37,19 @@ namespace GreenField.Common.Helper
                 _effectiveDate = value;
             }
         }
-       
+
+        private DateTime? _monthEndDate = DateTime.SpecifyKind(DateTime.Now.AddDays(-1).Date, DateTimeKind.Unspecified);
+        public DateTime? MonthEndDate
+        {
+            get
+            {
+                return _monthEndDate;
+            }
+            set
+            {
+                _monthEndDate = value;
+            }
+        }
         public MarketSnapshotSelectionData MarketSnapshotSelectionData { get; set; }
 
         public FilterSelectionData FilterSelectionData { get; set; }

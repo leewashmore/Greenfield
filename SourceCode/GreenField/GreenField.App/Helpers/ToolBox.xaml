@@ -344,8 +344,40 @@
                     </StackPanel>
                 </Grid>
 
+                <!--Month End Date Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding MonthEndDateSelectorVisibility}" Grid.Column="4">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                   Width="Auto" Foreground="Black" 
+                                  FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+
+                        <telerik:RadComboBox x:Name="cbMonthEndDateSelector"
+                                         ItemsSource="{Binding AvailableMonthEndDateStringList}"   
+                                         SelectedItem="{Binding SelectedEffectiveDateString, Mode=TwoWay}"                                             
+                                         SelectedIndex="0"
+                                         Width="auto" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         Style="{StaticResource RadComboBoxStyle}"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False"
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False"
+                                         >
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
+                    </StackPanel>
+                </Grid>
+
                 <!--Period Selector-->
-                <Grid Margin="5,0,0,0" Visibility="{Binding PeriodSelectorVisibility}" Grid.Column="4">
+                <Grid Margin="5,0,0,0" Visibility="{Binding PeriodSelectorVisibility}" Grid.Column="5">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Period" HorizontalAlignment="Left" VerticalAlignment="Center"  
                                    Style="{StaticResource TextBlockStyle}"
@@ -375,7 +407,7 @@
                 </Grid>
 
                 <!--Filter Selector-->
-                <Grid Margin="5,0,0,0" Visibility="{Binding FilterTypeVisibility}" Grid.Column="5">
+                <Grid Margin="5,0,0,0" Visibility="{Binding FilterTypeVisibility}" Grid.Column="6">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Filter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" 
                                    Foreground="Black" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
@@ -405,7 +437,7 @@
                 </Grid>
 
                 <!--Value Selector-->
-                <Grid Margin="5,0,0,0" Visibility="{Binding FilterValueVisibility}" Grid.Column="6">
+                <Grid Margin="5,0,0,0" Visibility="{Binding FilterValueVisibility}" Grid.Column="7">
                     <telerik:RadBusyIndicator x:Name="gridBusyIndicator" Style="{StaticResource BusyIndicatorStyle}" 
                                               MaxHeight="{StaticResource DefaultControlMinHeight}" VerticalAlignment="Top"
                                               BusyContent="{Binding BusyIndicatorContent}" IsBusy="{Binding IsFilterBusyIndicatorBusy}"
@@ -441,7 +473,7 @@
                 </Grid>
 
                 <!--NodeName Selector-->
-                <Grid Margin="5,0,0,0" Visibility="{Binding NodeSelectorVisibility}" Grid.Column="7">
+                <Grid Margin="5,0,0,0" Visibility="{Binding NodeSelectorVisibility}" Grid.Column="8">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Filter Node" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" 
                                    Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
@@ -470,7 +502,7 @@
                 </Grid>
                 
                 <!--Country Selector-->
-                <Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="8">
+                <Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="9">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Country" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" 
                                    Foreground="Black"  Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
@@ -501,7 +533,7 @@
                 </Grid>
 
                 <!--Commodity Selector-->
-                <Grid Visibility="{Binding CommoditySelectorVisibility}" Margin="5,0,0,0" Grid.Column="9">
+                <Grid Visibility="{Binding CommoditySelectorVisibility}" Margin="5,0,0,0" Grid.Column="10">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Commodity" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
                                     Style="{StaticResource TextBlockStyle}" FontWeight="Bold"
@@ -532,7 +564,7 @@
                 </Grid>
 
                 <!--RegionFX Selector-->
-                <Grid Margin="5,0,0,0" Visibility="{Binding RegionFXSelectorVisibility}" Grid.Column="10">
+                <Grid Margin="5,0,0,0" Visibility="{Binding RegionFXSelectorVisibility}" Grid.Column="11">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto"
                                     Style="{StaticResource TextBlockStyle}" FontWeight="Bold" />
@@ -559,14 +591,14 @@
                     </StackPanel>
                 </Grid>
                 
-                <Grid Margin="5,0,0,0" Visibility="{Binding MktCapExCashSelectorVisibility}" Grid.Column="11" VerticalAlignment="Center">
+                <Grid Margin="5,0,0,0" Visibility="{Binding MktCapExCashSelectorVisibility}" Grid.Column="12" VerticalAlignment="Center">
                     <CheckBox Content="Cash/No Cash" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center"
                               Style="{StaticResource CheckBoxStyle}" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
                               IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" 
                               Name="chkExCashSecurity" ToolTipService.ToolTip="Check to Exclude Cash"/>
                 </Grid>                
                 
-                <Grid Margin="5,0,0,0" Visibility="{Binding LookThruSelectorVisibility}" Grid.Column="12">
+                <Grid Margin="5,0,0,0" Visibility="{Binding LookThruSelectorVisibility}" Grid.Column="13">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <CheckBox Content="LookThru" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20"
                                   Style="{StaticResource CheckBoxStyle}" 
@@ -575,7 +607,7 @@
                 </Grid>
 
                 <!--Snapshot Selector-->
-                <Grid Margin="5,0,0,0" Visibility="{Binding SnapshotSelectorVisibility}" Grid.Column="13">
+                <Grid Margin="5,0,0,0" Visibility="{Binding SnapshotSelectorVisibility}" Grid.Column="14">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Snapshot" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
                                        Style="{StaticResource TextBlockStyle}" FontFamily="Arial" FontWeight="Bold"/>

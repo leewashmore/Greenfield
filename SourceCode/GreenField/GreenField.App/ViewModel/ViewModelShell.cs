@@ -451,6 +451,7 @@ namespace GreenField.App.ViewModel
                     dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
                     BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveAvailableDatesInPortfolios(RetrieveAvailableDatesInPortfoliosCallbackMethod);
+                    dbInteractivity.RequestMonthEndDates(this.TakeMonthEndDates);
                 }
             }
         }
@@ -539,6 +540,83 @@ namespace GreenField.App.ViewModel
                 selectedEffectiveDateString = value;
                 RaisePropertyChanged(() => this.SelectedEffectiveDateString);
                 SelectedEffectiveDateInfo = Convert.ToDateTime(selectedEffectiveDateString);
+            }
+        }
+
+        #endregion
+
+        #region Month End Date Selector
+
+        protected void TakeMonthEndDates(List<DateTime> dates)
+        {
+            this.AvailableMonthEndDateStringList = dates.Select(date => date.ToShortDateString()).ToList();
+        }
+
+        /// <summary>
+        /// Stores selected Month End date - Publishes MonthEndDateReferenceSetEvent on set event
+        /// </summary>
+        private DateTime? selectedMonthEndDateInfo = DateTime.Today.AddDays(-1).Date;
+        public DateTime? SelectedMonthEndDateInfo
+        {
+            get { return selectedMonthEndDateInfo; }
+            set
+            {
+                selectedMonthEndDateInfo = value;
+                RaisePropertyChanged(() => this.SelectedMonthEndDateInfo);
+                if (value != null)
+                {
+                    SelectorPayload.MonthEndDate = Convert.ToDateTime(value);
+                    if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving reference data...", false);
+                        dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, value, RetrieveFilterSelectionDataCallbackMethod);
+                    }
+                    eventAggregator.GetEvent<MonthEndDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores visibility property of the Month End date selector
+        /// </summary>
+        private Visibility monthEndDateSelectorVisibility = Visibility.Collapsed;
+        public Visibility MonthEndDateSelectorVisibility
+        {
+            get { return monthEndDateSelectorVisibility; }
+            set
+            {
+                monthEndDateSelectorVisibility = value;
+                RaisePropertyChanged(() => this.MonthEndDateSelectorVisibility);
+                if (value == Visibility.Collapsed)
+                {
+                    SelectedMonthEndDateInfo = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores the formatted value of Available dates in portfolio
+        /// </summary>
+        private List<String> availableMonthEndDateStringList;
+        public List<String> AvailableMonthEndDateStringList
+        {
+            get { return availableMonthEndDateStringList; }
+            set
+            {
+                availableMonthEndDateStringList = value;
+                RaisePropertyChanged(() => this.AvailableMonthEndDateStringList);
+            }
+        }
+
+        private String selectedMonthEndDateString;
+        public String SelectedMonthEndDateString
+        {
+            get { return selectedMonthEndDateString; }
+            set
+            {
+                selectedMonthEndDateString = value;
+                RaisePropertyChanged(() => this.SelectedMonthEndDateString);
+                SelectedMonthEndDateInfo = Convert.ToDateTime(selectedMonthEndDateString);
             }
         }
 
@@ -3969,6 +4047,7 @@ namespace GreenField.App.ViewModel
                     {
                         BusyIndicatorNotification(true, "Retrieving reference data...");
                         dbInteractivity.RetrieveAvailableDatesInPortfolios(RetrieveAvailableDatesInPortfoliosCallbackMethod);
+                        dbInteractivity.RequestMonthEndDates(this.TakeMonthEndDates);
                     }
                 }
                 else
@@ -4251,6 +4330,7 @@ namespace GreenField.App.ViewModel
             SecuritySelectorVisibility = ToolBoxItemVisibility.SECURITY_SELECTOR_VISIBILITY;
             PortfolioSelectorVisibility = ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY;
             EffectiveDateSelectorVisibility = ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY;
+            MonthEndDateSelectorVisibility = ToolBoxItemVisibility.MONTHEND_DATE_SELECTOR_VISIBILITY;
             PeriodSelectorVisibility = ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY;
             CountrySelectorVisibility = ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY;
             SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;

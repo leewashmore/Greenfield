@@ -2900,7 +2900,22 @@ namespace GreenField.Web.Services
         }
 
 
-        #endregion  `
+        #endregion
 
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<DateTime> GetLastDayOfMonths()
+        { 
+           DimensionEntitiesService.Entities entity = DimensionEntity;
+    
+            var q =
+                (entity.GF_PERF_TOPLEVELMONTH.Select(g => new { g.TO_DATE })).ToList()
+                    .Select(x => DateTime.ParseExact(x.TO_DATE, "dd-MM-yyyy", System.Globalization.CultureInfo.GetCultureInfo("en-us")))
+                    .Distinct()
+                    .OrderByDescending(x => x)
+                    .Take(12);
+
+            return q.ToList();
+        }
     }
 }
