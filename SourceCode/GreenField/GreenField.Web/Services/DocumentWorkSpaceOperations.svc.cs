@@ -164,7 +164,7 @@ namespace GreenField.Web.Services
                         DeleteDocument(deleteFileUrl);
                     }
 
-                    String[] destinationUrl = { DocumentServerUrl + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyyhhmmssffff") + "]" + fileName };
+                    String[] destinationUrl = { DocumentServerUrl + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyy") + "]" + fileName };
 
                     DocumentCopyService.CopyResult[] cResultArray = { new DocumentCopyService.CopyResult() };
                     DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
