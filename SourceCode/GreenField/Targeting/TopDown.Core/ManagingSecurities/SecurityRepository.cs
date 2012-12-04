@@ -96,7 +96,10 @@ namespace TopDown.Core.ManagingSecurities
 				if (!String.IsNullOrWhiteSpace(securityInfo.LookThruFund))
 				{
 					var fund = this.GetFund(securityInfo.Id);
-					result.Add(securityInfo.LookThruFund, fund);
+                    monitor.SwallowIfFails("Trying to add " + securityInfo.LookThruFund + " for \"" + fund + "\".", delegate
+                    {
+                        result.Add(securityInfo.LookThruFund, fund);
+                    });
 				}
 			}
 			return result;

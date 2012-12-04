@@ -82,7 +82,9 @@
          maxReceivedMessageSize="2147483647">
           <security mode="None" />
         </binding>
-        <binding name="TargetingOperations" maxReceivedMessageSize="2147483647" maxBufferSize="2147483647">
+        <binding name="TargetingOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+         receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647" enableHttpCookieContainer="true"
+         maxReceivedMessageSize="2147483647">
           <security mode="None" />
         </binding>
       </basicHttpBinding>
@@ -139,9 +141,9 @@
        binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations"
        contract="ExternalResearchDefinitions.ExternalResearchOperations"
        name="ExternalResearchOperations" />
-      <endpoint address="http://localhost:59430/Services/TargetingOperations.svc"
-    binding="basicHttpBinding" bindingConfiguration="TargetingOperations"
-    contract="Backend.Targeting.IFacade" name="TargetingOperations" />
+      <endpoint address="http://webqa.emiemm.com/GreenfieldDev/Services/TargetingOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="TargetingOperations"
+        contract="Backend.Targeting.IFacade" name="TargetingOperations" />
 
     </client>
   </system.serviceModel>

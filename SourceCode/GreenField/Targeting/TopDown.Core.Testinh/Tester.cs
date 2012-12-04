@@ -10,7 +10,7 @@ namespace TopDown.Core.Testing
 		public void Test()
 		{
 			var facade = Helper.CreateFacade();
-			var securities = facade.GetSecurities("S", 20);
+			var securities = facade.GetTargetingTypePortfolioPickerModel();
 		}
 
 		public void GetTargetingType()
