@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=9" />
+	<title>@ViewBag.Title</title>
+	<link href="@Url.Content("~/Content/Site.less")" rel="stylesheet/less" type="text/css" />
+	<script type="text/javascript" src="@Url.Content("~/Scripts/_Frameworks/less-1.3.0.min.js")"></script>
+	
+	@RenderSection("head")
+</head>
+<body>
+
+	<ul class="menu">
+		<li><a href="@Url.Action("BroadGlobalActive", "Home", new { shouldDrop = ViewBag.ShouldDrop })" title="Broad global active">Broad global active</a></li>
+		<li><a href="@Url.Action("BottomUp", "Home", new { shouldDrop = ViewBag.ShouldDrop })" title="Bottom-up">Bottom-Up</a></li>
+		<li><a href="@Url.Action("BasketTargets", "Home", new { shouldDrop = ViewBag.ShouldDrop })" title="Basket targets">Basket targets</a></li>
+		@*<li><a href="@Url.Action("Calculations", "Home", new { shouldDrop = ViewBag.ShouldDrop })" title="Calculations">Calculations</a></li>*@
+	</ul>
+
+	@RenderSection("content")
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Basket targets";
+    Layout = "~/Views/Shared/_Ajaxed.cshtml";
+}
+
+@section head {
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Gadgets/ash-SecurityPicker.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Bpst/ash-BasketPicker.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Bpst/ash-Root.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Bpst/ash-Model.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Bpst/ash-Serializer.js")"></script>
+	<script type="text/javascript">
+
+		$(function () {
+			(function ($, ko, window, ns) {
+				var baseUrl = ns.baseUrl;
+				var repository = new ns.Repository(baseUrl);
+				var basketPicker = new ns.Bpst.BasketPicker(repository);
+				var securityPicker = new ns.SecurityPicker(repository);
+				var serializerHelper = new ns.SerializerHelper();
+				var serializer = new ns.Bpst.Serializer(serializerHelper);
+				var model = new ns.Bpst.Root(repository, basketPicker, serializer, securityPicker);
+				var page = new ns.Page(model, window);
+				repository.considerHandlingError.add(page.takeError, page);
+				var element = window.document.getElementById("root");
+				ko.applyBindings(page, element);
+				model.start();
+			})(jQuery, ko, window, ash);
+		});
+
+	</script>
+}
+
+@section content {
+
+<div id="root">
+	<div class="error" data-bind="template: { name: 'errorTemplate', data: error }"></div>
+	<h2 class="off">Basket targets</h2>
+	<div class="page tight">
+			<!-- ko with: model -->
+			<div>
+				<div class="bordered off tight" data-bind="template: { name: 'basketPickerTemplate', data: basketPicker }"></div>
+				<div class="bordered off tight">
+						<button data-bind="click: save, disable: savingPrevented()">Save</button>
+				</div>
+				<div class="clear"></div>
+		    </div>
+			<div class="bordered off" data-bind="with: model">
+					<table class="data">
+					<thead>
+						<tr>
+								<td>Security</td>
+								<th>Benchmark</th>
+								<th>Base</th>
+								<!-- ko foreach: portfolios -->
+								<th data-bind="text: id"></th>
+								<!-- /ko -->
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: securities">
+						<tr>
+							<td data-bind="text: security.name"></td>
+							<td class="value" data-bind="text: percent(benchmark.value)"></td>
+							<td class="editable value" data-bind="template: { name: 'liveEditableValueTemplate', data: $data['base'] }"></td>
+							<!-- ko foreach: portfolioTargets -->
+							<td class="editable value" data-bind="template: { name: 'liveEditableValueTemplate', data: target }"></td>
+							<!-- /ko -->
+						</tr>
+					</tbody>
+							<tfoot>
+									<tr>
+											<td data-bind="with: $parent.securityPicker">
+													<input placeholder="Add security" data-bind="autocomplete: { source: requestOptions.bind($data), html: true, select: startTakingOption.bind($data) }, value: value " />
+											</td>
+									</tr>
+									<tr>
+											<th>Total</th>
+											<td></td>
+											<td class="value" data-bind="template: { name: 'valueTemplate', data: baseTotal }"></td>
+											<!-- ko foreach: portfolios -->
+											<td class="value" data-bind="template: { name: 'valueTemplate', data: portfolioTargetTotal }"></td>
+											<!-- /ko -->
+									</tr>
+							</tfoot>
+				</table>
+			</div>
+			<!-- /ko -->
+			<div class="curtain" data-bind="template: { name: 'curtainTemplate' }, visible: loading"></div>
+			<div class="curtain" data-bind="template: { name: 'issuesTemplate', data: issues }, visible: issues()"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+}

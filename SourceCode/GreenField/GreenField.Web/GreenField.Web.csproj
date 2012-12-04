@@ -68,6 +68,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -125,6 +126,7 @@
     <Content Include="Services\PerformanceOperations.svc" />
     <Content Include="Services\SecurityReferenceOperations.svc" />
     <Content Include="Services\SessionOperations.svc" />
+    <Content Include="Services\TargetingOperations.svc" />
     <Content Include="Silverlight.js" />
     <Content Include="Templates\AshmoreEMMLogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -267,6 +269,14 @@
     <Compile Include="Services\SessionOperations.svc.cs">
       <DependentUpon>SessionOperations.svc</DependentUpon>
     </Compile>
+    <Compile Include="Services\TargetingOperations.svc.cs">
+      <DependentUpon>TargetingOperations.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Targeting\ConfigurationSettings.cs" />
+    <Compile Include="Targeting\SilverlightFaultBehavior.cs" />
+    <Compile Include="Targeting\TargetingInstanceProvider.cs" />
+    <Compile Include="Targeting\TargetingServiceHost.cs" />
+    <Compile Include="Targeting\TargetingServiceHostFactory.cs" />
     <Compile Include="Web References\DocumentCopyService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -290,6 +300,14 @@
     <ProjectReference Include="..\GreenField.Logging\GreenField.Logging.csproj">
       <Project>{9052AA7D-8CC7-49C3-AB84-ECB114E6BCA0}</Project>
       <Name>GreenField.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Targeting\GreenField.Targeting.Server\GreenField.Targeting.Server.csproj">
+      <Project>{6E829E28-5519-4627-960D-12DD9162D156}</Project>
+      <Name>GreenField.Targeting.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Targeting\TopDown.Core\TopDown.Core.csproj">
+      <Project>{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59}</Project>
+      <Name>TopDown.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

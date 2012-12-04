@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfBgaTargetingTypePickerModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BgaTargetingTypePickerModel" nillable="true" type="tns:BgaTargetingTypePickerModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBgaTargetingTypePickerModel" nillable="true" type="tns:ArrayOfBgaTargetingTypePickerModel" />
+  <xs:complexType name="BgaTargetingTypePickerModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Portfolios" nillable="true" type="tns:ArrayOfBgaPortfolioPickerModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BgaTargetingTypePickerModel" nillable="true" type="tns:BgaTargetingTypePickerModel" />
+  <xs:complexType name="ArrayOfBgaPortfolioPickerModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BgaPortfolioPickerModel" nillable="true" type="tns:BgaPortfolioPickerModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBgaPortfolioPickerModel" nillable="true" type="tns:ArrayOfBgaPortfolioPickerModel" />
+  <xs:complexType name="BgaPortfolioPickerModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BgaPortfolioPickerModel" nillable="true" type="tns:BgaPortfolioPickerModel" />
+</xs:schema>

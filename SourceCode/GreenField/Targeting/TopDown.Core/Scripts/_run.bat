@@ -1,0 +1,1 @@
+sqlcmd /S localhost\SQLEXPRESS -b /d Aims /E /i %1

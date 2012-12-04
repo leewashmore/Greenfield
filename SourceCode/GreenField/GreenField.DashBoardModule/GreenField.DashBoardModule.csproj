@@ -308,9 +308,9 @@
       <Project>{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}</Project>
       <Name>GreenField.UserSession</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GreenField.Targeting.Only\GreenField.Targeting.Only.csproj">
+    <ProjectReference Include="..\Targeting\GreenField.Targeting.Controls\GreenField.Targeting.Controls.csproj">
       <Project>{41FF9542-D13F-4F69-85B3-A435ADF58243}</Project>
-      <Name>GreenField.Targeting.Only</Name>
+      <Name>GreenField.Targeting.Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

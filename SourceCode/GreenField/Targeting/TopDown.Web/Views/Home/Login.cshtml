@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <div>
+        <form action="@Url.Action("Login", "Home")" method="post">
+        <div><label>User Name</label><input type="text" name="username" /></div>
+        <div><label>Password</label><input type="password" name="password" /></div>
+        <div><button type="submit"  title="Login" >Login</button></div>
+        <input type="hidden" name="redirectUrl" value="@Request.Params["ReturnUrl"]"/>
+        </form>
+    </div>
+</body>
+</html>
