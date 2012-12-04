@@ -6,7 +6,7 @@
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:59430/Services/TargetingOperations.svc"
+            <endpoint address="http://webqa.emiemm.com/GreenfieldDEV/Services/TargetingOperations.svc"
                 binding="basicHttpBinding" bindingConfiguration="TargetingOperations"
                 contract="Backend.Targeting.IFacade" name="TargetingOperations" />
         </client>

@@ -23,7 +23,7 @@
             </ContentControl>
         </StackPanel>
     </DataTemplate>
-    
+
     <local:BusyIndicatorTemplateSelector x:Key="busyIndicatorTemplateSelector">
 
         <local:BusyIndicatorTemplateSelector.LoadingTemplate>
@@ -49,14 +49,26 @@
 
         <local:BusyIndicatorTemplateSelector.ErrorTemplate>
             <DataTemplate>
-                <TextBlock Text="{Binding Message}"></TextBlock>
+                <StackPanel Orientation="Vertical">
+                    <ScrollViewer Content="{Binding}" MaxHeight="300">
+                        <ScrollViewer.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Exception.Message}" TextWrapping="Wrap"></TextBlock>
+                                    <TextBlock Text="{Binding Exception.StackTrace}" TextWrapping="Wrap"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ScrollViewer.ContentTemplate>
+                    </ScrollViewer>
+                    <Button Margin="0 5 0 0" Command="{Binding AcknowledgeCommand}">OK</Button>
+                </StackPanel>
             </DataTemplate>
         </local:BusyIndicatorTemplateSelector.ErrorTemplate>
 
     </local:BusyIndicatorTemplateSelector>
     <local:CommunicationStateModelToBooleanConverter x:Key="communicationStateModelToBooleanConverter" />
 
-    
+
     <Style TargetType="toolkit:BusyIndicator" x:Key="busyIndicatorStyle" BasedOn="{StaticResource specialBusyIndicator}">
         <Setter Property="IsBusy" Value="{Binding CommunicationStateModel, Converter={StaticResource communicationStateModelToBooleanConverter}}" />
         <Setter Property="BusyContent" Value="{Binding CommunicationStateModel}" />

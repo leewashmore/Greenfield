@@ -24,7 +24,7 @@ namespace GreenField.Targeting.App
             base.ConfigureAggregateCatalog();
 
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Bootstrapper).Assembly));
-			this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Controls.GlobalSettings).Assembly));
+			this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Controls.TargetingModule).Assembly));
             
             // 
             
