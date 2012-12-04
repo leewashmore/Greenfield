@@ -1,0 +1,7 @@
+﻿<%@ ServiceHost
+    Language="C#"
+    Debug="true"
+    Service="GreenField.Web.Services.TargetingOperations"
+    Factory="GreenField.Web.Targeting.TargetingServiceHostFactory"
+    CodeBehind="TargetingOperations.svc.cs"
+%>
