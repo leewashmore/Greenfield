@@ -145,6 +145,7 @@
     <Compile Include="SecurityPickerView.xaml.cs">
       <DependentUpon>SecurityPickerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TargetingModule.cs" />
     <Compile Include="ValidatedResultWindow.xaml.cs">
       <DependentUpon>ValidatedResultWindow.xaml</DependentUpon>
     </Compile>

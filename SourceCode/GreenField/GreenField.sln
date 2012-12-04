@@ -47,6 +47,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Targeting.Controls", "Targeting\GreenField.Targeting.Controls\GreenField.Targeting.Controls.csproj", "{41FF9542-D13F-4F69-85B3-A435ADF58243}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Targeting.Client", "Targeting\GreenField.Targeting.Client\GreenField.Targeting.Client.csproj", "{60EFAB0A-6A13-4E2A-90DF-064DCB6526D2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{64C3D391-3815-4125-9AEE-2C253B7A80A3} = {64C3D391-3815-4125-9AEE-2C253B7A80A3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
