@@ -785,9 +785,9 @@ namespace GreenField.LoginModule.ViewModel
         /// </summary>
         private void DefaultSettings()
         {
-            LoginIdText = String.Empty;
+            LoginIdText = "vfedonkin";//String.Empty;
             LoginIdState = FieldState.ValidField;
-            PasswordText = String.Empty;
+            PasswordText = "Kolbasa11";//String.Empty;
             PasswordState = FieldState.ValidField;
         }
         #endregion

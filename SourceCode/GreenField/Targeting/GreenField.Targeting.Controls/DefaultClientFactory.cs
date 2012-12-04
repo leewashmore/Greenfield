@@ -14,7 +14,6 @@ namespace GreenField.Targeting.Controls
 {
 	public class DefaultClientFactory : IClientFactory
 	{
-
 		public TopDown.FacingServer.Backend.Targeting.FacadeClient CreateClient()
 		{
 			var result = new FacadeClient();

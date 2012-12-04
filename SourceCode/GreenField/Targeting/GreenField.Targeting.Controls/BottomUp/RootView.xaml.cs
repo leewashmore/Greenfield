@@ -14,7 +14,7 @@ using System.ComponentModel.Composition;
 namespace GreenField.Targeting.Controls.BottomUp
 {
     [Export]
-    public partial class RootView : UserControl//, INavigationAware
+    public partial class RootView : UserControl
     {
         [ImportingConstructor]
         public RootView(RootViewModel viewModel)

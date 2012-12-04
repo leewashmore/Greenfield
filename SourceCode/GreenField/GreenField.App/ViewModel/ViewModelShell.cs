@@ -29,7 +29,7 @@ namespace GreenField.App.ViewModel
     /// View model class for Shell
     /// </summary>
     [Export]
-    public class ViewModelShell : NotificationObject
+    public partial class ViewModelShell : NotificationObject
     {
         #region Fields
         /// <summary>
@@ -84,6 +84,7 @@ namespace GreenField.App.ViewModel
                 eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Subscribe(HandleMarketPerformanceSnapshotActionCompletionEvent);
                 eventAggregator.GetEvent<ToolboxUpdateEvent>().Subscribe(HandleToolboxUpdateEvent);
             }
+            this.InitializeTargetingCommands();
 
             BusyIndicatorNotification(true, "Retrieving session information...");
             ServiceClientFactory.ReadCookies((result) =>

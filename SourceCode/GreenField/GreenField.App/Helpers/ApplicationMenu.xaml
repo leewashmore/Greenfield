@@ -79,12 +79,25 @@
                     </telerik:RadMenuItem>
 
                     <telerik:RadMenuItem x:Name="rmItemModels" Header="Targeting"> <!--Header="Models"-->
-                        <telerik:RadMenuItem Header="Asset Allocation" x:Name="rmItemAssetAllocation"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Stock Selection" x:Name="rmItemStockSelection"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Bottom Up" x:Name="rmItemBottomUp"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <telerik:RadMenuItem
+                            Header="Asset Allocation"
+                            x:Name="rmItemAssetAllocation"
+                            Style="{StaticResource RadSecondLevelMenuItemStyle}"
+                            Command="{Binding TargetingBroadGlobalActiveCommand}"
+                        />
+                        <telerik:RadMenuItem
+                            Header="Stock Selection"
+                            x:Name="rmItemStockSelection"
+                            Style="{StaticResource RadSecondLevelMenuItemStyle}"
+                            Command="{Binding TargetingBasketTargetsCommand}"
+                        />
+                        <telerik:RadMenuItem
+                            Header="Bottom Up"
+                            x:Name="rmItemBottomUp"
+                            Style="{StaticResource RadSecondLevelMenuItemStyle}"
+                            Command="{Binding TargetingBottomUpCommand}"
+                        />
+                        
                         <!--<telerik:RadMenuItem Header="Direct Overlay" x:Name="rmItemDirectOverlay"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                     </telerik:RadMenuItem>

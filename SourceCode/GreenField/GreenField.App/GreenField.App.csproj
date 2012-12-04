@@ -136,6 +136,7 @@
       <DependentUpon>ToolBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ViewModelShell.cs" />
+    <Compile Include="ViewModel\ViewModelShell_Targeting.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
