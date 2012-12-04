@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{41FF9542-D13F-4F69-85B3-A435ADF58243}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreenField.Targeting.Controls</RootNamespace>
+    <AssemblyName>GreenField.Targeting.Controls</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\Binaries\Prism4\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity">
+      <HintPath>..\Binaries\Prism4\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.MefExtensions">
+      <HintPath>..\Binaries\Prism4\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Layout.Toolkit">
+      <HintPath>..\Binaries\Lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\Binaries\Lib\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\Binaries\Lib\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AcknowledgeableCommunicationStateModelBase.cs" />
+    <Compile Include="ApplicationException.cs" />
+    <Compile Include="AutoCompleteBoxWithEnterWorking.cs" />
+    <Compile Include="BasketTargets\BasketPickedEvent.cs" />
+    <Compile Include="BasketTargets\CellTemplateSelector.cs" />
+    <Compile Include="BasketTargets\Converter, RootModelToPortfolioTargetTotal.cs" />
+    <Compile Include="BasketTargets\Column.cs" />
+    <Compile Include="BasketTargets\DataAndIndexWrap.cs" />
+    <Compile Include="BasketTargets\DataGridColumnBehavior.cs" />
+    <Compile Include="BasketTargets\EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BasketTargets\EditorViewModel.cs" />
+    <Compile Include="BasketTargets\PickerView.xaml.cs">
+      <DependentUpon>PickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BasketTargets\PickerViewModel.cs" />
+    <Compile Include="BasketTargets\RootView.xaml.cs">
+      <DependentUpon>RootView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BasketTargets\RootViewModel.cs" />
+    <Compile Include="BasketTargets\Converter, SecurityModelToPortfolioTarget.cs" />
+    <Compile Include="BasketTargets\Settings.cs" />
+    <Compile Include="BasketTargets\ValueTraverser.cs" />
+    <Compile Include="Behavior, Watermark.cs" />
+    <Compile Include="BottomUp\BottomUpPortfolioPickedEvent.cs" />
+    <Compile Include="BottomUp\EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BottomUp\EditorViewModel.cs" />
+    <Compile Include="BottomUp\PortfolioPickerView.xaml.cs">
+      <DependentUpon>PortfolioPickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BottomUp\PorfolioPickerViewModel.cs" />
+    <Compile Include="BottomUp\RootView.xaml.cs">
+      <DependentUpon>RootView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BottomUp\RootViewModel.cs" />
+    <Compile Include="Behavior, DataGridRowVisibility.cs" />
+    <Compile Include="Behavior, Toggle.cs" />
+    <Compile Include="BusyIndicatorTemplateSelector.cs" />
+    <Compile Include="CancellableEvent.cs" />
+    <Compile Include="CommunicationStateChangedEvent.cs" />
+    <Compile Include="CommunicationStateModel, Loaded.cs" />
+    <Compile Include="CommunicationStateModelToBooleanConverter.cs" />
+    <Compile Include="EditorViewModelBase.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="IEnumerableExtender.cs" />
+    <Compile Include="CommunicationStateModel, I.cs" />
+    <Compile Include="CommunicationStateModel, Error.cs" />
+    <Compile Include="CommunicationStateModel, Loading.cs" />
+    <Compile Include="CommunicationStateModel, Issues.cs" />
+    <Compile Include="SecurityPickedEvent.cs" />
+    <Compile Include="SecurityPickerViewModel.cs" />
+    <Compile Include="BottomUp\Settings.cs" />
+    <Compile Include="BroadGlobalActive\DefaultExpandCollapseStateSetter.cs" />
+    <Compile Include="BroadGlobalActive\EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BroadGlobalActive\Settings.cs" />
+    <Compile Include="Behavior, AutoCompleteAsync.cs" />
+    <Compile Include="Behavior, Comment.cs" />
+    <Compile Include="SecurityPickerView.xaml.cs">
+      <DependentUpon>SecurityPickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TargetingModule.cs" />
+    <Compile Include="ValidatedResultWindow.xaml.cs">
+      <DependentUpon>ValidatedResultWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Behavior, EditableValue.cs" />
+    <Compile Include="InteractiveCommand.cs" />
+    <Compile Include="IViewModel, ComeAndGo.cs" />
+    <Compile Include="AutoCompleteResponse.cs" />
+    <Compile Include="AutoCompleteRequest.cs" />
+    <Compile Include="ViewModelBase.cs" />
+    <Compile Include="DefaultClientFactory.cs" />
+    <Compile Include="Converter, Echo.cs" />
+    <Compile Include="GlobalSettings.cs" />
+    <Compile Include="BroadGlobalActive\RootViewModel.cs" />
+    <Compile Include="BroadGlobalActive\RootView.xaml.cs">
+      <DependentUpon>RootView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IViewModel, Dirty.cs" />
+    <Compile Include="RootViewModelBase.cs" />
+    <Compile Include="IClientFactory.cs" />
+    <Compile Include="Converter, LevelToPadding.cs" />
+    <Compile Include="BroadGlobalActive\ModelTraverser.cs" />
+    <Compile Include="BroadGlobalActive\PickerView.xaml.cs">
+      <DependentUpon>PickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BroadGlobalActive\PortfolioPickedEvent.cs" />
+    <Compile Include="BroadGlobalActive\EditorViewModel.cs" />
+    <Compile Include="BroadGlobalActive\PickerViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuntimeHelper.cs" />
+    <Compile Include="BroadGlobalActive\Converter, GlobalResidentToDataTemplate.cs" />
+    <Compile Include="ValueTextBox.cs" />
+    <Compile Include="WatermarkLabs.xaml.cs">
+      <DependentUpon>WatermarkLabs.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ServiceReferences.ClientConfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="BasketTargets\EditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BasketTargets\PickerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BasketTargets\RootView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BottomUp\EditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BottomUp\PortfolioPickerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BottomUp\RootView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BroadGlobalActive\EditorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BroadGlobalActive\RootView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CrazyShit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SecurityPickerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ValidatedResultWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CommonTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WatermarkLabs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="BroadGlobalActive\PickerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GreenField.Targeting.Client\GreenField.Targeting.Client.csproj">
+      <Project>{60EFAB0A-6A13-4E2A-90DF-064DCB6526D2}</Project>
+      <Name>GreenField.Targeting.Client</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

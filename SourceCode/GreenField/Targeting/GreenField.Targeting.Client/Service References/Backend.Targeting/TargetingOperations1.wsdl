@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TargetingOperations" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IFacade_GetBroadGlobalActive_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBroadGlobalActive" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetBroadGlobalActive_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBroadGlobalActiveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetTargetingTypePortfolioPicker_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTargetingTypePortfolioPicker" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetTargetingTypePortfolioPicker_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTargetingTypePortfolioPickerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RecalculateBroadGlobalActive_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecalculateBroadGlobalActive" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RecalculateBroadGlobalActive_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecalculateBroadGlobalActiveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_PickSecurities_InputMessage">
+    <wsdl:part name="parameters" element="tns:PickSecurities" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_PickSecurities_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PickSecuritiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_PickSecuritiesFromBasket_InputMessage">
+    <wsdl:part name="parameters" element="tns:PickSecuritiesFromBasket" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_PickSecuritiesFromBasket_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PickSecuritiesFromBasketResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_SaveBroadGlobalActive_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveBroadGlobalActive" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_SaveBroadGlobalActive_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveBroadGlobalActiveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetBasketPicker_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBasketPicker" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetBasketPicker_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBasketPickerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetBasketTargets_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBasketTargets" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetBasketTargets_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBasketTargetsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RecalculateBasketTargets_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecalculateBasketTargets" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RecalculateBasketTargets_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecalculateBasketTargetsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_SaveBasketTargets_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveBasketTargets" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_SaveBasketTargets_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveBasketTargetsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetBottomUpPortfolioPicker_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBottomUpPortfolioPicker" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetBottomUpPortfolioPicker_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBottomUpPortfolioPickerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetBottomUpModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBottomUpModel" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_GetBottomUpModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBottomUpModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RecalculateBottomUp_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecalculateBottomUp" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RecalculateBottomUp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecalculateBottomUpResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_SaveBottomUp_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveBottomUp" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_SaveBottomUp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveBottomUpResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IFacade">
+    <wsdl:operation name="GetBroadGlobalActive">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/GetBroadGlobalActive" message="tns:IFacade_GetBroadGlobalActive_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/GetBroadGlobalActiveResponse" message="tns:IFacade_GetBroadGlobalActive_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTargetingTypePortfolioPicker">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/GetTargetingTypePortfolioPicker" message="tns:IFacade_GetTargetingTypePortfolioPicker_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/GetTargetingTypePortfolioPickerResponse" message="tns:IFacade_GetTargetingTypePortfolioPicker_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecalculateBroadGlobalActive">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RecalculateBroadGlobalActive" message="tns:IFacade_RecalculateBroadGlobalActive_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RecalculateBroadGlobalActiveResponse" message="tns:IFacade_RecalculateBroadGlobalActive_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PickSecurities">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/PickSecurities" message="tns:IFacade_PickSecurities_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/PickSecuritiesResponse" message="tns:IFacade_PickSecurities_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PickSecuritiesFromBasket">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/PickSecuritiesFromBasket" message="tns:IFacade_PickSecuritiesFromBasket_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/PickSecuritiesFromBasketResponse" message="tns:IFacade_PickSecuritiesFromBasket_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveBroadGlobalActive">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/SaveBroadGlobalActive" message="tns:IFacade_SaveBroadGlobalActive_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/SaveBroadGlobalActiveResponse" message="tns:IFacade_SaveBroadGlobalActive_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBasketPicker">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/GetBasketPicker" message="tns:IFacade_GetBasketPicker_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/GetBasketPickerResponse" message="tns:IFacade_GetBasketPicker_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBasketTargets">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/GetBasketTargets" message="tns:IFacade_GetBasketTargets_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/GetBasketTargetsResponse" message="tns:IFacade_GetBasketTargets_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecalculateBasketTargets">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RecalculateBasketTargets" message="tns:IFacade_RecalculateBasketTargets_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RecalculateBasketTargetsResponse" message="tns:IFacade_RecalculateBasketTargets_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveBasketTargets">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/SaveBasketTargets" message="tns:IFacade_SaveBasketTargets_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/SaveBasketTargetsResponse" message="tns:IFacade_SaveBasketTargets_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBottomUpPortfolioPicker">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/GetBottomUpPortfolioPicker" message="tns:IFacade_GetBottomUpPortfolioPicker_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/GetBottomUpPortfolioPickerResponse" message="tns:IFacade_GetBottomUpPortfolioPicker_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBottomUpModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/GetBottomUpModel" message="tns:IFacade_GetBottomUpModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/GetBottomUpModelResponse" message="tns:IFacade_GetBottomUpModel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecalculateBottomUp">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RecalculateBottomUp" message="tns:IFacade_RecalculateBottomUp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RecalculateBottomUpResponse" message="tns:IFacade_RecalculateBottomUp_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveBottomUp">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/SaveBottomUp" message="tns:IFacade_SaveBottomUp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/SaveBottomUpResponse" message="tns:IFacade_SaveBottomUp_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TargetingOperations" type="tns:IFacade">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetBroadGlobalActive">
+      <soap:operation soapAction="http://tempuri.org/IFacade/GetBroadGlobalActive" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTargetingTypePortfolioPicker">
+      <soap:operation soapAction="http://tempuri.org/IFacade/GetTargetingTypePortfolioPicker" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecalculateBroadGlobalActive">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RecalculateBroadGlobalActive" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PickSecurities">
+      <soap:operation soapAction="http://tempuri.org/IFacade/PickSecurities" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PickSecuritiesFromBasket">
+      <soap:operation soapAction="http://tempuri.org/IFacade/PickSecuritiesFromBasket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveBroadGlobalActive">
+      <soap:operation soapAction="http://tempuri.org/IFacade/SaveBroadGlobalActive" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasketPicker">
+      <soap:operation soapAction="http://tempuri.org/IFacade/GetBasketPicker" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasketTargets">
+      <soap:operation soapAction="http://tempuri.org/IFacade/GetBasketTargets" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecalculateBasketTargets">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RecalculateBasketTargets" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveBasketTargets">
+      <soap:operation soapAction="http://tempuri.org/IFacade/SaveBasketTargets" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBottomUpPortfolioPicker">
+      <soap:operation soapAction="http://tempuri.org/IFacade/GetBottomUpPortfolioPicker" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBottomUpModel">
+      <soap:operation soapAction="http://tempuri.org/IFacade/GetBottomUpModel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecalculateBottomUp">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RecalculateBottomUp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveBottomUp">
+      <soap:operation soapAction="http://tempuri.org/IFacade/SaveBottomUp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TargetingOperations">
+    <wsdl:port name="TargetingOperations" binding="tns:TargetingOperations">
+      <soap:address location="http://localhost:59430/Services/TargetingOperations.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

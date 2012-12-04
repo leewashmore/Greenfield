@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive" />
+  <xs:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" />
+  <xs:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
+  <xs:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" />
+  <xs:import schemaLocation="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" />
+  <xs:element name="GetBroadGlobalActive">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="targetingTypeId" type="xs:int" />
+        <xs:element minOccurs="0" name="bgaPortfolioId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="benchmarkDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBroadGlobalActiveResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive" minOccurs="0" name="GetBroadGlobalActiveResult" nillable="true" type="q1:BgaRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTargetingTypePortfolioPicker">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTargetingTypePortfolioPickerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" minOccurs="0" name="GetTargetingTypePortfolioPickerResult" nillable="true" type="q2:ArrayOfBgaTargetingTypePickerModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecalculateBroadGlobalActive">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive" minOccurs="0" name="model" nillable="true" type="q3:BgaRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecalculateBroadGlobalActiveResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive" minOccurs="0" name="RecalculateBroadGlobalActiveResult" nillable="true" type="q4:BgaRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PickSecurities">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pattern" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="atMost" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PickSecuritiesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PickSecuritiesResult" nillable="true" type="q5:ArrayOfSecurityModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PickSecuritiesFromBasket">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pattern" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="atMost" type="xs:int" />
+        <xs:element minOccurs="0" name="basketId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PickSecuritiesFromBasketResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PickSecuritiesFromBasketResult" nillable="true" type="q6:ArrayOfSecurityModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveBroadGlobalActive">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive" minOccurs="0" name="model" nillable="true" type="q7:BgaRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveBroadGlobalActiveResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="SaveBroadGlobalActiveResult" nillable="true" type="q8:ArrayOfIssueModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBasketPicker">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBasketPickerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" minOccurs="0" name="GetBasketPickerResult" nillable="true" type="q9:BtPickerModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBasketTargets">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="targetingTypeGroupId" type="xs:int" />
+        <xs:element minOccurs="0" name="basketId" type="xs:int" />
+        <xs:element minOccurs="0" name="benchmarkDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBasketTargetsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" minOccurs="0" name="GetBasketTargetsResult" nillable="true" type="q10:BtRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecalculateBasketTargets">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" minOccurs="0" name="model" nillable="true" type="q11:BtRootModel" />
+        <xs:element minOccurs="0" name="benchmarkDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecalculateBasketTargetsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" minOccurs="0" name="RecalculateBasketTargetsResult" nillable="true" type="q12:BtRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveBasketTargets">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" minOccurs="0" name="model" nillable="true" type="q13:BtRootModel" />
+        <xs:element minOccurs="0" name="benchmarkDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveBasketTargetsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="SaveBasketTargetsResult" nillable="true" type="q14:ArrayOfIssueModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBottomUpPortfolioPicker">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBottomUpPortfolioPickerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" minOccurs="0" name="GetBottomUpPortfolioPickerResult" nillable="true" type="q15:BuPickerModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBottomUpModel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="bottomUpPortfolioId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBottomUpModelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" minOccurs="0" name="GetBottomUpModelResult" nillable="true" type="q16:BuRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecalculateBottomUp">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" minOccurs="0" name="model" nillable="true" type="q17:BuRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecalculateBottomUpResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" minOccurs="0" name="RecalculateBottomUpResult" nillable="true" type="q18:BuRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveBottomUp">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" minOccurs="0" name="model" nillable="true" type="q19:BuRootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveBottomUpResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="SaveBottomUpResult" nillable="true" type="q20:ArrayOfIssueModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

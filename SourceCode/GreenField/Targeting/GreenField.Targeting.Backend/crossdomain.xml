@@ -1,0 +1,6 @@
+<cross-domain-policy>
+  <allow-http-request-headers-from domain="*" headers="SOAPAction,Content-Type"/>
+</cross-domain-policy>
+
+
+

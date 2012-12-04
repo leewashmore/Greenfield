@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TopDown.Core</RootNamespace>
+    <AssemblyName>TopDown.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Targeting|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Targeting\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\TopDown.Core.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Binaries\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ExpressionFromJsonDeserializer.cs" />
+    <Compile Include="ExpressionToJsonSerializer.cs" />
+    <Compile Include="JsonPropertyValueGiver.cs" />
+    <Compile Include="ManagingBpst\BasketSecurityPortfolioTargetRepository.cs" />
+    <Compile Include="ManagingBpst\BasketSecurityPortfolioTargetRepositoryManager.cs" />
+    <Compile Include="ManagingBpst\CoreModel.cs" />
+    <Compile Include="ManagingBpst\TargetingTypeGroupBasketSecurityBaseValueRepository.cs" />
+    <Compile Include="ManagingBpt\Computing\CashScaledFormula.cs" />
+    <Compile Include="ManagingCalculations\CalculationInfo.cs" />
+    <Compile Include="ManagingCalculations\TargetRecord.cs" />
+    <Compile Include="ManagingSecurities\Extender.cs" />
+    <Compile Include="ManagingSecurities\Fund.cs" />
+    <Compile Include="ManagingSecurities\ISecurity.cs" />
+    <Compile Include="Persisting\CalculationWithChangesets.cs" />
+    <Compile Include="Persisting\IChangesetInfoResolver.cs" />
+    <Compile Include="Scripts\GlueTogether.cs" />
+    <Compile Include="Sql\NullableDatetimeField.cs" />
+    <Compile Include="Sql\OuterDateTimeField.cs" />
+    <Compile Include="Sql\OuterInt32Field.cs" />
+    <Compile Include="Sql\OuterStringField.cs" />
+    <Compile Include="ValidatorBase.cs" />
+    <Compile Include="Persisting\Info, BgaPortfolioSecurityTarget.cs" />
+    <Compile Include="ManagingBpst\TargetingTypeGroupBasketSecurityBaseValueRepositoryManager.cs" />
+    <Content Include="Scripts\016-BGA_PORTFOLIO_SECURITY_TARGET.sql" />
+    <Compile Include="ValidationIssueToJsonSerializer.cs" />
+    <Compile Include="Gadgets\ProtfolioPicker\Model, Root.cs" />
+    <Compile Include="Gadgets\ProtfolioPicker\Model, TargetingType.cs" />
+    <Compile Include="Helpers\ChangesetApplierBase.cs" />
+    <Compile Include="Helpers\ExceptionToJsonSerializer.cs" />
+    <Compile Include="Helpers\IMonitor.cs" />
+    <Compile Include="Helpers\Monitor.cs" />
+    <Compile Include="ManagingBenchmarks\BenchmarkManager.cs" />
+    <Compile Include="ManagingBenchmarks\BenchmarkRepository.cs" />
+    <Compile Include="ManagingBpst\BenchmarkInitializer.cs" />
+    <Compile Include="ManagingBpst\ModelChangeDetector.cs" />
+    <Compile Include="ManagingBpst\ModelExpressionTraverser.cs" />
+    <Compile Include="ManagingBpst\ModelValidator.cs" />
+    <Compile Include="ManagingBpt\ChangingBt\Changeset.cs" />
+    <Compile Include="ManagingBpt\ChangingBt\ChangesetApplier.cs" />
+    <Compile Include="ManagingBpt\ChangingBt\Change, CountryBasket.cs" />
+    <Compile Include="ManagingBpt\ChangingBt\ModelToChangesetTransformer.cs" />
+    <Compile Include="ManagingBpt\ChangingBt\Change, Taxonomy.cs" />
+    <Compile Include="ManagingBpt\ChangingPsto\Change, Delete.cs" />
+    <Compile Include="ManagingBpt\ChangingPsto\Change, I.cs" />
+    <Compile Include="ManagingBpt\ChangingPsto\Change, Insert.cs" />
+    <Compile Include="ManagingBpt\ChangingPsto\Change, Update.cs" />
+    <Compile Include="ManagingBpt\ChangingPsto\Changeset.cs" />
+    <Compile Include="ManagingBpt\ChangingPsto\ChangesetApplier.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbbv\Changeset.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbbv\Change, Delete.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbbv\Change, I.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbbv\Change, Insert.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbbv\ChangesetApplier.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbbv\ModelToChangeTransformer.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbbv\Change, Update.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbpt\Change, Delete.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbpt\Changeset.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbpt\ChangesetApplier.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbpt\IChange.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbpt\Change, Insert.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbpt\Change, Update.cs" />
+    <Compile Include="ManagingBpt\Computing\BaseLessOverlayPositiveTotalFormula.cs" />
+    <Compile Include="ManagingBpt\Computing\BaseLessOverlayTotalFormula.cs" />
+    <Compile Include="ManagingBpt\Computing\PortfolioScaledTotalFormula.cs" />
+    <Compile Include="ManagingBpt\ModelChangeDetector.cs" />
+    <Compile Include="ManagingBpt\Initializer, PortfolioAdjustment.cs" />
+    <Compile Include="ManagingBpt\ModelExpressionTraverser.cs" />
+    <Compile Include="ManagingCalculations\Hopper.cs" />
+    <Compile Include="ManagingCalculations\TargetingCalculationStatus.cs" />
+    <Compile Include="ModelToJsonSerializerBase.cs" />
+    <Compile Include="ManagingCalculations\CalculationRequester.cs" />
+    <Compile Include="ManagingPortfolios\PortfolioToJsonSerializer.cs" />
+    <Compile Include="ManagingCountries\JsonNames.cs" />
+    <Compile Include="ManagingPortfolios\BroadGlobalActivePotfolio.cs" />
+    <Compile Include="ManagingPortfolios\BottomUpPortfolio.cs" />
+    <Compile Include="ManagingPortfolios\ISecurityIdToPortfolioIdResolver.cs" />
+    <Compile Include="ManagingBpt\ManagingOverlays\ModelBuilder.cs" />
+    <Compile Include="ManagingBpt\ModelApplier.cs" />
+    <Compile Include="Facade.cs" />
+    <Compile Include="Gadgets\BasketPicker\ModelManager.cs" />
+    <Compile Include="Gadgets\BasketPicker\ModelToJsonSerializer.cs" />
+    <Compile Include="Gadgets\ProtfolioPicker\GadgetManager.cs" />
+    <Compile Include="Helpers\DecimalValueExecuter.cs" />
+    <Compile Include="Helpers\IStorageExtender.cs" />
+    <Compile Include="Helpers\NullableDecimalValueAdapter.cs" />
+    <Compile Include="Helpers\StringValueAdapter.cs" />
+    <Compile Include="JsonFacade.cs" />
+    <Compile Include="ManagingBaskets\BasketRenderer.cs" />
+    <Compile Include="ManagingBaskets\BasketSecurityRelationshipInvestigator.cs" />
+    <Compile Include="ManagingBaskets\Extender, Basket.cs" />
+    <Compile Include="ManagingBaskets\Basket, Region.cs" />
+    <Compile Include="ManagingBaskets\XmlDeserializer.cs" />
+    <Compile Include="ManagingBaskets\ModelManager.cs" />
+    <Compile Include="ManagingBaskets\Repository, Basket.cs" />
+    <Compile Include="ManagingBpst\ChangingBpst\Change, Delete.cs" />
+    <Compile Include="ManagingBpst\ChangingBpst\Change, Update.cs" />
+    <Compile Include="ManagingBpst\ModelApplier.cs" />
+    <Compile Include="ManagingBpst\ChangingTtgbsbv\Change, Delete.cs" />
+    <Compile Include="ManagingBpst\ChangingTtgbsbv\Change, Update.cs" />
+    <Compile Include="ManagingBpst\ChangingTtgbsbv\Changeset.cs" />
+    <Compile Include="ManagingBpst\ChangingTtgbsbv\Change, Insert.cs" />
+    <Compile Include="ManagingBpst\ChangingTtgbsbv\ChangesetApplier.cs" />
+    <Compile Include="ManagingBpst\DefaultValues.cs" />
+    <Compile Include="ManagingBpst\ChangingTtgbsbv\Change, I.cs" />
+    <Compile Include="ManagingBpst\Model, PortfolioTarget.cs" />
+    <Compile Include="ManagingBpst\Model, Security.cs" />
+    <Compile Include="ManagingBpst\ChangingTtgbsbv\ModelToChangesetTransformer.cs" />
+    <Compile Include="ManagingBpst\ModelBuilder.cs" />
+    <Compile Include="ManagingBpst\ModelFromJsonDeserializer.cs" />
+    <Compile Include="ManagingBpst\ModelManager.cs" />
+    <Compile Include="ManagingBpst\ModelToJsonSerializer.cs" />
+    <Compile Include="ManagingBpst\ChangingBpst\Change, I.cs" />
+    <Compile Include="ManagingBpst\ChangingBpst\Change, Insert.cs" />
+    <Compile Include="ManagingBpst\ChangingBpst\ModelToChangesetTransformter.cs" />
+    <Compile Include="ManagingBpst\ChangingBpst\Changeset.cs" />
+    <Compile Include="ManagingBpst\ChangingBpst\ChangesetApplier.cs" />
+    <Compile Include="ManagingBpst\Model, Portfolio.cs" />
+    <Compile Include="ManagingBpt\ModelExtender.cs" />
+    <Compile Include="ManagingBpt\ChangingTtbpt\ModelToChangesetTransformer.cs" />
+    <Compile Include="ManagingBpt\ChangingPsto\ModelToChangesetTransformer.cs" />
+    <Compile Include="ManagingBpt\ModelValidator.cs" />
+    <Compile Include="ManagingCountries\Manager, Country.cs" />
+    <Compile Include="ManagingCountries\Repository, Country.cs" />
+    <Compile Include="ManagingBaskets\Extractor, BasketId.cs" />
+    <Compile Include="ManagingPortfolios\JsonNames.cs" />
+    <Compile Include="ManagingPortfolios\PortfolioManager.cs" />
+    <Compile Include="ModelChangeDetectorBase.cs" />
+    <Compile Include="ManagingPst\ModelChangesDetector.cs" />
+    <Compile Include="ManagingPst\ModelExpressionTraverser.cs" />
+    <Compile Include="ManagingPst\PortfolioSecurityTargetRepository.cs" />
+    <Compile Include="ManagingPst\ModelBuilder.cs" />
+    <Compile Include="ManagingPst\RepositoryManager.cs" />
+    <Compile Include="ManagingSecurities\CountryToJsonSerializer.cs" />
+    <Compile Include="ManagingSecurities\CompanySecurity.cs" />
+    <Compile Include="ManagingTargetingTypes\InfoDeserializer.cs" />
+    <Compile Include="ManagingPortfolios\Portfolio.cs" />
+    <Compile Include="ManagingTargetingTypes\Manager, TargetingType.cs" />
+    <Compile Include="ManagingTaxonomies\InfoDeserializer.cs" />
+    <Compile Include="ManagingTaxonomies\Node, BasketCountry.cs" />
+    <Compile Include="ManagingBpt\Computations.cs" />
+    <Compile Include="ManagingBpt\Computing\BaseActiveFormula.cs" />
+    <Compile Include="ManagingBpt\Computing\BaseForCashFormula.cs" />
+    <Compile Include="ManagingBpt\Computing\BaseLessOverlayFormula.cs" />
+    <Compile Include="ManagingBpt\Computing\BaseWherePortfoioAdjustmentSetTotalFormula.cs" />
+    <Compile Include="ManagingBpt\Computing\PortfolioScaledFormula.cs" />
+    <Compile Include="ManagingBpt\Computing\RescaledBaseForCashFormula.cs" />
+    <Compile Include="ManagingBpt\Computing\RescaledBaseFormula.cs" />
+    <Compile Include="ManagingBpt\ModelFromJsonDeserializer.cs" />
+    <Compile Include="ManagingBpt\ModelManager.cs" />
+    <Compile Include="ManagingBpt\ModelToJsonSerializer.cs" />
+    <Compile Include="ManagingBpt\DefaultValues.cs" />
+    <Compile Include="ManagingBpt\Computing\TrueExposureFormula.cs" />
+    <Compile Include="ManagingBpt\Computing\TrueActiveFormula.cs" />
+    <Compile Include="Helpers\DumpWriterRecorder.cs" />
+    <Compile Include="Helpers\IEnumerableExtender.cs" />
+    <Compile Include="Helpers\IJsonWriter.cs" />
+    <Compile Include="ManagingBpt\Initializer, BaseValue.cs" />
+    <Compile Include="ManagingBpt\Initializer, BenchmarkValue.cs" />
+    <Compile Include="ManagingBpt\Initializer, Overlay.cs" />
+    <Compile Include="Helpers\IStorage.cs" />
+    <Compile Include="Helpers\JsonReader.cs" />
+    <Compile Include="Helpers\JsonWriter.cs" />
+    <Compile Include="Helpers\JsonWriterExtender.cs" />
+    <Compile Include="ManagingBpt\Model, Globe.cs" />
+    <Compile Include="ManagingBpt\ExpressionPicker.cs" />
+    <Compile Include="Helpers\CommonParts.cs" />
+    <Compile Include="KeyedRepository.cs" />
+    <Compile Include="Gadgets\BasketPicker\ModelBuilder.cs" />
+    <Compile Include="Gadgets\BasketPicker\Model, Basket.cs" />
+    <Compile Include="Gadgets\BasketPicker\Model, Root.cs" />
+    <Compile Include="Gadgets\BasketPicker\Model, TargetingGroup.cs" />
+    <Compile Include="ManagingBaskets\Basket, Country.cs" />
+    <Compile Include="ManagingBaskets\Basket, I.cs" />
+    <Compile Include="ManagingBpst\Model, Root.cs" />
+    <Compile Include="ManagingPst\ModelManager.cs" />
+    <Compile Include="ManagingSecurities\JsonNames.cs" />
+    <Compile Include="ManagingSecurities\SecurityToJsonSerializer.cs" />
+    <Compile Include="ManagingPst\Change, I.cs" />
+    <Compile Include="JsonNames.cs" />
+    <Compile Include="ManagingPst\ModelFromJsonDeserializer.cs" />
+    <Compile Include="ManagingPst\ModelToChangeTransformer.cs" />
+    <Compile Include="ManagingPst\ChangesetApplier.cs" />
+    <Compile Include="ManagingPst\Changeset.cs" />
+    <Compile Include="ManagingPst\Change, Delete.cs" />
+    <Compile Include="ManagingPst\Change, Insert.cs" />
+    <Compile Include="ManagingPst\Change, Update.cs" />
+    <Compile Include="ManagingTargetingTypes\TargetingTypeGroup.cs" />
+    <Compile Include="ManagingTargetingTypes\Repository, TargetingTypeGroup.cs" />
+    <Compile Include="ManagingTargetingTypes\TargetingType.cs" />
+    <Compile Include="ManagingTaxonomies\TaxonomyRepository.cs" />
+    <Compile Include="OnDamand.cs" />
+    <Compile Include="OnDemandDataManager.cs" />
+    <Compile Include="Persisting\CountryBasketInfo.cs" />
+    <Compile Include="Persisting\FakeCountries.cs" />
+    <Compile Include="Persisting\Info, Benchmark.cs" />
+    <Compile Include="Persisting\ChangesetInfoBase.cs" />
+    <Compile Include="Persisting\Info, TargetingCalculation.cs" />
+    <Compile Include="Persisting\Info, UsernamePortfolio.cs" />
+    <Compile Include="Persisting\Info, BasketPortfolioSecurityTargetChange.cs" />
+    <Compile Include="Persisting\Info, BasketPortfolioSecurityTarget.cs" />
+    <Compile Include="Persisting\Info, BasketPortfolioSecurityTargetChangeset.cs" />
+    <Compile Include="Persisting\Info, Country.cs" />
+    <Compile Include="Persisting\Info, Basket.cs" />
+    <Compile Include="Persisting\Info, TargetingType.cs" />
+    <Compile Include="ManagingTargetingTypes\Repository, TargetingType.cs" />
+    <Compile Include="Persisting\Info, Security.cs" />
+    <Compile Include="ManagingSecurities\SecurityManager.cs" />
+    <Compile Include="ManagingSecurities\SecurityReader.cs" />
+    <Compile Include="ManagingSecurities\SecurityRepository.cs" />
+    <Compile Include="ManagingPst\Model, Root.cs" />
+    <Compile Include="ManagingPst\Model, Item.cs" />
+    <Compile Include="ManagingPst\ModelToJsonSerializer.cs" />
+    <Compile Include="Persisting\Info, BuPortfolioSecurityTargetChangeset.cs" />
+    <Compile Include="Persisting\Info, BuPortfolioSecurityTargetChange.cs" />
+    <Compile Include="Persisting\Info, TargetingTypeBasketBaseValueChange.cs" />
+    <Compile Include="Persisting\Info, TargetingTypeGroup.cs" />
+    <Compile Include="Persisting\Info, TargetingTypePortfolio.cs" />
+    <Compile Include="Persisting\Info, TargetingTypeBasketBaseValue.cs" />
+    <Compile Include="Persisting\Info, TargetingTypeGroupBasketSecurityBaseValue.cs" />
+    <Compile Include="Persisting\Info, TargetingTypeGroupBasketSecurityBaseValueChange.cs" />
+    <Compile Include="Persisting\Info, TargetingTypeBasketBaseValueChangeset.cs" />
+    <Compile Include="Persisting\Info, TargetingTypeGroupBasketSecurityBaseValueChangeset.cs" />
+    <Compile Include="Persisting\Info, TargetingTypeBasketPortfolioTarget.cs" />
+    <Compile Include="Persisting\Info, TargetingTypeBasketPortfolioTargetChange.cs" />
+    <Compile Include="Persisting\Info, TargetingTypeBasketPortfolioTargetChangeset.cs" />
+    <Compile Include="Persisting\Info, BgaPortfolioSecurityFactor.cs" />
+    <Compile Include="Persisting\Info, BgaPortfolioSecurityFactorChange.cs" />
+    <Compile Include="Persisting\Info, BgaPortfolioSecurityFactorChangeset.cs" />
+    <Compile Include="Persisting\PortfolioInfo.cs" />
+    <Compile Include="Persisting\RegionBasketInfo.cs" />
+    <Compile Include="Persisting\TableNames.cs" />
+    <Compile Include="ManagingPortfolios\PortfolioRepository.cs" />
+    <Compile Include="RepositoryManager.cs" />
+    <Content Include="Scripts\007-COUNTRY_BASKET.sql" />
+    <Compile Include="Sql\DatetimeField.cs" />
+    <Compile Include="Sql\FakeSqlConnectionFactory.cs" />
+    <Compile Include="Sql\MandatoryStringField.cs" />
+    <Compile Include="Sql\SqlCommandBuilder.cs" />
+    <Compile Include="Gadgets\ProtfolioPicker\ModelToJsonSerializer.cs" />
+    <Compile Include="BaseValueResolver.cs" />
+    <Compile Include="ManagingBenchmarks\CountryIsoCodesExtractor.cs" />
+    <Compile Include="ManagingBpt\GlobeTraverser.cs" />
+    <Compile Include="ManagingBpt\IModel.cs" />
+    <Compile Include="ManagingBpt\IModelDifference.cs" />
+    <Compile Include="ManagingBpt\Model, Cash.cs" />
+    <Compile Include="ManagingBpt\Model, BasketCountry, Unsaved.cs" />
+    <Compile Include="ManagingCountries\Country.cs" />
+    <Compile Include="Helpers\Extender.cs" />
+    <Compile Include="KnownValidators.cs" />
+    <Compile Include="No.cs" />
+    <Compile Include="MissingCountriesDetector.cs" />
+    <Compile Include="ManagingBpt\ManagingOverlays\CountryIsoCodeExtractor.cs" />
+    <Compile Include="ManagingBpt\ManagingOverlays\CountryIsoCodeExtractor, Combined.cs" />
+    <Compile Include="ManagingBpt\ManagingOverlays\IsoCodeToOverlayTargetValueResolver.cs" />
+    <Compile Include="ManagingBpt\ManagingOverlays\OverlayManager.cs" />
+    <Compile Include="ManagingBpt\ManagingOverlays\TargetsFlattener.cs" />
+    <Compile Include="ManagingBpt\ManagingOverlays\TargetValueRescaler.cs" />
+    <Compile Include="Persisting\DataManagerFactory.cs" />
+    <Compile Include="Persisting\DataManager, Fake.cs" />
+    <Compile Include="Persisting\FakeDataManagerFactory.cs" />
+    <Compile Include="Persisting\DataManager, I.cs" />
+    <Compile Include="Persisting\IDataManagerFactory.cs" />
+    <Compile Include="Sql\DecimalField.cs" />
+    <Compile Include="Sql\SqlConnectionFactory.cs" />
+    <Compile Include="Persisting\Stored.cs" />
+    <Compile Include="Sql\ISqlConnectionFactory.cs" />
+    <Compile Include="Gadgets\ProtfolioPicker\Model, Portfolio.cs" />
+    <Compile Include="ManagingBpt\ModelToTaxonomyTransformer.cs" />
+    <Compile Include="ManagingTaxonomies\TaxonomyManager.cs" />
+    <Compile Include="UnknownCountryIsoCodesDetector.cs" />
+    <Compile Include="ManagingTaxonomies\CountryIsoCodesExtractor.cs" />
+    <Compile Include="ManagingBpt\ManagingOverlays\TargetsTraverser.cs" />
+    <Compile Include="ManagingBpt\ManagingOverlays\Model, Root.cs" />
+    <Compile Include="ManagingBpt\ManagingOverlays\Model, Item.cs" />
+    <Compile Include="Persisting\Info, BuPortfolioSecurityTarget.cs" />
+    <Compile Include="Persisting\InfoCopier.cs" />
+    <Compile Include="ManagingTaxonomies\INode.cs" />
+    <Compile Include="ManagingTaxonomies\Node, BasketRegion.cs" />
+    <Compile Include="ManagingBenchmarks\BenchmarkValueResolver.cs" />
+    <Compile Include="ManagingBpt\Model, Country.cs" />
+    <Compile Include="ManagingBpt\Model, Other.cs" />
+    <Compile Include="Persisting\Info, Taxonomy.cs" />
+    <Compile Include="Sql\IField.cs" />
+    <Compile Include="Sql\Int32Field.cs" />
+    <Compile Include="Sql\NullableDecimalField.cs" />
+    <Compile Include="Sql\NullableInt32Field.cs" />
+    <Compile Include="Sql\SafeFieldWrapper.cs" />
+    <Compile Include="Sql\SqlCommandBuilderBase.cs" />
+    <Compile Include="Sql\SqlQueryCommandBuilder.cs" />
+    <Compile Include="Sql\OptionalStringField.cs" />
+    <Compile Include="Persisting\DataManager.cs" />
+    <Compile Include="ManagingTaxonomies\Taxonomy.cs" />
+    <Compile Include="ManagingTaxonomies\TaxonomyCopier.cs" />
+    <Compile Include="ManagingTaxonomies\XmlDeserializer.cs" />
+    <Compile Include="Helpers\IDumpWriter.cs" />
+    <Compile Include="ManagingTaxonomies\ITaxonomyResident.cs" />
+    <Compile Include="ManagingBenchmarks\BenchmarkSumByIsoInfo.cs" />
+    <Compile Include="ManagingTaxonomies\IRegionNodeResident.cs" />
+    <Compile Include="ManagingBpt\Model, BasketCountry.cs" />
+    <Compile Include="ManagingBpt\Model, BasketRegion.cs" />
+    <Compile Include="ManagingBpt\Model, Root.cs" />
+    <Compile Include="ManagingBpt\TaxonomyToModelTransformer.cs" />
+    <Compile Include="ManagingBpt\ModelResident, Breakdown, I.cs" />
+    <Compile Include="ManagingBpt\ModelResident, Region, I.cs" />
+    <Compile Include="ManagingBpt\Model, Region.cs" />
+    <Compile Include="ManagingTaxonomies\Node, Other.cs" />
+    <Compile Include="ManagingTaxonomies\Node, Region.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ManagingTaxonomies\TaxonomyToXmlWriter.cs" />
+    <Compile Include="Helpers\TraceDumper.cs" />
+    <Compile Include="ManagingTaxonomies\Traverser, Taxonomy.cs" />
+    <Compile Include="ValidationManager.cs" />
+    <Compile Include="ValueNames.cs" />
+    <Compile Include="Xml\XmlWriterExtender.cs" />
+    <Compile Include="Xml\Consumable.cs" />
+    <Compile Include="Xml\ContentElement.cs" />
+    <Compile Include="Xml\AtomicElement.cs" />
+    <Compile Include="Xml\Extender.cs" />
+    <Compile Include="Xml\IElement.cs" />
+    <Compile Include="Xml\IValueAccessor.cs" />
+    <Compile Include="Xml\DocumentElement.cs" />
+    <Compile Include="Xml\ValueAccessorBase.cs" />
+    <Compile Include="ManagingBpt\ModelBuilder.cs" />
+    <Compile Include="_Testing\BasketTester.cs" />
+    <Compile Include="_Testing\Extender.cs" />
+    <Compile Include="_Testing\FakeDataManager.cs" />
+    <Compile Include="_Testing\Generator.cs" />
+    <Compile Include="_Testing\JsonReaderTester.cs" />
+    <Compile Include="_Testing\StorageMock.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\015-TARGETING_CALCULATION.sql" />
+    <Content Include="Scripts\008-REGION_BASKET.sql" />
+    <Content Include="Scripts\030.TARGETING_TYPE_GROUP_BASKET_SECURITY_BASE_VALUE_CHANGESET.sql" />
+    <Content Include="Scripts\031-TARGETING_TYPE_GROUP_BASKET_SECURITY_BASE_VALUE_CHANGE.sql" />
+    <Content Include="Scripts\032-TARGETING_TYPE_GROUP_BASKET_SECURITY_BASE_VALUE.sql" />
+    <Content Include="Scripts\040-BASKET_PORTFOLIO_SECURITY_TARGET_CHANGESET.sql" />
+    <Content Include="Scripts\050-TARGETING_TYPE_BASKET_BASE_VALUE_CHANGESET.sql" />
+    <Content Include="Scripts\041-BASKET_PORTFOLIO_SECURITY_TARGET_CHANGE.sql" />
+    <Content Include="Scripts\042-BASKET_PORTFOLIO_SECURITY_TARGET.sql" />
+    <Content Include="Scripts\051-TARGETING_TYPE_BASKET_BASE_VALUE_CHANGE.sql" />
+    <Content Include="Scripts\052-TARGETING_TYPE_BASKET_BASE_VALUE.sql" />
+    <Content Include="Scripts\062-BGA_PORTFOLIO_SECURITY_FACTOR.sql" />
+    <Content Include="Scripts\061-BGA_PORTFOLIO_SECURITY_FACTOR_CHANGE.sql" />
+    <Content Include="Scripts\060-BGA_PORTFOLIO_SECURITY_FACTOR_CHANGESET.sql" />
+    <Content Include="Scripts\070-TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_CHANGESET.sql" />
+    <Content Include="Scripts\071-TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_CHANGE.sql" />
+    <Content Include="Scripts\072-TARGETING_TYPE_BASKET_PORTFOLIO_TARGET.sql" />
+    <Content Include="Scripts\014-USERNAME_FUND.sql" />
+    <Content Include="Scripts\004-PORTFOLIO.sql" />
+    <None Include="Properties\DataSources\TopDown.Core.Geographic.Backend.Entities.datasource" />
+    <Content Include="Scripts\020-BU_PORTFOLIO_SECURITY_TARGET_CHANGESET.sql" />
+    <None Include="Scripts\_run-all-dev.bat" />
+    <None Include="Scripts\_run-all.bat" />
+    <None Include="Scripts\_run.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\000-DROP-EVERYTHING.sql" />
+    <Content Include="Scripts\001-SEQUENCE.sql" />
+    <Content Include="Scripts\002-BASKET.sql" />
+    <Content Include="Scripts\003-TAXONOMY.sql" />
+    <Content Include="Scripts\010-TARGETING_TYPE_GROUP.sql" />
+    <Content Include="Scripts\011-TARGETING_TYPE.sql" />
+    <Content Include="Scripts\012-TARGETING_TYPE_PORTFOLIO.sql" />
+    <Content Include="Scripts\021-BU_PORTFOLIO_SECURITY_TARGET_CHANGE.sql" />
+    <Content Include="Scripts\022-BU_PORTFOLIO_SECURITY_TARGET.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Expressing\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TopDown.Expressions\Aims.Expressions.csproj">
+      <Project>{9FC437D2-362D-4898-8C9B-408B16406A0F}</Project>
+      <Name>Aims.Expressions</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

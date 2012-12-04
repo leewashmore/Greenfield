@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Bottom-up";
+	Layout = "~/Views/Shared/_Ajaxed.cshtml";
+}
+@section head {
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Gadgets/ash-SecurityPicker.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Pst/ash-Root.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Pst/ash-PortfolioPicker.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Pst/ash-Serializer.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Pst/ash-Model.js")"></script>
+	<script type="text/javascript">
+
+		$(function () {
+			(function ($, ko, document, ns) {
+				var baseUrl = ns.baseUrl;
+				var repository = new ns.Repository(baseUrl);
+				var portfolioPicker = new ns.Pst.PortfolioPicker(repository);
+				var securityPicker = new ns.SecurityPicker(repository);
+				var serializer = new ns.Pst.Serializer(new ns.SerializerHelper());
+				var model = new ns.Pst.Root(repository, portfolioPicker, securityPicker, serializer);
+				var page = new ns.Page(model, window);
+				repository.considerHandlingError.add(page.takeError, page);
+				var element = document.getElementById("root");
+				ko.applyBindings(page, element);
+				model.start();
+			})(jQuery, ko, window.document, ash);
+		});
+
+	</script>
+}
+
+@section content {
+
+<script type="text/html" id="pstPortfolioPickerTemplate">
+	<select data-bind="options: portfolios, optionsCaption: 'Choose portfolio...', optionsText: pickName, optionsValue: pickId, value: selectedPortfolio"></select>
+</script>
+
+
+<div id="root">
+    <div class="error" data-bind="template: { name: 'errorTemplate', data: error }"></div>
+    <h2 class="off">Bottom up</h2>
+    <div class="page tight">
+
+        <!-- ko with: model -->
+    
+        <div>
+            <div class="bordered off tight">
+	            <div data-bind="template: { name: 'pstPortfolioPickerTemplate', data: portfolioPicker }"></div>
+            </div>
+            <div class="bordered off tight">
+                <div><button data-bind="click: save, disable: savingPrevented()">Save</button></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    
+        <div class="bordered off" data-bind="with: model">
+		    <table class="data">
+		    <thead>
+			    <tr>
+                    <td>Security</td>
+                    <th>Target</th>
+                </tr>
+		    </thead>
+		    <tbody data-bind="foreach: items">
+			    <tr>
+				    <td class="textual" data-bind="text: security.name"></td>
+				    <td class="editable value" data-bind="template: { name: 'liveEditableValueTemplate', data: target }"></td>
+			    </tr>
+		    </tbody>
+            <tfoot>
+                <tr>
+                    <td data-bind="with: $parent.securityPicker">
+                        <input class="autocomplete" placeholder="Add security" data-bind="autocomplete: { source: requestOptions.bind($data), html: true, select: startTakingOption.bind($data) }, value: value " />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <th class="value" data-bind="template: { name: 'valueTemplate', data: targetTotal }"></th>
+                </tr>
+            </tfoot>
+		    </table>
+	    </div>
+        <!-- /ko -->
+        <div class="curtain" data-bind="template: { name: 'curtainTemplate' }, visible: loading"></div>
+        <div class="curtain" data-bind="template: { name: 'issuesTemplate', data: issues }, visible: issues()"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+}

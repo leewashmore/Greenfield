@@ -721,6 +721,10 @@
       <Project>{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}</Project>
       <Name>GreenField.UserSession</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Targeting\GreenField.Targeting.Client\GreenField.Targeting.Client.csproj">
+      <Project>{60EFAB0A-6A13-4E2A-90DF-064DCB6526D2}</Project>
+      <Name>GreenField.Targeting.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

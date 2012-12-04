@@ -7,7 +7,7 @@ using GreenField.ServiceCaller;
 using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Modularity;
-
+using TargetingModule = GreenField.Targeting.Controls;
 
 namespace GreenField.App
 {
@@ -22,6 +22,7 @@ namespace GreenField.App
 
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Bootstrapper).Assembly));
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.AdministrationModule.AdministrationModule).Assembly));
+            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.Targeting.Controls.TargetingModule).Assembly));
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.ServiceCaller.DBInteractivity).Assembly));
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.DashboardModule.DashboardModule).Assembly));
         }
@@ -47,6 +48,42 @@ namespace GreenField.App
         {
             base.ConfigureContainer();
             this.Container.ComposeExportedValue<ILoggerFacade>(this.Logger);
+            this.InitializeEntitiesForTargetingModule();
         }
+
+        private void InitializeEntitiesForTargetingModule()
+        {
+            var settings = this.CreateTargetingModuleSettings();
+            this.Container.ComposeExportedValue<TargetingModule.BroadGlobalActive.Settings>(settings.BgaSettings);
+            this.Container.ComposeExportedValue<TargetingModule.IClientFactory>(settings.ClientFactory);
+            this.Container.ComposeExportedValue<TargetingModule.BottomUp.Settings>(settings.BuSettings);
+            this.Container.ComposeExportedValue<TargetingModule.BasketTargets.Settings>(settings.BtSettings);
+        }
+
+        private TargetingModule.GlobalSettings CreateTargetingModuleSettings()
+        {
+            var benchmarkDate = new DateTime(2012, 10, 17);
+            var clientFactory = new TargetingModule.DefaultClientFactory();
+            var modelTraverser = new TargetingModule.BroadGlobalActive.ModelTraverser();
+
+            var bgaSettings = new TargetingModule.BroadGlobalActive.Settings(
+                clientFactory,
+                modelTraverser,
+                new TargetingModule.BroadGlobalActive.DefaultExpandCollapseStateSetter(modelTraverser),
+                benchmarkDate
+            );
+
+            var buSettings = new TargetingModule.BottomUp.Settings(clientFactory);
+            var btSettings = new TargetingModule.BasketTargets.Settings(clientFactory, benchmarkDate);
+
+            var settings = new TargetingModule.GlobalSettings(
+                clientFactory,
+                bgaSettings,
+                buSettings,
+                btSettings
+            );
+            return settings;
+        }
+
     }
 }

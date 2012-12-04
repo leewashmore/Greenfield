@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="GreenField.Targeting.App.Shell"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://www.codeplex.com/prism"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
+
+	<Grid x:Name="LayoutRoot">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<StackPanel Orientation="Horizontal">
+			<HyperlinkButton Grid.Row="0" Command="{Binding NavigateToTargetingBroadGlobalActiveCommand}">Broad Global Active</HyperlinkButton>
+			<HyperlinkButton Grid.Row="0" Command="{Binding NavigateToTargetingBottomUpCommand}">Bottom Up</HyperlinkButton>
+			<HyperlinkButton Grid.Row="0" Command="{Binding NavigateToTargetingBasketTargetsCommand}">Basket Targets</HyperlinkButton>
+		</StackPanel>
+
+		<ContentControl
+            Grid.Row="1"
+            VerticalContentAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            prism:RegionManager.RegionName="MainRegion" />
+	</Grid>
+</UserControl>
