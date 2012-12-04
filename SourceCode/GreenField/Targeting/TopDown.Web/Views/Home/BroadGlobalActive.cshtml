@@ -1,0 +1,220 @@
+﻿@{
+	ViewBag.Title = "Borad global active";
+	Layout = "~/Views/Shared/_Ajaxed.cshtml";
+}
+
+@section head {
+	<script src="@Url.Content("~/Scripts/Bpt/ash-PortfolioPicker.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/Bpt/ash-Model.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/Bpt/ash-Serializer.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/Bpt/ash-Root.js")" type="text/javascript"></script>
+	<script type="text/javascript">
+		var templates = {
+			region: 'regionTemplate',
+			basketCountry: 'basketCountryTemplate',
+			basketRegion: 'basketRegionTemplate',
+			countryTemplate: 'countryTemplate',
+			other: 'otherTemplate',
+			unsavedBasketCountry: 'unsavedBasketCountryTemplate',
+			nothing: 'emptyTemplate'
+		};
+
+		function pickTemplate(item) {
+			return templates[item['_'] || 'nothing'] || 'missingTemplate';
+		}
+
+		$(function () {
+			(function ($, ko, window, ns) {
+				var baseUrl = ns.baseUrl;
+				var repository = new ns.Repository(baseUrl);
+				var serializerHelper = new ns.SerializerHelper();
+				var serializer = new ns.Bpt.Serializer(serializerHelper);
+				var portfolioPicker = new ns.Bpt.PortfolioPicker(repository);
+				var model = new ns.Bpt.Root(repository, serializer, portfolioPicker);
+				var page = new ns.Page(model, window);
+				repository.considerHandlingError.add(page.takeError, page);
+				var element = window.document.getElementById("root");
+				ko.applyBindings(page, element);
+				model.start();
+			})(jQuery, ko, window, ash);
+		});
+
+	</script>
+}
+
+@section content {
+<div id="root">
+    
+    <div class="error" data-bind="template: { name: 'errorTemplate', data: error }"></div>
+
+    <h2 class="off">Broad global active</h2>
+    <div class="page tight">
+	
+	    <!-- ko with: model -->
+        <div>
+            <div class="tight bordered off" data-bind="template: { name: 'portfolioPickerTemplate', data: portfolioPicker }"></div>
+            <div class="tight titled off">
+                <h4>Ready?</h4>
+                <button data-bind="click: save, disable: savingPrevented()">Save</button>
+            </div>
+            <!-- ko with: model -->
+            <!-- ko if: data.overlay.items.length -->
+                <div class="tight titled off" style="z-index:100;">
+                    <h4>Overlays</h4>
+		            <div class="overlays" data-bind="foreach: data.overlay.items">
+			            <div class="labeled">
+				            <label data-bind="text: portfolio.name"></label>
+				            <div class="value editable" data-bind="template: { name: 'liveEditableValueTemplate', data: overlayFactor }"></div>
+			            </div>
+		            </div>
+                </div>
+            <!-- /ko -->
+            <!-- /ko -->
+            <div class="clear"></div>
+        </div>
+	    <div data-bind="with: model">
+		    <table class="data bordered off">
+			    <thead>
+				    <tr>
+					    <th class="name"></th>
+					    <th>Benchmark</th>
+					    <th>Base</th>
+					    <th>Base<br/>active</th>
+					    <th>Overlay</th>
+					    <th>Portfolio<br/>adjust.</th>
+					    <th>Portfolio<br/>scaled</th>
+					    <th>True<br/>exposure</th>
+					    <th>True<br/>active</th>
+				    </tr>
+			    </thead>
+			    <tbody>
+				    <!-- ko template: { name: pickTemplate, foreach: data.root.residents } -->
+				    <!-- /ko -->
+				    <!-- ko template: { name: 'cashTemplate', data: data.cash } -->
+				    <!-- /ko -->
+			    </tbody>
+                <tfoot>
+                    <tr data-bind="with: data.root">
+                        <th>Total</th>
+                        <td class="value" data-bind="text: percent(benchmark.value)"></td>
+                        <td class="value">100.000</td>
+                        <td></td>
+                        <td class="value" data-bind="text: percent(overlay.value)"></td>
+                        <td class="value" data-bind="text: percent(portfolioAdjustment.value)"></td>
+                        <td class="value" data-bind="text: percent($parent.data.portfolioScaledTotal.value)"></td>
+                        @*<td class="value" data-bind="text: percent(trueExposure.value)"></td>
+                        <td class="value" data-bind="text: percent(trueActive.value)"></td>*@
+                        <td></td>
+                        <td></td>
+                    </tr>
+                 </tfoot>
+		    </table>
+		    
+	    </div>
+	
+	    <!-- /ko -->
+        <!-- curtain needs to be kept at the bottom to be over whatever is on the page -->
+        <div class="curtain" data-bind="template: { name: 'curtainTemplate' }, visible: loading"></div>
+        <div class="curtain" data-bind="template: { name: 'issuesTemplate', data: issues }, visible: issues()"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script type="text/html" id="emptyTemplate"></script>
+<script type="text/html" id="missingTemplate">MISSING!</script>
+<script type="text/html" id="basketCountryTemplate">
+    <tr data-bind="visible: parent.expanded, attr: { 'class': 'level' + depth   }">
+        <td class="name" data-bind="text: country.name"></td>
+        <td class="value" data-bind="text: percent(benchmark.value)"></td>
+        <td class="editable value" data-bind="template: {name: 'liveEditableValueTemplate', data: $data['base'] }"></td>
+        <td class="value" data-bind="text: percent(baseActive.value)"></td>
+        <td class="value" data-bind="text: percent(overlay.value)"></td>
+        <td class="editable value" data-bind="template: {name: 'liveEditableValueTemplate', data: portfolioAdjustment }"></td>
+        <td class="value" data-bind="text: percent(portfolioScaled.value)"></td>
+        <td class="value" data-bind="text: percent(trueExposure.value)"></td>
+        <td class="value" data-bind="text: percent(trueActive.value)"></td>
+    </tr>
+</script>
+<script type="text/html" id="basketRegionTemplate">
+    <tr data-bind="visible: parent.expanded, attr: { 'class': 'basket-region level' + depth }">
+        <td class="name clickable" data-bind="click: toggleExpanded, text: name, css: { expanded: expanded(), collapsed: !expanded() }"></td>
+        <td class="value" data-bind="text: percent(benchmark.value)"></td>
+        <td class="editable value" data-bind="template: {name: 'liveEditableValueTemplate', data: $data['base'] }"></td>
+        <td class="value" data-bind="text: percent(baseActive.value)"></td>
+        <td class="value" data-bind="text: percent(overlay.value)"></td>
+        <td class="editable value" data-bind="template: {name: 'liveEditableValueTemplate', data: portfolioAdjustment }"></td>
+        <td class="value" data-bind="text: percent(portfolioScaled.value)"></td>
+        <td class="value" data-bind="text: percent(trueExposure.value)"></td>
+        <td class="value" data-bind="text: percent(trueActive.value)"></td>
+    </tr>
+    <!-- ko template: { name: 'countryTemplate', foreach: countries } --><!-- /ko -->
+</script>
+<script type="text/html" id="unsavedBasketCountryTemplate">
+    <tr data-bind="visible: parent.expanded, attr: { 'class': 'level' + depth  }">
+        <td class="name" data-bind="text: country.name"></td>
+        <td class="value" data-bind="text: percent(benchmark.value)"></td>
+        <td class="editable value" data-bind="template: {name: 'liveEditableValueTemplate', data: $data['base'] }"></td>
+        <td class="value" data-bind="text: percent(baseActive.value)"></td>
+        <td class="value" data-bind="text: percent(overlay.value)"></td>
+        <td class="editable value" data-bind="template: {name: 'liveEditableValueTemplate', data: portfolioAdjustment }"></td>
+        <td class="value" data-bind="text: percent(portfolioScaled.value)"></td>
+        <td class="value" data-bind="text: percent(trueExposure.value)"></td>
+        <td class="value" data-bind="text: percent(trueActive.value)"></td>
+    </tr>
+</script>
+<script type="text/html" id="regionTemplate">
+    <tr data-bind="visible: parent.expanded, attr: { 'class': 'region level' + depth  }">
+        <td class="name clickable" data-bind="click: toggleExpanded, text: name, css: { expanded: expanded(), collapsed: !expanded() }"></td>
+        <td class="value" data-bind="text: percent(benchmark.value)"></td>
+        <td class="value" data-bind="text: percent($data['base'].value)"></td>
+        <td class="value" data-bind="text: percent(baseActive.value)"></td>
+        <td class="value" data-bind="text: percent(overlay.value)"></td>
+        <td class="value" data-bind="text: percent(portfolioAdjustment.value)"></td>
+        <td class="value" data-bind="text: percent(portfolioScaled.value)"></td>
+        <td class="value" data-bind="text: percent(trueExposure.value)"></td>
+        <td class="value" data-bind="text: percent(trueActive.value)"></td>
+    </tr>
+    <!-- ko template: { name: pickTemplate, foreach: residents } --><!-- /ko -->
+</script>
+<script type="text/html" id="otherTemplate">
+    <tr data-bind="click: toggleExpanded, visible: parent.expanded, attr: {'class': 'level' + depth}">
+        <td class="name clickable" data-bind="click: toggleExpanded, css: { expanded: expanded(), collapsed: !expanded() }">Other countries</td>
+        <td class="value" data-bind="text: percent(benchmark.value)"></td>
+        <td class="value" data-bind="text: percent($data['base'].value)"></td>
+        <td class="value" data-bind="text: percent(baseActive.value)"></td>
+        <td class="value" data-bind="text: percent(overlay.value)"></td>
+        <td class="value" data-bind="text: percent(portfolioAdjustment.value)"></td>
+        <td class="value" data-bind="text: percent(portfolioScaled.value)"></td>
+        <td class="value" data-bind="text: percent(trueExposure.value)"></td>
+        <td class="value" data-bind="text: percent(trueActive.value)"></td>
+    </tr>
+    <!-- ko template: { name: pickTemplate, foreach: basketCountries } --><!-- /ko -->
+		<!-- ko template: { name: pickTemplate, foreach: unsavedBasketCountries } --><!-- /ko -->
+</script>
+<script type="text/html" id="countryTemplate">
+    <tr data-bind="visible: parent.expanded, attr: {'class': 'level' + depth}">
+        <td class="name country" data-bind="text: country.name"></td>
+        <td class="value" data-bind="text: percent(benchmark.value)"></td>
+        <td></td>
+        <td></td>
+        <td class="value" data-bind="text: percent(overlay.value)"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</script>
+<script type="text/html" id="cashTemplate">
+    <tr>
+        <td class="name">Cash</td>
+        <td></td>
+        <td class="value" data-bind="text: percent($data['base'].value)"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="value" data-bind="text: percent($data['cashScaled'].value)"></td>
+        <td></td>
+        <td></td>
+    </tr>
+</script>
+}

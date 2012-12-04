@@ -1,0 +1,36 @@
+﻿@using TopDown.Web.Models;
+@{
+  ViewBag.Title = "Calculations";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model TopDown.Web.Models.RecalculatePageModel
+@section head {
+}
+@section content {
+  <div class="container">
+    @foreach (var item in this.Model.Calculations)
+    {
+      <div class="off bordered">
+        @if (item.CalculationInfo.StatusCode > 1)
+        {
+          <span>Finished on @item.CalculationInfo.FinishedOn, it took @(item.CalculationInfo.FinishedOn - item.CalculationInfo.StartedOn)</span>
+        }
+        else
+        {
+          <a href="@Url.Action("Calculate", "Home", new { calculationId = item.CalculationInfo.Id })">Calculate</a>
+        }
+        @item.CalculationInfo.QueuedOn
+        @foreach (var people in item.GetChangesets().Where(x => x != null).GroupBy(x => x.Username))
+        {
+          <b>@people.Key</b> <span>has modified</span>
+          <ul>
+          @foreach (var changeset in people)
+          {
+            <li>@changeset.Render().ToLowerInvariant()</li>
+          }
+          </ul>
+        }
+      </div>
+    }
+  </div>
+}

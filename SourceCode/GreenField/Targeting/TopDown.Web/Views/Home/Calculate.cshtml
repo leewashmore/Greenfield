@@ -1,0 +1,29 @@
+﻿@using TopDown.Web.Models;
+@{
+  ViewBag.Title = "Calculations";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model TopDown.Web.Models.CalculationPageModel
+@section head {
+}
+@section content {
+  <table class="data">
+  <thead>
+    <tr>
+      <th>Portfolio</th>
+      <th>Security</th>
+      <th>Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in this.Model.Targets)
+    {
+      <tr>
+        <td>@item.Portfolio.Name</td>
+        <td>@item.Security.Name</td>
+        <td>@item.Target.ToString("c")</td>
+      </tr>
+    }
+  </tbody>
+  </table>
+}

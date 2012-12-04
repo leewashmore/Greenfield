@@ -1,0 +1,175 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:Telerik_Windows_Controls_RibbonView_Primitives="clr-namespace:Telerik.Windows.Controls.RibbonView.Primitives;assembly=Telerik.Windows.Controls.RibbonView" 
+    xmlns:Telerik_Windows_Controls_Primitives="clr-namespace:Telerik.Windows.Controls.Primitives;assembly=Telerik.Windows.Controls.Navigation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <System:Double x:Key="DefaultPrimaryMenuPanelFontSize">12</System:Double>
+    <System:String x:Key="DefaultPrimaryMenuPanelFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultPrimaryMenuPanelFontWeight">Bold</FontWeight>
+    <SolidColorBrush x:Key="DefaultPrimaryMenuPanelBackground">#cbd4f1</SolidColorBrush>
+
+
+    <System:Double x:Key="DefaultPrimaryMenuFontSize">10</System:Double>
+    <System:String x:Key="DefaultPrimaryMenuFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultPrimaryMenuFontWeight">Bold</FontWeight>
+    <SolidColorBrush x:Key="DefaultPrimaryMenuBackground">#dfe6f8</SolidColorBrush>
+
+
+
+    <System:Double x:Key="DefaultFirstLevelMenuFontSize">10</System:Double>
+    <System:String x:Key="DefaultFirstLevelMenuFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultFirstLevelMenuFontWeight">Bold</FontWeight>
+    <SolidColorBrush x:Key="DefaultFirstLevelMenuBackground">#dfe6f8</SolidColorBrush>
+
+
+
+    <System:Double x:Key="DefaultSecondLevelMenuFontSize">10</System:Double>
+    <System:String x:Key="DefaultSecondLevelMenuFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultSecondLevelMenuFontWeight">Bold</FontWeight>
+    <SolidColorBrush x:Key="DefaultSecondLevelMenuBackground">#dfe6f8</SolidColorBrush>
+
+
+    <Style TargetType="telerik:RadPanelBarItem" x:Key="PanelBarItemStyle">
+        <Setter Property="Background" Value="{StaticResource DefaultPrimaryMenuPanelBackground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultPrimaryMenuPanelFontFamily}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultPrimaryMenuPanelFontWeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultPrimaryMenuPanelFontSize}"/>
+    </Style>
+
+    <Style TargetType="telerik:RadMenu" x:Key="RadMenuStyle">
+        <Setter Property="Background" Value="{StaticResource DefaultPrimaryMenuBackground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultPrimaryMenuFontFamily}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultPrimaryMenuFontWeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultPrimaryMenuFontSize}"/>
+    </Style>
+
+
+    <Style TargetType="telerik:RadMenuItem" x:Key="RadFirstLevelMenuItemStyle">
+        <Setter Property="Background" Value="{StaticResource DefaultFirstLevelMenuBackground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFirstLevelMenuFontFamily}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultFirstLevelMenuFontWeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultFirstLevelMenuFontSize}"/>
+    </Style>
+
+    <Style TargetType="telerik:RadMenuItem" x:Key="RadSecondLevelMenuItemStyle">
+        <Setter Property="Background" Value="{StaticResource DefaultSecondLevelMenuBackground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultSecondLevelMenuFontFamily}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultSecondLevelMenuFontWeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultSecondLevelMenuFontSize}"/>
+    </Style>
+
+
+    <!--################################-->
+
+
+
+    <System:Double x:Key="DefaultControlFontSize">9</System:Double>
+    <System:Double x:Key="DefaultControlMinHeight">20</System:Double>
+    <System:String x:Key="DefaultControlFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultControlFontWeight">Normal</FontWeight>
+
+
+    <!--TextBlock Style-->
+    <Style TargetType="TextBlock" x:Name="TextBlockStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+    </Style>
+
+    <!--TextBox Style-->
+    <Style TargetType="TextBox" x:Name="TextBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+    </Style>
+
+    <!--RadComboBox Style-->
+    <Style TargetType="telerik:RadComboBox" x:Name="RadComboBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--RadComboBox Style-->
+    <Style TargetType="telerik:RadDropDownButton" x:Name="RadDropDownButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--CheckBox Style-->
+    <Style TargetType="CheckBox" x:Name="CheckBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--ComboBoxStyle-->
+    <Style TargetType="ComboBox" x:Name="ComboBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--RadButtonStyle-->
+    <Style TargetType="telerik:RadButton" x:Name="RadButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--RadNumericUpDownStyle-->
+    <Style TargetType="telerik:RadNumericUpDown" x:Name="RadNumericUpDownStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+    </Style>
+
+    <!--RadDatePicker-->
+    <Style TargetType="telerik:RadDatePicker" x:Name="RadDatePickerStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
+    <!--RadCalendar-->
+    <Style TargetType="telerik:RadCalendar" x:Name="RadCalendarStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
+    <!--BusyIndicatorStyle-->
+    <Style TargetType="telerik:RadBusyIndicator" x:Key="BusyIndicatorStyle">
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>   
+</ResourceDictionary>

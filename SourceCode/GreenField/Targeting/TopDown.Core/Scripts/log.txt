@@ -1,0 +1,200 @@
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>cls
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>for %f in (*.sql) do (
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i %f  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 000-DROP-EVERYTHING.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 3726, Level 16, State 1, Server LONWEB1T, Line 6
+Could not drop object 'dbo.TARGETING_TYPE' because it is referenced by a FOREIGN KEY constraint.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 001-SEQUENCE.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 2714, Level 16, State 6, Server LONWEB1T, Line 3
+There is already an object named 'SEQUENCE' in the database.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 002-BASKET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 2714, Level 16, State 6, Server LONWEB1T, Line 1
+There is already an object named 'BASKET' in the database.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 003-TAXONOMY.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 2714, Level 16, State 6, Server LONWEB1T, Line 1
+There is already an object named 'TAXONOMY' in the database.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 004-PORTFOLIO.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 2714, Level 16, State 6, Server LONWEB1T, Line 1
+There is already an object named 'PORTFOLIO' in the database.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 005-SECURITY_AS_PORTFOLIO.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 2714, Level 16, State 6, Server LONWEB1T, Line 1
+There is already an object named 'SECURITY_AS_PORTFOLIO' in the database.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 006-GF_BENCHMARK_HOLDINGS.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 2714, Level 16, State 6, Server LONWEB1T, Line 1
+There is already an object named 'GF_BENCHMARK_HOLDINGS' in the database.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 007-COUNTRY_BASKET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 207, Level 16, State 1, Server LONWEB1T, Line 2
+Invalid column name 'TYPE'.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 008-REGION_BASKET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 207, Level 16, State 1, Server LONWEB1T, Line 2
+Invalid column name 'TYPE'.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 010-TARGETING_TYPE_GROUP.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 2714, Level 16, State 6, Server LONWEB1T, Line 3
+There is already an object named 'TARGETING_TYPE_GROUP' in the database.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 011-TARGETING_TYPE.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+Msg 2714, Level 16, State 6, Server LONWEB1T, Line 1
+There is already an object named 'TARGETING_TYPE' in the database.
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 012-TARGETING_TYPE_PORTFOLIO.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+(1 rows affected)
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 014-USERNAME_PORTFOLIO.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+(1 rows affected)
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 020-PORTFOLIO_SECURITY_TARGET_CHANGESET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+(1 rows affected)
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 021-PORTFOLIO_SECURITY_TARGET_CHANGE.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 022-PORTFOLIO_SECURITY_TARGET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 030.TARGETING_TYPE_GROUP_BASKET_SECURITY_BASE_VALUE_CHANGESET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+(1 rows affected)
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 031-TARGETING_TYPE_GROUP_BASKET_SECURITY_BASE_VALUE_CHANGE.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 032-TARGETING_TYPE_GROUP_BASKET_SECURITY_BASE_VALUE.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 040-BASKET_PORTFOLIO_SECURITY_TARGET_CHANGESET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+(1 rows affected)
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 041-BASKET_PORTFOLIO_SECURITY_TARGET_CHANGE.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 042-BASKET_PORTFOLIO_SECURITY_TARGET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 050-TARGETING_TYPE_BASKET_BASE_VALUE_CHANGESET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+(1 rows affected)
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 051-TARGETING_TYPE_BASKET_BASE_VALUE_CHANGE.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 052-TARGETING_TYPE_BASKET_BASE_VALUE.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 060-PORTFOLIO_SECURITY_TARGET_OVERLAY_CHANGESET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+(1 rows affected)
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 061-PORTFOLIO_SECURITY_TARGET_OVERLAY_CHANGE.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 062-PORTFOLIO_SECURITY_TARGET_OVERLAY.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 070-TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_CHANGESET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+(1 rows affected)
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 071-TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_CHANGE.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 
+
+C:\kill-me-now\top-down\TopDown.Core\Scripts>(
+sqlcmd /S lonweb1t.ashmore.local -b /d AIMS_Data_Dev /U WPSuperUser /P Password1 /i 072-TARGETING_TYPE_BASKET_PORTFOLIO_TARGET.sql  
+ if ERRORLEVEL neq 0 exit /b 0 
+) 

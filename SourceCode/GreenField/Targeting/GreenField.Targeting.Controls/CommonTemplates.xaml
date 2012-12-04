@@ -1,0 +1,137 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:GreenField.Targeting.Controls"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:p="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+>
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/GreenField.Targeting.Controls;component/CrazyShit.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <DataTemplate x:Key="issueTemplate">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="{Binding Message}"></TextBlock>
+            <ContentControl Content="{Binding}">
+                <ContentControl.ContentTemplate>
+                    <DataTemplate>
+                        <ItemsControl Margin="20 0 0 0" ItemsSource="{Binding Issues}" ItemTemplate="{StaticResource issueTemplate}" />
+                    </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+        </StackPanel>
+    </DataTemplate>
+    
+    <local:BusyIndicatorTemplateSelector x:Key="busyIndicatorTemplateSelector">
+
+        <local:BusyIndicatorTemplateSelector.LoadingTemplate>
+            <DataTemplate>
+                <TextBlock>Loadin, please wait</TextBlock>
+            </DataTemplate>
+        </local:BusyIndicatorTemplateSelector.LoadingTemplate>
+
+        <local:BusyIndicatorTemplateSelector.IssuesTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Vertical">
+                    <ScrollViewer Content="{Binding}" MaxHeight="300">
+                        <ScrollViewer.ContentTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding Issues}" ItemTemplate="{StaticResource issueTemplate}" />
+                            </DataTemplate>
+                        </ScrollViewer.ContentTemplate>
+                    </ScrollViewer>
+                    <Button Margin="0 5 0 0" Command="{Binding AcknowledgeCommand}">OK</Button>
+                </StackPanel>
+            </DataTemplate>
+        </local:BusyIndicatorTemplateSelector.IssuesTemplate>
+
+        <local:BusyIndicatorTemplateSelector.ErrorTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding Message}"></TextBlock>
+            </DataTemplate>
+        </local:BusyIndicatorTemplateSelector.ErrorTemplate>
+
+    </local:BusyIndicatorTemplateSelector>
+    <local:CommunicationStateModelToBooleanConverter x:Key="communicationStateModelToBooleanConverter" />
+
+    
+    <Style TargetType="toolkit:BusyIndicator" x:Key="busyIndicatorStyle" BasedOn="{StaticResource specialBusyIndicator}">
+        <Setter Property="IsBusy" Value="{Binding CommunicationStateModel, Converter={StaticResource communicationStateModelToBooleanConverter}}" />
+        <Setter Property="BusyContent" Value="{Binding CommunicationStateModel}" />
+        <Setter Property="BusyContentTemplate" Value="{Binding CommunicationStateModel, Converter={StaticResource busyIndicatorTemplateSelector}}" />
+        <Setter Property="MinWidth" Value="300" />
+    </Style>
+
+    <Style TargetType="sdk:DataGridCell" x:Key="valueCellStyle">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style TargetType="sdk:DataGridCell" x:Key="editableValueCellStyle">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <DataTemplate x:Key="valueTemplate">
+        <local:ValueTextBox
+            IsReadOnly="True"
+            Value="{Binding Value}"
+            TextAlignment="Right"
+            Style="{StaticResource specialTextBox}" />
+    </DataTemplate>
+
+    <ItemsPanelTemplate x:Key="wrappedPanelTemplate">
+        <toolkit:WrapPanel />
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="editableValueTemplate">
+
+        <local:ValueTextBox
+                Value="{Binding EditedValue, Mode=TwoWay}"
+                AssumedValue="{Binding DisplayValue}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                TextAlignment="Right"
+                Style="{StaticResource specialTextBox}"
+            >
+            <i:Interaction.Behaviors>
+                <local:CommentBehavior>
+                    <local:CommentBehavior.ContentTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Black" BorderThickness="1" Background="White" Padding="5 2 5 5">
+                                <Grid Height="100" Width="200">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" IsHitTestVisible="False" HorizontalAlignment="Stretch">Comment</TextBlock>
+                                    <TextBox Grid.Row="1" Text="{Binding Data.Comment, Mode=TwoWay}"
+                                             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <i:Interaction.Behaviors>
+                                            <local:UpdateOnEnterBehavior EnterCommand="{Binding CloseCommand}" />
+                                        </i:Interaction.Behaviors>
+                                    </TextBox>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </local:CommentBehavior.ContentTemplate>
+                </local:CommentBehavior>
+            </i:Interaction.Behaviors>
+        </local:ValueTextBox>
+
+    </DataTemplate>
+
+    <Style TargetType="ContentControl" x:Key="valueContentStyle">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
+
+    <Style TargetType="ContentControl" x:Key="editableValueContentStyle">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
+
+</ResourceDictionary>

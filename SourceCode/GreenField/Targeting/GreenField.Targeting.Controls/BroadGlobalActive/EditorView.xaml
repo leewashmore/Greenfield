@@ -1,0 +1,221 @@
+﻿<UserControl
+    x:Class="GreenField.Targeting.Controls.BroadGlobalActive.EditorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:k="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:mine="clr-namespace:GreenField.Targeting.Controls.BroadGlobalActive"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:local="clr-namespace:GreenField.Targeting.Controls"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400"
+>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Targeting.Controls;component/CommonTemplates.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <local:LevelToPaddingConverter x:Key="levelToPaddingConverter" />
+
+            <!-- name cell style -->
+            <Style TargetType="TextBlock" x:Key="paddingAwareCellStyle">
+                <Setter Property="Padding" Value="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
+            </Style>
+
+            <!-- name cell template selector -->
+            <mine:GlobalResidentToDataTemplateConverter x:Key="nameCellTemplateSelector">
+
+                <mine:GlobalResidentToDataTemplateConverter.DefaultTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Style="{StaticResource paddingAwareCellStyle}"
+                        />
+                    </DataTemplate>
+                </mine:GlobalResidentToDataTemplateConverter.DefaultTemplate>
+
+                <mine:GlobalResidentToDataTemplateConverter.BasketRegionTemplate>
+                    <DataTemplate>
+                        <Button>
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <TextBlock Text="{Binding Basket.Name}" Style="{StaticResource paddingAwareCellStyle}" />
+                                </ControlTemplate>
+                            </Button.Template>
+                            <i:Interaction.Behaviors>
+                                <local:ToggleBehavior Switch="{Binding IsExpanded, Mode=TwoWay}" />
+                            </i:Interaction.Behaviors>
+                        </Button>
+                    </DataTemplate>
+                </mine:GlobalResidentToDataTemplateConverter.BasketRegionTemplate>
+
+                <mine:GlobalResidentToDataTemplateConverter.BasketCountryTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Basket.Country.Name}" Style="{StaticResource paddingAwareCellStyle}" />
+                    </DataTemplate>
+                </mine:GlobalResidentToDataTemplateConverter.BasketCountryTemplate>
+
+                <mine:GlobalResidentToDataTemplateConverter.RegionTemplate>
+                    <DataTemplate>
+                        <Button>
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource paddingAwareCellStyle}" />
+                                </ControlTemplate>
+                            </Button.Template>
+                            <i:Interaction.Behaviors>
+                                <local:ToggleBehavior Switch="{Binding IsExpanded, Mode=TwoWay}" />
+                            </i:Interaction.Behaviors>
+						</Button>
+                    </DataTemplate>
+                </mine:GlobalResidentToDataTemplateConverter.RegionTemplate>
+
+                <mine:GlobalResidentToDataTemplateConverter.CountryTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding Country.Name}"
+                            Style="{StaticResource paddingAwareCellStyle}"
+                        />
+                    </DataTemplate>
+                </mine:GlobalResidentToDataTemplateConverter.CountryTemplate>
+
+                <mine:GlobalResidentToDataTemplateConverter.OtherTemplate>
+                    <DataTemplate>
+                        <TextBlock>Other</TextBlock>
+                    </DataTemplate>
+                </mine:GlobalResidentToDataTemplateConverter.OtherTemplate>
+
+                <mine:GlobalResidentToDataTemplateConverter.CashLineTemplate>
+                    <DataTemplate>
+                        <TextBlock>Cash</TextBlock>
+                    </DataTemplate>
+                </mine:GlobalResidentToDataTemplateConverter.CashLineTemplate>
+
+                <mine:GlobalResidentToDataTemplateConverter.TotalLineTemplate>
+                    <DataTemplate>
+                        <TextBlock>Total</TextBlock>
+                    </DataTemplate>
+                </mine:GlobalResidentToDataTemplateConverter.TotalLineTemplate>
+
+            </mine:GlobalResidentToDataTemplateConverter>
+
+            <mine:GlobalResidentToDataTemplateConverter x:Key="templateSelector"
+                BasketCountryTemplate="{StaticResource editableValueTemplate}"
+                BasketRegionTemplate="{StaticResource editableValueTemplate}"
+                DefaultTemplate="{StaticResource valueTemplate}"
+            >
+            </mine:GlobalResidentToDataTemplateConverter>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+
+            <sdk:DataGrid AutoGenerateColumns="false" ItemsSource="{Binding Residents}">
+                <i:Interaction.Behaviors>
+                    <local:DataGridRowVisibilityBehavior />
+                </i:Interaction.Behaviors>
+                <sdk:DataGrid.Columns>
+
+                    <sdk:DataGridTemplateColumn Width="*" Header="Name">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl
+                                    Content="{Binding}"
+                                    ContentTemplate="{Binding Converter={StaticResource nameCellTemplateSelector}}"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+								/>
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+
+                    </sdk:DataGridTemplateColumn>
+
+                    <sdk:DataGridTemplateColumn Header="Benchmark" CellStyle="{StaticResource valueCellStyle}" >
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding Benchmark}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+
+                    <sdk:DataGridTemplateColumn Header="Base" CellStyle="{StaticResource editableValueCellStyle}">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl
+                                    Content="{Binding Base}"
+                                    ContentTemplate="{Binding Converter={StaticResource templateSelector}}"
+                                    Style="{StaticResource editableValueContentStyle}"
+								/>
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+
+                    <sdk:DataGridTemplateColumn Header="Base Active" CellStyle="{StaticResource valueCellStyle}">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding BaseActive}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+
+                    <sdk:DataGridTemplateColumn Header="Overlay" CellStyle="{StaticResource valueCellStyle}">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding Overlay}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+
+                    <sdk:DataGridTemplateColumn Header="Portfolio Adj" CellStyle="{StaticResource editableValueCellStyle}">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl
+                                    Content="{Binding PortfolioAdjustment}"
+                                    ContentTemplate="{Binding Converter={StaticResource templateSelector}}"
+                                    Style="{StaticResource editableValueContentStyle}"
+                                />
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+
+                    <sdk:DataGridTemplateColumn Header="Portfolio Scaled" CellStyle="{StaticResource valueCellStyle}">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding PortfolioScaled}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+
+                    <sdk:DataGridTemplateColumn Header="True Active" CellStyle="{StaticResource valueCellStyle}">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding TrueActive}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+
+                    <sdk:DataGridTemplateColumn Header="True Exposure" CellStyle="{StaticResource valueCellStyle}">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding TrueExposure}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+
+                </sdk:DataGrid.Columns>
+
+            </sdk:DataGrid>
+
+        </Grid>
+    </Grid>
+
+</UserControl>

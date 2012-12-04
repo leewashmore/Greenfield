@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="GreenField.Targeting.Controls.BasketTargets.PickerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="800">
+    <Grid>
+        
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+            <TextBlock Margin="5 2 5 0">Select targeting type group</TextBlock>
+            <ComboBox
+                Width="150"
+                ItemsSource="{Binding TargetingTypeGroups}"
+                SelectedItem="{Binding SelectedTargetingTypeGroup, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding TargetingTypeGroupName}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Margin="15 2 5 0">Select basket</TextBlock>
+            <ComboBox Width="100" ItemsSource="{Binding Baskets}" SelectedItem="{Binding SelectedBasket, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>
