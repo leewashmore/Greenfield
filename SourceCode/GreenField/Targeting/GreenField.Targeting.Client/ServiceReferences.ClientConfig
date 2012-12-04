@@ -6,13 +6,13 @@
             </basicHttpBinding>
         </bindings>
         <client>
-          <!--<endpoint address="http://localhost:35583/Services/TargetingOperations.svc"
+          <endpoint address="http://localhost:35583/Services/TargetingOperations.svc"
     binding="basicHttpBinding" bindingConfiguration="TargetingOperations"
-    contract="Backend.Targeting.IFacade" name="TargetingOperations" />-->
+    contract="Backend.Targeting.IFacade" name="TargetingOperations" />
 
-          <endpoint address="http://webqa.emiemm.com/GreenfieldDEV/Services/TargetingOperations.svc"
+          <!--<endpoint address="http://webqa.emiemm.com/GreenfieldDEV/Services/TargetingOperations.svc"
               binding="basicHttpBinding" bindingConfiguration="TargetingOperations"
-              contract="Backend.Targeting.IFacade" name="TargetingOperations" />
+              contract="Backend.Targeting.IFacade" name="TargetingOperations" />-->
         </client>
     </system.serviceModel>
 </configuration>

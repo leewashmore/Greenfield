@@ -20,18 +20,18 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:59430/Services/TargetingOperations.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:35583/Services/TargetingOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="TargetingOperations7.xsd" MetadataType="Schema" ID="a0d4504a-8d38-40d6-b7ae-cbc57794f3c5" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd3" />
-    <MetadataFile FileName="TargetingOperations71.xsd" MetadataType="Schema" ID="02d27af1-23a8-4518-bf18-08c4102b9825" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd4" />
-    <MetadataFile FileName="TargetingOperations72.xsd" MetadataType="Schema" ID="b54d1f64-f244-4349-842f-923bf3fcd0f9" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd6" />
-    <MetadataFile FileName="TargetingOperations73.xsd" MetadataType="Schema" ID="9345f649-d2b1-4aaf-8485-1a7e0d045dcf" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd5" />
-    <MetadataFile FileName="TargetingOperations74.xsd" MetadataType="Schema" ID="db570af3-363c-45e6-9193-4ae5f4abe300" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd0" />
-    <MetadataFile FileName="TargetingOperations1.wsdl" MetadataType="Wsdl" ID="5c2535ff-854c-45be-9c66-e57f0334d157" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?wsdl" />
-    <MetadataFile FileName="TargetingOperations75.xsd" MetadataType="Schema" ID="99a7ae6d-f309-4ee4-afb8-44e41e27e493" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd2" />
-    <MetadataFile FileName="TargetingOperations1.disco" MetadataType="Disco" ID="42fa6258-39dd-41fd-9ea6-2b3c51a9aa91" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?disco" />
-    <MetadataFile FileName="TargetingOperations76.xsd" MetadataType="Schema" ID="4f7db5e9-26f9-427f-bdbc-89f80adab60a" SourceId="1" SourceUrl="http://localhost:59430/Services/TargetingOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="TargetingOperations.xsd" MetadataType="Schema" ID="666ccb3b-8901-41f2-bb7b-8a5f35f4cba7" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="TargetingOperations1.xsd" MetadataType="Schema" ID="edd8dea0-8381-4c1a-bfda-e2ca195fbf1d" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd5" />
+    <MetadataFile FileName="TargetingOperations2.xsd" MetadataType="Schema" ID="dfe5d112-28d7-4373-b251-a7e561252bfa" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="TargetingOperations3.xsd" MetadataType="Schema" ID="b400398f-83f3-4feb-aa40-e1a8774b71a0" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd6" />
+    <MetadataFile FileName="TargetingOperations4.xsd" MetadataType="Schema" ID="ec17568c-dde5-47a7-b751-13c6f7e02aa1" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd4" />
+    <MetadataFile FileName="TargetingOperations.disco" MetadataType="Disco" ID="cff53d9b-66b6-4788-a6d7-22f0e02acbaf" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?disco" />
+    <MetadataFile FileName="TargetingOperations.wsdl" MetadataType="Wsdl" ID="9826f03d-4a97-442d-9828-ee60316e1125" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?wsdl" />
+    <MetadataFile FileName="TargetingOperations5.xsd" MetadataType="Schema" ID="35a9f521-f057-42ee-a476-43e585609d75" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="TargetingOperations6.xsd" MetadataType="Schema" ID="f9aaed8d-6871-4ee2-af42-5d866aedf252" SourceId="1" SourceUrl="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
