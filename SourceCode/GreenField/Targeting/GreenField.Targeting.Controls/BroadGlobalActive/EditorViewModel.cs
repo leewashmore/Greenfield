@@ -193,9 +193,10 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         /// </summary>
         public BgaRootModel RootModel { get; protected set; }
 
-        public void Deactivate()
+        public void Discard()
         {
             this.Residents = null;
+            this.Factors = null;
             this.RootModel = null;
         }
 

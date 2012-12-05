@@ -13,15 +13,15 @@ namespace GreenField.Targeting.Controls
 {
     public class PickerViewModelBase : CommunicatingViewModelBase
     {
-        public event EventHandler Reset;
-        protected virtual void OnReset()
+        public event CancellableEventHandler Reseting;
+        protected virtual void OnReseting(CancellableEventArgs args)
         {
             if (!this.IsSilent)
             {
-                var handler = this.Reset;
+                var handler = this.Reseting;
                 if (handler != null)
                 {
-                    handler(this, new EventArgs());
+                    handler(this, args);
                 }
             }
         }

@@ -51,7 +51,8 @@ namespace GreenField.Targeting.Controls
             }
             else
             {
-                this.OnPicked(new SecurityPickedEventArgs(selectedSecurity));
+                var args = new SecurityPickedEventArgs(selectedSecurity);
+                this.OnPicked(args);
             }
             this.SelectedSecurity = null;
         }

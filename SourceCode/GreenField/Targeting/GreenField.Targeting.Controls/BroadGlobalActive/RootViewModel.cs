@@ -39,27 +39,38 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             this.EditorViewModel = editorViewModel;
             this.PickerViewModel = pickerViewModel;
 
-            pickerViewModel.Picked += (sender, e) => this.ConsiderReloading(e.TargetingType.Id, e.Portfolio.Id, settings.BenchmarkDate);
-            pickerViewModel.Reset += (sender, e) => this.ConsiderReseting();
+            pickerViewModel.Picking += (sender, e) =>
+            {
+                e.IsCancelled = !this.ConsiderReloading(e.TargetingType.Id, e.Portfolio.Id, settings.BenchmarkDate);
+            };
+            pickerViewModel.Reseting += (sender, e) =>
+            {
+                e.IsCancelled = !this.ConsiderReseting();
+            };
 
             this.SaveCommand = new DelegateCommand(this.Save, this.CanSave);
             editorViewModel.GotData += (sender, e) => this.SaveCommand.RaiseCanExecuteChanged();
         }
 
-        protected void ConsiderReseting()
+        protected Boolean ConsiderReseting()
         {
-            if (this.CanGo())
+            var result = this.CanGo();
+            if (result)
             {
-                this.EditorViewModel.Deactivate();
+                this.EditorViewModel.Discard();
             }
+            return result;
         }
 
-        protected void ConsiderReloading(Int32 targetingTypeId, String portfolioId, DateTime benchmarkDate)
+        protected Boolean ConsiderReloading(Int32 targetingTypeId, String portfolioId, DateTime benchmarkDate)
         {
-            if (this.CanGo())
+            var result = this.CanGo();
+            if (result)
             {
+                this.EditorViewModel.Discard();
                 this.EditorViewModel.RequestData(targetingTypeId, portfolioId, benchmarkDate);
             }
+            return result;
         }
 
         public void Save()
@@ -83,7 +94,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         public override void Deactivate()
         {
             this.PickerViewModel.Deactivate(true);
-            this.EditorViewModel.Deactivate();
+            this.EditorViewModel.Discard();
         }
 
 

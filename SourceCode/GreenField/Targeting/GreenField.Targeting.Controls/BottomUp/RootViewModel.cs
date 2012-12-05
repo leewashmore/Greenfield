@@ -29,8 +29,15 @@ namespace GreenField.Targeting.Controls.BottomUp
             var securityPickerViewModel = new SecurityPickerViewModel(clientFactory, MaxNumberOfSecuritiesInDropdown);
             this.SecurityPickerViewModel = securityPickerViewModel;
 
-            pickerViewModel.Picked += (s, e) => this.ConsiderReloading(e.BottomUpPortfolio.Id);
-            pickerViewModel.Reset += (s, e) => this.ConsiderReseting();
+            pickerViewModel.Picked += (s, e) =>
+            {
+                e.IsCancelled = !this.ConsiderReloading(e.BottomUpPortfolio.Id);
+            };
+
+            pickerViewModel.Reseting += (s, e) =>
+            {
+                e.IsCancelled = !this.ConsiderReseting();
+            };
             securityPickerViewModel.SecurityPicked += (s, e) =>
             {
                 this.EditorViewModel.AddSecurity(e.Security);
@@ -41,24 +48,28 @@ namespace GreenField.Targeting.Controls.BottomUp
             this.SaveCommand = new DelegateCommand(this.Save, this.CanSave);
         }
 
-        protected void ConsiderReseting()
+        protected Boolean ConsiderReseting()
         {
-            if (this.CanGo())
+            var result = this.CanGo();
+            if (result)
             {
                 this.EditorViewModel.Deactivate();
             }
+            return result;
         }
 
-        protected void ConsiderReloading(String bottomUpPortfolioId)
+        protected Boolean ConsiderReloading(String bottomUpPortfolioId)
         {
-            if (this.CanGo())
+            var result = this.CanGo();
+            if (result)
             {
                 this.EditorViewModel.RequestData(bottomUpPortfolioId);
             }
+            return result;
         }
 
         public DelegateCommand SaveCommand { get; private set; }
-        
+
         public void Save()
         {
             this.EditorViewModel.RequestSaving();
@@ -92,6 +103,6 @@ namespace GreenField.Targeting.Controls.BottomUp
             this.EditorViewModel.Deactivate();
         }
 
-       
+
     }
 }

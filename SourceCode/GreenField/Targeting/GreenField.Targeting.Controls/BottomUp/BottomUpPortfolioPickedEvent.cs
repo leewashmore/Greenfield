@@ -13,10 +13,11 @@ using System.Diagnostics;
 
 namespace GreenField.Targeting.Controls.BottomUp
 {
-    public class BottomUpPortfolioPickedEventArgs : EventArgs
+    public class BottomUpPortfolioPickedEventArgs : CancellableEventArgs
     {
         [DebuggerStepThrough]
-        public BottomUpPortfolioPickedEventArgs(BottomUpPortfolioModel bottomUpPortfolio)
+        public BottomUpPortfolioPickedEventArgs(BottomUpPortfolioModel bottomUpPortfolio, Boolean isCancelled)
+            : base(isCancelled)
         {
             this.BottomUpPortfolio = bottomUpPortfolio;
         }

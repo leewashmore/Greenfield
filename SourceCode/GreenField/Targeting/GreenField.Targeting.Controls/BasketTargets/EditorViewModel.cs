@@ -99,7 +99,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.OnGotData();
         }
 
-        public void Deactivate()
+        public void Discard()
         {
             this.Portfolios = null;
             this.Lines = null;

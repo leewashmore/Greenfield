@@ -35,13 +35,7 @@
             <StackPanel Grid.Row="0" Orientation="Vertical" Margin="0 0 5 5">
                 
                 <StackPanel Orientation="Horizontal">
-                    <mine:PickerView DataContext="{Binding PickerViewModel}" Margin="5 5 0 0">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PortfolioPicked">
-                                <i:InvokeCommandAction Command="{Binding PortfolioPickedCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </mine:PickerView>
+                    <mine:PickerView DataContext="{Binding PickerViewModel}" Margin="5 5 0 0" />
                     <ContentControl Content="{Binding}" ContentTemplate="{StaticResource saveTemplate}" Margin="20 4 0 0" />
                 </StackPanel>
 

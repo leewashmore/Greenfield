@@ -3,13 +3,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:local="clr-namespace:GreenField.Targeting.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
     
     <Grid Background="White">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
             <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Select bottom-up portfolio</TextBlock>
-            <ComboBox ItemsSource="{Binding BottomUpPortfolios}" Width="150" SelectedItem="{Binding SelectedBottomUpPortfolio, Mode=TwoWay}">
+            <ComboBox ItemsSource="{Binding BottomUpPortfolios}" Width="150"
+                      SelectedItem="{Binding SelectedBottomUpPortfolio, Mode=TwoWay}">
+                <i:Interaction.Behaviors>
+                    <local:UndoingCancelledSelectionBehavior Source="{Binding SelectedBottomUpPortfolio}" />
+                </i:Interaction.Behaviors>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"></TextBlock>

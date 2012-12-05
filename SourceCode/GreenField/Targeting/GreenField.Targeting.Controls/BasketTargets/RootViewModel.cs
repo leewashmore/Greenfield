@@ -26,8 +26,16 @@ namespace GreenField.Targeting.Controls.BasketTargets
             var securityPickerViewModel = new SecurityPickerViewModel(settings.ClientFactory, MaxNumberOfSecurities);
             this.SecurityPickerViewModel = securityPickerViewModel;
 
-            pickerViewModel.Picked += (s, e) => this.ConsiderReloading(e.TargetingTypeGroupId, e.BasketId);
-            pickerViewModel.Reset += (s, e) => this.ConsiderReseting();
+            pickerViewModel.Picking += (s, e) =>
+            {
+                e.IsCancelled = !this.ConsiderReloading(e.TargetingTypeGroupId, e.BasketId);
+            };
+
+            pickerViewModel.Reseting += (s, e) =>
+            {
+                e.IsCancelled = !this.ConsiderReseting();
+            };
+
             securityPickerViewModel.SecurityPicked += (s, e) =>
             {
                 this.EditorViewModel.AddSecurity(e.Security);
@@ -38,20 +46,24 @@ namespace GreenField.Targeting.Controls.BasketTargets
             editorViewModel.GotData += (s, e) => this.SaveCommand.RaiseCanExecuteChanged();
         }
 
-        protected void ConsiderReseting()
+        protected Boolean ConsiderReseting()
         {
-            if (this.CanGo())
+            var result = this.CanGo();
+            if (result)
             {
-                this.EditorViewModel.Deactivate();
+                this.EditorViewModel.Discard();
             }
+            return result;
         }
 
-        protected void ConsiderReloading(Int32 targetingTypeGroupId, Int32 basketId)
+        protected Boolean ConsiderReloading(Int32 targetingTypeGroupId, Int32 basketId)
         {
-            if (this.CanGo())
+            var result = this.CanGo();
+            if (result)
             {
                 this.EditorViewModel.RequestData(targetingTypeGroupId, basketId);
             }
+            return result;
         }
 
         public void Save()
@@ -87,7 +99,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
         public override void Deactivate()
         {
             this.PickerViewModel.Deactivate(true);
-            this.EditorViewModel.Deactivate();
+            this.EditorViewModel.Discard();
         }
 
 

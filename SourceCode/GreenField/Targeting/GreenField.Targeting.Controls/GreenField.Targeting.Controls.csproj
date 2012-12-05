@@ -133,6 +133,7 @@
     <Compile Include="CommunicationStateModel, Error.cs" />
     <Compile Include="CommunicationStateModel, Loading.cs" />
     <Compile Include="CommunicationStateModel, Issues.cs" />
+    <Compile Include="Behavior, ReevaluateSelectedItem.cs" />
     <Compile Include="SecurityPickedEvent.cs" />
     <Compile Include="SecurityPickerViewModel.cs" />
     <Compile Include="BottomUp\Settings.cs" />

@@ -34,11 +34,17 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             get { return this.selectedTargetingType; }
             set
             {
-                this.selectedTargetingType = value;
-                this.RaisePropertyChanged(() => this.SelectedTargetingType);
-                if (value == null)
+                if (this.selectedTargetingType != value)
                 {
-                    this.OnReset();
+                    // no matter if the new value is NULL or something real
+                    // we fire the reseting event anyways as long as the value before is not the same as the value after
+                    var args = new CancellableEventArgs(false);
+                    this.OnReseting(args);
+                    if (!args.IsCancelled)
+                    {
+                        this.selectedTargetingType = value;
+                        this.RaisePropertyChanged(() => this.SelectedTargetingType);
+                    }                    
                 }
             }
         }
@@ -49,22 +55,30 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             get { return this.selectedPortfolio; }
             set
             {
-                this.selectedPortfolio = value;
-                this.RaisePropertyChanged(() => this.SelectedPortfolio);
-
-                if (value == null)
+                if (this.selectedPortfolio != value)
                 {
-                    this.OnReset();
-                }
-                else
-                {
-                    if (this.selectedTargetingType != null)
+                    if (value == null)
                     {
-                        var args = new PortfolioPickedEventArgs(
-                            this.selectedTargetingType,
-                            value
-                        );
-                        this.OnPortfolioPicked(args);
+                        var args = new CancellableEventArgs(false);
+                        this.OnReseting(args);
+                        if (!args.IsCancelled)
+                        {
+                            this.selectedPortfolio = null;
+                            this.RaisePropertyChanged(() => this.SelectedPortfolio);
+                        }
+                    }
+                    else
+                    {
+                        if (this.selectedTargetingType != null)
+                        {
+                            var args = new PortfolioPickedEventArgs(this.selectedTargetingType, value, false);
+                            this.OnPicking(args);
+                            if (!args.IsCancelled)
+                            {
+                                this.selectedPortfolio = value;
+                                this.RaisePropertyChanged(() => this.SelectedPortfolio);
+                            }
+                        }
                     }
                 }
             }
@@ -88,10 +102,10 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             this.FinishLoading();
         }
 
-        public event PortfolioPickedEventHandler Picked;
-        protected void OnPortfolioPicked(PortfolioPickedEventArgs args)
+        public event PortfolioPickedEventHandler Picking;
+        protected void OnPicking(PortfolioPickedEventArgs args)
         {
-            var handler = this.Picked;
+            var handler = this.Picking;
             if (handler != null)
             {
                 handler(this, args);

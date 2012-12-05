@@ -55,15 +55,28 @@ namespace GreenField.Targeting.Controls.BottomUp
             get { return this.selectedBottomUpPortfolio; }
             set
             {
-                this.selectedBottomUpPortfolio = value;
-                this.RaisePropertyChanged(() => this.SelectedBottomUpPortfolio);
-                if (value == null)
+                if (this.selectedBottomUpPortfolio != value)
                 {
-                    this.OnReset();
-                }
-                else
-                {
-                    this.OnPicked(new BottomUpPortfolioPickedEventArgs(value));
+                    if (value == null)
+                    {
+                        var args = new CancellableEventArgs(false);
+                        this.OnReseting(args);
+                        if (!args.IsCancelled)
+                        {
+                            this.selectedBottomUpPortfolio = null;
+                            this.RaisePropertyChanged(() => this.SelectedBottomUpPortfolio);
+                        }
+                    }
+                    else
+                    {
+                        var args = new BottomUpPortfolioPickedEventArgs(value, false);
+                        this.OnPicked(args);
+                        if (!args.IsCancelled)
+                        {
+                            this.selectedBottomUpPortfolio = value;
+                            this.RaisePropertyChanged(() => this.SelectedBottomUpPortfolio);
+                        }
+                    }
                 }
             }
         }

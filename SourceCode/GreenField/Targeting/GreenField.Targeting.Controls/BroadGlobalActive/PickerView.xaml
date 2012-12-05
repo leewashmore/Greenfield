@@ -5,14 +5,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="800"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:local="clr-namespace:GreenField.Targeting.Controls"
     xmlns:my="clr-namespace:GreenField.Targeting.Controls.BroadGlobalActive">
 
+    <UserControl.Resources>
+        <local:EchoConverter x:Key="echoConverter"         />
+    </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
             <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Select tarteting type</TextBlock>
             <ComboBox Width="200"
                 ItemsSource="{Binding TargetingTypes}"
                 SelectedItem="{Binding SelectedTargetingType, Mode=TwoWay}" >
+                <i:Interaction.Behaviors>
+                    <local:UndoingCancelledSelectionBehavior Source="{Binding SelectedTargetingType}" />
+                </i:Interaction.Behaviors>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"></TextBlock>
@@ -23,7 +30,11 @@
             <ComboBox Width="100"
                 ItemsSource="{Binding SelectedTargetingType.Portfolios}"
                 SelectedItem="{Binding SelectedPortfolio, Mode=TwoWay}"
-            >
+                >
+                <i:Interaction.Behaviors>
+                    <local:UndoingCancelledSelectionBehavior Source="{Binding SelectedPortfolio}" />
+                </i:Interaction.Behaviors>
+
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"></TextBlock>

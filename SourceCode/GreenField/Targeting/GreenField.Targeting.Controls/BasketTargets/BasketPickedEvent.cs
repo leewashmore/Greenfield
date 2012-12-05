@@ -12,10 +12,11 @@ using System.Diagnostics;
 
 namespace GreenField.Targeting.Controls.BasketTargets
 {
-    public class BasketPickedEventArgs : EventArgs
+    public class BasketPickedEventArgs : CancellableEventArgs
     {
         [DebuggerStepThrough]
-        public BasketPickedEventArgs(Int32 targetingTypeGroupId, Int32 basketId)
+        public BasketPickedEventArgs(Int32 targetingTypeGroupId, Int32 basketId, Boolean isCancelled)
+            : base(isCancelled)
         {
             this.TargetingTypeGroupId = targetingTypeGroupId;
             this.BasketId = basketId;

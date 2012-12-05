@@ -87,7 +87,7 @@
             <sdk:DataGridTemplateColumn Header="Benchmark">
                 <sdk:DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource benchmarkCellTemplateSelector}}" />
+                        <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource benchmarkCellTemplateSelector}}" Style="{StaticResource valueContentStyle}" />
                     </DataTemplate>
                 </sdk:DataGridTemplateColumn.CellTemplate>
             </sdk:DataGridTemplateColumn>

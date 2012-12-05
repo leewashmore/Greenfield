@@ -45,17 +45,24 @@ namespace GreenField.Targeting.Controls.BasketTargets
             get { return this.selectedTargetingTypeGroup; }
             set
             {
-                this.selectedTargetingTypeGroup = value;
-                this.RaisePropertyChanged(() => this.SelectedTargetingTypeGroup);
-                if (value != null)
+                if (this.selectedTargetingTypeGroup != value)
                 {
-                    this.Baskets = value.Baskets;
+                    var args = new CancellableEventArgs(false);
+                    this.OnReseting(args);
+                    if (!args.IsCancelled)
+                    {
+                        this.selectedTargetingTypeGroup = value;
+                        if (value == null)
+                        {
+                            this.Baskets = null;
+                        }
+                        else
+                        {
+                            this.Baskets = value.Baskets;
+                        }
+                        this.RaisePropertyChanged(() => this.SelectedTargetingTypeGroup);
+                    }
                 }
-                else
-                {
-                    this.Baskets = null;
-                }
-                this.OnReset();
             }
         }
 
@@ -74,17 +81,30 @@ namespace GreenField.Targeting.Controls.BasketTargets
             get { return this.selectedBasket; }
             set
             {
-                this.selectedBasket = value;
-                this.RaisePropertyChanged(() => this.SelectedBasket);
-                if (value != null)
+                if (this.selectedBasket != value)
                 {
-                    var targetingTypeGroup = this.SelectedTargetingTypeGroup;
-                    var basket = value;
-                    this.OnBasketPicked(new BasketPickedEventArgs(targetingTypeGroup.TargetingTypeGroupId, basket.Id));
-                }
-                else
-                {
-                    this.OnReset();
+                    if (value != null)
+                    {
+                        var targetingTypeGroup = this.SelectedTargetingTypeGroup;
+                        var basket = value;
+                        var args = new BasketPickedEventArgs(targetingTypeGroup.TargetingTypeGroupId, basket.Id, false);
+                        this.OnPicking(args);
+                        if (!args.IsCancelled)
+                        {
+                            this.selectedBasket = value;
+                            this.RaisePropertyChanged(() => this.SelectedBasket);
+                        }
+                    }
+                    else
+                    {
+                        var args = new CancellableEventArgs(false);
+                        this.OnReseting(args);
+                        if (!args.IsCancelled)
+                        {
+                            this.selectedBasket = value;
+                            this.RaisePropertyChanged(() => this.SelectedBasket);
+                        }
+                    }
                 }
             }
         }
@@ -101,10 +121,10 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.TargetingTypeGroups = data.TargetingGroups;
         }
 
-        public event BasketPickedEventHandler Picked;
-        protected virtual void OnBasketPicked(BasketPickedEventArgs args)
+        public event BasketPickedEventHandler Picking;
+        protected virtual void OnPicking(BasketPickedEventArgs args)
         {
-            var handler = this.Picked;
+            var handler = this.Picking;
             if (handler != null)
             {
                 handler(this, args);

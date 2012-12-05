@@ -13,10 +13,11 @@ using TopDown.FacingServer.Backend.Targeting;
 
 namespace GreenField.Targeting.Controls.BroadGlobalActive
 {
-    public class PortfolioPickedEventArgs : EventArgs
+    public class PortfolioPickedEventArgs : CancellableEventArgs
     {
         [DebuggerStepThrough]
-        public PortfolioPickedEventArgs(BgaTargetingTypePickerModel targetingType, BgaPortfolioPickerModel portfolio)
+        public PortfolioPickedEventArgs(BgaTargetingTypePickerModel targetingType, BgaPortfolioPickerModel portfolio, Boolean isCancelled)
+            : base(isCancelled)
         {
             this.TargetingType = targetingType;
             this.Portfolio = portfolio;
