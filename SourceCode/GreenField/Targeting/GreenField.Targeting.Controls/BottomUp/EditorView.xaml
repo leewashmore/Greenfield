@@ -14,7 +14,13 @@
     </UserControl.Resources>
     <sdk:DataGrid ItemsSource="{Binding Items}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto">
         <sdk:DataGrid.Columns>
-            <sdk:DataGridTextColumn Header="Security" Binding="{Binding Security.Name}" />
+            <sdk:DataGridTemplateColumn Header="Security">
+                <sdk:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Security.Name}" Style="{StaticResource nicelyMarginedTextboxStyle}" />
+                    </DataTemplate>
+                </sdk:DataGridTemplateColumn.CellTemplate>
+            </sdk:DataGridTemplateColumn>
             <sdk:DataGridTemplateColumn Header="Target">
                 <sdk:DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>

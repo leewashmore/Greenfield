@@ -11,6 +11,10 @@
         <ResourceDictionary Source="/GreenField.Targeting.Controls;component/CrazyShit.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Style TargetType="TextBlock" x:Key="nicelyMarginedTextboxStyle">
+        <Setter Property="Margin" Value="5 4" />
+    </Style>
+
     <DataTemplate x:Key="issueTemplate">
         <StackPanel Orientation="Vertical">
             <TextBlock Text="{Binding Message}"></TextBlock>

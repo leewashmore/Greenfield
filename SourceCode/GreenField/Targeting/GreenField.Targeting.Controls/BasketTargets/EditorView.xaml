@@ -19,12 +19,12 @@
             <mine:CellTemplateSelector x:Key="nameCellTemplateSelector">
                 <mine:CellTemplateSelector.RootTemplate>
                     <DataTemplate>
-                        <TextBlock>Total</TextBlock>
+                        <TextBlock Style="{StaticResource nicelyMarginedTextboxStyle}">Total</TextBlock>
                     </DataTemplate>
                 </mine:CellTemplateSelector.RootTemplate>
                 <mine:CellTemplateSelector.SecurityTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Security.Name}" />
+                        <TextBlock Text="{Binding Security.Name}" Style="{StaticResource nicelyMarginedTextboxStyle}" />
                     </DataTemplate>
                 </mine:CellTemplateSelector.SecurityTemplate>
             </mine:CellTemplateSelector>

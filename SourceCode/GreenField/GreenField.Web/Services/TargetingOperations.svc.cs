@@ -29,17 +29,146 @@ using TopDown.Core.ManagingBpt.ChangingTtbpt;
 using TopDown.Core.ManagingPst;
 using TopDown.Core.Gadgets.PortfolioPicker;
 using GreenField.Web.Targeting;
+using Server = GreenField.Targeting.Server;
 
 namespace GreenField.Web.Services
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class TargetingOperations : GreenField.Targeting.Server.Facade
+    public class TargetingOperations : GreenField.Targeting.Server.IFacade
     {
-        public TargetingOperations(GreenField.Targeting.Server.FacadeSettings settings)
-            : base(settings)
+        private Server.Facade facade;
+
+        public TargetingOperations(Server.FacadeSettings settings)
         {
+            this.facade = new Server.Facade(settings);
         }
 
-        
+        protected TResult Watch<TResult>(String failureMessage, Func<TResult> action)
+        {
+            TResult result;
+            try
+            {
+                result = action();
+            }
+            catch (Exception exception)
+            {
+                throw new ApplicationException(failureMessage + " Reason: " + exception.Message, exception);
+            }
+            return result;
+        }
+
+        public Server.BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId, DateTime benchmarkDate)
+        {
+            var user = HttpContext.Current.User;
+            return this.Watch("Unable to get the broad global active data for targeting type (ID: " + targetingTypeId + ") and broad global active portfolio (ID: " + bgaPortfolioId + ") for the benchamark as of " + benchmarkDate + ".", delegate
+            {
+
+                return this.facade.GetBroadGlobalActive(targetingTypeId, bgaPortfolioId, benchmarkDate);
+            });
+        }
+
+        public IEnumerable<Server.BroadGlobalActive.Picker.TargetingTypeModel> GetTargetingTypePortfolioPicker()
+        {
+            return this.Watch("Unable to get the data for targeting type and porfolio picker.", delegate
+            {
+                return this.facade.GetTargetingTypePortfolioPicker();
+            });
+        }
+
+        public Server.BroadGlobalActive.RootModel RecalculateBroadGlobalActive(Server.BroadGlobalActive.RootModel model)
+        {
+            return this.Watch("Unable to recalculate the broad global active data.", delegate
+            {
+                return this.facade.RecalculateBroadGlobalActive(model);
+            });
+        }
+
+        public IEnumerable<Server.SecurityModel> PickSecurities(String pattern, Int32 atMost)
+        {
+            return this.Watch("Unable to get a securities for the pattern \"" + pattern + "\".", delegate
+            {
+                return this.facade.PickSecurities(pattern, atMost);
+            });
+        }
+
+        public IEnumerable<Server.SecurityModel> PickSecuritiesFromBasket(String pattern, Int32 atMost, Int32 basketId)
+        {
+            return this.Watch("Unable to get securities for the pattern \"" + pattern + "\" from the basket (ID: " + basketId + ").", delegate
+            {
+                return this.facade.PickSecuritiesFromBasket(pattern, atMost, basketId);
+            });
+        }
+
+        public IEnumerable<Server.IssueModel> SaveBroadGlobalActive(Server.BroadGlobalActive.RootModel model)
+        {
+            return this.Watch("Unable to save the broad global active data.", delegate
+            {
+                return this.facade.SaveBroadGlobalActive(model);
+            });
+        }
+
+        public Server.BasketTargets.PickerModel GetBasketPicker()
+        {
+            return this.Watch("Unable to get the data for the basket picker.", delegate
+            {
+                return this.facade.GetBasketPicker();
+            });
+        }
+
+        public Server.BasketTargets.RootModel GetBasketTargets(Int32 targetingTypeGroupId, Int32 basketId, DateTime benchmarkDate)
+        {
+            return this.Watch("Unable to get basket targets for the targeting type group (ID: " + targetingTypeGroupId + "), basket (ID: " + basketId + ") and benchmark data as of " + benchmarkDate + ".", delegate
+            {
+                return this.facade.GetBasketTargets(targetingTypeGroupId, basketId, benchmarkDate);
+            });
+        }
+
+        public Server.BasketTargets.RootModel RecalculateBasketTargets(Server.BasketTargets.RootModel model, DateTime benchmarkDate)
+        {
+            return this.Watch("Unable to recalculate the basket targets using benchmark data as of " + benchmarkDate + ".", delegate
+            {
+                return this.facade.RecalculateBasketTargets(model, benchmarkDate);
+            });
+        }
+
+        public IEnumerable<Server.IssueModel> SaveBasketTargets(Server.BasketTargets.RootModel model, DateTime benchmarkDate)
+        {
+            return this.Watch("Unable to save the basket targets using benchmark data as of " + benchmarkDate + ".", delegate
+            {
+                return this.facade.SaveBasketTargets(model, benchmarkDate);
+            });
+        }
+
+        public Server.BottomUp.PickerModel GetBottomUpPortfolioPicker()
+        {
+            return this.Watch("Unable to get the bottom-up portfolio picker data.", delegate
+            {
+                return this.facade.GetBottomUpPortfolioPicker();
+            });
+        }
+
+        public Server.BottomUp.RootModel GetBottomUpModel(String bottomUpPortfolioId)
+        {
+            return this.Watch("Unable to get a bottom-up data for the bottom-up portfolio (ID: " + bottomUpPortfolioId + ").", delegate
+            {
+                return this.facade.GetBottomUpModel(bottomUpPortfolioId);
+            });
+        }
+
+        public Server.BottomUp.RootModel RecalculateBottomUp(Server.BottomUp.RootModel model)
+        {
+            return this.Watch("Unable to recalculate the bottom-up data.", delegate
+            {
+                return this.facade.RecalculateBottomUp(model);
+            });
+        }
+
+        public IEnumerable<Server.IssueModel> SaveBottomUp(Server.BottomUp.RootModel model)
+        {
+            return this.Watch("Unable to save the bottom-up data.", delegate
+            {
+                return this.facade.SaveBottomUp(model);
+            });
+        }
     }
 }
