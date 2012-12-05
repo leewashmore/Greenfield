@@ -73,6 +73,9 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <StackPanel Orientation="Vertical">
+    <CheckBox IsChecked="{Binding AreEmptyColumnsShown, Mode=TwoWay}" Content="Show default columns?" />
+
     <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" FrozenColumnCount="3">
         <sdk:DataGrid.Columns>
             
@@ -100,11 +103,10 @@
                 </sdk:DataGridTemplateColumn.CellTemplate>
             </sdk:DataGridTemplateColumn>
 
-
         </sdk:DataGrid.Columns>
 
         <i:Interaction.Behaviors>
-            <mine:DataGridDynamicColumnsBehavior ColumnsData="{Binding Portfolios}">
+            <mine:DataGridDynamicColumnsBehavior ColumnsData="{Binding Portfolios}" AreEmptyColumnShown="{Binding AreEmptyColumnsShown}">
                 <mine:DataGridDynamicColumnsBehavior.CellTemplate>
                     <DataTemplate>
                         <!-- the Content="{Binding}" is defined in the code so don't bother setting it here in XAML, it will be overriden -->
@@ -115,5 +117,6 @@
         </i:Interaction.Behaviors>
 
     </sdk:DataGrid>
+    </StackPanel>
 
 </UserControl>

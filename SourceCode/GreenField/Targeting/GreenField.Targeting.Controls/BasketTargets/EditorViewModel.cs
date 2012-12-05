@@ -40,10 +40,12 @@ namespace GreenField.Targeting.Controls.BasketTargets
         public EditorViewModel(IClientFactory clientFactory, DateTime benchmarkDate)
             : this(clientFactory, benchmarkDate, new ValueTraverser())
         {
+
         }
 
         public EditorViewModel(IClientFactory clientFactory, DateTime benchmarkDate, ValueTraverser valueTraverser)
         {
+            this.areEmptyColumnsShown = true;
             this.clientFactory = clientFactory;
             this.benchmarkDate = benchmarkDate;
             this.valueTraverser = valueTraverser;
@@ -58,6 +60,18 @@ namespace GreenField.Targeting.Controls.BasketTargets
                 this.RaisePropertyChanged(() => this.Portfolios);
             }
         }
+
+        private Boolean areEmptyColumnsShown;
+        public Boolean AreEmptyColumnsShown
+        {
+            get { return this.areEmptyColumnsShown; }
+            set
+            {
+                this.areEmptyColumnsShown = value;
+                this.RaisePropertyChanged("AreEmptyColumnsShown");
+            }
+        }
+
 
         // for later use when we send data back to the service
         internal BtRootModel KeptRootModel { get; private set; }

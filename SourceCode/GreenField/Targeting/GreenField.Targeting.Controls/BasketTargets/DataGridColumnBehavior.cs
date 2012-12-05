@@ -18,6 +18,60 @@ namespace GreenField.Targeting.Controls.BasketTargets
 {
     public class DataGridDynamicColumnsBehavior : Behavior<DataGrid>, IValueConverter
     {
+        public const Int32 NumberOfColumnsToKeep = 3;
+
+        public static readonly DependencyProperty AreEmptyColumnShownProperty = DependencyProperty.Register("AreEmptyColumnShown", typeof(Boolean), typeof(DataGridDynamicColumnsBehavior), new PropertyMetadata(WhenAreEmptyColumnShownChanges));
+        public Boolean AreEmptyColumnShown
+        {
+            get { return (Boolean)this.GetValue(AreEmptyColumnShownProperty); }
+            set { this.SetValue(AreEmptyColumnShownProperty, value); }
+        }
+
+        private static void WhenAreEmptyColumnShownChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var self = d as DataGridDynamicColumnsBehavior;
+            var before = (Boolean)e.OldValue;
+            var after = (Boolean)e.NewValue;
+
+            if (before != after)
+            {
+                self.SetEmptyColumnsVisibility(after);
+            }
+        }
+
+        protected void SetEmptyColumnsVisibility(Boolean isVisible)
+        {
+            var grid = this.AssociatedObject;
+            foreach (var column in grid.Columns)
+            {
+                if (this.IsEmptyColumn(column))
+                {
+                    column.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
+                }
+            }
+        }
+
+        private Boolean IsEmptyColumn(DataGridColumn column)
+        {
+            var grid = this.AssociatedObject;
+            var castedColumn = column as Column;
+            if (castedColumn == null) return false;
+            
+            foreach (var something in grid.ItemsSource)
+            {
+                var data = something as BtSecurityModel;
+                if (data == null) continue;
+                var index = column.DisplayIndex - NumberOfColumnsToKeep;
+                if (data.PortfolioTargets[index].PortfolioTarget.EditedValue.HasValue)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+
         public static readonly DependencyProperty ColumnsDataProperty = DependencyProperty.Register("ColumnsData", typeof(Object), typeof(DataGridDynamicColumnsBehavior), new PropertyMetadata(OnColumnsDataChanged));
         public Int32 ColumnsData
         {
@@ -37,7 +91,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             var self = dependencyObject as DataGridDynamicColumnsBehavior;
             var grid = self.AssociatedObject;
 
-            for (var index = grid.Columns.Count - 1; index >= 3; index--)
+            for (var index = grid.Columns.Count - 1; index >= NumberOfColumnsToKeep; index--)
             {
                 var column = grid.Columns[index];
                 grid.Columns.RemoveAt(index);

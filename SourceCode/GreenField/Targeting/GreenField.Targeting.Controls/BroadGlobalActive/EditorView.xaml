@@ -110,6 +110,7 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
+    
 
     <Grid Background="White">
 
@@ -121,7 +122,7 @@
 
             <sdk:DataGrid AutoGenerateColumns="false" ItemsSource="{Binding Residents}">
                 <i:Interaction.Behaviors>
-                    <local:DataGridRowVisibilityBehavior />
+                    <local:DataGridRowVisibilityBehavior  />
                 </i:Interaction.Behaviors>
                 <sdk:DataGrid.Columns>
 
