@@ -8,56 +8,69 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
-
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400"
+>
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Targeting.Controls;component/CommonTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <ItemsPanelTemplate x:Key="wrappedPanelTemplate">
+                <toolkit:WrapPanel />
+            </ItemsPanelTemplate>
+
         </ResourceDictionary>
     </UserControl.Resources>
 
     <toolkit:BusyIndicator Style="{StaticResource busyIndicatorStyle}">
 
-		<Grid x:Name="LayoutRoot" Background="White">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-			<StackPanel Grid.Row="0" Orientation="Vertical">
-				<StackPanel Orientation="Horizontal">
-					<mine:PickerView DataContext="{Binding PickerViewModel}">
-						<i:Interaction.Triggers>
-							<i:EventTrigger EventName="PortfolioPicked">
-								<i:InvokeCommandAction Command="{Binding PortfolioPickedCommand}" />
-							</i:EventTrigger>
-						</i:Interaction.Triggers>
-					</mine:PickerView>
-					<Button Command="{Binding SaveCommand}" Content="Save" />
-				</StackPanel>
-
-                <ItemsControl ItemsSource="{Binding EditorViewModel.Factors}" ItemsPanel="{StaticResource wrappedPanelTemplate}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Background="LightGray" Margin="0 0 20 0">
-                            <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="{Binding BottomUpPortfolio.Name}" Margin="0 5 10 0" Width="50"></TextBlock>
-                                <ContentControl Content="{Binding OverlayFactor}" ContentTemplate="{StaticResource editableValueTemplate}" />
-                            </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+            <StackPanel Grid.Row="0" Orientation="Vertical" Margin="0 0 5 5">
                 
+                <StackPanel Orientation="Horizontal">
+                    <mine:PickerView DataContext="{Binding PickerViewModel}" Margin="5 5 0 0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PortfolioPicked">
+                                <i:InvokeCommandAction Command="{Binding PortfolioPickedCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </mine:PickerView>
+                    <ContentControl Content="{Binding}" ContentTemplate="{StaticResource saveTemplate}" Margin="20 4 0 0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Margin="5 5 0 0">Target overlays</TextBlock>
+                    <ItemsControl ItemsSource="{Binding EditorViewModel.Factors}" ItemsPanel="{StaticResource wrappedPanelTemplate}" Margin="0 0 100 0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="5 5 0 0" Padding="5" BorderBrush="LightGray" BorderThickness="1">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding BottomUpPortfolio.Name}" Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                        <ContentControl
+                                            Content="{Binding OverlayFactor}" ContentTemplate="{StaticResource editableValueTemplate}" Width="50"
+                                            Style="{StaticResource editableValueContentStyle}"
+                                            HorizontalAlignment="Right" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+
             </StackPanel>
 
-			<mine:EditorView Grid.Row="1" DataContext="{Binding EditorViewModel}" />
+            <mine:EditorView Grid.Row="1" DataContext="{Binding EditorViewModel}" />
 
-		</Grid>
+        </Grid>
 
-	</toolkit:BusyIndicator>
+    </toolkit:BusyIndicator>
 
 </UserControl>

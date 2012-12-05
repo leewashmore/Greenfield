@@ -18,7 +18,7 @@ namespace GreenField.Targeting.Controls.BottomUp
         {
             var clientFactory = settings.ClientFactory;
 
-            var pickerViewModel = new PorfolioPickerViewModel(clientFactory);
+            var pickerViewModel = new PortfolioPickerViewModel(clientFactory);
             pickerViewModel.CommunicationStateChanged += this.WhenCommunicationStateChanges;
             this.PortfolioPickerViewModel = pickerViewModel;
 
@@ -69,7 +69,7 @@ namespace GreenField.Targeting.Controls.BottomUp
             return this.HasUnsavedChanges;
         }
 
-        public PorfolioPickerViewModel PortfolioPickerViewModel { get; private set; }
+        public PortfolioPickerViewModel PortfolioPickerViewModel { get; private set; }
         public EditorViewModel EditorViewModel { get; private set; }
         public SecurityPickerViewModel SecurityPickerViewModel { get; private set; }
 
@@ -88,8 +88,8 @@ namespace GreenField.Targeting.Controls.BottomUp
 
         public override void Deactivate()
         {
+            this.PortfolioPickerViewModel.Deactivate(true);
             this.EditorViewModel.Deactivate();
-            this.PortfolioPickerViewModel.Deactivate();
         }
 
        

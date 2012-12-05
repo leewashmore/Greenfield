@@ -16,7 +16,7 @@ using TopDown.FacingServer.Backend.Targeting;
 
 namespace GreenField.Targeting.Controls.BroadGlobalActive
 {
-    public class PickerViewModel : CommunicatingViewModelBase
+    public class PickerViewModel : PickerViewModelBase
     {
         private IClientFactory clientFactory;
 
@@ -98,21 +98,12 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             }
         }
 
-        public event EventHandler Reset;
-        protected void OnReset()
+        public void Deactivate(Boolean silently)
         {
-            var handler = this.Reset;
-            if (handler != null)
-            {
-                handler(this, new EventArgs());
-            }
-        }
-
-
-        public void Deactivate()
-        {
+            this.IsSilent = silently;
             this.SelectedPortfolio = null;
             this.SelectedTargetingType = null;
+            this.IsSilent = false;
         }
     }
 }

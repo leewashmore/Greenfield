@@ -23,13 +23,10 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-			<StackPanel Grid.Row="0" Orientation="Horizontal">
-				<mine:PickerView
-					DataContext="{Binding PickerViewModel}"
-					Margin="0 0 10 0"
-					/>
-					<Button Content="Save" Command="{Binding SaveCommand}" />
-			</StackPanel>
+			<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 0 5 5">
+				<mine:PickerView DataContext="{Binding PickerViewModel}" Margin="5 5 0 0" />
+                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource saveTemplate}" Margin="20 5 0 0" />
+            </StackPanel>
 			<mine:EditorView Grid.Row="1" DataContext="{Binding EditorViewModel}" />
             <local:SecurityPickerView Grid.Row="2" DataContext="{Binding SecurityPickerViewModel}" />
 

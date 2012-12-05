@@ -8,7 +8,7 @@
     
     <Grid Background="White">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <TextBlock Margin="5 2 5 0">Select bottom-up portfolio</TextBlock>
+            <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Select bottom-up portfolio</TextBlock>
             <ComboBox ItemsSource="{Binding BottomUpPortfolios}" Width="150" SelectedItem="{Binding SelectedBottomUpPortfolio, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

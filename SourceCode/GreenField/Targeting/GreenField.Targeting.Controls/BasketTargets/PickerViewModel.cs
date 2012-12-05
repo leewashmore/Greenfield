@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace GreenField.Targeting.Controls.BasketTargets
 {
-    public class PickerViewModel : CommunicatingViewModelBase
+    public class PickerViewModel : PickerViewModelBase
     {
         private IClientFactory clientFactory;
         private ObservableCollection<BtPickerTargetingGroupModel> targetingTypeGroups;
@@ -111,22 +111,14 @@ namespace GreenField.Targeting.Controls.BasketTargets
             }
         }
 
-        public event EventHandler Reset;
-        protected virtual void OnReset()
+        public void Deactivate(Boolean silently)
         {
-            var handler = this.Reset;
-            if (handler != null)
-            {
-                handler(this, new EventArgs());
-            }
-        }
-
-        public void Deactivate()
-        {
+            this.IsSilent = silently;
             this.TargetingTypeGroups = null;
             this.SelectedTargetingTypeGroup = null;
             this.SelectedBasket = null;
             this.Baskets = null;
+            this.IsSilent = false;
         }
     }
 }

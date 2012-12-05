@@ -6,10 +6,10 @@
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="800"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:my="clr-namespace:GreenField.Targeting.Controls.BroadGlobalActive">
-    
+
     <Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <TextBlock Margin="5 2 5 0">Select tarteting type</TextBlock>
+            <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Select tarteting type</TextBlock>
             <ComboBox Width="200"
                 ItemsSource="{Binding TargetingTypes}"
                 SelectedItem="{Binding SelectedTargetingType, Mode=TwoWay}" >
@@ -19,7 +19,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBlock Margin="15 2 5 0">Select portfolio</TextBlock>
+            <TextBlock Margin="20 0 5 0" VerticalAlignment="Center">Select portfolio</TextBlock>
             <ComboBox Width="100"
                 ItemsSource="{Binding SelectedTargetingType.Portfolios}"
                 SelectedItem="{Binding SelectedPortfolio, Mode=TwoWay}"
@@ -31,6 +31,6 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        
+
     </Grid>
 </UserControl>

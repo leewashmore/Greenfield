@@ -21,7 +21,10 @@
             <local:LevelToPaddingConverter x:Key="levelToPaddingConverter" />
 
             <!-- name cell style -->
-            <Style TargetType="TextBlock" x:Key="paddingAwareCellStyle">
+            <Style TargetType="TextBlock" x:Key="nicelyMarginedCellStyle">
+                <Setter Property="Margin" Value="5 4" />
+            </Style>
+            <Style TargetType="TextBlock" x:Key="paddingAwareCellStyle" BasedOn="{StaticResource nicelyMarginedCellStyle}">
                 <Setter Property="Padding" Value="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
             </Style>
 
@@ -83,19 +86,19 @@
 
                 <mine:GlobalResidentToDataTemplateConverter.OtherTemplate>
                     <DataTemplate>
-                        <TextBlock>Other</TextBlock>
+                        <TextBlock Style="{StaticResource nicelyMarginedCellStyle}">Other</TextBlock>
                     </DataTemplate>
                 </mine:GlobalResidentToDataTemplateConverter.OtherTemplate>
 
                 <mine:GlobalResidentToDataTemplateConverter.CashLineTemplate>
                     <DataTemplate>
-                        <TextBlock>Cash</TextBlock>
+                        <TextBlock Style="{StaticResource nicelyMarginedCellStyle}">Cash</TextBlock>
                     </DataTemplate>
                 </mine:GlobalResidentToDataTemplateConverter.CashLineTemplate>
 
                 <mine:GlobalResidentToDataTemplateConverter.TotalLineTemplate>
                     <DataTemplate>
-                        <TextBlock>Total</TextBlock>
+                        <TextBlock Style="{StaticResource nicelyMarginedCellStyle}">Total</TextBlock>
                     </DataTemplate>
                 </mine:GlobalResidentToDataTemplateConverter.TotalLineTemplate>
 

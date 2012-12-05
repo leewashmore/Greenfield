@@ -86,7 +86,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
 
         public override void Deactivate()
         {
-            this.PickerViewModel.Deactivate();
+            this.PickerViewModel.Deactivate(true);
             this.EditorViewModel.Deactivate();
         }
 

@@ -110,10 +110,11 @@
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BottomUp\EditorViewModel.cs" />
+    <Compile Include="PickerViewModelBase.cs" />
     <Compile Include="BottomUp\PortfolioPickerView.xaml.cs">
       <DependentUpon>PortfolioPickerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BottomUp\PorfolioPickerViewModel.cs" />
+    <Compile Include="BottomUp\PortfolioPickerViewModel.cs" />
     <Compile Include="BottomUp\RootView.xaml.cs">
       <DependentUpon>RootView.xaml</DependentUpon>
     </Compile>

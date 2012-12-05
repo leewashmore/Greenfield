@@ -82,7 +82,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
 
         public override void Deactivate()
         {
-            this.PickerViewModel.Deactivate();
+            this.PickerViewModel.Deactivate(true);
             this.EditorViewModel.Deactivate();
         }
 

@@ -28,7 +28,7 @@
 
         <local:BusyIndicatorTemplateSelector.LoadingTemplate>
             <DataTemplate>
-                <TextBlock>Loadin, please wait</TextBlock>
+                <TextBlock>Loading, please wait</TextBlock>
             </DataTemplate>
         </local:BusyIndicatorTemplateSelector.LoadingTemplate>
 
@@ -94,10 +94,14 @@
             TextAlignment="Right"
             Style="{StaticResource specialTextBox}" />
     </DataTemplate>
+    
+    <DataTemplate x:Key="saveTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center" Margin="0 0 5 0">Ready?</TextBlock>
+            <Button Command="{Binding SaveCommand}" Content="Save" />
+        </StackPanel>
+    </DataTemplate>
 
-    <ItemsPanelTemplate x:Key="wrappedPanelTemplate">
-        <toolkit:WrapPanel />
-    </ItemsPanelTemplate>
 
     <DataTemplate x:Key="editableValueTemplate">
 
@@ -114,7 +118,7 @@
                     <local:CommentBehavior.ContentTemplate>
                         <DataTemplate>
                             <Border BorderBrush="Black" BorderThickness="1" Background="White" Padding="5 2 5 5">
-                                <Grid Height="100" Width="200">
+                                <Grid Height="100" Width="100">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
@@ -143,7 +147,6 @@
 
     <Style TargetType="ContentControl" x:Key="editableValueContentStyle">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
     </Style>
 
 </ResourceDictionary>
