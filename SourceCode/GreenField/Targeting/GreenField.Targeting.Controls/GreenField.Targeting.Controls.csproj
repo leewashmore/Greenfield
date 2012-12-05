@@ -154,7 +154,7 @@
     <Compile Include="IViewModel, ComeAndGo.cs" />
     <Compile Include="AutoCompleteResponse.cs" />
     <Compile Include="AutoCompleteRequest.cs" />
-    <Compile Include="ViewModelBase.cs" />
+    <Compile Include="CommunicatingViewModelBase.cs" />
     <Compile Include="DefaultClientFactory.cs" />
     <Compile Include="Converter, Echo.cs" />
     <Compile Include="GlobalSettings.cs" />

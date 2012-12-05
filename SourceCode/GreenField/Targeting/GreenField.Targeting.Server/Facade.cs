@@ -26,7 +26,7 @@ namespace GreenField.Targeting.Server
         private BottomUp.Serializer buSerializer;
 
         [DebuggerStepThrough]
-        protected Facade(FacadeSettings settings)
+        public Facade(FacadeSettings settings)
             : this(
             settings.Facade,
             settings.Serializer,

@@ -42,7 +42,8 @@ namespace TopDown.Core
 		{
 			if (context.Any())
 			{
-				Trace.WriteLine(context.Pop());
+                var popped = context.Pop();
+				Trace.WriteLine(popped);
 				Trace.Indent();
 				this.DumpError(exception, context);
 				Trace.Unindent();
