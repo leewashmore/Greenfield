@@ -9,7 +9,18 @@ using System.Windows;
 
 namespace GreenField.Targeting.Controls.BottomUp
 {
-    public class EditorViewModel : EditorViewModelBase, IValueChangeWatcher
+    public class EditorInput
+    {
+        [DebuggerStepThrough]
+        public EditorInput(string bottomUpPortfolioId)
+        {
+            this.BottomUpPortfolioId = bottomUpPortfolioId;
+        }
+
+        public String BottomUpPortfolioId { get; private set; }
+    }
+
+    public class EditorViewModel : EditorViewModelBase<EditorInput>, IValueChangeWatcher
     {
         private IClientFactory clientFactory;
         private ObservableCollection<BuItemModel> items;
@@ -26,7 +37,14 @@ namespace GreenField.Targeting.Controls.BottomUp
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
-            client.GetBottomUpModelCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting picker data for the bottom-up editor", args, x => x.Result, this.TakeData, this.FinishLoading);
+            client.GetBottomUpModelCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
+                "Getting picker data for the bottom-up editor", args, x => x.Result,
+                data =>
+                {
+                    this.SetProvenValidInput(new EditorInput(bottomUpPortfolioId));
+                    this.TakeData(data);
+                },
+                this.FinishLoading);
             client.GetBottomUpModelAsync(bottomUpPortfolioId);
         }
 
@@ -43,6 +61,11 @@ namespace GreenField.Targeting.Controls.BottomUp
             client.RecalculateBottomUpAsync(this.KeptRootModel);
         }
 
+        protected override void RequestReloading(EditorInput input)
+        {
+            this.RequestData(input.BottomUpPortfolioId);
+        }
+
         public void TakeData(BuRootModel model)
         {
             this.KeptRootModel = model;
@@ -57,14 +80,14 @@ namespace GreenField.Targeting.Controls.BottomUp
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
             client.SaveBottomUpAsync(this.KeptRootModel);
-            client.SaveBottomUpCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Saving bottom-up", args, x => x.Result, this.FinishLoading, this.FinishLoading);
+            client.SaveBottomUpCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Saving bottom-up", args, x => x.Result, this.FinishSaving, this.FinishLoading);
         }
 
         private void RegisterInChangeWatcher(BuRootModel model)
         {
             model.Items.ForEach(x => x.Target.RegisterForBeingWatched(this));
         }
-        
+
         public void GetNotifiedAboutChangedValue(EditableExpressionModel model)
         {
             this.ConsiderRecalculating();
@@ -87,13 +110,11 @@ namespace GreenField.Targeting.Controls.BottomUp
             this.RequestRecalculating();
         }
 
-
-        public void Deactivate()
+        public void Discard()
         {
             this.Items = null;
             this.KeptRootModel = null;
         }
-
 
         // saving
     }

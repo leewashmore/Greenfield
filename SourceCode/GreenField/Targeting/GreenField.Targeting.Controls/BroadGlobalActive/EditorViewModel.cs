@@ -16,10 +16,26 @@ using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Linq;
+using System.Diagnostics;
 
 namespace GreenField.Targeting.Controls.BroadGlobalActive
 {
-    public class EditorViewModel : EditorViewModelBase, IValueChangeWatcher
+    public class EditorInput
+    {
+        [DebuggerStepThrough]
+        public EditorInput(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
+        {
+            this.TargetingTypeId = targetingTypeId;
+            this.BroadGlobalActivePortfolioId = broadGlobalActivePortfolioId;
+            this.BenchmarkDate = benchmarkDate;
+        }
+
+        public Int32 TargetingTypeId { get; private set; }
+        public String BroadGlobalActivePortfolioId { get; private set; }
+        public DateTime BenchmarkDate { get; private set; }
+    }
+
+    public class EditorViewModel : EditorViewModelBase<EditorInput>, IValueChangeWatcher
     {
         public const Int32 NumberOfMillisecondsBetweenLastChangeAndRecalcualtion = 0;
 
@@ -52,7 +68,14 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
-            client.GetBroadGlobalActiveCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting data for the editor", args, x => x.Result, this.TakeData, this.FinishLoading);
+            client.GetBroadGlobalActiveCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
+                "Getting data for the editor", args, x => x.Result,
+                data =>
+                {
+                    this.SetProvenValidInput(new EditorInput(targetingTypeId, broadGlobalActivePortfolioId, benchmarkDate));
+                    this.TakeData(data);
+                },
+                this.FinishLoading);
             client.GetBroadGlobalActiveAsync(targetingTypeId, broadGlobalActivePortfolioId, benchmarkDate);
         }
 
@@ -86,12 +109,17 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
-            client.SaveBroadGlobalActiveCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Saving data from the editor", args, x => x.Result, this.FinishLoading, this.FinishLoading);
+            client.SaveBroadGlobalActiveCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Saving data from the editor", args, x => x.Result, this.FinishSaving, this.FinishLoading);
             client.SaveBroadGlobalActiveAsync(this.RootModel);
         }
 
+        protected override void RequestReloading(EditorInput input)
+        {
+            this.RequestData(input.TargetingTypeId, input.BroadGlobalActivePortfolioId, input.BenchmarkDate);
+        }
+
         // handling data
-        
+
         private void RegisterOveralyFactorsForValueChangeWatch(BgaFactorModel factorsModel)
         {
             foreach (var item in factorsModel.Items)
@@ -203,7 +231,5 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         public void Dispose()
         {
         }
-
-
     }
 }

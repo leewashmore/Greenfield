@@ -15,7 +15,8 @@ using Microsoft.Practices.Prism.ViewModel;
 
 namespace GreenField.Targeting.Controls
 {
-    public class EditorViewModelBase : CommunicatingViewModelBase
+    public abstract class EditorViewModelBase<TInput> : CommunicatingViewModelBase
+        where TInput : class
     {
         public event EventHandler GotData;
         protected virtual void OnGotData()
@@ -27,7 +28,34 @@ namespace GreenField.Targeting.Controls
             }
         }
 
+        protected void SetProvenValidInput(TInput input)
+        {
+            this.lastValidInput = input;
+        }
 
-       
+        private TInput lastValidInput;
+
+        public void RequestReloading()
+        {
+            if (this.lastValidInput != null)
+            {
+                this.RequestReloading(this.lastValidInput);
+
+            }
+        }
+
+        protected abstract void RequestReloading(TInput input);
+
+        protected virtual void FinishSaving(ObservableCollection<IssueModel> issues)
+        {
+            if (issues.Any())
+            {
+                this.FinishLoading(issues);
+            }
+            else
+            {
+                this.RequestReloading();
+            }
+        }
     }
 }

@@ -12,9 +12,24 @@ using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
+
 namespace GreenField.Targeting.Controls.BasketTargets
 {
-    public class EditorViewModel : EditorViewModelBase, IValueChangeWatcher
+    public class EditorInput
+    {
+        [DebuggerStepThrough]
+        public EditorInput(Int32 targetingTypeGroupId, Int32 basketId)
+        {
+            this.TargetingTypeGroupId = targetingTypeGroupId;
+            this.BasketId = basketId;
+        }
+
+        public Int32 TargetingTypeGroupId { get; private set; }
+        public Int32 BasketId { get; private set; }
+    }
+
+    public class EditorViewModel : EditorViewModelBase<EditorInput>, IValueChangeWatcher
     {
         private IClientFactory clientFactory;
         private IEnumerable<BtPorfolioModel> portfolios;
@@ -71,16 +86,28 @@ namespace GreenField.Targeting.Controls.BasketTargets
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
-            client.GetBasketTargetsCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting basket targets", args, x => x.Result, this.TakeData, this.FinishLoading);
+            client.GetBasketTargetsCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
+                "Getting basket targets", args, x => x.Result,
+                data =>
+                {
+                    this.SetProvenValidInput(new EditorInput(targetingTypeGroupId, basketId));
+                    this.TakeData(data);
+                },
+                this.FinishLoading);
             client.GetBasketTargetsAsync(targetingTypeGroupId, basketId, this.benchmarkDate);
         }
-        
+
         public void RequestSaving()
         {
             this.StartLoading();
-			var client = this.clientFactory.CreateClient();
-			client.SaveBasketTargetsCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Saving basket targets", args, x => x.Result, this.FinishLoading, this.FinishLoading);
-			client.SaveBasketTargetsAsync(this.KeptRootModel, this.benchmarkDate);
+            var client = this.clientFactory.CreateClient();
+            client.SaveBasketTargetsCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Saving basket targets", args, x => x.Result, this.FinishSaving, this.FinishLoading);
+            client.SaveBasketTargetsAsync(this.KeptRootModel, this.benchmarkDate);
+        }
+
+        protected override void RequestReloading(EditorInput input)
+        {
+            this.RequestData(input.TargetingTypeGroupId, input.BasketId);
         }
 
         public void TakeData(BtRootModel model)
@@ -111,6 +138,6 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.RequestRecalculating();
         }
 
-       
+
     }
 }

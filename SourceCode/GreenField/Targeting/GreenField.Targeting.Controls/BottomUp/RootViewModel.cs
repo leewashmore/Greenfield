@@ -53,7 +53,7 @@ namespace GreenField.Targeting.Controls.BottomUp
             var result = this.CanGo();
             if (result)
             {
-                this.EditorViewModel.Deactivate();
+                this.EditorViewModel.Discard();
             }
             return result;
         }
@@ -100,7 +100,7 @@ namespace GreenField.Targeting.Controls.BottomUp
         public override void Deactivate()
         {
             this.PortfolioPickerViewModel.Deactivate(true);
-            this.EditorViewModel.Deactivate();
+            this.EditorViewModel.Discard();
         }
 
 

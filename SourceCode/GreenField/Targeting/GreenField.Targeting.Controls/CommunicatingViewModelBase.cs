@@ -49,6 +49,8 @@ namespace GreenField.Targeting.Controls
             this.IsLoading = false;
         }
 
+        
+
         public Boolean IsLoading { get; private set; }
     }
 }
