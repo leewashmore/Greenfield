@@ -42,7 +42,7 @@ namespace TopDown.Web.Controllers
 			{
                 var ticket = new CalculationTicket();
 				var facade = this.CreateJsonFacade(base.ShouldDrop(what));
-                var recalculatedBpstModelAsJson = facade.RecalculateBpstModel(bpstModelAsJson, BenchmarkDate, ticket);
+                var recalculatedBpstModelAsJson = facade.RecalculateBpstModel(bpstModelAsJson, ticket);
 				return recalculatedBpstModelAsJson;
 			});
 		}

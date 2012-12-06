@@ -22,7 +22,7 @@ namespace GreenField.Targeting.Controls
         public Object Data { get; set; }
         public DelegateCommand CloseCommand { get; set; }
     }
-    
+
     public class CommentBehavior : Behavior<ValueTextBox>
     {
         private readonly TimeSpan howLongWeWaitBeforePopupCloses = TimeSpan.FromMilliseconds(100);
@@ -30,7 +30,7 @@ namespace GreenField.Targeting.Controls
 
         public static DependencyProperty ContentTemplateProperty = DependencyProperty.Register("ContentTemplate", typeof(DataTemplate), typeof(CommentBehavior), new PropertyMetadata(null));
         private Popup popup;
-        
+
         private Popup Popup
         {
             get
@@ -38,9 +38,11 @@ namespace GreenField.Targeting.Controls
                 if (this.popup == null)
                 {
                     this.popup = new Popup();
-                    this.popup.Child = new ContentControl {
+                    this.popup.Child = new ContentControl
+                    {
                         ContentTemplate = this.ContentTemplate,
-                        Content = new CommentContext {
+                        Content = new CommentContext
+                        {
                             Data = this.AssociatedObject.DataContext,
                             CloseCommand = new DelegateCommand(this.ClosePopup)
                         }
@@ -59,7 +61,7 @@ namespace GreenField.Targeting.Controls
         }
 
         // initializing / deinitializing
-        
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -82,8 +84,8 @@ namespace GreenField.Targeting.Controls
             this.Popup.Child.LostFocus -= this.PopupChild_LostFocus;
             this.popupClosingTimer = null;
         }
-        
-        
+
+
         private void PopupChild_GotFocus(object sender, RoutedEventArgs e)
         {
             this.AssociatedObject.CancelFinishing();
@@ -114,7 +116,19 @@ namespace GreenField.Targeting.Controls
             this.popupClosingTimer.Stop();
             this.Popup.Visibility = Visibility.Visible;
             this.Popup.IsOpen = true;
-            var at = this.CalculatePopupPosition();
+            Point at;
+            
+            try
+            {
+                at = this.CalculatePopupPosition();
+            }
+            catch (ApplicationException)
+            {
+                // that's my guy (look below)
+                // just ignore it
+                return;
+            }
+
             this.Popup.HorizontalOffset = at.X;
             this.Popup.VerticalOffset = at.Y;
         }
@@ -122,7 +136,21 @@ namespace GreenField.Targeting.Controls
         private Point CalculatePopupPosition()
         {
             var owner = this.AssociatedObject;
-            var transformation = owner.TransformToVisual(Application.Current.RootVisual);
+
+            GeneralTransform transformation;
+            try
+            {
+                // this thing doesn't work when you click between 2 cells (at the border area).
+                transformation = owner.TransformToVisual(Application.Current.RootVisual);
+            }
+            catch (ArgumentException excepion)
+            {
+#warning Hack!
+                // there is a very annoying error that happened when the user hits a space between 2 cells (a border)
+                // I don't have time to figure out what is wrong with it
+                // as for now I am just going to ignore it
+                throw new ApplicationException("Unable to open a popup. Reason: " + excepion.Message, excepion);
+            }
             var at = transformation.Transform(new Point(owner.ActualWidth, 0));
             return at;
         }

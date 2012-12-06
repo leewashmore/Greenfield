@@ -34,8 +34,8 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
                 globe.Overlay,
                 globe.PortfolioAdjustment,
                 globe.PortfolioScaled,
-                globe.TrueActive,
-                globe.TrueExposure
+                globe.TrueExposure,
+                globe.TrueActive
             );
             totalLine.Parent = model.Globe;
             result.Add(totalLine);

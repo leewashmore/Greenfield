@@ -21,14 +21,16 @@ namespace GreenField.Targeting.Server.BottomUp
             String bottomUpPortfolioId,
             ChangesetModel changesetModel,
             IEnumerable<ItemModel> items,
-            NullableExpressionModel nullableExpressionModel,
+            NullableExpressionModel targetTotalExpression,
+            NullableExpressionModel cashExpression,
             Boolean isModified
         )
             : this()
         {
             this.BottomUpPortfolioId = bottomUpPortfolioId;
             this.ChangesetModel = changesetModel;
-            this.NullableExpressionModel = nullableExpressionModel;
+            this.TargetTotal = targetTotalExpression;
+            this.Cash = cashExpression;
             this.Items.AddRange(items);
             this.IsModified = isModified;
         }
@@ -40,7 +42,9 @@ namespace GreenField.Targeting.Server.BottomUp
         [DataMember]
         public List<ItemModel> Items { get; set; }
         [DataMember]
-        public NullableExpressionModel NullableExpressionModel { get; set; }
+        public NullableExpressionModel TargetTotal { get; set; }
+        [DataMember]
+        public NullableExpressionModel Cash { get; set; }
         [DataMember]
         public Boolean IsModified { get; set; }
         [DataMember]

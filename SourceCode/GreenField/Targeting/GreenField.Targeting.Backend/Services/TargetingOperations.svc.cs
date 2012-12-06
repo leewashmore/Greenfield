@@ -58,11 +58,11 @@ namespace GreenField.Targeting.Backend
 
 
 
-        public Server.BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId, DateTime benchmarkDate)
+        public Server.BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId)
         {
-            return this.Watch("Unable to get the broad global active data for targeting type (ID: " + targetingTypeId + ") and broad global active portfolio (ID: " + bgaPortfolioId + ") for the benchamark as of " + benchmarkDate + ".", delegate
+            return this.Watch("Unable to get the broad global active data for targeting type (ID: " + targetingTypeId + ") and broad global active portfolio (ID: " + bgaPortfolioId + ").", delegate
             {
-                return this.facade.GetBroadGlobalActive(targetingTypeId, bgaPortfolioId, benchmarkDate);
+                return this.facade.GetBroadGlobalActive(targetingTypeId, bgaPortfolioId);
             });
         }
 
@@ -114,27 +114,27 @@ namespace GreenField.Targeting.Backend
             });
         }
 
-        public Server.BasketTargets.RootModel GetBasketTargets(Int32 targetingTypeGroupId, Int32 basketId, DateTime benchmarkDate)
+        public Server.BasketTargets.RootModel GetBasketTargets(Int32 targetingTypeGroupId, Int32 basketId)
         {
-            return this.Watch("Unable to get basket targets for the targeting type group (ID: " + targetingTypeGroupId + "), basket (ID: " + basketId + ") and benchmark data as of " + benchmarkDate + ".", delegate
+            return this.Watch("Unable to get basket targets for the targeting type group (ID: " + targetingTypeGroupId + "), basket (ID: " + basketId + ").", delegate
             {
-                return this.facade.GetBasketTargets(targetingTypeGroupId, basketId, benchmarkDate);
+                return this.facade.GetBasketTargets(targetingTypeGroupId, basketId);
             });
         }
 
-        public Server.BasketTargets.RootModel RecalculateBasketTargets(Server.BasketTargets.RootModel model, DateTime benchmarkDate)
+        public Server.BasketTargets.RootModel RecalculateBasketTargets(Server.BasketTargets.RootModel model)
         {
-            return this.Watch("Unable to recalculate the basket targets using benchmark data as of " + benchmarkDate + ".", delegate
+            return this.Watch("Unable to recalculate the basket targets.", delegate
             {
-                return this.facade.RecalculateBasketTargets(model, benchmarkDate);
+                return this.facade.RecalculateBasketTargets(model);
             });
         }
 
-        public IEnumerable<Server.IssueModel> SaveBasketTargets(Server.BasketTargets.RootModel model, DateTime benchmarkDate)
+        public IEnumerable<Server.IssueModel> SaveBasketTargets(Server.BasketTargets.RootModel model)
         {
-            return this.Watch("Unable to save the basket targets using benchmark data as of " + benchmarkDate + ".", delegate
+            return this.Watch("Unable to save the basket targets.", delegate
             {
-                return this.facade.SaveBasketTargets(model, benchmarkDate);
+                return this.facade.SaveBasketTargets(model);
             });
         }
 

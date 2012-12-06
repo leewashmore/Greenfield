@@ -51,6 +51,7 @@ namespace TopDown.Core.ManagingBpt
 
                 var targetingTypeId = reader.ReadAsInt32(JsonNames.TargetingTypeId);
                 var portfolioId = reader.ReadAsString(JsonNames.PortfolioId);
+                var benchamrkDate = reader.ReadAsDatetime(JsonNames.BenchmarkDate);
 
                 var latestChangesets = reader.Read(JsonNames.LatestChangesets, delegate
                 {
@@ -104,7 +105,8 @@ namespace TopDown.Core.ManagingBpt
                     globe,
                     cash,
                     factors,
-                    portfolioScaledTotal
+                    portfolioScaledTotal,
+                    benchamrkDate
                 );
                 return result;
             });

@@ -56,6 +56,7 @@
     <Compile Include="ManagingBpt\Computing\CashScaledFormula.cs" />
     <Compile Include="ManagingCalculations\CalculationInfo.cs" />
     <Compile Include="ManagingCalculations\TargetRecord.cs" />
+    <Compile Include="ManagingPst\ModelValidator.cs" />
     <Compile Include="ManagingSecurities\Extender.cs" />
     <Compile Include="ManagingSecurities\Fund.cs" />
     <Compile Include="ManagingSecurities\ISecurity.cs" />

@@ -66,9 +66,12 @@
     <Compile Include="BasketTargets\Picker, Model.cs" />
     <Compile Include="BasketTargets\Model, PickerTargetingGroup.cs" />
     <Compile Include="BasketTargets\Serializer.cs" />
+    <Compile Include="BottomUp\Model, CashLine.cs" />
     <Compile Include="BottomUp\Deserializer.cs" />
+    <Compile Include="BottomUp\Model, IBuLine.cs" />
     <Compile Include="BottomUp\Model, Item.cs" />
     <Compile Include="BottomUp\Model, Root.cs" />
+    <Compile Include="BottomUp\Model, TotalLine.cs" />
     <Compile Include="BottomUp\PickerModel.cs" />
     <Compile Include="BottomUp\Serializer.cs" />
     <Compile Include="BroadGlobalActive\Deserializer.cs" />

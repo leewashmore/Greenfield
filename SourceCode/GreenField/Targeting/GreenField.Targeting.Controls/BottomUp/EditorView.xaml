@@ -4,30 +4,77 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:mine="clr-namespace:GreenField.Targeting.Controls.BottomUp"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+    
     <UserControl.Resources>
         <ResourceDictionary>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Targeting.Controls;component/CommonTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
-    <sdk:DataGrid ItemsSource="{Binding Items}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto">
-        <sdk:DataGrid.Columns>
-            <sdk:DataGridTemplateColumn Header="Security">
-                <sdk:DataGridTemplateColumn.CellTemplate>
+            
+            <mine:LineTemplateSelector x:Key="nameCellTemplateSelector">
+                <mine:LineTemplateSelector.SecurityTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Security.Name}" Style="{StaticResource nicelyMarginedTextboxStyle}" />
                     </DataTemplate>
-                </sdk:DataGridTemplateColumn.CellTemplate>
-            </sdk:DataGridTemplateColumn>
-            <sdk:DataGridTemplateColumn Header="Target">
+                </mine:LineTemplateSelector.SecurityTemplate>
+                <mine:LineTemplateSelector.CashTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource totalTextBlockStyle}">Cash</TextBlock>
+                    </DataTemplate>
+                </mine:LineTemplateSelector.CashTemplate>
+                <mine:LineTemplateSelector.TotalTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource totalTextBlockStyle}">Total</TextBlock>
+                    </DataTemplate>
+                </mine:LineTemplateSelector.TotalTemplate>
+            </mine:LineTemplateSelector>
+            
+            <mine:LineTemplateSelector x:Key="targetCellTemplateSelector">
+                <mine:LineTemplateSelector.SecurityTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding Target}" ContentTemplate="{StaticResource editableValueTemplate}" Style="{StaticResource editableValueContentStyle}" />
+                    </DataTemplate>
+                </mine:LineTemplateSelector.SecurityTemplate>
+                <mine:LineTemplateSelector.CashTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding Cash}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />
+                    </DataTemplate>
+                </mine:LineTemplateSelector.CashTemplate>
+                <mine:LineTemplateSelector.TotalTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding TargetTotal}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />
+                    </DataTemplate>
+                </mine:LineTemplateSelector.TotalTemplate>
+            </mine:LineTemplateSelector>
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto">
+        <sdk:DataGrid.Columns>
+            
+            <sdk:DataGridTemplateColumn Header="Security">
                 <sdk:DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <ContentControl Content="{Binding Target}" ContentTemplate="{StaticResource editableValueTemplate}" Style="{StaticResource valueContentStyle}" />
+                        <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource nameCellTemplateSelector}}"  Style="{StaticResource valueContentStyle}" />
                     </DataTemplate>
                 </sdk:DataGridTemplateColumn.CellTemplate>
             </sdk:DataGridTemplateColumn>
+            
+            <sdk:DataGridTemplateColumn Header="Target">
+                <sdk:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource targetCellTemplateSelector}}" Style="{StaticResource editableValueContentStyle}" />
+                    </DataTemplate>
+                </sdk:DataGridTemplateColumn.CellTemplate>
+            </sdk:DataGridTemplateColumn>
+            
+        
         </sdk:DataGrid.Columns>
+        
     </sdk:DataGrid>
+    
 </UserControl>

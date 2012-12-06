@@ -15,14 +15,11 @@ namespace GreenField.Targeting.Controls.BasketTargets
     public class Settings
     {
         [DebuggerStepThrough]
-        public Settings(IClientFactory clientFactory, DateTime benchmarkDate)
+        public Settings(IClientFactory clientFactory)
         {
             this.ClientFactory = clientFactory;
-            this.BenchmarkDate = benchmarkDate;
         }
 
         public IClientFactory ClientFactory { get; private set; }
-
-        public DateTime BenchmarkDate { get; private set; }
     }
 }

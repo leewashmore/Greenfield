@@ -73,11 +73,11 @@ namespace GreenField.Targeting.Server
             }
         }
 
-        public BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId, DateTime benchmarkDate)
+        public BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId)
         {
             this.MakeSureRepositoriesAreDroppedIfNeeded();
             var ticket = new CalculationTicket();
-            var model = this.facade.GetBptModel(targetingTypeId, bgaPortfolioId, benchmarkDate);
+            var model = this.facade.GetBptModel(targetingTypeId, bgaPortfolioId);
             var result = this.bgaSerializer.SerializeRoot(model, ticket);
             return result;
         }
@@ -132,25 +132,25 @@ namespace GreenField.Targeting.Server
             return serializedModel;
         }
 
-        public BasketTargets.RootModel GetBasketTargets(Int32 targetingTypeGroupId, Int32 basketId, DateTime benchmarkDate)
+        public BasketTargets.RootModel GetBasketTargets(Int32 targetingTypeGroupId, Int32 basketId)
         {
             var ticket = new CalculationTicket();
-            var model = this.facade.GetBpstModel(targetingTypeGroupId, basketId, benchmarkDate);
+            var model = this.facade.GetBpstModel(targetingTypeGroupId, basketId);
             var serializedModel = this.btSerializer.SerializeRoot(model, ticket);
             return serializedModel;
         }
 
-        public BasketTargets.RootModel RecalculateBasketTargets(BasketTargets.RootModel model, DateTime benchmarkDate)
+        public BasketTargets.RootModel RecalculateBasketTargets(BasketTargets.RootModel model)
         {
-            var deserializedModel = this.btDeserializer.DeserializeRoot(model, benchmarkDate);
+            var deserializedModel = this.btDeserializer.DeserializeRoot(model);
             var ticket = new CalculationTicket();
             var serializedModel = this.btSerializer.SerializeRoot(deserializedModel, ticket);
             return serializedModel;
         }
 
-        public IEnumerable<IssueModel> SaveBasketTargets(BasketTargets.RootModel model, DateTime benchmarkDate)
+        public IEnumerable<IssueModel> SaveBasketTargets(BasketTargets.RootModel model)
         {
-            var deserializedModel = this.btDeserializer.DeserializeRoot(model, benchmarkDate);
+            var deserializedModel = this.btDeserializer.DeserializeRoot(model);
             var ticket = new CalculationTicket();
             var issues = this.facade.ApplyBpstModelIfValid(deserializedModel, Username, ticket);
             var serializedIssues = this.serializer.SerializeValidationIssues(issues);

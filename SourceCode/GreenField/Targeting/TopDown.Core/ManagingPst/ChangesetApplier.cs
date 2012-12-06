@@ -11,17 +11,6 @@ namespace TopDown.Core.ManagingPst
 {
     public class ChangesetApplier
     {
-        public IEnumerable<IValidationIssue> Validate(RootModel root, CalculationTicket ticket)
-        {
-            var issues = new List<IValidationIssue>();
-            issues.AddRange(root.TargetTotal.Validate(ticket));
-            foreach (var item in root.Items)
-            {
-                issues.AddRange(item.Target.Validate());
-            }
-            return issues;
-        }
-
         public void Apply(Int32 calculationId, Changeset changeset, IDataManager manager)
         {
             var latestChangeSet = manager.GetLatestPortfolioSecurityTargetChangeSet();

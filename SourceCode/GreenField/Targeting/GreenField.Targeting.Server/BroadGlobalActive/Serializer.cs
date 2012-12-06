@@ -34,6 +34,7 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
                 this.serializer.SerializeChangeset(model.LatestPstChangeset),
                 this.SerializeGlobe(model.Globe, ticket),
                 this.SerializeCash(model.Cash, ticket),
+                model.BenchmarkDate,
                 hasBeenChanged
             );
             result.Factors = this.SerializeFactors(model.Factors);

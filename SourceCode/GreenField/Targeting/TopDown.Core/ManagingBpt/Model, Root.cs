@@ -24,7 +24,8 @@ namespace TopDown.Core.ManagingBpt
             GlobeModel globe,
             CashModel cash,
             Overlaying.RootModel factors,
-            IExpression<Decimal?> portfolioScaledTotalExpression
+            IExpression<Decimal?> portfolioScaledTotalExpression,
+            DateTime benchmarkDate
         )
         {
             this.TargetingType = targetingType;
@@ -37,6 +38,7 @@ namespace TopDown.Core.ManagingBpt
             this.Cash = cash;
             this.Factors = factors;
             this.PortfolioScaledTotal = portfolioScaledTotalExpression;
+            this.BenchmarkDate = benchmarkDate;
         }
 
         public TargetingType TargetingType { get; private set; }
@@ -49,5 +51,6 @@ namespace TopDown.Core.ManagingBpt
         public CashModel Cash { get; private set; }
         public Overlaying.RootModel Factors { get; private set; }
         public IExpression<Decimal?> PortfolioScaledTotal { get; private set; }
+        public DateTime BenchmarkDate { get; private set; }
     }
 }

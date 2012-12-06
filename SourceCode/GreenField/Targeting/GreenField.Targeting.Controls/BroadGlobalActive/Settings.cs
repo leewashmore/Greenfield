@@ -20,19 +20,16 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         public Settings(
             IClientFactory clientFactory,
             ModelTraverser modelTraverser,
-            DefaultExpandCollapseStateSetter defaultExpandCollapseStateSetter,
-            DateTime benchmarkDate
+            DefaultExpandCollapseStateSetter defaultExpandCollapseStateSetter
         )
         {
             this.ClientFactory = clientFactory;
             this.ModelTraverser = modelTraverser;
             this.DefaultExpandCollapseStateSetter = defaultExpandCollapseStateSetter;
-            this.BenchmarkDate = benchmarkDate;
         }
 
         public IClientFactory ClientFactory { get; private set; }
         public ModelTraverser ModelTraverser { get; private set; }
         public DefaultExpandCollapseStateSetter DefaultExpandCollapseStateSetter { get; private set; }
-        public DateTime BenchmarkDate { get; private set; }
     }
 }

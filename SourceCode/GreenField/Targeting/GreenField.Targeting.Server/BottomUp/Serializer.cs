@@ -32,6 +32,7 @@ namespace GreenField.Targeting.Server.BottomUp
                 this.serializer.SerializeChangeset(model.LatestChangeset),
                 items,
                 this.serializer.SerializeNullableExpression(model.TargetTotal, ticket),
+                this.serializer.SerializeNullableExpression(model.Cash, ticket),
                 this.modelChangeDetector.HasChanged(model)
             );
             return result;

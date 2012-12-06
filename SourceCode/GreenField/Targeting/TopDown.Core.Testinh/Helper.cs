@@ -161,8 +161,10 @@ namespace TopDown.Core.Testing
 			var pstModelToChangeMapper = new TopDown.Core.ManagingPst.ModelToChangesetTransformer();
 			var pstChangeApplier = new TopDown.Core.ManagingPst.ChangesetApplier();
 			var pstModelBuilder = new TopDown.Core.ManagingPst.ModelBuilder(null, commonParts);
+            var pstModelValidator = new TopDown.Core.ManagingPst.ModelValidator();
 			var pstManager = new PstManager(
 				pstChangeApplier,
+                pstModelValidator,
 				pstModelToChangeMapper,
 				new TopDown.Core.ManagingPst.ModelFromJsonDeserializer(
 					pstModelBuilder,

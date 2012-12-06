@@ -57,6 +57,10 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backend\Targeting\Model, BuItem.cs" />
+    <Compile Include="Backend\Targeting\Model, BuTotal.cs" />
+    <Compile Include="Backend\Targeting\Model, BuCash.cs" />
+    <Compile Include="Backend\Targeting\Model, IBuLine.cs" />
     <Compile Include="Backend\Targeting\Model, IExpression.cs" />
     <Compile Include="Backend\Targeting\Model, BtRoot.cs" />
     <Compile Include="Backend\Targeting\Model, BtSecurity.cs" />

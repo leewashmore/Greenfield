@@ -76,19 +76,17 @@ namespace GreenField.Targeting.App
 
         private Controls.GlobalSettings CreateTargetingSettings()
         {
-            var benchmarkDate = new DateTime(2012, 10, 17);
             var clientFactory = new DefaultClientFactory();
 			var modelTraverser = new Controls.BroadGlobalActive.ModelTraverser();
 
 			var bgaSettings = new Controls.BroadGlobalActive.Settings(
                 clientFactory,
                 modelTraverser,
-				new Controls.BroadGlobalActive.DefaultExpandCollapseStateSetter(modelTraverser),
-                benchmarkDate
+				new Controls.BroadGlobalActive.DefaultExpandCollapseStateSetter(modelTraverser)
             );
 
             var buSettings = new Controls.BottomUp.Settings(clientFactory);
-            var btSettings = new Controls.BasketTargets.Settings(clientFactory, benchmarkDate);
+            var btSettings = new Controls.BasketTargets.Settings(clientFactory);
 
 			var settings = new Controls.GlobalSettings(
                 clientFactory,

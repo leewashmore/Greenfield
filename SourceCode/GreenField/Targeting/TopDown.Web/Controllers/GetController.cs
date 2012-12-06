@@ -31,7 +31,7 @@ namespace TopDown.Web.Controllers
 				var shouldDrop = base.ShouldDrop(what);
                 var ticket = new CalculationTicket();
 				var facade = this.CreateJsonFacade(shouldDrop);
-				var json = facade.GetBreakdown(targetingId, portfolioId, BenchmarkDate, ticket);
+				var json = facade.GetBreakdown(targetingId, portfolioId, ticket);
 				return json;
 			});
 		}
@@ -59,7 +59,6 @@ namespace TopDown.Web.Controllers
 				var json = facade.GetBpstModel(
 					targetingTypeGroupId,
 					basketId,
-					BenchmarkDate,
                     ticket
 				);
 				return json;

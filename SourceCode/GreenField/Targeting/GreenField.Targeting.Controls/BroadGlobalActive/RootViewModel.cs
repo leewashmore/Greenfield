@@ -41,7 +41,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
 
             pickerViewModel.Picking += (sender, e) =>
             {
-                e.IsCancelled = !this.ConsiderReloading(e.TargetingType.Id, e.Portfolio.Id, settings.BenchmarkDate);
+                e.IsCancelled = !this.ConsiderReloading(e.TargetingType.Id, e.Portfolio.Id);
             };
             pickerViewModel.Reseting += (sender, e) =>
             {
@@ -62,13 +62,13 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             return result;
         }
 
-        protected Boolean ConsiderReloading(Int32 targetingTypeId, String portfolioId, DateTime benchmarkDate)
+        protected Boolean ConsiderReloading(Int32 targetingTypeId, String portfolioId)
         {
             var result = this.CanGo();
             if (result)
             {
                 this.EditorViewModel.Discard();
-                this.EditorViewModel.RequestData(targetingTypeId, portfolioId, benchmarkDate);
+                this.EditorViewModel.RequestData(targetingTypeId, portfolioId);
             }
             return result;
         }

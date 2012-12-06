@@ -34,20 +34,18 @@ namespace GreenField.Targeting.Controls.BasketTargets
         private IClientFactory clientFactory;
         private IEnumerable<BtPorfolioModel> portfolios;
         private IEnumerable<IBtLineModel> lines;
-        private DateTime benchmarkDate;
         private ValueTraverser valueTraverser;
 
-        public EditorViewModel(IClientFactory clientFactory, DateTime benchmarkDate)
-            : this(clientFactory, benchmarkDate, new ValueTraverser())
+        public EditorViewModel(IClientFactory clientFactory)
+            : this(clientFactory, new ValueTraverser())
         {
 
         }
 
-        public EditorViewModel(IClientFactory clientFactory, DateTime benchmarkDate, ValueTraverser valueTraverser)
+        public EditorViewModel(IClientFactory clientFactory, ValueTraverser valueTraverser)
         {
             this.areEmptyColumnsShown = true;
             this.clientFactory = clientFactory;
-            this.benchmarkDate = benchmarkDate;
             this.valueTraverser = valueTraverser;
         }
 
@@ -74,7 +72,16 @@ namespace GreenField.Targeting.Controls.BasketTargets
 
 
         // for later use when we send data back to the service
-        internal BtRootModel KeptRootModel { get; private set; }
+        private BtRootModel model;
+        public BtRootModel KeptRootModel
+        {
+            get { return this.model; }
+            set
+            {
+                this.model = value;
+                this.RaisePropertyChanged(() => this.KeptRootModel);
+            }
+        }
 
         public IEnumerable<IBtLineModel> Lines
         {
@@ -93,7 +100,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
             client.RecalculateBasketTargetsCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Recalculating basket targets", args, x => x.Result, this.TakeData, this.FinishLoading);
-            client.RecalculateBasketTargetsAsync(this.KeptRootModel, this.benchmarkDate);
+            client.RecalculateBasketTargetsAsync(this.KeptRootModel);
         }
 
         public void RequestData(Int32 targetingTypeGroupId, Int32 basketId)
@@ -108,7 +115,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
                     this.TakeData(data);
                 },
                 this.FinishLoading);
-            client.GetBasketTargetsAsync(targetingTypeGroupId, basketId, this.benchmarkDate);
+            client.GetBasketTargetsAsync(targetingTypeGroupId, basketId);
         }
 
         public void RequestSaving()
@@ -116,7 +123,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
             client.SaveBasketTargetsCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Saving basket targets", args, x => x.Result, this.FinishSaving, this.FinishLoading);
-            client.SaveBasketTargetsAsync(this.KeptRootModel, this.benchmarkDate);
+            client.SaveBasketTargetsAsync(this.KeptRootModel);
         }
 
         protected override void RequestReloading(EditorInput input)

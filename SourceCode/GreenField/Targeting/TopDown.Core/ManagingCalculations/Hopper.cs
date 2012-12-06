@@ -181,7 +181,7 @@ namespace TopDown.Core.ManagingCalculations
 			var root = this.bptManager.GetRootModel(
 				targetingType.Id,
 				portfolio.Id,
-				null /* we coundn't care less about benchmarks at this point */,
+				false /* we coundn't care less about benchmarks at this point */,
 				manager
 			);
 
@@ -384,7 +384,7 @@ namespace TopDown.Core.ManagingCalculations
 			var targetingTypeGroup = targetingTypeGroupRepository.GetTargetingTypeGroup(targetingType.TargetingTypeGroupId);
 			var portfolioRepository = this.repositoryManager.ClaimPortfolioRepository(manager);
 			
-			var bpstModel = this.bpstManager.GetCoreModel(
+			var core = this.bpstManager.GetCoreModel(
 				targetingTypeGroup,
 				basket,
 				securityRepositry,
@@ -393,9 +393,9 @@ namespace TopDown.Core.ManagingCalculations
 				portfolioRepository
 			);
 
-			this.MakeSureBpstCoreModelIsValid(bpstModel, ticket);
+			this.MakeSureBpstCoreModelIsValid(core, ticket);
 
-			foreach (var securityModel in bpstModel.Securities)
+			foreach (var securityModel in core.Securities)
 			{
 				var unscaledTarget = this.ResolveToUnscaledTarget(portfolio, securityModel, ticket);
 				var scaledTaget = unscaledTarget * portfolioScaled;

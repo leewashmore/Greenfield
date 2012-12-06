@@ -34,11 +34,16 @@ namespace GreenField.Targeting.Server.BottomUp
                 items.Insert(0, item);
             }
 
+
+            var targetTotalExpression = this.modelBuilder.CreateTargetTotalExpression(items);
+            var cashExpression = this.modelBuilder.CreateCashExpression(targetTotalExpression);
+
             var result = new Core.RootModel(
                 model.BottomUpPortfolioId,
                 this.DeserializeBuPortfolioSecurityTargetChangesetInfo(model.ChangesetModel),
                 items,
-                this.modelBuilder.CreateTargetTotalExpression(items)
+                targetTotalExpression,
+                cashExpression
             );
             return result;
         }
@@ -47,10 +52,7 @@ namespace GreenField.Targeting.Server.BottomUp
         {
             var security = this.deserializer.DeserializeSecurity(securityModel);
             var targetExpression = this.modelBuilder.CreateTargetExpression();
-            var result = new Core.ItemModel(
-                security,
-                targetExpression
-            );
+            var result = this.modelBuilder.CreateItem(security, targetExpression);
             return result;
         }
 
@@ -67,12 +69,10 @@ namespace GreenField.Targeting.Server.BottomUp
 
         protected Core.ItemModel DeserializeItem(ItemModel model)
         {
-            var totalExpression = this.modelBuilder.CreateTargetExpression();
-            this.deserializer.PopulateEditableExpression(totalExpression, model.Target);
-            var result = new Core.ItemModel(
-                this.deserializer.DeserializeSecurity(model.Security),
-                totalExpression
-            );
+            var security = this.deserializer.DeserializeSecurity(model.Security);
+            var targetExpression = this.modelBuilder.CreateTargetExpression();
+            this.deserializer.PopulateEditableExpression(targetExpression, model.Target);
+            var result = this.modelBuilder.CreateItem(security, targetExpression);
             return result;
         }
 

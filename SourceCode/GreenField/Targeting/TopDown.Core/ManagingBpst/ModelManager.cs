@@ -68,7 +68,6 @@ namespace TopDown.Core.ManagingBpst
         public RootModel GetRootModel(
             Int32 targetingTypeGroupId,
             Int32 basketId,
-            DateTime benchmarkDate,
             IDataManager manager
         )
         {
@@ -94,6 +93,7 @@ namespace TopDown.Core.ManagingBpst
             );
 			var securityRepository = this.repositoryManager.ClaimSecurityRepository(manager);
 			var portfolioRepository = this.repositoryManager.ClaimPortfolioRepository(manager);
+            var benchmarkDate = manager.GetLastestDateWhichBenchmarkDataIsAvialableOn();
 
             var core = this.GetCoreModel(
                 targetingTypeGroup,
@@ -109,9 +109,9 @@ namespace TopDown.Core.ManagingBpst
             var result = new RootModel(
                 latestBaseChangeset,
                 latestPortfolioTargetChangeset,
-                core
+                core,
+                benchmarkDate
             );
-
             var benchmarkRepository = this.repositoryManager.ClaimBenchmarkRepository(manager, benchmarkDate);
             this.benchmarkInitializer.InitializeCore(result.Core, benchmarkRepository);
 
@@ -232,7 +232,7 @@ namespace TopDown.Core.ManagingBpst
             TargetingTypeGroupRepository targetingTypeGroupRepository,
             BasketRepository basketRepository,
 			PortfolioRepository portfolioRepository,
-			BenchmarkRepository benchmarkRepository
+            IOnDamand<IDataManager> ondemandManager
         )
         {
             using (var reader = new JsonReader(new Newtonsoft.Json.JsonTextReader(new StringReader(bpstModelAsJson))))
@@ -245,7 +245,8 @@ namespace TopDown.Core.ManagingBpst
                         targetingTypeGroupRepository,
                         basketRepository,
 						portfolioRepository,
-						benchmarkRepository
+						this.repositoryManager,
+                        ondemandManager
                     );
                 });
                 return result;

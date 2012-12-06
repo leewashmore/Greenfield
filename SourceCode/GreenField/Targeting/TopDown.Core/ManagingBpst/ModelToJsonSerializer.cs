@@ -36,6 +36,7 @@ namespace TopDown.Core.ManagingBpst
             });
             writer.Write(root.Core.TargetingTypeGroup.Id, JsonNames.TargetingTypeGroupId);
             writer.Write(root.Core.Basket.Id, JsonNames.BasketId);
+            writer.Write(root.BenchmarkDate, JsonNames.BenchmarkDate);
             writer.WriteArray(root.Core.Securities, JsonNames.Securities, security =>
             {
                 writer.Write(delegate

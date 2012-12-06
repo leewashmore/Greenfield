@@ -29,6 +29,7 @@ namespace TopDown.Core.ManagingBpt
 		{
 			writer.Write(model.TargetingType.Id, JsonNames.TargetingTypeId);
 			writer.Write(model.Portfolio.Id, JsonNames.PortfolioId);
+            writer.Write(model.BenchmarkDate, JsonNames.BenchmarkDate);
 			writer.Write(JsonNames.LatestChangesets, delegate
 			{
 				writer.Write(JsonNames.TargetingTypeBasketBaseValue, delegate

@@ -21,6 +21,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         "tive")]
     public partial class BgaRootModel : object, System.ComponentModel.INotifyPropertyChanged {
         
+        private System.DateTime BenchmarkDateField;
+        
         private TopDown.FacingServer.Backend.Targeting.BroadGlobalActivePortfolioModel BroadGlobalActiveProtfolioField;
         
         private TopDown.FacingServer.Backend.Targeting.CashModel CashField;
@@ -40,6 +42,19 @@ namespace TopDown.FacingServer.Backend.Targeting {
         private TopDown.FacingServer.Backend.Targeting.ChangesetModel LatestTtbptChangesetField;
         
         private TopDown.FacingServer.Backend.Targeting.TargetingTypeModel TargetingTypeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime BenchmarkDate {
+            get {
+                return this.BenchmarkDateField;
+            }
+            set {
+                if ((this.BenchmarkDateField.Equals(value) != true)) {
+                    this.BenchmarkDateField = value;
+                    this.RaisePropertyChanged("BenchmarkDate");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public TopDown.FacingServer.Backend.Targeting.BroadGlobalActivePortfolioModel BroadGlobalActiveProtfolio {
@@ -2226,6 +2241,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private TopDown.FacingServer.Backend.Targeting.BasketModel BasketField;
         
+        private System.DateTime BenchmarkDateField;
+        
         private bool IsModifiedField;
         
         private TopDown.FacingServer.Backend.Targeting.ChangesetModel LatestBaseChangesetField;
@@ -2262,6 +2279,19 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.BasketField, value) != true)) {
                     this.BasketField = value;
                     this.RaisePropertyChanged("Basket");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime BenchmarkDate {
+            get {
+                return this.BenchmarkDateField;
+            }
+            set {
+                if ((this.BenchmarkDateField.Equals(value) != true)) {
+                    this.BenchmarkDateField = value;
+                    this.RaisePropertyChanged("BenchmarkDate");
                 }
             }
         }
@@ -2647,15 +2677,17 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private string BottomUpPortfolioIdField;
         
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel CashField;
+        
         private TopDown.FacingServer.Backend.Targeting.ChangesetModel ChangesetModelField;
         
         private bool IsModifiedField;
         
         private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.BuItemModel> ItemsField;
         
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel NullableExpressionModelField;
-        
         private TopDown.FacingServer.Backend.Targeting.SecurityModel SecurityToBeAddedOptField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TargetTotalField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string BottomUpPortfolioId {
@@ -2666,6 +2698,19 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.BottomUpPortfolioIdField, value) != true)) {
                     this.BottomUpPortfolioIdField = value;
                     this.RaisePropertyChanged("BottomUpPortfolioId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel Cash {
+            get {
+                return this.CashField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CashField, value) != true)) {
+                    this.CashField = value;
+                    this.RaisePropertyChanged("Cash");
                 }
             }
         }
@@ -2710,19 +2755,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel NullableExpressionModel {
-            get {
-                return this.NullableExpressionModelField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NullableExpressionModelField, value) != true)) {
-                    this.NullableExpressionModelField = value;
-                    this.RaisePropertyChanged("NullableExpressionModel");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public TopDown.FacingServer.Backend.Targeting.SecurityModel SecurityToBeAddedOpt {
             get {
                 return this.SecurityToBeAddedOptField;
@@ -2731,6 +2763,19 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.SecurityToBeAddedOptField, value) != true)) {
                     this.SecurityToBeAddedOptField = value;
                     this.RaisePropertyChanged("SecurityToBeAddedOpt");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TargetTotal {
+            get {
+                return this.TargetTotalField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TargetTotalField, value) != true)) {
+                    this.TargetTotalField = value;
+                    this.RaisePropertyChanged("TargetTotal");
                 }
             }
         }
@@ -2795,7 +2840,7 @@ namespace TopDown.FacingServer.Backend.Targeting {
     public interface IFacade {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/GetBroadGlobalActive", ReplyAction="http://tempuri.org/IFacade/GetBroadGlobalActiveResponse")]
-        System.IAsyncResult BeginGetBroadGlobalActive(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetBroadGlobalActive(int targetingTypeId, string bgaPortfolioId, System.AsyncCallback callback, object asyncState);
         
         TopDown.FacingServer.Backend.Targeting.BgaRootModel EndGetBroadGlobalActive(System.IAsyncResult result);
         
@@ -2830,17 +2875,17 @@ namespace TopDown.FacingServer.Backend.Targeting {
         TopDown.FacingServer.Backend.Targeting.BtPickerModel EndGetBasketPicker(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/GetBasketTargets", ReplyAction="http://tempuri.org/IFacade/GetBasketTargetsResponse")]
-        System.IAsyncResult BeginGetBasketTargets(int targetingTypeGroupId, int basketId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetBasketTargets(int targetingTypeGroupId, int basketId, System.AsyncCallback callback, object asyncState);
         
         TopDown.FacingServer.Backend.Targeting.BtRootModel EndGetBasketTargets(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/RecalculateBasketTargets", ReplyAction="http://tempuri.org/IFacade/RecalculateBasketTargetsResponse")]
-        System.IAsyncResult BeginRecalculateBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRecalculateBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.AsyncCallback callback, object asyncState);
         
         TopDown.FacingServer.Backend.Targeting.BtRootModel EndRecalculateBasketTargets(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/SaveBasketTargets", ReplyAction="http://tempuri.org/IFacade/SaveBasketTargetsResponse")]
-        System.IAsyncResult BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> EndSaveBasketTargets(System.IAsyncResult result);
         
@@ -3309,8 +3354,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginGetBroadGlobalActive(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetBroadGlobalActive(targetingTypeId, bgaPortfolioId, benchmarkDate, callback, asyncState);
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginGetBroadGlobalActive(int targetingTypeId, string bgaPortfolioId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetBroadGlobalActive(targetingTypeId, bgaPortfolioId, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3321,8 +3366,7 @@ namespace TopDown.FacingServer.Backend.Targeting {
         private System.IAsyncResult OnBeginGetBroadGlobalActive(object[] inValues, System.AsyncCallback callback, object asyncState) {
             int targetingTypeId = ((int)(inValues[0]));
             string bgaPortfolioId = ((string)(inValues[1]));
-            System.DateTime benchmarkDate = ((System.DateTime)(inValues[2]));
-            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginGetBroadGlobalActive(targetingTypeId, bgaPortfolioId, benchmarkDate, callback, asyncState);
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginGetBroadGlobalActive(targetingTypeId, bgaPortfolioId, callback, asyncState);
         }
         
         private object[] OnEndGetBroadGlobalActive(System.IAsyncResult result) {
@@ -3338,11 +3382,11 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
         }
         
-        public void GetBroadGlobalActiveAsync(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate) {
-            this.GetBroadGlobalActiveAsync(targetingTypeId, bgaPortfolioId, benchmarkDate, null);
+        public void GetBroadGlobalActiveAsync(int targetingTypeId, string bgaPortfolioId) {
+            this.GetBroadGlobalActiveAsync(targetingTypeId, bgaPortfolioId, null);
         }
         
-        public void GetBroadGlobalActiveAsync(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, object userState) {
+        public void GetBroadGlobalActiveAsync(int targetingTypeId, string bgaPortfolioId, object userState) {
             if ((this.onBeginGetBroadGlobalActiveDelegate == null)) {
                 this.onBeginGetBroadGlobalActiveDelegate = new BeginOperationDelegate(this.OnBeginGetBroadGlobalActive);
             }
@@ -3354,8 +3398,7 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
             base.InvokeAsync(this.onBeginGetBroadGlobalActiveDelegate, new object[] {
                         targetingTypeId,
-                        bgaPortfolioId,
-                        benchmarkDate}, this.onEndGetBroadGlobalActiveDelegate, this.onGetBroadGlobalActiveCompletedDelegate, userState);
+                        bgaPortfolioId}, this.onEndGetBroadGlobalActiveDelegate, this.onGetBroadGlobalActiveCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3637,8 +3680,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginGetBasketTargets(int targetingTypeGroupId, int basketId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetBasketTargets(targetingTypeGroupId, basketId, benchmarkDate, callback, asyncState);
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginGetBasketTargets(int targetingTypeGroupId, int basketId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetBasketTargets(targetingTypeGroupId, basketId, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3649,8 +3692,7 @@ namespace TopDown.FacingServer.Backend.Targeting {
         private System.IAsyncResult OnBeginGetBasketTargets(object[] inValues, System.AsyncCallback callback, object asyncState) {
             int targetingTypeGroupId = ((int)(inValues[0]));
             int basketId = ((int)(inValues[1]));
-            System.DateTime benchmarkDate = ((System.DateTime)(inValues[2]));
-            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginGetBasketTargets(targetingTypeGroupId, basketId, benchmarkDate, callback, asyncState);
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginGetBasketTargets(targetingTypeGroupId, basketId, callback, asyncState);
         }
         
         private object[] OnEndGetBasketTargets(System.IAsyncResult result) {
@@ -3666,11 +3708,11 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
         }
         
-        public void GetBasketTargetsAsync(int targetingTypeGroupId, int basketId, System.DateTime benchmarkDate) {
-            this.GetBasketTargetsAsync(targetingTypeGroupId, basketId, benchmarkDate, null);
+        public void GetBasketTargetsAsync(int targetingTypeGroupId, int basketId) {
+            this.GetBasketTargetsAsync(targetingTypeGroupId, basketId, null);
         }
         
-        public void GetBasketTargetsAsync(int targetingTypeGroupId, int basketId, System.DateTime benchmarkDate, object userState) {
+        public void GetBasketTargetsAsync(int targetingTypeGroupId, int basketId, object userState) {
             if ((this.onBeginGetBasketTargetsDelegate == null)) {
                 this.onBeginGetBasketTargetsDelegate = new BeginOperationDelegate(this.OnBeginGetBasketTargets);
             }
@@ -3682,13 +3724,12 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
             base.InvokeAsync(this.onBeginGetBasketTargetsDelegate, new object[] {
                         targetingTypeGroupId,
-                        basketId,
-                        benchmarkDate}, this.onEndGetBasketTargetsDelegate, this.onGetBasketTargetsCompletedDelegate, userState);
+                        basketId}, this.onEndGetBasketTargetsDelegate, this.onGetBasketTargetsCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRecalculateBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRecalculateBasketTargets(model, benchmarkDate, callback, asyncState);
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRecalculateBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRecalculateBasketTargets(model, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3698,8 +3739,7 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private System.IAsyncResult OnBeginRecalculateBasketTargets(object[] inValues, System.AsyncCallback callback, object asyncState) {
             TopDown.FacingServer.Backend.Targeting.BtRootModel model = ((TopDown.FacingServer.Backend.Targeting.BtRootModel)(inValues[0]));
-            System.DateTime benchmarkDate = ((System.DateTime)(inValues[1]));
-            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRecalculateBasketTargets(model, benchmarkDate, callback, asyncState);
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRecalculateBasketTargets(model, callback, asyncState);
         }
         
         private object[] OnEndRecalculateBasketTargets(System.IAsyncResult result) {
@@ -3715,11 +3755,11 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
         }
         
-        public void RecalculateBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.DateTime benchmarkDate) {
-            this.RecalculateBasketTargetsAsync(model, benchmarkDate, null);
+        public void RecalculateBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model) {
+            this.RecalculateBasketTargetsAsync(model, null);
         }
         
-        public void RecalculateBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.DateTime benchmarkDate, object userState) {
+        public void RecalculateBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model, object userState) {
             if ((this.onBeginRecalculateBasketTargetsDelegate == null)) {
                 this.onBeginRecalculateBasketTargetsDelegate = new BeginOperationDelegate(this.OnBeginRecalculateBasketTargets);
             }
@@ -3730,13 +3770,12 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 this.onRecalculateBasketTargetsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRecalculateBasketTargetsCompleted);
             }
             base.InvokeAsync(this.onBeginRecalculateBasketTargetsDelegate, new object[] {
-                        model,
-                        benchmarkDate}, this.onEndRecalculateBasketTargetsDelegate, this.onRecalculateBasketTargetsCompletedDelegate, userState);
+                        model}, this.onEndRecalculateBasketTargetsDelegate, this.onRecalculateBasketTargetsCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginSaveBasketTargets(model, benchmarkDate, callback, asyncState);
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveBasketTargets(model, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3746,8 +3785,7 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private System.IAsyncResult OnBeginSaveBasketTargets(object[] inValues, System.AsyncCallback callback, object asyncState) {
             TopDown.FacingServer.Backend.Targeting.BtRootModel model = ((TopDown.FacingServer.Backend.Targeting.BtRootModel)(inValues[0]));
-            System.DateTime benchmarkDate = ((System.DateTime)(inValues[1]));
-            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginSaveBasketTargets(model, benchmarkDate, callback, asyncState);
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginSaveBasketTargets(model, callback, asyncState);
         }
         
         private object[] OnEndSaveBasketTargets(System.IAsyncResult result) {
@@ -3763,11 +3801,11 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
         }
         
-        public void SaveBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.DateTime benchmarkDate) {
-            this.SaveBasketTargetsAsync(model, benchmarkDate, null);
+        public void SaveBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model) {
+            this.SaveBasketTargetsAsync(model, null);
         }
         
-        public void SaveBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.DateTime benchmarkDate, object userState) {
+        public void SaveBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model, object userState) {
             if ((this.onBeginSaveBasketTargetsDelegate == null)) {
                 this.onBeginSaveBasketTargetsDelegate = new BeginOperationDelegate(this.OnBeginSaveBasketTargets);
             }
@@ -3778,8 +3816,7 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 this.onSaveBasketTargetsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveBasketTargetsCompleted);
             }
             base.InvokeAsync(this.onBeginSaveBasketTargetsDelegate, new object[] {
-                        model,
-                        benchmarkDate}, this.onEndSaveBasketTargetsDelegate, this.onSaveBasketTargetsCompletedDelegate, userState);
+                        model}, this.onEndSaveBasketTargetsDelegate, this.onSaveBasketTargetsCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4040,11 +4077,10 @@ namespace TopDown.FacingServer.Backend.Targeting {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginGetBroadGlobalActive(int targetingTypeId, string bgaPortfolioId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[3];
+            public System.IAsyncResult BeginGetBroadGlobalActive(int targetingTypeId, string bgaPortfolioId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
                 _args[0] = targetingTypeId;
                 _args[1] = bgaPortfolioId;
-                _args[2] = benchmarkDate;
                 System.IAsyncResult _result = base.BeginInvoke("GetBroadGlobalActive", _args, callback, asyncState);
                 return _result;
             }
@@ -4134,11 +4170,10 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetBasketTargets(int targetingTypeGroupId, int basketId, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[3];
+            public System.IAsyncResult BeginGetBasketTargets(int targetingTypeGroupId, int basketId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
                 _args[0] = targetingTypeGroupId;
                 _args[1] = basketId;
-                _args[2] = benchmarkDate;
                 System.IAsyncResult _result = base.BeginInvoke("GetBasketTargets", _args, callback, asyncState);
                 return _result;
             }
@@ -4149,10 +4184,9 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRecalculateBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
+            public System.IAsyncResult BeginRecalculateBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
                 _args[0] = model;
-                _args[1] = benchmarkDate;
                 System.IAsyncResult _result = base.BeginInvoke("RecalculateBasketTargets", _args, callback, asyncState);
                 return _result;
             }
@@ -4163,10 +4197,9 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 return _result;
             }
             
-            public System.IAsyncResult BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.DateTime benchmarkDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
+            public System.IAsyncResult BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
                 _args[0] = model;
-                _args[1] = benchmarkDate;
                 System.IAsyncResult _result = base.BeginInvoke("SaveBasketTargets", _args, callback, asyncState);
                 return _result;
             }

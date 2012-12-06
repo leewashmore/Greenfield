@@ -28,5 +28,11 @@ namespace GreenField.Targeting.Server.BottomUp
 
         [DataMember]
         public EditableExpressionModel Target { get; set; }
+
+        [DebuggerStepThrough]
+        public void Accept(IBuLineModelResolver resolver)
+        {
+            resolver.Resolve(this);
+        }
     }
 }

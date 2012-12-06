@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:GreenField.Targeting.Controls"
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
-    
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,14 +21,20 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-			<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 0 5 5">
-				<mine:PickerView DataContext="{Binding PickerViewModel}" Margin="5 5 0 0" />
-                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource saveTemplate}" Margin="20 5 0 0" />
+            <StackPanel Grid.Row="0" Orientation="Vertical"  Margin="0 0 5 5">
+                <StackPanel Orientation="Horizontal">
+                    <mine:PickerView DataContext="{Binding PickerViewModel}" Margin="5 5 0 0" />
+                    <ContentControl Content="{Binding}" ContentTemplate="{StaticResource saveTemplate}" Margin="20 5 0 0" />
+                </StackPanel>
+                <local:SecurityPickerView Margin="5 5 0 0" DataContext="{Binding SecurityPickerViewModel}" />
+                <StackPanel Margin="5 5 0 0" Orientation="Horizontal">
+                    <CheckBox IsEnabled="{Binding SecurityPickerViewModel.IsEnabled}"  IsChecked="{Binding EditorViewModel.AreEmptyColumnsShown, Mode=TwoWay}" Content="Show default columns?" />
+                    <TextBlock VerticalAlignment="Center" Margin="20 0 5 0">Benchmark data is as of</TextBlock>
+                    <TextBlock Text="{Binding EditorViewModel.KeptRootModel.BenchmarkDate}" VerticalAlignment="Center"/>
+                </StackPanel>
             </StackPanel>
-			<mine:EditorView Grid.Row="1" DataContext="{Binding EditorViewModel}" />
-            <local:SecurityPickerView Grid.Row="2" DataContext="{Binding SecurityPickerViewModel}" />
+            <mine:EditorView Grid.Row="1" DataContext="{Binding EditorViewModel}" />
 
         </Grid>
     </toolkit:BusyIndicator>

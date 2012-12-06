@@ -21,16 +21,15 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="0 0 5 5">
                 <StackPanel Orientation="Horizontal">
                     <mine:PortfolioPickerView Grid.Row="0" DataContext="{Binding PortfolioPickerViewModel}" Margin="5 5 0 0" />
                     <ContentControl Content="{Binding}" ContentTemplate="{StaticResource saveTemplate}" Margin="20 5 0 0" />
                 </StackPanel>
+                <local:SecurityPickerView Margin="5 5 0 0" DataContext="{Binding SecurityPickerViewModel}" />
             </StackPanel>
             <mine:EditorView Grid.Row="1" DataContext="{Binding EditorViewModel}" />
-            <local:SecurityPickerView Grid.Row="2" DataContext="{Binding SecurityPickerViewModel}" />
         </Grid>
     </toolkit:BusyIndicator>
 </UserControl>
