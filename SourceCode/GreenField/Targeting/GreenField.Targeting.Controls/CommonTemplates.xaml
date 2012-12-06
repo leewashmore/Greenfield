@@ -15,6 +15,10 @@
         <Setter Property="Margin" Value="5 4" />
     </Style>
 
+    <Style TargetType="TextBlock" x:Key="totalTextBlockStyle" BasedOn="{StaticResource nicelyMarginedTextboxStyle}">
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
     <DataTemplate x:Key="issueTemplate">
         <StackPanel Orientation="Vertical">
             <TextBlock Text="{Binding Message}"></TextBlock>

@@ -26,6 +26,7 @@ namespace GreenField.Targeting.Controls
             this.RequestDataCommand = new DelegateCommand<AutoCompleteRequest>(request => this.ConsiderRequestingData(request));
             this.PickSecurityCommand = new DelegateCommand(this.ConsiderPickingSecurity);
             this.Items = new ObservableCollection<SecurityModel>();
+            this.isEnabled = false;
         }
 
         public ObservableCollection<SecurityModel> Items { get; private set; }
@@ -112,6 +113,17 @@ namespace GreenField.Targeting.Controls
         public void Clear()
         {
             this.SelectedSecurity = null;
+        }
+
+        private Boolean isEnabled;
+        public Boolean IsEnabled
+        {
+            get { return this.isEnabled; }
+            set
+            {
+                this.isEnabled = value;
+                this.RaisePropertyChanged(() => this.IsEnabled);
+            }
         }
 
         public void Deactivate()

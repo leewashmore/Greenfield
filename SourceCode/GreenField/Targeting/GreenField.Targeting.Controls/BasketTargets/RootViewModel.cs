@@ -19,7 +19,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             pickerViewModel.CommunicationStateChanged += this.WhenCommunicationStateChanges;
             this.PickerViewModel = pickerViewModel;
 
-            var editorViewModel = new EditorViewModel(settings.ClientFactory, settings.BenchmarkDate);
+            var editorViewModel = new EditorViewModel(settings.ClientFactory);
             editorViewModel.CommunicationStateChanged += this.WhenCommunicationStateChanges;
             this.EditorViewModel = editorViewModel;
 
@@ -43,7 +43,13 @@ namespace GreenField.Targeting.Controls.BasketTargets
             };
 
             this.SaveCommand = new DelegateCommand(this.Save, this.CanSave);
-            editorViewModel.GotData += (s, e) => this.SaveCommand.RaiseCanExecuteChanged();
+            editorViewModel.GotData += (s, e) => this.ReactOnDataBeingGotten();
+        }
+
+        protected void ReactOnDataBeingGotten()
+        {
+            this.SaveCommand.RaiseCanExecuteChanged(); // poke the save button
+            this.SecurityPickerViewModel.IsEnabled = true; // can add securities now
         }
 
         protected Boolean ConsiderReseting()
@@ -100,10 +106,11 @@ namespace GreenField.Targeting.Controls.BasketTargets
         {
             this.PickerViewModel.Deactivate(true);
             this.EditorViewModel.Discard();
+            this.SecurityPickerViewModel.IsEnabled = false;
         }
 
 
 
-        
+
     }
 }

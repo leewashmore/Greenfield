@@ -41,12 +41,14 @@ namespace TopDown.Core.ManagingPst
                 });
 
                 var targetTotalExpression = this.modelBuilder.CreateTargetTotalExpression(items);
+                var cashExpression = this.modelBuilder.CreateCashExpression(targetTotalExpression);
 
                 var result = new RootModel(
                     protfolioId,
                     latestChangeset,
                     items,
-                    targetTotalExpression
+                    targetTotalExpression,
+                    cashExpression
                 );
 
                 return result;
@@ -75,7 +77,7 @@ namespace TopDown.Core.ManagingPst
                 this.expressionDeserializer.PopulateEditableExpression(reader, targetExpression);
             });
 
-            var result = new ItemModel(security, targetExpression);
+            var result = this.modelBuilder.CreateItem(security, targetExpression);
             return result;
         }
     }

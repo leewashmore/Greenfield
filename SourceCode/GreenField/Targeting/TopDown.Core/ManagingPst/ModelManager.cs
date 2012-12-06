@@ -23,9 +23,11 @@ namespace TopDown.Core.ManagingPst
         private IDataManagerFactory dataManagerFactory;
         private ManagingCalculations.CalculationRequester calculationRequester;
         private ModelToJsonSerializer modelSerializer;
+        private ModelValidator modelValidator;
 
         public PstManager(
             ChangesetApplier applier,
+            ModelValidator modelValidator,
             ModelToChangesetTransformer transformer,
             ModelFromJsonDeserializer modelDeserializer,
             ModelBuilder modelBuilder,
@@ -37,6 +39,7 @@ namespace TopDown.Core.ManagingPst
         )
         {
             this.applier = applier;
+            this.modelValidator = modelValidator;
             this.transformer = transformer;
             this.modelDeserializer = modelDeserializer;
             this.modelBuilder = modelBuilder;
@@ -55,28 +58,31 @@ namespace TopDown.Core.ManagingPst
             var items = new List<ItemModel>();
             foreach (var target in targets)
             {
-                var targetExpression = this.modelBuilder.CreateTargetExpression();
                 var security = securityRepository.GetSecurity(target.SecurityId);
-
-				var item = new ItemModel(security, targetExpression);
+                var targetExpression = this.modelBuilder.CreateTargetExpression();
+                var item = this.modelBuilder.CreateItem(security, targetExpression);
                 item.Target.InitialValue = target.Target;
                 items.Add(item);
             }
+
+            var targetTotalExpression = this.modelBuilder.CreateTargetTotalExpression(items);
+            var cashExpression = this.modelBuilder.CreateCashExpression(targetTotalExpression);
 
             var result = new RootModel(
                 portfolioId,
                 latestChangeSetInfo,
                 items,
-                this.modelBuilder.CreateTargetTotalExpression(items)
+                targetTotalExpression,
+                cashExpression
             );
 
             return result;
         }
 
         public RootModel DeserializeFromJson(
-			String pstCompositionAsJson,
-			SecurityRepository securityRepository
-		)
+            String pstCompositionAsJson,
+            SecurityRepository securityRepository
+        )
         {
             RootModel composition;
             using (var reader = new JsonReader(new JsonTextReader(new StringReader(pstCompositionAsJson))))
@@ -104,7 +110,7 @@ namespace TopDown.Core.ManagingPst
 
         public IEnumerable<IValidationIssue> ApplyIsValid(RootModel composition, String username, SqlConnection connection, CalculationTicket ticket, ref CalculationInfo info)
         {
-            var issues = this.applier.Validate(composition, ticket);
+            var issues = this.modelValidator.ValidateRoot(composition, ticket);
             if (issues.Any()) return issues;
 
             try
@@ -131,10 +137,10 @@ namespace TopDown.Core.ManagingPst
             }
         }
 
-		public IEnumerable<IValidationIssue> Validate(RootModel model, CalculationTicket ticket)
-		{
-            var issues = this.applier.Validate(model, ticket);
+        public IEnumerable<IValidationIssue> Validate(RootModel model, CalculationTicket ticket)
+        {
+            var issues = this.modelValidator.ValidateRoot(model, ticket);
             return issues;
-		}
-	}
+        }
+    }
 }

@@ -25,8 +25,8 @@ namespace TopDown.Core.Persisting
         public const String Name = "";
         public const String Name = "";
         public const String Name = "";
-        public const String Name = "";
         */
+        public const String GF_BENCHMARK_HOLDINGS = "GF_BENCHMARK_HOLDINGS";
 		public const String TARGETING_TYPE_GROUP_BASKET_SECURITY_BASE_VALUE_CHANGESET = "TARGETING_TYPE_GROUP_BASKET_SECURITY_BASE_VALUE_CHANGESET";
 		public const String TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_CHANGESET = "TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_CHANGESET";
 		public const String BGA_PORTFOLIO_SECURITY_FACTOR_CHANGESET = "BGA_PORTFOLIO_SECURITY_FACTOR_CHANGESET";

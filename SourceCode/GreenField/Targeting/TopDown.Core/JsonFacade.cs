@@ -18,235 +18,234 @@ using TopDown.Core.ManagingBenchmarks;
 
 namespace TopDown.Core
 {
-	public class JsonFacade
-	{
-		private Facade facade;
-		private ValidationManager validationManager;
-		private SecurityToJsonSerializer securitySerializer;
+    public class JsonFacade
+    {
+        private Facade facade;
+        private ValidationManager validationManager;
+        private SecurityToJsonSerializer securitySerializer;
 
-		public JsonFacade(
-			Facade facade,
-			ValidationManager validationManager,
-			ManagingSecurities.SecurityToJsonSerializer securitySerializer
-		)
-		{
-			this.facade = facade;
-			this.securitySerializer = securitySerializer;
-			this.validationManager = validationManager;
-		}
+        public JsonFacade(
+            Facade facade,
+            ValidationManager validationManager,
+            ManagingSecurities.SecurityToJsonSerializer securitySerializer
+        )
+        {
+            this.facade = facade;
+            this.securitySerializer = securitySerializer;
+            this.validationManager = validationManager;
+        }
 
-		/// <summary>
-		/// Gets JSON representation of securities retreived using the first few characters represented by the pattern that matched the names of securities.
-		/// </summary>
-		public String GetSecurities(String securityNamePattern, Int32 atMost)
-		{
-			var securities = this.facade.GetSecurities(securityNamePattern, atMost);
-			var json = this.SecuritiesToJson(securities);
-			return json;
-		}
+        /// <summary>
+        /// Gets JSON representation of securities retreived using the first few characters represented by the pattern that matched the names of securities.
+        /// </summary>
+        public String GetSecurities(String securityNamePattern, Int32 atMost)
+        {
+            var securities = this.facade.GetSecurities(securityNamePattern, atMost);
+            var json = this.SecuritiesToJson(securities);
+            return json;
+        }
 
-		public String GetSecurities(String securityNamePattern, Int32 atMost, Int32 basketId)
-		{
-			var securities = this.facade.GetSecurities(securityNamePattern, atMost, basketId);
-			var json = this.SecuritiesToJson(securities);
-			return json;
-		}
+        public String GetSecurities(String securityNamePattern, Int32 atMost, Int32 basketId)
+        {
+            var securities = this.facade.GetSecurities(securityNamePattern, atMost, basketId);
+            var json = this.SecuritiesToJson(securities);
+            return json;
+        }
 
-		public String GetTargetingTypePortfolioPickerModel()
-		{
-			var targetings = this.facade.GetTargetingTypePortfolioPickerModel();
-			var json = this.facade.PortfiolioPickerManager.SerializeToJson(targetings);
-			return json;
-		}
+        public String GetTargetingTypePortfolioPickerModel()
+        {
+            var targetings = this.facade.GetTargetingTypePortfolioPickerModel();
+            var json = this.facade.PortfiolioPickerManager.SerializeToJson(targetings);
+            return json;
+        }
 
-		public String GetBreakdown(Int32 targetingId, String portfolioId, DateTime benchmarkDate, CalculationTicket ticket)
-		{
-			var breakdown = this.facade.GetBptModel(targetingId, portfolioId, benchmarkDate);
-			var result = this.facade.BptManager.SerializeToJson(breakdown, ticket);
-			return result;
-		}
+        public String GetBreakdown(Int32 targetingId, String portfolioId, CalculationTicket ticket)
+        {
+            var breakdown = this.facade.GetBptModel(targetingId, portfolioId);
+            var result = this.facade.BptManager.SerializeToJson(breakdown, ticket);
+            return result;
+        }
 
-		public String RecalculateBreakdown(String bptAsJson, CalculationTicket ticket)
-		{
-			BasketRepository basketRepository;
-			SecurityRepository securityRepository;
-			PortfolioRepository portfolioRepository;
+        public String RecalculateBreakdown(String bptAsJson, CalculationTicket ticket)
+        {
+            BasketRepository basketRepository;
+            SecurityRepository securityRepository;
+            PortfolioRepository portfolioRepository;
             TargetingTypeRepository targetingTypeRepository;
-			using (var ondemandManager = this.facade.CreateOnDemandDataManager())
-			{
-				basketRepository = this.facade.RepositoryManager.ClaimBasketRepository(ondemandManager);
-				securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
-				portfolioRepository = this.facade.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
+            using (var ondemandManager = this.facade.CreateOnDemandDataManager())
+            {
+                basketRepository = this.facade.RepositoryManager.ClaimBasketRepository(ondemandManager);
+                securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
+                portfolioRepository = this.facade.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
                 targetingTypeRepository = this.facade.RepositoryManager.ClaimTargetingTypeRepository(ondemandManager);
-			}
+            }
 
-			var root = this.facade.BptManager.DeserializeFromJson(
-				bptAsJson,
-				basketRepository,
-				securityRepository,
-				portfolioRepository,
+            var root = this.facade.BptManager.DeserializeFromJson(
+                bptAsJson,
+                basketRepository,
+                securityRepository,
+                portfolioRepository,
                 targetingTypeRepository
-			);
-			this.facade.RecalculateBptModel(root, ticket);
-			var result = this.facade.BptManager.SerializeToJson(root, ticket);
-			return result;
-		}
+            );
+            this.facade.RecalculateBptModel(root, ticket);
+            var result = this.facade.BptManager.SerializeToJson(root, ticket);
+            return result;
+        }
 
-		public String TryApplyBptModel(String bptAsJson, String username, CalculationTicket ticket)
-		{
-			BasketRepository basketRepository;
-			SecurityRepository securityRepository;
-			PortfolioRepository portfolioRepository;
+        public String TryApplyBptModel(String bptAsJson, String username, CalculationTicket ticket)
+        {
+            BasketRepository basketRepository;
+            SecurityRepository securityRepository;
+            PortfolioRepository portfolioRepository;
             TargetingTypeRepository targetingTypeRepository;
-			using (var ondemandManager = this.facade.CreateOnDemandDataManager())
-			{
-				basketRepository = this.facade.RepositoryManager.ClaimBasketRepository(ondemandManager);
-				securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
-				portfolioRepository = this.facade.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
+            using (var ondemandManager = this.facade.CreateOnDemandDataManager())
+            {
+                basketRepository = this.facade.RepositoryManager.ClaimBasketRepository(ondemandManager);
+                securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
+                portfolioRepository = this.facade.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
                 targetingTypeRepository = this.facade.RepositoryManager.ClaimTargetingTypeRepository(ondemandManager);
-			}
-			var model = this.facade.BptManager.DeserializeFromJson(
-				bptAsJson,
-				basketRepository,
-				securityRepository,
-				portfolioRepository,
+            }
+            var model = this.facade.BptManager.DeserializeFromJson(
+                bptAsJson,
+                basketRepository,
+                securityRepository,
+                portfolioRepository,
                 targetingTypeRepository
-			);
-			var issues = this.facade.ApplyBroadGlobalActiveModelIfValid(model, username, ticket);
+            );
+            var issues = this.facade.ApplyBroadGlobalActiveModelIfValid(model, username, ticket);
             var issuesAsJson = this.validationManager.SerializeToJson(issues);
-			return issuesAsJson;
-		}
+            return issuesAsJson;
+        }
 
 
-		public String GetPstComposition(String portfolioId, CalculationTicket ticket)
-		{
-			var composition = this.facade.GetPstModel(portfolioId);
-			var result = this.facade.PstManager.SerializeToJson(composition, ticket);
-			return result;
-		}
+        public String GetPstComposition(String portfolioId, CalculationTicket ticket)
+        {
+            var composition = this.facade.GetPstModel(portfolioId);
+            var result = this.facade.PstManager.SerializeToJson(composition, ticket);
+            return result;
+        }
 
-		protected String SecuritiesToJson(IEnumerable<ISecurity> securities)
-		{
-			var builder = new StringBuilder();
-			using (var writer = new JsonWriter(builder.ToJsonTextWriter()))
-			{
-				writer.WriteArray(securities, security =>
-				{
-					writer.Write(delegate
-					{
-						this.securitySerializer.SerializeSecurityOnceResolved(security, writer);
-					});
-				});
-			}
-			var result = builder.ToString();
-			return result;
-		}
+        protected String SecuritiesToJson(IEnumerable<ISecurity> securities)
+        {
+            var builder = new StringBuilder();
+            using (var writer = new JsonWriter(builder.ToJsonTextWriter()))
+            {
+                writer.WriteArray(securities, security =>
+                {
+                    writer.Write(delegate
+                    {
+                        this.securitySerializer.SerializeSecurityOnceResolved(security, writer);
+                    });
+                });
+            }
+            var result = builder.ToString();
+            return result;
+        }
 
-		public String RecalculatePstModel(String pstAsJson, CalculationTicket ticket)
-		{
-			SecurityRepository securityRepository;
-			using (var ondemandManager = this.facade.CreateOnDemandDataManager())
-			{
-				securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
-			}
-			var composition = this.facade.PstManager.DeserializeFromJson(pstAsJson, securityRepository);
-			var refereshedPstCompositionAsJson = this.facade.PstManager.SerializeToJson(composition, ticket);
-			return refereshedPstCompositionAsJson;
-		}
+        public String RecalculatePstModel(String pstAsJson, CalculationTicket ticket)
+        {
+            SecurityRepository securityRepository;
+            using (var ondemandManager = this.facade.CreateOnDemandDataManager())
+            {
+                securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
+            }
+            var composition = this.facade.PstManager.DeserializeFromJson(pstAsJson, securityRepository);
+            var refereshedPstCompositionAsJson = this.facade.PstManager.SerializeToJson(composition, ticket);
+            return refereshedPstCompositionAsJson;
+        }
 
-		public String TryApplyPstModel(String pstAsJson, String username, CalculationTicket ticket)
-		{
-			SecurityRepository securityRepository;
-			using (var ondemandManager = this.facade.CreateOnDemandDataManager())
-			{
-				securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
-			}
-			var model = this.facade.PstManager.DeserializeFromJson(pstAsJson, securityRepository);
-			var issues = this.facade.ApplyPstModelIfValid(model, username, ticket);
-			var issuesAsJson = this.validationManager.SerializeToJson(issues);
-			return issuesAsJson;
-		}
+        public String TryApplyPstModel(String pstAsJson, String username, CalculationTicket ticket)
+        {
+            SecurityRepository securityRepository;
+            using (var ondemandManager = this.facade.CreateOnDemandDataManager())
+            {
+                securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
+            }
+            var model = this.facade.PstManager.DeserializeFromJson(pstAsJson, securityRepository);
+            var issues = this.facade.ApplyPstModelIfValid(model, username, ticket);
+            var issuesAsJson = this.validationManager.SerializeToJson(issues);
+            return issuesAsJson;
+        }
 
-		public String GetBasketPicker()
-		{
-			var model = this.facade.GetBasketPickerRootModel();
-			var json = this.facade.BasketPickerManager.ToJson(model);
-			return json;
-		}
+        public String GetBasketPicker()
+        {
+            var model = this.facade.GetBasketPickerRootModel();
+            var json = this.facade.BasketPickerManager.ToJson(model);
+            return json;
+        }
 
-		public String GetBpstModel(Int32 targetingTypeGroupId, Int32 basketId, DateTime benchmarkDate, CalculationTicket ticket)
-		{
-			var model = this.facade.GetBpstModel(
-				targetingTypeGroupId,
-				basketId,
-				benchmarkDate
-			);
-			var json = this.facade.BpstManager.SerializeToJson(model, ticket);
-			return json;
-		}
+        public String GetBpstModel(Int32 targetingTypeGroupId, Int32 basketId, CalculationTicket ticket)
+        {
+            var model = this.facade.GetBpstModel(
+                targetingTypeGroupId,
+                basketId
+            );
+            var json = this.facade.BpstManager.SerializeToJson(model, ticket);
+            return json;
+        }
 
-		public String RecalculateBpstModel(String bpstModelAsJson, DateTime benchmarkDate, CalculationTicket ticket)
-		{
-			SecurityRepository securityRepository;
-			TargetingTypeGroupRepository targetingTypeGroupRepository;
-			BasketRepository basketRepository;
-			PortfolioRepository portfolioRepository;
-			BenchmarkRepository benchmarkRepository;
-			using (var ondemandManager = this.facade.CreateOnDemandDataManager())
-			{
-				securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
-				targetingTypeGroupRepository = this.facade.RepositoryManager.ClaimTargetingTypeGroupRepository(ondemandManager);
-				basketRepository = this.facade.RepositoryManager.ClaimBasketRepository(ondemandManager);
-				portfolioRepository = this.facade.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
-				benchmarkRepository = this.facade.RepositoryManager.ClaimBenchmarkRepository(ondemandManager, benchmarkDate);
-			}
-			var model = this.facade.BpstManager.DeserializeFromJson(
-				bpstModelAsJson,
-				securityRepository,
-				targetingTypeGroupRepository,
-				basketRepository,
-				portfolioRepository,
-				benchmarkRepository
-			);
-			var json = this.facade.BpstManager.SerializeToJson(model, ticket);
-			return json;
-		}
+        public String RecalculateBpstModel(String bpstModelAsJson, CalculationTicket ticket)
+        {
+            SecurityRepository securityRepository;
+            TargetingTypeGroupRepository targetingTypeGroupRepository;
+            BasketRepository basketRepository;
+            PortfolioRepository portfolioRepository;
+            ManagingBpst.RootModel model;
+            using (var ondemandManager = this.facade.CreateOnDemandDataManager())
+            {
+                securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
+                targetingTypeGroupRepository = this.facade.RepositoryManager.ClaimTargetingTypeGroupRepository(ondemandManager);
+                basketRepository = this.facade.RepositoryManager.ClaimBasketRepository(ondemandManager);
+                portfolioRepository = this.facade.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
 
-		public String TryApplyBpstModel(String bpstAsJson, DateTime benchmarkDate, String username, CalculationTicket ticket)
-		{
-			SecurityRepository securityRepository;
-			TargetingTypeGroupRepository targetingTypeGroupRepository;
-			BasketRepository basketRepository;
-			PortfolioRepository portfolioRepository;
-			BenchmarkRepository benchmarkRepository;
-			using (var ondemandManager = this.facade.CreateOnDemandDataManager())
-			{
-				securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
-				targetingTypeGroupRepository = this.facade.RepositoryManager.ClaimTargetingTypeGroupRepository(ondemandManager);
-				basketRepository = this.facade.RepositoryManager.ClaimBasketRepository(ondemandManager);
-				portfolioRepository = this.facade.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
-				benchmarkRepository = this.facade.RepositoryManager.ClaimBenchmarkRepository(ondemandManager, benchmarkDate);
-			}
+                model = this.facade.BpstManager.DeserializeFromJson(
+                    bpstModelAsJson,
+                    securityRepository,
+                    targetingTypeGroupRepository,
+                    basketRepository,
+                    portfolioRepository,
+                    ondemandManager
+                );
+            }
+            var json = this.facade.BpstManager.SerializeToJson(model, ticket);
+            return json;
+        }
 
-			var model = this.facade.BpstManager.DeserializeFromJson(
-				bpstAsJson,
-				securityRepository,
-				targetingTypeGroupRepository,
-				basketRepository,
-				portfolioRepository,
-				benchmarkRepository
-			);
+        public String TryApplyBpstModel(String bpstAsJson, String username, CalculationTicket ticket)
+        {
+            SecurityRepository securityRepository;
+            TargetingTypeGroupRepository targetingTypeGroupRepository;
+            BasketRepository basketRepository;
+            PortfolioRepository portfolioRepository;
 
-			var issues = this.facade.ApplyBpstModelIfValid(model, username, ticket);
-			var issuesAsJson = this.validationManager.SerializeToJson(issues);
-			return issuesAsJson;
-		}
+            ManagingBpst.RootModel model;
+            using (var ondemandManager = this.facade.CreateOnDemandDataManager())
+            {
+                securityRepository = this.facade.RepositoryManager.ClaimSecurityRepository(ondemandManager);
+                targetingTypeGroupRepository = this.facade.RepositoryManager.ClaimTargetingTypeGroupRepository(ondemandManager);
+                basketRepository = this.facade.RepositoryManager.ClaimBasketRepository(ondemandManager);
+                portfolioRepository = this.facade.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
 
-		public String GetBottomUpPortfolios(String username)
-		{
-			var result = this.facade.GetBottomUpPortfolios(username);
-			var json = this.facade.PortfolioManager.SerializeToJson(result);
-			return json;
-		}
-	}
+                model = this.facade.BpstManager.DeserializeFromJson(
+                    bpstAsJson,
+                    securityRepository,
+                    targetingTypeGroupRepository,
+                    basketRepository,
+                    portfolioRepository,
+                    ondemandManager
+                );
+            }
+
+            var issues = this.facade.ApplyBpstModelIfValid(model, username, ticket);
+            var issuesAsJson = this.validationManager.SerializeToJson(issues);
+            return issuesAsJson;
+        }
+
+        public String GetBottomUpPortfolios(String username)
+        {
+            var result = this.facade.GetBottomUpPortfolios(username);
+            var json = this.facade.PortfolioManager.SerializeToJson(result);
+            return json;
+        }
+    }
 }

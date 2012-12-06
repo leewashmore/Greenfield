@@ -72,7 +72,7 @@ namespace TopDown.Core.ManagingBpt
         public ManagingBpt.RootModel GetRootModel(
             Int32 targetingTypeId,
             String portfolioId,
-            DateTime? benchmarkDateOpt, // <--- in the final calculation we don't need benchmarks
+            Boolean shouldBenchmarksBeInitialized,
             IDataManager manager
         )
         {
@@ -86,7 +86,6 @@ namespace TopDown.Core.ManagingBpt
             var baseValueResolver = this.CreateBaseValueResolver(manager, targetingType.Id);
             var securityRepository = this.repositoryManager.ClaimSecurityRepository(manager);
             var portfolioRepository = this.repositoryManager.ClaimPortfolioRepository(manager);
-
 
             var overlayModel = this.overlayManager.GetOverlayModel(
                 targetingType,
@@ -115,6 +114,7 @@ namespace TopDown.Core.ManagingBpt
             var cash = new CashModel(computations.CashBase, computations.CashScaled);
             var portfolioScaledTotal = this.modelBuilder.CreatePortfolioScaledTotalExpression(cash.Scaled, globe.PortfolioScaled);
             var portfolio = portfolioRepository.GetBroadGlobalActivePortfolio(portfolioId);
+            var benchmarkDate = manager.GetLastestDateWhichBenchmarkDataIsAvialableOn();
 
             result = new RootModel(
                 targetingType,
@@ -126,7 +126,8 @@ namespace TopDown.Core.ManagingBpt
                 globe,
                 cash,
                 overlayModel,
-                portfolioScaledTotal
+                portfolioScaledTotal,
+                benchmarkDate
             );
 
             // populating the base and portfolio adjustment columsn first as they don't depend on potentially missing countries
@@ -135,11 +136,17 @@ namespace TopDown.Core.ManagingBpt
 
             // in order to proceed we need to make sure all missing countries are there
             IEnumerable<BenchmarkSumByIsoInfo> benchmarks = new BenchmarkSumByIsoInfo[] { };
-            if (benchmarkDateOpt.HasValue)
+
+            // here is the deal with shouldBenchmarksBeInitialized:
+            // when we are editing broad-global-avive composition we need benchmakrs for reference and in order to make sure all countries are considered
+            // but when the hopper process  runs we don't need additional counties from bechmakr that can mess around and prevent the hopper from running
+            // so this is why we need this switch
+            if (shouldBenchmarksBeInitialized)
             {
-                var benchmarkRepository = this.repositoryManager.ClaimBenchmarkRepository(manager, benchmarkDateOpt.Value);
+                var benchmarkRepository = this.repositoryManager.ClaimBenchmarkRepository(manager, benchmarkDate);
                 benchmarks = benchmarkRepository.GetByBenchmarkId(targetingType.BenchmarkIdOpt);
             }
+
             this.RegisterMissingCountriesIfAny(
                 result,
                 computations,

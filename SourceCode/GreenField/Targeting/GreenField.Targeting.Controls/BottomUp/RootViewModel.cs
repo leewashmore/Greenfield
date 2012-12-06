@@ -44,8 +44,14 @@ namespace GreenField.Targeting.Controls.BottomUp
                 this.SecurityPickerViewModel.Clear();
             };
 
-            editorViewModel.GotData += (s, e) => this.SaveCommand.RaiseCanExecuteChanged();
+            editorViewModel.GotData += (s, e) => this.ReactOnDataBeingGotten();
             this.SaveCommand = new DelegateCommand(this.Save, this.CanSave);
+        }
+
+        protected void ReactOnDataBeingGotten()
+        {
+            this.SaveCommand.RaiseCanExecuteChanged(); // poke the save button
+            this.SecurityPickerViewModel.IsEnabled = true;
         }
 
         protected Boolean ConsiderReseting()

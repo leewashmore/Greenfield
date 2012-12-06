@@ -23,16 +23,14 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
     public class EditorInput
     {
         [DebuggerStepThrough]
-        public EditorInput(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
+        public EditorInput(Int32 targetingTypeId, String broadGlobalActivePortfolioId)
         {
             this.TargetingTypeId = targetingTypeId;
             this.BroadGlobalActivePortfolioId = broadGlobalActivePortfolioId;
-            this.BenchmarkDate = benchmarkDate;
         }
 
         public Int32 TargetingTypeId { get; private set; }
         public String BroadGlobalActivePortfolioId { get; private set; }
-        public DateTime BenchmarkDate { get; private set; }
     }
 
     public class EditorViewModel : EditorViewModelBase<EditorInput>, IValueChangeWatcher
@@ -64,7 +62,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
 
         // talking to the server
 
-        public void RequestData(Int32 targetingTypeId, String broadGlobalActivePortfolioId, DateTime benchmarkDate)
+        public void RequestData(Int32 targetingTypeId, String broadGlobalActivePortfolioId)
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
@@ -72,11 +70,11 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
                 "Getting data for the editor", args, x => x.Result,
                 data =>
                 {
-                    this.SetProvenValidInput(new EditorInput(targetingTypeId, broadGlobalActivePortfolioId, benchmarkDate));
+                    this.SetProvenValidInput(new EditorInput(targetingTypeId, broadGlobalActivePortfolioId));
                     this.TakeData(data);
                 },
                 this.FinishLoading);
-            client.GetBroadGlobalActiveAsync(targetingTypeId, broadGlobalActivePortfolioId, benchmarkDate);
+            client.GetBroadGlobalActiveAsync(targetingTypeId, broadGlobalActivePortfolioId);
         }
 
         public void RequestRecalculating()
@@ -115,7 +113,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
 
         protected override void RequestReloading(EditorInput input)
         {
-            this.RequestData(input.TargetingTypeId, input.BroadGlobalActivePortfolioId, input.BenchmarkDate);
+            this.RequestData(input.TargetingTypeId, input.BroadGlobalActivePortfolioId);
         }
 
         // handling data
@@ -219,7 +217,16 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         /// <summary>
         /// Original model from the backend service.
         /// </summary>
-        public BgaRootModel RootModel { get; protected set; }
+        private BgaRootModel model;
+        public BgaRootModel RootModel
+        {
+            get { return this.model; }
+            set
+            {
+                this.model = value;
+                this.RaisePropertyChanged(() => this.RootModel);
+            }
+        }
 
         public void Discard()
         {

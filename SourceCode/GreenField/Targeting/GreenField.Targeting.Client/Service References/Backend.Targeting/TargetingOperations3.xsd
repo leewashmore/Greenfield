@@ -10,11 +10,12 @@
   <xs:complexType name="BuRootModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="BottomUpPortfolioId" nillable="true" type="xs:string" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="ChangesetModel" nillable="true" type="q2:ChangesetModel" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Cash" nillable="true" type="q2:NullableExpressionModel" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="ChangesetModel" nillable="true" type="q3:ChangesetModel" />
       <xs:element minOccurs="0" name="IsModified" type="xs:boolean" />
       <xs:element minOccurs="0" name="Items" nillable="true" type="tns:ArrayOfBuItemModel" />
-      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="NullableExpressionModel" nillable="true" type="q3:NullableExpressionModel" />
       <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="SecurityToBeAddedOpt" nillable="true" type="q4:SecurityModel" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TargetTotal" nillable="true" type="q5:NullableExpressionModel" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="BuRootModel" nillable="true" type="tns:BuRootModel" />
@@ -26,8 +27,8 @@
   <xs:element name="ArrayOfBuItemModel" nillable="true" type="tns:ArrayOfBuItemModel" />
   <xs:complexType name="BuItemModel">
     <xs:sequence>
-      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Security" nillable="true" type="q5:SecurityModel" />
-      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Target" nillable="true" type="q6:EditableExpressionModel" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Security" nillable="true" type="q6:SecurityModel" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Target" nillable="true" type="q7:EditableExpressionModel" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="BuItemModel" nillable="true" type="tns:BuItemModel" />

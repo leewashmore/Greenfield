@@ -110,6 +110,7 @@
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BottomUp\EditorViewModel.cs" />
+    <Compile Include="BottomUp\LineTemplateSelector.cs" />
     <Compile Include="PickerViewModelBase.cs" />
     <Compile Include="BottomUp\PortfolioPickerView.xaml.cs">
       <DependentUpon>PortfolioPickerView.xaml</DependentUpon>

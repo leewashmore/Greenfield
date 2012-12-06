@@ -77,8 +77,7 @@ namespace TopDown.Core
         // bpt module
         public ManagingBpt.RootModel GetBptModel(
             Int32 targetingTypeId,
-            String portfolioId,
-            DateTime date
+            String portfolioId
         )
         {
             using (var connection = this.connectionFactory.CreateConnection())
@@ -87,7 +86,7 @@ namespace TopDown.Core
                 var result = this.BptManager.GetRootModel(
                     targetingTypeId,
                     portfolioId,
-                    date,
+                    true,
                     manager
                 );
                 return result;
@@ -221,7 +220,7 @@ namespace TopDown.Core
 
         // B-P-S-T module
 
-        public ManagingBpst.RootModel GetBpstModel(Int32 targetingTypeGroupId, Int32 basketId, DateTime benchmarkDate)
+        public ManagingBpst.RootModel GetBpstModel(Int32 targetingTypeGroupId, Int32 basketId)
         {
             using (var connection = this.connectionFactory.CreateConnection())
             {
@@ -229,7 +228,6 @@ namespace TopDown.Core
                 var model = this.BpstManager.GetRootModel(
                     targetingTypeGroupId,
                     basketId,
-                    benchmarkDate,
                     manager
                 );
                 return model;

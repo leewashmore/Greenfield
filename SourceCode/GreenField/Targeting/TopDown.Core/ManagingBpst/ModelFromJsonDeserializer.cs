@@ -35,7 +35,8 @@ namespace TopDown.Core.ManagingBpst
 			ManagingTargetingTypes.TargetingTypeGroupRepository targetingTypeGroupRepository,
 			ManagingBaskets.BasketRepository basketRepository,
 			PortfolioRepository portfolioRepository,
-			BenchmarkRepository benchmarkRepository
+			RepositoryManager repositoryManager,
+            IOnDamand<IDataManager> ondemandManager
 		)
 		{
 
@@ -54,6 +55,7 @@ namespace TopDown.Core.ManagingBpst
 
 			var basketId = reader.ReadAsInt32(JsonNames.BasketId);
 			var basket = basketRepository.GetBasket(basketId);
+            var benchmarkDate = reader.ReadAsDatetime(JsonNames.BenchmarkDate);
 
 			var securityModels = reader.ReadArray("securities", delegate
 			{
@@ -82,6 +84,8 @@ namespace TopDown.Core.ManagingBpst
 						this.modelBuilder.CreatePortfolioTargetExpression(bgaPortfolio.Name)
 					)).ToArray()
 				);
+
+                var benchmarkRepository = this.repositoryManager.ClaimBenchmarkRepository(ondemandManager, benchmarkDate);
 				this.benchmarkInitializer.InitializeSecurity(securityModel, benchmarkRepository);
 				securityModels.Add(securityModel);
 			}
@@ -113,12 +117,11 @@ namespace TopDown.Core.ManagingBpst
 				baseTotalExpression
 			);
 
-
-
 			var result = new RootModel(
 				latestBaseChangeset,
 				latestPortfolioTargetChangeset,
-				core
+				core,
+                benchmarkDate
 			);
 			return result;
 		}

@@ -3,6 +3,7 @@
   <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
   <xs:complexType name="BgaRootModel">
     <xs:sequence>
+      <xs:element minOccurs="0" name="BenchmarkDate" type="xs:dateTime" />
       <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="BroadGlobalActiveProtfolio" nillable="true" type="q1:BroadGlobalActivePortfolioModel" />
       <xs:element minOccurs="0" name="Cash" nillable="true" type="tns:CashModel" />
       <xs:element minOccurs="0" name="Factors" nillable="true" type="tns:BgaFactorModel" />

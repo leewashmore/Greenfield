@@ -47,7 +47,8 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
                 globe,
                 cash,
 				factors,
-				portfolioScaledTotalExpression
+				portfolioScaledTotalExpression,
+                model.BenchmarkDate
             );
             return result;
         }

@@ -12,6 +12,8 @@ namespace TopDown.Core.Persisting
         IEnumerable<CountryInfo> GetAllCountries();
 		IEnumerable<PortfolioInfo> GetAllPortfolios();
 		IEnumerable<UsernameBottomUpPortfolioInfo> GetUsernameBottomUpPortfolios(String username);
+
+        DateTime GetLastestDateWhichBenchmarkDataIsAvialableOn();
         IEnumerable<BenchmarkInfo> GetBenchmarks(DateTime date);
 		IEnumerable<CountryBasketInfo> GetAllCountryBaskets();
 		IEnumerable<RegionBasketInfo> GetAllRegionBaskets();

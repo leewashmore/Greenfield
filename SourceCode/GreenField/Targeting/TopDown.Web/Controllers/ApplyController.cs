@@ -46,7 +46,7 @@ namespace TopDown.Web.Controllers
 				var shouldDrop = base.ShouldDrop(what);
                 var ticket = new CalculationTicket();
 				var facade = this.CreateJsonFacade(shouldDrop);
-				var issuesAsJson = facade.TryApplyBpstModel(bpstAsJson, BenchmarkDate, Username, ticket);
+				var issuesAsJson = facade.TryApplyBpstModel(bpstAsJson, Username, ticket);
 				return issuesAsJson;
 			});
         }

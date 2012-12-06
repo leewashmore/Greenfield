@@ -10,7 +10,7 @@ namespace GreenField.Targeting.Server
     public interface IFacade
     {
         [OperationContract]
-        BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId, DateTime benchmarkDate);
+        BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId);
 
         [OperationContract]
         IEnumerable<BroadGlobalActive.Picker.TargetingTypeModel> GetTargetingTypePortfolioPicker();
@@ -33,13 +33,13 @@ namespace GreenField.Targeting.Server
         BasketTargets.PickerModel GetBasketPicker();
 
         [OperationContract]
-        BasketTargets.RootModel GetBasketTargets(Int32 targetingTypeGroupId, Int32 basketId, DateTime benchmarkDate);
+        BasketTargets.RootModel GetBasketTargets(Int32 targetingTypeGroupId, Int32 basketId);
 
         [OperationContract]
-        BasketTargets.RootModel RecalculateBasketTargets(BasketTargets.RootModel model, DateTime benchmarkDate);
+        BasketTargets.RootModel RecalculateBasketTargets(BasketTargets.RootModel model);
 
 		[OperationContract]
-		IEnumerable<IssueModel> SaveBasketTargets(BasketTargets.RootModel model, DateTime benchmarkDate);
+		IEnumerable<IssueModel> SaveBasketTargets(BasketTargets.RootModel model);
 
 		// bottom up
 

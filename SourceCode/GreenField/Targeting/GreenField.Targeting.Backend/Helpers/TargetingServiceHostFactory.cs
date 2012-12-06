@@ -238,8 +238,10 @@ namespace GreenField.Targeting.Backend.Helpers
             var pstModelChangeDetector = new TopDown.Core.ManagingPst.ModelChangeDetector(
                     new TopDown.Core.ManagingPst.ModelExpressionTraverser()
                 );
+            var pstModelValidator = new TopDown.Core.ManagingPst.ModelValidator();
             var pstManager = new PstManager(
                 pstChangeApplier,
+                pstModelValidator,
                 pstModelToChangeMapper,
                 new TopDown.Core.ManagingPst.ModelFromJsonDeserializer(
                     pstModelBuilder,

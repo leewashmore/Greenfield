@@ -26,7 +26,6 @@ namespace TopDown.Web.Controllers
 		[Obsolete("This is a HACK!")]
 		public const String Username = "bykova";
 		//public String Username { get { return this.HttpContext.User.Identity.Name; } }
-		public readonly DateTime BenchmarkDate = new DateTime(2012, 10, 17);
 		public const String JsonMimeType = "application/json";
 		private ExceptionToJsonSerializer exceptionSerializer;
 
@@ -180,8 +179,10 @@ namespace TopDown.Web.Controllers
 			var pstModelToChangeMapper = new ModelToChangesetTransformer();
 			var pstChangeApplier = new ChangesetApplier();
 			var pstModelBuilder = new Core.ManagingPst.ModelBuilder(null, commonParts);
+            var pstModelValidator = new TopDown.Core.ManagingPst.ModelValidator();
 			var pstManager = new PstManager(
 				pstChangeApplier,
+                pstModelValidator,
 				pstModelToChangeMapper,
 				new Core.ManagingPst.ModelFromJsonDeserializer(
 					pstModelBuilder,

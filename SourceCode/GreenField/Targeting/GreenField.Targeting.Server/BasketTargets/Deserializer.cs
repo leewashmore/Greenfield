@@ -26,10 +26,10 @@ namespace GreenField.Targeting.Server.BasketTargets
             this.benchmarkInitializer = benchmarkInitializer;
         }
 
-        public Core.RootModel DeserializeRoot(RootModel model, DateTime benchmarkDate)
+        public Core.RootModel DeserializeRoot(RootModel model)
         {
             var targetingTypeGroup = this.deserializer.DeserializeTargetingTypeGroup(model.TargetingTypeGroup);
-            var benchmarkRepository = this.deserializer.ClaimBenchmarkRepository(benchmarkDate);
+            var benchmarkRepository = this.deserializer.ClaimBenchmarkRepository(model.BenchmarkDate);
 
             var securities = this.DeserializeSecurities(model.Securities).ToList();
             if (model.SecurityToBeAddedOpt != null)
@@ -54,7 +54,8 @@ namespace GreenField.Targeting.Server.BasketTargets
             var result = new Core.RootModel(
                 this.DeserializeTargetingTypeGroupBasketSecurityBaseValueChangeset(model.LatestBaseChangeset),
                 this.DeserializeBasketPortfolioSecurityTargetChangesetInfo(model.LatestPortfolioTargetChangeset),
-                core
+                core,
+                model.BenchmarkDate
             );
             return result;
         }

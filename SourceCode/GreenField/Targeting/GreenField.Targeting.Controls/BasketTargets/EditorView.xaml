@@ -19,7 +19,7 @@
             <mine:CellTemplateSelector x:Key="nameCellTemplateSelector">
                 <mine:CellTemplateSelector.RootTemplate>
                     <DataTemplate>
-                        <TextBlock Style="{StaticResource nicelyMarginedTextboxStyle}">Total</TextBlock>
+                        <TextBlock Style="{StaticResource nicelyMarginedTextboxStyle}" FontWeight="Bold">Total</TextBlock>
                     </DataTemplate>
                 </mine:CellTemplateSelector.RootTemplate>
                 <mine:CellTemplateSelector.SecurityTemplate>
@@ -74,49 +74,48 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="Vertical">
-    <CheckBox IsChecked="{Binding AreEmptyColumnsShown, Mode=TwoWay}" Content="Show default columns?" />
 
-    <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" FrozenColumnCount="3">
-        <sdk:DataGrid.Columns>
-            
-            <sdk:DataGridTemplateColumn Header="Security">
-                <sdk:DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource nameCellTemplateSelector}}" />
-                    </DataTemplate>
-                </sdk:DataGridTemplateColumn.CellTemplate>
-            </sdk:DataGridTemplateColumn>
+        <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" FrozenColumnCount="3">
+            <sdk:DataGrid.Columns>
 
-            <sdk:DataGridTemplateColumn Header="Benchmark">
-                <sdk:DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource benchmarkCellTemplateSelector}}" Style="{StaticResource valueContentStyle}" />
-                    </DataTemplate>
-                </sdk:DataGridTemplateColumn.CellTemplate>
-            </sdk:DataGridTemplateColumn>
+                <sdk:DataGridTemplateColumn Header="Security">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource nameCellTemplateSelector}}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
 
-            <sdk:DataGridTemplateColumn Header="Base" CellStyle="{StaticResource editableValueCellStyle}">
-                <sdk:DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource baseCellTemplateSelector}}" Style="{StaticResource editableValueContentStyle}" />
-                    </DataTemplate>
-                </sdk:DataGridTemplateColumn.CellTemplate>
-            </sdk:DataGridTemplateColumn>
+                <sdk:DataGridTemplateColumn Header="Benchmark">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource benchmarkCellTemplateSelector}}" Style="{StaticResource valueContentStyle}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
 
-        </sdk:DataGrid.Columns>
+                <sdk:DataGridTemplateColumn Header="Base" CellStyle="{StaticResource editableValueCellStyle}">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource baseCellTemplateSelector}}" Style="{StaticResource editableValueContentStyle}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
 
-        <i:Interaction.Behaviors>
-            <mine:DataGridDynamicColumnsBehavior ColumnsData="{Binding Portfolios}" AreEmptyColumnShown="{Binding AreEmptyColumnsShown}">
-                <mine:DataGridDynamicColumnsBehavior.CellTemplate>
-                    <DataTemplate>
-                        <!-- the Content="{Binding}" is defined in the code so don't bother setting it here in XAML, it will be overriden -->
-                        <ContentControl ContentTemplate="{Binding Converter={StaticResource portfolioTargetTemplateSelector}}" Style="{StaticResource editableValueContentStyle}" />
-                    </DataTemplate>
-                </mine:DataGridDynamicColumnsBehavior.CellTemplate>
-            </mine:DataGridDynamicColumnsBehavior>
-        </i:Interaction.Behaviors>
+            </sdk:DataGrid.Columns>
 
-    </sdk:DataGrid>
+            <i:Interaction.Behaviors>
+                <mine:DataGridDynamicColumnsBehavior ColumnsData="{Binding Portfolios}" AreEmptyColumnShown="{Binding AreEmptyColumnsShown}">
+                    <mine:DataGridDynamicColumnsBehavior.CellTemplate>
+                        <DataTemplate>
+                            <!-- the Content="{Binding}" is defined in the code so don't bother setting it here in XAML, it will be overriden -->
+                            <ContentControl ContentTemplate="{Binding Converter={StaticResource portfolioTargetTemplateSelector}}" Style="{StaticResource editableValueContentStyle}" />
+                        </DataTemplate>
+                    </mine:DataGridDynamicColumnsBehavior.CellTemplate>
+                </mine:DataGridDynamicColumnsBehavior>
+            </i:Interaction.Behaviors>
+
+        </sdk:DataGrid>
     </StackPanel>
 
 </UserControl>

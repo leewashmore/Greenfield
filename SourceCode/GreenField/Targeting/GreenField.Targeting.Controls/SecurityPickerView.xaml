@@ -9,8 +9,16 @@
     mc:Ignorable="d" d:DesignHeight="30" d:DesignWidth="400">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-        <TextBlock Margin="5 5 5 0">Add security</TextBlock>
-        <local:AutoCompleteBoxWithEnterWorking ItemsSource="{Binding Items}" MinimumPopulateDelay="250" FilterMode="None" ValueMemberPath="Name" SelectedItem="{Binding SelectedSecurity, Mode=TwoWay}" HorizontalAlignment="Stretch" >
+        <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Add security</TextBlock>
+        <local:AutoCompleteBoxWithEnterWorking
+            ItemsSource="{Binding Items}"
+            MinimumPopulateDelay="250"
+            FilterMode="None"
+            ValueMemberPath="Name"
+            SelectedItem="{Binding SelectedSecurity, Mode=TwoWay}"
+            Width="200"
+            IsEnabled="{Binding IsEnabled}"
+        >
             <i:Interaction.Behaviors>
                 <local:AutoCompleteAsyncBehavior SearchCommand="{Binding RequestDataCommand}" PickCommand="{Binding PickSecurityCommand}" />
             </i:Interaction.Behaviors>

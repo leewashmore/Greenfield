@@ -58,6 +58,7 @@ namespace TopDown.Core
         public const String PortfolioSecurityTarget = "pst";
         public const String TargetingTypeId = "targetingTypeId";
         public const String Portfolio = "portfolio";
+        public const String BenchmarkDate = "benchmarkDate";
 
         public const String Securities = "securities";
         public const String Portfolios = "portfolios";

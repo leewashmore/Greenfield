@@ -15,7 +15,6 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
         {
         }
 
-
         [DebuggerStepThrough]
         public RootModel(
             TargetingTypeModel targetingType,
@@ -26,6 +25,7 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             ChangesetModel latestPstChangeset,
             GlobeModel globe,
             CashModel cash,
+            DateTime benchmarkDate,
             Boolean isModified
         )
         {
@@ -38,7 +38,11 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             this.Globe = globe;
             this.Cash = cash;
             this.IsModified = isModified;
+            this.BenchmarkDate = benchmarkDate;
         }
+
+        [DataMember]
+        public DateTime BenchmarkDate { get; set; }
 
         [DataMember]
         public TargetingTypeModel TargetingType { get; set; }
@@ -48,7 +52,6 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
 
         [DataMember]
         public FactorModel Factors { get; set; }
-
 
         [DataMember]
         public ChangesetModel LatestTtbbvChangeset { get; set; }

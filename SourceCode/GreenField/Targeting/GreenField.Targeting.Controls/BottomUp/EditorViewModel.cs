@@ -23,7 +23,7 @@ namespace GreenField.Targeting.Controls.BottomUp
     public class EditorViewModel : EditorViewModelBase<EditorInput>, IValueChangeWatcher
     {
         private IClientFactory clientFactory;
-        private ObservableCollection<BuItemModel> items;
+        private ObservableCollection<IBuLineModel> lines;
 
         [DebuggerStepThrough]
         public EditorViewModel(IClientFactory clientFactory)
@@ -70,7 +70,10 @@ namespace GreenField.Targeting.Controls.BottomUp
         {
             this.KeptRootModel = model;
             this.RegisterInChangeWatcher(model);
-            this.Items = model.Items;
+            var lines = Helper.ToObservableCollection(model.Items.Select(x => Helper.As<IBuLineModel>(x)));
+            lines.Add(new BuTotalModel(model.TargetTotal));
+            lines.Add(new BuCashModel(model.Cash));
+            this.Lines = lines;
             this.FinishLoading();
             this.OnGotData();
         }
@@ -93,10 +96,10 @@ namespace GreenField.Targeting.Controls.BottomUp
             this.ConsiderRecalculating();
         }
 
-        public ObservableCollection<BuItemModel> Items
+        public ObservableCollection<IBuLineModel> Lines
         {
-            get { return this.items; }
-            set { this.items = value; this.RaisePropertyChanged(() => this.Items); }
+            get { return this.lines; }
+            set { this.lines = value; this.RaisePropertyChanged(() => this.Lines); }
         }
 
         /// <summary>
@@ -112,7 +115,7 @@ namespace GreenField.Targeting.Controls.BottomUp
 
         public void Discard()
         {
-            this.Items = null;
+            this.Lines = null;
             this.KeptRootModel = null;
         }
 

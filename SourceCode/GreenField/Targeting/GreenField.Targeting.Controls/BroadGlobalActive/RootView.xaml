@@ -57,6 +57,11 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" Margin="5 5 0 0">
+                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Benchmark data is as of</TextBlock>
+                    <TextBlock Text="{Binding EditorViewModel.RootModel.BenchmarkDate}" VerticalAlignment="Center" />
+                </StackPanel>
 
 
             </StackPanel>
