@@ -101,12 +101,26 @@
 
             </mine:GlobalResidentToDataTemplateConverter>
 
-            <mine:GlobalResidentToDataTemplateConverter x:Key="templateSelector"
+            <mine:GlobalResidentToDataTemplateConverter x:Key="baseTemplateSelector"
                 BasketCountryTemplate="{StaticResource editableValueTemplate}"
                 BasketRegionTemplate="{StaticResource editableValueTemplate}"
                 DefaultTemplate="{StaticResource valueTemplate}"
+            />
+
+            <DataTemplate x:Key="portfolioAdjustmentTemplate">
+                <ContentControl Content="{Binding PortfolioAdjustment}" ContentTemplate="{StaticResource editableValueTemplate}" Style="{StaticResource editableValueContentStyle}" />
+            </DataTemplate>
+            
+            <mine:GlobalResidentToDataTemplateConverter x:Key="portfolioAdjustmentTemplateSelector"
+                BasketCountryTemplate="{StaticResource portfolioAdjustmentTemplate}"
+                BasketRegionTemplate="{StaticResource portfolioAdjustmentTemplate}"
+                UnsavedBasketCountryTemplate="{StaticResource portfolioAdjustmentTemplate}"
             >
+                <mine:GlobalResidentToDataTemplateConverter.DefaultTemplate>
+                    <DataTemplate />
+                </mine:GlobalResidentToDataTemplateConverter.DefaultTemplate>                
             </mine:GlobalResidentToDataTemplateConverter>
+
 
         </ResourceDictionary>
     </UserControl.Resources>
@@ -153,7 +167,7 @@
                             <DataTemplate>
                                 <ContentControl
                                     Content="{Binding Base}"
-                                    ContentTemplate="{Binding Converter={StaticResource templateSelector}}"
+                                    ContentTemplate="{Binding Converter={StaticResource baseTemplateSelector}}"
                                     Style="{StaticResource editableValueContentStyle}"
 								/>
                             </DataTemplate>
@@ -179,11 +193,7 @@
                     <sdk:DataGridTemplateColumn Header="Portfolio Adj" CellStyle="{StaticResource editableValueCellStyle}">
                         <sdk:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ContentControl
-                                    Content="{Binding PortfolioAdjustment}"
-                                    ContentTemplate="{Binding Converter={StaticResource templateSelector}}"
-                                    Style="{StaticResource editableValueContentStyle}"
-                                />
+                                <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource portfolioAdjustmentTemplateSelector}}" Style="{StaticResource editableValueContentStyle}" />
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>
