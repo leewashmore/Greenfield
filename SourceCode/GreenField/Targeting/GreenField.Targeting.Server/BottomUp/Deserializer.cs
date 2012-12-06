@@ -25,12 +25,15 @@ namespace GreenField.Targeting.Server.BottomUp
 
         public Core.RootModel DeserializerRoot(RootModel model)
         {
-            var items = this.DeserializeItems(model.Items).ToList();
+            var items = new List<Core.ItemModel>();
+            this.PopulateItems(model.Items, items);
+            
             if (model.SecurityToBeAddedOpt != null)
             {
                 var item = this.DeserializeAdditionalItem(model.SecurityToBeAddedOpt);
-                items.Add(item);
+                items.Insert(0, item);
             }
+
             var result = new Core.RootModel(
                 model.BottomUpPortfolioId,
                 this.DeserializeBuPortfolioSecurityTargetChangesetInfo(model.ChangesetModel),
@@ -51,11 +54,16 @@ namespace GreenField.Targeting.Server.BottomUp
             return result;
         }
 
-        protected IEnumerable<Core.ItemModel> DeserializeItems(IEnumerable<ItemModel> models)
+        protected void PopulateItems(IEnumerable<ItemModel> models, ICollection<Core.ItemModel> result)
         {
-            var result = models.Select(x => this.DeserializeItem(x)).ToList();
-            return result;
+            foreach (var model in models)
+            {
+                var deserializedModel = this.DeserializeItem(model);
+                result.Add(deserializedModel);
+            }
         }
+
+        
 
         protected Core.ItemModel DeserializeItem(ItemModel model)
         {

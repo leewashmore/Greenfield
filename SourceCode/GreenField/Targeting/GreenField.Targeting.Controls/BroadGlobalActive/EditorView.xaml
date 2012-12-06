@@ -196,18 +196,19 @@
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>
 
-                    <sdk:DataGridTemplateColumn Header="True Active" CellStyle="{StaticResource valueCellStyle}">
-                        <sdk:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <ContentControl Content="{Binding TrueActive}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
-                            </DataTemplate>
-                        </sdk:DataGridTemplateColumn.CellTemplate>
-                    </sdk:DataGridTemplateColumn>
-
                     <sdk:DataGridTemplateColumn Header="True Exposure" CellStyle="{StaticResource valueCellStyle}">
                         <sdk:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ContentControl Content="{Binding TrueExposure}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+
+
+                    <sdk:DataGridTemplateColumn Header="True Active" CellStyle="{StaticResource valueCellStyle}">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding TrueActive}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>

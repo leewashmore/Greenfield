@@ -23,7 +23,9 @@ namespace TopDown.Core.ManagingBpt.Computing
             var trueExposure = trueExposureExpressionOpt.Value(ticket);
             if (!trueExposure.HasValue) return null;
             var benchmark = benchmarkExpressionOpt.Value(ticket);
-            var value = trueExposure.Value - benchmark;
+            // var value = trueExposure.Value - benchmark
+            // per email from Gerred: Gadget is not calculating the True Active (Benchmark – True Exposure).
+            var value = benchmark - trueExposure.Value;
             return value;
         }
     }
