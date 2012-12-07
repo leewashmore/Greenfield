@@ -130,6 +130,10 @@
     </Compile>
     <Compile Include="BottomUp\EditorViewModel.cs" />
     <Compile Include="BottomUp\LineTemplateSelector.cs" />
+    <Compile Include="DemoData.cs" />
+    <Compile Include="DemoView.xaml.cs">
+      <DependentUpon>DemoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PickerViewModelBase.cs" />
     <Compile Include="BottomUp\PortfolioPickerView.xaml.cs">
       <DependentUpon>PortfolioPickerView.xaml</DependentUpon>
@@ -240,6 +244,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CrazyShit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DemoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

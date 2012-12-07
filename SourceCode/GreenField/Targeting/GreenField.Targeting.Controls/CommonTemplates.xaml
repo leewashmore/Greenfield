@@ -78,9 +78,6 @@
 
 
     <Style TargetType="toolkit:BusyIndicator" x:Key="busyIndicatorStyle" BasedOn="{StaticResource specialBusyIndicator}">
-        <Setter Property="IsBusy" Value="{Binding CommunicationStateModel, Converter={StaticResource communicationStateModelToBooleanConverter}}" />
-        <Setter Property="BusyContent" Value="{Binding CommunicationStateModel}" />
-        <Setter Property="BusyContentTemplate" Value="{Binding CommunicationStateModel, Converter={StaticResource busyIndicatorTemplateSelector}}" />
         <Setter Property="MinWidth" Value="300" />
     </Style>
 

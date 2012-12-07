@@ -71,6 +71,7 @@ namespace GreenField.Targeting.App
         {
             //this.NavigateToTargetingBottomUpCommand.Execute(new Object());
             this.NavigateToTargetingBasketTargetsCommand.Execute(new Object());
+            //this.regionManager.RequestNavigate(MainRegionName, typeof(DemoView).FullName);
 			//this.NavigateToTargetingBroadGlobalActiveCommand.Execute(new Object());
             //this.regionManager.RequestNavigate(MainRegionName, typeof(Controls.SecurityPickerDemoView).FullName);
             //this.regionManager.RequestNavigate(MainRegionName, typeof(Controls.CommentDemoView).FullName);
