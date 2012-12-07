@@ -70,14 +70,23 @@
     <Reference Include="System.Windows.Controls.Data">
       <HintPath>..\Binaries\Lib\System.Windows.Controls.Data.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Controls.Data.Input">
+      <HintPath>..\Binaries\Lib\System.Windows.Controls.Data.Input.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Controls.Input">
       <HintPath>..\Binaries\Lib\System.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\Binaries\Lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Controls.Layout.Toolkit">
       <HintPath>..\Binaries\Lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Controls.Toolkit">
       <HintPath>..\Binaries\Lib\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit.Internals">
+      <HintPath>..\Binaries\Lib\System.Windows.Controls.Toolkit.Internals.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Data">
       <HintPath>..\Binaries\Lib\System.Windows.Data.dll</HintPath>
