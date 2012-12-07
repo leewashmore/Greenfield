@@ -916,6 +916,14 @@ namespace GreenField.Web.Helpers
                         record = data.Where(a => a.LOAD_TIME.Date == DateTime.Today.Date).FirstOrDefault();
                         documentId = record.DOCUMENT_ID;
                         DocumentWorkspaceOperations service = new DocumentWorkspaceOperations();
+                        String nameOFFile = "Model_" + issuerId + TimeStamp.ToString("ddMMyyyy") + ".xls";
+                        List<FileMaster> fileRecords = ICPresentationEntity.FileMasters.Where(a => a.Type.Trim().ToLower() ==
+                          "Models".Trim().ToLower() && a.Name.Trim().ToLower() == nameOFFile.Trim().ToLower()).ToList();
+                        foreach (FileMaster filerec in fileRecords)
+                        {
+                            String deleteUrl = filerec.Location;
+                            service.DeleteDocument(deleteUrl);
+                        }
                         FileURI = service.UploadDocument(ModelReferenceData.IssuerId + ".xls", FileBytes, string.Empty);
                         bool fileRecordCreated = service.SetUploadFileInfo(UserName, "Model_" + issuerId + TimeStamp.ToString("ddMMyyyy") + ".xls",
                             FileURI, ModelReferenceData.IssuerName, null, null
@@ -1719,7 +1727,7 @@ namespace GreenField.Web.Helpers
                                 }
                                 ++i;
                                 ++j;
-                            } 
+                            }
                         }
                     }
                 }
@@ -1781,7 +1789,7 @@ namespace GreenField.Web.Helpers
                                 }
                                 ++i;
                                 ++j;
-                            } 
+                            }
                         }
                     }
                 }
@@ -1843,7 +1851,7 @@ namespace GreenField.Web.Helpers
                                 }
                                 ++i;
                                 ++j;
-                            } 
+                            }
                         }
                     }
                 }
@@ -1905,7 +1913,7 @@ namespace GreenField.Web.Helpers
                                 }
                                 ++i;
                                 ++j;
-                            } 
+                            }
                         }
                     }
                 }
