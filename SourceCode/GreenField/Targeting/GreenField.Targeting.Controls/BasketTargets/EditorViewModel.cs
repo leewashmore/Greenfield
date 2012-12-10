@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Aims.Data.Client;
 
 namespace GreenField.Targeting.Controls.BasketTargets
 {
@@ -40,6 +41,15 @@ namespace GreenField.Targeting.Controls.BasketTargets
             : this(clientFactory, new ValueTraverser())
         {
 
+        }
+
+        public Int32? LastBasketId
+        {
+            get
+            {
+                var lastInputOpt = base.LastValidInput;
+                return lastInputOpt != null ? lastInputOpt.BasketId : (Int32?)null;
+            }
         }
 
         public EditorViewModel(IClientFactory clientFactory, ValueTraverser valueTraverser)
@@ -89,9 +99,9 @@ namespace GreenField.Targeting.Controls.BasketTargets
             set { this.lines = value; this.RaisePropertyChanged(() => this.Lines); }
         }
 
-        public void AddSecurity(SecurityModel security)
+        public void AddSecurity(ISecurity security)
         {
-            this.KeptRootModel.SecurityToBeAddedOpt = security;
+            this.KeptRootModel.SecurityToBeAddedOpt = security.ToSecurityModel();
             this.RequestRecalculating();
         }
 
@@ -158,7 +168,5 @@ namespace GreenField.Targeting.Controls.BasketTargets
         {
             this.RequestRecalculating();
         }
-
-
     }
 }

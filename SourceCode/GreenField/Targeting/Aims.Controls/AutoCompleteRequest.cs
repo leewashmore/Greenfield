@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace GreenField.Targeting.Controls
+namespace Aims.Controls
 {
     public class AutoCompleteRequest
     {

@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace GreenField.Targeting.Controls
+namespace Aims.Controls
 {
     public class AutoCompleteBoxWithEnterWorking : AutoCompleteBox
     {

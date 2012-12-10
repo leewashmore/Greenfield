@@ -9,20 +9,12 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Aims.Data.Client;
+using System.Collections.Generic;
 
-namespace TopDown.FacingServer.Backend.Targeting
+namespace Aims.Controls
 {
-    public partial class CountryModel : ICountry
+    public interface ISecurityPickerClient
     {
-        public CountryModel()
-        {
-        }
-
-        public CountryModel(String name, String isoCode)
-            : this()
-        {
-            this.Name = name;
-            this.IsoCode = isoCode;
-        }
+        void RequestSecurities(String pattern, Action<IEnumerable<ISecurity>> callback, Action<Exception> errorHandler);
     }
 }

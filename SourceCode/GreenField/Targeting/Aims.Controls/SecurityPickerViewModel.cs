@@ -4,34 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
-using TopDown.FacingServer.Backend.Targeting;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Windows.Input;
 using System.Windows;
+using Aims.Data.Client;
 
-namespace GreenField.Targeting.Controls
+namespace Aims.Controls
 {
-    public class SecurityPickerViewModel : CommunicatingViewModelBase
+    public class SecurityPickerViewModel : NotificationObject
     {
-        private IClientFactory clientFactory;
-        private Int32 maxNumberOfSecurities;
-        private SecurityModel selectedSecurity;
+        private ISecurityPickerClientFactory clientFactory;
+        private ISecurity selectedSecurity;
+        private ICommunicationState communicationState;
 
         [DebuggerStepThrough]
-        public SecurityPickerViewModel(IClientFactory clientFactory, Int32 maxNumberOfSecurities)
+        public SecurityPickerViewModel(ICommunicationState communicationState, ISecurityPickerClientFactory clientFactory)
         {
+            this.communicationState = communicationState;
             this.clientFactory = clientFactory;
-            this.maxNumberOfSecurities = maxNumberOfSecurities;
             this.RequestDataCommand = new DelegateCommand<AutoCompleteRequest>(request => this.ConsiderRequestingData(request));
             this.PickSecurityCommand = new DelegateCommand(this.ConsiderPickingSecurity);
-            this.Items = new ObservableCollection<SecurityModel>();
+            this.Items = new ObservableCollection<ISecurity>();
             this.isEnabled = false;
         }
 
-        public ObservableCollection<SecurityModel> Items { get; private set; }
+        public ObservableCollection<ISecurity> Items { get; private set; }
 
-        public SecurityModel SelectedSecurity
+        public ISecurity SelectedSecurity
         {
             get { return this.selectedSecurity; }
             set
@@ -82,7 +82,7 @@ namespace GreenField.Targeting.Controls
 
         private void ConsiderRequestingData(AutoCompleteRequest request)
         {
-            if (!this.IsLoading)
+            if (!this.communicationState.IsLoading)
             {
                 this.RequestData(request);
             }
@@ -90,24 +90,27 @@ namespace GreenField.Targeting.Controls
 
         public void RequestData(AutoCompleteRequest request)
         {
-            this.StartLoading();
-            var client = this.clientFactory.CreateClient();
-            client.PickSecuritiesCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
-                "Getting securities that match \"" + request.Pattern + "\".",
-                args, x => new AutoCompleteResponse<ObservableCollection<SecurityModel>>(request, x.Result), this.TakeData, this.FinishLoading
+            this.communicationState.StartLoading();
+            var client = this.clientFactory.CreateSecurityPickerClient();
+            client.RequestSecurities(
+                request.Pattern,
+                data =>
+                {
+                    this.TakeData(data);
+                    request.Callback();
+                    this.communicationState.FinishLoading();
+                },
+                this.communicationState.FinishLoading
             );
-            client.PickSecuritiesAsync(request.Pattern, this.maxNumberOfSecurities);
         }
 
-        public void TakeData(AutoCompleteResponse<ObservableCollection<SecurityModel>> response)
+        public void TakeData(IEnumerable<ISecurity> securities)
         {
             this.Items.Clear();
-            foreach (var security in response.Result)
+            foreach (var security in securities)
             {
                 this.Items.Add(security);
             }
-            response.Request.Callback();
-            this.FinishLoading();
         }
 
         public void Clear()
@@ -116,6 +119,7 @@ namespace GreenField.Targeting.Controls
         }
 
         private Boolean isEnabled;
+
         public Boolean IsEnabled
         {
             get { return this.isEnabled; }
@@ -128,7 +132,7 @@ namespace GreenField.Targeting.Controls
 
         public void Deactivate()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

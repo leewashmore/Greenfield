@@ -8,21 +8,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Aims.Data.Client;
+using System.Diagnostics;
 
 namespace TopDown.FacingServer.Backend.Targeting
 {
-    public partial class CountryModel : ICountry
+    public partial class BgaCountryModel
     {
-        public CountryModel()
+        [DebuggerStepThrough]
+        public override void Accept(IGlobeResidentResolver resolver)
         {
-        }
-
-        public CountryModel(String name, String isoCode)
-            : this()
-        {
-            this.Name = name;
-            this.IsoCode = isoCode;
+            resolver.Resolve(this);
         }
     }
 }

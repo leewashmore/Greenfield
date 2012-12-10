@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Interactivity;
 
-namespace GreenField.Targeting.Controls
+namespace Aims.Controls
 {
     public class AutoCompleteAsyncBehavior : Behavior<AutoCompleteBoxWithEnterWorking>
     {

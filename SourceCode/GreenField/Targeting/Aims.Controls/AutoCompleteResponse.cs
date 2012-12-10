@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
-using TopDown.FacingServer.Backend.Targeting;
 using System.Diagnostics;
 
-namespace GreenField.Targeting.Controls
+namespace Aims.Controls
 {
     public class AutoCompleteResponse<TResult>
     {

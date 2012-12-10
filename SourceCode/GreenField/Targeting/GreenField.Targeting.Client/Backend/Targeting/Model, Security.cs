@@ -12,17 +12,18 @@ using Aims.Data.Client;
 
 namespace TopDown.FacingServer.Backend.Targeting
 {
-    public partial class CountryModel : ICountry
+    public abstract partial class SecurityModel : ISecurity
     {
-        public CountryModel()
+        public SecurityModel()
         {
         }
 
-        public CountryModel(String name, String isoCode)
-            : this()
+        public SecurityModel(String id, String name) : this()
         {
+            this.Id = id;
             this.Name = name;
-            this.IsoCode = isoCode;
         }
+
+        public abstract void Accept(ISecurityResolver resolver);
     }
 }

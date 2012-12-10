@@ -6,6 +6,7 @@ using System.Diagnostics;
 using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
 using System.Windows;
+using Aims.Data.Client;
 
 namespace GreenField.Targeting.Controls.BottomUp
 {
@@ -107,9 +108,9 @@ namespace GreenField.Targeting.Controls.BottomUp
         /// </summary>
         internal BuRootModel KeptRootModel { get; private set; }
 
-        public void AddSecurity(SecurityModel security)
+        public void AddSecurity(ISecurity security)
         {
-            this.KeptRootModel.SecurityToBeAddedOpt = security;
+            this.KeptRootModel.SecurityToBeAddedOpt = security.ToSecurityModel();
             this.RequestRecalculating();
         }
 
