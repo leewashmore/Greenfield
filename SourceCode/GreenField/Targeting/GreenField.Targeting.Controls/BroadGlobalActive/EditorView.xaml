@@ -18,21 +18,14 @@
                 <ResourceDictionary Source="/GreenField.Targeting.Controls;component/CommonTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <local:LevelToPaddingConverter x:Key="levelToPaddingConverter" />
-
-            <!-- name cell style -->
-            <Style TargetType="TextBlock" x:Key="paddingAwareCellStyle" BasedOn="{StaticResource nicelyMarginedTextboxStyle}">
-                <Setter Property="Padding" Value="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
-            </Style>
+            <local:IntToLeftPaddingConverter x:Key="levelToPaddingConverter" />
 
             <!-- name cell template selector -->
             <mine:GlobalResidentToDataTemplateConverter x:Key="nameCellTemplateSelector">
 
                 <mine:GlobalResidentToDataTemplateConverter.DefaultTemplate>
                     <DataTemplate>
-                        <TextBlock
-                            Style="{StaticResource paddingAwareCellStyle}"
-                        />
+                        <TextBlock Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
                     </DataTemplate>
                 </mine:GlobalResidentToDataTemplateConverter.DefaultTemplate>
 
@@ -41,7 +34,7 @@
                         <Button>
                             <Button.Template>
                                 <ControlTemplate>
-                                    <TextBlock Text="{Binding Basket.Name}" Style="{StaticResource paddingAwareCellStyle}" />
+                                    <TextBlock Text="{Binding Basket.Name}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
                                 </ControlTemplate>
                             </Button.Template>
                             <i:Interaction.Behaviors>
@@ -53,7 +46,7 @@
 
                 <mine:GlobalResidentToDataTemplateConverter.BasketCountryTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Basket.Country.Name}" Style="{StaticResource paddingAwareCellStyle}" />
+                        <TextBlock Text="{Binding Basket.Country.Name}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
                     </DataTemplate>
                 </mine:GlobalResidentToDataTemplateConverter.BasketCountryTemplate>
 
@@ -62,7 +55,7 @@
                         <Button>
                             <Button.Template>
                                 <ControlTemplate>
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource paddingAwareCellStyle}" />
+                                    <TextBlock Text="{Binding Name}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
                                 </ControlTemplate>
                             </Button.Template>
                             <i:Interaction.Behaviors>
@@ -74,10 +67,7 @@
 
                 <mine:GlobalResidentToDataTemplateConverter.CountryTemplate>
                     <DataTemplate>
-                        <TextBlock
-                            Text="{Binding Country.Name}"
-                            Style="{StaticResource paddingAwareCellStyle}"
-                        />
+                        <TextBlock Text="{Binding Country.Name}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
                     </DataTemplate>
                 </mine:GlobalResidentToDataTemplateConverter.CountryTemplate>
 

@@ -24,7 +24,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <toolkit:BusyIndicator Style="{StaticResource busyIndicatorStyle}">
+    <toolkit:BusyIndicator
+        Style="{StaticResource busyIndicatorStyle}"
+        IsBusy="{Binding CommunicationStateModel, Converter={StaticResource communicationStateModelToBooleanConverter}}"
+        BusyContent="{Binding CommunicationStateModel}"
+        BusyContentTemplate="{Binding CommunicationStateModel, Converter={StaticResource busyIndicatorTemplateSelector}}"
+    >
 
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>

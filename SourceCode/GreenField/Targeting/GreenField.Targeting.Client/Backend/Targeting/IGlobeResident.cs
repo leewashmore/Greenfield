@@ -7,6 +7,7 @@ namespace TopDown.FacingServer.Backend.Targeting
 {
     public interface IGlobeResident
     {
+        Int32 Level { get; }
         IExpandableModel Parent { get; }
         Boolean IsVisible { get; }
         void Accept(IGlobeResidentResolver resolver);
