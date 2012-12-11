@@ -63,7 +63,6 @@
     <Compile Include="PortfolioManager.cs" />
     <Compile Include="PortfolioToJsonSerializer.cs" />
     <Compile Include="Scripts\GlueTogether.cs" />
-    <Compile Include="SecurityManager.cs" />
     <Compile Include="SecurityToJsonSerializer.cs" />
     <Compile Include="Sql\NullableDatetimeField.cs" />
     <Compile Include="Sql\OuterDateTimeField.cs" />

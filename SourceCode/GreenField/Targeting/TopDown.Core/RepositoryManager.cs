@@ -18,7 +18,7 @@ namespace TopDown.Core
         private ManagingTargetingTypes.TargetingTypeManager targetingTypeManager;
         private CountryManager countryManager;
         private ManagingTaxonomies.TaxonomyManager taxonomyManager;
-        private ManagingSecurities.SecurityManager securityManager;
+        private SecurityManager securityManager;
         private ManagingPortfolios.PortfolioManager portfolioManager;
         private ManagingBenchmarks.BenchmarkManager benchmarkManager;
         private ManagingPst.RepositoryManager portfolioSecurityTargerManager;
@@ -32,7 +32,7 @@ namespace TopDown.Core
             ManagingTargetingTypes.TargetingTypeManager targetingTypeManager,
             CountryManager countryManager,
             ManagingTaxonomies.TaxonomyManager taxonomyManager,
-            ManagingSecurities.SecurityManager securityManager,
+            SecurityManager securityManager,
             ManagingPortfolios.PortfolioManager portfolioManager,
             ManagingBenchmarks.BenchmarkManager benchmarkManager,
             ManagingPst.RepositoryManager portfolioSecurityTargerManager,

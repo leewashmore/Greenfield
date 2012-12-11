@@ -47,7 +47,7 @@ namespace TopDown.Web.Controllers
 			var calculationRequester = new Core.ManagingCalculations.CalculationRequester();
 
 			var securitySerializer = new SecurityToJsonSerializer(countrySerializer);
-			var securityManager = new SecurityManager(securityRepositoryCache, securitySerializer, monitor);
+			var securityManager = new SecurityManager(securityRepositoryCache, monitor);
 			var settings = Settings.CreateFromConfiguration();
 
 			IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();

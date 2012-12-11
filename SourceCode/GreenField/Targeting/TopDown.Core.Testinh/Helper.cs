@@ -32,7 +32,7 @@ namespace TopDown.Core.Testing
 			var calculationRequester = new CalculationRequester();
 			var monitor = new Monitor();
 			var securitySerializer = new SecurityToJsonSerializer(countrySerializer);
-			var securityManager = new SecurityManager(securityRepositoryCache, securitySerializer, monitor);
+			var securityManager = new SecurityManager(securityRepositoryCache, monitor);
 
 			IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
             var connectionFactory = new SqlConnectionFactory("Data Source=lonweb1t.ashmore.local;Initial Catalog=AIMS_Data_QA;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True");

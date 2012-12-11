@@ -103,7 +103,7 @@ namespace GreenField.Targeting.Backend.Helpers
             var calculationRequester = new CalculationRequester();
             var monitor = new Monitor();
             var securitySerializer = new SecurityToJsonSerializer(countrySerializer);
-            var securityManager = new SecurityManager(securityRepositoryCache, securitySerializer, monitor);
+            var securityManager = new SecurityManager(securityRepositoryCache, monitor);
 
             IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
             var connectionFactory = new SqlConnectionFactory(connectionString);
