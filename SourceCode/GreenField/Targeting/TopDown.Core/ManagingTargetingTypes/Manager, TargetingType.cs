@@ -6,6 +6,7 @@ using System.Diagnostics;
 using TopDown.Core.Sql;
 using TopDown.Core.Persisting;
 using TopDown.Core.ManagingTaxonomies;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingTargetingTypes
 {
@@ -33,7 +34,7 @@ namespace TopDown.Core.ManagingTargetingTypes
         public TargetingTypeRepository ClaimTargetingTypeRepository(
 			IOnDamand<IDataManager> ondemandManager,
 			Func<TaxonomyRepository> ondemandTaxonomyRepository,
-			Func<ManagingPortfolios.PortfolioRepository> ondemandPortfolioRepository
+			Func<PortfolioRepository> ondemandPortfolioRepository
 		)
         {
             return this.targetingTypeRepositoryStorage.Claim(TargetingTypeRepositoryStorageKey, delegate
@@ -50,7 +51,7 @@ namespace TopDown.Core.ManagingTargetingTypes
         public TargetingTypeRepository ClaimTargetingTypeRepository(
            IDataManager manager,
            Func<TaxonomyRepository> ondemandTaxonomyRepository,
-           Func<ManagingPortfolios.PortfolioRepository> ondemandPortfolioRepository
+           Func<PortfolioRepository> ondemandPortfolioRepository
        )
         {
             return this.targetingTypeRepositoryStorage.Claim(TargetingTypeRepositoryStorageKey, delegate
@@ -67,7 +68,7 @@ namespace TopDown.Core.ManagingTargetingTypes
 		public TargetingTypeRepository ClaimTargetingTypeRepository(
 			IOnDamand<IDataManager> ondemandManager,
 			TaxonomyRepository taxonomyRepository,
-			ManagingPortfolios.PortfolioRepository portfolioRepository
+			PortfolioRepository portfolioRepository
 		)
         {
             return this.targetingTypeRepositoryStorage.Claim(TargetingTypeRepositoryStorageKey, delegate
@@ -82,7 +83,7 @@ namespace TopDown.Core.ManagingTargetingTypes
         protected TargetingTypeRepository CreateTargetingTypeRepository(
 			IDataManager manager,
 			TaxonomyRepository taxonomyRepository,
-			ManagingPortfolios.PortfolioRepository portfolioRepository
+			PortfolioRepository portfolioRepository
 		)
         {
             var targetingTypeInfos = manager.GetAllTargetingTypes();

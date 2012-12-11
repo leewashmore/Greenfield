@@ -5,6 +5,7 @@ using System.Text;
 using TopDown.Core.Persisting;
 using TopDown.Core.ManagingTaxonomies;
 using TopDown.Core.ManagingPortfolios;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingTargetingTypes
 {

@@ -15,6 +15,7 @@ using TopDown.Core.ManagingBpt;
 using TopDown.Core.Overlaying;
 using TopDown.Core.ManagingPst;
 using TopDown.Core.Gadgets.PortfolioPicker;
+using Aims.Core;
 
 namespace TopDown.Core.Testing
 {
@@ -35,7 +36,7 @@ namespace TopDown.Core.Testing
 
 			IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
             var connectionFactory = new SqlConnectionFactory("Data Source=lonweb1t.ashmore.local;Initial Catalog=AIMS_Data_QA;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True");
-			var portfolioRepositoryCache = new InMemoryStorage<TopDown.Core.ManagingPortfolios.PortfolioRepository>();
+			var portfolioRepositoryCache = new InMemoryStorage<PortfolioRepository>();
 			var portfolioSerialzer = new TopDown.Core.ManagingPortfolios.PortfolioToJsonSerializer(securitySerializer);
 			var portfolioManager = new TopDown.Core.ManagingPortfolios.PortfolioManager(
 				portfolioRepositoryCache,

@@ -15,6 +15,7 @@ using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingPortfolios;
 using Aims.Expressions;
 using TopDown.Core.ManagingCalculations;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpt
 {
@@ -345,8 +346,8 @@ namespace TopDown.Core.ManagingBpt
 #warning it's a big question whether overlays need to be recalculated every time
 #warning we need to see if somebody has changed PST composition since we opened for editing but haven't yet saved
 
-            ManagingSecurities.SecurityRepository securityRepository;
-            ManagingPortfolios.PortfolioRepository portfolioRepository;
+            SecurityRepository securityRepository;
+            PortfolioRepository portfolioRepository;
             ManagingPst.PortfolioSecurityTargetRepository portfolioSecurityTargetRepository;
             using (var ondemandManager = new OnDemandDataManager(connectionFactory, dataManagerFactory))
             {

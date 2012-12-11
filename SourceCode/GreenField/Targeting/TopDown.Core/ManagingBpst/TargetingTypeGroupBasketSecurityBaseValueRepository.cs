@@ -7,6 +7,7 @@ using TopDown.Core.Persisting;
 using TopDown.Core.ManagingBaskets;
 using TInfo = TopDown.Core.Persisting.TargetingTypeGroupBasketSecurityBaseValueInfo;
 using TopDown.Core.ManagingSecurities;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpst
 {

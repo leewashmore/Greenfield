@@ -13,6 +13,7 @@ using TopDown.Core.ManagingPortfolios;
 using Aims.Expressions;
 using TopDown.Core.ManagingBenchmarks;
 using TopDown.Core.ManagingCalculations;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpst
 {

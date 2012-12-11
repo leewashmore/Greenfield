@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CountryToJsonSerializer.cs" />
     <Compile Include="ExpressionFromJsonDeserializer.cs" />
     <Compile Include="ExpressionToJsonSerializer.cs" />
     <Compile Include="JsonPropertyValueGiver.cs" />
@@ -57,12 +58,13 @@
     <Compile Include="ManagingCalculations\CalculationInfo.cs" />
     <Compile Include="ManagingCalculations\TargetRecord.cs" />
     <Compile Include="ManagingPst\ModelValidator.cs" />
-    <Compile Include="ManagingSecurities\Extender.cs" />
-    <Compile Include="ManagingSecurities\Fund.cs" />
-    <Compile Include="ManagingSecurities\ISecurity.cs" />
     <Compile Include="Persisting\CalculationWithChangesets.cs" />
     <Compile Include="Persisting\IChangesetInfoResolver.cs" />
+    <Compile Include="PortfolioManager.cs" />
+    <Compile Include="PortfolioToJsonSerializer.cs" />
     <Compile Include="Scripts\GlueTogether.cs" />
+    <Compile Include="SecurityManager.cs" />
+    <Compile Include="SecurityToJsonSerializer.cs" />
     <Compile Include="Sql\NullableDatetimeField.cs" />
     <Compile Include="Sql\OuterDateTimeField.cs" />
     <Compile Include="Sql\OuterInt32Field.cs" />
@@ -76,7 +78,6 @@
     <Compile Include="Gadgets\ProtfolioPicker\Model, TargetingType.cs" />
     <Compile Include="Helpers\ChangesetApplierBase.cs" />
     <Compile Include="Helpers\ExceptionToJsonSerializer.cs" />
-    <Compile Include="Helpers\IMonitor.cs" />
     <Compile Include="Helpers\Monitor.cs" />
     <Compile Include="ManagingBenchmarks\BenchmarkManager.cs" />
     <Compile Include="ManagingBenchmarks\BenchmarkRepository.cs" />
@@ -118,11 +119,6 @@
     <Compile Include="ManagingCalculations\TargetingCalculationStatus.cs" />
     <Compile Include="ModelToJsonSerializerBase.cs" />
     <Compile Include="ManagingCalculations\CalculationRequester.cs" />
-    <Compile Include="ManagingPortfolios\PortfolioToJsonSerializer.cs" />
-    <Compile Include="ManagingCountries\JsonNames.cs" />
-    <Compile Include="ManagingPortfolios\BroadGlobalActivePotfolio.cs" />
-    <Compile Include="ManagingPortfolios\BottomUpPortfolio.cs" />
-    <Compile Include="ManagingPortfolios\ISecurityIdToPortfolioIdResolver.cs" />
     <Compile Include="ManagingBpt\ManagingOverlays\ModelBuilder.cs" />
     <Compile Include="ManagingBpt\ModelApplier.cs" />
     <Compile Include="Facade.cs" />
@@ -130,7 +126,6 @@
     <Compile Include="Gadgets\BasketPicker\ModelToJsonSerializer.cs" />
     <Compile Include="Gadgets\ProtfolioPicker\GadgetManager.cs" />
     <Compile Include="Helpers\DecimalValueExecuter.cs" />
-    <Compile Include="Helpers\IStorageExtender.cs" />
     <Compile Include="Helpers\NullableDecimalValueAdapter.cs" />
     <Compile Include="Helpers\StringValueAdapter.cs" />
     <Compile Include="JsonFacade.cs" />
@@ -168,21 +163,14 @@
     <Compile Include="ManagingBpt\ChangingTtbpt\ModelToChangesetTransformer.cs" />
     <Compile Include="ManagingBpt\ChangingPsto\ModelToChangesetTransformer.cs" />
     <Compile Include="ManagingBpt\ModelValidator.cs" />
-    <Compile Include="ManagingCountries\Manager, Country.cs" />
-    <Compile Include="ManagingCountries\Repository, Country.cs" />
     <Compile Include="ManagingBaskets\Extractor, BasketId.cs" />
-    <Compile Include="ManagingPortfolios\JsonNames.cs" />
-    <Compile Include="ManagingPortfolios\PortfolioManager.cs" />
     <Compile Include="ModelChangeDetectorBase.cs" />
     <Compile Include="ManagingPst\ModelChangesDetector.cs" />
     <Compile Include="ManagingPst\ModelExpressionTraverser.cs" />
     <Compile Include="ManagingPst\PortfolioSecurityTargetRepository.cs" />
     <Compile Include="ManagingPst\ModelBuilder.cs" />
     <Compile Include="ManagingPst\RepositoryManager.cs" />
-    <Compile Include="ManagingSecurities\CountryToJsonSerializer.cs" />
-    <Compile Include="ManagingSecurities\CompanySecurity.cs" />
     <Compile Include="ManagingTargetingTypes\InfoDeserializer.cs" />
-    <Compile Include="ManagingPortfolios\Portfolio.cs" />
     <Compile Include="ManagingTargetingTypes\Manager, TargetingType.cs" />
     <Compile Include="ManagingTaxonomies\InfoDeserializer.cs" />
     <Compile Include="ManagingTaxonomies\Node, BasketCountry.cs" />
@@ -206,14 +194,12 @@
     <Compile Include="ManagingBpt\Initializer, BaseValue.cs" />
     <Compile Include="ManagingBpt\Initializer, BenchmarkValue.cs" />
     <Compile Include="ManagingBpt\Initializer, Overlay.cs" />
-    <Compile Include="Helpers\IStorage.cs" />
     <Compile Include="Helpers\JsonReader.cs" />
     <Compile Include="Helpers\JsonWriter.cs" />
     <Compile Include="Helpers\JsonWriterExtender.cs" />
     <Compile Include="ManagingBpt\Model, Globe.cs" />
     <Compile Include="ManagingBpt\ExpressionPicker.cs" />
     <Compile Include="Helpers\CommonParts.cs" />
-    <Compile Include="KeyedRepository.cs" />
     <Compile Include="Gadgets\BasketPicker\ModelBuilder.cs" />
     <Compile Include="Gadgets\BasketPicker\Model, Basket.cs" />
     <Compile Include="Gadgets\BasketPicker\Model, Root.cs" />
@@ -222,8 +208,6 @@
     <Compile Include="ManagingBaskets\Basket, I.cs" />
     <Compile Include="ManagingBpst\Model, Root.cs" />
     <Compile Include="ManagingPst\ModelManager.cs" />
-    <Compile Include="ManagingSecurities\JsonNames.cs" />
-    <Compile Include="ManagingSecurities\SecurityToJsonSerializer.cs" />
     <Compile Include="ManagingPst\Change, I.cs" />
     <Compile Include="JsonNames.cs" />
     <Compile Include="ManagingPst\ModelFromJsonDeserializer.cs" />
@@ -237,7 +221,6 @@
     <Compile Include="ManagingTargetingTypes\Repository, TargetingTypeGroup.cs" />
     <Compile Include="ManagingTargetingTypes\TargetingType.cs" />
     <Compile Include="ManagingTaxonomies\TaxonomyRepository.cs" />
-    <Compile Include="OnDamand.cs" />
     <Compile Include="OnDemandDataManager.cs" />
     <Compile Include="Persisting\CountryBasketInfo.cs" />
     <Compile Include="Persisting\FakeCountries.cs" />
@@ -248,14 +231,9 @@
     <Compile Include="Persisting\Info, BasketPortfolioSecurityTargetChange.cs" />
     <Compile Include="Persisting\Info, BasketPortfolioSecurityTarget.cs" />
     <Compile Include="Persisting\Info, BasketPortfolioSecurityTargetChangeset.cs" />
-    <Compile Include="Persisting\Info, Country.cs" />
     <Compile Include="Persisting\Info, Basket.cs" />
     <Compile Include="Persisting\Info, TargetingType.cs" />
     <Compile Include="ManagingTargetingTypes\Repository, TargetingType.cs" />
-    <Compile Include="Persisting\Info, Security.cs" />
-    <Compile Include="ManagingSecurities\SecurityManager.cs" />
-    <Compile Include="ManagingSecurities\SecurityReader.cs" />
-    <Compile Include="ManagingSecurities\SecurityRepository.cs" />
     <Compile Include="ManagingPst\Model, Root.cs" />
     <Compile Include="ManagingPst\Model, Item.cs" />
     <Compile Include="ManagingPst\ModelToJsonSerializer.cs" />
@@ -275,10 +253,8 @@
     <Compile Include="Persisting\Info, BgaPortfolioSecurityFactor.cs" />
     <Compile Include="Persisting\Info, BgaPortfolioSecurityFactorChange.cs" />
     <Compile Include="Persisting\Info, BgaPortfolioSecurityFactorChangeset.cs" />
-    <Compile Include="Persisting\PortfolioInfo.cs" />
-    <Compile Include="Persisting\RegionBasketInfo.cs" />
+    <Compile Include="Persisting\Info, RegionBasket.cs" />
     <Compile Include="Persisting\TableNames.cs" />
-    <Compile Include="ManagingPortfolios\PortfolioRepository.cs" />
     <Compile Include="RepositoryManager.cs" />
     <Content Include="Scripts\007-COUNTRY_BASKET.sql" />
     <Compile Include="Sql\DatetimeField.cs" />
@@ -293,7 +269,6 @@
     <Compile Include="ManagingBpt\IModelDifference.cs" />
     <Compile Include="ManagingBpt\Model, Cash.cs" />
     <Compile Include="ManagingBpt\Model, BasketCountry, Unsaved.cs" />
-    <Compile Include="ManagingCountries\Country.cs" />
     <Compile Include="Helpers\Extender.cs" />
     <Compile Include="KnownValidators.cs" />
     <Compile Include="No.cs" />
@@ -354,7 +329,6 @@
     <Compile Include="ManagingBpt\Model, Region.cs" />
     <Compile Include="ManagingTaxonomies\Node, Other.cs" />
     <Compile Include="ManagingTaxonomies\Node, Region.cs" />
-    <Compile Include="Repository.cs" />
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ManagingTaxonomies\TaxonomyToXmlWriter.cs" />
@@ -420,6 +394,10 @@
     <Folder Include="Expressing\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Aims.Core\Aims.Core.csproj">
+      <Project>{426D597E-4276-41D2-BE84-D1229501A51A}</Project>
+      <Name>Aims.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TopDown.Expressions\Aims.Expressions.csproj">
       <Project>{9FC437D2-362D-4898-8C9B-408B16406A0F}</Project>
       <Name>Aims.Expressions</Name>

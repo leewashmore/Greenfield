@@ -5,6 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingPortfolios;
+using Aims.Core;
 
 namespace TopDown.Core.Gadgets.PortfolioPicker
 {

@@ -6,12 +6,13 @@ using Aims.Expressions;
 using Core = TopDown.Core;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingBaskets;
+using Aims.Core;
 
 namespace GreenField.Targeting.Server
 {
     public class Serializer
     {
-        public BottomUpPortfolioModel SerializeBottomUpPortfolio(Core.ManagingPortfolios.BottomUpPortfolio portfolio)
+        public BottomUpPortfolioModel SerializeBottomUpPortfolio(BottomUpPortfolio portfolio)
         {
             var result = new BottomUpPortfolioModel(
                 portfolio.Id,
@@ -21,20 +22,20 @@ namespace GreenField.Targeting.Server
             return result;
         }
 
-        public IEnumerable<SecurityModel> SerializeSecurities(IEnumerable<Core.ManagingSecurities.ISecurity> securities)
+        public IEnumerable<SecurityModel> SerializeSecurities(IEnumerable<ISecurity> securities)
         {
             var result = securities.Select(x => this.SerializeSecurityOnceResolved(x)).ToArray();
             return result;
         }
 
-        public SecurityModel SerializeSecurityOnceResolved(Core.ManagingSecurities.ISecurity security)
+        public SecurityModel SerializeSecurityOnceResolved(ISecurity security)
         {
             var resolver = new SerializeSecurityOnceResolved_ISecurityResolver(this);
             security.Accept(resolver);
             return resolver.Result;
         }
 
-        private class SerializeSecurityOnceResolved_ISecurityResolver : Core.ManagingSecurities.ISecurityResolver
+        private class SerializeSecurityOnceResolved_ISecurityResolver : ISecurityResolver
         {
             private Serializer serializer;
 
@@ -45,19 +46,19 @@ namespace GreenField.Targeting.Server
 
             public SecurityModel Result { get; private set; }
 
-            public void Resolve(Core.ManagingSecurities.CompanySecurity stock)
+            public void Resolve(CompanySecurity stock)
             {
                 this.Result = this.serializer.SerializeCompanySecurity(stock);
             }
 
-            public void Resolve(Core.ManagingSecurities.Fund fund)
+            public void Resolve(Fund fund)
             {
                 this.Result = this.serializer.SerializeFund(fund);
             }
         }
 
 
-        private FundModel SerializeFund(Core.ManagingSecurities.Fund fund)
+        private FundModel SerializeFund(Fund fund)
         {
             var result = new FundModel(
                 fund.Id,
@@ -68,7 +69,7 @@ namespace GreenField.Targeting.Server
             return result;
         }
 
-        public CompanySecurityModel SerializeCompanySecurity(Core.ManagingSecurities.CompanySecurity security)
+        public CompanySecurityModel SerializeCompanySecurity(CompanySecurity security)
         {
             var result = new CompanySecurityModel(
                 security.Id,
@@ -80,7 +81,7 @@ namespace GreenField.Targeting.Server
             return result;
         }
 
-        public CountryModel SerializeCountry(Core.ManagingCountries.Country country)
+        public CountryModel SerializeCountry(Country country)
         {
             var result = new CountryModel(
                 country.IsoCode,
@@ -172,7 +173,7 @@ namespace GreenField.Targeting.Server
             return result;
         }
 
-        public BroadGlobalActivePortfolioModel SerializeBroadGlobalActivePorfolio(Core.ManagingPortfolios.BroadGlobalActivePortfolio broadGlobalActivePortfolio)
+        public BroadGlobalActivePortfolioModel SerializeBroadGlobalActivePorfolio(BroadGlobalActivePortfolio broadGlobalActivePortfolio)
         {
             var result = new BroadGlobalActivePortfolioModel(
                 broadGlobalActivePortfolio.Id,
@@ -209,7 +210,7 @@ namespace GreenField.Targeting.Server
             return result;
         }
 
-        public IEnumerable<CountryModel> SerializeCountries(IEnumerable<Core.ManagingCountries.Country> models)
+        public IEnumerable<CountryModel> SerializeCountries(IEnumerable<Country> models)
         {
             var result = models.Select(x => this.SerializeCountry(x)).ToArray();
             return result;

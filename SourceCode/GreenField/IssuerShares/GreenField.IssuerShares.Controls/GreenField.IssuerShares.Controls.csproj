@@ -102,6 +102,16 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Targeting\Aims.Controls\Aims.Controls.csproj">
+      <Project>{23635A8E-745F-45D6-A4C7-31B67DA175E2}</Project>
+      <Name>Aims.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Targeting\Aims.Data.Client\Aims.Data.Client.csproj">
+      <Project>{69F03A94-4D45-4682-9796-648C752F95E6}</Project>
+      <Name>Aims.Data.Client</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

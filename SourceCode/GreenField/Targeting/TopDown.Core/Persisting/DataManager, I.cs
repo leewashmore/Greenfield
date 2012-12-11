@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Aims.Core.Persisting;
 
 namespace TopDown.Core.Persisting
 {
-    public interface IDataManager
+    public interface IDataManager : Aims.Core.Persisting.IDataManager
     {
         IEnumerable<BasketInfo> GetAllBaskets();
-        IEnumerable<SecurityInfo> GetAllSecurities();
-        IEnumerable<CountryInfo> GetAllCountries();
-		IEnumerable<PortfolioInfo> GetAllPortfolios();
 		IEnumerable<UsernameBottomUpPortfolioInfo> GetUsernameBottomUpPortfolios(String username);
 
         DateTime GetLastestDateWhichBenchmarkDataIsAvialableOn();

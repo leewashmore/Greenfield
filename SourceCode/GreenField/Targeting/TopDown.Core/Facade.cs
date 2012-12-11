@@ -23,6 +23,7 @@ using TopDown.Core.Gadgets.BasketPicker;
 using TopDown.Core.ManagingPortfolios;
 using Aims.Expressions;
 using TopDown.Core.ManagingCalculations;
+using Aims.Core;
 
 namespace TopDown.Core
 {

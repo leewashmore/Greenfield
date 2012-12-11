@@ -18,6 +18,7 @@ using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.Gadgets.PortfolioPicker;
 using TopDown.Core.Gadgets.BasketPicker;
 using TopDown.Core.ManagingBenchmarks;
+using Aims.Core;
 
 namespace TopDown.Web.Controllers
 {
@@ -51,7 +52,7 @@ namespace TopDown.Web.Controllers
 
 			IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
 			var connectionFactory = new SqlConnectionFactory(settings.ConnectionString);
-			var portfolioRepositoryCache = new CacheStorage<Core.ManagingPortfolios.PortfolioRepository>(cache);
+			var portfolioRepositoryCache = new CacheStorage<PortfolioRepository>(cache);
 			var portfolioSerialzer = new Core.ManagingPortfolios.PortfolioToJsonSerializer(securitySerializer);
 			var portfolioManager = new Core.ManagingPortfolios.PortfolioManager(
 				portfolioRepositoryCache,

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using TopDown.Core.Persisting;
 using TopDown.Core.ManagingPortfolios;
 using TopDown.Core.ManagingBenchmarks;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpst
 {

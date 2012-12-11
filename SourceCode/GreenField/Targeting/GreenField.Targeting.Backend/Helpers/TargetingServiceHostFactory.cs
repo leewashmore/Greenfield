@@ -20,6 +20,7 @@ using TopDown.Core.ManagingBpt;
 using TopDown.Core.Overlaying;
 using TopDown.Core.ManagingPst;
 using TopDown.Core.Gadgets.PortfolioPicker;
+using Aims.Core;
 
 namespace GreenField.Targeting.Backend.Helpers
 {
@@ -106,7 +107,7 @@ namespace GreenField.Targeting.Backend.Helpers
 
             IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
             var connectionFactory = new SqlConnectionFactory(connectionString);
-            var portfolioRepositoryCache = new CacheStorage<TopDown.Core.ManagingPortfolios.PortfolioRepository>(cache);
+            var portfolioRepositoryCache = new CacheStorage<PortfolioRepository>(cache);
             var portfolioSerialzer = new TopDown.Core.ManagingPortfolios.PortfolioToJsonSerializer(securitySerializer);
             var portfolioManager = new TopDown.Core.ManagingPortfolios.PortfolioManager(
                 portfolioRepositoryCache,

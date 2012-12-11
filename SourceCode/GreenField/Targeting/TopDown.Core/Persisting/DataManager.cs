@@ -7,6 +7,7 @@ using TopDown.Core.ManagingTaxonomies;
 using System.Diagnostics;
 using TopDown.Core.Sql;
 using System.Data;
+using Aims.Core.Persisting;
 
 namespace TopDown.Core.Persisting
 {
@@ -132,6 +133,17 @@ namespace TopDown.Core.Persisting
                     .Field(", [LOOK_THRU_FUND]", (info, value) => info.LookThruFund = value, false)
                 .Text(" from " + TableNames.GF_SECURITY_BASEVIEW)
                 .PullAll();
+            }
+        }
+        public IEnumerable<PortfolioInfo> GetAllPortfolios()
+        {
+            using (var builder = this.CreateQueryCommandBuilder<PortfolioInfo>())
+            {
+                return builder.Text("select ")
+                    .Field("  [ID]", (info, value) => info.Id = value, true)
+                    .Field(", [NAME]", (info, value) => info.Name = value, true)
+                    .Text(" from [" + TableNames.PORTFOLIO + "]")
+                    .PullAll();
             }
         }
 
@@ -449,17 +461,7 @@ namespace TopDown.Core.Persisting
                     .PullAll();
             }
         }
-        public IEnumerable<PortfolioInfo> GetAllPortfolios()
-        {
-            using (var builder = this.CreateQueryCommandBuilder<PortfolioInfo>())
-            {
-                return builder.Text("select ")
-                    .Field("  [ID]", (info, value) => info.Id = value, true)
-                    .Field(", [NAME]", (info, value) => info.Name = value, true)
-                    .Text(" from [" + TableNames.PORTFOLIO + "]")
-                    .PullAll();
-            }
-        }
+        
 
         // P-S-TO
         public virtual BgaPortfolioSecurityFactorChangesetInfo GetLatestBgaPortfolioSecurityFactorChangeset()

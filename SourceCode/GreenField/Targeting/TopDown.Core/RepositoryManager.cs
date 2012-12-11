@@ -7,6 +7,7 @@ using TopDown.Core.Persisting;
 using TopDown.Core.Gadgets.PortfolioPicker;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingBaskets;
+using Aims.Core;
 
 namespace TopDown.Core
 {
@@ -15,7 +16,7 @@ namespace TopDown.Core
         private IMonitor monitor;
         private ManagingBaskets.BasketManager basketManager;
         private ManagingTargetingTypes.TargetingTypeManager targetingTypeManager;
-        private ManagingCountries.CountryManager countryManager;
+        private CountryManager countryManager;
         private ManagingTaxonomies.TaxonomyManager taxonomyManager;
         private ManagingSecurities.SecurityManager securityManager;
         private ManagingPortfolios.PortfolioManager portfolioManager;
@@ -29,7 +30,7 @@ namespace TopDown.Core
             IMonitor monitor,
             ManagingBaskets.BasketManager basketManager,
             ManagingTargetingTypes.TargetingTypeManager targetingTypeManager,
-            ManagingCountries.CountryManager countryManager,
+            CountryManager countryManager,
             ManagingTaxonomies.TaxonomyManager taxonomyManager,
             ManagingSecurities.SecurityManager securityManager,
             ManagingPortfolios.PortfolioManager portfolioManager,
@@ -134,7 +135,7 @@ namespace TopDown.Core
         }
 
 
-        public ManagingSecurities.SecurityRepository ClaimSecurityRepository(IOnDamand<IDataManager> ondemandManager)
+        public SecurityRepository ClaimSecurityRepository(IOnDamand<IDataManager> ondemandManager)
         {
             return this.securityManager.ClaimSecurityRepository(
                 ondemandManager,
@@ -144,7 +145,7 @@ namespace TopDown.Core
                 }
             );
         }
-        public ManagingSecurities.SecurityRepository ClaimSecurityRepository(IDataManager manager)
+        public SecurityRepository ClaimSecurityRepository(IDataManager manager)
         {
             return this.securityManager.ClaimSecurityRepository(
                 manager,
@@ -167,16 +168,16 @@ namespace TopDown.Core
         }
 
 
-        public ManagingCountries.CountryRepository ClaimCountryRepository(IOnDamand<IDataManager> ondemandManager)
+        public CountryRepository ClaimCountryRepository(IOnDamand<IDataManager> ondemandManager)
         {
             return this.countryManager.ClaimCountryRepository(ondemandManager);
         }
-        public ManagingCountries.CountryRepository ClaimCountryRepository(IDataManager manager)
+        public CountryRepository ClaimCountryRepository(IDataManager manager)
         {
             return this.countryManager.ClaimCountryRepository(manager);
         }
 
-        public ManagingPortfolios.PortfolioRepository ClaimPortfolioRepository(IOnDamand<IDataManager> ondemandManager)
+        public PortfolioRepository ClaimPortfolioRepository(IOnDamand<IDataManager> ondemandManager)
         {
             return this.portfolioManager.ClaimPortfolioRepository(
                 ondemandManager,
@@ -186,7 +187,7 @@ namespace TopDown.Core
                 }
             );
         }
-        public ManagingPortfolios.PortfolioRepository ClaimPortfolioRepository(IDataManager manager)
+        public PortfolioRepository ClaimPortfolioRepository(IDataManager manager)
         {
             return this.portfolioManager.ClaimPortfolioRepository(
                 manager,
