@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
-using TopDown.Core.Sql;
 using TopDown.Core.Persisting;
 using TopDown.Core.ManagingTaxonomies;
 using Aims.Core;
@@ -32,7 +31,7 @@ namespace TopDown.Core.ManagingTargetingTypes
         }
 
         public TargetingTypeRepository ClaimTargetingTypeRepository(
-			IOnDamand<IDataManager> ondemandManager,
+			IOnDemand<IDataManager> ondemandManager,
 			Func<TaxonomyRepository> ondemandTaxonomyRepository,
 			Func<PortfolioRepository> ondemandPortfolioRepository
 		)
@@ -66,7 +65,7 @@ namespace TopDown.Core.ManagingTargetingTypes
 		
 		
 		public TargetingTypeRepository ClaimTargetingTypeRepository(
-			IOnDamand<IDataManager> ondemandManager,
+			IOnDemand<IDataManager> ondemandManager,
 			TaxonomyRepository taxonomyRepository,
 			PortfolioRepository portfolioRepository
 		)
@@ -107,7 +106,7 @@ namespace TopDown.Core.ManagingTargetingTypes
 			});
 		}
 
-		public TargetingTypeGroupRepository ClaimTargetingTypeGroupRepository(IOnDamand<IDataManager> ondemandManager, Func<TargetingTypeRepository> ondemandTargetingTypeRepository)
+		public TargetingTypeGroupRepository ClaimTargetingTypeGroupRepository(IOnDemand<IDataManager> ondemandManager, Func<TargetingTypeRepository> ondemandTargetingTypeRepository)
         {
             return this.targetingTypeGroupRepositoryStorage.Claim(TargetingTypeGroupRepositoryStorageKey, delegate
             {

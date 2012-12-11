@@ -7,7 +7,7 @@ using TopDown.Core.ManagingCountries;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingCalculations;
 using TopDown.Core.ManagingBaskets;
-using TopDown.Core.Sql;
+using Aims.Core.Sql;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingTaxonomies;
 using TopDown.Core.ManagingBenchmarks;
@@ -78,6 +78,10 @@ namespace TopDown.Core.Testing
 			var ttgbsbvrCache = new InMemoryStorage<TopDown.Core.ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepository>();
 			var ttgbsbvrManager = new TopDown.Core.ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepositoryManager(ttgbsbvrCache);
 
+            var issuerRepositoryStorage = new InMemoryStorage<IssuerRepository>();
+            var issuerManager = new IssuerManager(monitor, issuerRepositoryStorage);
+
+
 			var repositoryManager = new TopDown.Core.RepositoryManager(
 				monitor,
 				basketManager,
@@ -89,7 +93,8 @@ namespace TopDown.Core.Testing
 				benchmarkManager,
 				portfolioSecurityTargetRepositoryManager,
 				bpstManager,
-				ttgbsbvrManager
+				ttgbsbvrManager,
+                issuerManager
 			);
 
 			repositoryManager.DropEverything();

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using TopDown.Core;
 using System.Diagnostics;
-using TopDown.Core.Sql;
+using Aims.Core.Sql;
 using TopDown.Core.Persisting;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingPortfolios;
@@ -13,32 +13,29 @@ using TopDown.Core.ManagingCountries;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingBenchmarks;
 using Aims.Core;
+using Aims.Data.Server;
 
 namespace GreenField.Targeting.Server
 {
-    public class Deserializer
+    public class Deserializer : Aims.Data.Server.Deserializer<IDataManager>
     {
-        private RepositoryManager repositoryManager;
+        private TopDown.Core.RepositoryManager repositoryManager;
         private ISqlConnectionFactory connectionFactory;
         private IDataManagerFactory dataManagerFactory;
-        
+
         [DebuggerStepThrough]
         public Deserializer(
             ISqlConnectionFactory connectionFactory,
             IDataManagerFactory dataManagerFactory,
-            RepositoryManager repositoryManager
+            TopDown.Core.RepositoryManager repositoryManager
         )
+            : base(connectionFactory, dataManagerFactory, repositoryManager)
         {
             this.connectionFactory = connectionFactory;
             this.dataManagerFactory = dataManagerFactory;
             this.repositoryManager = repositoryManager;
         }
 
-        protected IOnDamand<IDataManager> CreateOnDemandDataManager()
-        {
-            var result = new OnDemandDataManager(this.connectionFactory, this.dataManagerFactory);
-            return result;
-        }
 
         public TargetingType DeserializeTargetingType(TargetingTypeModel model)
         {
@@ -112,16 +109,16 @@ namespace GreenField.Targeting.Server
         }
 
 
-		public BottomUpPortfolio DeserializeBottomUpPortfolio(BottomUpPortfolioModel model)
-		{
-			PortfolioRepository portfolioRepository;
-			using (var ondemandManager = this.CreateOnDemandDataManager())
-			{
-				portfolioRepository = this.repositoryManager.ClaimPortfolioRepository(ondemandManager);
-			}
-			var result = portfolioRepository.GetBottomUpPortfolio(model.Id);
-			return result;
-		}
+        public BottomUpPortfolio DeserializeBottomUpPortfolio(BottomUpPortfolioModel model)
+        {
+            PortfolioRepository portfolioRepository;
+            using (var ondemandManager = this.CreateOnDemandDataManager())
+            {
+                portfolioRepository = this.repositoryManager.ClaimPortfolioRepository(ondemandManager);
+            }
+            var result = portfolioRepository.GetBottomUpPortfolio(model.Id);
+            return result;
+        }
 
         public ISecurity DeserializeSecurity(SecurityModel model)
         {

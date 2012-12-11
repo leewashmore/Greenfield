@@ -12,7 +12,7 @@ using TopDown.Core.ManagingCountries;
 using TopDown.Core.ManagingBaskets;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingCalculations;
-using TopDown.Core.Sql;
+using Aims.Core.Sql;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingTaxonomies;
 using TopDown.Core.ManagingBenchmarks;
@@ -149,6 +149,9 @@ namespace GreenField.Targeting.Backend.Helpers
             var ttgbsbvrCache = new CacheStorage<TopDown.Core.ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepository>(cache);
             var ttgbsbvrManager = new TopDown.Core.ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepositoryManager(ttgbsbvrCache);
 
+            var issuerRepositoryStorage = new CacheStorage<IssuerRepository>(cache);
+            var issuerManager = new IssuerManager(monitor, issuerRepositoryStorage);
+
             var repositoryManager = new TopDown.Core.RepositoryManager(
                 monitor,
                 basketManager,
@@ -160,7 +163,8 @@ namespace GreenField.Targeting.Backend.Helpers
                 benchmarkManager,
                 portfolioSecurityTargetRepositoryManager,
                 bpstManager,
-                ttgbsbvrManager
+                ttgbsbvrManager,
+                issuerManager
             );
 
             if (shouldDropRepositories)
@@ -275,7 +279,7 @@ namespace GreenField.Targeting.Backend.Helpers
             );
             var bpstBenchmarkInitializer = new TopDown.Core.ManagingBpst.BenchmarkInitializer();
             var bpstModelValidator = new TopDown.Core.ManagingBpst.ModelValidator();
-            var bpstModelChangeDetector =new TopDown.Core.ManagingBpst.ModelChangeDetector(new TopDown.Core.ManagingBpst.ModelExpressionTraverser());
+            var bpstModelChangeDetector = new TopDown.Core.ManagingBpst.ModelChangeDetector(new TopDown.Core.ManagingBpst.ModelExpressionTraverser());
             var bpstModelManager = new TopDown.Core.ManagingBpst.ModelManager(
                 new TopDown.Core.ManagingBpst.ModelToJsonSerializer(expressionSerializer, securitySerializer),
                 bpstModelBuilder,

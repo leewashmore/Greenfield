@@ -233,7 +233,7 @@ namespace TopDown.Core.ManagingBpst
             TargetingTypeGroupRepository targetingTypeGroupRepository,
             BasketRepository basketRepository,
 			PortfolioRepository portfolioRepository,
-            IOnDamand<IDataManager> ondemandManager
+            IOnDemand<IDataManager> ondemandManager
         )
         {
             using (var reader = new JsonReader(new Newtonsoft.Json.JsonTextReader(new StringReader(bpstModelAsJson))))

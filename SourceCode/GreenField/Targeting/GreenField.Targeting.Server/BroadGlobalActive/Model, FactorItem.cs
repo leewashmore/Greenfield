@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Diagnostics;
+using Aims.Data.Server;
 
 namespace GreenField.Targeting.Server.BroadGlobalActive
 {

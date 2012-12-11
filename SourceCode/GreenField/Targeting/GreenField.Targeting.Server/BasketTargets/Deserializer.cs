@@ -61,7 +61,7 @@ namespace GreenField.Targeting.Server.BasketTargets
         }
 
         private Core.SecurityModel DeserializeAdditionalSecurity(
-            Server.SecurityModel securityModel,
+            Aims.Data.Server.SecurityModel securityModel,
             TopDown.Core.ManagingTargetingTypes.TargetingTypeGroup targetingTypeGroup,
             TopDown.Core.ManagingBenchmarks.BenchmarkRepository benchmarkRepository
         )

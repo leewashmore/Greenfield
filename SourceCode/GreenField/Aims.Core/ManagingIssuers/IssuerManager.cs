@@ -28,7 +28,7 @@ namespace Aims.Core
             });
         }
 
-        public IssuerRepository ClaimIssuerRepository(IOnDamand<IDataManager> ondemandManager)
+        public IssuerRepository ClaimIssuerRepository(IOnDemand<IDataManager> ondemandManager)
         {
             return this.issuerRepositoryStorage.Claim(IssuerRepositoryStorageKey, delegate
             {
@@ -37,10 +37,11 @@ namespace Aims.Core
             });
         }
 
-        public IssuerRepository ClaimIssuerRepository(IEnumerable<SecurityInfo> securities)
+        public IssuerRepository ClaimIssuerRepository(Func<IEnumerable<SecurityInfo>> ondemandSecurities)
         {
             return this.issuerRepositoryStorage.Claim(IssuerRepositoryStorageKey, delegate
             {
+                var securities = ondemandSecurities();
                 return this.CreateIssuerRepository(securities);
             });
         }

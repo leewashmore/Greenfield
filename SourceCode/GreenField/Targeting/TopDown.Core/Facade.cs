@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using TopDown.Core.Persisting;
-using TopDown.Core.Sql;
 using TopDown.Core.ManagingBpt;
 using Newtonsoft.Json;
 using System.IO;
@@ -24,6 +23,7 @@ using TopDown.Core.ManagingPortfolios;
 using Aims.Expressions;
 using TopDown.Core.ManagingCalculations;
 using Aims.Core;
+using Aims.Core.Sql;
 
 namespace TopDown.Core
 {
@@ -235,12 +235,12 @@ namespace TopDown.Core
             }
         }
 
-        protected internal OnDemandDataManager CreateOnDemandDataManager()
+        internal OnDemandDataManager CreateOnDemandDataManager()
         {
             return new OnDemandDataManager(this.connectionFactory, this.dataManagerFactory);
         }
 
-        protected internal OnDemandDataManager CreateOnDemandDataManager(SqlConnection connection)
+        internal OnDemandDataManager CreateOnDemandDataManager(SqlConnection connection)
         {
             return new OnDemandDataManager(connection, this.dataManagerFactory);
         }

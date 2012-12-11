@@ -48,6 +48,6 @@ namespace GreenField.Targeting.Server.BottomUp
         [DataMember]
         public Boolean IsModified { get; set; }
         [DataMember]
-        public Server.SecurityModel SecurityToBeAddedOpt { get; set; }
+        public Aims.Data.Server.SecurityModel SecurityToBeAddedOpt { get; set; }
     }
 }

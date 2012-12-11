@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TopDown.Core.Sql;
 using System.Diagnostics;
 using TopDown.Core.Persisting;
 using TopDown.Core.ManagingCountries;
@@ -32,7 +31,7 @@ namespace TopDown.Core.ManagingBaskets
 		}
 
 		public BasketRepository ClaimBasketRepository(
-			IOnDamand<IDataManager> ondemandManager,
+			IOnDemand<IDataManager> ondemandManager,
 			Func<CountryRepository> ondemandCountryRepository,
 			IMonitor monitor
 		)
@@ -60,7 +59,7 @@ namespace TopDown.Core.ManagingBaskets
         }
 
 		public BasketRepository ClaimBasketRepository(
-			IOnDamand<IDataManager> ondemandManager,
+			IOnDemand<IDataManager> ondemandManager,
 			CountryRepository countryRepository,
 			IMonitor monitor
 		)

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Aims.Core
 {
-    public interface IOnDamand<out TValue> : IDisposable
+    public interface IOnDemand<out TValue> : IDisposable
     {
         TValue Claim();
     }

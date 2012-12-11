@@ -37,7 +37,7 @@ namespace TopDown.Core.ManagingBpst
 			ManagingBaskets.BasketRepository basketRepository,
 			PortfolioRepository portfolioRepository,
 			RepositoryManager repositoryManager,
-            IOnDamand<IDataManager> ondemandManager
+            IOnDemand<IDataManager> ondemandManager
 		)
 		{
 

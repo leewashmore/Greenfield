@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TopDown.Core.Persisting;
-using TopDown.Core.Sql;
 using System.Xml;
 using System.IO;
 using TopDown.Core.ManagingBaskets;
@@ -29,7 +28,7 @@ namespace TopDown.Core.ManagingTaxonomies
         }
 
         public TaxonomyRepository ClaimTaxonomyRepository(
-			IOnDamand<IDataManager> ondemandManager,
+			IOnDemand<IDataManager> ondemandManager,
 			Func<BasketRepository> ondemandBasketRepository,
 			Func<CountryRepository> ondemandCountryRepository
 		)
@@ -61,7 +60,7 @@ namespace TopDown.Core.ManagingTaxonomies
         }
 
         public TaxonomyRepository ClaimTaxonomyRepository(
-			IOnDamand<IDataManager> ondemandManager,
+			IOnDemand<IDataManager> ondemandManager,
 			BasketRepository basketRepository,
 			CountryRepository countryRepository
 		)

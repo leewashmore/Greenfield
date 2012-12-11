@@ -59,7 +59,7 @@ namespace GreenField.Targeting.Server.BasketTargets
         [DataMember]
         public Boolean IsModified { get; set; }
         [DataMember]
-        public Server.SecurityModel SecurityToBeAddedOpt { get; set; }
+        public Aims.Data.Server.SecurityModel SecurityToBeAddedOpt { get; set; }
         [DataMember]
         public DateTime BenchmarkDate { get; set; }
     }

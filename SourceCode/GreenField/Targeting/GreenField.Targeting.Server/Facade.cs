@@ -6,6 +6,7 @@ using System.ServiceModel;
 using Aims.Expressions;
 using System.Diagnostics;
 using Core = TopDown.Core;
+using Aims.Data.Server;
 
 namespace GreenField.Targeting.Server
 {

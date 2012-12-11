@@ -18,7 +18,7 @@ namespace Aims.Core
 			this.countryRepositoryStorage = countryRepositoryStorage;
 		}
 
-        public CountryRepository ClaimCountryRepository(IOnDamand<IDataManager> ondemandManager)
+        public CountryRepository ClaimCountryRepository(IOnDemand<IDataManager> ondemandManager)
         {
             return this.countryRepositoryStorage.Claim(CountryRepositoryStorageKey, delegate
             {

@@ -9,11 +9,12 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
+using Microsoft.Practices.Prism.Regions;
 
 namespace GreenField.IssuerShares.Controls
 {
     [Export]
-    public class RootViewModel
+    public class RootViewModel : RootViewModelBase
     {
         private IClientFactory clientFactory;
 
@@ -21,8 +22,30 @@ namespace GreenField.IssuerShares.Controls
         public RootViewModel(IClientFactory clientFactory)
         {
             this.clientFactory = clientFactory;
+            this.CompositionViewModel = new CompositionViewModel();
         }
 
-        
+        protected override void Activate()
+        {
+        }
+
+        protected override void Deactivate()
+        {
+            throw new NotImplementedException();
+        }
+
+        private Controls.CompositionViewModel compositionViewModel;
+        public CompositionViewModel CompositionViewModel
+        {
+            get
+            {
+                return this.compositionViewModel;
+            }
+            set
+            {
+                this.compositionViewModel = value;
+                this.RaisePropertyChanged(() => this.CompositionViewModel);
+            }
+        }
     }
 }

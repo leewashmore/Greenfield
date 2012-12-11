@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Diagnostics;
 
+
 namespace GreenField.Targeting.Server.BroadGlobalActive
 {
     [DataContract(Name = "BgaCountryModel")]
@@ -18,7 +19,7 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
         [DebuggerStepThrough]
         public CountryModel(
             ExpressionModel benchmarkExpression,
-            Server.CountryModel country,
+            Aims.Data.Server.CountryModel country,
             ExpressionModel overlayExpression
         )
             : this()
@@ -32,7 +33,7 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
         public ExpressionModel Benchmark { get; set; }
 
         [DataMember]
-        public Server.CountryModel Country { get; set; }
+        public Aims.Data.Server.CountryModel Country { get; set; }
 
         [DataMember]
         public ExpressionModel Overlay { get; set; }

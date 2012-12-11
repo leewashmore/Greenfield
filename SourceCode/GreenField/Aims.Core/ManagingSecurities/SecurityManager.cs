@@ -23,7 +23,7 @@ namespace Aims.Core
         }
 
         public SecurityRepository ClaimSecurityRepository(
-            IOnDamand<IDataManager> ondemandManager,
+            IOnDemand<IDataManager> ondemandManager,
             Func<CountryRepository> ondemandCountryRepository
         )
         {
@@ -53,15 +53,17 @@ namespace Aims.Core
         }
 
         public SecurityRepository ClaimSecurityRepository(
-            IEnumerable<SecurityInfo> securities,
+            Func<IEnumerable<SecurityInfo>> ondemandSecurities,
             Func<CountryRepository> ondemandCountryRepository)
         {
             return this.securityRepositoryStorage.Claim(SecurityManagerCacheKey, delegate
             {
+                var securities = ondemandSecurities();
+                var countryRepository = ondemandCountryRepository();
                 var repository = new SecurityRepository(
                     this.monitor,
                     securities,
-                    ondemandCountryRepository()
+                    countryRepository
                 );
                 return repository;
             });
@@ -79,5 +81,10 @@ namespace Aims.Core
             return repository;
         }
 
+
+        public void DropSecurityRepository()
+        {
+            this.securityRepositoryStorage[SecurityManagerCacheKey] = null;
+        }
     }
 }

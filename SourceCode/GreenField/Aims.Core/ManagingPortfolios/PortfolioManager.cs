@@ -20,7 +20,7 @@ namespace Aims.Core
 		}
 
 		public PortfolioRepository ClaimPortfolioRepository(
-			IOnDamand<IDataManager> ondemandManager,
+			IOnDemand<IDataManager> ondemandManager,
 			Func<SecurityRepository> ondemandSecurityRepository
 		)
 		{
