@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Media;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
+using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Helpers
 {
@@ -315,6 +316,8 @@ namespace GreenField.Gadgets.Helpers
         public Func<int, int, object, object, object> CellValueOverwrite { get; set; }
 
         public Func<int, int, string> ColumnAggregateOverwrite { get; set; }
+
+        public Func<Block> InitialHeaderBlock { get; set; }
     }
 
     /// <summary>
@@ -329,7 +332,8 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="exportOption">RadExportOptions</param>
         /// <param name="stream">Stream</param>
         public static void ExportStream(int filterIndex, RadExportOptions exportOption, Stream stream, List<int> skipColumnDisplayIndex = null
-            , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null)
+            , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null
+            , Func<Block> initialHeaderBlock = null)
         {
             switch (exportOption.ExportFilterOption)
             {
@@ -376,7 +380,7 @@ namespace GreenField.Gadgets.Helpers
                     break;
                 case RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER:
                     RadExport.ExportRadGridViewPDF(exportOption.Element, stream, skipColumnDisplayIndex, cellValueOverwrite
-                        , columnAggregateOverWrite);
+                        , columnAggregateOverWrite, initialHeaderBlock);
                     break;
                 case RadExportFilterOption.RADCHART_PDF_EXPORT_FILTER:
                     RadExport.ExportRadChartPDF(exportOption.Element, stream);
@@ -497,10 +501,11 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="element">UIElement</param>
         /// <param name="stream">Stream</param>
         private static void ExportRadGridViewPDF(UIElement element, Stream stream, List<int> skipColumnDisplayIndex = null
-            , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null)
+            , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null
+            , Func<Block> initialHeaderBlock = null)
         {
             PDFExporter.btnExportPDF_Click(element as RadGridView, stream: stream, skipColumnDisplayIndex: skipColumnDisplayIndex
-                , cellValueOverwrite: cellValueOverwrite, columnAggregateOverWrite: columnAggregateOverWrite); 
+                , cellValueOverwrite: cellValueOverwrite, columnAggregateOverWrite: columnAggregateOverWrite, initialHeaderBlock: initialHeaderBlock); 
         }
     }
 

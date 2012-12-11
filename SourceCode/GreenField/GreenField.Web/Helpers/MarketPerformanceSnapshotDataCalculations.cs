@@ -144,8 +144,8 @@ namespace GreenField.Web.Helpers
                 result.MonthToDateReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1) > firstRecordDateTime 
                     ? new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1) : firstRecordDateTime, lastBusinessDateTime);
                 result.QuarterToDateReturn = GetReturn(entity, preference
-                    , new DateTime(DateTime.Today.Year, (DateTime.Today.Month - (DateTime.Today.Month % 3) + 1), 1) > firstRecordDateTime 
-                    ? new DateTime(DateTime.Today.Year, (DateTime.Today.Month - (DateTime.Today.Month % 3) + 1), 1) : firstRecordDateTime, lastBusinessDateTime);
+                    , new DateTime(DateTime.Today.Year, (DateTime.Today.Month - ((DateTime.Today.Month - 1) % 3)), 1) > firstRecordDateTime
+                    ? new DateTime(DateTime.Today.Year, (DateTime.Today.Month - ((DateTime.Today.Month - 1) % 3)), 1) : firstRecordDateTime, lastBusinessDateTime);
                 result.YearToDateReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year, 1, 1) > firstRecordDateTime 
                     ? new DateTime(DateTime.Today.Year, 1, 1) : firstRecordDateTime, lastBusinessDateTime);
                 result.LastYearReturn = GetReturn(entity, preference, new DateTime(DateTime.Today.Year - 1, 1, 1) > firstRecordDateTime 

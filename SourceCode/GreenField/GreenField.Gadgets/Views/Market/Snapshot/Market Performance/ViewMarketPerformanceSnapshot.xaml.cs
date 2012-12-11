@@ -271,7 +271,8 @@ namespace GreenField.Gadgets.Views
                     ElementName = "Market Performance Snapshot",
                     Element = this.radGridSnapshot,
                     ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
-                    RichTextBox = this.RichTextBox
+                    RichTextBox = this.RichTextBox,
+                    CellValueOverwrite = radGridSnapshot_PdfElementExporting
                 });
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Market Performance Snapshot");
