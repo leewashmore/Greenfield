@@ -79,6 +79,16 @@ namespace TopDown.Core.ManagingBpst
             );
         }
 
+        public IExpression<Decimal> CreateBenchmarkTotalExpression(List<SecurityModel> securities)
+        {
+            return new SumExpression(
+                ValueNames.BenchmarkTotal,
+                securities.Select(x => x.Benchmark),
+                this.defaultValues.DefaultBenchmark,
+                this.commonParts.ValidateWhatever
+            );
+        }
+
         public IExpression<Decimal?> CreatePortfolioTargetTotalExpression(
 			BroadGlobalActivePortfolio portfolio,
 			IEnumerable<SecurityModel> securities
@@ -120,5 +130,7 @@ namespace TopDown.Core.ManagingBpst
                 this.commonParts.ValidateEitheNullOr100
             );
         }
+
+        
     }
 }

@@ -42,13 +42,15 @@ namespace GreenField.Targeting.Server.BasketTargets
                 securities.Add(security);
             }
             var baseTotalExpression = this.modelBuilder.CreateBaseTotalExpression(securities);
+            var benchmarkTotalExpression = this.modelBuilder.CreateBenchmarkTotalExpression(securities);
 
             var core = new Core.CoreModel(
                 targetingTypeGroup,
                 this.deserializer.DeserializeBasket(model.Basket.Id),
                 this.DeserializePortfolios(model.Portfolios, securities),
                 securities,
-                baseTotalExpression
+                baseTotalExpression,
+                benchmarkTotalExpression
             );
 
             var result = new Core.RootModel(

@@ -162,12 +162,14 @@ namespace TopDown.Core.ManagingBpst
             ).ToArray();
 
             var baseTotalExpression = this.modelBuilder.CreateBaseTotalExpression(securityModels);
+            var benchmarkTotalExpression = this.modelBuilder.CreateBenchmarkTotalExpression(securityModels);
             var core = new CoreModel(
                 targetingTypeGroup,
                 basket,
                 portfolios,
                 securityModels,
-                baseTotalExpression
+                baseTotalExpression,
+                benchmarkTotalExpression
             );
             return core;
         }

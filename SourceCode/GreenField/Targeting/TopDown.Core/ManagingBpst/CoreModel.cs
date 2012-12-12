@@ -17,7 +17,8 @@ namespace TopDown.Core.ManagingBpst
             IBasket basket,
             IEnumerable<PortfolioModel> portfolios,
             IEnumerable<SecurityModel> securities,
-            IExpression<Decimal?> baseTotalExpression
+            IExpression<Decimal?> baseTotalExpression,
+            IExpression<Decimal> benchmarkTotalExpression
         )
         {
             this.TargetingTypeGroup = targetingTypeGroup;
@@ -25,6 +26,7 @@ namespace TopDown.Core.ManagingBpst
             this.Portfolios = portfolios.ToList();
             this.Securities = securities.ToList();
             this.BaseTotal = baseTotalExpression;
+            this.BenchmarkTotal = benchmarkTotalExpression;
         }
 
         public TargetingTypeGroup TargetingTypeGroup { get; private set; }
@@ -32,5 +34,6 @@ namespace TopDown.Core.ManagingBpst
         public IEnumerable<PortfolioModel> Portfolios { get; private set; }
         public IEnumerable<SecurityModel> Securities { get; private set; }
         public IExpression<Decimal?> BaseTotal { get; private set; }
+        public IExpression<Decimal> BenchmarkTotal { get; private set; }
     }
 }

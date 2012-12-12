@@ -32,6 +32,7 @@ namespace GreenField.Targeting.Server.BasketTargets
                 this.SerializePortfolios(model.Core.Portfolios, ticket),
                 this.SerializeSecurities(model.Core.Securities, ticket),
                 this.serializer.SerializeNullableExpression(model.Core.BaseTotal, ticket),
+                this.serializer.SerializeExpression(model.Core.BenchmarkTotal, ticket),
                 this.modelChangeDetector.HasChanged(model),
                 model.BenchmarkDate
             );

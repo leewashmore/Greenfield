@@ -32,7 +32,7 @@
             <mine:CellTemplateSelector x:Key="benchmarkCellTemplateSelector" >
                 <mine:CellTemplateSelector.TotalTemplate>
                     <DataTemplate>
-                        <TextBlock />
+                        <ContentControl Content="{Binding BenchmarkTotal}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
                     </DataTemplate>
                 </mine:CellTemplateSelector.TotalTemplate>
                 <mine:CellTemplateSelector.SecurityTemplate>
@@ -75,7 +75,7 @@
             <mine:CellTemplateSelector x:Key="tickerCellTemplateSelector">
                 <mine:CellTemplateSelector.SecurityTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Security.Ticker}" />
+                        <TextBlock Text="{Binding Security.Ticker}" Style="{StaticResource nicelyMarginedTextboxStyle}" />
                     </DataTemplate>
                 </mine:CellTemplateSelector.SecurityTemplate>
                 <mine:CellTemplateSelector.TotalTemplate>
@@ -88,7 +88,7 @@
 
     <StackPanel Orientation="Vertical">
 
-        <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" FrozenColumnCount="3">
+        <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" FrozenColumnCount="4">
             <sdk:DataGrid.Columns>
 
                 <sdk:DataGridTemplateColumn Header="Security">

@@ -26,6 +26,7 @@ namespace GreenField.Targeting.Server.BasketTargets
             IEnumerable<PortfolioModel> portfolios,
             IEnumerable<SecurityModel> securities,
             NullableExpressionModel baseTotalExpression,
+            ExpressionModel benchmarkTotalExpression,
             Boolean isModified,
             DateTime benchmarkDate
         )
@@ -38,6 +39,7 @@ namespace GreenField.Targeting.Server.BasketTargets
             this.Portfolios.AddRange(portfolios);
             this.Securities.AddRange(securities);
             this.BaseTotal = baseTotalExpression;
+            this.BenchmarkTotal = benchmarkTotalExpression;
             this.IsModified = isModified;
             this.BenchmarkDate = benchmarkDate;
         }
@@ -62,5 +64,7 @@ namespace GreenField.Targeting.Server.BasketTargets
         public Aims.Data.Server.SecurityModel SecurityToBeAddedOpt { get; set; }
         [DataMember]
         public DateTime BenchmarkDate { get; set; }
+        [DataMember]
+        public ExpressionModel BenchmarkTotal { get; set; }
     }
 }

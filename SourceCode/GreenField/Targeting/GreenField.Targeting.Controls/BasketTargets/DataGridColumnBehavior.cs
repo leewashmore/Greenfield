@@ -18,7 +18,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
 {
     public class DataGridDynamicColumnsBehavior : Behavior<DataGrid>, IValueConverter
     {
-        public const Int32 NumberOfColumnsToKeep = 3;
+        public const Int32 NumberOfColumnsToKeep = 4;
 
         public static readonly DependencyProperty AreEmptyColumnShownProperty = DependencyProperty.Register("AreEmptyColumnShown", typeof(Boolean), typeof(DataGridDynamicColumnsBehavior), new PropertyMetadata(WhenAreEmptyColumnShownChanges));
         public Boolean AreEmptyColumnShown

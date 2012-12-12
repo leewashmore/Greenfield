@@ -21,6 +21,7 @@ namespace TopDown.Core
 		public const String BaseForCash = "Base for cash";
 		public const String PortfolioTargetTotalFormat = "Target total of {0}";
 		public const String BaseTotal = "Base total";
+        public const String BenchmarkTotal = "Benchmark total";
 		public const String TrueActive = "True active";
 		public const String TrueExposure = "True exposure";
 		public const String PortfolioScaled = "Portfolio scaled";

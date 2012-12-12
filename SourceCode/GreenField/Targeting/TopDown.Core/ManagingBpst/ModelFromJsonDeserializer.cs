@@ -107,6 +107,7 @@ namespace TopDown.Core.ManagingBpst
 			});
 
 			var baseTotalExpression = this.modelBuilder.CreateBaseTotalExpression(securityModels);
+            var benchmarkTotalExpression = this.modelBuilder.CreateBenchmarkTotalExpression(securityModels);
 
 
 			//var targetingTypeGroup = targetingTypeGroupRepository.Get
@@ -115,7 +116,8 @@ namespace TopDown.Core.ManagingBpst
 				basket,
 				portfolios,
 				securityModels,
-				baseTotalExpression
+				baseTotalExpression,
+                benchmarkTotalExpression
 			);
 
 			var result = new RootModel(
