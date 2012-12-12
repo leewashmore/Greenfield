@@ -463,12 +463,16 @@ namespace GreenField.Gadgets.ViewModels
                 Iterator = e.PeriodColumnNavigationDirection == NavigationDirection.LEFT ? Iterator - 1 : Iterator + 1;
                 PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(incrementFactor: Iterator, defaultHistoricalYearCount: 3
                     , defaultHistoricalQuarterCount: 4, netColumnCount: 6, isQuarterImplemented: true);
-                FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
-                    (FinancialStatementInfo.Where(record => record.IsConsensus == "N").ToList(), out periodRecord, periodRecord, subGroups: null, updatePeriodRecord: true);
+
+                var nList = FinancialStatementInfo.Where(record => record.IsConsensus == "N").ToList();
+                this.SetDecimals(nList, 1);
+
+                FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>(nList, out periodRecord, periodRecord, subGroups: null, updatePeriodRecord: true);
                 if (financialStatementType != FinancialStatementType.FUNDAMENTAL_SUMMARY)
                 {
-                    FinancialStatementExtDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
-                        (FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList(), out periodRecord, periodRecord, updatePeriodRecord: false);
+                    var yList = FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList();
+                    this.SetDecimals(yList, 1);
+                    FinancialStatementExtDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>(yList, out periodRecord, periodRecord, updatePeriodRecord: false);
                 }
                 PeriodRecord = periodRecord;
                 PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
@@ -568,17 +572,27 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorNotification(true, "Updating Financial Statement Information based on selected preference");
 
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator);
-            FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
-                (FinancialStatementInfo.Where(record => record.IsConsensus == "N").ToList(), out periodRecord, periodRecord);
+            var nList = FinancialStatementInfo.Where(record => record.IsConsensus == "N").ToList();
+            this.SetDecimals(nList, 1);
+            FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>(nList, out periodRecord, periodRecord);
 
             if (financialStatementType != FinancialStatementType.FUNDAMENTAL_SUMMARY)
             {
-                FinancialStatementExtDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
-                        (FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList(), out periodRecord, periodRecord, updatePeriodRecord: false);
+                var yList = FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList();
+                this.SetDecimals(yList, 1);
+                FinancialStatementExtDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>(yList, out periodRecord, periodRecord, updatePeriodRecord: false);
             }
             PeriodRecord = periodRecord;
             PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
             BusyIndicatorNotification();
+        }
+
+        private void SetDecimals(List<FinancialStatementData> list, Int32 numberOfDecimals)
+        {
+            foreach (var item in list)
+            {
+                item.Decimals = numberOfDecimals;
+            }
         }
 
         /// <summary>
