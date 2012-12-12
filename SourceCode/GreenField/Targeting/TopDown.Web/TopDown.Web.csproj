@@ -134,6 +134,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Aims.Core\Aims.Core.csproj">
+      <Project>{426D597E-4276-41D2-BE84-D1229501A51A}</Project>
+      <Name>Aims.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TopDown.Core\TopDown.Core.csproj">
       <Project>{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59}</Project>
       <Name>TopDown.Core</Name>

@@ -13,6 +13,7 @@ using TopDown.Core.ManagingPortfolios;
 using Aims.Expressions;
 using TopDown.Core.ManagingBenchmarks;
 using TopDown.Core.ManagingCalculations;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpst
 {
@@ -232,7 +233,7 @@ namespace TopDown.Core.ManagingBpst
             TargetingTypeGroupRepository targetingTypeGroupRepository,
             BasketRepository basketRepository,
 			PortfolioRepository portfolioRepository,
-            IOnDamand<IDataManager> ondemandManager
+            IOnDemand<IDataManager> ondemandManager
         )
         {
             using (var reader = new JsonReader(new Newtonsoft.Json.JsonTextReader(new StringReader(bpstModelAsJson))))

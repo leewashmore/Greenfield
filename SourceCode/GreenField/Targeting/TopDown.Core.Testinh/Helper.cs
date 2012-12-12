@@ -7,7 +7,7 @@ using TopDown.Core.ManagingCountries;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingCalculations;
 using TopDown.Core.ManagingBaskets;
-using TopDown.Core.Sql;
+using Aims.Core.Sql;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingTaxonomies;
 using TopDown.Core.ManagingBenchmarks;
@@ -15,6 +15,7 @@ using TopDown.Core.ManagingBpt;
 using TopDown.Core.Overlaying;
 using TopDown.Core.ManagingPst;
 using TopDown.Core.Gadgets.PortfolioPicker;
+using Aims.Core;
 
 namespace TopDown.Core.Testing
 {
@@ -31,11 +32,11 @@ namespace TopDown.Core.Testing
 			var calculationRequester = new CalculationRequester();
 			var monitor = new Monitor();
 			var securitySerializer = new SecurityToJsonSerializer(countrySerializer);
-			var securityManager = new SecurityManager(securityRepositoryCache, securitySerializer, monitor);
+			var securityManager = new SecurityManager(securityRepositoryCache, monitor);
 
 			IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
             var connectionFactory = new SqlConnectionFactory("Data Source=lonweb1t.ashmore.local;Initial Catalog=AIMS_Data_QA;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True");
-			var portfolioRepositoryCache = new InMemoryStorage<TopDown.Core.ManagingPortfolios.PortfolioRepository>();
+			var portfolioRepositoryCache = new InMemoryStorage<PortfolioRepository>();
 			var portfolioSerialzer = new TopDown.Core.ManagingPortfolios.PortfolioToJsonSerializer(securitySerializer);
 			var portfolioManager = new TopDown.Core.ManagingPortfolios.PortfolioManager(
 				portfolioRepositoryCache,
@@ -77,6 +78,10 @@ namespace TopDown.Core.Testing
 			var ttgbsbvrCache = new InMemoryStorage<TopDown.Core.ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepository>();
 			var ttgbsbvrManager = new TopDown.Core.ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepositoryManager(ttgbsbvrCache);
 
+            var issuerRepositoryStorage = new InMemoryStorage<IssuerRepository>();
+            var issuerManager = new IssuerManager(monitor, issuerRepositoryStorage);
+
+
 			var repositoryManager = new TopDown.Core.RepositoryManager(
 				monitor,
 				basketManager,
@@ -88,7 +93,8 @@ namespace TopDown.Core.Testing
 				benchmarkManager,
 				portfolioSecurityTargetRepositoryManager,
 				bpstManager,
-				ttgbsbvrManager
+				ttgbsbvrManager,
+                issuerManager
 			);
 
 			repositoryManager.DropEverything();

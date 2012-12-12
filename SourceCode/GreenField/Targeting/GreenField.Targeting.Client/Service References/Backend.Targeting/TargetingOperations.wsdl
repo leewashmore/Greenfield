@@ -5,10 +5,11 @@
       <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive" />
-      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
-      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" />
-      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" />
-      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" />
+      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" />
+      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
+      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" />
+      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" />
+      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IFacade_GetBroadGlobalActive_InputMessage">

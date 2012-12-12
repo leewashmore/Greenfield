@@ -1,35 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
-  <xs:complexType name="BuPickerModel">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
+  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" />
+  <xs:complexType name="BtPickerModel">
     <xs:sequence>
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="BottomUpPortfolios" nillable="true" type="q1:ArrayOfBottomUpPortfolioModel" />
+      <xs:element minOccurs="0" name="TargetingGroups" nillable="true" type="tns:ArrayOfBtPickerTargetingGroupModel" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="BuPickerModel" nillable="true" type="tns:BuPickerModel" />
-  <xs:complexType name="BuRootModel">
+  <xs:element name="BtPickerModel" nillable="true" type="tns:BtPickerModel" />
+  <xs:complexType name="ArrayOfBtPickerTargetingGroupModel">
     <xs:sequence>
-      <xs:element minOccurs="0" name="BottomUpPortfolioId" nillable="true" type="xs:string" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Cash" nillable="true" type="q2:NullableExpressionModel" />
-      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="ChangesetModel" nillable="true" type="q3:ChangesetModel" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BtPickerTargetingGroupModel" nillable="true" type="tns:BtPickerTargetingGroupModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBtPickerTargetingGroupModel" nillable="true" type="tns:ArrayOfBtPickerTargetingGroupModel" />
+  <xs:complexType name="BtPickerTargetingGroupModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Baskets" nillable="true" type="tns:ArrayOfBtPickerBasketModel" />
+      <xs:element minOccurs="0" name="TargetingTypeGroupId" type="xs:int" />
+      <xs:element minOccurs="0" name="TargetingTypeGroupName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BtPickerTargetingGroupModel" nillable="true" type="tns:BtPickerTargetingGroupModel" />
+  <xs:complexType name="ArrayOfBtPickerBasketModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BtPickerBasketModel" nillable="true" type="tns:BtPickerBasketModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBtPickerBasketModel" nillable="true" type="tns:ArrayOfBtPickerBasketModel" />
+  <xs:complexType name="BtPickerBasketModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BtPickerBasketModel" nillable="true" type="tns:BtPickerBasketModel" />
+  <xs:complexType name="BtRootModel">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="BaseTotal" nillable="true" type="q1:NullableExpressionModel" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Basket" nillable="true" type="q2:BasketModel" />
+      <xs:element minOccurs="0" name="BenchmarkDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="IsModified" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Items" nillable="true" type="tns:ArrayOfBuItemModel" />
-      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="SecurityToBeAddedOpt" nillable="true" type="q4:SecurityModel" />
-      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TargetTotal" nillable="true" type="q5:NullableExpressionModel" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="LatestBaseChangeset" nillable="true" type="q3:ChangesetModel" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="LatestPortfolioTargetChangeset" nillable="true" type="q4:ChangesetModel" />
+      <xs:element minOccurs="0" name="Portfolios" nillable="true" type="tns:ArrayOfBtPorfolioModel" />
+      <xs:element minOccurs="0" name="Securities" nillable="true" type="tns:ArrayOfBtSecurityModel" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="SecurityToBeAddedOpt" nillable="true" type="q5:SecurityModel" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TargetingTypeGroup" nillable="true" type="q6:TargetingTypeGroupModel" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="BuRootModel" nillable="true" type="tns:BuRootModel" />
-  <xs:complexType name="ArrayOfBuItemModel">
+  <xs:element name="BtRootModel" nillable="true" type="tns:BtRootModel" />
+  <xs:complexType name="ArrayOfBtPorfolioModel">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="BuItemModel" nillable="true" type="tns:BuItemModel" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BtPorfolioModel" nillable="true" type="tns:BtPorfolioModel" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfBuItemModel" nillable="true" type="tns:ArrayOfBuItemModel" />
-  <xs:complexType name="BuItemModel">
+  <xs:element name="ArrayOfBtPorfolioModel" nillable="true" type="tns:ArrayOfBtPorfolioModel" />
+  <xs:complexType name="BtPorfolioModel">
     <xs:sequence>
-      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Security" nillable="true" type="q6:SecurityModel" />
-      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Target" nillable="true" type="q7:EditableExpressionModel" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="BroadGlobalActivePortfolio" nillable="true" type="q7:BroadGlobalActivePortfolioModel" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioTargetTotal" nillable="true" type="q8:NullableExpressionModel" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="BuItemModel" nillable="true" type="tns:BuItemModel" />
+  <xs:element name="BtPorfolioModel" nillable="true" type="tns:BtPorfolioModel" />
+  <xs:complexType name="ArrayOfBtSecurityModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BtSecurityModel" nillable="true" type="tns:BtSecurityModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBtSecurityModel" nillable="true" type="tns:ArrayOfBtSecurityModel" />
+  <xs:complexType name="BtSecurityModel">
+    <xs:sequence>
+      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Base" nillable="true" type="q9:EditableExpressionModel" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Benchmark" nillable="true" type="q10:ExpressionModel" />
+      <xs:element minOccurs="0" name="PortfolioTargets" nillable="true" type="tns:ArrayOfBtPortfolioTargetModel" />
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="Security" nillable="true" type="q11:SecurityModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BtSecurityModel" nillable="true" type="tns:BtSecurityModel" />
+  <xs:complexType name="ArrayOfBtPortfolioTargetModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BtPortfolioTargetModel" nillable="true" type="tns:BtPortfolioTargetModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBtPortfolioTargetModel" nillable="true" type="tns:ArrayOfBtPortfolioTargetModel" />
+  <xs:complexType name="BtPortfolioTargetModel">
+    <xs:sequence>
+      <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="BroadGlobalActivePortfolio" nillable="true" type="q12:BroadGlobalActivePortfolioModel" />
+      <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioTarget" nillable="true" type="q13:EditableExpressionModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BtPortfolioTargetModel" nillable="true" type="tns:BtPortfolioTargetModel" />
 </xs:schema>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TopDown.Core.Persisting;
 using System.Diagnostics;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingTargetingTypes
 {

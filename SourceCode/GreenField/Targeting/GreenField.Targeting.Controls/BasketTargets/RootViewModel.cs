@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Commands;
+using Aims.Controls;
 
 namespace GreenField.Targeting.Controls.BasketTargets
 {
@@ -11,6 +12,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
     public class RootViewModel : RootViewModelBase
     {
         public const Int32 MaxNumberOfSecurities = 20;
+        private SecurityPickerClientFactory securityPickerClientFactory;
 
         [ImportingConstructor]
         public RootViewModel(Settings settings)
@@ -23,7 +25,11 @@ namespace GreenField.Targeting.Controls.BasketTargets
             editorViewModel.CommunicationStateChanged += this.WhenCommunicationStateChanges;
             this.EditorViewModel = editorViewModel;
 
-            var securityPickerViewModel = new SecurityPickerViewModel(settings.ClientFactory, MaxNumberOfSecurities);
+            this.securityPickerClientFactory = new SecurityPickerClientFactory(settings.ClientFactory);
+            var securityPickerViewModel = new SecurityPickerViewModel(
+                new OnlyErrorCommunicationState(this),
+                this.securityPickerClientFactory
+            );
             this.SecurityPickerViewModel = securityPickerViewModel;
 
             pickerViewModel.Picking += (s, e) =>
@@ -50,6 +56,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
         {
             this.SaveCommand.RaiseCanExecuteChanged(); // poke the save button
             this.SecurityPickerViewModel.IsEnabled = true; // can add securities now
+            this.securityPickerClientFactory.BasketId = this.EditorViewModel.LastBasketId; // update the basket id for the picker
         }
 
         protected Boolean ConsiderReseting()
@@ -107,6 +114,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.PickerViewModel.Deactivate(true);
             this.EditorViewModel.Discard();
             this.SecurityPickerViewModel.IsEnabled = false;
+            this.securityPickerClientFactory.BasketId = null;
         }
 
 

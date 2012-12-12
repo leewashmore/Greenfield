@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Core = TopDown.Core.ManagingPst;
 using Aims.Expressions;
 using Picker = TopDown.Core.ManagingPortfolios;
+using Aims.Core;
 
 namespace GreenField.Targeting.Server.BottomUp
 {
@@ -53,7 +54,7 @@ namespace GreenField.Targeting.Server.BottomUp
             return result;
         }
 
-        public PickerModel SerializePicker(IEnumerable<Picker.BottomUpPortfolio> models)
+        public PickerModel SerializePicker(IEnumerable<BottomUpPortfolio> models)
         {
             var result = new PickerModel(
                 models.Select(x => this.serializer.SerializeBottomUpPortfolio(x)).ToList()

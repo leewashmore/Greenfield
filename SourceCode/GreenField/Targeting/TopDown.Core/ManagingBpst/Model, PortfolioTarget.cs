@@ -5,6 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using Aims.Expressions;
 using TopDown.Core.ManagingPortfolios;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpst
 {

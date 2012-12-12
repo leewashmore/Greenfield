@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel.Composition;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
+using Aims.Controls;
 
 namespace GreenField.Targeting.Controls.BottomUp
 {
@@ -26,7 +27,11 @@ namespace GreenField.Targeting.Controls.BottomUp
             editorViewModel.CommunicationStateChanged += this.WhenCommunicationStateChanges;
             this.EditorViewModel = editorViewModel;
 
-            var securityPickerViewModel = new SecurityPickerViewModel(clientFactory, MaxNumberOfSecuritiesInDropdown);
+            var securityPickerViewModel = new SecurityPickerViewModel(
+                new OnlyErrorCommunicationState(this),
+                new SecurityPickerClientFactory(settings.ClientFactory)
+            );
+
             this.SecurityPickerViewModel = securityPickerViewModel;
 
             pickerViewModel.Picked += (s, e) =>
@@ -38,6 +43,7 @@ namespace GreenField.Targeting.Controls.BottomUp
             {
                 e.IsCancelled = !this.ConsiderReseting();
             };
+
             securityPickerViewModel.SecurityPicked += (s, e) =>
             {
                 this.EditorViewModel.AddSecurity(e.Security);

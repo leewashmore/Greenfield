@@ -5,6 +5,7 @@ using System.Text;
 using TopDown.Core.ManagingPortfolios;
 using TopDown.Core.ManagingSecurities;
 using System.Diagnostics;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingCalculations
 {

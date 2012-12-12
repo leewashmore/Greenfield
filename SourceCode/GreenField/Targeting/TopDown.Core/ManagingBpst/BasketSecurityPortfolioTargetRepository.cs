@@ -6,6 +6,7 @@ using TopDown.Core.Persisting;
 using TopDown.Core.ManagingBaskets;
 using TInfo = TopDown.Core.Persisting.BasketPortfolioSecurityTargetInfo;
 using TopDown.Core.ManagingSecurities;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpst
 {

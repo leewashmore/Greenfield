@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingPortfolios;
+using Aims.Core;
 
 namespace TopDown.Core.Overlaying
 {

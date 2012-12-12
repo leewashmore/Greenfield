@@ -35,6 +35,8 @@ namespace GreenField.Targeting.Controls
 
         private TInput lastValidInput;
 
+        protected TInput LastValidInput { get { return this.lastValidInput; } }
+
         public void RequestReloading()
         {
             if (this.lastValidInput != null)

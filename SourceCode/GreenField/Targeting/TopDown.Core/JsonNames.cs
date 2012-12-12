@@ -73,6 +73,10 @@ namespace TopDown.Core
         public const String Message = "message";
         public const String Issues = "issues";
 
+        public const String Ticker = "ticker";
+        public const String ShortName = "shortName";
+
+
 		public const String SecurityIdTobeAdded = "securityIdTobeAdded";
     }
 }

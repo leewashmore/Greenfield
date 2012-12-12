@@ -18,7 +18,7 @@ namespace GreenField.Targeting.Server.BasketTargets
 
         [DebuggerStepThrough]
         public SecurityModel(
-            Server.SecurityModel security,
+            Aims.Data.Server.SecurityModel security,
             EditableExpressionModel baseExpression,
             ExpressionModel benchmarkExpression,
             IEnumerable<PortfolioTargetModel> portfolioTargets
@@ -33,7 +33,7 @@ namespace GreenField.Targeting.Server.BasketTargets
 
 
         [DataMember]
-        public Server.SecurityModel Security { get; set; }
+        public Aims.Data.Server.SecurityModel Security { get; set; }
         [DataMember]
         public EditableExpressionModel Base { get; set; }
         [DataMember]

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using TopDown.Core.Persisting;
 using TopDown.Core.ManagingPortfolios;
 using Aims.Expressions;
+using Aims.Core;
 
 namespace TopDown.Core.Overlaying
 {

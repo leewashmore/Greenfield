@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
-using TopDown.Core.Sql;
 using TopDown.Core.Persisting;
 using TopDown.Core.ManagingTaxonomies;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingTargetingTypes
 {
@@ -31,9 +31,9 @@ namespace TopDown.Core.ManagingTargetingTypes
         }
 
         public TargetingTypeRepository ClaimTargetingTypeRepository(
-			IOnDamand<IDataManager> ondemandManager,
+			IOnDemand<IDataManager> ondemandManager,
 			Func<TaxonomyRepository> ondemandTaxonomyRepository,
-			Func<ManagingPortfolios.PortfolioRepository> ondemandPortfolioRepository
+			Func<PortfolioRepository> ondemandPortfolioRepository
 		)
         {
             return this.targetingTypeRepositoryStorage.Claim(TargetingTypeRepositoryStorageKey, delegate
@@ -50,7 +50,7 @@ namespace TopDown.Core.ManagingTargetingTypes
         public TargetingTypeRepository ClaimTargetingTypeRepository(
            IDataManager manager,
            Func<TaxonomyRepository> ondemandTaxonomyRepository,
-           Func<ManagingPortfolios.PortfolioRepository> ondemandPortfolioRepository
+           Func<PortfolioRepository> ondemandPortfolioRepository
        )
         {
             return this.targetingTypeRepositoryStorage.Claim(TargetingTypeRepositoryStorageKey, delegate
@@ -65,9 +65,9 @@ namespace TopDown.Core.ManagingTargetingTypes
 		
 		
 		public TargetingTypeRepository ClaimTargetingTypeRepository(
-			IOnDamand<IDataManager> ondemandManager,
+			IOnDemand<IDataManager> ondemandManager,
 			TaxonomyRepository taxonomyRepository,
-			ManagingPortfolios.PortfolioRepository portfolioRepository
+			PortfolioRepository portfolioRepository
 		)
         {
             return this.targetingTypeRepositoryStorage.Claim(TargetingTypeRepositoryStorageKey, delegate
@@ -82,7 +82,7 @@ namespace TopDown.Core.ManagingTargetingTypes
         protected TargetingTypeRepository CreateTargetingTypeRepository(
 			IDataManager manager,
 			TaxonomyRepository taxonomyRepository,
-			ManagingPortfolios.PortfolioRepository portfolioRepository
+			PortfolioRepository portfolioRepository
 		)
         {
             var targetingTypeInfos = manager.GetAllTargetingTypes();
@@ -106,7 +106,7 @@ namespace TopDown.Core.ManagingTargetingTypes
 			});
 		}
 
-		public TargetingTypeGroupRepository ClaimTargetingTypeGroupRepository(IOnDamand<IDataManager> ondemandManager, Func<TargetingTypeRepository> ondemandTargetingTypeRepository)
+		public TargetingTypeGroupRepository ClaimTargetingTypeGroupRepository(IOnDemand<IDataManager> ondemandManager, Func<TargetingTypeRepository> ondemandTargetingTypeRepository)
         {
             return this.targetingTypeGroupRepositoryStorage.Claim(TargetingTypeGroupRepositoryStorageKey, delegate
             {

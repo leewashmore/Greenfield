@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mine="clr-namespace:GreenField.Targeting.Controls.BasketTargets"
     xmlns:local="clr-namespace:GreenField.Targeting.Controls"
+    xmlns:aims="clr-namespace:Aims.Controls;assembly=Aims.Controls"
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
@@ -32,7 +33,7 @@
                     <mine:PickerView DataContext="{Binding PickerViewModel}" Margin="5 5 0 0" />
                     <ContentControl Content="{Binding}" ContentTemplate="{StaticResource saveTemplate}" Margin="20 5 0 0" />
                 </StackPanel>
-                <local:SecurityPickerView Margin="5 5 0 0" DataContext="{Binding SecurityPickerViewModel}" />
+                <aims:SecurityPickerView Margin="5 5 0 0" DataContext="{Binding SecurityPickerViewModel}" />
                 <StackPanel Margin="5 5 0 0" Orientation="Horizontal">
                     <CheckBox IsEnabled="{Binding SecurityPickerViewModel.IsEnabled}"  IsChecked="{Binding EditorViewModel.AreEmptyColumnsShown, Mode=TwoWay}" Content="Show default columns?" />
                     <TextBlock VerticalAlignment="Center" Margin="20 0 5 0">Benchmark data is as of</TextBlock>

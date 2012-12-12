@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using Aims.Expressions;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpt
 {
