@@ -127,7 +127,9 @@ namespace GreenField.Gadgets.Helpers
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    ExportOption.RichTextBox.Document = PDFExporter.PrintGrid(ExportOption.Element as RadGridView, ExportOption.SkipColumnDisplayIndex);
+                    ExportOption.RichTextBox.Document = PDFExporter.CreateDocument(ExportOption.Element as RadGridView
+                        , ExportOption.SkipColumnDisplayIndex, ExportOption.CellValueOverwrite, ExportOption.ColumnAggregateOverwrite
+                        , ExportOption.InitialHeaderBlock);
                 }));
 
                 ExportOption.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
@@ -157,7 +159,7 @@ namespace GreenField.Gadgets.Helpers
                 {
                     RadGridView_ElementExport.ExportElementOptions = ExportElementOptionsInfo;
                     RadExport.ExportStream(dialog.FilterIndex, ExportOption, dialog.OpenFile(), ExportOption.SkipColumnDisplayIndex
-                        , ExportOption.CellValueOverwrite, ExportOption.ColumnAggregateOverwrite);
+                        , ExportOption.CellValueOverwrite, ExportOption.ColumnAggregateOverwrite, initialHeaderBlock: ExportOption.InitialHeaderBlock);
                     this.DialogResult = true;
                 }
                 else

@@ -42,7 +42,8 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="e"></param>
         public static void btnExportPDF_Click(RadGridView dataGrid, int fontSize = 6, DocumentLayoutMode layoutMode = DocumentLayoutMode.Paged,
             PageOrientation orientation = PageOrientation.Portrait, List<int> skipColumnDisplayIndex = null, Stream stream = null
-            , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null)
+            , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null
+            , Func<Block> initialHeaderBlock = null)
         {
             try
             {
@@ -56,7 +57,8 @@ namespace GreenField.Gadgets.Helpers
 
                     if (dialog.ShowDialog() == true)
                     {
-                        RadDocument document = CreateDocument(dataGrid, skipColumnDisplayIndex, cellValueOverwrite, columnAggregateOverWrite);
+                        RadDocument document = CreateDocument(dataGrid, skipColumnDisplayIndex, cellValueOverwrite, columnAggregateOverWrite
+                            , initialHeaderBlock);
                         document.LayoutMode = layoutMode;
                         document.SectionDefaultPageOrientation = orientation;
                         document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
@@ -70,7 +72,8 @@ namespace GreenField.Gadgets.Helpers
                 }
                 else
                 {
-                    RadDocument document = CreateDocument(dataGrid, skipColumnDisplayIndex, cellValueOverwrite, columnAggregateOverWrite);
+                    RadDocument document = CreateDocument(dataGrid, skipColumnDisplayIndex, cellValueOverwrite, columnAggregateOverWrite
+                            , initialHeaderBlock);
                     document.LayoutMode = layoutMode;
                     document.SectionDefaultPageOrientation = orientation;
                     document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
@@ -132,11 +135,11 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="grid"></param>
         /// <param name="fontSize"></param>
         /// <returns></returns>
-        public static RadDocument Print(RadGridView grid, int fontSize = 8)
+        public static RadDocument Print(RadGridView grid, Func<int, int, object, object, object> cellValueOverwrite = null
+            , Func<int, int, string> columnAggregateOverWrite = null, Func<Block> initialHeaderBlock = null)
         {
             try
             {
-                fontSizePDF = fontSize;
                 return CreateDocument(grid);
             }
             catch (Exception ex)
@@ -175,7 +178,8 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="grid"></param>
         /// <returns></returns>
         public static RadDocument CreateDocument(RadGridView grid, List<int> skipColumnDisplayIndex = null
-            , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null)
+            , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null
+            , Func<Block> initialHeaderBlock = null)
         {
             if (skipColumnDisplayIndex == null)
             {
@@ -217,6 +221,11 @@ namespace GreenField.Gadgets.Helpers
             Table table = new Table();
             RadDocument document = new RadDocument();
             Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+            if (initialHeaderBlock != null)
+            {
+                Block result = initialHeaderBlock();
+                section.Blocks.Add(result);
+            }
             section.Blocks.Add(table);
             document.Sections.Add(section);
 

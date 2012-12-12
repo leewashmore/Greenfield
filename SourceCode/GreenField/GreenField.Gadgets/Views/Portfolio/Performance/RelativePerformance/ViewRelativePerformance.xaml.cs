@@ -661,7 +661,8 @@ namespace GreenField.Gadgets.Views
                 ElementName = "Excess Contribution",
                 Element = this.dgRelativePerformance,
                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
-                RichTextBox = this.RichTextBox
+                RichTextBox = this.RichTextBox,
+                CellValueOverwrite = dgRelativePerformance_PdfElementExporting
             });
 
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Excess Contribution");

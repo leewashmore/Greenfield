@@ -201,7 +201,7 @@
                                        FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                             <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtPrimaryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0"
                                        Text="{Binding PrimaryAnalyst}" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="IndustryAnalyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Industry Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
                                        FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                             <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtIndustryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0"
                                        Text="{Binding IndustryAnalyst}" Style="{StaticResource TextBlockStyle}"/>
