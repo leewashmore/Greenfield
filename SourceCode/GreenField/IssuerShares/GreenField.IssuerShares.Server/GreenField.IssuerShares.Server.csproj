@@ -42,12 +42,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Deserializer.cs" />
+    <Compile Include="Facade.cs" />
     <Compile Include="IFacade.cs" />
     <Compile Include="Model, Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model, Root.cs" />
+    <Compile Include="Serializer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Aims.Core\Aims.Core.csproj">
+      <Project>{426D597E-4276-41D2-BE84-D1229501A51A}</Project>
+      <Name>Aims.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aims.Data.Server\Aims.Data.Server.csproj">
       <Project>{243C3D53-8C51-469E-88E1-9623A3D8292B}</Project>
       <Name>Aims.Data.Server</Name>

@@ -4,18 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using Aims.Data.Server;
+using System.Diagnostics;
 
 namespace GreenField.IssuerShares.Server
 {
     [DataContract]
     public class RootModel
     {
+        [DebuggerStepThrough]
         public RootModel()
         {
             this.Items = new List<ItemModel>();
         }
 
-        public RootModel(Issuer issuer, IEnumerable<ItemModel> items)
+        [DebuggerStepThrough]
+        public RootModel(IssuerModel issuer, IEnumerable<ItemModel> items)
             : this()
         {
             this.Issuer = issuer;
@@ -23,7 +26,7 @@ namespace GreenField.IssuerShares.Server
         }
 
         [DataMember]
-        public Issuer Issuer { get; set; }
+        public IssuerModel Issuer { get; set; }
 
         [DataMember]
         public List<ItemModel> Items { get; set; }

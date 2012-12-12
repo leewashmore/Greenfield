@@ -129,6 +129,9 @@
     <None Include="Service References\Backend.Targeting\TargetingOperations6.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\Backend.Targeting\TargetingOperations7.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\Backend.Targeting\TopDown.FacingServer.Backend.Targeting.BgaRootModel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

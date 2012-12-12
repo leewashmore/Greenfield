@@ -12,9 +12,11 @@ namespace GreenField.IssuerShares.Core
         [DebuggerStepThrough]
         public RootModel(Issuer issuer, IEnumerable<ItemModel> items)
         {
+            this.Issuer = issuer;
             this.Items = items.ToList();
         }
 
+        public Issuer Issuer { get; private set; }
         public IEnumerable<ItemModel> Items { get; private set; }
     }
 }

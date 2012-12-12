@@ -81,5 +81,14 @@ namespace Aims.Data.Server
             var result = models.Select(x => this.SerializeCountry(x)).ToArray();
             return result;
         }
+
+        public IssuerModel SerializeIssuer(Issuer issuer)
+        {
+            var result = new IssuerModel(
+                issuer.Id,
+                issuer.Name
+            );
+            return result;
+        }
     }
 }

@@ -24,27 +24,21 @@ using Aims.Core;
 
 namespace GreenField.Targeting.Backend.Helpers
 {
-    public class TargetingServiceHostFactory : ServiceHostFactory
+    public class TargetingServiceHostFactory :Aims.Data.Server.ServiceHostFactoryBase<TargetingOperations,  GreenField.Targeting.Server.FacadeSettings>
     {
-        private readonly GreenField.Targeting.Server.FacadeSettings settings;
-
-        public TargetingServiceHostFactory()
+        protected override Server.FacadeSettings CreateSettings()
         {
-            this.settings = CreateFacadeSettings(
+            var settings = CreateFacadeSettings(
                 ConfigurationSettings.AimsConnectionString,
                 ConfigurationSettings.ShouldDropRepositoriesOnEachReload
             );
+            return settings;
         }
 
-        protected override ServiceHost CreateServiceHost(Type serviceType,
-            Uri[] baseAddresses)
+        protected override TargetingOperations CreateService(Server.FacadeSettings settings)
         {
-            var serviceHost = new TargetingServiceHost(
-                this.settings,
-                serviceType,
-                baseAddresses
-            );
-            return serviceHost;
+            var service = new TargetingOperations(settings);
+            return service;
         }
 
         private class CacheStorage<TValue> : IStorage<TValue>

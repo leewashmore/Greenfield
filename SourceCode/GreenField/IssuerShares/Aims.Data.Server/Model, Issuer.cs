@@ -7,13 +7,13 @@ using System.Runtime.Serialization;
 namespace Aims.Data.Server
 {
     [DataContract]
-    public class Issuer
+    public class IssuerModel
     {
-        public Issuer()
+        public IssuerModel()
         {
         }
 
-        public Issuer(String id, String name)
+        public IssuerModel(String id, String name)
             : this()
         {
             this.Id = id;

@@ -76,8 +76,6 @@
   <ItemGroup>
     <Compile Include="Helpers\ConfigurationSettings.cs" />
     <Compile Include="Helpers\SilverlightFaultBehavior.cs" />
-    <Compile Include="Helpers\TargetingInstanceProvider.cs" />
-    <Compile Include="Helpers\TargetingServiceHost.cs" />
     <Compile Include="Helpers\TargetingServiceHostFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TargetingOperations.svc.cs">
