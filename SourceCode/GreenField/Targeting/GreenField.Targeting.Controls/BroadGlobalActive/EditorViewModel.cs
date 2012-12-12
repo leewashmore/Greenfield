@@ -35,14 +35,12 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
 
     public class EditorViewModel : EditorViewModelBase<EditorInput>, IValueChangeWatcher
     {
-        public const Int32 NumberOfMillisecondsBetweenLastChangeAndRecalcualtion = 0;
-
         private IClientFactory clientFactory;
         private ModelTraverser traverser;
         private DefaultExpandCollapseStateSetter defaultExpandCollapseStateSetter;
         private ObservableCollection<IGlobeResident> residents;
         private ObservableCollection<BgaFactorItemModel> factors;
-        private DispatcherTimer waitBeforeRecalculating;
+        
 
         public EditorViewModel(
             IClientFactory clientFactory,
@@ -50,10 +48,6 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             DefaultExpandCollapseStateSetter defaultExpandCollapseStateSetter
         )
         {
-            this.waitBeforeRecalculating = new DispatcherTimer();
-            this.waitBeforeRecalculating.Interval = TimeSpan.FromMilliseconds(NumberOfMillisecondsBetweenLastChangeAndRecalcualtion);
-            this.waitBeforeRecalculating.Stop();
-            this.waitBeforeRecalculating.Tick += this.ConsiderRecalculating;
 
             this.traverser = traverser;
             this.defaultExpandCollapseStateSetter = defaultExpandCollapseStateSetter;
@@ -77,7 +71,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             client.GetBroadGlobalActiveAsync(targetingTypeId, broadGlobalActivePortfolioId);
         }
 
-        public void RequestRecalculating()
+        public override void RequestRecalculating()
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
@@ -181,14 +175,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
 
         public void GetNotifiedAboutChangedValue(EditableExpressionModel model)
         {
-            this.waitBeforeRecalculating.Stop();
-            this.waitBeforeRecalculating.Start();
-        }
-
-        protected void ConsiderRecalculating(Object sender, EventArgs e)
-        {
-            this.waitBeforeRecalculating.Stop();
-            this.RequestRecalculating();
+            base.ResetRecalculationTimer();
         }
 
         /// <summary>

@@ -86,6 +86,13 @@ namespace GreenField.Targeting.Controls.BasketTargets
             set { this.SetValue(CellTemplateProperty, value); }
         }
 
+        public static readonly DependencyProperty HeaderStyleProperty = DependencyProperty.Register("HeaderStyle", typeof(Style), typeof(DataGridDynamicColumnsBehavior), new PropertyMetadata(null));
+        public Style HeaderStyle
+        {
+            get { return (Style)this.GetValue(HeaderStyleProperty); }
+            set { this.SetValue(HeaderStyleProperty, value); }
+        }
+
         protected static void OnColumnsDataChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var self = dependencyObject as DataGridDynamicColumnsBehavior;
@@ -104,13 +111,15 @@ namespace GreenField.Targeting.Controls.BasketTargets
                 foreach (var portfolio in portfolios)
                 {
                     var column = new Column();
-                    column.Header = portfolio.BroadGlobalActivePortfolio.Name;
+                    var index = grid.Columns.Count - indexOffset;
                     column.Binding = new Binding(String.Empty)
                     {
-                        ConverterParameter = grid.Columns.Count - indexOffset,
+                        ConverterParameter = index,
                         Converter = self
                     };
                     column.CellTemplate = self.CellTemplate;
+                    column.HeaderStyle = self.HeaderStyle;
+                    column.Header = new HeaderInfo { Name = portfolio.BroadGlobalActivePortfolio.Name, Index = index };
                     grid.Columns.Add(column);
                 }
             }

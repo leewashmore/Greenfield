@@ -12,12 +12,24 @@ using System.Collections.ObjectModel;
 using TopDown.FacingServer.Backend.Targeting;
 using System.Linq;
 using Microsoft.Practices.Prism.ViewModel;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls
 {
     public abstract class EditorViewModelBase<TInput> : CommunicatingViewModelBase
         where TInput : class
     {
+        public const Int32 NumberOfMillisecondsBetweenLastChangeAndRecalcualtion = 100;
+
+        private DispatcherTimer waitBeforeRecalculating;
+        public EditorViewModelBase()
+        {
+            this.waitBeforeRecalculating = new DispatcherTimer();
+            this.waitBeforeRecalculating.Interval = TimeSpan.FromMilliseconds(NumberOfMillisecondsBetweenLastChangeAndRecalcualtion);
+            this.waitBeforeRecalculating.Stop();
+            this.waitBeforeRecalculating.Tick += this.WhenTimeout;
+        }
+
         public event EventHandler GotData;
         protected virtual void OnGotData()
         {
@@ -59,5 +71,19 @@ namespace GreenField.Targeting.Controls
                 this.RequestReloading();
             }
         }
+
+        protected void ResetRecalculationTimer()
+        {
+            this.waitBeforeRecalculating.Stop();
+            this.waitBeforeRecalculating.Start();
+        }
+        
+        protected void WhenTimeout(Object sender, EventArgs e)
+        {
+            this.waitBeforeRecalculating.Stop();
+            this.RequestRecalculating();
+        }
+
+        public abstract void RequestRecalculating();
     }
 }

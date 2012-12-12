@@ -76,9 +76,7 @@
     <Reference Include="System.Windows.Controls.Input">
       <HintPath>..\Binaries\Lib\System.Windows.Controls.Input.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Input.Toolkit">
-      <HintPath>..\Binaries\Lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Layout.Toolkit">
       <HintPath>..\Binaries\Lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
     </Reference>
@@ -111,6 +109,8 @@
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BasketTargets\EditorViewModel.cs" />
+    <Compile Include="BasketTargets\HeaderInfo.cs" />
+    <Compile Include="BasketTargets\ObservableCollection.cs" />
     <Compile Include="BasketTargets\PickerView.xaml.cs">
       <DependentUpon>PickerView.xaml</DependentUpon>
     </Compile>

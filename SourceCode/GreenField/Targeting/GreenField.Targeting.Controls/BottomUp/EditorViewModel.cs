@@ -54,7 +54,7 @@ namespace GreenField.Targeting.Controls.BottomUp
             this.RequestRecalculating();
         }
 
-        public void RequestRecalculating()
+        public override void RequestRecalculating()
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();

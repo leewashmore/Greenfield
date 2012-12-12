@@ -14,6 +14,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Aims.Data.Client;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Targeting.Controls.BasketTargets
 {
@@ -40,7 +41,14 @@ namespace GreenField.Targeting.Controls.BasketTargets
         public EditorViewModel(IClientFactory clientFactory)
             : this(clientFactory, new ValueTraverser())
         {
+            this.ContextMenuCommand = new DelegateCommand(this.HandleContextMenu);
+        }
 
+        public DelegateCommand ContextMenuCommand { get; private set; }
+
+        public void HandleContextMenu()
+        {
+            MessageBox.Show("Hey!");
         }
 
         public Int32? LastBasketId
@@ -105,7 +113,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.RequestRecalculating();
         }
 
-        private void RequestRecalculating()
+        public override void RequestRecalculating()
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
@@ -166,7 +174,9 @@ namespace GreenField.Targeting.Controls.BasketTargets
 
         public void GetNotifiedAboutChangedValue(EditableExpressionModel model)
         {
-            this.RequestRecalculating();
+            this.ResetRecalculationTimer();
         }
+
+        
     }
 }
