@@ -17,11 +17,11 @@
             </ResourceDictionary.MergedDictionaries>
 
             <mine:CellTemplateSelector x:Key="nameCellTemplateSelector">
-                <mine:CellTemplateSelector.RootTemplate>
+                <mine:CellTemplateSelector.TotalTemplate>
                     <DataTemplate>
                         <TextBlock Style="{StaticResource nicelyMarginedTextboxStyle}" FontWeight="Bold">Total</TextBlock>
                     </DataTemplate>
-                </mine:CellTemplateSelector.RootTemplate>
+                </mine:CellTemplateSelector.TotalTemplate>
                 <mine:CellTemplateSelector.SecurityTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Security.Name}" Style="{StaticResource nicelyMarginedTextboxStyle}" />
@@ -30,11 +30,11 @@
             </mine:CellTemplateSelector>
 
             <mine:CellTemplateSelector x:Key="benchmarkCellTemplateSelector" >
-                <mine:CellTemplateSelector.RootTemplate>
+                <mine:CellTemplateSelector.TotalTemplate>
                     <DataTemplate>
                         <TextBlock />
                     </DataTemplate>
-                </mine:CellTemplateSelector.RootTemplate>
+                </mine:CellTemplateSelector.TotalTemplate>
                 <mine:CellTemplateSelector.SecurityTemplate>
                     <DataTemplate>
                         <ContentControl Content="{Binding Benchmark}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
@@ -43,11 +43,11 @@
             </mine:CellTemplateSelector>
 
             <mine:CellTemplateSelector x:Key="baseCellTemplateSelector">
-                <mine:CellTemplateSelector.RootTemplate>
+                <mine:CellTemplateSelector.TotalTemplate>
                     <DataTemplate>
                         <ContentControl Content="{Binding BaseTotal}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
                     </DataTemplate>
-                </mine:CellTemplateSelector.RootTemplate>
+                </mine:CellTemplateSelector.TotalTemplate>
                 <mine:CellTemplateSelector.SecurityTemplate>
                     <DataTemplate>
                         <ContentControl Content="{Binding Base}" ContentTemplate="{StaticResource editableValueTemplate}" Style="{StaticResource editableValueContentStyle}" />
@@ -57,17 +57,30 @@
 
             <mine:RootModelToPortfolioTargetTotalConverter x:Key="rootModelToPortfolioTargetTotalConverter" />
             <mine:SecurityModelToPortfolioTargetConverter x:Key="securityModelToPortfolioTargetConverter" />
+            
             <mine:CellTemplateSelector x:Key="portfolioTargetTemplateSelector">
                 <mine:CellTemplateSelector.SecurityTemplate>
                     <DataTemplate>
                         <ContentControl Content="{Binding Converter={StaticResource securityModelToPortfolioTargetConverter}}" ContentTemplate="{StaticResource editableValueTemplate}" Style="{StaticResource editableValueContentStyle}" />
                     </DataTemplate>
                 </mine:CellTemplateSelector.SecurityTemplate>
-                <mine:CellTemplateSelector.RootTemplate>
+                <mine:CellTemplateSelector.TotalTemplate>
                     <DataTemplate>
                         <ContentControl Content="{Binding Converter={StaticResource rootModelToPortfolioTargetTotalConverter}}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />
                     </DataTemplate>
-                </mine:CellTemplateSelector.RootTemplate>
+                    </mine:CellTemplateSelector.TotalTemplate>
+            </mine:CellTemplateSelector>
+
+
+            <mine:CellTemplateSelector x:Key="tickerCellTemplateSelector">
+                <mine:CellTemplateSelector.SecurityTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Security.Ticker}" />
+                    </DataTemplate>
+                </mine:CellTemplateSelector.SecurityTemplate>
+                <mine:CellTemplateSelector.TotalTemplate>
+                    <DataTemplate></DataTemplate>
+                </mine:CellTemplateSelector.TotalTemplate>
             </mine:CellTemplateSelector>
 
         </ResourceDictionary>
@@ -82,6 +95,14 @@
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource nameCellTemplateSelector}}" />
+                        </DataTemplate>
+                    </sdk:DataGridTemplateColumn.CellTemplate>
+                </sdk:DataGridTemplateColumn>
+                
+                <sdk:DataGridTemplateColumn Header="Ticker">
+                    <sdk:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource tickerCellTemplateSelector}}" />
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>
