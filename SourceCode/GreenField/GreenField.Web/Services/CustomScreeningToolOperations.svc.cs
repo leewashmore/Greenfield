@@ -785,7 +785,11 @@ namespace GreenField.Web.Services
 
                 #region Fetching and processing PORTFOLIO_SECURITY_TARGETS data
                 portfolioSecurityTargetsData = externalEntity.PORTFOLIO_SECURITY_TARGETS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).ToList();
+
+                //Lane working here
+                //portfolioSecurityTargetsData = externalEntity.PORTFOLIO_SECURITY_TARGETS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).ToList();
                
+
                 foreach (PORTFOLIO_SECURITY_TARGETS item in portfolioSecurityTargetsData)
                 {
                     GF_SECURITY_BASEVIEW specificSecurity = entity.GF_SECURITY_BASEVIEW
