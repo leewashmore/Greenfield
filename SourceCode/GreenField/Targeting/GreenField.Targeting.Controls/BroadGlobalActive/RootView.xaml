@@ -64,7 +64,9 @@
                 </StackPanel>
                 
                 <StackPanel Orientation="Horizontal" Margin="5 5 0 0">
-                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Benchmark data is as of</TextBlock>
+                    <CheckBox IsChecked="{Binding EditorViewModel.IsRecalculationAutomatic, Mode=TwoWay}" Content="Recalculate automatically?" Margin="20 0 0 0" />
+                    <Button Command="{Binding EditorViewModel.RequestRecalculatingCommand}" Content="Recalculate" />
+                    <TextBlock Margin="20 0 5 0" VerticalAlignment="Center">Benchmark data is as of</TextBlock>
                     <TextBlock Text="{Binding EditorViewModel.RootModel.BenchmarkDate}" VerticalAlignment="Center" />
                 </StackPanel>
 
