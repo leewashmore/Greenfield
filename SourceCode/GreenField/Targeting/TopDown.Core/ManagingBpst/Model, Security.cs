@@ -16,18 +16,21 @@ namespace TopDown.Core.ManagingBpst
 			ISecurity security,
 			EditableExpression baseExpression,
 			UnchangableExpression<Decimal> benchmark,
-			IEnumerable<PortfolioTargetModel> portfolioTargets
+			IEnumerable<PortfolioTargetModel> portfolioTargets,
+            Expression<Decimal?> baseActiveExpression
 		)
         {
             this.Security = security;
 			this.Base = baseExpression;
             this.Benchmark = benchmark;
 			this.PortfolioTargets = portfolioTargets.ToList();
+            this.BaseActive = baseActiveExpression;
         }
 
         public ISecurity Security { get; private set; }
         public EditableExpression Base { get; private set; }
         public UnchangableExpression<Decimal> Benchmark { get; private set; }
 		public IEnumerable<PortfolioTargetModel> PortfolioTargets { get; private set; }
+        public Expression<Decimal?> BaseActive { get; set; }
     }
 }

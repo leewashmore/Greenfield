@@ -75,6 +75,7 @@
     <Compile Include="BottomUp\PickerModel.cs" />
     <Compile Include="BottomUp\Serializer.cs" />
     <Compile Include="BroadGlobalActive\Deserializer.cs" />
+    <Compile Include="Model, Comment.cs" />
     <Compile Include="Deserializer.cs" />
     <Compile Include="BroadGlobalActive\Model, Country.cs" />
     <Compile Include="BroadGlobalActive\Model, BasketCountry.cs" />

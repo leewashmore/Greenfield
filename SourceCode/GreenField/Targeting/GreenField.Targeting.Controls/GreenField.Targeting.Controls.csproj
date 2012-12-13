@@ -120,11 +120,11 @@
     </Compile>
     <Compile Include="BasketTargets\RootViewModel.cs" />
     <Compile Include="BasketTargets\Converter, SecurityModelToPortfolioTarget.cs" />
+    <Compile Include="BooleanToColorConverter.cs" />
     <Compile Include="BottomUp\SecurityPickerClientFactory.cs" />
     <Compile Include="ISecurity.cs" />
     <Compile Include="BasketTargets\SecurityPickerClientFactory.cs" />
     <Compile Include="BasketTargets\Settings.cs" />
-    <Compile Include="BasketTargets\ValueTraverser.cs" />
     <Compile Include="Behavior, Watermark.cs" />
     <Compile Include="BottomUp\BottomUpPortfolioPickedEvent.cs" />
     <Compile Include="BottomUp\EditorView.xaml.cs">

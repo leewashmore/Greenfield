@@ -55,5 +55,14 @@ namespace GreenField.Targeting.Server
 
         [OperationContract]
         IEnumerable<IssueModel> SaveBottomUp(BottomUp.RootModel model);
+
+
+        // comments
+
+        [OperationContract]
+        IEnumerable<CommentModel> RequestCommentsForBasketPortfolioSecurityTarget(Int32 basketId, String broadGlbalActivePortfolioId, String securityId);
+
+        [OperationContract]
+        IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBase(Int32 targetingTypeGroupId, Int32 basketId, String securityId);
     }
 }

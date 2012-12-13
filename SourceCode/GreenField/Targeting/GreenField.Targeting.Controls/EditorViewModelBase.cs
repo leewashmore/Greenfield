@@ -13,6 +13,7 @@ using TopDown.FacingServer.Backend.Targeting;
 using System.Linq;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Windows.Threading;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Targeting.Controls
 {
@@ -28,6 +29,7 @@ namespace GreenField.Targeting.Controls
             this.waitBeforeRecalculating.Interval = TimeSpan.FromMilliseconds(NumberOfMillisecondsBetweenLastChangeAndRecalcualtion);
             this.waitBeforeRecalculating.Stop();
             this.waitBeforeRecalculating.Tick += this.WhenTimeout;
+            this.RequestRecalculatingCommand = new DelegateCommand(this.RequestRecalculating, () => !this.IsRecalculationAutomatic);
         }
 
         public event EventHandler GotData;
@@ -77,13 +79,31 @@ namespace GreenField.Targeting.Controls
             this.waitBeforeRecalculating.Stop();
             this.waitBeforeRecalculating.Start();
         }
-        
+
         protected void WhenTimeout(Object sender, EventArgs e)
         {
             this.waitBeforeRecalculating.Stop();
-            this.RequestRecalculating();
+            if (this.IsRecalculationAutomatic)
+            {
+                this.RequestRecalculating();
+            }
         }
 
+        public DelegateCommand RequestRecalculatingCommand { get; private set; }
         public abstract void RequestRecalculating();
+
+
+        private Boolean isRecalculationAutomatic;
+        
+        public Boolean IsRecalculationAutomatic
+        {
+            get { return this.isRecalculationAutomatic; }
+            set
+            {
+                this.isRecalculationAutomatic = value;
+                this.RequestRecalculatingCommand.RaiseCanExecuteChanged();
+                this.RaisePropertyChanged(() => this.IsRecalculationAutomatic);
+            }
+        }
     }
 }

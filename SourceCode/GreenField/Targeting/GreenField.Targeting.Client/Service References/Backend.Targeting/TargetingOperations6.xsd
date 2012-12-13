@@ -201,4 +201,36 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RequestCommentsForBasketPortfolioSecurityTarget">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="basketId" type="xs:int" />
+        <xs:element minOccurs="0" name="broadGlbalActivePortfolioId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="securityId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForBasketPortfolioSecurityTargetResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="RequestCommentsForBasketPortfolioSecurityTargetResult" nillable="true" type="q21:ArrayOfCommentModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForTargetingTypeBasketBase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="targetingTypeGroupId" type="xs:int" />
+        <xs:element minOccurs="0" name="basketId" type="xs:int" />
+        <xs:element minOccurs="0" name="securityId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForTargetingTypeBasketBaseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="RequestCommentsForTargetingTypeBasketBaseResult" nillable="true" type="q22:ArrayOfCommentModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

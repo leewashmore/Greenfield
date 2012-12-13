@@ -89,7 +89,10 @@ namespace GreenField.Targeting.Controls.BottomUp
 
         private void RegisterInChangeWatcher(BuRootModel model)
         {
-            model.Items.ForEach(x => x.Target.RegisterForBeingWatched(this));
+            foreach (var security in model.Items)
+            {
+                security.Target.RegisterForBeingWatched(this, null);
+            }
         }
 
         public void GetNotifiedAboutChangedValue(EditableExpressionModel model)

@@ -21,7 +21,8 @@ namespace GreenField.Targeting.Server.BasketTargets
             Aims.Data.Server.SecurityModel security,
             EditableExpressionModel baseExpression,
             ExpressionModel benchmarkExpression,
-            IEnumerable<PortfolioTargetModel> portfolioTargets
+            IEnumerable<PortfolioTargetModel> portfolioTargets,
+            NullableExpressionModel baseActiveExpression
         )
             : this()
         {
@@ -29,6 +30,7 @@ namespace GreenField.Targeting.Server.BasketTargets
             this.Base = baseExpression;
             this.Benchmark = benchmarkExpression;
             this.PortfolioTargets.AddRange(portfolioTargets);
+            this.BaseActive = baseActiveExpression;
         }
 
 
@@ -40,5 +42,7 @@ namespace GreenField.Targeting.Server.BasketTargets
         public ExpressionModel Benchmark { get; set; }
         [DataMember]
         public List<PortfolioTargetModel> PortfolioTargets { get; set; }
+        [DataMember]
+        public NullableExpressionModel BaseActive { get; set; }
     }
 }

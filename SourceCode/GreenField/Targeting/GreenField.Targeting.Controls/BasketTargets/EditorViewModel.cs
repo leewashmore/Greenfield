@@ -36,13 +36,6 @@ namespace GreenField.Targeting.Controls.BasketTargets
         private IClientFactory clientFactory;
         private IEnumerable<BtPorfolioModel> portfolios;
         private IEnumerable<IBtLineModel> lines;
-        private ValueTraverser valueTraverser;
-
-        public EditorViewModel(IClientFactory clientFactory)
-            : this(clientFactory, new ValueTraverser())
-        {
-            this.ContextMenuCommand = new DelegateCommand(this.HandleContextMenu);
-        }
 
         public DelegateCommand ContextMenuCommand { get; private set; }
 
@@ -60,11 +53,20 @@ namespace GreenField.Targeting.Controls.BasketTargets
             }
         }
 
-        public EditorViewModel(IClientFactory clientFactory, ValueTraverser valueTraverser)
+        public Int32? LastTargetingTypeGroupId
+        {
+            get
+            {
+                var lastInputOpt = base.LastValidInput;
+                return lastInputOpt != null ? lastInputOpt.TargetingTypeGroupId : (Int32?)null;
+            }
+        }
+
+        public EditorViewModel(IClientFactory clientFactory)
         {
             this.areEmptyColumnsShown = true;
             this.clientFactory = clientFactory;
-            this.valueTraverser = valueTraverser;
+            this.ContextMenuCommand = new DelegateCommand(this.HandleContextMenu);
         }
 
         public IEnumerable<BtPorfolioModel> Portfolios
@@ -161,8 +163,52 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.Lines = lines;
 
             this.KeptRootModel = model;
-            this.valueTraverser.TraverseValues(model).ForEach(x => x.RegisterForBeingWatched(this));
+
+            foreach (var security in model.Securities)
+            {
+                var securityId = security.Security.Id;
+                var basketId = this.LastBasketId.Value;
+                foreach (var portfolioTarget in security.PortfolioTargets)
+                {
+                    
+                    var portfolioId = portfolioTarget.BroadGlobalActivePortfolio.Id;
+                    
+                    var requestCommentsCommand = new DelegateCommand(delegate {
+                        this.RequestComments(basketId, portfolioId, securityId);
+                    });
+                    portfolioTarget.PortfolioTarget.RegisterForBeingWatched(this, requestCommentsCommand);
+                }
+                var requestBaseCommentsCommand = new DelegateCommand(delegate
+                {
+                    this.RequestComments(this.LastTargetingTypeGroupId.Value, basketId, securityId);
+                });
+                security.Base.RegisterForBeingWatched(this, requestBaseCommentsCommand);
+            }
+
             this.OnGotData();
+        }
+
+        private void RequestComments(int targetingTypeGroupId, int basketId, string securityId)
+        {
+            this.StartLoading();
+            var client = this.clientFactory.CreateClient();
+            client.RequestCommentsForTargetingTypeBasketBaseCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting comments", args, x => x.Result, this.TakeComments, this.FinishLoading);
+            client.RequestCommentsForTargetingTypeBasketBaseAsync(targetingTypeGroupId, basketId, securityId);
+        }
+
+        public void RequestComments(Int32 basketId, String portfolioId, String securityId)
+        {
+            this.StartLoading();
+            var client = this.clientFactory.CreateClient();
+            client.RequestCommentsForBasketPortfolioSecurityTargetCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting comments", args, x => x.Result, this.TakeComments, this.FinishLoading);
+            client.RequestCommentsForBasketPortfolioSecurityTargetAsync(basketId, portfolioId, securityId);
+        }
+
+        public void TakeComments(ObservableCollection<CommentModel> comments)
+        {
+            this.FinishLoading();
+            var comment = String.Join(", ", comments.Select(x => x.Comment));
+            MessageBox.Show(comment);
         }
 
         public void Discard()
@@ -176,7 +222,5 @@ namespace GreenField.Targeting.Controls.BasketTargets
         {
             this.ResetRecalculationTimer();
         }
-
-        
     }
 }

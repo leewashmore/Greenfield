@@ -13,13 +13,11 @@ using System.Windows.Data;
 using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-
+using System.Linq;
 namespace GreenField.Targeting.Controls.BasketTargets
 {
     public class DataGridDynamicColumnsBehavior : Behavior<DataGrid>, IValueConverter
     {
-        public const Int32 NumberOfColumnsToKeep = 4;
-
         public static readonly DependencyProperty AreEmptyColumnShownProperty = DependencyProperty.Register("AreEmptyColumnShown", typeof(Boolean), typeof(DataGridDynamicColumnsBehavior), new PropertyMetadata(WhenAreEmptyColumnShownChanges));
         public Boolean AreEmptyColumnShown
         {
@@ -56,12 +54,15 @@ namespace GreenField.Targeting.Controls.BasketTargets
             var grid = this.AssociatedObject;
             var castedColumn = column as Column;
             if (castedColumn == null) return false;
+
+            var badColumnsCount = grid.Columns.Count(x => x is Column);
+            var goodColumnsCount = grid.Columns.Count - badColumnsCount;
             
             foreach (var something in grid.ItemsSource)
             {
                 var data = something as BtSecurityModel;
                 if (data == null) continue;
-                var index = column.DisplayIndex - NumberOfColumnsToKeep;
+                var index = column.DisplayIndex - goodColumnsCount;
                 if (data.PortfolioTargets[index].PortfolioTarget.EditedValue.HasValue)
                 {
                     return false;
@@ -98,10 +99,13 @@ namespace GreenField.Targeting.Controls.BasketTargets
             var self = dependencyObject as DataGridDynamicColumnsBehavior;
             var grid = self.AssociatedObject;
 
-            for (var index = grid.Columns.Count - 1; index >= NumberOfColumnsToKeep; index--)
+            for (var index = grid.Columns.Count - 1; index >= 0; index--)
             {
                 var column = grid.Columns[index];
-                grid.Columns.RemoveAt(index);
+                if (column is Column)
+                {
+                    grid.Columns.RemoveAt(index);
+                }
             }
 
             var portfolios = e.NewValue as ObservableCollection<BtPorfolioModel>;

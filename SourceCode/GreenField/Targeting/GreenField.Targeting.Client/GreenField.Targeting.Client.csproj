@@ -150,6 +150,9 @@
     <None Include="Service References\Backend.Targeting\TopDown.FacingServer.Backend.Targeting.BuRootModel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Backend.Targeting\TopDown.FacingServer.Backend.Targeting.CommentModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Backend.Targeting\TopDown.FacingServer.Backend.Targeting.IssueModel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

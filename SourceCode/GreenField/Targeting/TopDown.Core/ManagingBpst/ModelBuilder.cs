@@ -131,6 +131,37 @@ namespace TopDown.Core.ManagingBpst
             );
         }
 
-        
+
+
+
+        public Expression<Decimal?> CreateBaseActiveExpression(EditableExpression baseExpression, UnchangableExpression<decimal> benchmarkExpression)
+        {
+            return new Expression<decimal?>(ValueNames.BaseActive, new BaseActiveFormula(baseExpression, benchmarkExpression) ,this.commonParts.NullableDecimalValueAdapter, this.commonParts.ValidateWhatever);
+        }
+
+        private class BaseActiveFormula : IFormula<Decimal?>
+        {
+            public BaseActiveFormula(EditableExpression baseExpression, UnchangableExpression<Decimal> benchmarkExpression)
+            {
+                this.BaseExpression = baseExpression;
+                this.BenchmarkExpression = benchmarkExpression;
+            }
+
+            public Decimal? Calculate(CalculationTicket ticket)
+            {
+                var baseValue = BaseExpression.Value(ticket);
+                var benchmarkValue = BenchmarkExpression.Value(ticket);
+                return baseValue.HasValue ? baseValue - benchmarkValue : null;
+            }
+
+            public UnchangableExpression<Decimal> BenchmarkExpression { get; set; }
+            public EditableExpression BaseExpression { get; set; }
+        }
+
+        public IExpression<Decimal?> CreateBaseActiveTotalExpression(List<SecurityModel> securityModels)
+        {
+            var baseActiveTotalExpression = new NullableSumExpression(ValueNames.BaseActiveTotal, securityModels.Select(s => s.BaseActive), this.defaultValues.DefaultBaseActive, this.commonParts.ValidateWhatever);
+            return baseActiveTotalExpression;
+        }
     }
 }

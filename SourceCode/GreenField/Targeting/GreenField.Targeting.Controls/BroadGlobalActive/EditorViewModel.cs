@@ -116,7 +116,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         {
             foreach (var item in factorsModel.Items)
             {
-                item.OverlayFactor.RegisterForBeingWatched(this);
+                item.OverlayFactor.RegisterForBeingWatched(this, null);
             }
         }
 
@@ -138,13 +138,13 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             }
             public void Resolve(BasketCountryModel model)
             {
-                model.Base.RegisterForBeingWatched(this.watcher);
-                model.PortfolioAdjustment.RegisterForBeingWatched(this.watcher);
+                model.Base.RegisterForBeingWatched(this.watcher, null);
+                model.PortfolioAdjustment.RegisterForBeingWatched(this.watcher, null);
             }
             public void Resolve(BasketRegionModel model)
             {
-                model.Base.RegisterForBeingWatched(this.watcher);
-                model.PortfolioAdjustment.RegisterForBeingWatched(this.watcher);
+                model.Base.RegisterForBeingWatched(this.watcher, null);
+                model.PortfolioAdjustment.RegisterForBeingWatched(this.watcher, null);
             }
             public void Resolve(OtherModel model)
             {
@@ -156,8 +156,8 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             }
             public void Resolve(UnsavedBasketCountryModel model)
             {
-                model.Base.RegisterForBeingWatched(this.watcher);
-                model.PortfolioAdjustment.RegisterForBeingWatched(this.watcher);
+                model.Base.RegisterForBeingWatched(this.watcher, null);
+                model.PortfolioAdjustment.RegisterForBeingWatched(this.watcher, null);
             }
             public void Resolve(BgaCountryModel model)
             {

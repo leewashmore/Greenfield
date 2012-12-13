@@ -163,13 +163,15 @@ namespace TopDown.Core.ManagingBpst
 
             var baseTotalExpression = this.modelBuilder.CreateBaseTotalExpression(securityModels);
             var benchmarkTotalExpression = this.modelBuilder.CreateBenchmarkTotalExpression(securityModels);
+            var baseActiveTotalExpression = this.modelBuilder.CreateBaseActiveTotalExpression(securityModels);
             var core = new CoreModel(
                 targetingTypeGroup,
                 basket,
                 portfolios,
                 securityModels,
                 baseTotalExpression,
-                benchmarkTotalExpression
+                benchmarkTotalExpression,
+                baseActiveTotalExpression
             );
             return core;
         }
@@ -218,12 +220,13 @@ namespace TopDown.Core.ManagingBpst
             }
 
             var benchmarkExpression = this.modelBuilder.CreateBenchmarkExpression();
-
+            var baseActiveExpression = this.modelBuilder.CreateBaseActiveExpression(baseExpression, benchmarkExpression);
             var securityModel = new SecurityModel(
                 security,
                 baseExpression,
                 benchmarkExpression,
-                portfolioTargets
+                portfolioTargets,
+                baseActiveExpression
             );
             return securityModel;
         }

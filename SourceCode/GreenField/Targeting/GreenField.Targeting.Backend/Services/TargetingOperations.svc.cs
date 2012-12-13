@@ -169,5 +169,27 @@ namespace GreenField.Targeting.Backend
                 return this.facade.SaveBottomUp(model);
             });
         }
+
+        // comments
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForBasketPortfolioSecurityTarget(int basketId, string broadGlbalActivePortfolioId, string securityId)
+        {
+#warning list parameters in the text message
+            return this.Watch("Getting comments.....", delegate
+            {
+                return this.facade.RequestCommentsForBasketPortfolioSecurityTarget(basketId, broadGlbalActivePortfolioId, securityId);
+            });
+        }
+
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId)
+        {
+#warning list parameters in the text message
+            return this.Watch("Getting comments.....", delegate
+            {
+                return this.facade.RequestCommentsForTargetingTypeBasketBase(targetingTypeGroupId, basketId, securityId);
+            });
+            
+        }
     }
 }

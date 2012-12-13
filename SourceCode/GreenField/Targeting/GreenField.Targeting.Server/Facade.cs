@@ -110,7 +110,7 @@ namespace GreenField.Targeting.Server
 
         public IEnumerable<SecurityModel> PickSecuritiesFromBasket(String pattern, Int32 atMost, Int32 basketId)
         {
-            var result = this.facade.GetSecurities(pattern, atMost);
+            var result = this.facade.GetSecurities(pattern, atMost, basketId);
             var serializedSecurities = this.serializer.SerializeSecurities(result);
             return serializedSecurities;
         }
@@ -190,6 +190,19 @@ namespace GreenField.Targeting.Server
             var issues = this.facade.ApplyPstModelIfValid(deserializedModel, Username, ticket);
             var serializedIssues = this.serializer.SerializeValidationIssues(issues);
             return serializedIssues;
+        }
+
+
+        // comments
+
+        public IEnumerable<CommentModel> RequestCommentsForBasketPortfolioSecurityTarget(Int32 basketId, String broadGlbalActivePortfolioId, String securityId)
+        {
+            return new CommentModel[] { new CommentModel("Hey!") };
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId)
+        {
+            return new CommentModel[] { new CommentModel("Hey yourself!") };
         }
     }
 }

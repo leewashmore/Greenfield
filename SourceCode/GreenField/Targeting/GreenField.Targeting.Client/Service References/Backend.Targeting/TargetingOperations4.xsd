@@ -97,4 +97,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfTargetingTypeModel" nillable="true" type="tns:ArrayOfTargetingTypeModel" />
+  <xs:complexType name="ArrayOfCommentModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CommentModel" nillable="true" type="tns:CommentModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCommentModel" nillable="true" type="tns:ArrayOfCommentModel" />
+  <xs:complexType name="CommentModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CommentModel" nillable="true" type="tns:CommentModel" />
 </xs:schema>
