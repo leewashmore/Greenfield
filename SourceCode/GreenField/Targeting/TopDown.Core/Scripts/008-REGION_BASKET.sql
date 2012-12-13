@@ -25,5 +25,5 @@ insert into [REGION_BASKET] ([ID], [DEFINITION]) values (21, '<region-basket nam
 insert into [BASKET] ([ID], [TYPE]) values (22, 'region')
 insert into [REGION_BASKET] ([ID], [DEFINITION]) values (22, '<region-basket name="Middle East" iso-codes="BH, JO, KW, LB, OM, PS, QA, SA, AE" />')
 insert into [BASKET] ([ID], [TYPE]) values (23, 'region')
-insert into [REGION_BASKET] ([ID], [DEFINITION]) values (23, '<region-basket name="China" iso-codes="HK, CH" />')
+insert into [REGION_BASKET] ([ID], [DEFINITION]) values (23, '<region-basket name="China" iso-codes="HK, CN" />')
 GO

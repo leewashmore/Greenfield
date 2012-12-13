@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive" />
-  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" />
-  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
-  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" />
-  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" />
+  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" />
+  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" />
+  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
+  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" />
+  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" />
   <xs:element name="GetBroadGlobalActive">
     <xs:complexType>
       <xs:sequence>
@@ -57,7 +58,7 @@
   <xs:element name="PickSecuritiesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PickSecuritiesResult" nillable="true" type="q5:ArrayOfSecurityModel" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="PickSecuritiesResult" nillable="true" type="q5:ArrayOfSecurityModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -73,7 +74,7 @@
   <xs:element name="PickSecuritiesFromBasketResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PickSecuritiesFromBasketResult" nillable="true" type="q6:ArrayOfSecurityModel" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="PickSecuritiesFromBasketResult" nillable="true" type="q6:ArrayOfSecurityModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -197,6 +198,38 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="SaveBottomUpResult" nillable="true" type="q20:ArrayOfIssueModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForBasketPortfolioSecurityTarget">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="basketId" type="xs:int" />
+        <xs:element minOccurs="0" name="broadGlbalActivePortfolioId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="securityId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForBasketPortfolioSecurityTargetResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="RequestCommentsForBasketPortfolioSecurityTargetResult" nillable="true" type="q21:ArrayOfCommentModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForTargetingTypeBasketBase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="targetingTypeGroupId" type="xs:int" />
+        <xs:element minOccurs="0" name="basketId" type="xs:int" />
+        <xs:element minOccurs="0" name="securityId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForTargetingTypeBasketBaseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="RequestCommentsForTargetingTypeBasketBaseResult" nillable="true" type="q22:ArrayOfCommentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

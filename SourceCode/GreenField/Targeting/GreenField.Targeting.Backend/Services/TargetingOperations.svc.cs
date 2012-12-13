@@ -19,7 +19,7 @@ using TopDown.Core.ManagingCountries;
 using TopDown.Core.ManagingBaskets;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingCalculations;
-using TopDown.Core.Sql;
+using Aims.Core.Sql;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingTaxonomies;
 using TopDown.Core.ManagingBenchmarks;
@@ -82,7 +82,7 @@ namespace GreenField.Targeting.Backend
             });
         }
 
-        public IEnumerable<Server.SecurityModel> PickSecurities(String pattern, Int32 atMost)
+        public IEnumerable<Aims.Data.Server.SecurityModel> PickSecurities(String pattern, Int32 atMost)
         {
             return this.Watch("Unable to get a securities for the pattern \"" + pattern + "\".", delegate
             {
@@ -90,7 +90,7 @@ namespace GreenField.Targeting.Backend
             });
         }
 
-        public IEnumerable<Server.SecurityModel> PickSecuritiesFromBasket(String pattern, Int32 atMost, Int32 basketId)
+        public IEnumerable<Aims.Data.Server.SecurityModel> PickSecuritiesFromBasket(String pattern, Int32 atMost, Int32 basketId)
         {
             return this.Watch("Unable to get securities for the pattern \"" + pattern + "\" from the basket (ID: " + basketId + ").", delegate
             {
@@ -168,6 +168,28 @@ namespace GreenField.Targeting.Backend
             {
                 return this.facade.SaveBottomUp(model);
             });
+        }
+
+        // comments
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForBasketPortfolioSecurityTarget(int basketId, string broadGlbalActivePortfolioId, string securityId)
+        {
+#warning list parameters in the text message
+            return this.Watch("Getting comments.....", delegate
+            {
+                return this.facade.RequestCommentsForBasketPortfolioSecurityTarget(basketId, broadGlbalActivePortfolioId, securityId);
+            });
+        }
+
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId)
+        {
+#warning list parameters in the text message
+            return this.Watch("Getting comments.....", delegate
+            {
+                return this.facade.RequestCommentsForTargetingTypeBasketBase(targetingTypeGroupId, basketId, securityId);
+            });
+            
         }
     }
 }

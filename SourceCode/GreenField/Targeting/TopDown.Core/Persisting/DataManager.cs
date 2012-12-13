@@ -5,84 +5,21 @@ using System.Text;
 using System.Data.SqlClient;
 using TopDown.Core.ManagingTaxonomies;
 using System.Diagnostics;
-using TopDown.Core.Sql;
 using System.Data;
+using Aims.Core.Persisting;
+using Aims.Core.Sql;
 
 namespace TopDown.Core.Persisting
 {
     /// <summary>
     /// Knows how to talk to the database.
     /// </summary>
-    public class DataManager : IDataManager
+    public class DataManager : Aims.Core.Persisting.DataManager, IDataManager
     {
-        private SqlConnection connection;
-        private SqlTransaction transactionOpt;
-
         [DebuggerStepThrough]
         public DataManager(SqlConnection connection, SqlTransaction transactionOpt)
+            : base(connection, transactionOpt)
         {
-            this.connection = connection;
-            this.transactionOpt = transactionOpt;
-        }
-
-        protected SqlQueryCommandBuilder<TInfo> CreateQueryCommandBuilder<TInfo>()
-            where TInfo : class, new()
-        {
-            var command = connection.CreateCommand();
-            if (this.transactionOpt != null)
-            {
-                command.Transaction = this.transactionOpt;
-            }
-            return new SqlQueryCommandBuilder<TInfo>(command);
-        }
-
-        protected TopDown.Core.Sql.SqlCommandBuilder CreateCommandBuilder()
-        {
-            var command = connection.CreateCommand();
-            if (this.transactionOpt != null)
-            {
-                command.Transaction = this.transactionOpt;
-            }
-            return new TopDown.Core.Sql.SqlCommandBuilder(command);
-        }
-
-        protected IEnumerator<Int32> ReserveIds(String sequenceName, Int32 howMany)
-        {
-            Int32 firstId;
-            using (var command = this.connection.CreateCommand())
-            {
-                if (this.transactionOpt != null)
-                {
-                    command.Transaction = this.transactionOpt;
-                }
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                command.CommandText = "CLAIM_IDS";
-
-                var sequenceNameParameter = command.CreateParameter();
-                sequenceNameParameter.ParameterName = "@sequenceName";
-                sequenceNameParameter.Value = sequenceName;
-                command.Parameters.Add(sequenceNameParameter);
-
-                var howManyParameter = command.CreateParameter();
-                howManyParameter.ParameterName = "@howMany";
-                howManyParameter.Value = howMany;
-                command.Parameters.Add(howManyParameter);
-
-                var something = command.ExecuteScalar();
-                if (DBNull.Value.Equals(something))
-                {
-                    throw new ApplicationException("There is no sequence named \"" + sequenceName + "\".");
-                }
-
-                firstId = (Int32)something;
-            }
-            var ids = new List<Int32>(howMany);
-            for (var index = 0; index < howMany; index++)
-            {
-                var id = firstId + index;
-                ids.Add(id);
-            }
-            return ids.GetEnumerator();
         }
 
         public virtual IEnumerable<BasketInfo> GetAllBaskets()
@@ -118,28 +55,12 @@ namespace TopDown.Core.Persisting
                 .PullAll();
             }
         }
-        public virtual IEnumerable<SecurityInfo> GetAllSecurities()
-        {
-            using (var builder = this.CreateQueryCommandBuilder<SecurityInfo>())
-            {
-#warning SECURITY_ID needs to be changed to mandatory once all problem with securities that have NULL as a SECURITY_ID are removed from the GF_SECURITY_BASEVIEW table.
-                return builder.Text("select")
-                    .Field("  [SECURITY_ID]", (info, value) => info.Id = value, false)
-                    .Field(", [TICKER]", (info, value) => info.Ticker = value, false)
-                    .Field(", [ASEC_SEC_SHORT_NAME]", (info, value) => info.ShortName = value, false)
-                    .Field(", [ISSUE_NAME]", (info, value) => info.Name = value, false)
-                    .Field(", [ISO_COUNTRY_CODE]", (info, value) => info.IsoCountryCode = value, false)
-                    .Field(", [LOOK_THRU_FUND]", (info, value) => info.LookThruFund = value, false)
-                .Text(" from " + TableNames.GF_SECURITY_BASEVIEW)
-                .PullAll();
-            }
-        }
 
         public virtual DateTime GetLastestDateWhichBenchmarkDataIsAvialableOn()
         {
             DateTime result;
             // used to be Oct 17, 2012
-            using (var command = this.connection.CreateCommand())
+            using (var command = this.Connection.CreateCommand())
             {
                 command.CommandText = "select top 1 PORTFOLIO_DATE from [" + TableNames.GF_BENCHMARK_HOLDINGS + "] order by [PORTFOLIO_DATE] desc";
                 var something = command.ExecuteScalar();
@@ -208,17 +129,6 @@ namespace TopDown.Core.Persisting
             }
         }
 
-        public virtual IEnumerable<CountryInfo> GetAllCountries()
-        {
-            using (var builder = this.CreateQueryCommandBuilder<CountryInfo>())
-            {
-                return builder.Text("select ")
-                    .Field("  [COUNTRY_CODE]", (field, value) => field.CountryCode = value, false)
-                    .Field(", [COUNTRY_NAME]", (field, value) => field.CountryName = value, false)
-                    .Text(" from [Country_Master]")
-                    .PullAll();
-            }
-        }
         public virtual IEnumerable<BgaPortfolioSecurityFactorInfo> GetBgaPortfolioSecurityFactors(String porfolioId)
         {
             using (var builder = this.CreateQueryCommandBuilder<BgaPortfolioSecurityFactorInfo>())
@@ -446,17 +356,6 @@ namespace TopDown.Core.Persisting
                     .Field(", [PORTFOLIO_ID]", (info, value) => info.BottomUpPortfolioId = value, true)
                     .Text(" from [" + TableNames.USERNAME_FUND + "]")
                     .Text(" where [USERNAME] = ").Parameter(username)
-                    .PullAll();
-            }
-        }
-        public IEnumerable<PortfolioInfo> GetAllPortfolios()
-        {
-            using (var builder = this.CreateQueryCommandBuilder<PortfolioInfo>())
-            {
-                return builder.Text("select ")
-                    .Field("  [ID]", (info, value) => info.Id = value, true)
-                    .Field(", [NAME]", (info, value) => info.Name = value, true)
-                    .Text(" from [" + TableNames.PORTFOLIO + "]")
                     .PullAll();
             }
         }
@@ -1285,7 +1184,7 @@ namespace TopDown.Core.Persisting
 
             var table = this.CreateDataTableForInsertingBgaPortfolioSecurityTargets(targetInfos);
 
-            var pusher = this.transactionOpt != null ? new SqlBulkCopy(this.connection, SqlBulkCopyOptions.CheckConstraints, this.transactionOpt) : new SqlBulkCopy(this.connection);
+            var pusher = this.TransactionOpt != null ? new SqlBulkCopy(this.Connection, SqlBulkCopyOptions.CheckConstraints, this.TransactionOpt) : new SqlBulkCopy(this.Connection);
             pusher.BulkCopyTimeout = 0;	// no timeout
             pusher.DestinationTableName = TableNames.BGA_PORTFOLIO_SECURITY_TARGET;
             pusher.WriteToServer(table);

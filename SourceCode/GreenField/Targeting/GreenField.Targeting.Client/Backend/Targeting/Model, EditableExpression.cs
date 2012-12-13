@@ -15,6 +15,7 @@ namespace TopDown.FacingServer.Backend.Targeting
 {
     public partial class EditableExpressionModel : INotifyDataErrorInfo, IExpressionModel
     {
+
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public System.Collections.IEnumerable GetErrors(String propertyName)
@@ -36,8 +37,20 @@ namespace TopDown.FacingServer.Backend.Targeting
             get { return this.Issues.Any(); }
         }
 
-        public void RegisterForBeingWatched(IValueChangeWatcher watcher)
+        private ICommand requestCommentsCommand;
+        public ICommand RequestCommentsCommand
         {
+            get { return this.requestCommentsCommand; }
+            set
+            {
+                this.requestCommentsCommand = value;
+                this.RaisePropertyChanged("RequestCommentsCommand");
+            }
+        }
+
+        public void RegisterForBeingWatched(IValueChangeWatcher watcher, ICommand command)
+        {
+            this.RequestCommentsCommand = command;
             // in the beginning we memorize the original values so that we can use the original values to detemine whether the value was changed later
             this.OriginalEditedValue = this.EditedValue;
             this.OriginalComment = this.Comment;
@@ -46,6 +59,7 @@ namespace TopDown.FacingServer.Backend.Targeting
             {
                 if (e.PropertyName == "EditedValue")
                 {
+                    this.RaisePropertyChanged("IsModified");
                     if (this.EditedValue == this.OriginalEditedValue) return;
                     watcher.GetNotifiedAboutChangedValue(this);
                 }
@@ -57,7 +71,17 @@ namespace TopDown.FacingServer.Backend.Targeting
             };
         }
 
+        
+
         protected String OriginalComment { get; private set; }
         protected Decimal? OriginalEditedValue { get; private set; }
+        public Boolean IsModified {
+            get 
+            {
+                return this.InitialValue != this.EditedValue;
+            } 
+        }
+
+        
     }
 }

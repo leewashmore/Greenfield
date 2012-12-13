@@ -7,6 +7,7 @@ using System.Diagnostics;
 using TopDown.Core.Persisting;
 using TopDown.Core.ManagingPortfolios;
 using TopDown.Core.ManagingBenchmarks;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpst
 {
@@ -36,7 +37,7 @@ namespace TopDown.Core.ManagingBpst
 			ManagingBaskets.BasketRepository basketRepository,
 			PortfolioRepository portfolioRepository,
 			RepositoryManager repositoryManager,
-            IOnDamand<IDataManager> ondemandManager
+            IOnDemand<IDataManager> ondemandManager
 		)
 		{
 
@@ -75,6 +76,7 @@ namespace TopDown.Core.ManagingBpst
 				var security = securityRepository.GetSecurity(securityIdTobeAddedOpt);
 				var baseExpression = this.modelBuilder.CreateBaseExpression();
 				var benchmarkExpression = this.modelBuilder.CreateBenchmarkExpression();
+                var baseActiveExpression = this.modelBuilder.CreateBaseActiveExpression(baseExpression, benchmarkExpression);
 				var securityModel = new SecurityModel(
 					security,
 					baseExpression,
@@ -82,7 +84,8 @@ namespace TopDown.Core.ManagingBpst
 					broadGlobalActivePortfolios.Select(bgaPortfolio => new PortfolioTargetModel(
 						bgaPortfolio,
 						this.modelBuilder.CreatePortfolioTargetExpression(bgaPortfolio.Name)
-					)).ToArray()
+					)).ToArray(),
+                    baseActiveExpression
 				);
 
                 var benchmarkRepository = this.repositoryManager.ClaimBenchmarkRepository(ondemandManager, benchmarkDate);
@@ -106,7 +109,8 @@ namespace TopDown.Core.ManagingBpst
 			});
 
 			var baseTotalExpression = this.modelBuilder.CreateBaseTotalExpression(securityModels);
-
+            var benchmarkTotalExpression = this.modelBuilder.CreateBenchmarkTotalExpression(securityModels);
+            var baseActiveTotalExpression = this.modelBuilder.CreateBaseActiveTotalExpression(securityModels);
 
 			//var targetingTypeGroup = targetingTypeGroupRepository.Get
 			var core = new CoreModel(
@@ -114,7 +118,9 @@ namespace TopDown.Core.ManagingBpst
 				basket,
 				portfolios,
 				securityModels,
-				baseTotalExpression
+				baseTotalExpression,
+                benchmarkTotalExpression,
+                baseActiveTotalExpression
 			);
 
 			var result = new RootModel(
@@ -173,12 +179,13 @@ namespace TopDown.Core.ManagingBpst
 			{
 				return this.DeserializePortfolioTarget(reader, portfolioRepository);
 			});
-
+            var baseActiveExpression = this.modelBuilder.CreateBaseActiveExpression(baseExpression, benchmarkExpression);
 			var result = new SecurityModel(
 				security,
 				baseExpression,
 				benchmarkExpression,
-				portfolioTargets
+				portfolioTargets,
+                baseActiveExpression
 			);
 			return result;
 		}

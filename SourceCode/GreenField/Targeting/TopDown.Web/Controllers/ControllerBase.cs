@@ -7,7 +7,7 @@ using TopDown.Web.Helpers;
 using TopDown.Core.Persisting;
 using TopDown.Core;
 using TopDown.Core.ManagingBpt;
-using TopDown.Core.Sql;
+using Aims.Core.Sql;
 using TopDown.Core.Overlaying;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingPst;
@@ -18,6 +18,7 @@ using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.Gadgets.PortfolioPicker;
 using TopDown.Core.Gadgets.BasketPicker;
 using TopDown.Core.ManagingBenchmarks;
+using Aims.Core;
 
 namespace TopDown.Web.Controllers
 {
@@ -46,17 +47,20 @@ namespace TopDown.Web.Controllers
 			var calculationRequester = new Core.ManagingCalculations.CalculationRequester();
 
 			var securitySerializer = new SecurityToJsonSerializer(countrySerializer);
-			var securityManager = new SecurityManager(securityRepositoryCache, securitySerializer, monitor);
+			var securityManager = new SecurityManager(securityRepositoryCache, monitor);
 			var settings = Settings.CreateFromConfiguration();
 
 			IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
 			var connectionFactory = new SqlConnectionFactory(settings.ConnectionString);
-			var portfolioRepositoryCache = new CacheStorage<Core.ManagingPortfolios.PortfolioRepository>(cache);
+			var portfolioRepositoryCache = new CacheStorage<PortfolioRepository>(cache);
 			var portfolioSerialzer = new Core.ManagingPortfolios.PortfolioToJsonSerializer(securitySerializer);
 			var portfolioManager = new Core.ManagingPortfolios.PortfolioManager(
 				portfolioRepositoryCache,
 				portfolioSerialzer
 			);
+
+            var issuerRepositoryStorage = new CacheStorage<IssuerRepository>(cache);
+            var issuerManager = new IssuerManager(monitor, issuerRepositoryStorage);
 
 			var targetingTypeManager = new TargetingTypeManager(
 				new Core.ManagingTargetingTypes.InfoDeserializer(),
@@ -92,7 +96,7 @@ namespace TopDown.Web.Controllers
 
 			var ttgbsbvrCache = new CacheStorage<Core.ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepository>(cache);
 			var ttgbsbvrManager = new Core.ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepositoryManager(ttgbsbvrCache);
-
+            
 			var repositoryManager = new Core.RepositoryManager(
 				monitor,
 				basketManager,
@@ -104,7 +108,8 @@ namespace TopDown.Web.Controllers
 				benchmarkManager,
 				portfolioSecurityTargetRepositoryManager,
 				bpstManager,
-				ttgbsbvrManager
+				ttgbsbvrManager,
+                issuerManager
 			);
 
 			if (shouldDrop)

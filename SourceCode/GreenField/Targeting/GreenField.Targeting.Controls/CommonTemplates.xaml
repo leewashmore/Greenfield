@@ -107,6 +107,8 @@
         </StackPanel>
     </DataTemplate>
 
+    <local:BooleanToColorConverter x:Key="booleanToColorConverter" />
+
 
     <DataTemplate x:Key="editableValueTemplate">
 
@@ -117,6 +119,8 @@
                 HorizontalContentAlignment="Stretch"
                 TextAlignment="Right"
                 Style="{StaticResource specialTextBox}"
+                BorderBrush="{Binding IsModified, Converter={StaticResource booleanToColorConverter}}"
+                BorderThickness="2"
             >
             <i:Interaction.Behaviors>
                 <local:CommentBehavior>
@@ -128,7 +132,10 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" IsHitTestVisible="False" HorizontalAlignment="Stretch">Comment</TextBlock>
+                                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                                        <TextBlock IsHitTestVisible="False" HorizontalAlignment="Stretch">Comment</TextBlock>
+                                        <HyperlinkButton Content="History" Command="{Binding Data.RequestCommentsCommand}"></HyperlinkButton>
+                                    </StackPanel>
                                     <TextBox Grid.Row="1" Text="{Binding Data.Comment, Mode=TwoWay}"
                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
                                         <i:Interaction.Behaviors>

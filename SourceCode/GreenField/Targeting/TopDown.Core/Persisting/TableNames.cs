@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TopDown.Core.Persisting
 {
-    public static class TableNames
+    public class TableNames : Aims.Core.Persisting.TableNames
     {
         public const String BU_PORTFOLIO_SECURITY_TARGET_CHANGESET = "BU_PORTFOLIO_SECURITY_TARGET_CHANGESET";
         public const String BU_PORTFOLIO_SECURITY_TARGET_CHANGE = "BU_PORTFOLIO_SECURITY_TARGET_CHANGE";
@@ -33,10 +33,8 @@ namespace TopDown.Core.Persisting
 		public const String BASKET_PORTFOLIO_SECURITY_TARGET_CHANGESET = "BASKET_PORTFOLIO_SECURITY_TARGET_CHANGESET";
 		public const String BGA_PORTFOLIO_SECURITY_TARGET = "BGA_PORTFOLIO_SECURITY_TARGET";
         public const String TARGETING_CALCULATION = "TARGETING_CALCULATION";
-		public const String GF_SECURITY_BASEVIEW = "GF_SECURITY_BASEVIEW";
 		public const String REGION_BASKET = "REGION_BASKET";
 		public const String COUNTRY_BASKET = "COUNTRY_BASKET";
-		public const String PORTFOLIO = "PORTFOLIO";
         public const String USERNAME_FUND = "USERNAME_FUND";
 		public const String TARGETING_TYPE_BASKET_PORTFOLIO_TARGET = "TARGETING_TYPE_BASKET_PORTFOLIO_TARGET";
 		public const String BGA_PORTFOLIO_SECURITY_FACTOR = "BGA_PORTFOLIO_SECURITY_FACTOR";

@@ -13,13 +13,11 @@ using System.Windows.Data;
 using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-
+using System.Linq;
 namespace GreenField.Targeting.Controls.BasketTargets
 {
     public class DataGridDynamicColumnsBehavior : Behavior<DataGrid>, IValueConverter
     {
-        public const Int32 NumberOfColumnsToKeep = 3;
-
         public static readonly DependencyProperty AreEmptyColumnShownProperty = DependencyProperty.Register("AreEmptyColumnShown", typeof(Boolean), typeof(DataGridDynamicColumnsBehavior), new PropertyMetadata(WhenAreEmptyColumnShownChanges));
         public Boolean AreEmptyColumnShown
         {
@@ -56,12 +54,15 @@ namespace GreenField.Targeting.Controls.BasketTargets
             var grid = this.AssociatedObject;
             var castedColumn = column as Column;
             if (castedColumn == null) return false;
+
+            var badColumnsCount = grid.Columns.Count(x => x is Column);
+            var goodColumnsCount = grid.Columns.Count - badColumnsCount;
             
             foreach (var something in grid.ItemsSource)
             {
                 var data = something as BtSecurityModel;
                 if (data == null) continue;
-                var index = column.DisplayIndex - NumberOfColumnsToKeep;
+                var index = column.DisplayIndex - goodColumnsCount;
                 if (data.PortfolioTargets[index].PortfolioTarget.EditedValue.HasValue)
                 {
                     return false;
@@ -86,15 +87,25 @@ namespace GreenField.Targeting.Controls.BasketTargets
             set { this.SetValue(CellTemplateProperty, value); }
         }
 
+        public static readonly DependencyProperty HeaderStyleProperty = DependencyProperty.Register("HeaderStyle", typeof(Style), typeof(DataGridDynamicColumnsBehavior), new PropertyMetadata(null));
+        public Style HeaderStyle
+        {
+            get { return (Style)this.GetValue(HeaderStyleProperty); }
+            set { this.SetValue(HeaderStyleProperty, value); }
+        }
+
         protected static void OnColumnsDataChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var self = dependencyObject as DataGridDynamicColumnsBehavior;
             var grid = self.AssociatedObject;
 
-            for (var index = grid.Columns.Count - 1; index >= NumberOfColumnsToKeep; index--)
+            for (var index = grid.Columns.Count - 1; index >= 0; index--)
             {
                 var column = grid.Columns[index];
-                grid.Columns.RemoveAt(index);
+                if (column is Column)
+                {
+                    grid.Columns.RemoveAt(index);
+                }
             }
 
             var portfolios = e.NewValue as ObservableCollection<BtPorfolioModel>;
@@ -104,13 +115,15 @@ namespace GreenField.Targeting.Controls.BasketTargets
                 foreach (var portfolio in portfolios)
                 {
                     var column = new Column();
-                    column.Header = portfolio.BroadGlobalActivePortfolio.Name;
+                    var index = grid.Columns.Count - indexOffset;
                     column.Binding = new Binding(String.Empty)
                     {
-                        ConverterParameter = grid.Columns.Count - indexOffset,
+                        ConverterParameter = index,
                         Converter = self
                     };
                     column.CellTemplate = self.CellTemplate;
+                    column.HeaderStyle = self.HeaderStyle;
+                    column.Header = new HeaderInfo { Name = portfolio.BroadGlobalActivePortfolio.Name, Index = index };
                     grid.Columns.Add(column);
                 }
             }

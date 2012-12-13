@@ -12,7 +12,7 @@ using TopDown.Core.ManagingCountries;
 using TopDown.Core.ManagingBaskets;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingCalculations;
-using TopDown.Core.Sql;
+using Aims.Core.Sql;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingTaxonomies;
 using TopDown.Core.ManagingBenchmarks;
@@ -20,30 +20,25 @@ using TopDown.Core.ManagingBpt;
 using TopDown.Core.Overlaying;
 using TopDown.Core.ManagingPst;
 using TopDown.Core.Gadgets.PortfolioPicker;
+using Aims.Core;
 
 namespace GreenField.Targeting.Backend.Helpers
 {
-    public class TargetingServiceHostFactory : ServiceHostFactory
+    public class TargetingServiceHostFactory :Aims.Data.Server.ServiceHostFactoryBase<TargetingOperations,  GreenField.Targeting.Server.FacadeSettings>
     {
-        private readonly GreenField.Targeting.Server.FacadeSettings settings;
-
-        public TargetingServiceHostFactory()
+        protected override Server.FacadeSettings CreateSettings()
         {
-            this.settings = CreateFacadeSettings(
+            var settings = CreateFacadeSettings(
                 ConfigurationSettings.AimsConnectionString,
                 ConfigurationSettings.ShouldDropRepositoriesOnEachReload
             );
+            return settings;
         }
 
-        protected override ServiceHost CreateServiceHost(Type serviceType,
-            Uri[] baseAddresses)
+        protected override TargetingOperations CreateService(Server.FacadeSettings settings)
         {
-            var serviceHost = new TargetingServiceHost(
-                this.settings,
-                serviceType,
-                baseAddresses
-            );
-            return serviceHost;
+            var service = new TargetingOperations(settings);
+            return service;
         }
 
         private class CacheStorage<TValue> : IStorage<TValue>
@@ -102,11 +97,11 @@ namespace GreenField.Targeting.Backend.Helpers
             var calculationRequester = new CalculationRequester();
             var monitor = new Monitor();
             var securitySerializer = new SecurityToJsonSerializer(countrySerializer);
-            var securityManager = new SecurityManager(securityRepositoryCache, securitySerializer, monitor);
+            var securityManager = new SecurityManager(securityRepositoryCache, monitor);
 
             IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
             var connectionFactory = new SqlConnectionFactory(connectionString);
-            var portfolioRepositoryCache = new CacheStorage<TopDown.Core.ManagingPortfolios.PortfolioRepository>(cache);
+            var portfolioRepositoryCache = new CacheStorage<PortfolioRepository>(cache);
             var portfolioSerialzer = new TopDown.Core.ManagingPortfolios.PortfolioToJsonSerializer(securitySerializer);
             var portfolioManager = new TopDown.Core.ManagingPortfolios.PortfolioManager(
                 portfolioRepositoryCache,
@@ -148,6 +143,9 @@ namespace GreenField.Targeting.Backend.Helpers
             var ttgbsbvrCache = new CacheStorage<TopDown.Core.ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepository>(cache);
             var ttgbsbvrManager = new TopDown.Core.ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepositoryManager(ttgbsbvrCache);
 
+            var issuerRepositoryStorage = new CacheStorage<IssuerRepository>(cache);
+            var issuerManager = new IssuerManager(monitor, issuerRepositoryStorage);
+
             var repositoryManager = new TopDown.Core.RepositoryManager(
                 monitor,
                 basketManager,
@@ -159,7 +157,8 @@ namespace GreenField.Targeting.Backend.Helpers
                 benchmarkManager,
                 portfolioSecurityTargetRepositoryManager,
                 bpstManager,
-                ttgbsbvrManager
+                ttgbsbvrManager,
+                issuerManager
             );
 
             if (shouldDropRepositories)
@@ -274,7 +273,7 @@ namespace GreenField.Targeting.Backend.Helpers
             );
             var bpstBenchmarkInitializer = new TopDown.Core.ManagingBpst.BenchmarkInitializer();
             var bpstModelValidator = new TopDown.Core.ManagingBpst.ModelValidator();
-            var bpstModelChangeDetector =new TopDown.Core.ManagingBpst.ModelChangeDetector(new TopDown.Core.ManagingBpst.ModelExpressionTraverser());
+            var bpstModelChangeDetector = new TopDown.Core.ManagingBpst.ModelChangeDetector(new TopDown.Core.ManagingBpst.ModelExpressionTraverser());
             var bpstModelManager = new TopDown.Core.ManagingBpst.ModelManager(
                 new TopDown.Core.ManagingBpst.ModelToJsonSerializer(expressionSerializer, securitySerializer),
                 bpstModelBuilder,

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.Persisting;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBenchmarks
 {
@@ -17,7 +18,7 @@ namespace TopDown.Core.ManagingBenchmarks
             this.benchmarkRepositoryStorage = benchmarkRepositoryStorage;
         }
 
-        public BenchmarkRepository ClaimBenchmarkRepository(IOnDamand<IDataManager> ondemandManager, DateTime timestamp)
+        public BenchmarkRepository ClaimBenchmarkRepository(IOnDemand<IDataManager> ondemandManager, DateTime timestamp)
         {
 			var stored = this.benchmarkRepositoryStorage[BenchmarkManagerCacheKey];
 			if (stored == null)

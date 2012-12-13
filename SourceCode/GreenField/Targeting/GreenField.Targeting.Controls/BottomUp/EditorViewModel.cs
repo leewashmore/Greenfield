@@ -6,6 +6,7 @@ using System.Diagnostics;
 using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
 using System.Windows;
+using Aims.Data.Client;
 
 namespace GreenField.Targeting.Controls.BottomUp
 {
@@ -53,7 +54,7 @@ namespace GreenField.Targeting.Controls.BottomUp
             this.RequestRecalculating();
         }
 
-        public void RequestRecalculating()
+        public override void RequestRecalculating()
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
@@ -88,7 +89,10 @@ namespace GreenField.Targeting.Controls.BottomUp
 
         private void RegisterInChangeWatcher(BuRootModel model)
         {
-            model.Items.ForEach(x => x.Target.RegisterForBeingWatched(this));
+            foreach (var security in model.Items)
+            {
+                security.Target.RegisterForBeingWatched(this, null);
+            }
         }
 
         public void GetNotifiedAboutChangedValue(EditableExpressionModel model)
@@ -107,9 +111,9 @@ namespace GreenField.Targeting.Controls.BottomUp
         /// </summary>
         internal BuRootModel KeptRootModel { get; private set; }
 
-        public void AddSecurity(SecurityModel security)
+        public void AddSecurity(ISecurity security)
         {
-            this.KeptRootModel.SecurityToBeAddedOpt = security;
+            this.KeptRootModel.SecurityToBeAddedOpt = security.ToSecurityModel();
             this.RequestRecalculating();
         }
 

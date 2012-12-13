@@ -5,10 +5,11 @@
       <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive" />
-      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
-      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" />
-      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" />
-      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" />
+      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" />
+      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" />
+      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" />
+      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BasketTargets" />
+      <xsd:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BottomUp" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IFacade_GetBroadGlobalActive_InputMessage">
@@ -95,6 +96,18 @@
   <wsdl:message name="IFacade_SaveBottomUp_OutputMessage">
     <wsdl:part name="parameters" element="tns:SaveBottomUpResponse" />
   </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForBasketPortfolioSecurityTarget_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForBasketPortfolioSecurityTarget" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForBasketPortfolioSecurityTarget_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForBasketPortfolioSecurityTargetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForTargetingTypeBasketBase_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForTargetingTypeBasketBase" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForTargetingTypeBasketBase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForTargetingTypeBasketBaseResponse" />
+  </wsdl:message>
   <wsdl:portType name="IFacade">
     <wsdl:operation name="GetBroadGlobalActive">
       <wsdl:input wsaw:Action="http://tempuri.org/IFacade/GetBroadGlobalActive" message="tns:IFacade_GetBroadGlobalActive_InputMessage" />
@@ -151,6 +164,14 @@
     <wsdl:operation name="SaveBottomUp">
       <wsdl:input wsaw:Action="http://tempuri.org/IFacade/SaveBottomUp" message="tns:IFacade_SaveBottomUp_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IFacade/SaveBottomUpResponse" message="tns:IFacade_SaveBottomUp_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForBasketPortfolioSecurityTarget">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForBasketPortfolioSecurityTarget" message="tns:IFacade_RequestCommentsForBasketPortfolioSecurityTarget_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForBasketPortfolioSecurityTargetResponse" message="tns:IFacade_RequestCommentsForBasketPortfolioSecurityTarget_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForTargetingTypeBasketBase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBase" message="tns:IFacade_RequestCommentsForTargetingTypeBasketBase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBaseResponse" message="tns:IFacade_RequestCommentsForTargetingTypeBasketBase_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="TargetingOperations" type="tns:IFacade">
@@ -274,6 +295,24 @@
     </wsdl:operation>
     <wsdl:operation name="SaveBottomUp">
       <soap:operation soapAction="http://tempuri.org/IFacade/SaveBottomUp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForBasketPortfolioSecurityTarget">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RequestCommentsForBasketPortfolioSecurityTarget" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForTargetingTypeBasketBase">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBase" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

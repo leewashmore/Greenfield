@@ -8,10 +8,11 @@ using TopDown.Core.Persisting;
 using TopDown.Core.ManagingCountries;
 using TopDown.Core.ManagingSecurities;
 using Aims.Expressions;
+using Aims.Core;
 
 namespace TopDown.Core
 {
-    public static class No
+    public class No : Aims.Core.No
     {
         private readonly static IEnumerable<IModelDifference> modelDifference = new IModelDifference[] { };
         public static IEnumerable<IModelDifference> ModelDifference
@@ -51,8 +52,6 @@ namespace TopDown.Core
         private readonly static IDumpWriter dumpWriter = new _DumpWriter();
         public static IDumpWriter DumpWriter { get { return dumpWriter; } }
 
-        private readonly static IEnumerable<ISecurity> securities = new ISecurity[] { };
-        public static IEnumerable<ISecurity> Securities { [DebuggerStepThrough]get { return securities; } }
 
         private readonly static String[] isoCodes = new String[] { };
         public static IEnumerable<String> IsoCodes { [DebuggerStepThrough]get { return isoCodes; } }

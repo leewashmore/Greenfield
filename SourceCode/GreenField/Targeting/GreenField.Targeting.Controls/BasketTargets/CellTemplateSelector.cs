@@ -17,7 +17,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
     {
         public DataTemplate DefaultTemplate { get; set; }
         public DataTemplate SecurityTemplate { get; set; }
-        public DataTemplate RootTemplate { get; set; }
+        public DataTemplate TotalTemplate { get; set; }
 
         public Object Convert(Object value, Type targetType, Object parameter, System.Globalization.CultureInfo culture)
         {
@@ -54,7 +54,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
 
             public void Resolve(BtRootModel model)
             {
-                this.Result = this.selector.RootTemplate;
+                this.Result = this.selector.TotalTemplate;
             }
         }
 

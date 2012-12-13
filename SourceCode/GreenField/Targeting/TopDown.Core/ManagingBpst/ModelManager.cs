@@ -13,6 +13,7 @@ using TopDown.Core.ManagingPortfolios;
 using Aims.Expressions;
 using TopDown.Core.ManagingBenchmarks;
 using TopDown.Core.ManagingCalculations;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpst
 {
@@ -161,12 +162,16 @@ namespace TopDown.Core.ManagingBpst
             ).ToArray();
 
             var baseTotalExpression = this.modelBuilder.CreateBaseTotalExpression(securityModels);
+            var benchmarkTotalExpression = this.modelBuilder.CreateBenchmarkTotalExpression(securityModels);
+            var baseActiveTotalExpression = this.modelBuilder.CreateBaseActiveTotalExpression(securityModels);
             var core = new CoreModel(
                 targetingTypeGroup,
                 basket,
                 portfolios,
                 securityModels,
-                baseTotalExpression
+                baseTotalExpression,
+                benchmarkTotalExpression,
+                baseActiveTotalExpression
             );
             return core;
         }
@@ -215,12 +220,13 @@ namespace TopDown.Core.ManagingBpst
             }
 
             var benchmarkExpression = this.modelBuilder.CreateBenchmarkExpression();
-
+            var baseActiveExpression = this.modelBuilder.CreateBaseActiveExpression(baseExpression, benchmarkExpression);
             var securityModel = new SecurityModel(
                 security,
                 baseExpression,
                 benchmarkExpression,
-                portfolioTargets
+                portfolioTargets,
+                baseActiveExpression
             );
             return securityModel;
         }
@@ -232,7 +238,7 @@ namespace TopDown.Core.ManagingBpst
             TargetingTypeGroupRepository targetingTypeGroupRepository,
             BasketRepository basketRepository,
 			PortfolioRepository portfolioRepository,
-            IOnDamand<IDataManager> ondemandManager
+            IOnDemand<IDataManager> ondemandManager
         )
         {
             using (var reader = new JsonReader(new Newtonsoft.Json.JsonTextReader(new StringReader(bpstModelAsJson))))

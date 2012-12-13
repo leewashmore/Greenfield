@@ -32,6 +32,8 @@ namespace GreenField.Targeting.Server.BasketTargets
                 this.SerializePortfolios(model.Core.Portfolios, ticket),
                 this.SerializeSecurities(model.Core.Securities, ticket),
                 this.serializer.SerializeNullableExpression(model.Core.BaseTotal, ticket),
+                this.serializer.SerializeExpression(model.Core.BenchmarkTotal, ticket),
+                this.serializer.SerializeNullableExpression(model.Core.BaseActiveTotal, ticket),
                 this.modelChangeDetector.HasChanged(model),
                 model.BenchmarkDate
             );
@@ -50,7 +52,8 @@ namespace GreenField.Targeting.Server.BasketTargets
                 this.serializer.SerializeSecurityOnceResolved(model.Security),
                 this.serializer.SerializeEditableExpression(model.Base),
                 this.serializer.SerializeExpression(model.Benchmark, ticket),
-                this.SerializePortfolioTargets(model.PortfolioTargets, model.Base)
+                this.SerializePortfolioTargets(model.PortfolioTargets, model.Base),
+                this.serializer.SerializeNullableExpression(model.BaseActive, ticket)
             );
             return result;
         }

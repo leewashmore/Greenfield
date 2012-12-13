@@ -21,7 +21,7 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             EditableExpressionModel baseExpression,
             NullableExpressionModel baseActiveExpression,
             ExpressionModel benchmarkExpression,
-            Server.CountryModel country,
+            Aims.Data.Server.CountryModel country,
             ExpressionModel overlayExpression,
             EditableExpressionModel portfolioAdjustmentExpression,
             NullableExpressionModel portfolioScaledExpression,
@@ -50,7 +50,7 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
         public ExpressionModel Benchmark { get; private set; }
 
         [DataMember]
-        public Server.CountryModel Country { get; private set; }
+        public Aims.Data.Server.CountryModel Country { get; private set; }
 
         [DataMember]
         public ExpressionModel Overlay { get; set; }

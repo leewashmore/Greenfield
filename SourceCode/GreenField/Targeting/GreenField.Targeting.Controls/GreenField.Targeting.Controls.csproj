@@ -76,9 +76,7 @@
     <Reference Include="System.Windows.Controls.Input">
       <HintPath>..\Binaries\Lib\System.Windows.Controls.Input.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Input.Toolkit">
-      <HintPath>..\Binaries\Lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Layout.Toolkit">
       <HintPath>..\Binaries\Lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
     </Reference>
@@ -101,7 +99,6 @@
   <ItemGroup>
     <Compile Include="AcknowledgeableCommunicationStateModelBase.cs" />
     <Compile Include="ApplicationException.cs" />
-    <Compile Include="AutoCompleteBoxWithEnterWorking.cs" />
     <Compile Include="BasketTargets\BasketPickedEvent.cs" />
     <Compile Include="BasketTargets\CellTemplateSelector.cs" />
     <Compile Include="BasketTargets\Converter, RootModelToPortfolioTargetTotal.cs" />
@@ -112,6 +109,8 @@
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BasketTargets\EditorViewModel.cs" />
+    <Compile Include="BasketTargets\HeaderInfo.cs" />
+    <Compile Include="BasketTargets\ObservableCollection.cs" />
     <Compile Include="BasketTargets\PickerView.xaml.cs">
       <DependentUpon>PickerView.xaml</DependentUpon>
     </Compile>
@@ -121,8 +120,11 @@
     </Compile>
     <Compile Include="BasketTargets\RootViewModel.cs" />
     <Compile Include="BasketTargets\Converter, SecurityModelToPortfolioTarget.cs" />
+    <Compile Include="BooleanToColorConverter.cs" />
+    <Compile Include="BottomUp\SecurityPickerClientFactory.cs" />
+    <Compile Include="ISecurity.cs" />
+    <Compile Include="BasketTargets\SecurityPickerClientFactory.cs" />
     <Compile Include="BasketTargets\Settings.cs" />
-    <Compile Include="BasketTargets\ValueTraverser.cs" />
     <Compile Include="Behavior, Watermark.cs" />
     <Compile Include="BottomUp\BottomUpPortfolioPickedEvent.cs" />
     <Compile Include="BottomUp\EditorView.xaml.cs">
@@ -130,10 +132,12 @@
     </Compile>
     <Compile Include="BottomUp\EditorViewModel.cs" />
     <Compile Include="BottomUp\LineTemplateSelector.cs" />
+    <Compile Include="CommunicationState.cs" />
     <Compile Include="DemoData.cs" />
     <Compile Include="DemoView.xaml.cs">
       <DependentUpon>DemoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OnlyErrorCommunicationState.cs" />
     <Compile Include="PickerViewModelBase.cs" />
     <Compile Include="BottomUp\PortfolioPickerView.xaml.cs">
       <DependentUpon>PortfolioPickerView.xaml</DependentUpon>
@@ -158,19 +162,13 @@
     <Compile Include="CommunicationStateModel, Loading.cs" />
     <Compile Include="CommunicationStateModel, Issues.cs" />
     <Compile Include="Behavior, ReevaluateSelectedItem.cs" />
-    <Compile Include="SecurityPickedEvent.cs" />
-    <Compile Include="SecurityPickerViewModel.cs" />
     <Compile Include="BottomUp\Settings.cs" />
     <Compile Include="BroadGlobalActive\DefaultExpandCollapseStateSetter.cs" />
     <Compile Include="BroadGlobalActive\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BroadGlobalActive\Settings.cs" />
-    <Compile Include="Behavior, AutoCompleteAsync.cs" />
     <Compile Include="Behavior, Comment.cs" />
-    <Compile Include="SecurityPickerView.xaml.cs">
-      <DependentUpon>SecurityPickerView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TargetingModule.cs" />
     <Compile Include="ValidatedResultWindow.xaml.cs">
       <DependentUpon>ValidatedResultWindow.xaml</DependentUpon>
@@ -178,8 +176,6 @@
     <Compile Include="Behavior, EditableValue.cs" />
     <Compile Include="InteractiveCommand.cs" />
     <Compile Include="IViewModel, ComeAndGo.cs" />
-    <Compile Include="AutoCompleteResponse.cs" />
-    <Compile Include="AutoCompleteRequest.cs" />
     <Compile Include="CommunicatingViewModelBase.cs" />
     <Compile Include="DefaultClientFactory.cs" />
     <Compile Include="Converter, Echo.cs" />
@@ -251,10 +247,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SecurityPickerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ValidatedResultWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -275,6 +267,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aims.Controls\Aims.Controls.csproj">
+      <Project>{23635A8E-745F-45D6-A4C7-31B67DA175E2}</Project>
+      <Name>Aims.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aims.Data.Client\Aims.Data.Client.csproj">
+      <Project>{69F03A94-4D45-4682-9796-648C752F95E6}</Project>
+      <Name>Aims.Data.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GreenField.Targeting.Client\GreenField.Targeting.Client.csproj">
       <Project>{60EFAB0A-6A13-4E2A-90DF-064DCB6526D2}</Project>
       <Name>GreenField.Targeting.Client</Name>

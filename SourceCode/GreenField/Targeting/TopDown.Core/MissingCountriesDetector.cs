@@ -7,6 +7,7 @@ using TopDown.Core.Overlaying;
 using TopDown.Core.ManagingBenchmarks;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingPortfolios;
+using Aims.Core;
 
 namespace TopDown.Core
 {

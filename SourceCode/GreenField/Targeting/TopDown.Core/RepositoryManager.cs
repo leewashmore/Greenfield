@@ -7,18 +7,16 @@ using TopDown.Core.Persisting;
 using TopDown.Core.Gadgets.PortfolioPicker;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingBaskets;
+using Aims.Core;
 
 namespace TopDown.Core
 {
-    public class RepositoryManager
+    public class RepositoryManager : Aims.Core.RepositoryManager
     {
         private IMonitor monitor;
         private ManagingBaskets.BasketManager basketManager;
         private ManagingTargetingTypes.TargetingTypeManager targetingTypeManager;
-        private ManagingCountries.CountryManager countryManager;
         private ManagingTaxonomies.TaxonomyManager taxonomyManager;
-        private ManagingSecurities.SecurityManager securityManager;
-        private ManagingPortfolios.PortfolioManager portfolioManager;
         private ManagingBenchmarks.BenchmarkManager benchmarkManager;
         private ManagingPst.RepositoryManager portfolioSecurityTargerManager;
         private ManagingBpst.BasketSecurityPortfolioTargetRepositoryManager bpstManager;
@@ -29,23 +27,22 @@ namespace TopDown.Core
             IMonitor monitor,
             ManagingBaskets.BasketManager basketManager,
             ManagingTargetingTypes.TargetingTypeManager targetingTypeManager,
-            ManagingCountries.CountryManager countryManager,
+            CountryManager countryManager,
             ManagingTaxonomies.TaxonomyManager taxonomyManager,
-            ManagingSecurities.SecurityManager securityManager,
-            ManagingPortfolios.PortfolioManager portfolioManager,
+            SecurityManager securityManager,
+            PortfolioManager portfolioManager,
             ManagingBenchmarks.BenchmarkManager benchmarkManager,
             ManagingPst.RepositoryManager portfolioSecurityTargerManager,
             ManagingBpst.BasketSecurityPortfolioTargetRepositoryManager bpstManager,
-            ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepositoryManager ttgbsbvrManager
+            ManagingBpst.TargetingTypeGroupBasketSecurityBaseValueRepositoryManager ttgbsbvrManager,
+            IssuerManager issuerManager
         )
+            : base(monitor, countryManager, securityManager, portfolioManager, issuerManager)
         {
             this.monitor = monitor;
             this.taxonomyManager = taxonomyManager;
-            this.countryManager = countryManager;
             this.targetingTypeManager = targetingTypeManager;
             this.basketManager = basketManager;
-            this.securityManager = securityManager;
-            this.portfolioManager = portfolioManager;
             this.benchmarkManager = benchmarkManager;
             this.portfolioSecurityTargerManager = portfolioSecurityTargerManager;
             this.bpstManager = bpstManager;
@@ -53,7 +50,7 @@ namespace TopDown.Core
         }
 
 
-        public ManagingBaskets.BasketRepository ClaimBasketRepository(IOnDamand<IDataManager> ondemandManager)
+        public ManagingBaskets.BasketRepository ClaimBasketRepository(IOnDemand<IDataManager> ondemandManager)
         {
             return this.basketManager.ClaimBasketRepository(ondemandManager, delegate
             {
@@ -70,7 +67,7 @@ namespace TopDown.Core
             monitor);
         }
 
-        public ManagingTargetingTypes.TargetingTypeGroupRepository ClaimTargetingTypeGroupRepository(IOnDamand<IDataManager> ondemandManager)
+        public ManagingTargetingTypes.TargetingTypeGroupRepository ClaimTargetingTypeGroupRepository(IOnDemand<IDataManager> ondemandManager)
         {
             return this.targetingTypeManager.ClaimTargetingTypeGroupRepository(ondemandManager, delegate
             {
@@ -85,7 +82,7 @@ namespace TopDown.Core
             });
         }
 
-        public ManagingTargetingTypes.TargetingTypeRepository ClaimTargetingTypeRepository(IOnDamand<IDataManager> ondemandManager)
+        public ManagingTargetingTypes.TargetingTypeRepository ClaimTargetingTypeRepository(IOnDemand<IDataManager> ondemandManager)
         {
             return this.targetingTypeManager.ClaimTargetingTypeRepository(ondemandManager, delegate
             {
@@ -110,7 +107,7 @@ namespace TopDown.Core
 
 
 
-        public ManagingTaxonomies.TaxonomyRepository ClaimTaxonomyRepository(IOnDamand<IDataManager> ondemandManager)
+        public ManagingTaxonomies.TaxonomyRepository ClaimTaxonomyRepository(IOnDemand<IDataManager> ondemandManager)
         {
             return this.taxonomyManager.ClaimTaxonomyRepository(ondemandManager, delegate
             {
@@ -134,29 +131,7 @@ namespace TopDown.Core
         }
 
 
-        public ManagingSecurities.SecurityRepository ClaimSecurityRepository(IOnDamand<IDataManager> ondemandManager)
-        {
-            return this.securityManager.ClaimSecurityRepository(
-                ondemandManager,
-                delegate
-                {
-                    return this.ClaimCountryRepository(ondemandManager);
-                }
-            );
-        }
-        public ManagingSecurities.SecurityRepository ClaimSecurityRepository(IDataManager manager)
-        {
-            return this.securityManager.ClaimSecurityRepository(
-                manager,
-                delegate
-                {
-                    return this.ClaimCountryRepository(manager);
-                }
-            );
-        }
-
-
-        public ManagingBenchmarks.BenchmarkRepository ClaimBenchmarkRepository(IOnDamand<IDataManager> ondemandManager, DateTime benchmarkDate)
+        public ManagingBenchmarks.BenchmarkRepository ClaimBenchmarkRepository(IOnDemand<IDataManager> ondemandManager, DateTime benchmarkDate)
         {
             return this.benchmarkManager.ClaimBenchmarkRepository(ondemandManager, benchmarkDate);
 
@@ -166,36 +141,6 @@ namespace TopDown.Core
             return this.benchmarkManager.ClaimBenchmarkRepository(manager, benchmarkDate);
         }
 
-
-        public ManagingCountries.CountryRepository ClaimCountryRepository(IOnDamand<IDataManager> ondemandManager)
-        {
-            return this.countryManager.ClaimCountryRepository(ondemandManager);
-        }
-        public ManagingCountries.CountryRepository ClaimCountryRepository(IDataManager manager)
-        {
-            return this.countryManager.ClaimCountryRepository(manager);
-        }
-
-        public ManagingPortfolios.PortfolioRepository ClaimPortfolioRepository(IOnDamand<IDataManager> ondemandManager)
-        {
-            return this.portfolioManager.ClaimPortfolioRepository(
-                ondemandManager,
-                delegate
-                {
-                    return this.ClaimSecurityRepository(ondemandManager);
-                }
-            );
-        }
-        public ManagingPortfolios.PortfolioRepository ClaimPortfolioRepository(IDataManager manager)
-        {
-            return this.portfolioManager.ClaimPortfolioRepository(
-                manager,
-                delegate
-                {
-                    return this.ClaimSecurityRepository(manager);
-                }
-            );
-        }
 
         public ManagingPst.PortfolioSecurityTargetRepository ClaimPortfolioSecurityTargetRepository(
             BuPortfolioSecurityTargetChangesetInfo latestPstChangesetInfo,
@@ -264,17 +209,9 @@ namespace TopDown.Core
         {
             this.targetingTypeManager.DropTargetingTypeGroupRepository();
         }
-        public void DropCountryRepository()
-        {
-            this.countryManager.DropCountryRepository();
-        }
         public void DropBasketRespoitory()
         {
             this.basketManager.DropBasketRespoitory();
-        }
-        public void DropPortfolioRepository()
-        {
-            this.portfolioManager.DropPortfolioRepository();
         }
         public void DropPortfolioSecurityTargetRepository()
         {
@@ -293,8 +230,9 @@ namespace TopDown.Core
             this.ttgbsbvrManager.DropRepository();
         }
 
-        public void DropEverything()
+        public override void DropEverything()
         {
+            base.DropEverything();
             this.DropTaxonomyRepository();
             this.DropTargetingTypeRepository();
             this.DropTargetingTypeGroupRepository();

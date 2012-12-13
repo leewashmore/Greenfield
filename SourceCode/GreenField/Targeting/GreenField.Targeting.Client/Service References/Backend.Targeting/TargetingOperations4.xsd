@@ -1,30 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalActive.Picker" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ArrayOfBgaTargetingTypePickerModel">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:35583/Services/TargetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" />
+  <xs:complexType name="NullableExpressionModel">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="BgaTargetingTypePickerModel" nillable="true" type="tns:BgaTargetingTypePickerModel" />
+      <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfBgaTargetingTypePickerModel" nillable="true" type="tns:ArrayOfBgaTargetingTypePickerModel" />
-  <xs:complexType name="BgaTargetingTypePickerModel">
+  <xs:element name="NullableExpressionModel" nillable="true" type="tns:NullableExpressionModel" />
+  <xs:complexType name="ArrayOfIssueModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="IssueModel" nillable="true" type="tns:IssueModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfIssueModel" nillable="true" type="tns:ArrayOfIssueModel" />
+  <xs:complexType name="IssueModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IssueModel" nillable="true" type="tns:IssueModel" />
+  <xs:complexType name="EditableExpressionModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DefaultValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DisplayValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EditedValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="InitialValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EditableExpressionModel" nillable="true" type="tns:EditableExpressionModel" />
+  <xs:complexType name="ExpressionModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
+      <xs:element minOccurs="0" name="Value" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExpressionModel" nillable="true" type="tns:ExpressionModel" />
+  <xs:complexType name="CountryBasketModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasketModel">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="Country" nillable="true" type="q1:CountryModel" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CountryBasketModel" nillable="true" type="tns:CountryBasketModel" />
+  <xs:complexType name="BasketModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BasketModel" nillable="true" type="tns:BasketModel" />
+  <xs:complexType name="RegionBasketModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasketModel">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="Countries" nillable="true" type="q2:ArrayOfCountryModel" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RegionBasketModel" nillable="true" type="tns:RegionBasketModel" />
+  <xs:complexType name="ChangesetModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CalculationId" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ChangesetModel" nillable="true" type="tns:ChangesetModel" />
+  <xs:complexType name="TargetingTypeModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Portfolios" nillable="true" type="tns:ArrayOfBgaPortfolioPickerModel" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="BgaTargetingTypePickerModel" nillable="true" type="tns:BgaTargetingTypePickerModel" />
-  <xs:complexType name="ArrayOfBgaPortfolioPickerModel">
+  <xs:element name="TargetingTypeModel" nillable="true" type="tns:TargetingTypeModel" />
+  <xs:complexType name="TargetingTypeGroupModel">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="BgaPortfolioPickerModel" nillable="true" type="tns:BgaPortfolioPickerModel" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfBgaPortfolioPickerModel" nillable="true" type="tns:ArrayOfBgaPortfolioPickerModel" />
-  <xs:complexType name="BgaPortfolioPickerModel">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BenchmarkIdOpt" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TargetingTypes" nillable="true" type="tns:ArrayOfTargetingTypeModel" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="BgaPortfolioPickerModel" nillable="true" type="tns:BgaPortfolioPickerModel" />
+  <xs:element name="TargetingTypeGroupModel" nillable="true" type="tns:TargetingTypeGroupModel" />
+  <xs:complexType name="ArrayOfTargetingTypeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TargetingTypeModel" nillable="true" type="tns:TargetingTypeModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTargetingTypeModel" nillable="true" type="tns:ArrayOfTargetingTypeModel" />
+  <xs:complexType name="ArrayOfCommentModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CommentModel" nillable="true" type="tns:CommentModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCommentModel" nillable="true" type="tns:ArrayOfCommentModel" />
+  <xs:complexType name="CommentModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CommentModel" nillable="true" type="tns:CommentModel" />
 </xs:schema>

@@ -279,6 +279,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aims.Core\Aims.Core.csproj">
+      <Project>{426D597E-4276-41D2-BE84-D1229501A51A}</Project>
+      <Name>Aims.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GreenField.DAL\GreenField.DAL.csproj">
       <Project>{602A785A-F8AC-47D5-9AA9-6DE52A97C74A}</Project>
       <Name>GreenField.DAL</Name>
@@ -290,6 +294,10 @@
     <ProjectReference Include="..\GreenField.Logging\GreenField.Logging.csproj">
       <Project>{9052AA7D-8CC7-49C3-AB84-ECB114E6BCA0}</Project>
       <Name>GreenField.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IssuerShares\Aims.Data.Server\Aims.Data.Server.csproj">
+      <Project>{243C3D53-8C51-469E-88E1-9623A3D8292B}</Project>
+      <Name>Aims.Data.Server</Name>
     </ProjectReference>
     <ProjectReference Include="..\Targeting\GreenField.Targeting.Server\GreenField.Targeting.Server.csproj">
       <Project>{6E829E28-5519-4627-960D-12DD9162D156}</Project>

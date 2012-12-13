@@ -164,26 +164,42 @@ namespace GreenField.Gadgets.Views
 
             #region Report Name/Security and Date
             Table headertable = new Table();
+
+            TableRow headerLogoRow = new TableRow();
+            TableCell headerLogoCell = new TableCell()
+            {
+                VerticalAlignment = RadVerticalAlignment.Top
+            };
+
+            Paragraph headerLogoParagraph = new Paragraph() { TextAlignment = RadTextAlignment.Right };
+            Stream stream = Application.GetResourceStream(new Uri(@"/GreenField.Gadgets;component/Images/AshmoreEMMLogo.png", UriKind.RelativeOrAbsolute)).Stream;
+            Size size = new Size(160, 30);
+            ImageInline image = new ImageInline(stream, size, "png");
+            headerLogoParagraph.Inlines.Add(image);
+
+            headerLogoCell.Blocks.Add(headerLogoParagraph);
+            headerLogoRow.Cells.Add(headerLogoCell);
+            headertable.Rows.Add(headerLogoRow);
+
             TableRow headerRow = new TableRow();            
             TableCell headerCell = new TableCell()
             {
                 VerticalAlignment = RadVerticalAlignment.Center
             };
             Paragraph headerParagraph = new Paragraph() { TextAlignment = RadTextAlignment.Center };
-            Span span = new Span()
-            {
-                Text = "Finstat Report",
-                FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 12,
-                FontWeight = FontWeights.Bold
-            };
-            headerParagraph.Inlines.Add(span);
-
             if (!String.IsNullOrWhiteSpace(this.txtIssueName.Text))
             {
-                Span span2 = new Span()
+                Span span = new Span()
                 {                    
                     Text = FormattingSymbolLayoutBox.LINE_BREAK + this.txtIssueName.Text,
+                    FontFamily = new System.Windows.Media.FontFamily("Arial"),
+                    FontSize = 12,
+                    FontWeight = FontWeights.Bold
+                };
+                headerParagraph.Inlines.Add(span);
+                Span span2 = new Span()
+                {
+                    Text = FormattingSymbolLayoutBox.LINE_BREAK + DateTime.Today.ToString("d"),
                     FontFamily = new System.Windows.Media.FontFamily("Arial"),
                     FontSize = 10,
                     FontWeight = FontWeights.Bold
@@ -226,7 +242,7 @@ namespace GreenField.Gadgets.Views
                 {
                     Text = "Country :",
                     FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                    FontSize = 6,
+                    FontSize = 10,
                     FontWeight = FontWeights.Bold
                 };
             inputSection1Part1Paragraph.Inlines.Add(inputSection1Part1Item1Span);
@@ -234,7 +250,7 @@ namespace GreenField.Gadgets.Views
             {
                 Text = String.IsNullOrWhiteSpace(this.txtCountry.Text) ? "-" : this.txtCountry.Text,
                 FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 6
+                FontSize = 10
             };
             inputSection1Part1Paragraph.Inlines.Add(inputSection1Part2Item1Span);
             #endregion
@@ -244,7 +260,7 @@ namespace GreenField.Gadgets.Views
                 {
                     Text = FormattingSymbolLayoutBox.LINE_BREAK + "Sector :",
                     FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                    FontSize = 6,
+                    FontSize = 10,
                     FontWeight = FontWeights.Bold
                 };
             inputSection1Part1Paragraph.Inlines.Add(inputSection1Part1Item2Span);
@@ -252,7 +268,7 @@ namespace GreenField.Gadgets.Views
             {
                 Text = String.IsNullOrWhiteSpace(this.txtSector.Text) ? "-" : this.txtSector.Text,
                 FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 6
+                FontSize = 10
             };
             inputSection1Part1Paragraph.Inlines.Add(inputSection1Part2Item2Span); 
             #endregion
@@ -262,7 +278,7 @@ namespace GreenField.Gadgets.Views
                 {
                     Text = FormattingSymbolLayoutBox.LINE_BREAK + "Industry :",
                     FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                    FontSize = 6,
+                    FontSize = 10,
                     FontWeight = FontWeights.Bold
                 };
             inputSection1Part1Paragraph.Inlines.Add(inputSection1Part1Item3Span);
@@ -270,7 +286,7 @@ namespace GreenField.Gadgets.Views
             {
                 Text = String.IsNullOrWhiteSpace(this.txtIndustry.Text) ? "-" : this.txtIndustry.Text,
                 FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 6
+                FontSize = 10
             };
             inputSection1Part1Paragraph.Inlines.Add(inputSection1Part2Item3Span); 
             #endregion
@@ -280,7 +296,7 @@ namespace GreenField.Gadgets.Views
             {
                 Text = FormattingSymbolLayoutBox.LINE_BREAK + "Sub-Industry :",
                 FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 6,
+                FontSize = 10,
                 FontWeight = FontWeights.Bold
             };
             inputSection1Part1Paragraph.Inlines.Add(inputSection1Part1Item4Span);
@@ -288,7 +304,7 @@ namespace GreenField.Gadgets.Views
             {
                 Text = String.IsNullOrWhiteSpace(this.txtSubIndustry.Text) ? "-" : this.txtSubIndustry.Text,
                 FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 6
+                FontSize = 10
             };
             inputSection1Part1Paragraph.Inlines.Add(inputSection1Part2Item4Span);
 	        #endregion
@@ -299,6 +315,9 @@ namespace GreenField.Gadgets.Views
             inputSection1Cell.Blocks.Add(inputSection1Table);
             inputRow.Cells.Add(inputSection1Cell);           
             #endregion 
+
+            //dummy Cell to create distance between input sections
+            inputRow.Cells.Add(new TableCell());            
 
             #region Input Section 2
             TableCell inputSection2Cell = new TableCell()
@@ -319,7 +338,7 @@ namespace GreenField.Gadgets.Views
                 {
                     Text = "Ticker :",
                     FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                    FontSize = 6,
+                    FontSize = 10,
                     FontWeight = FontWeights.Bold
                 };
             inputSection2Part1Paragraph.Inlines.Add(inputSection2Part1Item1Span);
@@ -327,7 +346,7 @@ namespace GreenField.Gadgets.Views
             {
                 Text = String.IsNullOrWhiteSpace(this.txtTicker.Text) ? "-" : this.txtTicker.Text,
                 FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 6
+                FontSize = 10
             };
             inputSection2Part1Paragraph.Inlines.Add(inputSection2Part2Item1Span); 
             #endregion
@@ -337,7 +356,7 @@ namespace GreenField.Gadgets.Views
                 {
                     Text = FormattingSymbolLayoutBox.LINE_BREAK + "Currency :",
                     FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                    FontSize = 6,
+                    FontSize = 10,
                     FontWeight = FontWeights.Bold
                 };
             inputSection2Part1Paragraph.Inlines.Add(inputSection2Part1Item2Span);
@@ -345,7 +364,7 @@ namespace GreenField.Gadgets.Views
             {
                 Text = String.IsNullOrWhiteSpace(this.txtCurrency.Text) ? "-" : this.txtCurrency.Text,
                 FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 6
+                FontSize = 10
             };
             inputSection2Part1Paragraph.Inlines.Add(inputSection2Part2Item2Span); 
             #endregion
@@ -355,7 +374,7 @@ namespace GreenField.Gadgets.Views
                 {
                     Text = FormattingSymbolLayoutBox.LINE_BREAK + "Primary Analyst :",
                     FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                    FontSize = 6,
+                    FontSize = 10,
                     FontWeight = FontWeights.Bold
                 };
             inputSection2Part1Paragraph.Inlines.Add(inputSection2Part1Item3Span);
@@ -363,7 +382,7 @@ namespace GreenField.Gadgets.Views
             {
                 Text = String.IsNullOrWhiteSpace(this.txtPrimaryAnalyst.Text) ? "-" : this.txtPrimaryAnalyst.Text,
                 FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 6
+                FontSize = 10
             };
             inputSection2Part1Paragraph.Inlines.Add(inputSection2Part2Item3Span); 
             #endregion
@@ -373,7 +392,7 @@ namespace GreenField.Gadgets.Views
                 {
                     Text = FormattingSymbolLayoutBox.LINE_BREAK + "Industry Analyst :",
                     FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                    FontSize = 6,
+                    FontSize = 10,
                     FontWeight = FontWeights.Bold
                 };
             inputSection2Part1Paragraph.Inlines.Add(inputSection2Part1Item4Span);
@@ -381,7 +400,7 @@ namespace GreenField.Gadgets.Views
             {
                 Text = String.IsNullOrWhiteSpace(this.txtIndustryAnalyst.Text) ? "-" : this.txtIndustryAnalyst.Text,
                 FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 6
+                FontSize = 10
             };
             inputSection2Part1Paragraph.Inlines.Add(inputSection2Part2Item4Span); 
             #endregion
@@ -391,30 +410,6 @@ namespace GreenField.Gadgets.Views
             inputSection2Table.Rows.Add(inputSection2Row);
             inputSection2Cell.Blocks.Add(inputSection2Table);
             inputRow.Cells.Add(inputSection2Cell);
-            #endregion 
-
-            #region Input Section 3
-            TableCell inputSection3Cell = new TableCell()
-            {
-                VerticalAlignment = RadVerticalAlignment.Top
-            };
-
-            Paragraph inputSection3Paragraph = new Paragraph() { TextAlignment = RadTextAlignment.Center };
-            Stream stream = Application.GetResourceStream(new Uri(@"/GreenField.Gadgets;component/Images/AshmoreEMMLogo.png", UriKind.RelativeOrAbsolute)).Stream;
-            Size size = new Size(160, 30);
-            ImageInline image = new ImageInline(stream, size, "png");
-            inputSection3Paragraph.Inlines.Add(image);
-
-            Span inputSection3Span = new Span()
-            {
-                Text = FormattingSymbolLayoutBox.LINE_BREAK + DateTime.Today.ToString("d"),
-                FontFamily = new System.Windows.Media.FontFamily("Arial"),
-                FontSize = 6,
-                FontWeight = FontWeights.Bold
-            };
-            inputSection3Paragraph.Inlines.Add(inputSection3Span);
-            inputSection3Cell.Blocks.Add(inputSection3Paragraph);
-            inputRow.Cells.Add(inputSection3Cell);
             #endregion 
 
             inputtable.Rows.Add(inputRow);

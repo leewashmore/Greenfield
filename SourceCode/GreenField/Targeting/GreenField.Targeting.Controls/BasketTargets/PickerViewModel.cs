@@ -13,6 +13,7 @@ using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace GreenField.Targeting.Controls.BasketTargets
 {
@@ -58,12 +59,19 @@ namespace GreenField.Targeting.Controls.BasketTargets
                         }
                         else
                         {
-                            this.Baskets = value.Baskets;
+                            var sortedBaskets = this.SortBaskets(value.Baskets);
+                            this.Baskets = sortedBaskets;
                         }
                         this.RaisePropertyChanged(() => this.SelectedTargetingTypeGroup);
                     }
                 }
             }
+        }
+
+        public ObservableCollection<BtPickerBasketModel> SortBaskets(ObservableCollection<BtPickerBasketModel> baskets)
+        {
+            var result = Helper.ToObservableCollection(baskets.OrderBy(x => x.Name));
+            return result;
         }
 
         public ObservableCollection<BtPickerBasketModel> Baskets

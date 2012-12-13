@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingPortfolios;
+using Aims.Core;
 
 namespace TopDown.Core.Overlaying
 {

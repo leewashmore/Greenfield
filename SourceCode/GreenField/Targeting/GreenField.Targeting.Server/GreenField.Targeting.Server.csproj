@@ -75,6 +75,7 @@
     <Compile Include="BottomUp\PickerModel.cs" />
     <Compile Include="BottomUp\Serializer.cs" />
     <Compile Include="BroadGlobalActive\Deserializer.cs" />
+    <Compile Include="Model, Comment.cs" />
     <Compile Include="Deserializer.cs" />
     <Compile Include="BroadGlobalActive\Model, Country.cs" />
     <Compile Include="BroadGlobalActive\Model, BasketCountry.cs" />
@@ -92,28 +93,29 @@
     <Compile Include="BroadGlobalActive\Picker\PortfolioModel.cs" />
     <Compile Include="BroadGlobalActive\Picker\TargetingTypeModel.cs" />
     <Compile Include="Model, Changeset.cs" />
-    <Compile Include="Model, Fund.cs" />
     <Compile Include="Model, Basket, Region.cs" />
-    <Compile Include="Model, Security.cs" />
     <Compile Include="Model, TargetingType.cs" />
-    <Compile Include="Model, BroadGlobalActivePortfolio.cs" />
-    <Compile Include="Model, Country.cs" />
     <Compile Include="Model, Expression, Editable.cs" />
     <Compile Include="Facade.cs" />
     <Compile Include="IFacade.cs" />
-    <Compile Include="Model, BottomUpPortfolio.cs" />
     <Compile Include="BroadGlobalActive\Model, FactorItem.cs" />
     <Compile Include="BroadGlobalActive\Model, Factor.cs" />
     <Compile Include="Model, Issue.cs" />
-    <Compile Include="Model, Portfolio.cs" />
     <Compile Include="BroadGlobalActive\Model, Root.cs" />
-    <Compile Include="Model, Security, Company.cs" />
     <Compile Include="BroadGlobalActive\Serializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SerializerBase.cs" />
+    <Compile Include="Serializer.cs" />
     <Compile Include="TargetingTypeGroupModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Aims.Core\Aims.Core.csproj">
+      <Project>{426D597E-4276-41D2-BE84-D1229501A51A}</Project>
+      <Name>Aims.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\IssuerShares\Aims.Data.Server\Aims.Data.Server.csproj">
+      <Project>{243C3D53-8C51-469E-88E1-9623A3D8292B}</Project>
+      <Name>Aims.Data.Server</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TopDown.Core\TopDown.Core.csproj">
       <Project>{BB8D9BF9-12E7-40FF-BAE5-845D8927BB59}</Project>
       <Name>TopDown.Core</Name>

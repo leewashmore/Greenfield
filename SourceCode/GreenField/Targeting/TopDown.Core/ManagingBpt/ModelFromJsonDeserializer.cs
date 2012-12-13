@@ -8,6 +8,7 @@ using TopDown.Core.Persisting;
 using TopDown.Core.ManagingSecurities;
 using TopDown.Core.ManagingPortfolios;
 using TopDown.Core.ManagingTargetingTypes;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpt
 {

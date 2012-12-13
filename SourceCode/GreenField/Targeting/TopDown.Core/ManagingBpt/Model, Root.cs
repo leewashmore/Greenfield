@@ -8,6 +8,7 @@ using TopDown.Core.Overlaying;
 using Aims.Expressions;
 using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingPortfolios;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpt
 {

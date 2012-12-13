@@ -42,13 +42,16 @@ namespace GreenField.Targeting.Server.BasketTargets
                 securities.Add(security);
             }
             var baseTotalExpression = this.modelBuilder.CreateBaseTotalExpression(securities);
-
+            var benchmarkTotalExpression = this.modelBuilder.CreateBenchmarkTotalExpression(securities);
+            var baseActiveTotalExpression = this.modelBuilder.CreateBaseActiveTotalExpression(securities);
             var core = new Core.CoreModel(
                 targetingTypeGroup,
                 this.deserializer.DeserializeBasket(model.Basket.Id),
                 this.DeserializePortfolios(model.Portfolios, securities),
                 securities,
-                baseTotalExpression
+                baseTotalExpression,
+                benchmarkTotalExpression,
+                baseActiveTotalExpression
             );
 
             var result = new Core.RootModel(
@@ -61,13 +64,14 @@ namespace GreenField.Targeting.Server.BasketTargets
         }
 
         private Core.SecurityModel DeserializeAdditionalSecurity(
-            Server.SecurityModel securityModel,
+            Aims.Data.Server.SecurityModel securityModel,
             TopDown.Core.ManagingTargetingTypes.TargetingTypeGroup targetingTypeGroup,
             TopDown.Core.ManagingBenchmarks.BenchmarkRepository benchmarkRepository
         )
         {
                 var baseExpression = this.modelBuilder.CreateBaseExpression();
                 var benchmarkExpression = this.modelBuilder.CreateBenchmarkExpression();
+                var baseActiveExpression = this.modelBuilder.CreateBaseActiveExpression(baseExpression, benchmarkExpression);
                 var result = new Core.SecurityModel(
                     this.deserializer.DeserializeSecurity(securityModel),
                     baseExpression,
@@ -75,7 +79,8 @@ namespace GreenField.Targeting.Server.BasketTargets
                     targetingTypeGroup.GetBgaPortfolios().Select(bgaPortfolio => new Core.PortfolioTargetModel(
                         bgaPortfolio,
                         this.modelBuilder.CreatePortfolioTargetExpression(bgaPortfolio.Name))
-                    ).ToList()
+                    ).ToList(),
+                    baseActiveExpression
                 );
                 this.benchmarkInitializer.InitializeSecurity(result, benchmarkRepository);
             return result;
@@ -112,11 +117,13 @@ namespace GreenField.Targeting.Server.BasketTargets
             this.deserializer.PopulateUnchangableExpression(benchmarkExpression, model.Benchmark);
 
             var portfolioTargets = this.DeserializePortfolioTargets(model.PortfolioTargets);
+            var baseActiveExpression = this.modelBuilder.CreateBaseActiveExpression(baseExpression, benchmarkExpression);
             var result = new Core.SecurityModel(
                 this.deserializer.DeserializeSecurity(model.Security),
                 baseExpression,
                 benchmarkExpression,
-                portfolioTargets
+                portfolioTargets,
+                baseActiveExpression
             );
             return result;
         }
