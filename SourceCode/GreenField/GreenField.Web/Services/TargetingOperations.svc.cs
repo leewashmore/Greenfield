@@ -169,5 +169,16 @@ namespace GreenField.Web.Services
                 return this.facade.SaveBottomUp(model);
             });
         }
+
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForBasketPortfolioSecurityTarget(int basketId, string broadGlbalActivePortfolioId, string securityId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
