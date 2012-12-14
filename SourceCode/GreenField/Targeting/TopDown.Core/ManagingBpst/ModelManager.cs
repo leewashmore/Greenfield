@@ -113,8 +113,17 @@ namespace TopDown.Core.ManagingBpst
                 core,
                 benchmarkDate
             );
-            var benchmarkRepository = this.repositoryManager.ClaimBenchmarkRepository(manager, benchmarkDate);
-            this.benchmarkInitializer.InitializeCore(result.Core, benchmarkRepository);
+
+            if (!String.IsNullOrEmpty(targetingTypeGroup.BenchmarkIdOpt))
+            {
+                var benchmarkRepository = this.repositoryManager.ClaimBenchmarkRepository(manager, benchmarkDate);
+                this.benchmarkInitializer.InitializeCore(
+                    basket,
+                    targetingTypeGroup.BenchmarkIdOpt,
+                    result.Core,
+                    benchmarkRepository
+                );
+            }
 
             return result;
         }

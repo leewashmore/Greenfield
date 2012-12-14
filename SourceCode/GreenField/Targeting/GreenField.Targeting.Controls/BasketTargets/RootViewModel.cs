@@ -106,6 +106,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
 
         public override void Activate()
         {
+            
             this.PickerViewModel.RequestData();
         }
 

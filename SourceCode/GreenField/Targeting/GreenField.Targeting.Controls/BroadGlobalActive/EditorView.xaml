@@ -95,7 +95,8 @@
                 BasketCountryTemplate="{StaticResource editableValueTemplate}"
                 BasketRegionTemplate="{StaticResource editableValueTemplate}"
                 DefaultTemplate="{StaticResource valueTemplate}"
-            />
+            >
+            </mine:GlobalResidentToDataTemplateConverter>
 
             <DataTemplate x:Key="portfolioAdjustmentTemplate">
                 <ContentControl Content="{Binding PortfolioAdjustment}" ContentTemplate="{StaticResource editableValueTemplate}" Style="{StaticResource editableValueContentStyle}" />

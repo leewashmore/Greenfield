@@ -18,6 +18,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
 
         public IEnumerable<IGlobeResident> Traverse(BgaRootModel model)
         {
+            model.InitializeWhenDeSerializationIsDone();
             var result = new List<IGlobeResident>();
 
             this.TraverseGlobe(model.Globe, result);
@@ -29,7 +30,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             var globe = model.Globe;
 
             var totalLine = new TotalLineModel(
-                globe.Base,
+                model.GrandTotal,
                 globe.Benchmark,
                 globe.Overlay,
                 globe.PortfolioAdjustment,
