@@ -225,9 +225,18 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.KeptRootModel = null;
         }
 
+
+        private EditableExpressionModel lastExpressionModel;
         public void GetNotifiedAboutChangedValue(EditableExpressionModel model)
         {
+            if (this.lastExpressionModel != null)
+            {
+                this.lastExpressionModel.IsLastEdited = false;
+            }
+
+            model.IsLastEdited = true;
             this.ResetRecalculationTimer();
+            this.lastExpressionModel = model;
         }
     }
 }

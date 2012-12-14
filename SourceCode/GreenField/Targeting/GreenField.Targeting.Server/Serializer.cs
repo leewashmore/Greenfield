@@ -98,7 +98,8 @@ namespace GreenField.Targeting.Server
                 expression.InitialValue,
                 expression.EditedValue,
                 expression.Comment,
-                this.SerializeValidationIssues(expression.Validate())
+                this.SerializeValidationIssues(expression.Validate()),
+                expression.LastOneModified
             );
             return result;
         }

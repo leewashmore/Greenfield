@@ -28,6 +28,7 @@
       <xs:element minOccurs="0" name="DisplayValue" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="EditedValue" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="InitialValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IsLastEdited" type="xs:boolean" />
       <xs:element minOccurs="0" name="Issues" nillable="true" type="tns:ArrayOfIssueModel" />
     </xs:sequence>
   </xs:complexType>

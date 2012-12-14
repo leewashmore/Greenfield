@@ -169,6 +169,7 @@
     </Compile>
     <Compile Include="BroadGlobalActive\Settings.cs" />
     <Compile Include="Behavior, Comment.cs" />
+    <Compile Include="Behavior, SetFocus.cs" />
     <Compile Include="TargetingModule.cs" />
     <Compile Include="ValidatedResultWindow.xaml.cs">
       <DependentUpon>ValidatedResultWindow.xaml</DependentUpon>
