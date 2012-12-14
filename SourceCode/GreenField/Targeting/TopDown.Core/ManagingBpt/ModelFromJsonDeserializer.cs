@@ -91,10 +91,12 @@ namespace TopDown.Core.ManagingBpt
                     return this.DeserializeOverlay(reader, securityRepository, portfolioRepository);
                 });
 
-                var cash = new CashModel(computations.CashBase, computations.CashScaled);
-                var portfolioScaledTotal = this.modelBuilder.CreatePortfolioScaledTotalExpression(cash.Scaled, globe.PortfolioScaled);
+                var cash = this.modelBuilder.CreateCash(computations);
+                var portfolioScaledTotal = this.modelBuilder.CreateAddExpression(cash.PortfolioScaled, globe.PortfolioScaled);
                 var targetingType = targetingTypeRepository.GetTargetingType(targetingTypeId);
                 var portfolio = portfolioRepository.GetBroadGlobalActivePortfolio(portfolioId);
+                var trueExposureGrandTotal = this.modelBuilder.CreateAddExpression(cash.TrueExposure, globe.TrueExposure);
+                var trueActiveGrandTotal = this.modelBuilder.CreateAddExpression(cash.TrueActive, globe.TrueActive);
 
                 var result = new RootModel(
                     targetingType,
@@ -107,6 +109,8 @@ namespace TopDown.Core.ManagingBpt
                     cash,
                     factors,
                     portfolioScaledTotal,
+                    trueExposureGrandTotal,
+                    trueActiveGrandTotal,
                     benchamrkDate
                 );
                 return result;

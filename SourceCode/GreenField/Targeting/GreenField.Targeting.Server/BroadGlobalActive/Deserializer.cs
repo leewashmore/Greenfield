@@ -34,9 +34,10 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             residents.AddRange(this.DeserializeGlobeResidents(model.Globe.Residents, computations));
 
 			var factors = this.DeserializeOverlayFactors(model.Factors);
-            var cash = new Core.ManagingBpt.CashModel(computations.CashBase, computations.CashScaled);
-			var portfolioScaledTotalExpression = this.modelBuilder.CreatePortfolioScaledTotalExpression(cash.Scaled, globe.PortfolioScaled);
-
+            var cash = this.modelBuilder.CreateCash(computations);
+            var portfolioScaledGrandTotalExpression = this.modelBuilder.CreateAddExpression(cash.PortfolioScaled, globe.PortfolioScaled);
+            var trueExposureGrandTotal = this.modelBuilder.CreateAddExpression(cash.TrueExposure, globe.TrueExposure);
+            var trueActiveGrandTotal = this.modelBuilder.CreateAddExpression(cash.TrueActive, globe.TrueActive);
             var result = new Core.ManagingBpt.RootModel(
                 this.deserializer.DeserializeTargetingType(model.TargetingType),
                 this.deserializer.DeserializeBroadGlobalActivePorfolio(model.BroadGlobalActiveProtfolio),
@@ -47,7 +48,9 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
                 globe,
                 cash,
 				factors,
-				portfolioScaledTotalExpression,
+				portfolioScaledGrandTotalExpression,
+                trueExposureGrandTotal,
+                trueActiveGrandTotal,
                 model.BenchmarkDate
             );
             return result;

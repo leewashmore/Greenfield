@@ -73,17 +73,17 @@ namespace TopDown.Core.ManagingBenchmarks
             return found;
         }
 
-        public BenchmarkInfo TryGetBySecurity(ISecurity security)
+        public IEnumerable<BenchmarkInfo> TryGetBySecurity(ISecurity security)
         {
             var ticker = security.Ticker;
             if (this.benchmarkByTicker.Contains(ticker))
             {
                 var benchmarks = this.benchmarkByTicker[ticker];
-                return benchmarks.OrderByDescending(x => x.PortfolioDate).FirstOrDefault();
+                return benchmarks.OrderByDescending(x => x.PortfolioDate);
             }
             else
             {
-                return null;
+                return new BenchmarkInfo[] {};
             }
 
         }

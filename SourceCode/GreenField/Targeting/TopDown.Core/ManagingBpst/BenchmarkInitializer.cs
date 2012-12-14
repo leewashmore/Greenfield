@@ -30,8 +30,9 @@ namespace TopDown.Core.ManagingBpst
         )
         {
             var totalOpt = this.TryGetTotalByBasketOnceResolved(basket, benchmarkId, benchmarkRepository);
-            
-            var benchmarkInfoOpt = benchmarkRepository.TryGetBySecurity(security.Security);
+            var benchmarks = benchmarkRepository.TryGetBySecurity(security.Security);
+            var benchmarkInfoOpt = benchmarks.FirstOrDefault(x => x.BenchmarkId == benchmarkId);
+
             if (benchmarkInfoOpt != null && benchmarkInfoOpt.BenchmarkWeight.HasValue && benchmarkInfoOpt.BenchmarkId == benchmarkId)
             {
                 if (totalOpt.HasValue)

@@ -23,20 +23,26 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
 
             this.TraverseGlobe(model.Globe, result);
 
-            var cashLine = new CashLineModel(model.Cash.Base, model.Cash.Scaled);
+            var cash = model.Cash;
+            var cashLine = new CashLineModel(
+                cash.Base,
+                cash.Scaled,
+                cash.TrueExposure,
+                cash.TrueActive
+            );
             cashLine.Parent = model.Globe;
             result.Add(cashLine);
 
             var globe = model.Globe;
 
             var totalLine = new TotalLineModel(
-                model.GrandTotal,
+                model.BaseGrandTotal,
                 globe.Benchmark,
                 globe.Overlay,
                 globe.PortfolioAdjustment,
-                globe.PortfolioScaled,
-                globe.TrueExposure,
-                globe.TrueActive
+                model.PortfolioScaledGrandTotal,
+                model.TrueExposureGrandTotal,
+                model.TrueActiveGrandTotal
             );
             totalLine.Parent = model.Globe;
             result.Add(totalLine);
@@ -140,6 +146,12 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             {
                 resident.Parent = model;
                 this.TraverseBasketCountry(resident, result);
+            }
+
+            foreach (var resident in model.UnsavedBasketCountries)
+            {
+                resident.Parent = model;
+                this.TraverseUnsavedBasketCountry(resident, result);
             }
         }
 

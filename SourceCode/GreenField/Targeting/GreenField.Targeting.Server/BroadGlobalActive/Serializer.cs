@@ -35,7 +35,10 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
                 this.SerializeGlobe(model.Globe, ticket),
                 this.SerializeCash(model.Cash, ticket),
                 model.BenchmarkDate,
-                hasBeenChanged
+                hasBeenChanged,
+                this.serializer.SerializeNullableExpression(model.PortfolioScaledGrandTotal, ticket),
+                this.serializer.SerializeNullableExpression(model.TrueExposureGrandTotal, ticket),
+                this.serializer.SerializeNullableExpression(model.TrueActiveGrandTotal, ticket)
             );
             result.Factors = this.SerializeFactors(model.Factors);
 
@@ -46,7 +49,9 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
         {
             var result = new CashModel(
                 this.serializer.SerializeNullableExpression(model.Base, ticket),
-                this.serializer.SerializeNullableExpression(model.Scaled, ticket)
+                this.serializer.SerializeNullableExpression(model.PortfolioScaled, ticket),
+                this.serializer.SerializeNullableExpression(model.TrueExposure, ticket),
+                this.serializer.SerializeNullableExpression(model.TrueActive, ticket)
             );
             return result;
         }

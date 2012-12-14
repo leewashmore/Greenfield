@@ -22,7 +22,7 @@ namespace TopDown.Core.ManagingBpt
             var result = new List<IExpression>();
             this.TraverseGlobe(root.Globe, result);
             this.TraverseOverlay(root.Factors, result);
-            result.Add(root.PortfolioScaledTotal);
+            result.Add(root.PortfolioScaledGrandTotal);
             return result;
         }
 

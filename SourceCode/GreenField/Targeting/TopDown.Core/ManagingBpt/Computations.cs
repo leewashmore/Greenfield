@@ -17,7 +17,7 @@ namespace TopDown.Core.ManagingBpt
         public IModelFormula<IModel, Decimal?> BaseLessOverlayFormula { get; set; }
         public IExpression<Decimal?> BaseLessOverlayTotal { get; set; }
         public IModelFormula<IModel, Decimal?> PortfolioScaledFormula { get; set; }
-        public IExpression<Decimal?> CashScaled { get; set; }
+        public IExpression<Decimal?> CashPortfolioScaled { get; set; }
         public IModelFormula<IModel, Decimal?> BaseActiveFormula { get; set; }
         public IExpression<Decimal?> CashBase { get; set; }
         public IExpression<Decimal?> CashRescaledBase { get; set; }

@@ -112,11 +112,13 @@ namespace TopDown.Core.ManagingBpt
                 residents.Add(resident);
             }
 
-            var cash = new CashModel(computations.CashBase, computations.CashScaled);
-            var portfolioScaledTotal = this.modelBuilder.CreatePortfolioScaledTotalExpression(cash.Scaled, globe.PortfolioScaled);
+            var cash = this.modelBuilder.CreateCash(computations);
+            var portfolioScaledGrandTotal = this.modelBuilder.CreateAddExpression(cash.PortfolioScaled, globe.PortfolioScaled);
+            var trueExposureGrandTotal = this.modelBuilder.CreateAddExpression(cash.TrueExposure, globe.TrueExposure);
+            var trueActiveGrandTotal = this.modelBuilder.CreateAddExpression(cash.TrueActive, globe.TrueActive);
             var portfolio = portfolioRepository.GetBroadGlobalActivePortfolio(portfolioId);
             var benchmarkDate = manager.GetLastestDateWhichBenchmarkDataIsAvialableOn();
-
+            
             result = new RootModel(
                 targetingType,
                 portfolio,
@@ -127,7 +129,9 @@ namespace TopDown.Core.ManagingBpt
                 globe,
                 cash,
                 overlayModel,
-                portfolioScaledTotal,
+                portfolioScaledGrandTotal,
+                trueExposureGrandTotal,
+                trueActiveGrandTotal,
                 benchmarkDate
             );
 

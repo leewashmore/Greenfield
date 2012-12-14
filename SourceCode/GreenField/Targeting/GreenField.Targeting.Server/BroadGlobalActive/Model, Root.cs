@@ -27,7 +27,10 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             GlobeModel globe,
             CashModel cash,
             DateTime benchmarkDate,
-            Boolean isModified
+            Boolean isModified,
+            NullableExpressionModel portfolioScaledGranTotal,
+            NullableExpressionModel trueExposureGrandTotal,
+            NullableExpressionModel trueActiveGrandTotal
         )
         {
             this.TargetingType = targetingType;
@@ -40,6 +43,9 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             this.Cash = cash;
             this.IsModified = isModified;
             this.BenchmarkDate = benchmarkDate;
+            this.PortfolioScaledGrandTotal = portfolioScaledGranTotal;
+            this.TrueExposureGrandTotal = trueExposureGrandTotal;
+            this.TrueActiveGrandTotal = trueActiveGrandTotal;
         }
 
         [DataMember]
@@ -74,5 +80,14 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
 
         [DataMember]
         public Boolean IsModified { get; set; }
+
+        [DataMember]
+        public NullableExpressionModel PortfolioScaledGrandTotal { get; set; }
+
+        [DataMember]
+        public NullableExpressionModel TrueExposureGrandTotal { get; set; }
+
+        [DataMember]
+        public NullableExpressionModel TrueActiveGrandTotal { get; set; }
     }
 }

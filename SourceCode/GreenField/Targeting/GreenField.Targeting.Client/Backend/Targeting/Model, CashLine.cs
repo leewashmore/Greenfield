@@ -14,19 +14,32 @@ namespace TopDown.FacingServer.Backend.Targeting
 {
     public class CashLineModel : GlobeResident
     {
-        public CashLineModel(NullableExpressionModel baseExpression, NullableExpressionModel portfolioScaledExpression)
+        [DebuggerStepThrough]
+        public CashLineModel(
+            NullableExpressionModel baseExpression,
+            NullableExpressionModel portfolioScaledExpression,
+            NullableExpressionModel trueExposureExpression,
+            NullableExpressionModel trueActiveExpression
+        )
         {
             this.Base = baseExpression;
             this.PortfolioScaled = portfolioScaledExpression;
+            this.TrueExposure = trueExposureExpression;
+            this.TrueActive = trueActiveExpression;
         }
+
+        public NullableExpressionModel Base { get; private set; }
+
+        public NullableExpressionModel PortfolioScaled { get; private set; }
+
+        public NullableExpressionModel TrueExposure { get; private set; }
+
+        public NullableExpressionModel TrueActive { get; private set; }
 
         [DebuggerStepThrough]
         public override void Accept(IGlobeResidentResolver resolver)
         {
             resolver.Resolve(this);
         }
-
-        public NullableExpressionModel Base { get; private set; }
-        public NullableExpressionModel PortfolioScaled { get; private set; }
     }
 }

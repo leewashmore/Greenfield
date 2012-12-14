@@ -28,10 +28,10 @@ namespace TopDown.FacingServer.Backend.Targeting
             {
                 value = null;
             }
-            this.GrandTotal = new NullableExpressionModel { Value = value, Issues = new System.Collections.ObjectModel.ObservableCollection<IssueModel>() };
+            this.BaseGrandTotal = new NullableExpressionModel { Value = value, Issues = new System.Collections.ObjectModel.ObservableCollection<IssueModel>() };
 
         }
 
-        public NullableExpressionModel GrandTotal { get; set; }
+        public NullableExpressionModel BaseGrandTotal { get; set; }
     }
 }

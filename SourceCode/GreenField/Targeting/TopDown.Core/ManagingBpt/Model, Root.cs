@@ -25,7 +25,9 @@ namespace TopDown.Core.ManagingBpt
             GlobeModel globe,
             CashModel cash,
             Overlaying.RootModel factors,
-            IExpression<Decimal?> portfolioScaledTotalExpression,
+            IExpression<Decimal?> portfolioScaledGrandTotalExpression,
+            IExpression<Decimal?> trueExposureGrandTotal,
+            IExpression<Decimal?> trueActiveGrandTotal,
             DateTime benchmarkDate
         )
         {
@@ -38,7 +40,9 @@ namespace TopDown.Core.ManagingBpt
             this.Globe = globe;
             this.Cash = cash;
             this.Factors = factors;
-            this.PortfolioScaledTotal = portfolioScaledTotalExpression;
+            this.PortfolioScaledGrandTotal = portfolioScaledGrandTotalExpression;
+            this.TrueExposureGrandTotal = trueExposureGrandTotal;
+            this.TrueActiveGrandTotal = trueActiveGrandTotal;
             this.BenchmarkDate = benchmarkDate;
         }
 
@@ -51,7 +55,9 @@ namespace TopDown.Core.ManagingBpt
         public GlobeModel Globe { get; private set; }
         public CashModel Cash { get; private set; }
         public Overlaying.RootModel Factors { get; private set; }
-        public IExpression<Decimal?> PortfolioScaledTotal { get; private set; }
+        public IExpression<Decimal?> PortfolioScaledGrandTotal { get; private set; }
         public DateTime BenchmarkDate { get; private set; }
+        public IExpression<Decimal?> TrueExposureGrandTotal { get; private set; }
+        public IExpression<Decimal?> TrueActiveGrandTotal { get; private set; }
     }
 }

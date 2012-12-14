@@ -26,7 +26,7 @@ namespace GreenField.Targeting.Controls
             {
                 indent = 0;
             }
-            var result = new Thickness(indent, 0, 0, 0);
+            var result = new Thickness(5 + indent, 4, 0, 4);
             return result;
         }
 
