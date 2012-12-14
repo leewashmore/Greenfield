@@ -105,7 +105,11 @@
   <xs:element name="ArrayOfCommentModel" nillable="true" type="tns:ArrayOfCommentModel" />
   <xs:complexType name="CommentModel">
     <xs:sequence>
+      <xs:element minOccurs="0" name="After" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Before" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CommentModel" nillable="true" type="tns:CommentModel" />

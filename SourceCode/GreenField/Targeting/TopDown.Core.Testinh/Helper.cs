@@ -238,6 +238,8 @@ namespace TopDown.Core.Testing
 				basketRenderer
 			);
 
+            var commentManager = new Core.ManagingComments.CommentManager();
+
 			var facade = new Facade(
 				connectionFactory,
 				dataManagerFactory,
@@ -251,7 +253,8 @@ namespace TopDown.Core.Testing
 				basketPickerManager,
 				bpstModelManager,
 				portfolioManager,
-				hopper
+				hopper,
+                commentManager
 			);
 
 			return facade;

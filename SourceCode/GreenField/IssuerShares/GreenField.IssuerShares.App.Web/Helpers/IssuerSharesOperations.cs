@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using GreenField.IssuerShares.App.Web.Services;
 using GreenField.IssuerShares.Server;
+using Aims.Core.Sql;
+using System.Configuration;
+using GreenField.IssuerShares.Core;
 
 namespace GreenField.IssuerShares.App.Web
 {
@@ -11,7 +14,13 @@ namespace GreenField.IssuerShares.App.Web
     {
         protected override IFacade CreateSettings()
         {
-            var facade = new Facade();
+            var connectionString = ConfigurationManager.ConnectionStrings[""].ConnectionString;
+            var connectionFactory = new SqlConnectionFactory(connectionString);
+            var dataManagerFactory = new DataManagerFactory();
+            var repositoryManager = 
+            var manager = new Core.ModelManager(connectionFactory, dataManagerFactory, );
+            var serializer = new Serializer(new Aims.Data.Server.Serializer());
+            var facade = new Facade(manager, serializer);
             return facade;
         }
 

@@ -2885,7 +2885,41 @@ namespace TopDown.FacingServer.Backend.Targeting {
     [System.Runtime.Serialization.DataContractAttribute(Name="CommentModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
     public partial class CommentModel : object, System.ComponentModel.INotifyPropertyChanged {
         
+        private System.Nullable<decimal> AfterField;
+        
+        private System.Nullable<decimal> BeforeField;
+        
         private string CommentField;
+        
+        private System.DateTime TimestampField;
+        
+        private string UsernameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> After {
+            get {
+                return this.AfterField;
+            }
+            set {
+                if ((this.AfterField.Equals(value) != true)) {
+                    this.AfterField = value;
+                    this.RaisePropertyChanged("After");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> Before {
+            get {
+                return this.BeforeField;
+            }
+            set {
+                if ((this.BeforeField.Equals(value) != true)) {
+                    this.BeforeField = value;
+                    this.RaisePropertyChanged("Before");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string Comment {
@@ -2896,6 +2930,32 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.CommentField, value) != true)) {
                     this.CommentField = value;
                     this.RaisePropertyChanged("Comment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Timestamp {
+            get {
+                return this.TimestampField;
+            }
+            set {
+                if ((this.TimestampField.Equals(value) != true)) {
+                    this.TimestampField = value;
+                    this.RaisePropertyChanged("Timestamp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Username {
+            get {
+                return this.UsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UsernameField, value) != true)) {
+                    this.UsernameField = value;
+                    this.RaisePropertyChanged("Username");
                 }
             }
         }

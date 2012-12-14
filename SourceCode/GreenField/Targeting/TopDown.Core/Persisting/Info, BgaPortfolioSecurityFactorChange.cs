@@ -9,7 +9,7 @@ namespace TopDown.Core.Persisting
 	/// <summary>
 	/// Represents a record of the BGA_PORTFOLIO_SECURITY_FACTOR_CHANGE table.
 	/// </summary>
-    public class BgaPortfolioSecurityFactorChangeInfo
+    public class BgaPortfolioSecurityFactorChangeInfo : IChangeInfoBase
     {
         [DebuggerStepThrough]
         public BgaPortfolioSecurityFactorChangeInfo()
@@ -70,5 +70,21 @@ namespace TopDown.Core.Persisting
 		/// CHANGESET_ID
 		/// </summary>
 		public Int32 ChangesetId { get; private set; }
+
+
+        String IChangeInfoBase.Comment
+        {
+            get { return this.Comment; }
+        }
+
+        Decimal? IChangeInfoBase.Before
+        {
+            get { return this.FactorBefore; }
+        }
+
+        Decimal? IChangeInfoBase.After
+        {
+            get { return this.FactorAfter; }
+        }
     }
 }

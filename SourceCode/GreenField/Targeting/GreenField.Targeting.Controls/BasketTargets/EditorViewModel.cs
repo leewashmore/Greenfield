@@ -207,7 +207,14 @@ namespace GreenField.Targeting.Controls.BasketTargets
         public void TakeComments(ObservableCollection<CommentModel> comments)
         {
             this.FinishLoading();
-            var comment = String.Join(", ", comments.Select(x => x.Comment));
+            var comment = String.Join(", ", comments.Select(x => String.Format(
+                "{4} at {3} {1} => {2}: {0}",
+                x.Comment,
+                x.Before,
+                x.After,
+                x.Timestamp,
+                x.Username
+            )));
             MessageBox.Show(comment);
         }
 

@@ -254,6 +254,8 @@ namespace TopDown.Web.Controllers
 				bpstModelManager,
 				basketRenderer
 			);
+
+            var commentManager = new Core.ManagingComments.CommentManager();
 			
 			var facade = new Facade(
 				connectionFactory,
@@ -268,7 +270,8 @@ namespace TopDown.Web.Controllers
 				basketPickerManager,
 				bpstModelManager,
 				portfolioManager,
-				hopper
+				hopper,
+                commentManager
 			);
 			return facade;
 		}

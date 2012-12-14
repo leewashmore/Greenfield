@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace TopDown.Core.Persisting
 {
-    public class BasketPortfolioSecurityTargetChangeInfo
+    public class BasketPortfolioSecurityTargetChangeInfo : IChangeInfoBase
     {
         [DebuggerStepThrough]
         public BasketPortfolioSecurityTargetChangeInfo()
@@ -15,15 +15,15 @@ namespace TopDown.Core.Persisting
 
         [DebuggerStepThrough]
         public BasketPortfolioSecurityTargetChangeInfo(
-			Int32 id,
-			Int32 basketId,
-			String portfolioId,
-			String securityId,
-			Decimal? targetBefore,
-			Decimal? targetAfter,
-			Int32 changesetId,
-			String comment
-		)
+            Int32 id,
+            Int32 basketId,
+            String portfolioId,
+            String securityId,
+            Decimal? targetBefore,
+            Decimal? targetAfter,
+            Int32 changesetId,
+            String comment
+        )
         {
             this.Id = id;
             this.BasketId = basketId;
@@ -32,7 +32,7 @@ namespace TopDown.Core.Persisting
             this.TargetBefore = targetBefore;
             this.TargetAfter = targetAfter;
             this.ChangesetId = changesetId;
-			this.Comment = comment;
+            this.Comment = comment;
         }
 
 
@@ -43,6 +43,22 @@ namespace TopDown.Core.Persisting
         public Decimal? TargetBefore { get; set; }
         public Decimal? TargetAfter { get; set; }
         public Int32 ChangesetId { get; set; }
-		public String Comment { get; set; }
-	}
+        public String Comment { get; set; }
+
+
+        String IChangeInfoBase.Comment
+        {
+            get { return this.Comment; }
+        }
+
+        Decimal? IChangeInfoBase.Before
+        {
+            get { return this.TargetBefore; }
+        }
+
+        Decimal? IChangeInfoBase.After
+        {
+            get { return this.TargetAfter; }
+        }
+    }
 }

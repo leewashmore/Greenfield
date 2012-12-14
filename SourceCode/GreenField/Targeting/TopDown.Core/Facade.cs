@@ -32,6 +32,7 @@ namespace TopDown.Core
         private IDataManagerFactory dataManagerFactory;
         private ISqlConnectionFactory connectionFactory;
         private ManagingCalculations.Hopper hopper;
+        private ManagingComments.CommentManager commentManager;
 
         public Facade(
             ISqlConnectionFactory connectionFactory,
@@ -46,7 +47,8 @@ namespace TopDown.Core
             Gadgets.BasketPicker.ModelManager basketPickerManager,
             ManagingBpst.ModelManager bpstModelManager,
             ManagingPortfolios.PortfolioManager portfolioManager,
-            ManagingCalculations.Hopper hopper
+            ManagingCalculations.Hopper hopper,
+            ManagingComments.CommentManager commentsManager
         )
         {
             this.connectionFactory = connectionFactory;
@@ -62,6 +64,7 @@ namespace TopDown.Core
             this.BpstManager = bpstModelManager;
             this.PortfolioManager = portfolioManager;
             this.hopper = hopper;
+            this.commentManager = commentsManager;
         }
 
         public RepositoryManager RepositoryManager { get; private set; }
@@ -255,7 +258,7 @@ namespace TopDown.Core
                 var result = new List<BottomUpPortfolio>();
                 foreach (var composition in compositions)
                 {
-                    var bottomUpPortfolio =portfolioRepository.GetBottomUpPortfolio(composition.BottomUpPortfolioId);
+                    var bottomUpPortfolio = portfolioRepository.GetBottomUpPortfolio(composition.BottomUpPortfolioId);
                     result.Add(bottomUpPortfolio);
                 }
                 return result;
@@ -330,6 +333,25 @@ namespace TopDown.Core
                         return new List<TargetRecord>();
                     }
                 }
+            }
+        }
+
+        public IEnumerable<ManagingComments.CommentModel> GetCommentsForBasketPortfolioSecurityTarget(
+            Int32 basketId,
+            String broadGlbalActivePortfolioId,
+            String securityId
+        )
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.GetCommentsForBasketPortfolioSecurityTarget(
+                    basketId,
+                    broadGlbalActivePortfolioId,
+                    securityId,
+                    manager
+                );
+                return comments;
             }
         }
     }

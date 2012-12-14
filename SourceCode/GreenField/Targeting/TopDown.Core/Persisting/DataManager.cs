@@ -84,7 +84,7 @@ namespace TopDown.Core.Persisting
             using (var builder = this.CreateQueryCommandBuilder<BenchmarkInfo>())
             {
                 return builder.Text("select")
-                    //.Field("  GF_ID", (BenchmarkInfo info, int value) => info.GfId = value)
+                    //.Field("  GF_ID", (BenchmarkInfo info, Int32 value) => info.GfId = value)
                     .Field("  PORTFOLIO_DATE", (BenchmarkInfo info, DateTime value) => info.PortfolioDate = value)
                     .Field(",  PORTFOLIO_ID", (info, value) => info.PortfolioId = value, false)
                     //.Field(",  PORTFOLIO_THEME_SUBGROUP_CODE", (info, value) => info.PortfolioThemeSubgroupCode = value, false)
@@ -97,13 +97,13 @@ namespace TopDown.Core.Persisting
                     //.Field(",  SECURITYTHEMECODE", (info, value) => info.SecurityThemeCode = value, false)
                     //.Field(",  A_SEC_INSTR_TYPE", (info, value) => info.ASecInstrType = value, false)
                     //.Field(",  SECURITY_TYPE", (info, value) => info.SecurityType = value, false)
-                    //.Field(",  BALANCE_NOMINAL", (BenchmarkInfo info, decimal? value) => info.BalanceNominal = value)
-                    //.Field(",  DIRTY_PRICE", (BenchmarkInfo info, decimal? value) => info.DirtyPrice = value)
+                    //.Field(",  BALANCE_NOMINAL", (BenchmarkInfo info, Decimal? value) => info.BalanceNominal = value)
+                    //.Field(",  DIRTY_PRICE", (BenchmarkInfo info, Decimal? value) => info.DirtyPrice = value)
                     //.Field(",  TRADING_CURRENCY", (info, value) => info.TradingCurrency = value, false)
-                    //.Field(",  DIRTY_VALUE_PC", (BenchmarkInfo info, decimal? value) => info.DirtyValuePc = value)
-                    .Field(",  BENCHMARK_WEIGHT", (BenchmarkInfo info, decimal? value) => info.BenchmarkWeight = value)
-                    //.Field(",  ASH_EMM_MODEL_WEIGHT", (BenchmarkInfo info, decimal? value) => info.AshEmmModelWeight = value)
-                    //.Field(",  MARKET_CAP_IN_USD", (BenchmarkInfo info, decimal? value) => info.MarketCapInUsd = value)
+                    //.Field(",  DIRTY_VALUE_PC", (BenchmarkInfo info, Decimal? value) => info.DirtyValuePc = value)
+                    .Field(",  BENCHMARK_WEIGHT", (BenchmarkInfo info, Decimal? value) => info.BenchmarkWeight = value)
+                    //.Field(",  ASH_EMM_MODEL_WEIGHT", (BenchmarkInfo info, Decimal? value) => info.AshEmmModelWeight = value)
+                    //.Field(",  MARKET_CAP_IN_USD", (BenchmarkInfo info, Decimal? value) => info.MarketCapInUsd = value)
                     //.Field(",  ASHEMM_PROP_REGION_CODE", (info, value) => info.AshemmPropRegionCode = value, false)
                     //.Field(",  ASHEMM_PROP_REGION_NAME", (info, value) => info.AshemmPropRegionName = value, false)
                     .Field(",  ISO_COUNTRY_CODE", (info, value) => info.IsoCountryCode = value, false)
@@ -115,15 +115,15 @@ namespace TopDown.Core.Persisting
                     .Field(",  GICS_SUB_INDUSTRY", (info, value) => info.GicsSubIndustry = value, false)
                     .Field(",  GICS_SUB_INDUSTRY_NAME", (info, value) => info.GicsSubIndustryName = value, false)
                     //.Field(",  LOOK_THRU_FUND", (info, value) => info.LookThruFund = value, false)
-                    //.Field(",  BARRA_RISK_FACTOR_MOMENTUM", (BenchmarkInfo info, decimal? value) => info.BarraRiskFactorMomentum = value)
-                    //.Field(",  BARRA_RISK_FACTOR_VOLATILITY", (BenchmarkInfo info, decimal? value) => info.BarraRiskFactorVolatility = value)
-                    //.Field(",  BARRA_RISK_FACTOR_VALUE", (BenchmarkInfo info, decimal? value) => info.BarraRiskFactorValue = value)
-                    //.Field(",  BARRA_RISK_FACTOR_SIZE", (BenchmarkInfo info, decimal? value) => info.BarraRiskFactorSize = value)
-                    //.Field(",  BARRA_RISK_FACTOR_SIZE_NONLIN", (BenchmarkInfo info, decimal? value) => info.BarraRiskFactorSizeNonlin = value)
-                    //.Field(",  BARRA_RISK_FACTOR_GROWTH", (BenchmarkInfo info, decimal? value) => info.BarraRiskFactorGrowth = value)
-                    //.Field(",  BARRA_RISK_FACTOR_LIQUIDITY", (BenchmarkInfo info, decimal? value) => info.BarraRiskFactorLiquidity = value)
-                    //.Field(",  BARRA_RISK_FACTOR_LEVERAGE", (BenchmarkInfo info, decimal? value) => info.BarraRiskFactorLeverage = value)
-                    //.Field(",  BARRA_RISK_FACTOR_PBETEWLD", (BenchmarkInfo info, decimal? value) => info.BarraRiskFactorPbetewld = value)
+                    //.Field(",  BARRA_RISK_FACTOR_MOMENTUM", (BenchmarkInfo info, Decimal? value) => info.BarraRiskFactorMomentum = value)
+                    //.Field(",  BARRA_RISK_FACTOR_VOLATILITY", (BenchmarkInfo info, Decimal? value) => info.BarraRiskFactorVolatility = value)
+                    //.Field(",  BARRA_RISK_FACTOR_VALUE", (BenchmarkInfo info, Decimal? value) => info.BarraRiskFactorValue = value)
+                    //.Field(",  BARRA_RISK_FACTOR_SIZE", (BenchmarkInfo info, Decimal? value) => info.BarraRiskFactorSize = value)
+                    //.Field(",  BARRA_RISK_FACTOR_SIZE_NONLIN", (BenchmarkInfo info, Decimal? value) => info.BarraRiskFactorSizeNonlin = value)
+                    //.Field(",  BARRA_RISK_FACTOR_GROWTH", (BenchmarkInfo info, Decimal? value) => info.BarraRiskFactorGrowth = value)
+                    //.Field(",  BARRA_RISK_FACTOR_LIQUIDITY", (BenchmarkInfo info, Decimal? value) => info.BarraRiskFactorLiquidity = value)
+                    //.Field(",  BARRA_RISK_FACTOR_LEVERAGE", (BenchmarkInfo info, Decimal? value) => info.BarraRiskFactorLeverage = value)
+                    //.Field(",  BARRA_RISK_FACTOR_PBETEWLD", (BenchmarkInfo info, Decimal? value) => info.BarraRiskFactorPbetewld = value)
                 .Text(" from " + TableNames.GF_BENCHMARK_HOLDINGS + " where PORTFOLIO_DATE = ").Parameter(date)
                 .PullAll();
             }
@@ -511,7 +511,7 @@ namespace TopDown.Core.Persisting
                     .PullFirstOrDefault();
             }
         }
-        public IEnumerator<Int32> ReserveTargetingTypeBasketBaseValueChangesetIds(int howMany)
+        public IEnumerator<Int32> ReserveTargetingTypeBasketBaseValueChangesetIds(Int32 howMany)
         {
             var result = this.ReserveIds(TableNames.TARGETING_TYPE_BASKET_BASE_VALUE_CHANGESET, howMany);
             return result;
@@ -851,6 +851,51 @@ namespace TopDown.Core.Persisting
                     .Execute();
             }
         }
+
+        public IEnumerable<BasketPortfolioSecurityTargetChangeInfo> GetBasketPortfolioSecurityTargetChanges(Int32 basketId, String broadGlbalActivePortfolioId, String securityId)
+        {
+            using (var builder = this.CreateQueryCommandBuilder<BasketPortfolioSecurityTargetChangeInfo>())
+            {
+                return builder.Text("select ")
+                    .Field("  [ID]", (info, value) => info.Id = value)
+                    .Field(", [CHANGESET_ID]", (info, value) => info.ChangesetId = value)
+                    .Field(", [BASKET_ID]", (info, value) => info.BasketId = value)
+                    .Field(", [PORTFOLIO_ID]", (info, value) => info.PortfolioId = value, true)
+                    .Field(", [SECURITY_ID]", (info, value) => info.SecurityId = value, true)
+                    .Field(", [TARGET_BEFORE]", (BasketPortfolioSecurityTargetChangeInfo info, Decimal? value) => info.TargetBefore = value)
+                    .Field(", [TARGET_AFTER]", (BasketPortfolioSecurityTargetChangeInfo info, Decimal? value) => info.TargetAfter = value)
+                    .Field(", [COMMENT]", (info, value) => info.Comment = value, true)
+                    .Text(" from [" + TableNames.BASKET_PORTFOLIO_SECURITY_TARGET_CHANGE + "]")
+                    .Text(" where [BASKET_ID] = ").Parameter(basketId)
+                    .Text(" and   [PORTFOLIO_ID] = ").Parameter(broadGlbalActivePortfolioId)
+                    .Text(" and   [SECURITY_ID] = ").Parameter(securityId)
+                    .PullAll();
+            }
+        }
+
+        public IEnumerable<BasketPortfolioSecurityTargetChangesetInfo> GetBasketPortfolioSecurityTargetChangesets(IEnumerable<Int32> changesetIds)
+        {
+            if (changesetIds.Any())
+            {
+                using (var builder = this.CreateQueryCommandBuilder<BasketPortfolioSecurityTargetChangesetInfo>())
+                {
+                    return builder.Text("select ")
+                        .Field("  [ID]", (info, value) => info.Id = value)
+                        .Field(", [USERNAME]", (info, value) => info.Username = value, true)
+                        .Field(", [TIMESTAMP]", (info, value) => info.Timestamp = value)
+                        .Field(", [CALCULATION_ID]", (info, value) => info.CalculationId = value)
+                        .Text(" from [" + TableNames.BASKET_PORTFOLIO_SECURITY_TARGET_CHANGESET + "]")
+                        .Text(" where [ID] in (").Parameters(changesetIds).Text(")")
+                        .PullAll();
+                }
+            }
+            else
+            {
+                return new BasketPortfolioSecurityTargetChangesetInfo[] { };
+            }
+        }
+
+
         public Int32 InsertBasketPortfolioSecurityTarget(BasketPortfolioSecurityTargetInfo info)
         {
             using (var builder = this.CreateCommandBuilder())
@@ -998,9 +1043,9 @@ namespace TopDown.Core.Persisting
                     .Text(", ")
                         .Parameter(changeInfo.PortfolioId)
                     .Text(", ")
-                        .Parameter(changeInfo.Target_Before)
+                        .Parameter(changeInfo.TargetBefore)
                     .Text(", ")
-                        .Parameter(changeInfo.Target_After)
+                        .Parameter(changeInfo.TargetAfter)
                     .Text(", ")
                         .Parameter(changeInfo.Comment)
                     .Text(", ")
@@ -1357,7 +1402,7 @@ namespace TopDown.Core.Persisting
         }
 
 
-        public int UpdateTaxonomy(string taxonomy, int id)
+        public Int32 UpdateTaxonomy(String taxonomy, Int32 id)
         {
             using (var builder = this.CreateCommandBuilder())
             {
@@ -1368,5 +1413,11 @@ namespace TopDown.Core.Persisting
                 return b.Execute();
             }
         }
+
+
+
+
+
+
     }
 }

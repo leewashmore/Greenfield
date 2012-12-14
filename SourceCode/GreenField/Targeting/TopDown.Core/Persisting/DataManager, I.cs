@@ -94,6 +94,8 @@ namespace TopDown.Core.Persisting
         Int32 InsertBasketPortfolioSecurityTargetChangeset(BasketPortfolioSecurityTargetChangesetInfo changesetInfo);
         IEnumerator<Int32> ReserveBasketPortfolioSecurityTargetChangeIds(Int32 howMany);
         Int32 InsertBasketPortfolioSecurityTargetChange(BasketPortfolioSecurityTargetChangeInfo changeInfo);
+        IEnumerable<BasketPortfolioSecurityTargetChangeInfo> GetBasketPortfolioSecurityTargetChanges(Int32 basketId, String broadGlbalActivePortfolioId, String securityId);
+        IEnumerable<BasketPortfolioSecurityTargetChangesetInfo> GetBasketPortfolioSecurityTargetChangesets(IEnumerable<Int32> changesetIds);
         Int32 InsertBasketPortfolioSecurityTarget(BasketPortfolioSecurityTargetInfo info);
         Int32 UpdateBasketPortfolioSecurityTarget(BasketPortfolioSecurityTargetInfo info);
         Int32 DeleteBasketPortfolioSecurityTarget(Int32 basketId, String portfolioId, String securityId);
@@ -123,5 +125,7 @@ namespace TopDown.Core.Persisting
 		IEnumerable<CalculationWithChangesets> GetAllCalculationWithChangesets(Int32 howMany);
 
         Int32 StartTargetingCalculation(Int32 calculationId);
+
+        
     }
 }

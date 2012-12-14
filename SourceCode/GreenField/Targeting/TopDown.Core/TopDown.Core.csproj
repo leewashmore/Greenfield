@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ManagingComments\CommentModel.cs" />
     <Compile Include="CountryToJsonSerializer.cs" />
     <Compile Include="ExpressionFromJsonDeserializer.cs" />
     <Compile Include="ExpressionToJsonSerializer.cs" />
@@ -58,9 +59,11 @@
     <Compile Include="ManagingBpt\Computing\CashScaledFormula.cs" />
     <Compile Include="ManagingCalculations\CalculationInfo.cs" />
     <Compile Include="ManagingCalculations\TargetRecord.cs" />
+    <Compile Include="ManagingComments\CommentsManager.cs" />
     <Compile Include="ManagingPst\ModelValidator.cs" />
     <Compile Include="OnDemandDataManager.cs" />
     <Compile Include="Persisting\CalculationWithChangesets.cs" />
+    <Compile Include="Persisting\IChangeInfoBase.cs" />
     <Compile Include="Persisting\IChangesetInfoResolver.cs" />
     <Compile Include="PortfolioManager.cs" />
     <Compile Include="PortfolioToJsonSerializer.cs" />
