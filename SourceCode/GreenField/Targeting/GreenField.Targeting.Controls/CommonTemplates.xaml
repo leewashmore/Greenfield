@@ -147,7 +147,7 @@
                         </DataTemplate>
                     </local:CommentBehavior.ContentTemplate>
                 </local:CommentBehavior>
-                <local:SetFocusBehavior WasLastEdited="{Binding IsLastEdited, Mode=TwoWay}" />
+                <local:SetFocusBehavior WasLastEdited="{Binding IsFocusSet, Mode=TwoWay}" />
             </i:Interaction.Behaviors>
         </local:ValueTextBox>
 

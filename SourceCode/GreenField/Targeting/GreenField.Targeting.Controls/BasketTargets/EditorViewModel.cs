@@ -164,6 +164,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
 
             this.KeptRootModel = model;
 
+            var registeredExpressions = new List<EditableExpressionModel>();
             foreach (var security in model.Securities)
             {
                 var securityId = security.Security.Id;
@@ -176,19 +177,36 @@ namespace GreenField.Targeting.Controls.BasketTargets
                     var requestCommentsCommand = new DelegateCommand(delegate {
                         this.RequestComments(basketId, portfolioId, securityId);
                     });
-                    portfolioTarget.PortfolioTarget.RegisterForBeingWatched(this, requestCommentsCommand);
+                    var expression = portfolioTarget.PortfolioTarget;
+                    expression.RegisterForBeingWatched(this, requestCommentsCommand);
+                    registeredExpressions.Add(expression);
                 }
                 var requestBaseCommentsCommand = new DelegateCommand(delegate
                 {
                     this.RequestComments(this.LastTargetingTypeGroupId.Value, basketId, securityId);
                 });
-                security.Base.RegisterForBeingWatched(this, requestBaseCommentsCommand);
+                var baseExpression = security.Base;
+                baseExpression.RegisterForBeingWatched(this, requestBaseCommentsCommand);
+                registeredExpressions.Add(baseExpression);
             }
 
             this.OnGotData();
+            
+            
+            
+            
+            // setting the focus
+            foreach (var expression in registeredExpressions)
+            {
+                if (expression.IsLastEdited)
+                {
+                    expression.IsFocusSet = true;
+                    expression.IsLastEdited = false;
+                }
+            }
         }
 
-        private void RequestComments(int targetingTypeGroupId, int basketId, string securityId)
+        private void RequestComments(Int32 targetingTypeGroupId, Int32 basketId, String securityId)
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();

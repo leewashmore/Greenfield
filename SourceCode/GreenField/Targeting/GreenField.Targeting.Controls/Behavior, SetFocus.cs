@@ -15,47 +15,43 @@ namespace GreenField.Targeting.Controls
 {
     public class SetFocusBehavior : Behavior<ValueTextBox>
     {
-        
-        public SetFocusBehavior()
-        {
-        }
-
-
-        private DispatcherTimer timer;
         protected override void OnAttached()
         {
             base.OnAttached();
-            this.timer = new DispatcherTimer();
-            this.timer.Stop();
-            this.timer.Interval = TimeSpan.FromMilliseconds(500);
-            this.timer.Tick += timer_Tick;
-            this.timer.Start();
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            this.timer.Stop();
-            this.timer.Tick -= timer_Tick;
-            this.timer = null;
         }
 
-        public readonly static DependencyProperty WasLastEditedProperty = DependencyProperty.Register("WasLastEdited", typeof(Boolean), typeof(SetFocusBehavior), new PropertyMetadata(null));
+        public readonly static DependencyProperty WasLastEditedProperty = DependencyProperty.Register("WasLastEdited", typeof(Boolean), typeof(SetFocusBehavior), new PropertyMetadata(WhenPropertyChanged));
+
+        private static void WhenPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var behavior = d as SetFocusBehavior;
+            var wasLast = (Boolean)e.NewValue;
+            if (wasLast)
+            {
+#warning HACK with timer!!!
+                var timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromMilliseconds(50);
+                timer.Stop();
+                timer.Tick += (s1, e1) => {
+                    if (behavior.AssociatedObject.Focus())
+                    {
+                        behavior.WasLastEdited = false;
+                    }
+                    timer = null;
+                };
+                timer.Start();
+            }
+        }
         
         public Boolean WasLastEdited
         {
             get { return (Boolean)this.GetValue(WasLastEditedProperty); }
             set { this.SetValue(WasLastEditedProperty, value); }
-        }
-
-        void timer_Tick(object sender, EventArgs e)
-        {
-            if (this.WasLastEdited)
-            {
-                this.AssociatedObject.Focus();
-                this.WasLastEdited = false;
-            }
-            this.timer.Stop();
         }
     }
 }
