@@ -12,6 +12,7 @@ namespace TopDown.Core.ManagingBenchmarks
     {
         private Dictionary<String, IGrouping<String, BenchmarkInfo>> benchmarksByBenchmarkId;
         private ILookup<String, BenchmarkInfo> benchmarkByTicker;
+        private ILookup<String, BenchmarkInfo> benchmarkByCountry;
 
         protected BenchmarkRepository()
             : this(DateTime.Now, new BenchmarkInfo[] { })
@@ -32,6 +33,7 @@ namespace TopDown.Core.ManagingBenchmarks
                 .ToDictionary(x => x.Key);
             
 			this.benchmarkByTicker = benchmarks.ToLookup(x => x.Ticker);
+            this.benchmarkByCountry = benchmarks.ToLookup(x => x.IsoCountryCode);
         }
 
         public DateTime Timestamp { get; private set; }
@@ -55,6 +57,20 @@ namespace TopDown.Core.ManagingBenchmarks
             {
                 return new BenchmarkSumByIsoInfo[] { };
             }
+        }
+
+        public IEnumerable<BenchmarkInfo> GetBenchmarksByIsoCountryCode(String isoCode)
+        {
+            IEnumerable<BenchmarkInfo> found;
+            if (this.benchmarkByCountry.Contains(isoCode))
+            {
+                found = this.benchmarkByCountry[isoCode];
+            }
+            else
+            {
+                found = new BenchmarkInfo[] { };
+            }
+            return found;
         }
 
         public BenchmarkInfo TryGetBySecurity(ISecurity security)

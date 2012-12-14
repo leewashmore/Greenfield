@@ -5,6 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using Core = TopDown.Core.ManagingBpst;
 using TopDown.Core.Persisting;
+using TopDown.Core.ManagingBaskets;
 
 namespace GreenField.Targeting.Server.BasketTargets
 {
@@ -30,11 +31,12 @@ namespace GreenField.Targeting.Server.BasketTargets
         {
             var targetingTypeGroup = this.deserializer.DeserializeTargetingTypeGroup(model.TargetingTypeGroup);
             var benchmarkRepository = this.deserializer.ClaimBenchmarkRepository(model.BenchmarkDate);
-
+            var basket = this.deserializer.DeserializeBasket(model.Basket.Id);
             var securities = this.DeserializeSecurities(model.Securities).ToList();
             if (model.SecurityToBeAddedOpt != null)
             {
                 var security = this.DeserializeAdditionalSecurity(
+                    basket,
                     model.SecurityToBeAddedOpt,
                     targetingTypeGroup,
                     benchmarkRepository
@@ -46,7 +48,7 @@ namespace GreenField.Targeting.Server.BasketTargets
             var baseActiveTotalExpression = this.modelBuilder.CreateBaseActiveTotalExpression(securities);
             var core = new Core.CoreModel(
                 targetingTypeGroup,
-                this.deserializer.DeserializeBasket(model.Basket.Id),
+                basket,
                 this.DeserializePortfolios(model.Portfolios, securities),
                 securities,
                 baseTotalExpression,
@@ -64,6 +66,7 @@ namespace GreenField.Targeting.Server.BasketTargets
         }
 
         private Core.SecurityModel DeserializeAdditionalSecurity(
+            IBasket basket,
             Aims.Data.Server.SecurityModel securityModel,
             TopDown.Core.ManagingTargetingTypes.TargetingTypeGroup targetingTypeGroup,
             TopDown.Core.ManagingBenchmarks.BenchmarkRepository benchmarkRepository
@@ -82,7 +85,10 @@ namespace GreenField.Targeting.Server.BasketTargets
                     ).ToList(),
                     baseActiveExpression
                 );
-                this.benchmarkInitializer.InitializeSecurity(result, benchmarkRepository);
+                if (!String.IsNullOrWhiteSpace(targetingTypeGroup.BenchmarkIdOpt))
+                {
+                    this.benchmarkInitializer.InitializeSecurity(basket, targetingTypeGroup.BenchmarkIdOpt, result, benchmarkRepository);
+                }
             return result;
         }
 

@@ -88,8 +88,11 @@ namespace TopDown.Core.ManagingBpst
                     baseActiveExpression
 				);
 
-                var benchmarkRepository = this.repositoryManager.ClaimBenchmarkRepository(ondemandManager, benchmarkDate);
-				this.benchmarkInitializer.InitializeSecurity(securityModel, benchmarkRepository);
+                if (!String.IsNullOrWhiteSpace(targetingTypeGroup.BenchmarkIdOpt))
+                {
+                    var benchmarkRepository = this.repositoryManager.ClaimBenchmarkRepository(ondemandManager, benchmarkDate);
+                    this.benchmarkInitializer.InitializeSecurity(basket, targetingTypeGroup.BenchmarkIdOpt, securityModel, benchmarkRepository);
+                }
 				securityModels.Add(securityModel);
 			}
 

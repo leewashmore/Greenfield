@@ -1,27 +1,3 @@
-set noexec off
-
---declare  current and required version
---also do it an the end of the script
-declare @RequiredDBVersion as nvarchar(100) = '00154'
-declare @CurrentScriptVersion as nvarchar(100) = '00155'
-
---if current version already in DB, just skip
-if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
- set noexec on 
-
---check that current DB version is Ok
-declare @DBCurrentVersion as nvarchar(100) = (select top 1 ScriptVersion from ChangeScripts order by DateExecuted desc)
-if (@DBCurrentVersion != @RequiredDBVersion)
-begin
-	RAISERROR(N'DB version is "%s", required "%s".', 16, 1, @DBCurrentVersion, @RequiredDBVersion)
-	set noexec on
-end
-
-GO
-
---PUT YOUR CODE HERE:
-
-
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TARGETING_TYPE_BASKET_PORTFOLIO_TARGET]') AND type in (N'U'))
 BEGIN
@@ -663,7 +639,7 @@ CREATE TABLE [dbo].[TARGETING_TYPE_GROUP](
 GO
 
 
-INSERT INTO [TARGETING_TYPE_GROUP]([ID],[NAME],[BENCHMARK_ID]) VALUES(0,'Targeting group A',null)
+INSERT INTO [TARGETING_TYPE_GROUP]([ID],[NAME],[BENCHMARK_ID]) VALUES(0,'Targeting group A','MSCI EM NET')
 --INSERT INTO [TARGETING_TYPE_GROUP]([ID],[NAME],[BENCHMARK_ID]) VALUES(1,'Targeting group B',null)
 --INSERT INTO [TARGETING_TYPE_GROUP]([ID],[NAME],[BENCHMARK_ID]) VALUES(2,'Targeting group C',null)
 GO
@@ -697,7 +673,7 @@ GO
 
 
 
-INSERT INTO [TARGETING_TYPE]([ID],[TARGETING_TYPE_GROUP_ID],[TAXONOMY_ID],[NAME],[BENCHMARK_ID]) VALUES (0, 0, 2, 'Targeting type A', 'MSCI EM SC NET')
+INSERT INTO [TARGETING_TYPE]([ID],[TARGETING_TYPE_GROUP_ID],[TAXONOMY_ID],[NAME],[BENCHMARK_ID]) VALUES (0, 0, 2, 'Targeting type A', 'MSCI EM NET')
 INSERT INTO [TARGETING_TYPE]([ID],[TARGETING_TYPE_GROUP_ID],[TAXONOMY_ID],[NAME],[BENCHMARK_ID]) VALUES (1, 0, 1, 'Targeting type B', 'MSCI EM IMI NET')
 --INSERT INTO [TARGETING_TYPE]([ID],[TARGETING_TYPE_GROUP_ID],[TAXONOMY_ID],[NAME],[BENCHMARK_ID]) VALUES (1,1,0,'Targeting type B','MSCI EM IMI NET')
 --INSERT INTO [TARGETING_TYPE]([ID],[TARGETING_TYPE_GROUP_ID],[TAXONOMY_ID],[NAME],[BENCHMARK_ID]) VALUES (2,1,0,'Targeting type C','MSCI EM LATAM SC NET')
@@ -3293,20 +3269,3 @@ GO
 
 ALTER TABLE [dbo].[TARGETING_TYPE_BASKET_PORTFOLIO_TARGET] CHECK CONSTRAINT [FK_TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_CHANGE]
 GO
-
-
-
-
-
-
-
---END OF YOUR CODE.
-
-
-
---indicate thet current script is executed
-declare @CurrentScriptVersion as nvarchar(100) = '00155'
-insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
-
-
-
