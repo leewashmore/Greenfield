@@ -122,6 +122,7 @@
     <Compile Include="BasketTargets\Converter, SecurityModelToPortfolioTarget.cs" />
     <Compile Include="BooleanToColorConverter.cs" />
     <Compile Include="BottomUp\SecurityPickerClientFactory.cs" />
+    <Compile Include="EditableColumn.cs" />
     <Compile Include="ISecurity.cs" />
     <Compile Include="BasketTargets\SecurityPickerClientFactory.cs" />
     <Compile Include="BasketTargets\Settings.cs" />
@@ -169,6 +170,7 @@
     </Compile>
     <Compile Include="BroadGlobalActive\Settings.cs" />
     <Compile Include="Behavior, Comment.cs" />
+    <Compile Include="Behavior, SetFocus.cs" />
     <Compile Include="TargetingModule.cs" />
     <Compile Include="ValidatedResultWindow.xaml.cs">
       <DependentUpon>ValidatedResultWindow.xaml</DependentUpon>

@@ -71,6 +71,14 @@ namespace TopDown.FacingServer.Backend.Targeting
             };
         }
 
+
+        private Boolean isFocusSet;
+        public Boolean IsFocusSet
+        {
+            get { return this.isFocusSet; }
+            set { this.isFocusSet = value; this.RaisePropertyChanged("IsFocusSet"); }
+        }
+
         
 
         protected String OriginalComment { get; private set; }

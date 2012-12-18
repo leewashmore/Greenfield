@@ -17,17 +17,22 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
 
 
         [DebuggerStepThrough]
-        public CashModel(NullableExpressionModel baseExpression, NullableExpressionModel scaledExpression)
+        public CashModel(NullableExpressionModel baseExpression, NullableExpressionModel scaledExpression, NullableExpressionModel trueExposureExpression, NullableExpressionModel trueActiveExpression)
             : this()
         {
             this.Base = baseExpression;
             this.Scaled = scaledExpression;
+            this.TrueExposure = trueExposureExpression;
+            this.TrueActive = trueActiveExpression;
         }
 
         [DataMember]
         public NullableExpressionModel Base { get; set; }
-
         [DataMember]
         public NullableExpressionModel Scaled { get; set; }
+        [DataMember]
+        public NullableExpressionModel TrueExposure { get; set; }
+        [DataMember]
+        public NullableExpressionModel TrueActive { get; set; }
     }
 }

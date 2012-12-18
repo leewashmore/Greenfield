@@ -87,6 +87,7 @@
     <Compile Include="Backend\Targeting\Model, UnsavedBasketCountry.cs" />
     <Compile Include="Backend\Targeting\No.cs" />
     <Compile Include="Backend\Targeting\Model, Security.cs" />
+    <Compile Include="Backend\Targeting\Model, BgaRoot.cs" />
     <Compile Include="Backend\Targeting\ValidationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Backend.Targeting\Reference.cs">

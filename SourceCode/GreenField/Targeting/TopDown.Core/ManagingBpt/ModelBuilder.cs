@@ -213,7 +213,7 @@ namespace TopDown.Core.ManagingBpt
 			computations.BaseLessOverlayPositiveTotal = this.CreateBaseLessOverlayPositiveTotalExpression(root, traverser, computations.BaseLessOverlayFormula, computations.CashRescaledBase);
 			computations.BaseLessOverlayTotal = this.CreateBaseLessOverlayTotalExpression(root, traverser, computations.BaseLessOverlayFormula, computations.CashRescaledBase);
 			computations.PortfolioScaledFormula = this.CreatePortfolioScaledFormula(computations.BaseLessOverlayFormula, computations.BaseLessOverlayPositiveTotal, computations.BaseLessOverlayTotal);
-            computations.CashScaled = this.CreateScaledCash(this.CreateCashScaledFormula(computations.CashRescaledBase, computations.BaseLessOverlayPositiveTotal, computations.BaseLessOverlayTotal));
+            computations.CashPortfolioScaled = this.CreateScaledCash(this.CreateCashScaledFormula(computations.CashRescaledBase, computations.BaseLessOverlayPositiveTotal, computations.BaseLessOverlayTotal));
 			computations.TrueExposureFormula = this.CreateTrueExposureFormula();
 			computations.TrueActiveFormula = this.CreateTrueActiveFormula();
 
@@ -562,15 +562,16 @@ namespace TopDown.Core.ManagingBpt
 
         }
 
-        public IExpression<Decimal?> CreatePortfolioScaledTotalExpression(
-            IExpression<Decimal?> cashBaseExpression,
-            IExpression<Decimal?> globePortfolioScaledExpression)
+        public IExpression<Decimal?> CreateAddExpression(
+            IExpression<Decimal?> cashExpression,
+            IExpression<Decimal?> totalExpression
+        )
         {
             var result = new Expression<Decimal?>(
 				ValueNames.PortfolioScaledTotal,
-                new Computing.PortfolioScaledTotalFormula(
-                    cashBaseExpression,
-                    globePortfolioScaledExpression
+                new Computing.AddFormula(
+                    cashExpression,
+                    totalExpression
                 ),
                 this.commonParts.NullableDecimalValueAdapter,
                 this.commonParts.ValidateWhatever
@@ -614,5 +615,26 @@ namespace TopDown.Core.ManagingBpt
 			);
 			return result;
 		}
-	}
+
+        public CashModel CreateCash(Computations computations)
+        {
+           var result = new CashModel(
+               computations.CashBase,
+               computations.CashPortfolioScaled,
+/*
+Add a Cash amount to the True Exposure column.
+a.       Formula:  True Exposure Cash = Portfolio Scaled Cash
+b.      Include Cash Amount in the Total row of the True Exposure column.
+*/
+               computations.CashPortfolioScaled,
+/*
+Add a Cash amount to the True Active column.
+a.       Formula:  True Active Cash = Portfolio Scaled Cash – Benchmark Cash (Benchmark Cash should = 0).
+b.      Include Cash Amount in the Total row of the True Exposure column.
+*/
+               computations.CashPortfolioScaled
+            );
+           return result;
+        }
+    }
 }

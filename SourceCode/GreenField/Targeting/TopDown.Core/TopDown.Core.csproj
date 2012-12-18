@@ -21,6 +21,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ManagingComments\CommentModel.cs" />
     <Compile Include="CountryToJsonSerializer.cs" />
     <Compile Include="ExpressionFromJsonDeserializer.cs" />
     <Compile Include="ExpressionToJsonSerializer.cs" />
@@ -57,9 +59,11 @@
     <Compile Include="ManagingBpt\Computing\CashScaledFormula.cs" />
     <Compile Include="ManagingCalculations\CalculationInfo.cs" />
     <Compile Include="ManagingCalculations\TargetRecord.cs" />
+    <Compile Include="ManagingComments\CommentsManager.cs" />
     <Compile Include="ManagingPst\ModelValidator.cs" />
     <Compile Include="OnDemandDataManager.cs" />
     <Compile Include="Persisting\CalculationWithChangesets.cs" />
+    <Compile Include="Persisting\IChangeInfoBase.cs" />
     <Compile Include="Persisting\IChangesetInfoResolver.cs" />
     <Compile Include="PortfolioManager.cs" />
     <Compile Include="PortfolioToJsonSerializer.cs" />
@@ -107,7 +111,7 @@
     <Compile Include="ManagingBpt\ChangingTtbpt\Change, Update.cs" />
     <Compile Include="ManagingBpt\Computing\BaseLessOverlayPositiveTotalFormula.cs" />
     <Compile Include="ManagingBpt\Computing\BaseLessOverlayTotalFormula.cs" />
-    <Compile Include="ManagingBpt\Computing\PortfolioScaledTotalFormula.cs" />
+    <Compile Include="ManagingBpt\Computing\AddFormula.cs" />
     <Compile Include="ManagingBpt\ModelChangeDetector.cs" />
     <Compile Include="ManagingBpt\Initializer, PortfolioAdjustment.cs" />
     <Compile Include="ManagingBpt\ModelExpressionTraverser.cs" />

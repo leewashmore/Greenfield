@@ -62,6 +62,21 @@ namespace Aims.Core.Sql
 			}
 			return this;
 		}
+        
+        public SqlQueryCommandBuilder<TInfo> Parameters(IEnumerable<Int32> values)
+        {
+            var value = values.GetEnumerator();
+            if (value.MoveNext())
+            {
+                this.Parameter(value.Current);
+                while (value.MoveNext())
+                {
+                    this.Text(", ");
+                    this.Parameter(value.Current);
+                }
+            }
+            return this;
+        }
 
 		protected SqlQueryCommandBuilder<TInfo> AddField(String name, IField<TInfo> field)
 		{

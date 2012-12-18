@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataManagerFactory.cs" />
     <Compile Include="Persisting\DataManager.cs" />
     <Compile Include="Persisting\IDataManagerFactory.cs" />
     <Compile Include="ModelBuilder.cs" />

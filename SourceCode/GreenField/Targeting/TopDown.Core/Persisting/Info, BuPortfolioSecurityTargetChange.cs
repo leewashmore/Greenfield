@@ -10,7 +10,7 @@ namespace TopDown.Core.Persisting
     /// Before SOMETHING, after SOMETHING ELSE: a record was updated.
     /// Before SOMETHING, after NULL: a record was deleted.
     /// </summary>
-    public class BuPortfolioSecurityTargetChangeInfo 
+    public class BuPortfolioSecurityTargetChangeInfo : IChangeInfoBase
     {
         public BuPortfolioSecurityTargetChangeInfo(
             Int32 id,
@@ -37,5 +37,21 @@ namespace TopDown.Core.Persisting
         public Decimal? TargetAfter { get; set; }
         public Int32 ChangesetId { get; set; }
         public String Comment { get; set; }
+
+
+        String IChangeInfoBase.Comment
+        {
+            get { return this.Comment; }
+        }
+
+        Decimal? IChangeInfoBase.Before
+        {
+            get { return this.TargetBefore; }
+        }
+
+        Decimal? IChangeInfoBase.After
+        {
+            get { return this.TargetAfter; }
+        }
     }
 }

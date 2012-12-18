@@ -22,7 +22,8 @@ namespace GreenField.Targeting.Server
             Decimal? initialValue,
             Decimal? editedValue,
             String comment,
-            IEnumerable<IssueModel> issues
+            IEnumerable<IssueModel> issues,
+            Boolean isLastEdited
         ) : this()
         {
             this.DefaultValue = defaultValue;
@@ -31,6 +32,7 @@ namespace GreenField.Targeting.Server
             this.Comment = comment;
             this.Issues.AddRange(issues);
             this.DisplayValue = null;
+            this.IsLastEdited = isLastEdited;
         }
 
         [DataMember]
@@ -50,5 +52,8 @@ namespace GreenField.Targeting.Server
 
         [DataMember]
         public Decimal? DisplayValue { get; set; }
+
+        [DataMember]
+        public Boolean IsLastEdited { get; set; }
     }
 }

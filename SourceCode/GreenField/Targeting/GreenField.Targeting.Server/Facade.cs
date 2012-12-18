@@ -197,12 +197,16 @@ namespace GreenField.Targeting.Server
 
         public IEnumerable<CommentModel> RequestCommentsForBasketPortfolioSecurityTarget(Int32 basketId, String broadGlbalActivePortfolioId, String securityId)
         {
-            return new CommentModel[] { new CommentModel("Hey!") };
+            var comments = this.facade.GetCommentsForBasketPortfolioSecurityTarget(basketId, broadGlbalActivePortfolioId, securityId);
+            var serializedComments = this.serializer.SerializeComments(comments);
+            return serializedComments;
+            //return new CommentModel[] { new CommentModel("Hey!") };
         }
 
         public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId)
         {
-            return new CommentModel[] { new CommentModel("Hey yourself!") };
+            return null;
+            //return new CommentModel[] { new CommentModel("Hey yourself!") };
         }
     }
 }

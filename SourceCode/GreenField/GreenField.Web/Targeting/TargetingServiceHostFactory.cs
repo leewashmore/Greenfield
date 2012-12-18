@@ -314,6 +314,7 @@ namespace GreenField.Web.Targeting
                 basketRenderer
             );
 
+            var commentManager = new TopDown.Core.ManagingComments.CommentManager();
             var facade = new Facade(
                 connectionFactory,
                 dataManagerFactory,
@@ -327,7 +328,8 @@ namespace GreenField.Web.Targeting
                 basketPickerManager,
                 bpstModelManager,
                 portfolioManager,
-                hopper
+                hopper,
+                commentManager
             );
 
 

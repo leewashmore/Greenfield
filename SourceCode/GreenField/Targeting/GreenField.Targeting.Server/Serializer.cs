@@ -98,7 +98,8 @@ namespace GreenField.Targeting.Server
                 expression.InitialValue,
                 expression.EditedValue,
                 expression.Comment,
-                this.SerializeValidationIssues(expression.Validate())
+                this.SerializeValidationIssues(expression.Validate()),
+                expression.LastOneModified
             );
             return result;
         }
@@ -274,5 +275,17 @@ namespace GreenField.Targeting.Server
             }
         }
 
+
+        public IEnumerable<CommentModel> SerializeComments(IEnumerable<Core.ManagingComments.CommentModel> comments)
+        {
+            var result = comments.Select(x => new CommentModel(
+                x.ChangeInfo.Comment,
+                x.ChangeInfo.Before,
+                x.ChangeInfo.After,
+                x.ChangesetInfo.Username,
+                x.ChangesetInfo.Timestamp
+            )).ToList();
+            return result;
+        }
     }
 }

@@ -62,7 +62,7 @@ namespace TopDown.Core.ManagingBpt
 			{
                 this.SerializeOverlay(model.Factors, writer, ticket);
 			});
-            this.expressionWriter.SerializeOnceResolved(model.PortfolioScaledTotal, JsonNames.PortfolioScaledTotal, writer, ticket);
+            this.expressionWriter.SerializeOnceResolved(model.PortfolioScaledGrandTotal, JsonNames.PortfolioScaledTotal, writer, ticket);
 		}
 
 
@@ -187,7 +187,7 @@ namespace TopDown.Core.ManagingBpt
 		protected void SerializeCash(IJsonWriter writer, CashModel cash, CalculationTicket ticket)
 		{
             this.expressionWriter.SerializeOnceResolved(cash.Base, JsonNames.Base, writer, ticket);
-            this.expressionWriter.SerializeOnceResolved(cash.Scaled, JsonNames.CashScaled, writer, ticket);
+            this.expressionWriter.SerializeOnceResolved(cash.PortfolioScaled, JsonNames.CashScaled, writer, ticket);
 		}
 
 		protected void SerializeRegion(IJsonWriter writer, RegionModel model, String discriminator, CalculationTicket ticket)

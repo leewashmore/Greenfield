@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace TopDown.Core.Persisting
 {
-    public class TargetingTypeBasketBaseValueChangeInfo
+    public class TargetingTypeBasketBaseValueChangeInfo : IChangeInfoBase
     {
         [DebuggerStepThrough]
         public TargetingTypeBasketBaseValueChangeInfo()
@@ -32,5 +32,21 @@ namespace TopDown.Core.Persisting
         public Decimal? BaseValueAfter { get; set; }
         public Int32 ChangesetId { get; set; }
         public String Comment { get; set; }
+
+
+        String IChangeInfoBase.Comment
+        {
+            get { return this.Comment; }
+        }
+
+        Decimal? IChangeInfoBase.Before
+        {
+            get { return this.BaseValueBefore; }
+        }
+
+        Decimal? IChangeInfoBase.After
+        {
+            get { return this.BaseValueAfter; }
+        }
     }
 }

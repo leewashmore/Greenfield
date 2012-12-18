@@ -124,13 +124,24 @@ namespace GreenField.Targeting.Controls
             if (isAssumed)
             {
                 this.Foreground = new SolidColorBrush(Colors.Gray);
-
             }
             else
             {
                 this.Foreground = new SolidColorBrush(Colors.Black);
             }
+            this.OnGotText();
         }
+
+        public event EventHandler GotText;
+        protected virtual void OnGotText()
+        {
+            var handler = this.GotText;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
+        }
+
 
         private Decimal? PullText()
         {

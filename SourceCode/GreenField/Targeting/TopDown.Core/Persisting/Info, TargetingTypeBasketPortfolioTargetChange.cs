@@ -9,7 +9,7 @@ namespace TopDown.Core.Persisting
 	/// <summary>
 	/// Represents a record of the TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_CHANGE table.
 	/// </summary>
-    public class TargetingTypeBasketPortfolioTargetChangeInfo
+    public class TargetingTypeBasketPortfolioTargetChangeInfo : IChangeInfoBase
     {
         [DebuggerStepThrough]
         public TargetingTypeBasketPortfolioTargetChangeInfo()
@@ -32,8 +32,8 @@ namespace TopDown.Core.Persisting
             this.TargetingTypeId = targetingTypeId;
             this.BasketId = basketId;
             this.PortfolioId = portfolioId;
-            this.Target_Before = target_Before;
-            this.Target_After = target_After;
+            this.TargetBefore = target_Before;
+            this.TargetAfter = target_After;
 			this.Comment = comment;
             this.ChangesetId = changesetId;
         }
@@ -61,12 +61,12 @@ namespace TopDown.Core.Persisting
 		/// <summary>
 		/// TARGET_BEFORE column.
 		/// </summary>
-        public Decimal? Target_Before { get; set; }
+        public Decimal? TargetBefore { get; set; }
 
 		/// <summary>
 		/// TARGET_AFTER column.
 		/// </summary>
-        public Decimal? Target_After { get; set; }
+        public Decimal? TargetAfter { get; set; }
 
 		/// <summary>
 		/// CHANGESET_ID column.
@@ -77,5 +77,20 @@ namespace TopDown.Core.Persisting
 		/// COMMENT column.
 		/// </summary>
 		public String Comment { get; set; }
+
+        String IChangeInfoBase.Comment
+        {
+            get { return this.Comment; }
+        }
+
+        Decimal? IChangeInfoBase.Before
+        {
+            get { return this.TargetBefore; }
+        }
+
+        Decimal? IChangeInfoBase.After
+        {
+            get { return this.TargetAfter; }
+        }
 	}
 }

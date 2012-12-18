@@ -89,6 +89,7 @@ namespace GreenField.Targeting.Server
             expression.InitialValue = model.InitialValue;
             expression.EditedValue = model.EditedValue;
             expression.Comment = model.Comment;
+            expression.LastOneModified = model.IsLastEdited;
         }
 
         public void PopulateUnchangableExpression(Aims.Expressions.UnchangableExpression<Decimal> expression, ExpressionModel model)
