@@ -786,10 +786,6 @@ namespace GreenField.Web.Services
                 #region Fetching and processing PORTFOLIO_SECURITY_TARGETS data
                 portfolioSecurityTargetsData = externalEntity.PORTFOLIO_SECURITY_TARGETS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).ToList();
 
-                //Lane working here
-                //portfolioSecurityTargetsData = externalEntity.PORTFOLIO_SECURITY_TARGETS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).ToList();
-               
-
                 foreach (PORTFOLIO_SECURITY_TARGETS item in portfolioSecurityTargetsData)
                 {
                     GF_SECURITY_BASEVIEW specificSecurity = entity.GF_SECURITY_BASEVIEW
@@ -1063,13 +1059,18 @@ namespace GreenField.Web.Services
                 objTarget = check ? portfolioTargets.Where(a => a.IssuerId == issuerId).Sum(a => a.Target)
                     : portfolioTargets.Where(a => a.SecurityId == securityId.ToString()).Sum(a => a.Target);
             }
-            temp.PortfolioTarget = objTarget != null ? Math.Round(Convert.ToDecimal(objTarget), 1) + "%" : Math.Round(0.0) + "%";
+            //Lane - Adjusted Portfolio Target Here
+            //temp.PortfolioTarget = objTarget != null ? Math.Round(Convert.ToDecimal(objTarget), 1) + "%" : Math.Round(0.0) + "%";
+            temp.PortfolioTarget = objTarget != null ? Math.Round(Convert.ToDecimal(objTarget) * 100, 1) + "%" : Math.Round(0.0) + "%";
+
 
             targetSumPortfolio = portfolioCountryTargets.TryGetValue(country, out value) ? value : 0;
             if (targetSumPortfolio != 0)
             {
                 objTargetInCountry = objTarget / targetSumPortfolio;
-                temp.PortfolioTargetInCountry = objTargetInCountry != null ? Math.Round(Convert.ToDecimal(objTargetInCountry), 1) + "%" : Math.Round(0.0) + "%";
+                //Lane - Adjusted Portfolio Target in Country Here
+                //temp.PortfolioTargetInCountry = objTargetInCountry != null ? Math.Round(Convert.ToDecimal(objTargetInCountry), 1) + "%" : Math.Round(0.0) + "%";
+                temp.PortfolioTargetInCountry = objTargetInCountry != null ? Math.Round(Convert.ToDecimal(objTargetInCountry) * 100, 1) + "%" : Math.Round(0.0) + "%";
             }
             temp.Holdings = check ? Math.Round(Convert.ToDecimal(portfolioHoldingsData.Where(a => a.ISSUER_ID == issuerId)
                                                                                               .Sum(a => a.DIRTY_VALUE_PC)) / Convert.ToDecimal(1000000), 1)
@@ -1081,7 +1082,9 @@ namespace GreenField.Web.Services
                     ? Convert.ToDecimal(benchmarkData.Where(a => a.ISSUER_ID == issuerId).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()) / 100
                     : Convert.ToDecimal(benchmarkData.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()) / 100;
             }
-            temp.BenchmarkWeight = objBenchmarkWeight != null ? Math.Round(Convert.ToDecimal(objBenchmarkWeight), 1) + "%" : 0.0 + "%";
+            //Lane - Adjusted Benchmark Weight Here
+            //temp.BenchmarkWeight = objBenchmarkWeight != null ? Math.Round(Convert.ToDecimal(objBenchmarkWeight), 1) + "%" : 0.0 + "%";
+            temp.BenchmarkWeight = objBenchmarkWeight != null ? Math.Round(Convert.ToDecimal(objBenchmarkWeight) * 100, 1) + "%" : 0.0 + "%";
             targetSumBenchmark = benchmarkCountryData.TryGetValue(country, out value) ? value / 100 : 0;
             temp.BenchmarkWeightInCountry = Math.Round(0.0) + "%";
             if (targetSumBenchmark != 0)
