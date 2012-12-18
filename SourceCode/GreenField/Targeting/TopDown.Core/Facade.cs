@@ -355,5 +355,20 @@ namespace TopDown.Core
                 return comments;
             }
         }
+
+        public IEnumerable<ManagingComments.CommentModel> GetCommentsForTargetingTypeGroupBasketSecurityBaseValue(Int32 targetingTypeGroupId, Int32 basketId, String securityId)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.GetCommentsForTargetingTypeGroupBasketSecurityBaseValue(
+                    targetingTypeGroupId,
+                    basketId,
+                    securityId,
+                    manager
+                );
+                return comments;
+            }
+        }
     }
 }

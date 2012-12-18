@@ -212,8 +212,8 @@ namespace GreenField.Targeting.Controls.BasketTargets
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
-            client.RequestCommentsForTargetingTypeBasketBaseCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting comments", args, x => x.Result, this.TakeComments, this.FinishLoading);
-            client.RequestCommentsForTargetingTypeBasketBaseAsync(targetingTypeGroupId, basketId, securityId);
+            client.RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting comments", args, x => x.Result, this.TakeComments, this.FinishLoading);
+            client.RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueAsync(targetingTypeGroupId, basketId, securityId);
         }
 
         public void RequestComments(Int32 basketId, String portfolioId, String securityId)
@@ -227,14 +227,6 @@ namespace GreenField.Targeting.Controls.BasketTargets
         public void TakeComments(ObservableCollection<CommentModel> comments)
         {
             this.FinishLoading();
-            var comment = String.Join(", ", comments.Select(x => String.Format(
-                "{4} at {3} {1} => {2}: {0}",
-                x.Comment,
-                x.Before,
-                x.After,
-                x.Timestamp,
-                x.Username
-            )));
             this.Comments = comments;
         }
 

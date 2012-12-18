@@ -23,7 +23,7 @@
                 </local:CommentTemplateSelector.UpdateTemplate>
                 <local:CommentTemplateSelector.CreateTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Background="Blue">
+                        <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="{Binding Before}" Margin="10 0 0 0" />
                             <TextBlock Text="{Binding After}" Margin="10 0 0 0" />
                         </StackPanel>
@@ -31,7 +31,7 @@
                 </local:CommentTemplateSelector.CreateTemplate>
                 <local:CommentTemplateSelector.DeleteTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Background="Red">
+                        <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="{Binding Before}" Margin="10 0 0 0" />
                             <TextBlock Text="{Binding After}" Margin="10 0 0 0" />
                         </StackPanel>

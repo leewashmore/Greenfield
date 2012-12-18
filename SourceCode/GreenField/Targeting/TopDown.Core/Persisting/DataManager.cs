@@ -873,6 +873,49 @@ namespace TopDown.Core.Persisting
             }
         }
 
+        public IEnumerable<TargetingTypeGroupBasketSecurityBaseValueChangeInfo> GetTargetingTypeGroupBasketSecurityBaseValueChanges(int targetingTypeGroupId, int basketId, string securityId)
+        {
+            using (var builder = this.CreateQueryCommandBuilder<TargetingTypeGroupBasketSecurityBaseValueChangeInfo>())
+            {
+                return builder.Text("select ")
+                    .Field("  [ID]", (info, value) => info.Id = value)
+                    .Field(", [CHANGESET_ID]", (info, value) => info.ChangesetId = value)
+                    .Field(", [TARGETING_TYPE_ID]", (info, value) => info.TargetingTypeGroupId = value)
+                    .Field(", [BASKET_ID]", (info, value) => info.BasketId = value)
+                    .Field(", [SECURITY_ID]", (info, value) => info.SecurityId = value, true)
+                    .Field(", [BASE_VALUE_BEFORE]", (TargetingTypeGroupBasketSecurityBaseValueChangeInfo info, Decimal? value) => info.BaseValueBefore = value)
+                    .Field(", [BASE_VALUE_AFTER]", (TargetingTypeGroupBasketSecurityBaseValueChangeInfo info, Decimal? value) => info.BaseValueAfter = value)
+                    .Field(", [COMMENT]", (info, value) => info.Comment = value, true)
+                    .Text(" from [" + TableNames.TARGETING_TYPE_GROUP_BASKET_SECURITY_BASE_VALUE_CHANGE + "]")
+                    .Text(" where [BASKET_ID] = ").Parameter(basketId)
+                    .Text(" and   [TARGETING_TYPE_ID] = ").Parameter(targetingTypeGroupId)
+                    .Text(" and   [SECURITY_ID] = ").Parameter(securityId)
+                    .PullAll();
+            }
+        }
+
+        public IEnumerable<TargetingTypeGroupBasketSecurityBaseValueChangesetInfo> GetTargetingTypeGroupBasketSecurityBaseValueChangesets(int[] changesetIds)
+        {
+            if (changesetIds.Any())
+            {
+                using (var builder = this.CreateQueryCommandBuilder<TargetingTypeGroupBasketSecurityBaseValueChangesetInfo>())
+                {
+                    return builder.Text("select ")
+                        .Field("  [ID]", (info, value) => info.Id = value)
+                        .Field(", [USERNAME]", (info, value) => info.Username = value, true)
+                        .Field(", [TIMESTAMP]", (info, value) => info.Timestamp = value)
+                        .Field(", [CALCULATION_ID]", (info, value) => info.CalculationId = value)
+                        .Text(" from [" + TableNames.TARGETING_TYPE_GROUP_BASKET_SECURITY_BASE_VALUE_CHANGESET + "]")
+                        .Text(" where [ID] in (").Parameters(changesetIds).Text(")")
+                        .PullAll();
+                }
+            }
+            else
+            {
+                return new TargetingTypeGroupBasketSecurityBaseValueChangesetInfo[] { };
+            }
+        }
+
         public IEnumerable<BasketPortfolioSecurityTargetChangesetInfo> GetBasketPortfolioSecurityTargetChangesets(IEnumerable<Int32> changesetIds)
         {
             if (changesetIds.Any())
@@ -1415,9 +1458,6 @@ namespace TopDown.Core.Persisting
         }
 
 
-
-
-
-
+        
     }
 }

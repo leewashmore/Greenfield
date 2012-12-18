@@ -37,11 +37,13 @@ namespace GreenField.Targeting.Controls
                 var timer = new DispatcherTimer();
                 timer.Interval = TimeSpan.FromMilliseconds(50);
                 timer.Stop();
-                timer.Tick += (s1, e1) => {
+                timer.Tick += (s1, e1) =>
+                {
                     if (behavior.AssociatedObject.Focus())
                     {
                         behavior.WasLastEdited = false;
                     }
+                    timer.Stop();
                     timer = null;
                 };
                 timer.Start();
