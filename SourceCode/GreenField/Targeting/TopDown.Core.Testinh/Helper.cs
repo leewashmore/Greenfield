@@ -21,7 +21,7 @@ namespace TopDown.Core.Testing
 {
 	public class Helper
 	{
-		public static Facade CreateFacade()
+		public static Facade CreateFacade(String connectionString)
 		{
 			var infoCopier = new InfoCopier();
 			var countryRepositoryStorage = new InMemoryStorage<CountryRepository>();
@@ -35,7 +35,7 @@ namespace TopDown.Core.Testing
 			var securityManager = new SecurityManager(securityRepositoryCache, monitor);
 
 			IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
-            var connectionFactory = new SqlConnectionFactory("Data Source=lonweb1t.ashmore.local;Initial Catalog=AIMS_Data_QA;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True");
+            var connectionFactory = new SqlConnectionFactory(connectionString);
 			var portfolioRepositoryCache = new InMemoryStorage<PortfolioRepository>();
 			var portfolioSerialzer = new TopDown.Core.ManagingPortfolios.PortfolioToJsonSerializer(securitySerializer);
 			var portfolioManager = new TopDown.Core.ManagingPortfolios.PortfolioManager(

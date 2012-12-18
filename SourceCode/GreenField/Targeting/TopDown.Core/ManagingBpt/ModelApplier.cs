@@ -62,16 +62,16 @@ namespace TopDown.Core.ManagingBpt
 		)
 		{
             var issues = this.ValidateModelAndPermissions(model, username, ticket);
-			if (issues.Any()) return issues;
+			if (issues.Any(x => x is ErrorIssue)) return issues;
 
 			try
 			{
 				this.Apply(model, taxonomy, repositoryManager, username, connection, ref info);
-				return No.ValidationIssues;
+				return issues;
 			}
 			catch (ValidationException exception)
 			{
-				return new IValidationIssue[] { exception.Issue };
+                return issues.Union(new IValidationIssue[] { exception.Issue });
 			}
 		}
 
@@ -121,7 +121,9 @@ namespace TopDown.Core.ManagingBpt
                     this.ttbptChangesetApplier.Apply(calculationInfo.Id, ttbptChangesetOpt, manager);
 				}
 
-				transaction.Commit();
+//#warning HACK!!! prevent test changes to DB
+				//transaction.Rollback();
+                transaction.Commit();
 			}
 		}
 

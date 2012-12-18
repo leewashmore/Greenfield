@@ -31,15 +31,26 @@ namespace Aims.Expressions
 		public String Name { get; private set; }
         public Decimal Value(CalculationTicket ticket)
         {
+            var result = this.Value(ticket, No.CalculationTracer, No.ExpressionName);
+            return result;
+        }
+        public Decimal Value(CalculationTicket ticket, ICalculationTracer tracer, String name)
+        {
+            tracer.WriteLine("Sum: " + (name ?? this.Name));
+            tracer.Indent();
             var result = this.defaultValue;
             foreach (var expressionOpt in this.expressions)
             {
                 if (expressionOpt == null) continue;
                 var value = expressionOpt.Value(ticket);
+                tracer.WriteValue("+", value);
                 result = result + value;
             }
+            tracer.WriteValue("Total", result);
+            tracer.Unindent();
             return result;
         }
+
         [DebuggerStepThrough]
         public IEnumerable<IValidationIssue> Validate(CalculationTicket ticket)
         {
@@ -58,6 +69,9 @@ namespace Aims.Expressions
             resolver.Resolve(this);
         }
 
-		
-	}
+
+
+
+       
+    }
 }

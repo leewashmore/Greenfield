@@ -6,15 +6,20 @@ using System.Diagnostics;
 
 namespace Aims.Expressions
 {
-    public class ValidationIssue : IValidationIssue
+    public class WariningIssue : IValidationIssue
     {
         [DebuggerStepThrough]
-        public ValidationIssue(String message)
+        public WariningIssue(String message)
         {
             this.Message = message;
         }
 
-        public String Message { get; private set; }
+
+        public String Message
+        {
+            get;
+            private set;
+        }
 
         [DebuggerStepThrough]
         public void Accept(IValidationIssueResolver resolver)

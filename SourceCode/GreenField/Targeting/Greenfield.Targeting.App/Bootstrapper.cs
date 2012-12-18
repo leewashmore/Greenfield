@@ -14,6 +14,7 @@ using System.ComponentModel.Composition.Hosting;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Targeting.Controls;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.App
 {
@@ -47,6 +48,7 @@ namespace GreenField.Targeting.App
             base.InitializeShell();
             var shell = (Shell) this.Shell;
             Application.Current.RootVisual = shell;
+            this.Container.ComposeExportedValue<Dispatcher>(shell.Dispatcher);
         }
 
         // 2. Run
@@ -72,6 +74,7 @@ namespace GreenField.Targeting.App
             this.Container.ComposeExportedValue<Controls.IClientFactory>(settings.ClientFactory);
             this.Container.ComposeExportedValue<Controls.BottomUp.Settings>(settings.BuSettings);
             this.Container.ComposeExportedValue<Controls.BasketTargets.Settings>(settings.BtSettings);
+            
         }
 
         private Controls.GlobalSettings CreateTargetingSettings()

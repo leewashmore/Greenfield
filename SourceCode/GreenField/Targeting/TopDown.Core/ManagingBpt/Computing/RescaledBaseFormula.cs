@@ -11,7 +11,10 @@ namespace TopDown.Core.ManagingBpt.Computing
         private IExpression<Decimal?> baseWherePortfoioAdjustmentSetTotal;
         private IExpression<Decimal?> porfolioAdjustmentTotal;
 
-        public RescaledBaseFormula(IExpression<Decimal?> baseWherePortfoioAdjustmentSetTotal, IExpression<Decimal?> porfolioAdjustmentTotal)
+        public RescaledBaseFormula(
+            IExpression<Decimal?> baseWherePortfoioAdjustmentSetTotal,
+            IExpression<Decimal?> porfolioAdjustmentTotal
+        )
         {
             // TODO: Complete member initialization
             this.baseWherePortfoioAdjustmentSetTotal = baseWherePortfoioAdjustmentSetTotal;
@@ -20,11 +23,22 @@ namespace TopDown.Core.ManagingBpt.Computing
 
         public Decimal? Calculate(IModel model, CalculationTicket ticket)
         {
+            var result = this.Calculate(model, ticket, No.CalculationTracer);
+            return result;
+
+        }
+        public Decimal? Calculate(IModel model, CalculationTicket ticket, ICalculationTracer tracer)
+        {
             // if portfolio adjustment has anything return it
+
+            var baseWherePortfolioAdjustmentSetTotalValue = this.baseWherePortfoioAdjustmentSetTotal.Value(ticket, tracer, "");
+            var porfolioAdjustmentTotalValue = porfolioAdjustmentTotal.Value(ticket, tracer, "");
+
             var multimethod = new RescaledBaseForAdjustmentValueMultimethod(
                 ticket,
-                this.baseWherePortfoioAdjustmentSetTotal,
-                this.porfolioAdjustmentTotal
+                baseWherePortfolioAdjustmentSetTotalValue,
+                porfolioAdjustmentTotalValue,
+                tracer
             );
             model.Accept(multimethod);
             return multimethod.Result;
@@ -34,40 +48,48 @@ namespace TopDown.Core.ManagingBpt.Computing
             Decimal? @base,
             Decimal? portfolioAdjustment,
             Decimal? baseWherePortfoioAdjustmentSetTotal,
-            Decimal? porfolioAdjustmentTotal
+            Decimal? porfolioAdjustmentTotal,
+            ICalculationTracer tracer
         )
         {
+            Decimal? result;
             if (portfolioAdjustment.HasValue)
             {
-                return portfolioAdjustment.Value;
+                result = portfolioAdjustment.Value;
+                tracer.WriteValue("Portfolio adjustment as is", result);
             }
             else if (@base.HasValue)
             {
-                var result = @base.Value
+                result = @base.Value
                     / (1.0m - (baseWherePortfoioAdjustmentSetTotal.HasValue ? baseWherePortfoioAdjustmentSetTotal.Value : 0m))
                     * (1.0m - (porfolioAdjustmentTotal.HasValue ? porfolioAdjustmentTotal.Value : 0m));
-                return result;
+
+                tracer.WriteValue("Base / (1 - baseWherePortfoioAdjustmentSetTotal) * (1 - porfolioAdjustmentTotal)", result);
             }
             else
             {
-                return null;
+                result = null;
             }
+            return result;
         }
 
         private class RescaledBaseForAdjustmentValueMultimethod : IModelResolver
         {
-            private IExpression<Decimal?> baseWherePortfoioAdjustmentSetTotal;
-            private IExpression<Decimal?> porfolioAdjustmentTotal;
+            private Decimal? baseWherePortfoioAdjustmentSetTotal;
+            private Decimal? porfolioAdjustmentTotal;
             private CalculationTicket ticket;
+            private ICalculationTracer tracer;
             public RescaledBaseForAdjustmentValueMultimethod(
                 CalculationTicket ticket,
-                IExpression<Decimal?> baseWherePortfoioAdjustmentSetTotal,
-                IExpression<Decimal?> porfolioAdjustmentTotal
+                Decimal? baseWherePortfoioAdjustmentSetTotal,
+                Decimal? porfolioAdjustmentTotal,
+                ICalculationTracer tracer
             )
             {
                 this.ticket = ticket;
                 this.baseWherePortfoioAdjustmentSetTotal = baseWherePortfoioAdjustmentSetTotal;
                 this.porfolioAdjustmentTotal = porfolioAdjustmentTotal;
+                this.tracer = tracer;
             }
             public Decimal? Result { get; private set; }
             public void Resolve(BasketCountryModel model)
@@ -75,8 +97,9 @@ namespace TopDown.Core.ManagingBpt.Computing
                 this.Result = CalculateRescaledBase(
                     model.Base.EditedValue,
                     model.PortfolioAdjustment.EditedValue,
-                    this.baseWherePortfoioAdjustmentSetTotal.Value(this.ticket),
-                    this.porfolioAdjustmentTotal.Value(this.ticket)
+                    this.baseWherePortfoioAdjustmentSetTotal,
+                    this.porfolioAdjustmentTotal,
+                    tracer
                 );
             }
             public void Resolve(BasketRegionModel model)
@@ -84,8 +107,9 @@ namespace TopDown.Core.ManagingBpt.Computing
                 this.Result = CalculateRescaledBase(
                     model.Base.EditedValue,
                     model.PortfolioAdjustment.EditedValue,
-                    this.baseWherePortfoioAdjustmentSetTotal.Value(this.ticket),
-                    this.porfolioAdjustmentTotal.Value(this.ticket)
+                    this.baseWherePortfoioAdjustmentSetTotal,
+                    this.porfolioAdjustmentTotal,
+                    tracer
                 );
             }
             public void Resolve(UnsavedBasketCountryModel model)
@@ -93,13 +117,26 @@ namespace TopDown.Core.ManagingBpt.Computing
                 this.Result = CalculateRescaledBase(
                     model.Base.EditedValue,
                     model.PortfolioAdjustment.EditedValue,
-                    this.baseWherePortfoioAdjustmentSetTotal.Value(this.ticket),
-                    this.porfolioAdjustmentTotal.Value(this.ticket)
+                    this.baseWherePortfoioAdjustmentSetTotal,
+                    this.porfolioAdjustmentTotal,
+                    tracer
                 );
             }
-            public void Resolve(CountryModel model) { }
-            public void Resolve(OtherModel model) { }
-            public void Resolve(RegionModel model) { }
+            public void Resolve(CountryModel model)
+            {
+                this.Result = null;
+            }
+            public void Resolve(OtherModel model)
+            {
+                this.Result = null;
+            }
+            public void Resolve(RegionModel model)
+            {
+                this.Result = null;
+            }
         }
+
+
+
     }
 }

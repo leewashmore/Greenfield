@@ -39,7 +39,7 @@ namespace TopDown.Core
                 this.serializer = serializer;
             }
 
-            public void Resolve(ValidationIssue issue)
+            public void Resolve(ErrorIssue issue)
             {
                 this.serializer.SerializeValidationIssue(issue, writer);
             }
@@ -48,9 +48,14 @@ namespace TopDown.Core
             {
                 this.serializer.SerializeCompoundValidationIssue(issue, writer);
             }
+
+            public void Resolve(WariningIssue issue)
+            {
+                throw new NotImplementedException();
+            }
         }
 
-        public void SerializeValidationIssue(ValidationIssue issue, IJsonWriter writer)
+        public void SerializeValidationIssue(ErrorIssue issue, IJsonWriter writer)
         {
             this.Serialize(issue.Message, No.ValidationIssues, writer);
         }

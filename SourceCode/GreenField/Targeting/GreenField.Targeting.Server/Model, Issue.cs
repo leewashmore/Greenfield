@@ -2,37 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Diagnostics;
 
 namespace GreenField.Targeting.Server
 {
     [DataContract]
+    [KnownType(typeof(ErrorModel))]
+    [KnownType(typeof(WarningModel))]
+    [KnownType(typeof(CompoundIssueModel))]
     public class IssueModel
     {
+        [DataMember]
+        public String Message { get; set; }
+
+        [DebuggerStepThrough]
+        public IssueModel(String message) : this()
+        {
+            this.Message = message;
+        }
+
         [DebuggerStepThrough]
         public IssueModel()
         {
         }
-
-        [DebuggerStepThrough]
-        public IssueModel(String message)
-        {
-            this.Message = message;
-        }
-
-
-        [DebuggerStepThrough]
-        public IssueModel(String message, IEnumerable<IssueModel> issues)
-        {
-            this.Message = message;
-            this.Issues = issues.ToList();
-        }
-
-        [DataMember]
-        public String Message { get; set; }
-
-        [DataMember]
-        public IEnumerable<IssueModel> Issues { get; set; }
     }
 }

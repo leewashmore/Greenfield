@@ -182,14 +182,17 @@ namespace GreenField.Targeting.Backend
         }
 
 
-        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId)
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(Int32 targetingTypeGroupId, Int32 basketId, String securityId)
         {
 #warning list parameters in the text message
             return this.Watch("Getting comments.....", delegate
             {
-                return this.facade.RequestCommentsForTargetingTypeBasketBase(targetingTypeGroupId, basketId, securityId);
+                return this.facade.RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(targetingTypeGroupId, basketId, securityId);
             });
-            
+
         }
+
+
+        
     }
 }

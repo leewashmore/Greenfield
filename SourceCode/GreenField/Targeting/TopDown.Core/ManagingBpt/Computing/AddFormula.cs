@@ -19,30 +19,44 @@ namespace TopDown.Core.ManagingBpt.Computing
 
         public Decimal? Calculate(CalculationTicket ticket)
         {
-            var one = this.oneExpression.Value(ticket);
-            var another = this.anotherExpression.Value(ticket);
+            var result = this.Calculate(ticket, No.CalculationTracer);
+            return result;
+
+        }
+
+
+        public Decimal? Calculate(CalculationTicket ticket, ICalculationTracer tracer)
+        {
+            tracer.WriteLine("Add formula");
+            tracer.Indent();
+            var one = this.oneExpression.Value(ticket, tracer, No.ExpressionName);
+            var another = this.anotherExpression.Value(ticket, tracer, No.ExpressionName);
+            Decimal? result;
             if (one.HasValue)
             {
                 if (another.HasValue)
                 {
-                    return one.Value + another.Value;
+                    result = one.Value + another.Value;
                 }
                 else
                 {
-                    return one.Value;
+                    result = one.Value;
                 }
             }
             else
             {
                 if (another.HasValue)
                 {
-                    return another.Value;
+                    result = another.Value;
                 }
                 else
                 {
-                    return null;
+                    result = null;
                 }
             }
+            tracer.WriteValue("Sum", result);
+            tracer.Unindent();
+            return result;
         }
     }
 }

@@ -122,6 +122,10 @@
     <Compile Include="BasketTargets\Converter, SecurityModelToPortfolioTarget.cs" />
     <Compile Include="BooleanToColorConverter.cs" />
     <Compile Include="BottomUp\SecurityPickerClientFactory.cs" />
+    <Compile Include="CommentsWindow.xaml.cs">
+      <DependentUpon>CommentsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CommentTemplateSelector.cs" />
     <Compile Include="EditableColumn.cs" />
     <Compile Include="ISecurity.cs" />
     <Compile Include="BasketTargets\SecurityPickerClientFactory.cs" />
@@ -138,6 +142,8 @@
     <Compile Include="DemoView.xaml.cs">
       <DependentUpon>DemoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IssuesTraverser.cs" />
+    <Compile Include="IssueTemplateSelectort.cs" />
     <Compile Include="OnlyErrorCommunicationState.cs" />
     <Compile Include="PickerViewModelBase.cs" />
     <Compile Include="BottomUp\PortfolioPickerView.xaml.cs">
@@ -171,6 +177,7 @@
     <Compile Include="BroadGlobalActive\Settings.cs" />
     <Compile Include="Behavior, Comment.cs" />
     <Compile Include="Behavior, SetFocus.cs" />
+    <Compile Include="ShowChangesWindowBehavior.cs" />
     <Compile Include="TargetingModule.cs" />
     <Compile Include="ValidatedResultWindow.xaml.cs">
       <DependentUpon>ValidatedResultWindow.xaml</DependentUpon>
@@ -240,6 +247,10 @@
     <Page Include="BroadGlobalActive\RootView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CommentsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CrazyShit.xaml">
       <SubType>Designer</SubType>

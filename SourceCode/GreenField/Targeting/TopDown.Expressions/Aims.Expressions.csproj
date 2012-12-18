@@ -63,17 +63,22 @@
     <Compile Include="Expression, Unchangable.cs" />
     <Compile Include="Expression.cs" />
     <Compile Include="ExpressionPicker, I.cs" />
+    <Compile Include="ICalculationTracer.cs" />
     <Compile Include="IFormula.cs" />
     <Compile Include="IModelFormula.cs" />
+    <Compile Include="IssueSeverity.cs" />
+    <Compile Include="IssueTraverser.cs" />
     <Compile Include="IValueExecuter.cs" />
     <Compile Include="IValueGiver.cs" />
     <Compile Include="IValueTaker.cs" />
+    <Compile Include="CalculationHelper.cs" />
     <Compile Include="No.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationExeption.cs" />
     <Compile Include="ValidationIssue, Compound.cs" />
     <Compile Include="ValidationIssue, I.cs" />
-    <Compile Include="ValidationIssue.cs" />
+    <Compile Include="ErrorIssue.cs" />
+    <Compile Include="WariningIssue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

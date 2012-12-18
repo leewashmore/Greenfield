@@ -99,6 +99,12 @@
   <ItemGroup>
     <Folder Include="ManagingComments\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Targeting\TopDown.Expressions\Aims.Expressions.csproj">
+      <Project>{9FC437D2-362D-4898-8C9B-408B16406A0F}</Project>
+      <Name>Aims.Expressions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

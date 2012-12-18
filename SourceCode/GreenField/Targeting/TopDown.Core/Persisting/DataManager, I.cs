@@ -75,7 +75,9 @@ namespace TopDown.Core.Persisting
 
 
         // TTG-B-S-Bv
-        
+
+        IEnumerable<TargetingTypeGroupBasketSecurityBaseValueChangeInfo> GetTargetingTypeGroupBasketSecurityBaseValueChanges(int targetingTypeGroupId, int basketId, string securityId);
+        IEnumerable<TargetingTypeGroupBasketSecurityBaseValueChangesetInfo> GetTargetingTypeGroupBasketSecurityBaseValueChangesets(int[] changesetIds);
         TargetingTypeGroupBasketSecurityBaseValueChangesetInfo GetLatestTargetingTypeGroupBasketSecurityBaseValueChangeset();
         IEnumerator<Int32> ReserveTargetingTypeGroupBasketSecurityBaseValueChangesetIds(Int32 howMany);
         IEnumerator<Int32> ReserveTargetingTypeGroupBasketSecurityBaseValueChangeIds(Int32 howMany);

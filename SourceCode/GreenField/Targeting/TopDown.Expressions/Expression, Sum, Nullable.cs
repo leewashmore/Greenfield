@@ -13,26 +13,35 @@ namespace Aims.Expressions
         private Func<NullableSumExpression, CalculationTicket, IEnumerable<IValidationIssue>> validator;
 
         public NullableSumExpression(
-			String name,
+            String name,
             IEnumerable<IExpression<Decimal?>> expressions,
             Decimal? defaultValue,
             Func<NullableSumExpression, CalculationTicket, IEnumerable<IValidationIssue>> validator
-		)
+        )
         {
-			this.Name = name;
+            this.Name = name;
             this.defaultValue = defaultValue;
             this.expressions = expressions;
             this.validator = validator;
         }
 
-		public String Name { get; private set; }
+        public String Name { get; private set; }
         public Decimal? Value(CalculationTicket ticket)
         {
+            var result = this.Value(ticket, No.CalculationTracer, No.ExpressionName);
+            return result;
+        }
+
+        public Decimal? Value(CalculationTicket ticket, ICalculationTracer tracer, String name)
+        {
+            tracer.WriteLine("Nullable sum: " + (name ?? this.Name));
+            tracer.Indent();
             var result = this.defaultValue;
             foreach (var expressionOpt in this.expressions)
             {
                 if (expressionOpt == null) continue;
                 var value = expressionOpt.Value(ticket);
+                tracer.WriteValue("+", value);
                 if (value.HasValue)
                 {
                     if (result.HasValue)
@@ -44,8 +53,10 @@ namespace Aims.Expressions
                         result = value.Value;
                     }
                 }
-                
+
             }
+            tracer.WriteValue("Total", result);
+            tracer.Unindent();
             return result;
         }
         [DebuggerStepThrough]
@@ -65,5 +76,8 @@ namespace Aims.Expressions
         {
             resolver.Resolve(this);
         }
+
+
+
     }
 }

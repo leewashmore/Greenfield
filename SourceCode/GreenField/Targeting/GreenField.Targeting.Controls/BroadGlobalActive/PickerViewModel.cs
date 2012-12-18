@@ -13,6 +13,7 @@ using Microsoft.Practices.Prism.Commands;
 using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
 using TopDown.FacingServer.Backend.Targeting;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls.BroadGlobalActive
 {

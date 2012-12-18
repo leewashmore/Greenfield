@@ -118,7 +118,7 @@ namespace TopDown.Core.ManagingBpt
             var trueActiveGrandTotal = this.modelBuilder.CreateAddExpression(cash.TrueActive, globe.TrueActive);
             var portfolio = portfolioRepository.GetBroadGlobalActivePortfolio(portfolioId);
             var benchmarkDate = manager.GetLastestDateWhichBenchmarkDataIsAvialableOn();
-            
+
             result = new RootModel(
                 targetingType,
                 portfolio,
@@ -171,7 +171,11 @@ namespace TopDown.Core.ManagingBpt
                 portfolioSecurityTargetRepository
             );
             this.benchmarkValueInitializer.Initialize(result, new BenchmarkValueResolver(benchmarks));
+            
 
+
+            var ticket = new CalculationTicket();
+            this.Validate(result, ticket);
             return result;
         }
 
@@ -271,7 +275,7 @@ namespace TopDown.Core.ManagingBpt
                     targetingTypeRepository
                 );
 
-                
+
                 return result;
             }
         }
@@ -282,14 +286,14 @@ namespace TopDown.Core.ManagingBpt
             var other = this.ClaimOtherModel(root);
             foreach (var country in missingCountries)
             {
-				var baseExpression = this.modelBuilder.CreateBaseExpression();
-				var portfolioAdjustmentExpression = this.modelBuilder.CreatePortfolioAdjustmentExpression();
+                var baseExpression = this.modelBuilder.CreateBaseExpression();
+                var portfolioAdjustmentExpression = this.modelBuilder.CreatePortfolioAdjustmentExpression();
                 var unsavedBasketCountry = this.modelBuilder.CreateUnsavedBasketModel(
-					country,
-					computations,
-					baseExpression,
-					portfolioAdjustmentExpression
-				);
+                    country,
+                    computations,
+                    baseExpression,
+                    portfolioAdjustmentExpression
+                );
                 other.UnsavedBasketCountries.Add(unsavedBasketCountry);
             }
         }
@@ -328,7 +332,7 @@ namespace TopDown.Core.ManagingBpt
                 ticket,
                 ref info
             );
-            
+
             return issues;
         }
 
@@ -362,7 +366,7 @@ namespace TopDown.Core.ManagingBpt
                     ondemandManager.Claim()
                 );
 
-                
+
                 // in order to proceed we need to make sure all missing countries are there
                 IEnumerable<BenchmarkSumByIsoInfo> benchmarks = new BenchmarkSumByIsoInfo[] { };
                 var computations = this.modelBuilder.CreateComputations(root.Globe, this.Traverser);
@@ -382,14 +386,19 @@ namespace TopDown.Core.ManagingBpt
 
             }
 
-            
 
-            this.InitializeOverlay(
-                root,
-                securityRepository,
-                portfolioRepository,
-                portfolioSecurityTargetRepository
-            );
+           // this.InitializeOverlay(
+           //    root,
+           //    securityRepository,
+           //    portfolioRepository,
+           //    portfolioSecurityTargetRepository
+           //);
+
+            // required to inject problems to base values
+            // we are not interested in the result of validation
+            this.modelApplier.ValidateModel(root, ticket);
+
+
         }
 
 

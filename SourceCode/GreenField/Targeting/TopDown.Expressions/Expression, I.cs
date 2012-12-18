@@ -24,6 +24,7 @@ namespace Aims.Expressions
 	{
 		String Name { get; }
         TValue Value(CalculationTicket ticket);
+        TValue Value(CalculationTicket ticket, ICalculationTracer tracer, String name);
         void Accept(IExpressionResolver<TValue> resolver);
         IEnumerable<IValidationIssue> Validate(CalculationTicket ticket);
     }

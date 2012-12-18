@@ -217,7 +217,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RequestCommentsForTargetingTypeBasketBase">
+  <xs:element name="RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="targetingTypeGroupId" type="xs:int" />
@@ -226,10 +226,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RequestCommentsForTargetingTypeBasketBaseResponse">
+  <xs:element name="RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="RequestCommentsForTargetingTypeBasketBaseResult" nillable="true" type="q22:ArrayOfCommentModel" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueResult" nillable="true" type="q22:ArrayOfCommentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

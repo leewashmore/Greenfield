@@ -24,12 +24,24 @@ namespace TopDown.Core.ManagingBpt
         }
         public Decimal? Calculate(CalculationTicket ticket)
         {
-            Decimal? result = this.cashRescaledBase.Value(ticket);
+            var result = this.Calculate(ticket, No.CalculationTracer);
+            return result;
+        }
+
+
+        public decimal? Calculate(CalculationTicket ticket, ICalculationTracer tracer)
+        {
+            tracer.WriteLine("Base less overlay positive total formula");
+            tracer.Indent();
+
+            Decimal? result = this.cashRescaledBase.Value(ticket, tracer, "Cash rescaled base");
+            tracer.WriteValue(" + Cash rescaled base", result);
             foreach (var model in models)
             {
-                var value = this.baseLessOverlayFormula.Calculate(model, ticket);
+                var value = this.baseLessOverlayFormula.Calculate(model, ticket, tracer);
                 if (value.HasValue && value.Value > 0)
                 {
+                    tracer.WriteValue("+ Base less overlay", value);
                     if (result.HasValue)
                     {
                         result = result.Value + value.Value;
@@ -40,6 +52,8 @@ namespace TopDown.Core.ManagingBpt
                     }
                 }
             }
+            tracer.WriteValue("Total", result);
+            tracer.Unindent();
             return result;
         }
     }

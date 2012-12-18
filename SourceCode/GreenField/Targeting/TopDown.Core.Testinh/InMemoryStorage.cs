@@ -31,7 +31,7 @@ namespace TopDown.Core.Testing
 				{
 					if (Object.ReferenceEquals(found, null))
 					{
-						this.map[key] = found;
+						this.map[key] = value;
 					}
 					else
 					{

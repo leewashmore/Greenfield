@@ -13,6 +13,7 @@ using Microsoft.Practices.Prism.Commands;
 using System.ComponentModel.Composition;
 using System.Threading;
 using Microsoft.Practices.Prism.Events;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls.BroadGlobalActive
 {
@@ -22,6 +23,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
     [Export]
     public class RootViewModel : RootViewModelBase
     {
+        
         [ImportingConstructor]
         public RootViewModel(Settings settings)
         {
@@ -51,6 +53,13 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             this.SaveCommand = new DelegateCommand(this.Save, this.CanSave);
             editorViewModel.GotData += (sender, e) => this.SaveCommand.RaiseCanExecuteChanged();
         }
+
+        protected override void TakeDispatcher(Dispatcher dispatcher)
+        {
+            this.EditorViewModel.Dispatcher = dispatcher;
+            this.PickerViewModel.Dispatcher = dispatcher;
+        }
+
 
         protected Boolean ConsiderReseting()
         {
@@ -128,5 +137,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         }
 
 
+
+       
     }
 }

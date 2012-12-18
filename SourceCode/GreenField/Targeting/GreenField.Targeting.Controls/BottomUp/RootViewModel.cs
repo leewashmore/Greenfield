@@ -6,6 +6,7 @@ using System.ComponentModel.Composition;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Aims.Controls;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls.BottomUp
 {
@@ -53,6 +54,13 @@ namespace GreenField.Targeting.Controls.BottomUp
             editorViewModel.GotData += (s, e) => this.ReactOnDataBeingGotten();
             this.SaveCommand = new DelegateCommand(this.Save, this.CanSave);
         }
+
+        protected override void TakeDispatcher(Dispatcher dispatcher)
+        {
+            this.EditorViewModel.Dispatcher = dispatcher;
+            this.PortfolioPickerViewModel.Dispatcher = dispatcher;
+        }
+
 
         protected void ReactOnDataBeingGotten()
         {
