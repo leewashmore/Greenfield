@@ -3,7 +3,7 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
            xmlns:local="clr-namespace:GreenField.Targeting.Controls"
-           Width="400" Height="300" 
+           Width="561" Height="298" 
            Title="Comments">
 
 
@@ -16,24 +16,26 @@
                 <local:CommentTemplateSelector.UpdateTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Before}" Margin="10 0 0 0" />
-                            <TextBlock Text="{Binding After}" Margin="10 0 0 0" />
+                            <TextBlock Text="changed from " />
+                            <TextBlock Text="{Binding Before, StringFormat='#0.000'}" />
+                            <TextBlock Text=" to " />
+                            <TextBlock Text="{Binding After, StringFormat='#0.000'}" />
                         </StackPanel>
                     </DataTemplate>
                 </local:CommentTemplateSelector.UpdateTemplate>
                 <local:CommentTemplateSelector.CreateTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" >
-                            <TextBlock Text="{Binding Before}" Margin="10 0 0 0" />
-                            <TextBlock Text="{Binding After}" Margin="10 0 0 0" />
+                            <TextBlock Text="initiated by " />
+                            <TextBlock Text="{Binding After, StringFormat='#0.000'}" />
                         </StackPanel>
                     </DataTemplate>
                 </local:CommentTemplateSelector.CreateTemplate>
                 <local:CommentTemplateSelector.DeleteTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" >
-                            <TextBlock Text="{Binding Before}" Margin="10 0 0 0" />
-                            <TextBlock Text="{Binding After}" Margin="10 0 0 0" />
+                            <TextBlock Text="cleared from " />
+                            <TextBlock Text="{Binding Before, StringFormat='#0.000'}" />
                         </StackPanel>
                     </DataTemplate>
                 </local:CommentTemplateSelector.DeleteTemplate>
@@ -45,22 +47,22 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
-        <ItemsControl ItemsSource="{Binding}" Padding="0 0 5 5">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical" Margin="5 5 0 0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Username}" />
-                            <TextBlock Text="{Binding Timestamp}" Margin="10 0 0 0" />
-                            <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource commentTemplateSelector}}" />
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding}" Padding="0 0 5 5" >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" Margin="5 5 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Username}" />
+                                <TextBlock Text="{Binding Timestamp, StringFormat=g}" Margin="10 0 5 0" />
+                                <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource commentTemplateSelector}}" />
+                            </StackPanel>
+                            <TextBlock Text="{Binding Comment}" Margin="0 5 0 0" />
                         </StackPanel>
-                        <TextBlock Text="{Binding Comment}" Margin="0 5 0 0" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
         <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="1" />
         <Button x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="1" />
     </Grid>

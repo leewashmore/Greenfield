@@ -72,10 +72,17 @@ namespace GreenField.Targeting.Controls
             }
             else
             {
-                this.FinishLoading(issues, delegate
+                if (issues.Any())
+                {
+                    this.FinishLoading(issues, delegate
+                    {
+                        this.RequestReloading();
+                    });
+                }
+                else
                 {
                     this.RequestReloading();
-                });
+                }
             }
         }
 

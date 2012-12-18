@@ -173,12 +173,20 @@ namespace GreenField.Web.Services
 
         public IEnumerable<Server.CommentModel> RequestCommentsForBasketPortfolioSecurityTarget(int basketId, string broadGlbalActivePortfolioId, string securityId)
         {
-            throw new NotImplementedException();
+            return this.Watch(String.Format("Getting comments for BasketPortfolioSecurityTarget: basketId - {0}, broadGlbalActivePortfolioId - {1}, securityId - {2}", basketId, broadGlbalActivePortfolioId, securityId), delegate
+            {
+                return this.facade.RequestCommentsForBasketPortfolioSecurityTarget(basketId, broadGlbalActivePortfolioId, securityId);
+            });
         }
 
-        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId)
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(Int32 targetingTypeGroupId, Int32 basketId, String securityId)
         {
-            throw new NotImplementedException();
+            return this.Watch(String.Format("Getting comments for TargetingTypeGroupBasketSecurityBaseValue: basketId - {0}, targetingTypeGroupId - {1}, securityId - {2}", basketId, targetingTypeGroupId, securityId), delegate
+            {
+                return this.facade.RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(targetingTypeGroupId, basketId, securityId);
+            });
+
         }
     }
 }
