@@ -27,8 +27,15 @@
                     <ContentControl Content="{Binding}">
                         <ContentControl.ContentTemplate>
                             <DataTemplate>
-                                
-                                <ItemsControl Margin="20 0 0 0" ItemsSource="{Binding Issues}" ItemTemplate="{Binding Converter={StaticResource issueTemplateSelector1}}" />
+                                <ItemsControl
+                                    Margin="20 0 0 0"
+                                    ItemsSource="{Binding Issues}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource issueTemplateSelector1}}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </DataTemplate>
                         </ContentControl.ContentTemplate>
                     </ContentControl>
@@ -98,7 +105,7 @@
                 </StackPanel>
             </DataTemplate>
         </local:BusyIndicatorTemplateSelector.ErrorTemplate>
-        
+
 
     </local:BusyIndicatorTemplateSelector>
     <local:CommunicationStateModelToBooleanConverter x:Key="communicationStateModelToBooleanConverter" />

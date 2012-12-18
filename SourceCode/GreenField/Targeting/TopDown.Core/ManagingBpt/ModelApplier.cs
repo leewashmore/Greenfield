@@ -121,9 +121,9 @@ namespace TopDown.Core.ManagingBpt
                     this.ttbptChangesetApplier.Apply(calculationInfo.Id, ttbptChangesetOpt, manager);
 				}
 
-#warning HACK!!! prevent test changes to DB
-				transaction.Rollback();
-                //transaction.Commit();
+//#warning HACK!!! prevent test changes to DB
+				//transaction.Rollback();
+                transaction.Commit();
 			}
 		}
 

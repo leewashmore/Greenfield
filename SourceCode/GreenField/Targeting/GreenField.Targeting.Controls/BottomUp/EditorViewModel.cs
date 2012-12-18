@@ -7,6 +7,7 @@ using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
 using System.Windows;
 using Aims.Data.Client;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls.BottomUp
 {

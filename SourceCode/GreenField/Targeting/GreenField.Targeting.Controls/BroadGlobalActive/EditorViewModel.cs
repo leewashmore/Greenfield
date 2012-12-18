@@ -40,7 +40,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         private DefaultExpandCollapseStateSetter defaultExpandCollapseStateSetter;
         private ObservableCollection<IGlobeResident> residents;
         private ObservableCollection<BgaFactorItemModel> factors;
-        
+
 
         public EditorViewModel(
             IClientFactory clientFactory,

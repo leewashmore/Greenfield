@@ -138,6 +138,7 @@
     <Compile Include="DemoView.xaml.cs">
       <DependentUpon>DemoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IssuesTraverser.cs" />
     <Compile Include="IssueTemplateSelectort.cs" />
     <Compile Include="OnlyErrorCommunicationState.cs" />
     <Compile Include="PickerViewModelBase.cs" />

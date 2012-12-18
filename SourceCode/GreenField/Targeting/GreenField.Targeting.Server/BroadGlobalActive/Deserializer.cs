@@ -239,6 +239,7 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             );
 
             this.deserializer.PopulateUnchangableExpression(result.Benchmark, model.Benchmark);
+            this.deserializer.PopulateUnchangableExpression(result.Overlay, model.Overlay);
 
             return result;
         }
@@ -270,6 +271,7 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             var country = this.deserializer.DeserializeCountry(model.Country);
             var result = this.modelBuilder.CreateCountryModel(country);
             this.deserializer.PopulateUnchangableExpression(result.Benchmark, model.Benchmark);
+            this.deserializer.PopulateUnchangableExpression(result.Overlay, model.Overlay);
             return result;
         }
 
@@ -291,7 +293,7 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             );
 
             this.deserializer.PopulateUnchangableExpression(result.Benchmark, model.Benchmark);
-
+            this.deserializer.PopulateUnchangableExpression(result.Overlay, model.Overlay);
             return result;
         }
 

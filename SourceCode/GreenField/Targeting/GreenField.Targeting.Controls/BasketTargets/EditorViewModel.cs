@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Aims.Data.Client;
 using Microsoft.Practices.Prism.Commands;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls.BasketTargets
 {
@@ -171,10 +172,11 @@ namespace GreenField.Targeting.Controls.BasketTargets
                 var basketId = this.LastBasketId.Value;
                 foreach (var portfolioTarget in security.PortfolioTargets)
                 {
-                    
+
                     var portfolioId = portfolioTarget.BroadGlobalActivePortfolio.Id;
-                    
-                    var requestCommentsCommand = new DelegateCommand(delegate {
+
+                    var requestCommentsCommand = new DelegateCommand(delegate
+                    {
                         this.RequestComments(basketId, portfolioId, securityId);
                     });
                     var expression = portfolioTarget.PortfolioTarget;
@@ -191,10 +193,10 @@ namespace GreenField.Targeting.Controls.BasketTargets
             }
 
             this.OnGotData();
-            
-            
-            
-            
+
+
+
+
             // setting the focus
             foreach (var expression in registeredExpressions)
             {

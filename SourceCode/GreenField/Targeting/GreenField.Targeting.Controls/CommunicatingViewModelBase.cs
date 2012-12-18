@@ -5,12 +5,25 @@ using System.Text;
 using Microsoft.Practices.Prism.ViewModel;
 using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
+using System.ComponentModel.Composition;
 
 namespace GreenField.Targeting.Controls
 {
+    [Export]
     public class CommunicatingViewModelBase : NotificationObject
     {
+        private Dispatcher dispatcher;
+        [Import]
+        public Dispatcher Dispatcher
+        {
+            get { return this.dispatcher; }
+            set { this.dispatcher = value; }
+        }
+
         public event CommunicationStateChangedEventHandler CommunicationStateChanged;
+
+
         protected virtual void OnCommunicationStateChanged(CommunicationStateChangedEventArgs args)
         {
             var handler = this.CommunicationStateChanged;
@@ -27,30 +40,45 @@ namespace GreenField.Targeting.Controls
 
         protected virtual void StartLoading()
         {
-            this.IsLoading = true;
             this.OnCommunicationStateChanged(new LoadingCommunicationStateModel());
         }
 
         protected virtual void FinishLoading()
         {
             this.OnCommunicationStateChanged(new LoadedCommunicationStateModel());
-            this.IsLoading = false;
         }
 
         protected virtual void FinishLoading(ObservableCollection<IssueModel> issues)
         {
             this.OnCommunicationStateChanged(new IssuesCommunicationStateModel(issues));
-            this.IsLoading = false;
+        }
+
+        protected virtual void FinishLoading(ObservableCollection<IssueModel> issues, Action acknowledgeCallback)
+        {
+            /*
+                var timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromMilliseconds(100);
+                timer.Tick += (s1, e1) =>
+                {
+                    acknowledgeCallback();
+                    timer.Stop();
+                    timer = null;
+                };
+                timer.Start();
+            */
+
+            var args = new IssuesCommunicationStateModel(issues);
+            args.Acknowledged += (s, e) =>
+            {
+                this.dispatcher.BeginInvoke(acknowledgeCallback);
+            };
+
+            this.OnCommunicationStateChanged(args);
         }
 
         protected virtual void FinishLoading(Exception exception)
         {
             this.OnCommunicationStateChanged(new ErrorCommunicationStateModel(exception));
-            this.IsLoading = false;
         }
-
-        
-
-        public Boolean IsLoading { get; private set; }
     }
 }

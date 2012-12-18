@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls.BottomUp
 {
@@ -97,7 +98,7 @@ namespace GreenField.Targeting.Controls.BottomUp
 
             this.SelectedBottomUpPortfolio = null;
             this.BottomUpPortfolios = null;
-            
+
             this.IsSilent = false;
         }
     }

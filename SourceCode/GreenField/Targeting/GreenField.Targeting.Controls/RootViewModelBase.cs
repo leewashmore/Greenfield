@@ -12,6 +12,8 @@ using Microsoft.Practices.Prism.ViewModel;
 using System.ComponentModel;
 using Microsoft.Practices.Prism.Regions;
 using System.Threading;
+using System.Windows.Threading;
+using System.ComponentModel.Composition;
 
 namespace GreenField.Targeting.Controls
 {
@@ -24,6 +26,16 @@ namespace GreenField.Targeting.Controls
         {
             this.CommunicationStateModel = new LoadedCommunicationStateModel();
         }
+
+
+        [Import]
+        public Dispatcher Dispatcher
+        {
+            set { this.TakeDispatcher(value); }
+        }
+
+        protected abstract void TakeDispatcher(Dispatcher value);
+
 
         public abstract Boolean HasUnsavedChanges { get; }
 

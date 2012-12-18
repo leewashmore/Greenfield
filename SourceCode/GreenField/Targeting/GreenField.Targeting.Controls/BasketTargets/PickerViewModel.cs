@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls.BasketTargets
 {
