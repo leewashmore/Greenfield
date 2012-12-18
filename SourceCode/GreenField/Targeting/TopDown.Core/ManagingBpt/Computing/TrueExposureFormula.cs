@@ -16,6 +16,14 @@ namespace TopDown.Core.ManagingBpt.Computing
         }
 
         public Decimal? Calculate(IModel model, CalculationTicket ticket)
+        {                var result = this.Calculate(model, ticket, No.CalculationTracer);
+                return result;
+
+           
+        }
+
+
+        public Decimal? Calculate(IModel model, CalculationTicket ticket, ICalculationTracer tracer)
         {
             var overlayExpressionOpt = this.picker.Overlay.TryPickExpression(model);
             var portfolioScaledExpressionOpt = this.picker.PortfolioScaled.TryPickExpression(model);
@@ -24,6 +32,7 @@ namespace TopDown.Core.ManagingBpt.Computing
             var portfolioScaledValue = portfolioScaledExpressionOpt.Value(ticket);
             if (!portfolioScaledValue.HasValue) return null;
             var value = overlayValue + portfolioScaledValue.Value;
+tracer.WriteLine("Undone");
             return value;
         }
     }

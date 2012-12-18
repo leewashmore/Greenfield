@@ -10,6 +10,7 @@ namespace Aims.Expressions
     {
         private Decimal? _editedValue;
         private Func<EditableExpression, IEnumerable<IValidationIssue>> validator;
+        private IEnumerable<IValidationIssue> injectedProblemsOpt;
 
         [DebuggerStepThrough]
         public EditableExpression(
@@ -76,8 +77,17 @@ namespace Aims.Expressions
         /// </summary>
         public Decimal? Value(CalculationTicket ticket)
         {
-            return this.EditedValue;
+            var value = this.Value(ticket, No.CalculationTracer, No.ExpressionName);
+            return value;
         }
+        public Decimal? Value(CalculationTicket ticket, ICalculationTracer tracer, String name)
+        {
+            var value = this.EditedValue;
+            tracer.WriteValue(name ?? this.Name, value);
+            return value;
+        }
+
+
         public String Comment { get; set; }
         public Boolean LastOneModified { get; set; }
 
@@ -86,9 +96,23 @@ namespace Aims.Expressions
             return this.Validate();
         }
 
+        /// <summary>
+        /// When a value cannot validate itself we validate it from outside.
+        /// </summary>
+        public void InjectProblems(IEnumerable<IValidationIssue> issues)
+        {
+            this.injectedProblemsOpt = issues;
+        }
+
         public IEnumerable<IValidationIssue> Validate()
         {
-            return this.validator(this);
+            var result = new List<IValidationIssue>();
+            result.AddRange(this.validator(this));
+            if (this.injectedProblemsOpt != null)
+            {
+                result.AddRange(this.injectedProblemsOpt);
+            }
+            return result;
         }
 
         [DebuggerStepThrough]
@@ -102,5 +126,8 @@ namespace Aims.Expressions
         {
             resolver.Resolve(this);
         }
+
+
+      
     }
 }

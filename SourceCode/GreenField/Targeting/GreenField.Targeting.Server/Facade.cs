@@ -79,6 +79,10 @@ namespace GreenField.Targeting.Server
             this.MakeSureRepositoriesAreDroppedIfNeeded();
             var ticket = new CalculationTicket();
             var model = this.facade.GetBptModel(targetingTypeId, bgaPortfolioId);
+
+            /* Max code */
+            //this.facade.RecalculateBptModel(model, ticket);
+
             var result = this.bgaSerializer.SerializeRoot(model, ticket);
             return result;
         }
@@ -119,6 +123,10 @@ namespace GreenField.Targeting.Server
         {
             var ticket = new CalculationTicket();
             var model = this.bgaDeserializer.DeserializeRoot(serializedModel);
+
+            /* Max code */
+            //this.facade.RecalculateBptModel(model, ticket);
+
             var issues = this.facade.ApplyBroadGlobalActiveModelIfValid(model, Username, ticket);
             var serializedIssues = this.serializer.SerializeValidationIssues(issues);
             return serializedIssues;

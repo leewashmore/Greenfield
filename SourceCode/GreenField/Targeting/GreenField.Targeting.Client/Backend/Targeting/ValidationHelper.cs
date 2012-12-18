@@ -16,12 +16,12 @@ namespace TopDown.FacingServer.Backend.Targeting
 {
     internal static class ValidationHelper
     {
-        public static IEnumerable<String> GetErrors(String propertyName, String validatedPropertyName, IExpressionModel expressionModel)
+        public static IEnumerable<IssueModel> GetErrors(String propertyName, String validatedPropertyName, IExpressionModel expressionModel)
         {
-            if (String.IsNullOrWhiteSpace(propertyName)) return No.Strings;
-            if (propertyName != validatedPropertyName) return No.Strings;
+            if (String.IsNullOrWhiteSpace(propertyName)) return No.Issues;
+            if (propertyName != validatedPropertyName) return No.Issues;
 
-            var result = expressionModel.Issues.Select(x => x.Message).ToList();
+            var result = expressionModel.Issues;
             return result;
         }
     }

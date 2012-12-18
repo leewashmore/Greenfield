@@ -61,6 +61,14 @@ namespace TopDown.Core.ManagingPst
 
             public Decimal? Calculate(CalculationTicket ticket)
             {
+                var result = this.Calculate(ticket, No.CalculationTracer);
+                return result;
+
+            }
+
+
+            public decimal? Calculate(CalculationTicket ticket, ICalculationTracer tracer)
+            {
                 Decimal? result;
                 var total = this.targetTotalExpression.Value(ticket);
                 if (total.HasValue)
@@ -69,8 +77,9 @@ namespace TopDown.Core.ManagingPst
                 }
                 else
                 {
-                    result = null;   
+                    result = null;
                 }
+                tracer.WriteLine("Undone");
                 return result;
             }
         }

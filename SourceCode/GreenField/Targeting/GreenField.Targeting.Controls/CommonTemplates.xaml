@@ -19,18 +19,38 @@
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
 
-    <DataTemplate x:Key="issueTemplate">
-        <StackPanel Orientation="Vertical">
-            <TextBlock Text="{Binding Message}"></TextBlock>
-            <ContentControl Content="{Binding}">
-                <ContentControl.ContentTemplate>
-                    <DataTemplate>
-                        <ItemsControl Margin="20 0 0 0" ItemsSource="{Binding Issues}" ItemTemplate="{StaticResource issueTemplate}" />
-                    </DataTemplate>
-                </ContentControl.ContentTemplate>
-            </ContentControl>
-        </StackPanel>
-    </DataTemplate>
+    <local:IssueTemplateSelector x:Key="issueTemplateSelector1">
+        <local:IssueTemplateSelector.CompoundIssueTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding Message}"></TextBlock>
+                    <ContentControl Content="{Binding}">
+                        <ContentControl.ContentTemplate>
+                            <DataTemplate>
+                                
+                                <ItemsControl Margin="20 0 0 0" ItemsSource="{Binding Issues}" ItemTemplate="{Binding Converter={StaticResource issueTemplateSelector1}}" />
+                            </DataTemplate>
+                        </ContentControl.ContentTemplate>
+                    </ContentControl>
+                </StackPanel>
+            </DataTemplate>
+        </local:IssueTemplateSelector.CompoundIssueTemplate>
+        <local:IssueTemplateSelector.ErrorTemplate>
+            <DataTemplate>
+                <Border Background="Red">
+                    <TextBlock Text="{Binding Message}" Foreground="White"></TextBlock>
+                </Border>
+            </DataTemplate>
+        </local:IssueTemplateSelector.ErrorTemplate>
+        <local:IssueTemplateSelector.WarningTemplate>
+            <DataTemplate>
+                <Border Background="Yellow">
+                    <TextBlock Text="{Binding Message}"></TextBlock>
+                </Border>
+            </DataTemplate>
+        </local:IssueTemplateSelector.WarningTemplate>
+    </local:IssueTemplateSelector>
+
 
     <local:BusyIndicatorTemplateSelector x:Key="busyIndicatorTemplateSelector">
 
@@ -46,7 +66,13 @@
                     <ScrollViewer Content="{Binding}" MaxHeight="300">
                         <ScrollViewer.ContentTemplate>
                             <DataTemplate>
-                                <ItemsControl ItemsSource="{Binding Issues}" ItemTemplate="{StaticResource issueTemplate}" />
+                                <ItemsControl ItemsSource="{Binding Issues}"  >
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource issueTemplateSelector1}}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </DataTemplate>
                         </ScrollViewer.ContentTemplate>
                     </ScrollViewer>
@@ -72,6 +98,7 @@
                 </StackPanel>
             </DataTemplate>
         </local:BusyIndicatorTemplateSelector.ErrorTemplate>
+        
 
     </local:BusyIndicatorTemplateSelector>
     <local:CommunicationStateModelToBooleanConverter x:Key="communicationStateModelToBooleanConverter" />
@@ -99,7 +126,7 @@
             TextAlignment="Right"
             Style="{StaticResource specialTextBox}" />
     </DataTemplate>
-    
+
     <DataTemplate x:Key="saveTemplate">
         <StackPanel Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center" Margin="0 0 5 0">Ready?</TextBlock>

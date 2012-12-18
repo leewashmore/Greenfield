@@ -21,7 +21,7 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbpt
             if (changeset.LatestChangesetSnapshot.Id < latestChangeset.Id)
             {
                 throw new ValidationException(
-                    new ValidationIssue("User \"" + latestChangeset.Username + "\" modified the TT-B-P-T composition on " + latestChangeset.Timestamp + ".")
+                    new ErrorIssue("User \"" + latestChangeset.Username + "\" modified the TT-B-P-T composition on " + latestChangeset.Timestamp + ".")
                 );
             }
         }

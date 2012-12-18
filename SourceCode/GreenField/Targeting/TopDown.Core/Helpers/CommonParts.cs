@@ -60,7 +60,7 @@ namespace TopDown.Core
 			{
 				if (value.Value < 0)
 				{
-					return new IValidationIssue[] { new ValidationIssue(
+					return new IValidationIssue[] { new ErrorIssue(
 						String.Format("{0} cannot be less than 0.", name)
 					)};
 				}
@@ -71,7 +71,7 @@ namespace TopDown.Core
 			}
 			else
 			{
-				return new IValidationIssue[] { new ValidationIssue(String.Format("{0} is required.", name)) };
+				return new IValidationIssue[] { new ErrorIssue(String.Format("{0} is required.", name)) };
 			}
 		}
 
@@ -81,7 +81,7 @@ namespace TopDown.Core
 			{
 				if (value.Value < 0)
 				{
-					return new IValidationIssue[] { new ValidationIssue(String.Format("{0} cannot be less than 0.", name)) };
+					return new IValidationIssue[] { new ErrorIssue(String.Format("{0} cannot be less than 0.", name)) };
 				}
 				else
 				{
@@ -111,15 +111,15 @@ namespace TopDown.Core
 		{
 			if (value < 0)
 			{
-				return new IValidationIssue[] { new ValidationIssue(String.Format("{0} must be greater than 0.", name)) };
+				return new IValidationIssue[] { new ErrorIssue(String.Format("{0} must be greater than 0.", name)) };
 			}
 			else if ((value - 1.0m) > CalculationHelper.InsignificantDifference)
 			{
-				return new IValidationIssue[] { new ValidationIssue(String.Format("{0} must be equal to 100% (now greter than that).", name)) };
+				return new IValidationIssue[] { new ErrorIssue(String.Format("{0} must be equal to 100% (now greter than that).", name)) };
 			}
 			else if ((1.0m - value) > CalculationHelper.InsignificantDifference)
 			{
-				return new IValidationIssue[] { new ValidationIssue(String.Format("{0} must be equal to 100% (now less than that).", name)) };
+				return new IValidationIssue[] { new ErrorIssue(String.Format("{0} must be equal to 100% (now less than that).", name)) };
 			}
 			else
 			{
@@ -135,7 +135,7 @@ namespace TopDown.Core
 				// there is a change
 				if (String.IsNullOrWhiteSpace(expression.Comment))
 				{
-					issues.Add(new ValidationIssue(String.Format("{0} needs a comment.", expression.Name)));
+					issues.Add(new ErrorIssue(String.Format("{0} needs a comment.", expression.Name)));
 				}
 			}
 			return issues;

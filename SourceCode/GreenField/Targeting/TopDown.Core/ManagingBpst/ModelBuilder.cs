@@ -24,7 +24,7 @@ namespace TopDown.Core.ManagingBpst
         public EditableExpression CreatePortfolioTargetExpression(String porfolioName)
         {
             var result = new EditableExpression(
-				String.Format(ValueNames.PortfolioTargetFormat, porfolioName),
+                String.Format(ValueNames.PortfolioTargetFormat, porfolioName),
                 this.defaultValues.DefaultPortfolioTarget,
                 commonParts.NullableDecimalValueAdapter,
                 this.ValidatePortfolioTargetExpression
@@ -43,7 +43,7 @@ namespace TopDown.Core.ManagingBpst
         public EditableExpression CreateBaseExpression()
         {
             var result = new EditableExpression(
-				ValueNames.Base,
+                ValueNames.Base,
                 this.defaultValues.DefaultBase,
                 this.commonParts.NullableDecimalValueAdapter,
                 this.ValidateBaseExpression
@@ -62,17 +62,17 @@ namespace TopDown.Core.ManagingBpst
         public UnchangableExpression<Decimal> CreateBenchmarkExpression()
         {
             return new UnchangableExpression<Decimal>(
-				ValueNames.Benchmark,
+                ValueNames.Benchmark,
                 this.defaultValues.DefaultBenchmark,
                 this.commonParts.DecimalValueAdapter,
-				this.commonParts.ValidateWhatever
+                this.commonParts.ValidateWhatever
             );
         }
 
         public IExpression<Decimal?> CreateBaseTotalExpression(IEnumerable<SecurityModel> securities)
         {
             return new NullableSumExpression(
-				ValueNames.BaseTotal,
+                ValueNames.BaseTotal,
                 securities.Select(x => x.Base),
                 this.defaultValues.DefaultBase,
                 this.commonParts.ValidateEitheNullOr100
@@ -90,9 +90,9 @@ namespace TopDown.Core.ManagingBpst
         }
 
         public IExpression<Decimal?> CreatePortfolioTargetTotalExpression(
-			BroadGlobalActivePortfolio portfolio,
-			IEnumerable<SecurityModel> securities
-		)
+            BroadGlobalActivePortfolio portfolio,
+            IEnumerable<SecurityModel> securities
+        )
         {
             var expressions = securities.SelectMany(security =>
             {
@@ -102,7 +102,7 @@ namespace TopDown.Core.ManagingBpst
                     .Select(portfolioModel =>
                     {
                         IExpression<Decimal?> result;
-						var targetValue = portfolioModel.Target;
+                        var targetValue = portfolioModel.Target;
                         if (targetValue.EditedValue.HasValue)
                         {
                             result = targetValue;
@@ -124,7 +124,7 @@ namespace TopDown.Core.ManagingBpst
             });
 
             return new NullableSumExpression(
-				String.Format(ValueNames.PortfolioTargetTotalFormat, portfolio.Name),
+                String.Format(ValueNames.PortfolioTargetTotalFormat, portfolio.Name),
                 expressions,
                 this.defaultValues.DefaultPortfolioTarget,
                 this.commonParts.ValidateEitheNullOr100
@@ -136,7 +136,7 @@ namespace TopDown.Core.ManagingBpst
 
         public Expression<Decimal?> CreateBaseActiveExpression(EditableExpression baseExpression, UnchangableExpression<decimal> benchmarkExpression)
         {
-            return new Expression<decimal?>(ValueNames.BaseActive, new BaseActiveFormula(baseExpression, benchmarkExpression) ,this.commonParts.NullableDecimalValueAdapter, this.commonParts.ValidateWhatever);
+            return new Expression<decimal?>(ValueNames.BaseActive, new BaseActiveFormula(baseExpression, benchmarkExpression), this.commonParts.NullableDecimalValueAdapter, this.commonParts.ValidateWhatever);
         }
 
         private class BaseActiveFormula : IFormula<Decimal?>
@@ -149,13 +149,25 @@ namespace TopDown.Core.ManagingBpst
 
             public Decimal? Calculate(CalculationTicket ticket)
             {
-                var baseValue = BaseExpression.Value(ticket);
-                var benchmarkValue = BenchmarkExpression.Value(ticket);
-                return baseValue.HasValue ? baseValue - benchmarkValue : null;
+                var result = this.Calculate(ticket, No.CalculationTracer);
+                return result;
             }
 
             public UnchangableExpression<Decimal> BenchmarkExpression { get; set; }
             public EditableExpression BaseExpression { get; set; }
+
+
+            public Decimal? Calculate(CalculationTicket ticket, ICalculationTracer tracer)
+            {
+                tracer.WriteLine("Base active formula");
+                tracer.Indent();
+                var baseValue = BaseExpression.Value(ticket, tracer, "Base");
+                var benchmarkValue = BenchmarkExpression.Value(ticket, tracer, "Benchmark");
+                var result = baseValue.HasValue ? baseValue - benchmarkValue : null;
+                tracer.WriteValue("Base - Benchmark", result);
+                tracer.Unindent();
+                return result;
+            }
         }
 
         public IExpression<Decimal?> CreateBaseActiveTotalExpression(List<SecurityModel> securityModels)

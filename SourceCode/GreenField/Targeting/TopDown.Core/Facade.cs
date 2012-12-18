@@ -185,6 +185,7 @@ namespace TopDown.Core
         {
             var issues = this.PstManager.Validate(model, ticket);
             if (issues.Any()) return issues;
+
             using (var connection = this.connectionFactory.CreateConnection())
             {
                 CalculationInfo info = new CalculationInfo();

@@ -32,8 +32,19 @@ namespace Aims.Expressions
         public IValueAdapter<TValue> Adapter { get; private set; }
 		public TValue Value(CalculationTicket ticket)
 		{
-			return this.Formula.Calculate(this.Model, ticket);
+            var result = this.Value(ticket, No.CalculationTracer, No.ExpressionName);
+            return result;
 		}
+
+        public TValue Value(CalculationTicket ticket, ICalculationTracer tracer, string name)
+        {
+            tracer.WriteLine("Model expression: " + (name ?? this.Name));
+            tracer.Indent();
+            var result = this.Formula.Calculate(this.Model, ticket, tracer);
+            tracer.Unindent();
+            return result;
+        }
+
 		public IEnumerable<IValidationIssue> Validate(CalculationTicket ticket)
         {
             return this.validator(this, ticket);
@@ -49,5 +60,8 @@ namespace Aims.Expressions
         {
             resolver.Resolve(this);
         }
+
+
+        
     }
 }

@@ -905,24 +905,12 @@ namespace TopDown.FacingServer.Backend.Targeting {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="IssueModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.CompoundIssueModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.ErrorModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.WarningModel))]
     public partial class IssueModel : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> IssuesField;
-        
         private string MessageField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> Issues {
-            get {
-                return this.IssuesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IssuesField, value) != true)) {
-                    this.IssuesField = value;
-                    this.RaisePropertyChanged("Issues");
-                }
-            }
-        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string Message {
@@ -945,6 +933,39 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CompoundIssueModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
+    public partial class CompoundIssueModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
+        
+        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> IssuesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> Issues {
+            get {
+                return this.IssuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuesField, value) != true)) {
+                    this.IssuesField = value;
+                    this.RaisePropertyChanged("Issues");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ErrorModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
+    public partial class ErrorModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WarningModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
+    public partial class WarningModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

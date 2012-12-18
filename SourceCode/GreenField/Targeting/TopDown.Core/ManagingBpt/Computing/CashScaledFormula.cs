@@ -9,40 +9,47 @@ namespace TopDown.Core.ManagingBpt.Computing
     public class CashScaledFormula : IFormula<Decimal?>
     {
         public CashScaledFormula(
-            IExpression<Decimal?> rescaledBase,
+            IExpression<Decimal?> rescaledCashBase,
             IExpression<Decimal?> baseLessOverlayPositiveTotal,
             IExpression<Decimal?> baseLessOverlayTotal
             )
         {
-            this.rescaledBase = rescaledBase;
+            this.rescaledCashBase = rescaledCashBase;
             this.baseLessOverlayPositiveTotal = baseLessOverlayPositiveTotal;
             this.baseLessOverlayTotal = baseLessOverlayTotal;
 
         }
-    
-        private IExpression<Decimal?> rescaledBase;
+
+        private IExpression<Decimal?> rescaledCashBase;
         private IExpression<Decimal?> baseLessOverlayPositiveTotal;
         private IExpression<Decimal?> baseLessOverlayTotal;
 
-
-
-        public decimal? Calculate(CalculationTicket ticket)
+        public Decimal? Calculate(CalculationTicket ticket)
         {
-            var baseCash = this.rescaledBase.Value(ticket);
-            if (!baseCash.HasValue) return null;
-            if (baseCash.Value < 0) return 0m;
+            var result = this.Calculate(ticket, No.CalculationTracer);
+            return result;
+            
+        }
 
-            var positiveTotal = baseLessOverlayPositiveTotal.Value(ticket);
+
+        public Decimal? Calculate(CalculationTicket ticket, ICalculationTracer tracer)
+        {
+            var rescaledBaseCash = this.rescaledCashBase.Value(ticket, tracer, "Rescaled cash base");
+            if (!rescaledBaseCash.HasValue) return null;
+            if (rescaledBaseCash.Value < 0) return 0m;
+
+            var positiveTotal = baseLessOverlayPositiveTotal.Value(ticket, tracer, "Base less overlay positive total");
             if (!positiveTotal.HasValue) return null;
 
-            var total = baseLessOverlayTotal.Value(ticket);
+            var total = baseLessOverlayTotal.Value(ticket, tracer, "Base less overlay total");
             if (!total.HasValue) return null;
 
             if (positiveTotal.Value == 0)
             {
                 throw new NotImplementedException();
             }
-            var value = baseCash.Value / positiveTotal.Value * total.Value;
+            var value = rescaledBaseCash.Value / positiveTotal.Value * total.Value;
+            tracer.WriteValue("Rescaled cash base / positive base less overlay total * base less overlay total", value);
             return value;
         }
     }

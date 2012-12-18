@@ -8,22 +8,16 @@ using System.Diagnostics;
 namespace GreenField.Targeting.Server
 {
     [DataContract]
-    [KnownType(typeof(ErrorModel))]
-    [KnownType(typeof(WarningModel))]
-    [KnownType(typeof(CompoundIssueModel))]
-    public class IssueModel
+    public class WarningModel : IssueModel
     {
-        [DataMember]
-        public String Message { get; set; }
-
         [DebuggerStepThrough]
-        public IssueModel(String message) : this()
+        public WarningModel()
         {
-            this.Message = message;
         }
 
         [DebuggerStepThrough]
-        public IssueModel()
+        public WarningModel(String message)
+            : base(message)
         {
         }
     }

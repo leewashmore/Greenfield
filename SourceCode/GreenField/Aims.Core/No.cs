@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Aims.Core
 {
-    public class No
+    public class No : Aims.Expressions.No
     {
         private readonly static IEnumerable<ISecurity> securities = new ISecurity[] { };
         public static IEnumerable<ISecurity> Securities

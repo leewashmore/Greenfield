@@ -8,5 +8,6 @@ namespace Aims.Expressions
     public interface IFormula<TValue>
     {
         TValue Calculate(CalculationTicket ticket);
+        TValue Calculate(CalculationTicket ticket, ICalculationTracer tracer);
     }
 }

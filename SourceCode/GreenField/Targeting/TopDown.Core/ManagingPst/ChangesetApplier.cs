@@ -17,7 +17,7 @@ namespace TopDown.Core.ManagingPst
             if (changeset.LatestChangeset.Id < latestChangeSet.Id)
             {
                 throw new ValidationException(
-                    new ValidationIssue("User \"" + latestChangeSet.Username + "\" modified the P-S-T composition on " + latestChangeSet.Timestamp + ".")
+                    new ErrorIssue("User \"" + latestChangeSet.Username + "\" modified the P-S-T composition on " + latestChangeSet.Timestamp + ".")
                 );
             }
 

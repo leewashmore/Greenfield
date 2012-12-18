@@ -311,7 +311,7 @@ namespace TopDown.Core.ManagingCalculations
 			public void Resolve(UnsavedBasketCountryModel model)
 			{
 				throw new ValidationException(
-					new ValidationIssue("There is an unsaved basket for the \"" + model.Country.Name + "\" country (ISO: " + model.Country.IsoCode + ") which hasn't been saved to the system yet.")
+					new ErrorIssue("There is an unsaved basket for the \"" + model.Country.Name + "\" country (ISO: " + model.Country.IsoCode + ") which hasn't been saved to the system yet.")
 				);
 			}
 		}
@@ -326,10 +326,10 @@ namespace TopDown.Core.ManagingCalculations
 			)
 		{
 			var baseValue = model.Base.Value(ticket);
-			if (!baseValue.HasValue) throw new ValidationException(new ValidationIssue("There is no base value defined for the \"" + model.Basket.Name + "\" region."));
+			if (!baseValue.HasValue) throw new ValidationException(new ErrorIssue("There is no base value defined for the \"" + model.Basket.Name + "\" region."));
 
 			var portfolioScaledValue = model.PortfolioScaled.Value(ticket);
-			if (!portfolioScaledValue.HasValue) throw new ValidationException(new ValidationIssue("There is no portfolio scaled value defined for the \"" + model.Basket.Name + "\" region."));
+			if (!portfolioScaledValue.HasValue) throw new ValidationException(new ErrorIssue("There is no portfolio scaled value defined for the \"" + model.Basket.Name + "\" region."));
 
 			this.RecalculateSecurityTargets(
 				portfolioScaledValue.Value,
@@ -352,10 +352,10 @@ namespace TopDown.Core.ManagingCalculations
 		)
 		{
 			var baseValue = model.Base.Value(ticket);
-			if (!baseValue.HasValue) throw new ValidationException(new ValidationIssue("There is no base value defined for the \"" + model.Basket.Country.Name + "\" country (ISO: " + model.Basket.Country.IsoCode + ")."));
+			if (!baseValue.HasValue) throw new ValidationException(new ErrorIssue("There is no base value defined for the \"" + model.Basket.Country.Name + "\" country (ISO: " + model.Basket.Country.IsoCode + ")."));
 
 			var portfolioScaledValue = model.PortfolioScaled.Value(ticket);
-			if (!portfolioScaledValue.HasValue) throw new ValidationException(new ValidationIssue("There is no portfolio scaled value defined for the \"" + model.Basket.Country.Name + "\" country (ISO: " + model.Basket.Country.IsoCode + ")."));
+			if (!portfolioScaledValue.HasValue) throw new ValidationException(new ErrorIssue("There is no portfolio scaled value defined for the \"" + model.Basket.Country.Name + "\" country (ISO: " + model.Basket.Country.IsoCode + ")."));
 
 			this.RecalculateSecurityTargets(
 				portfolioScaledValue.Value,
@@ -454,7 +454,7 @@ namespace TopDown.Core.ManagingCalculations
 		{
 			if (calculationInfo.StatusCode > 0)
 			{
-				var issue = new ValidationIssue(
+				var issue = new ErrorIssue(
 					"Your calculation (ID: " + calculationInfo.Id + ") has already been run on " + calculationInfo.StartedOn + ", it doesn't make sense to run the same calcualtion multiple times."
 				);
 				throw new ValidationException(issue);
@@ -505,7 +505,7 @@ namespace TopDown.Core.ManagingCalculations
 			}
 			catch (Exception exception)
 			{
-				throw new ValidationException(new ValidationIssue(exception.Message));
+				throw new ValidationException(new ErrorIssue(exception.Message));
 			}
 		}
 

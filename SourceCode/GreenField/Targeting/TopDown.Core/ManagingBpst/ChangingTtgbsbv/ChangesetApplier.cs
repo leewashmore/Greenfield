@@ -22,7 +22,7 @@ namespace TopDown.Core.ManagingBpst.ChangingTtgbsbv
             if (changeset.LatestChangesetSnapshot.Id < latestChangeset.Id)
             {
                 throw new ValidationException(
-                    new ValidationIssue("User \"" + latestChangeset.Username + "\" modified the TTG-B-S-Bv composition on " + latestChangeset.Timestamp + ".")
+                    new ErrorIssue("User \"" + latestChangeset.Username + "\" modified the TTG-B-S-Bv composition on " + latestChangeset.Timestamp + ".")
                 );
             }
         }
