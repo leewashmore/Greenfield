@@ -235,7 +235,14 @@ namespace GreenField.Targeting.Controls.BasketTargets
                 x.Timestamp,
                 x.Username
             )));
-            MessageBox.Show(comment);
+            this.Comments = comments;
+        }
+
+        private ObservableCollection<CommentModel> comments;
+        public ObservableCollection<CommentModel> Comments
+        {
+            get { return this.comments; }
+            set { this.comments = value; this.RaisePropertyChanged(() => this.Comments); }
         }
 
         public void Discard()
@@ -243,6 +250,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.Portfolios = null;
             this.Lines = null;
             this.KeptRootModel = null;
+            this.Comments = null;
         }
 
 

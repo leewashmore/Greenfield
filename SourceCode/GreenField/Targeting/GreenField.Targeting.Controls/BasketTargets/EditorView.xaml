@@ -130,7 +130,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <i:Interaction.Behaviors>
+        <local:ShowCommentsWindowBehavior Comments="{Binding Comments}" />
+    </i:Interaction.Behaviors>
+
     <StackPanel Orientation="Vertical">
+        
 
         <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" FrozenColumnCount="5" x:Name="grid">
             <sdk:DataGrid.Columns>
