@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AIMSDataModelStoreContainer" CdmEntityContainer="AIMSDataEntity">
+    <EntitySetMapping Name="BENCHMARK_NODE_FINANCIALS">
+      <EntityTypeMapping TypeName="AIMSDataModel.BENCHMARK_NODE_FINANCIALS">
+        <MappingFragment StoreEntitySet="BENCHMARK_NODE_FINANCIALS">
+          <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+          <ScalarProperty Name="NODE_NAME1" ColumnName="NODE_NAME1" />
+          <ScalarProperty Name="NODE_ID1" ColumnName="NODE_ID1" />
+          <ScalarProperty Name="NODE_NAME2" ColumnName="NODE_NAME2" />
+          <ScalarProperty Name="NODE_ID2" ColumnName="NODE_ID2" />
+          <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+          <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+          <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+          <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERIOD_FINANCIALS">
+      <EntityTypeMapping TypeName="AIMSDataModel.PERIOD_FINANCIALS">
+        <MappingFragment StoreEntitySet="PERIOD_FINANCIALS">
+          <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+          <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+          <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+          <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+          <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+          <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+          <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+          <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+          <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+          <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+          <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+          <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+          <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+          <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_GetDataForBenchmarkNodefinancials" FunctionName="AIMSDataModel.Store.usp_GetDataForBenchmarkNodefinancials">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AIMSDataModel.PeriodFinancialForwardRatios">
+          <ScalarProperty Name="IssuerID" ColumnName="IssuerID" />
+          <ScalarProperty Name="SecurityID" ColumnName="SecurityID" />
+          <ScalarProperty Name="DataID" ColumnName="DataID" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_GetDataForBenchNodefinPeriodYear" FunctionName="AIMSDataModel.Store.usp_GetDataForBenchNodefinPeriodYear">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AIMSDataModel.PeriodFinancialPeriodRatios">
+          <ScalarProperty Name="IssuerID" ColumnName="IssuerID" />
+          <ScalarProperty Name="SecurityID" ColumnName="SecurityID" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="DataID" ColumnName="DataID" />
+          <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertIntoBenchmarkNodeFinancials" FunctionName="AIMSDataModel.Store.InsertIntoBenchmarkNodeFinancials" />
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,135 @@
+2012-12-19 10:33:33,691 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
+2012-12-19 10:34:52,288 ERROR BenchmarkNodeFinancials.BenchmarkNodeFinancial - Void RetrieveData(System.DateTime)
+System.Data.EntityException: The underlying provider failed on Open. ---> System.Data.SqlClient.SqlException: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity)
+   at System.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, SqlConnection owningObject)
+   at System.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, Boolean redirectedUserInstance, SqlConnection owningObject, SqlConnectionString connectionOptions, TimeoutTimer timeout)
+   at System.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(SqlConnection owningObject, TimeoutTimer timeout, SqlConnectionString connectionOptions, String newPassword, Boolean redirectedUserInstance)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, Object providerInfo, String newPassword, SqlConnection owningObject, Boolean redirectedUserInstance)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnection owningConnection, DbConnectionPool pool, DbConnectionOptions options)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionPool.GetConnection(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionFactory.GetConnection(DbConnection owningConnection)
+   at System.Data.ProviderBase.DbConnectionClosed.OpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   --- End of inner exception stack trace ---
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   at System.Data.EntityClient.EntityConnection.Open()
+   at System.Data.Objects.ObjectContext.EnsureConnection()
+   at System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, EntitySet entitySet, EdmType edmType, MergeOption mergeOption)
+   at System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   at System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   at BenchmarkNodeFinancials.AIMSDataEntity.usp_GetDataForBenchmarkNodefinancials(String issuerIds, String securityIds) in D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\BNFDataModel.Designer.cs:line 149
+   at BenchmarkNodeFinancials.BenchmarkNodeFinancial.RetrieveData(DateTime lastBusinessDate) in D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\BenchmarkNodeFinancial.cs:line 87
+2012-12-19 10:34:52,308 DEBUG BenchmarkNodeFinancials.Program - Application completed successfully on 12/19/2012 12:00:00 AM
+2012-12-19 10:37:26,918 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
+2012-12-19 10:37:46,285 ERROR BenchmarkNodeFinancials.BenchmarkNodeFinancial - Void RetrieveData(System.DateTime)
+System.Data.EntityException: The underlying provider failed on Open. ---> System.Data.SqlClient.SqlException: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity)
+   at System.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, SqlConnection owningObject)
+   at System.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, Boolean redirectedUserInstance, SqlConnection owningObject, SqlConnectionString connectionOptions, TimeoutTimer timeout)
+   at System.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(SqlConnection owningObject, TimeoutTimer timeout, SqlConnectionString connectionOptions, String newPassword, Boolean redirectedUserInstance)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, Object providerInfo, String newPassword, SqlConnection owningObject, Boolean redirectedUserInstance)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnection owningConnection, DbConnectionPool pool, DbConnectionOptions options)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionPool.GetConnection(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionFactory.GetConnection(DbConnection owningConnection)
+   at System.Data.ProviderBase.DbConnectionClosed.OpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   --- End of inner exception stack trace ---
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   at System.Data.EntityClient.EntityConnection.Open()
+   at System.Data.Objects.ObjectContext.EnsureConnection()
+   at System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, EntitySet entitySet, EdmType edmType, MergeOption mergeOption)
+   at System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   at System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   at BenchmarkNodeFinancials.AIMSDataEntity.usp_GetDataForBenchmarkNodefinancials(String issuerIds, String securityIds) in D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\BNFDataModel.Designer.cs:line 149
+   at BenchmarkNodeFinancials.BenchmarkNodeFinancial.RetrieveData(DateTime lastBusinessDate) in D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\BenchmarkNodeFinancial.cs:line 87
+2012-12-19 10:37:46,291 DEBUG BenchmarkNodeFinancials.Program - Application completed successfully on 12/19/2012 12:00:00 AM
+2012-12-19 10:41:13,516 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
+2012-12-19 10:41:36,846 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM GROSS. Number of rows: 0
+2012-12-19 10:41:41,746 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM LATAM NET. Number of rows: 0
+2012-12-19 10:41:56,491 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM NET. Number of rows: 0
+2012-12-19 10:42:10,343 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM IN NET. Number of rows: 0
+2012-12-19 10:42:14,673 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark S&P PAN AFRICA EX SOUTH AFRICA NET. Number of rows: 0
+2012-12-19 10:42:17,313 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark S&P AEMM MIDDLE EAST NET. Number of rows: 0
+2012-12-19 10:42:19,603 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark GIC CUSTOM NET. Number of rows: 0
+2012-12-19 10:42:22,383 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM SC NET. Number of rows: 0
+2012-12-19 10:42:25,213 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM IN SC NET. Number of rows: 0
+2012-12-19 10:42:28,093 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM LATAM SC NET. Number of rows: 0
+2012-12-19 10:53:30,784 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
+2012-12-19 10:53:46,326 ERROR BenchmarkNodeFinancials.BenchmarkNodeFinancial - System.Collections.Generic.List`1[BenchmarkNodeFinancials.SecurityData] RetrieveSecurityIds(System.Collections.Generic.List`1[System.String])
+System.InvalidOperationException: The closed type BenchmarkNodeFinancials.DimensionServiceReference.GF_SECURITY_BASEVIEW does not have a corresponding CHG_PCT_MTD settable property.
+   at System.Data.Services.Client.ClientType.GetProperty(String propertyName, Boolean ignoreMissingProperties)
+   at System.Data.Services.Client.AtomMaterializer.MaterializeDataValues(ClientType actualType, List`1 values, Boolean ignoreMissingProperties, DataServiceContext context)
+   at System.Data.Services.Client.AtomMaterializer.MaterializeResolvedEntry(AtomEntry entry, Boolean includeLinks)
+   at System.Data.Services.Client.AtomMaterializerInvoker.DirectMaterializePlan(Object materializer, Object entry, Type expectedEntryType)
+   at System.Data.Services.Client.ProjectionPlan.Run(AtomMaterializer materializer, AtomEntry entry, Type expectedType)
+   at System.Data.Services.Client.AtomMaterializer.Read()
+   at System.Data.Services.Client.MaterializeAtom.MoveNextInternal()
+   at System.Data.Services.Client.MaterializeAtom.MoveNext()
+   at System.Linq.Enumerable.<CastIterator>d__b1`1.MoveNext()
+   at System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source)
+   at System.Data.Services.Client.DataServiceQueryProvider.ReturnSingleton[TElement](Expression expression)
+   at System.Data.Services.Client.DataServiceQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.FirstOrDefault[TSource](IQueryable`1 source)
+   at BenchmarkNodeFinancials.BenchmarkNodeFinancial.RetrieveSecurityIds(List`1 asecShortNames) in D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\BenchmarkNodeFinancial.cs:line 125
+2012-12-19 10:53:46,496 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM GROSS. Number of rows: 0
+2012-12-19 10:54:11,847 ERROR BenchmarkNodeFinancials.BenchmarkNodeFinancial - System.Collections.Generic.List`1[BenchmarkNodeFinancials.SecurityData] RetrieveSecurityIds(System.Collections.Generic.List`1[System.String])
+System.InvalidOperationException: The closed type BenchmarkNodeFinancials.DimensionServiceReference.GF_SECURITY_BASEVIEW does not have a corresponding CHG_PCT_MTD settable property.
+   at System.Data.Services.Client.ClientType.GetProperty(String propertyName, Boolean ignoreMissingProperties)
+   at System.Data.Services.Client.AtomMaterializer.MaterializeDataValues(ClientType actualType, List`1 values, Boolean ignoreMissingProperties, DataServiceContext context)
+   at System.Data.Services.Client.AtomMaterializer.MaterializeResolvedEntry(AtomEntry entry, Boolean includeLinks)
+   at System.Data.Services.Client.AtomMaterializerInvoker.DirectMaterializePlan(Object materializer, Object entry, Type expectedEntryType)
+   at System.Data.Services.Client.ProjectionPlan.Run(AtomMaterializer materializer, AtomEntry entry, Type expectedType)
+   at System.Data.Services.Client.AtomMaterializer.Read()
+   at System.Data.Services.Client.MaterializeAtom.MoveNextInternal()
+   at System.Data.Services.Client.MaterializeAtom.MoveNext()
+   at System.Linq.Enumerable.<CastIterator>d__b1`1.MoveNext()
+   at System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source)
+   at System.Data.Services.Client.DataServiceQueryProvider.ReturnSingleton[TElement](Expression expression)
+   at System.Data.Services.Client.DataServiceQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.FirstOrDefault[TSource](IQueryable`1 source)
+   at BenchmarkNodeFinancials.BenchmarkNodeFinancial.RetrieveSecurityIds(List`1 asecShortNames) in D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\BenchmarkNodeFinancial.cs:line 125
+2012-12-19 10:54:57,140 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
+2012-12-19 10:56:52,689 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
+2012-12-19 10:59:10,649 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
+2012-12-19 11:03:01,317 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion failed for Benchmark : MSCI EM GROSS
+2012-12-19 11:03:01,317 ERROR BenchmarkNodeFinancials.BenchmarkNodeFinancial - Void CreateXMLInsertData(System.Collections.Generic.List`1[BenchmarkNodeFinancials.GroupedBenchmarkNodeData], BenchmarkNodeFinancials.AIMSDataEntity, System.String)
+System.Data.EntityCommandExecutionException: An error occurred while executing the command definition. See the inner exception for details. ---> System.Data.SqlClient.SqlException: Cannot insert duplicate key row in object 'dbo.BENCHMARK_NODE_FINANCIALS' with unique index 'BENCHMARK_NODE_FINANCIALS_idx'.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+   --- End of inner exception stack trace ---
+   at System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+   at System.Data.EntityClient.EntityCommandDefinition.Execute(EntityCommand entityCommand, CommandBehavior behavior)
+   at System.Data.EntityClient.EntityCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.EntityClient.EntityCommand.ExecuteScalar[T_Result](Func`2 resultSelector)
+   at System.Data.EntityClient.EntityCommand.ExecuteNonQuery()
+   at System.Data.Objects.ObjectContext.ExecuteFunction(String functionName, ObjectParameter[] parameters)
+   at BenchmarkNodeFinancials.AIMSDataEntity.InsertIntoBenchmarkNodeFinancials(String xmlScript) in D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\BNFDataModel.Designer.cs:line 198
+   at BenchmarkNodeFinancials.BenchmarkNodeFinancial.CreateXMLInsertData(List`1 groupedFinalData, AIMSDataEntity entity, String benId) in D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\BenchmarkNodeFinancial.cs:line 617
+2012-12-19 11:06:57,377 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
+2012-12-19 11:12:54,074 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM GROSS. Number of rows: 418

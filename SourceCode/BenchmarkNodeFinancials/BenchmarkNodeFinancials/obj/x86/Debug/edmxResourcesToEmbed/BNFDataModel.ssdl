@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AIMSDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="AIMSDataModelStoreContainer">
+    <EntitySet Name="BENCHMARK_NODE_FINANCIALS" EntityType="AIMSDataModel.Store.BENCHMARK_NODE_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="BENCHMARK_NODE_FINANCIALS">
+      <DefiningQuery>SELECT 
+      [BENCHMARK_NODE_FINANCIALS].[BENCHMARK_ID] AS [BENCHMARK_ID], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_NAME1] AS [NODE_NAME1], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_ID1] AS [NODE_ID1], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_NAME2] AS [NODE_NAME2], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_ID2] AS [NODE_ID2], 
+      [BENCHMARK_NODE_FINANCIALS].[DATA_ID] AS [DATA_ID], 
+      [BENCHMARK_NODE_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [BENCHMARK_NODE_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [BENCHMARK_NODE_FINANCIALS].[CURRENCY] AS [CURRENCY], 
+      [BENCHMARK_NODE_FINANCIALS].[AMOUNT] AS [AMOUNT], 
+      [BENCHMARK_NODE_FINANCIALS].[UPDATE_DATE] AS [UPDATE_DATE]
+      FROM [dbo].[BENCHMARK_NODE_FINANCIALS] AS [BENCHMARK_NODE_FINANCIALS]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PERIOD_FINANCIALS" EntityType="AIMSDataModel.Store.PERIOD_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="PERIOD_FINANCIALS">
+      <DefiningQuery>SELECT 
+      [PERIOD_FINANCIALS].[ISSUER_ID] AS [ISSUER_ID], 
+      [PERIOD_FINANCIALS].[SECURITY_ID] AS [SECURITY_ID], 
+      [PERIOD_FINANCIALS].[COA_TYPE] AS [COA_TYPE], 
+      [PERIOD_FINANCIALS].[DATA_SOURCE] AS [DATA_SOURCE], 
+      [PERIOD_FINANCIALS].[ROOT_SOURCE] AS [ROOT_SOURCE], 
+      [PERIOD_FINANCIALS].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE], 
+      [PERIOD_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [PERIOD_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [PERIOD_FINANCIALS].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
+      [PERIOD_FINANCIALS].[FISCAL_TYPE] AS [FISCAL_TYPE], 
+      [PERIOD_FINANCIALS].[CURRENCY] AS [CURRENCY], 
+      [PERIOD_FINANCIALS].[DATA_ID] AS [DATA_ID], 
+      [PERIOD_FINANCIALS].[AMOUNT] AS [AMOUNT], 
+      [PERIOD_FINANCIALS].[CALCULATION_DIAGRAM] AS [CALCULATION_DIAGRAM], 
+      [PERIOD_FINANCIALS].[SOURCE_CURRENCY] AS [SOURCE_CURRENCY], 
+      [PERIOD_FINANCIALS].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
+      FROM [dbo].[PERIOD_FINANCIALS] AS [PERIOD_FINANCIALS]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.BENCHMARK_NODE_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="BENCHMARK_NODE_FINANCIALS">
+    <Key>
+      <PropertyRef Name="BENCHMARK_ID" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="UPDATE_DATE" />
+    </Key>
+    <Property Name="BENCHMARK_ID" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="NODE_NAME1" Type="varchar" MaxLength="50" />
+    <Property Name="NODE_ID1" Type="varchar" MaxLength="50" />
+    <Property Name="NODE_NAME2" Type="varchar" MaxLength="50" />
+    <Property Name="NODE_ID2" Type="varchar" MaxLength="50" />
+    <Property Name="DATA_ID" Type="int" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+    <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="UPDATE_DATE" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="PERIOD_FINANCIALS">
+    <Key>
+      <PropertyRef Name="ISSUER_ID" />
+      <PropertyRef Name="SECURITY_ID" />
+      <PropertyRef Name="COA_TYPE" />
+      <PropertyRef Name="DATA_SOURCE" />
+      <PropertyRef Name="ROOT_SOURCE" />
+      <PropertyRef Name="ROOT_SOURCE_DATE" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="PERIOD_END_DATE" />
+      <PropertyRef Name="FISCAL_TYPE" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="SOURCE_CURRENCY" />
+      <PropertyRef Name="AMOUNT_TYPE" />
+    </Key>
+    <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="ROOT_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="ROOT_SOURCE_DATE" Type="datetime" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+    <Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
+    <Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
+    <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="DATA_ID" Type="int" Nullable="false" />
+    <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="CALCULATION_DIAGRAM" Type="varchar" MaxLength="255" />
+    <Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <Function Name="InsertIntoBenchmarkNodeFinancials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="usp_GetDataForBenchmarkNodefinancials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="issuerIds" Type="varchar(max)" Mode="In" />
+    <Parameter Name="securityIds" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="usp_GetDataForBenchNodefinPeriodYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="issuerIds" Type="varchar(max)" Mode="In" />
+    <Parameter Name="securityIds" Type="varchar(max)" Mode="In" />
+  </Function>
+</Schema>
