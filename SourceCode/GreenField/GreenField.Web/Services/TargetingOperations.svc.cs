@@ -192,7 +192,10 @@ namespace GreenField.Web.Services
 
         public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId)
         {
-            throw new NotImplementedException();
+            return this.Watch(String.Format("Getting comments for TargetingTypeBasketBaseValue: basketId - {0}, targetingTypeId - {1}", basketId, targetingTypeId), delegate
+            {
+                return this.facade.RequestCommentsForTargetingTypeBasketBaseValue(targetingTypeId, basketId);
+            });
         }
     }
 }
