@@ -979,6 +979,131 @@ namespace TopDown.Core.Persisting
             }
         }
 
+        public IEnumerable<TargetingTypeBasketPortfolioTargetChangeInfo> GetTargetingTypeBasketPortfolioTargetChanges(int targetingTypeId, string portfolioId, int basketId)
+        {
+            using (var builder = this.CreateQueryCommandBuilder<TargetingTypeBasketPortfolioTargetChangeInfo>())
+            {
+                return builder.Text("select ")
+                    .Field("  [ID]", (info, value) => info.Id = value)
+                    .Field(", [CHANGESET_ID]", (info, value) => info.ChangesetId = value)
+                    .Field(", [TARGETING_TYPE_ID]", (info, value) => info.TargetingTypeId = value)
+                    .Field(", [BASKET_ID]", (info, value) => info.BasketId = value)
+                    .Field(", [PORTFOLIO_ID]", (info, value) => info.PortfolioId = value, true)
+                    .Field(", [TARGET_BEFORE]", (TargetingTypeBasketPortfolioTargetChangeInfo info, Decimal? value) => info.TargetBefore = value)
+                    .Field(", [TARGET_AFTER]", (TargetingTypeBasketPortfolioTargetChangeInfo info, Decimal? value) => info.TargetAfter = value)
+                    .Field(", [COMMENT]", (info, value) => info.Comment = value, true)
+                    .Text(" from [" + TableNames.TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_CHANGE + "]")
+                    .Text(" where [BASKET_ID] = ").Parameter(basketId)
+                    .Text(" and   [TARGETING_TYPE_ID] = ").Parameter(targetingTypeId)
+                    .Text(" and   [PORTFOLIO_ID] = ").Parameter(portfolioId)
+                    .PullAll();
+            }
+        }
+
+        public IEnumerable<TargetingTypeBasketPortfolioTargetChangesetInfo> GetTargetingTypeBasketPortfolioTargetChangesets(int[] changesetIds)
+        {
+            if (changesetIds.Any())
+            {
+                using (var builder = this.CreateQueryCommandBuilder<TargetingTypeBasketPortfolioTargetChangesetInfo>())
+                {
+                    return builder.Text("select ")
+                        .Field("  [ID]", (info, value) => info.Id = value)
+                        .Field(", [USERNAME]", (info, value) => info.Username = value, true)
+                        .Field(", [TIMESTAMP]", (info, value) => info.Timestamp = value)
+                        .Field(", [CALCULATION_ID]", (info, value) => info.CalculationId = value)
+                        .Text(" from [" + TableNames.TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_CHANGESET + "]")
+                        .Text(" where [ID] in (").Parameters(changesetIds).Text(")")
+                        .PullAll();
+                }
+            }
+            else
+            {
+                return new TargetingTypeBasketPortfolioTargetChangesetInfo[] { };
+            }
+        }
+
+        public IEnumerable<BgaPortfolioSecurityFactorChangeInfo> GetBgaPortfolioSecurityFactorChanges(string portfolioId, string securityId)
+        {
+            using (var builder = this.CreateQueryCommandBuilder<BgaPortfolioSecurityFactorChangeInfo>())
+            {
+                return builder.Text("select ")
+                    .Field("  [ID]", (info, value) => info.Id = value)
+                    .Field(", [CHANGESET_ID]", (info, value) => info.ChangesetId = value)
+                    .Field(", [PORTFOLIO_ID]", (info, value) => info.BroadGlobalActivePortfolioId = value, true)
+                    .Field(", [SECURITY_ID]", (info, value) => info.SecurityId = value, true)
+                    .Field(", [FACTOR_BEFORE]", (BgaPortfolioSecurityFactorChangeInfo info, Decimal? value) => info.FactorBefore = value)
+                    .Field(", [FACTOR_AFTER]", (BgaPortfolioSecurityFactorChangeInfo info, Decimal? value) => info.FactorAfter = value)
+                    .Field(", [COMMENT]", (info, value) => info.Comment = value, true)
+                    .Text(" from [" + TableNames.BGA_PORTFOLIO_SECURITY_FACTOR_CHANGE + "]")
+                    .Text(" where   [PORTFOLIO_ID] = ").Parameter(portfolioId)
+                    .Text(" and   [SECURITY_ID] = ").Parameter(securityId)
+                    .PullAll();
+            }
+        }
+
+        public IEnumerable<BgaPortfolioSecurityFactorChangesetInfo> GetBgaPortfolioSecurityFactorChangesets(int[] changesetIds)
+        {
+            if (changesetIds.Any())
+            {
+                using (var builder = this.CreateQueryCommandBuilder<BgaPortfolioSecurityFactorChangesetInfo>())
+                {
+                    return builder.Text("select ")
+                        .Field("  [ID]", (info, value) => info.Id = value)
+                        .Field(", [USERNAME]", (info, value) => info.Username = value, true)
+                        .Field(", [TIMESTAMP]", (info, value) => info.Timestamp = value)
+                        .Field(", [CALCULATION_ID]", (info, value) => info.CalculationId = value)
+                        .Text(" from [" + TableNames.BGA_PORTFOLIO_SECURITY_FACTOR_CHANGESET + "]")
+                        .Text(" where [ID] in (").Parameters(changesetIds).Text(")")
+                        .PullAll();
+                }
+            }
+            else
+            {
+                return new BgaPortfolioSecurityFactorChangesetInfo[] { };
+            }
+        }
+
+        public IEnumerable<BuPortfolioSecurityTargetChangeInfo> GetBuPortfolioSecurityTargetChanges(string portfolioId, string securityId)
+        {
+            using (var builder = this.CreateQueryCommandBuilder<BuPortfolioSecurityTargetChangeInfo>())
+            {
+                return builder.Text("select ")
+                    .Field("  [ID]", (info, value) => info.Id = value)
+                    .Field(", [CHANGESET_ID]", (info, value) => info.ChangesetId = value)
+                    .Field(", [PORTFOLIO_ID]", (info, value) => info.BottomUpPortfolioId = value, true)
+                    .Field(", [SECURITY_ID]", (info, value) => info.SecurityId = value, true)
+                    .Field(", [TARGET_BEFORE]", (BuPortfolioSecurityTargetChangeInfo info, Decimal? value) => info.TargetBefore = value)
+                    .Field(", [TARGET_AFTER]", (BuPortfolioSecurityTargetChangeInfo info, Decimal? value) => info.TargetAfter = value)
+                    .Field(", [COMMENT]", (info, value) => info.Comment = value, true)
+                    .Text(" from [" + TableNames.BU_PORTFOLIO_SECURITY_TARGET_CHANGE + "]")
+                    .Text(" where   [PORTFOLIO_ID] = ").Parameter(portfolioId)
+                    .Text(" and   [SECURITY_ID] = ").Parameter(securityId)
+                    .PullAll();
+            }
+        }
+
+        public IEnumerable<BuPortfolioSecurityTargetChangesetInfo> GetBuPortfolioSecurityTargetChangesets(int[] changesetIds)
+        {
+            if (changesetIds.Any())
+            {
+                using (var builder = this.CreateQueryCommandBuilder<BuPortfolioSecurityTargetChangesetInfo>())
+                {
+                    return builder.Text("select ")
+                        .Field("  [ID]", (info, value) => info.Id = value)
+                        .Field(", [USERNAME]", (info, value) => info.Username = value, true)
+                        .Field(", [TIMESTAMP]", (info, value) => info.Timestamp = value)
+                        .Field(", [CALCULATION_ID]", (info, value) => info.CalculationId = value)
+                        .Text(" from [" + TableNames.BU_PORTFOLIO_SECURITY_TARGET_CHANGESET + "]")
+                        .Text(" where [ID] in (").Parameters(changesetIds).Text(")")
+                        .PullAll();
+                }
+            }
+            else
+            {
+                return new BuPortfolioSecurityTargetChangesetInfo[] { };
+            }
+        }
+
 
         public Int32 InsertBasketPortfolioSecurityTarget(BasketPortfolioSecurityTargetInfo info)
         {
@@ -1502,6 +1627,15 @@ namespace TopDown.Core.Persisting
 
 
 
-       
+
+
+
+
+
+
+
+
+
+        
     }
 }

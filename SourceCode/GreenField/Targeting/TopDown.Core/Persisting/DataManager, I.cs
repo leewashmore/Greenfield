@@ -17,6 +17,8 @@ namespace TopDown.Core.Persisting
 		IEnumerable<RegionBasketInfo> GetAllRegionBaskets();
 
         // P-S-T
+        IEnumerable<BuPortfolioSecurityTargetChangeInfo> GetBuPortfolioSecurityTargetChanges(string portfolioId, string securityId);
+        IEnumerable<BuPortfolioSecurityTargetChangesetInfo> GetBuPortfolioSecurityTargetChangesets(int[] changesetIds);
         IEnumerable<BuPortfolioSecurityTargetInfo> GetAllPortfolioSecurityTargets();
 		IEnumerable<BuPortfolioSecurityTargetInfo> GetPortfolioSecurityTargets(String bottomUpPortfolioId);
         Int32 InsertPortfolioSecurityTarget(BuPortfolioSecurityTargetInfo pstInfo);
@@ -39,8 +41,12 @@ namespace TopDown.Core.Persisting
         IEnumerable<TaxonomyInfo> GetAllTaxonomies();
 
         // TT-B-Bv
+        IEnumerable<BgaPortfolioSecurityFactorChangeInfo> GetBgaPortfolioSecurityFactorChanges(string portfolioId, string securityId);
+        IEnumerable<BgaPortfolioSecurityFactorChangesetInfo> GetBgaPortfolioSecurityFactorChangesets(int[] changesetIds);
         IEnumerable<TargetingTypeBasketBaseValueChangeInfo> GetTargetingTypeBasketBaseValueChanges(int targetingTypeId, int basketId);
         IEnumerable<TargetingTypeBasketBaseValueChangesetInfo> GetTargetingTypeBasketBaseValueChangesets(int[] changesetIds);
+        IEnumerable<TargetingTypeBasketPortfolioTargetChangeInfo> GetTargetingTypeBasketPortfolioTargetChanges(int targetingTypeId, string portfolioId, int basketId);
+        IEnumerable<TargetingTypeBasketPortfolioTargetChangesetInfo> GetTargetingTypeBasketPortfolioTargetChangesets(int[] changesetIds);
         IEnumerable<TargetingTypeBasketBaseValueInfo> GetTargetingTypeBasketBaseValues(Int32 targetingTypeId);
         TargetingTypeBasketBaseValueChangesetInfo GetLatestTargetingTypeBasketBaseValueChangeset();
         IEnumerator<Int32> ReserveTargetingTypeBasketBaseValueChangesetIds(Int32 howMany);
@@ -129,8 +135,6 @@ namespace TopDown.Core.Persisting
 		IEnumerable<CalculationWithChangesets> GetAllCalculationWithChangesets(Int32 howMany);
 
         Int32 StartTargetingCalculation(Int32 calculationId);
-
-
 
 
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 namespace TopDown.Core.Persisting
 {
     /// <summary>
@@ -12,6 +13,10 @@ namespace TopDown.Core.Persisting
     /// </summary>
     public class BuPortfolioSecurityTargetChangeInfo : IChangeInfoBase
     {
+        [DebuggerStepThrough]
+        public BuPortfolioSecurityTargetChangeInfo()
+        { }
+
         public BuPortfolioSecurityTargetChangeInfo(
             Int32 id,
             String bottomUpPortfolioId,

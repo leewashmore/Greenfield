@@ -39,37 +39,37 @@ namespace TopDown.Core.Persisting
 		/// <summary>
 		/// ID
 		/// </summary>
-		public Int32 Id { get; private set; }
+		public Int32 Id { get; set; }
 
 		/// <summary>
 		/// PORTFOLIO_ID
 		/// </summary>
-		public String BroadGlobalActivePortfolioId { get; private set; }
+		public String BroadGlobalActivePortfolioId { get; set; }
 
 		/// <summary>
 		/// SECURITY_ID
 		/// </summary>
-		public String SecurityId { get; private set; }
+		public String SecurityId { get; set; }
 		
 		/// <summary>
 		/// FACTOR_BEFORE
 		/// </summary>
-		public Decimal? FactorBefore { get; private set; }
+		public Decimal? FactorBefore { get;  set; }
 		
 		/// <summary>
 		/// FACTOR_AFTER
 		/// </summary>
-		public Decimal? FactorAfter { get; private set; }
+		public Decimal? FactorAfter { get; set; }
 		
 		/// <summary>
 		/// COMMENT
 		/// </summary>
-		public String Comment { get; private set; }
+		public String Comment { get; set; }
 
 		/// <summary>
 		/// CHANGESET_ID
 		/// </summary>
-		public Int32 ChangesetId { get; private set; }
+		public Int32 ChangesetId { get; set; }
 
 
         String IChangeInfoBase.Comment

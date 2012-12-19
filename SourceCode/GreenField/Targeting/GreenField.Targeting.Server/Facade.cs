@@ -224,5 +224,27 @@ namespace GreenField.Targeting.Server
             var serializedComments = this.serializer.SerializeComments(comments);
             return serializedComments;
         }
+
+        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId)
+        {
+            var comments = this.facade.RequestCommentsForTargetingTypeBasketPortfolioTarget(targetingTypeId, portfolioId, basketId);
+            var serializedComments = this.serializer.SerializeComments(comments);
+            return serializedComments;
+        }
+
+
+        public IEnumerable<CommentModel> RequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId)
+        {
+            var comments = this.facade.RequestCommentsForBgaPortfolioSecurityFactor(portfolioId, securityId);
+            var serializedComments = this.serializer.SerializeComments(comments);
+            return serializedComments;
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId)
+        {
+            var comments = this.facade.RequestCommentsForBuPortfolioSecurityTarget(portfolioId, securityId);
+            var serializedComments = this.serializer.SerializeComments(comments);
+            return serializedComments;
+        }
     }
 }

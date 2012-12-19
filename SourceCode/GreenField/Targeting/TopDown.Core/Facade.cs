@@ -385,5 +385,48 @@ namespace TopDown.Core
                 return comments;
             }
         }
+
+        public IEnumerable<ManagingComments.CommentModel> RequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.RequestCommentsForTargetingTypeBasketPortfolioTarget(
+                    targetingTypeId,
+                    portfolioId,
+                    basketId,
+                    manager
+                );
+                return comments;
+            }
+        }
+
+        public IEnumerable<ManagingComments.CommentModel> RequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.RequestCommentsForBgaPortfolioSecurityFactor(
+                    portfolioId,
+                    securityId,
+                    manager
+                );
+                return comments;
+            }
+        }
+
+        public IEnumerable<ManagingComments.CommentModel> RequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.RequestCommentsForBuPortfolioSecurityTarget(
+                    portfolioId,
+                    securityId,
+                    manager
+                );
+                return comments;
+            }
+        }
     }
 }

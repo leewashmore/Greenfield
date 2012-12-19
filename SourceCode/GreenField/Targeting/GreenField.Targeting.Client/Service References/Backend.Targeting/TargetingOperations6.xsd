@@ -248,4 +248,50 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RequestCommentsForTargetingTypeBasketPortfolioTarget">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="targetingTypeId" type="xs:int" />
+        <xs:element minOccurs="0" name="portfolioId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="basketId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForTargetingTypeBasketPortfolioTargetResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="RequestCommentsForTargetingTypeBasketPortfolioTargetResult" nillable="true" type="q24:ArrayOfCommentModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForBgaPortfolioSecurityFactor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="securityId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForBgaPortfolioSecurityFactorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="RequestCommentsForBgaPortfolioSecurityFactorResult" nillable="true" type="q25:ArrayOfCommentModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForBuPortfolioSecurityTarget">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="securityId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestCommentsForBuPortfolioSecurityTargetResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="RequestCommentsForBuPortfolioSecurityTargetResult" nillable="true" type="q26:ArrayOfCommentModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

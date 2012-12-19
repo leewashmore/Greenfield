@@ -1183,12 +1183,12 @@ namespace TopDown.FacingServer.Backend.Targeting {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GlobeResident", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
         "tive")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.OtherModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BasketCountryModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.RegionModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BasketCountryModel))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BgaCountryModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BasketRegionModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.OtherModel))]
     public partial class GlobeResident : object, System.ComponentModel.INotifyPropertyChanged {
         
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -1197,447 +1197,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="OtherModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
-        "tive")]
-    public partial class OtherModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActiveField;
-        
-        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.BasketCountryModel> BasketCountriesField;
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioAdjustmentField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaledField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActiveField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposureField;
-        
-        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel> UnsavedBasketCountriesField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel Base {
-            get {
-                return this.BaseField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
-                    this.BaseField = value;
-                    this.RaisePropertyChanged("Base");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActive {
-            get {
-                return this.BaseActiveField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
-                    this.BaseActiveField = value;
-                    this.RaisePropertyChanged("BaseActive");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.BasketCountryModel> BasketCountries {
-            get {
-                return this.BasketCountriesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BasketCountriesField, value) != true)) {
-                    this.BasketCountriesField = value;
-                    this.RaisePropertyChanged("BasketCountries");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
-            get {
-                return this.BenchmarkField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
-                    this.BenchmarkField = value;
-                    this.RaisePropertyChanged("Benchmark");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
-            get {
-                return this.OverlayField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
-                    this.OverlayField = value;
-                    this.RaisePropertyChanged("Overlay");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioAdjustment {
-            get {
-                return this.PortfolioAdjustmentField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
-                    this.PortfolioAdjustmentField = value;
-                    this.RaisePropertyChanged("PortfolioAdjustment");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaled {
-            get {
-                return this.PortfolioScaledField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
-                    this.PortfolioScaledField = value;
-                    this.RaisePropertyChanged("PortfolioScaled");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActive {
-            get {
-                return this.TrueActiveField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
-                    this.TrueActiveField = value;
-                    this.RaisePropertyChanged("TrueActive");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposure {
-            get {
-                return this.TrueExposureField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
-                    this.TrueExposureField = value;
-                    this.RaisePropertyChanged("TrueExposure");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel> UnsavedBasketCountries {
-            get {
-                return this.UnsavedBasketCountriesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UnsavedBasketCountriesField, value) != true)) {
-                    this.UnsavedBasketCountriesField = value;
-                    this.RaisePropertyChanged("UnsavedBasketCountries");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="BasketCountryModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
-        "tive")]
-    public partial class BasketCountryModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
-        
-        private TopDown.FacingServer.Backend.Targeting.EditableExpressionModel BaseField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActiveField;
-        
-        private TopDown.FacingServer.Backend.Targeting.CountryBasketModel BasketField;
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
-        
-        private TopDown.FacingServer.Backend.Targeting.EditableExpressionModel PortfolioAdjustmentField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaledField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActiveField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposureField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.EditableExpressionModel Base {
-            get {
-                return this.BaseField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
-                    this.BaseField = value;
-                    this.RaisePropertyChanged("Base");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActive {
-            get {
-                return this.BaseActiveField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
-                    this.BaseActiveField = value;
-                    this.RaisePropertyChanged("BaseActive");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.CountryBasketModel Basket {
-            get {
-                return this.BasketField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BasketField, value) != true)) {
-                    this.BasketField = value;
-                    this.RaisePropertyChanged("Basket");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
-            get {
-                return this.BenchmarkField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
-                    this.BenchmarkField = value;
-                    this.RaisePropertyChanged("Benchmark");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
-            get {
-                return this.OverlayField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
-                    this.OverlayField = value;
-                    this.RaisePropertyChanged("Overlay");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.EditableExpressionModel PortfolioAdjustment {
-            get {
-                return this.PortfolioAdjustmentField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
-                    this.PortfolioAdjustmentField = value;
-                    this.RaisePropertyChanged("PortfolioAdjustment");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaled {
-            get {
-                return this.PortfolioScaledField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
-                    this.PortfolioScaledField = value;
-                    this.RaisePropertyChanged("PortfolioScaled");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActive {
-            get {
-                return this.TrueActiveField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
-                    this.TrueActiveField = value;
-                    this.RaisePropertyChanged("TrueActive");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposure {
-            get {
-                return this.TrueExposureField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
-                    this.TrueExposureField = value;
-                    this.RaisePropertyChanged("TrueExposure");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UnsavedBasketCountryModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
-        "tive")]
-    public partial class UnsavedBasketCountryModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
-        
-        private TopDown.FacingServer.Backend.Targeting.EditableExpressionModel BaseField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActiveField;
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
-        
-        private TopDown.FacingServer.Backend.Targeting.CountryModel CountryField;
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
-        
-        private TopDown.FacingServer.Backend.Targeting.EditableExpressionModel PortfolioAdjustmentField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaledField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActiveField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposureField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.EditableExpressionModel Base {
-            get {
-                return this.BaseField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
-                    this.BaseField = value;
-                    this.RaisePropertyChanged("Base");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActive {
-            get {
-                return this.BaseActiveField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
-                    this.BaseActiveField = value;
-                    this.RaisePropertyChanged("BaseActive");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
-            get {
-                return this.BenchmarkField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
-                    this.BenchmarkField = value;
-                    this.RaisePropertyChanged("Benchmark");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.CountryModel Country {
-            get {
-                return this.CountryField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
-                    this.CountryField = value;
-                    this.RaisePropertyChanged("Country");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
-            get {
-                return this.OverlayField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
-                    this.OverlayField = value;
-                    this.RaisePropertyChanged("Overlay");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.EditableExpressionModel PortfolioAdjustment {
-            get {
-                return this.PortfolioAdjustmentField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
-                    this.PortfolioAdjustmentField = value;
-                    this.RaisePropertyChanged("PortfolioAdjustment");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaled {
-            get {
-                return this.PortfolioScaledField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
-                    this.PortfolioScaledField = value;
-                    this.RaisePropertyChanged("PortfolioScaled");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActive {
-            get {
-                return this.TrueActiveField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
-                    this.TrueActiveField = value;
-                    this.RaisePropertyChanged("TrueActive");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposure {
-            get {
-                return this.TrueExposureField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
-                    this.TrueExposureField = value;
-                    this.RaisePropertyChanged("TrueExposure");
-                }
             }
         }
     }
@@ -1801,6 +1360,148 @@ namespace TopDown.FacingServer.Backend.Targeting {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BasketCountryModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
+        "tive")]
+    public partial class BasketCountryModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
+        
+        private TopDown.FacingServer.Backend.Targeting.EditableExpressionModel BaseField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActiveField;
+        
+        private TopDown.FacingServer.Backend.Targeting.CountryBasketModel BasketField;
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
+        
+        private TopDown.FacingServer.Backend.Targeting.EditableExpressionModel PortfolioAdjustmentField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaledField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActiveField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposureField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.EditableExpressionModel Base {
+            get {
+                return this.BaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
+                    this.BaseField = value;
+                    this.RaisePropertyChanged("Base");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActive {
+            get {
+                return this.BaseActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
+                    this.BaseActiveField = value;
+                    this.RaisePropertyChanged("BaseActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.CountryBasketModel Basket {
+            get {
+                return this.BasketField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BasketField, value) != true)) {
+                    this.BasketField = value;
+                    this.RaisePropertyChanged("Basket");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.EditableExpressionModel PortfolioAdjustment {
+            get {
+                return this.PortfolioAdjustmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
+                    this.PortfolioAdjustmentField = value;
+                    this.RaisePropertyChanged("PortfolioAdjustment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaled {
+            get {
+                return this.PortfolioScaledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
+                    this.PortfolioScaledField = value;
+                    this.RaisePropertyChanged("PortfolioScaled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActive {
+            get {
+                return this.TrueActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
+                    this.TrueActiveField = value;
+                    this.RaisePropertyChanged("TrueActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposure {
+            get {
+                return this.TrueExposureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
+                    this.TrueExposureField = value;
+                    this.RaisePropertyChanged("TrueExposure");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BgaCountryModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
         "tive")]
     public partial class BgaCountryModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
@@ -1846,6 +1547,148 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
                     this.OverlayField = value;
                     this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UnsavedBasketCountryModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
+        "tive")]
+    public partial class UnsavedBasketCountryModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
+        
+        private TopDown.FacingServer.Backend.Targeting.EditableExpressionModel BaseField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActiveField;
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
+        
+        private TopDown.FacingServer.Backend.Targeting.CountryModel CountryField;
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
+        
+        private TopDown.FacingServer.Backend.Targeting.EditableExpressionModel PortfolioAdjustmentField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaledField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActiveField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposureField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.EditableExpressionModel Base {
+            get {
+                return this.BaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
+                    this.BaseField = value;
+                    this.RaisePropertyChanged("Base");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActive {
+            get {
+                return this.BaseActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
+                    this.BaseActiveField = value;
+                    this.RaisePropertyChanged("BaseActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.CountryModel Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.EditableExpressionModel PortfolioAdjustment {
+            get {
+                return this.PortfolioAdjustmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
+                    this.PortfolioAdjustmentField = value;
+                    this.RaisePropertyChanged("PortfolioAdjustment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaled {
+            get {
+                return this.PortfolioScaledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
+                    this.PortfolioScaledField = value;
+                    this.RaisePropertyChanged("PortfolioScaled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActive {
+            get {
+                return this.TrueActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
+                    this.TrueActiveField = value;
+                    this.RaisePropertyChanged("TrueActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposure {
+            get {
+                return this.TrueExposureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
+                    this.TrueExposureField = value;
+                    this.RaisePropertyChanged("TrueExposure");
                 }
             }
         }
@@ -2003,6 +1846,163 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
                     this.TrueExposureField = value;
                     this.RaisePropertyChanged("TrueExposure");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OtherModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
+        "tive")]
+    public partial class OtherModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActiveField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.BasketCountryModel> BasketCountriesField;
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioAdjustmentField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaledField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActiveField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposureField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel> UnsavedBasketCountriesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel Base {
+            get {
+                return this.BaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
+                    this.BaseField = value;
+                    this.RaisePropertyChanged("Base");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActive {
+            get {
+                return this.BaseActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
+                    this.BaseActiveField = value;
+                    this.RaisePropertyChanged("BaseActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.BasketCountryModel> BasketCountries {
+            get {
+                return this.BasketCountriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BasketCountriesField, value) != true)) {
+                    this.BasketCountriesField = value;
+                    this.RaisePropertyChanged("BasketCountries");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioAdjustment {
+            get {
+                return this.PortfolioAdjustmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
+                    this.PortfolioAdjustmentField = value;
+                    this.RaisePropertyChanged("PortfolioAdjustment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaled {
+            get {
+                return this.PortfolioScaledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
+                    this.PortfolioScaledField = value;
+                    this.RaisePropertyChanged("PortfolioScaled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActive {
+            get {
+                return this.TrueActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
+                    this.TrueActiveField = value;
+                    this.RaisePropertyChanged("TrueActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposure {
+            get {
+                return this.TrueExposureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
+                    this.TrueExposureField = value;
+                    this.RaisePropertyChanged("TrueExposure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel> UnsavedBasketCountries {
+            get {
+                return this.UnsavedBasketCountriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UnsavedBasketCountriesField, value) != true)) {
+                    this.UnsavedBasketCountriesField = value;
+                    this.RaisePropertyChanged("UnsavedBasketCountries");
                 }
             }
         }
@@ -3173,6 +3173,22 @@ namespace TopDown.FacingServer.Backend.Targeting {
         System.IAsyncResult BeginRequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeBasketBaseValue(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketPortfolioTarget", ReplyAction="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketPortfolioTargetRe" +
+            "sponse")]
+        System.IAsyncResult BeginRequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeBasketPortfolioTarget(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/RequestCommentsForBgaPortfolioSecurityFactor", ReplyAction="http://tempuri.org/IFacade/RequestCommentsForBgaPortfolioSecurityFactorResponse")]
+        System.IAsyncResult BeginRequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBgaPortfolioSecurityFactor(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/RequestCommentsForBuPortfolioSecurityTarget", ReplyAction="http://tempuri.org/IFacade/RequestCommentsForBuPortfolioSecurityTargetResponse")]
+        System.IAsyncResult BeginRequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBuPortfolioSecurityTarget(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -3504,6 +3520,63 @@ namespace TopDown.FacingServer.Backend.Targeting {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RequestCommentsForTargetingTypeBasketPortfolioTargetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RequestCommentsForTargetingTypeBasketPortfolioTargetCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RequestCommentsForBgaPortfolioSecurityFactorCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RequestCommentsForBgaPortfolioSecurityFactorCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RequestCommentsForBuPortfolioSecurityTargetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RequestCommentsForBuPortfolioSecurityTargetCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class FacadeClient : System.ServiceModel.ClientBase<TopDown.FacingServer.Backend.Targeting.IFacade>, TopDown.FacingServer.Backend.Targeting.IFacade {
         
         private BeginOperationDelegate onBeginGetBroadGlobalActiveDelegate;
@@ -3608,6 +3681,24 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private System.Threading.SendOrPostCallback onRequestCommentsForTargetingTypeBasketBaseValueCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate;
+        
+        private EndOperationDelegate onEndRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate;
+        
+        private System.Threading.SendOrPostCallback onRequestCommentsForTargetingTypeBasketPortfolioTargetCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRequestCommentsForBgaPortfolioSecurityFactorDelegate;
+        
+        private EndOperationDelegate onEndRequestCommentsForBgaPortfolioSecurityFactorDelegate;
+        
+        private System.Threading.SendOrPostCallback onRequestCommentsForBgaPortfolioSecurityFactorCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRequestCommentsForBuPortfolioSecurityTargetDelegate;
+        
+        private EndOperationDelegate onEndRequestCommentsForBuPortfolioSecurityTargetDelegate;
+        
+        private System.Threading.SendOrPostCallback onRequestCommentsForBuPortfolioSecurityTargetCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -3694,6 +3785,12 @@ namespace TopDown.FacingServer.Backend.Targeting {
         public event System.EventHandler<RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompletedEventArgs> RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompleted;
         
         public event System.EventHandler<RequestCommentsForTargetingTypeBasketBaseValueCompletedEventArgs> RequestCommentsForTargetingTypeBasketBaseValueCompleted;
+        
+        public event System.EventHandler<RequestCommentsForTargetingTypeBasketPortfolioTargetCompletedEventArgs> RequestCommentsForTargetingTypeBasketPortfolioTargetCompleted;
+        
+        public event System.EventHandler<RequestCommentsForBgaPortfolioSecurityFactorCompletedEventArgs> RequestCommentsForBgaPortfolioSecurityFactorCompleted;
+        
+        public event System.EventHandler<RequestCommentsForBuPortfolioSecurityTargetCompletedEventArgs> RequestCommentsForBuPortfolioSecurityTargetCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -4495,6 +4592,152 @@ namespace TopDown.FacingServer.Backend.Targeting {
                         basketId}, this.onEndRequestCommentsForTargetingTypeBasketBaseValueDelegate, this.onRequestCommentsForTargetingTypeBasketBaseValueCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRequestCommentsForTargetingTypeBasketPortfolioTarget(targetingTypeId, portfolioId, basketId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> TopDown.FacingServer.Backend.Targeting.IFacade.EndRequestCommentsForTargetingTypeBasketPortfolioTarget(System.IAsyncResult result) {
+            return base.Channel.EndRequestCommentsForTargetingTypeBasketPortfolioTarget(result);
+        }
+        
+        private System.IAsyncResult OnBeginRequestCommentsForTargetingTypeBasketPortfolioTarget(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int targetingTypeId = ((int)(inValues[0]));
+            string portfolioId = ((string)(inValues[1]));
+            int basketId = ((int)(inValues[2]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRequestCommentsForTargetingTypeBasketPortfolioTarget(targetingTypeId, portfolioId, basketId, callback, asyncState);
+        }
+        
+        private object[] OnEndRequestCommentsForTargetingTypeBasketPortfolioTarget(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> retVal = ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndRequestCommentsForTargetingTypeBasketPortfolioTarget(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRequestCommentsForTargetingTypeBasketPortfolioTargetCompleted(object state) {
+            if ((this.RequestCommentsForTargetingTypeBasketPortfolioTargetCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RequestCommentsForTargetingTypeBasketPortfolioTargetCompleted(this, new RequestCommentsForTargetingTypeBasketPortfolioTargetCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RequestCommentsForTargetingTypeBasketPortfolioTargetAsync(int targetingTypeId, string portfolioId, int basketId) {
+            this.RequestCommentsForTargetingTypeBasketPortfolioTargetAsync(targetingTypeId, portfolioId, basketId, null);
+        }
+        
+        public void RequestCommentsForTargetingTypeBasketPortfolioTargetAsync(int targetingTypeId, string portfolioId, int basketId, object userState) {
+            if ((this.onBeginRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate == null)) {
+                this.onBeginRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate = new BeginOperationDelegate(this.OnBeginRequestCommentsForTargetingTypeBasketPortfolioTarget);
+            }
+            if ((this.onEndRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate == null)) {
+                this.onEndRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate = new EndOperationDelegate(this.OnEndRequestCommentsForTargetingTypeBasketPortfolioTarget);
+            }
+            if ((this.onRequestCommentsForTargetingTypeBasketPortfolioTargetCompletedDelegate == null)) {
+                this.onRequestCommentsForTargetingTypeBasketPortfolioTargetCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRequestCommentsForTargetingTypeBasketPortfolioTargetCompleted);
+            }
+            base.InvokeAsync(this.onBeginRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate, new object[] {
+                        targetingTypeId,
+                        portfolioId,
+                        basketId}, this.onEndRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate, this.onRequestCommentsForTargetingTypeBasketPortfolioTargetCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRequestCommentsForBgaPortfolioSecurityFactor(portfolioId, securityId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> TopDown.FacingServer.Backend.Targeting.IFacade.EndRequestCommentsForBgaPortfolioSecurityFactor(System.IAsyncResult result) {
+            return base.Channel.EndRequestCommentsForBgaPortfolioSecurityFactor(result);
+        }
+        
+        private System.IAsyncResult OnBeginRequestCommentsForBgaPortfolioSecurityFactor(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string portfolioId = ((string)(inValues[0]));
+            string securityId = ((string)(inValues[1]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRequestCommentsForBgaPortfolioSecurityFactor(portfolioId, securityId, callback, asyncState);
+        }
+        
+        private object[] OnEndRequestCommentsForBgaPortfolioSecurityFactor(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> retVal = ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndRequestCommentsForBgaPortfolioSecurityFactor(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRequestCommentsForBgaPortfolioSecurityFactorCompleted(object state) {
+            if ((this.RequestCommentsForBgaPortfolioSecurityFactorCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RequestCommentsForBgaPortfolioSecurityFactorCompleted(this, new RequestCommentsForBgaPortfolioSecurityFactorCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RequestCommentsForBgaPortfolioSecurityFactorAsync(string portfolioId, string securityId) {
+            this.RequestCommentsForBgaPortfolioSecurityFactorAsync(portfolioId, securityId, null);
+        }
+        
+        public void RequestCommentsForBgaPortfolioSecurityFactorAsync(string portfolioId, string securityId, object userState) {
+            if ((this.onBeginRequestCommentsForBgaPortfolioSecurityFactorDelegate == null)) {
+                this.onBeginRequestCommentsForBgaPortfolioSecurityFactorDelegate = new BeginOperationDelegate(this.OnBeginRequestCommentsForBgaPortfolioSecurityFactor);
+            }
+            if ((this.onEndRequestCommentsForBgaPortfolioSecurityFactorDelegate == null)) {
+                this.onEndRequestCommentsForBgaPortfolioSecurityFactorDelegate = new EndOperationDelegate(this.OnEndRequestCommentsForBgaPortfolioSecurityFactor);
+            }
+            if ((this.onRequestCommentsForBgaPortfolioSecurityFactorCompletedDelegate == null)) {
+                this.onRequestCommentsForBgaPortfolioSecurityFactorCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRequestCommentsForBgaPortfolioSecurityFactorCompleted);
+            }
+            base.InvokeAsync(this.onBeginRequestCommentsForBgaPortfolioSecurityFactorDelegate, new object[] {
+                        portfolioId,
+                        securityId}, this.onEndRequestCommentsForBgaPortfolioSecurityFactorDelegate, this.onRequestCommentsForBgaPortfolioSecurityFactorCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRequestCommentsForBuPortfolioSecurityTarget(portfolioId, securityId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> TopDown.FacingServer.Backend.Targeting.IFacade.EndRequestCommentsForBuPortfolioSecurityTarget(System.IAsyncResult result) {
+            return base.Channel.EndRequestCommentsForBuPortfolioSecurityTarget(result);
+        }
+        
+        private System.IAsyncResult OnBeginRequestCommentsForBuPortfolioSecurityTarget(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string portfolioId = ((string)(inValues[0]));
+            string securityId = ((string)(inValues[1]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRequestCommentsForBuPortfolioSecurityTarget(portfolioId, securityId, callback, asyncState);
+        }
+        
+        private object[] OnEndRequestCommentsForBuPortfolioSecurityTarget(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> retVal = ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndRequestCommentsForBuPortfolioSecurityTarget(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRequestCommentsForBuPortfolioSecurityTargetCompleted(object state) {
+            if ((this.RequestCommentsForBuPortfolioSecurityTargetCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RequestCommentsForBuPortfolioSecurityTargetCompleted(this, new RequestCommentsForBuPortfolioSecurityTargetCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RequestCommentsForBuPortfolioSecurityTargetAsync(string portfolioId, string securityId) {
+            this.RequestCommentsForBuPortfolioSecurityTargetAsync(portfolioId, securityId, null);
+        }
+        
+        public void RequestCommentsForBuPortfolioSecurityTargetAsync(string portfolioId, string securityId, object userState) {
+            if ((this.onBeginRequestCommentsForBuPortfolioSecurityTargetDelegate == null)) {
+                this.onBeginRequestCommentsForBuPortfolioSecurityTargetDelegate = new BeginOperationDelegate(this.OnBeginRequestCommentsForBuPortfolioSecurityTarget);
+            }
+            if ((this.onEndRequestCommentsForBuPortfolioSecurityTargetDelegate == null)) {
+                this.onEndRequestCommentsForBuPortfolioSecurityTargetDelegate = new EndOperationDelegate(this.OnEndRequestCommentsForBuPortfolioSecurityTarget);
+            }
+            if ((this.onRequestCommentsForBuPortfolioSecurityTargetCompletedDelegate == null)) {
+                this.onRequestCommentsForBuPortfolioSecurityTargetCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRequestCommentsForBuPortfolioSecurityTargetCompleted);
+            }
+            base.InvokeAsync(this.onBeginRequestCommentsForBuPortfolioSecurityTargetDelegate, new object[] {
+                        portfolioId,
+                        securityId}, this.onEndRequestCommentsForBuPortfolioSecurityTargetDelegate, this.onRequestCommentsForBuPortfolioSecurityTargetCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -4796,6 +5039,49 @@ namespace TopDown.FacingServer.Backend.Targeting {
             public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeBasketBaseValue(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForTargetingTypeBasketBaseValue", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = targetingTypeId;
+                _args[1] = portfolioId;
+                _args[2] = basketId;
+                System.IAsyncResult _result = base.BeginInvoke("RequestCommentsForTargetingTypeBasketPortfolioTarget", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeBasketPortfolioTarget(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForTargetingTypeBasketPortfolioTarget", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = portfolioId;
+                _args[1] = securityId;
+                System.IAsyncResult _result = base.BeginInvoke("RequestCommentsForBgaPortfolioSecurityFactor", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBgaPortfolioSecurityFactor(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForBgaPortfolioSecurityFactor", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = portfolioId;
+                _args[1] = securityId;
+                System.IAsyncResult _result = base.BeginInvoke("RequestCommentsForBuPortfolioSecurityTarget", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBuPortfolioSecurityTarget(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForBuPortfolioSecurityTarget", _args, result)));
                 return _result;
             }
         }

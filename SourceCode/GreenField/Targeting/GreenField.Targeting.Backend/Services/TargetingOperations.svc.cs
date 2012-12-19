@@ -198,5 +198,32 @@ namespace GreenField.Targeting.Backend
                 return this.facade.RequestCommentsForTargetingTypeBasketBaseValue(targetingTypeId, basketId);
             });
         }
+
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId)
+        {
+            return this.Watch(String.Format("Getting comments for RequestCommentsForTargetingTypeBasketPortfolioTarget: basketId - {0}, targetingTypeId - {1}, portfolioId - {2}", basketId, targetingTypeId, portfolioId), delegate
+            {
+                return this.facade.RequestCommentsForTargetingTypeBasketPortfolioTarget(targetingTypeId, portfolioId, basketId);
+            });
+        }
+
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId)
+        {
+            return this.Watch(String.Format("Getting comments for RequestCommentsForBgaPortfolioSecurityFactor: portfolioId - {0}, securityId - {1}", portfolioId, securityId), delegate
+            {
+                return this.facade.RequestCommentsForBgaPortfolioSecurityFactor(portfolioId, securityId);
+            });
+        }
+
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId)
+        {
+            return this.Watch(String.Format("Getting comments for RequestCommentsForBuPortfolioSecurityTarget: portfolioId - {0}, securityId - {1}", portfolioId, securityId), delegate
+            {
+                return this.facade.RequestCommentsForBuPortfolioSecurityTarget(portfolioId, securityId);
+            });
+        }
     }
 }

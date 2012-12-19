@@ -65,5 +65,35 @@ namespace TopDown.Core.ManagingComments
             var result = this.WeldTogether(changes, changsets);
             return result;
         }
+
+        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId, IDataManager manager)
+        {
+            var changes = manager.GetTargetingTypeBasketPortfolioTargetChanges(targetingTypeId, portfolioId, basketId);
+            var changesetIds = changes.Select(x => x.ChangesetId).ToArray();
+            var changsets = manager.GetTargetingTypeBasketPortfolioTargetChangesets(changesetIds);
+
+            var result = this.WeldTogether(changes, changsets);
+            return result;
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId, IDataManager manager)
+        {
+            var changes = manager.GetBgaPortfolioSecurityFactorChanges(portfolioId, securityId);
+            var changesetIds = changes.Select(x => x.ChangesetId).ToArray();
+            var changsets = manager.GetBgaPortfolioSecurityFactorChangesets(changesetIds);
+
+            var result = this.WeldTogether(changes, changsets);
+            return result;
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId, IDataManager manager)
+        {
+            var changes = manager.GetBuPortfolioSecurityTargetChanges(portfolioId, securityId);
+            var changesetIds = changes.Select(x => x.ChangesetId).ToArray();
+            var changsets = manager.GetBuPortfolioSecurityTargetChangesets(changesetIds);
+
+            var result = this.WeldTogether(changes, changsets);
+            return result;
+        }
     }
 }
