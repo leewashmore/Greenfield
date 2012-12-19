@@ -135,6 +135,9 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <i:Interaction.Behaviors>
+        <local:ShowCommentsWindowBehavior Comments="{Binding Comments}" />
+    </i:Interaction.Behaviors>
 
     <Grid Background="White">
 

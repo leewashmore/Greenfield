@@ -46,11 +46,21 @@ namespace TopDown.Core.ManagingComments
             return comment;
         }
 
-        internal IEnumerable<CommentModel> GetCommentsForTargetingTypeGroupBasketSecurityBaseValue(int targetingTypeGroupId, int basketId, string securityId, IDataManager manager)
+        public IEnumerable<CommentModel> GetCommentsForTargetingTypeGroupBasketSecurityBaseValue(int targetingTypeGroupId, int basketId, string securityId, IDataManager manager)
         {
             var changes = manager.GetTargetingTypeGroupBasketSecurityBaseValueChanges(targetingTypeGroupId, basketId, securityId);
             var changesetIds = changes.Select(x => x.ChangesetId).ToArray();
             var changsets = manager.GetTargetingTypeGroupBasketSecurityBaseValueChangesets(changesetIds);
+
+            var result = this.WeldTogether(changes, changsets);
+            return result;
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId, IDataManager manager)
+        {
+            var changes = manager.GetTargetingTypeBasketBaseValueChanges(targetingTypeId, basketId);
+            var changesetIds = changes.Select(x => x.ChangesetId).ToArray();
+            var changsets = manager.GetTargetingTypeBasketBaseValueChangesets(changesetIds);
 
             var result = this.WeldTogether(changes, changsets);
             return result;

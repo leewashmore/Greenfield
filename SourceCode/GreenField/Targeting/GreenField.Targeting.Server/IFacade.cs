@@ -64,5 +64,8 @@ namespace GreenField.Targeting.Server
 
         [OperationContract]
         IEnumerable<CommentModel> RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(Int32 targetingTypeGroupId, Int32 basketId, String securityId);
+
+        [OperationContract]
+        IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(Int32 targetingTypeId, Int32 basketId);
     }
 }
