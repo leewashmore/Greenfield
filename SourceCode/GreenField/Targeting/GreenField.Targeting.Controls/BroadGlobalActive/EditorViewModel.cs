@@ -97,14 +97,27 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             var registeredExpressions = new List<EditableExpressionModel>();
             foreach (var resident in residents)
             {
+                int basketId = -1;
+                EditableExpressionModel baseExpression = null;
                 if (resident is BasketCountryModel)
                 {
                     var r = resident as BasketCountryModel;
+                    basketId = r.Basket.Id;
+                    baseExpression = r.Base;
+                }
+                if (resident is BasketRegionModel)
+                {
+                    var r = resident as BasketRegionModel;
+                    basketId = r.Basket.Id;
+                    baseExpression = r.Base;
+                }
+
+                if (basketId > -1)
+                {
                     var requestBaseCommentsCommand = new DelegateCommand(delegate
                     {
-                        this.RequestComments(this.LastValidInput.TargetingTypeId, r.Basket.Id);
+                        this.RequestComments(this.LastValidInput.TargetingTypeId, basketId);
                     });
-                    var baseExpression = r.Base;
                     baseExpression.RegisterForBeingWatched(this, requestBaseCommentsCommand);
                     registeredExpressions.Add(baseExpression);
                 }

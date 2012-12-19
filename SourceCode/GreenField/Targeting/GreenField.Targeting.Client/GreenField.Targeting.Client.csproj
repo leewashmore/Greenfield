@@ -111,7 +111,9 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\Backend.Targeting\TargetingOperations.disco" />
-    <Content Include="ServiceReferences.ClientConfig" />
+    <Content Include="ServiceReferences.ClientConfig">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Service References\Backend.Targeting\TargetingOperations.wsdl" />
     <None Include="Service References\Backend.Targeting\TargetingOperations.xsd">
       <SubType>Designer</SubType>

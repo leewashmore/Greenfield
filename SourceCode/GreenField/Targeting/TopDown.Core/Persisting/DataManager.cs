@@ -968,7 +968,7 @@ namespace TopDown.Core.Persisting
                         .Field(", [USERNAME]", (info, value) => info.Username = value, true)
                         .Field(", [TIMESTAMP]", (info, value) => info.Timestamp = value)
                         .Field(", [CALCULATION_ID]", (info, value) => info.CalculationId = value)
-                        .Text(" from [" + TableNames.BASKET_PORTFOLIO_SECURITY_TARGET_CHANGESET + "]")
+                        .Text(" from [" + TableNames.TARGETING_TYPE_BASKET_BASE_VALUE_CHANGESET + "]")
                         .Text(" where [ID] in (").Parameters(changesetIds).Text(")")
                         .PullAll();
                 }
