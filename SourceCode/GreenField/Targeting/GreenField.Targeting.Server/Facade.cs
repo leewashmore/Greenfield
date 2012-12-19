@@ -197,16 +197,54 @@ namespace GreenField.Targeting.Server
 
         public IEnumerable<CommentModel> RequestCommentsForBasketPortfolioSecurityTarget(Int32 basketId, String broadGlbalActivePortfolioId, String securityId)
         {
+            //return new CommentModel[] {
+            //    new CommentModel("Create a value first", null, 0.1m, "Aleksey Bykov", DateTime.Now.AddDays(-2)),
+            //    new CommentModel("Then we change it", 0.1m, 0.2m, "Maxim Rusaev", DateTime.Now.AddDays(-1)),
+            //    new CommentModel("This value is wrong I am deleting it.", 0.2m, null, "David Lassiter", DateTime.Now)
+            //};
+
             var comments = this.facade.GetCommentsForBasketPortfolioSecurityTarget(basketId, broadGlbalActivePortfolioId, securityId);
             var serializedComments = this.serializer.SerializeComments(comments);
             return serializedComments;
-            //return new CommentModel[] { new CommentModel("Hey!") };
+            
         }
 
-        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId)
+        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(Int32 targetingTypeGroupId, Int32 basketId, String securityId)
         {
-            return null;
+            var comments = this.facade.GetCommentsForTargetingTypeGroupBasketSecurityBaseValue(targetingTypeGroupId, basketId, securityId);
+            var serializedComments = this.serializer.SerializeComments(comments);
+            return serializedComments;
             //return new CommentModel[] { new CommentModel("Hey yourself!") };
+        }
+
+
+        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId)
+        {
+            var comments = this.facade.RequestCommentsForTargetingTypeBasketBaseValue(targetingTypeId, basketId);
+            var serializedComments = this.serializer.SerializeComments(comments);
+            return serializedComments;
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId)
+        {
+            var comments = this.facade.RequestCommentsForTargetingTypeBasketPortfolioTarget(targetingTypeId, portfolioId, basketId);
+            var serializedComments = this.serializer.SerializeComments(comments);
+            return serializedComments;
+        }
+
+
+        public IEnumerable<CommentModel> RequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId)
+        {
+            var comments = this.facade.RequestCommentsForBgaPortfolioSecurityFactor(portfolioId, securityId);
+            var serializedComments = this.serializer.SerializeComments(comments);
+            return serializedComments;
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId)
+        {
+            var comments = this.facade.RequestCommentsForBuPortfolioSecurityTarget(portfolioId, securityId);
+            var serializedComments = this.serializer.SerializeComments(comments);
+            return serializedComments;
         }
     }
 }

@@ -63,6 +63,18 @@ namespace GreenField.Targeting.Server
         IEnumerable<CommentModel> RequestCommentsForBasketPortfolioSecurityTarget(Int32 basketId, String broadGlbalActivePortfolioId, String securityId);
 
         [OperationContract]
-        IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBase(Int32 targetingTypeGroupId, Int32 basketId, String securityId);
+        IEnumerable<CommentModel> RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(Int32 targetingTypeGroupId, Int32 basketId, String securityId);
+
+        [OperationContract]
+        IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(Int32 targetingTypeId, Int32 basketId);
+        
+        [OperationContract]
+        IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketPortfolioTarget(Int32 targetingTypeId, string portfolioId, Int32 basketId);
+
+        [OperationContract]
+        IEnumerable<CommentModel> RequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId);
+
+        [OperationContract]
+        IEnumerable<CommentModel> RequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId);
     }
 }

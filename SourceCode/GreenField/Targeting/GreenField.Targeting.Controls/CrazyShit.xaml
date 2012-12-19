@@ -10,6 +10,30 @@
 >
     <local:EchoConverter x:Key="echoConverter" />
 
+    <local:IssueTemplateSelector x:Key="issueTemplateSelector">
+        <local:IssueTemplateSelector.CompoundIssueTemplate>
+            <DataTemplate />
+            <!-- not applicable to cell issues because there can not be compound issue in a cell -->
+        </local:IssueTemplateSelector.CompoundIssueTemplate>
+        <local:IssueTemplateSelector.ErrorTemplate>
+            <DataTemplate>
+                <TextBlock UseLayoutRounding="false"
+                    Foreground="White"
+                    Margin="8,4,8,4"
+                    MaxWidth="250"
+                    TextWrapping="Wrap"
+                    Text="{Binding Message}" />
+            </DataTemplate>
+        </local:IssueTemplateSelector.ErrorTemplate>
+        <local:IssueTemplateSelector.WarningTemplate>
+            <DataTemplate>
+                <Border Background="Yellow">
+                    <TextBlock Text="{Binding Message}" />
+                </Border>
+            </DataTemplate>
+        </local:IssueTemplateSelector.WarningTemplate>
+    </local:IssueTemplateSelector>
+
     <ControlTemplate x:Key="ValidationToolTipTemplate">
         <Grid x:Name="Root" Margin="5,0" RenderTransformOrigin="0,0" Opacity="0">
             <Grid.RenderTransform>
@@ -54,7 +78,9 @@
                 <ItemsControl ItemsSource="{Binding (Validation.Errors)}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock UseLayoutRounding="false" Foreground="White" Margin="8,4,8,4" MaxWidth="250" TextWrapping="Wrap" Text="{Binding ErrorContent}"/>
+                            <ContentControl
+                                Content="{Binding ErrorContent}"
+                                ContentTemplate="{Binding ErrorContent, Converter={StaticResource issueTemplateSelector}}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

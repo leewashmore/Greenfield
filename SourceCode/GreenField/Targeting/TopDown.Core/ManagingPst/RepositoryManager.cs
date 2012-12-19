@@ -34,7 +34,7 @@ namespace TopDown.Core.ManagingPst
                 if (latestChangesetSnapshoot.Id < latestChangeset.Id)
                 {
                     throw new ValidationException(
-                        new ValidationIssue("User \"" + latestChangeset.Username + "\" modified the bottom-up-portfolio/security/target composition on " + latestChangeset.Timestamp + ".")
+                        new ErrorIssue("User \"" + latestChangeset.Username + "\" modified the bottom-up-portfolio/security/target composition on " + latestChangeset.Timestamp + ".")
                     );
                 }
                 else

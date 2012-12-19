@@ -905,24 +905,12 @@ namespace TopDown.FacingServer.Backend.Targeting {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="IssueModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.WarningModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.ErrorModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.CompoundIssueModel))]
     public partial class IssueModel : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> IssuesField;
-        
         private string MessageField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> Issues {
-            get {
-                return this.IssuesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IssuesField, value) != true)) {
-                    this.IssuesField = value;
-                    this.RaisePropertyChanged("Issues");
-                }
-            }
-        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string Message {
@@ -943,6 +931,39 @@ namespace TopDown.FacingServer.Backend.Targeting {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WarningModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
+    public partial class WarningModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ErrorModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
+    public partial class ErrorModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CompoundIssueModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
+    public partial class CompoundIssueModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
+        
+        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> IssuesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> Issues {
+            get {
+                return this.IssuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuesField, value) != true)) {
+                    this.IssuesField = value;
+                    this.RaisePropertyChanged("Issues");
+                }
             }
         }
     }
@@ -3140,10 +3161,34 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBasketPortfolioSecurityTarget(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBase", ReplyAction="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBaseResponse")]
-        System.IAsyncResult BeginRequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeGroupBasketSecurityBase" +
+            "Value", ReplyAction="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeGroupBasketSecurityBase" +
+            "ValueResponse")]
+        System.IAsyncResult BeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(int targetingTypeGroupId, int basketId, string securityId, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeBasketBase(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBaseValue", ReplyAction="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBaseValueResponse" +
+            "")]
+        System.IAsyncResult BeginRequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeBasketBaseValue(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketPortfolioTarget", ReplyAction="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketPortfolioTargetRe" +
+            "sponse")]
+        System.IAsyncResult BeginRequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeBasketPortfolioTarget(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/RequestCommentsForBgaPortfolioSecurityFactor", ReplyAction="http://tempuri.org/IFacade/RequestCommentsForBgaPortfolioSecurityFactorResponse")]
+        System.IAsyncResult BeginRequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBgaPortfolioSecurityFactor(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/RequestCommentsForBuPortfolioSecurityTarget", ReplyAction="http://tempuri.org/IFacade/RequestCommentsForBuPortfolioSecurityTargetResponse")]
+        System.IAsyncResult BeginRequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBuPortfolioSecurityTarget(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -3437,11 +3482,87 @@ namespace TopDown.FacingServer.Backend.Targeting {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RequestCommentsForTargetingTypeBasketBaseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public RequestCommentsForTargetingTypeBasketBaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RequestCommentsForTargetingTypeBasketBaseValueCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RequestCommentsForTargetingTypeBasketBaseValueCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RequestCommentsForTargetingTypeBasketPortfolioTargetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RequestCommentsForTargetingTypeBasketPortfolioTargetCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RequestCommentsForBgaPortfolioSecurityFactorCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RequestCommentsForBgaPortfolioSecurityFactorCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RequestCommentsForBuPortfolioSecurityTargetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RequestCommentsForBuPortfolioSecurityTargetCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -3548,11 +3669,35 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private System.Threading.SendOrPostCallback onRequestCommentsForBasketPortfolioSecurityTargetCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRequestCommentsForTargetingTypeBasketBaseDelegate;
+        private BeginOperationDelegate onBeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueDelegate;
         
-        private EndOperationDelegate onEndRequestCommentsForTargetingTypeBasketBaseDelegate;
+        private EndOperationDelegate onEndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueDelegate;
         
-        private System.Threading.SendOrPostCallback onRequestCommentsForTargetingTypeBasketBaseCompletedDelegate;
+        private System.Threading.SendOrPostCallback onRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRequestCommentsForTargetingTypeBasketBaseValueDelegate;
+        
+        private EndOperationDelegate onEndRequestCommentsForTargetingTypeBasketBaseValueDelegate;
+        
+        private System.Threading.SendOrPostCallback onRequestCommentsForTargetingTypeBasketBaseValueCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate;
+        
+        private EndOperationDelegate onEndRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate;
+        
+        private System.Threading.SendOrPostCallback onRequestCommentsForTargetingTypeBasketPortfolioTargetCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRequestCommentsForBgaPortfolioSecurityFactorDelegate;
+        
+        private EndOperationDelegate onEndRequestCommentsForBgaPortfolioSecurityFactorDelegate;
+        
+        private System.Threading.SendOrPostCallback onRequestCommentsForBgaPortfolioSecurityFactorCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRequestCommentsForBuPortfolioSecurityTargetDelegate;
+        
+        private EndOperationDelegate onEndRequestCommentsForBuPortfolioSecurityTargetDelegate;
+        
+        private System.Threading.SendOrPostCallback onRequestCommentsForBuPortfolioSecurityTargetCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -3637,7 +3782,15 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         public event System.EventHandler<RequestCommentsForBasketPortfolioSecurityTargetCompletedEventArgs> RequestCommentsForBasketPortfolioSecurityTargetCompleted;
         
-        public event System.EventHandler<RequestCommentsForTargetingTypeBasketBaseCompletedEventArgs> RequestCommentsForTargetingTypeBasketBaseCompleted;
+        public event System.EventHandler<RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompletedEventArgs> RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompleted;
+        
+        public event System.EventHandler<RequestCommentsForTargetingTypeBasketBaseValueCompletedEventArgs> RequestCommentsForTargetingTypeBasketBaseValueCompleted;
+        
+        public event System.EventHandler<RequestCommentsForTargetingTypeBasketPortfolioTargetCompletedEventArgs> RequestCommentsForTargetingTypeBasketPortfolioTargetCompleted;
+        
+        public event System.EventHandler<RequestCommentsForBgaPortfolioSecurityFactorCompletedEventArgs> RequestCommentsForBgaPortfolioSecurityFactorCompleted;
+        
+        public event System.EventHandler<RequestCommentsForBuPortfolioSecurityTargetCompletedEventArgs> RequestCommentsForBuPortfolioSecurityTargetCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -4342,53 +4495,247 @@ namespace TopDown.FacingServer.Backend.Targeting {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRequestCommentsForTargetingTypeBasketBase(targetingTypeGroupId, basketId, securityId, callback, asyncState);
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(int targetingTypeGroupId, int basketId, string securityId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(targetingTypeGroupId, basketId, securityId, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> TopDown.FacingServer.Backend.Targeting.IFacade.EndRequestCommentsForTargetingTypeBasketBase(System.IAsyncResult result) {
-            return base.Channel.EndRequestCommentsForTargetingTypeBasketBase(result);
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> TopDown.FacingServer.Backend.Targeting.IFacade.EndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(System.IAsyncResult result) {
+            return base.Channel.EndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(result);
         }
         
-        private System.IAsyncResult OnBeginRequestCommentsForTargetingTypeBasketBase(object[] inValues, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult OnBeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(object[] inValues, System.AsyncCallback callback, object asyncState) {
             int targetingTypeGroupId = ((int)(inValues[0]));
             int basketId = ((int)(inValues[1]));
             string securityId = ((string)(inValues[2]));
-            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRequestCommentsForTargetingTypeBasketBase(targetingTypeGroupId, basketId, securityId, callback, asyncState);
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(targetingTypeGroupId, basketId, securityId, callback, asyncState);
         }
         
-        private object[] OnEndRequestCommentsForTargetingTypeBasketBase(System.IAsyncResult result) {
-            System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> retVal = ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndRequestCommentsForTargetingTypeBasketBase(result);
+        private object[] OnEndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> retVal = ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnRequestCommentsForTargetingTypeBasketBaseCompleted(object state) {
-            if ((this.RequestCommentsForTargetingTypeBasketBaseCompleted != null)) {
+        private void OnRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompleted(object state) {
+            if ((this.RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RequestCommentsForTargetingTypeBasketBaseCompleted(this, new RequestCommentsForTargetingTypeBasketBaseCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompleted(this, new RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RequestCommentsForTargetingTypeBasketBaseAsync(int targetingTypeGroupId, int basketId, string securityId) {
-            this.RequestCommentsForTargetingTypeBasketBaseAsync(targetingTypeGroupId, basketId, securityId, null);
+        public void RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueAsync(int targetingTypeGroupId, int basketId, string securityId) {
+            this.RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueAsync(targetingTypeGroupId, basketId, securityId, null);
         }
         
-        public void RequestCommentsForTargetingTypeBasketBaseAsync(int targetingTypeGroupId, int basketId, string securityId, object userState) {
-            if ((this.onBeginRequestCommentsForTargetingTypeBasketBaseDelegate == null)) {
-                this.onBeginRequestCommentsForTargetingTypeBasketBaseDelegate = new BeginOperationDelegate(this.OnBeginRequestCommentsForTargetingTypeBasketBase);
+        public void RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueAsync(int targetingTypeGroupId, int basketId, string securityId, object userState) {
+            if ((this.onBeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueDelegate == null)) {
+                this.onBeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueDelegate = new BeginOperationDelegate(this.OnBeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue);
             }
-            if ((this.onEndRequestCommentsForTargetingTypeBasketBaseDelegate == null)) {
-                this.onEndRequestCommentsForTargetingTypeBasketBaseDelegate = new EndOperationDelegate(this.OnEndRequestCommentsForTargetingTypeBasketBase);
+            if ((this.onEndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueDelegate == null)) {
+                this.onEndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueDelegate = new EndOperationDelegate(this.OnEndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue);
             }
-            if ((this.onRequestCommentsForTargetingTypeBasketBaseCompletedDelegate == null)) {
-                this.onRequestCommentsForTargetingTypeBasketBaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRequestCommentsForTargetingTypeBasketBaseCompleted);
+            if ((this.onRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompletedDelegate == null)) {
+                this.onRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompleted);
             }
-            base.InvokeAsync(this.onBeginRequestCommentsForTargetingTypeBasketBaseDelegate, new object[] {
+            base.InvokeAsync(this.onBeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueDelegate, new object[] {
                         targetingTypeGroupId,
                         basketId,
-                        securityId}, this.onEndRequestCommentsForTargetingTypeBasketBaseDelegate, this.onRequestCommentsForTargetingTypeBasketBaseCompletedDelegate, userState);
+                        securityId}, this.onEndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueDelegate, this.onRequestCommentsForTargetingTypeGroupBasketSecurityBaseValueCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRequestCommentsForTargetingTypeBasketBaseValue(targetingTypeId, basketId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> TopDown.FacingServer.Backend.Targeting.IFacade.EndRequestCommentsForTargetingTypeBasketBaseValue(System.IAsyncResult result) {
+            return base.Channel.EndRequestCommentsForTargetingTypeBasketBaseValue(result);
+        }
+        
+        private System.IAsyncResult OnBeginRequestCommentsForTargetingTypeBasketBaseValue(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int targetingTypeId = ((int)(inValues[0]));
+            int basketId = ((int)(inValues[1]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRequestCommentsForTargetingTypeBasketBaseValue(targetingTypeId, basketId, callback, asyncState);
+        }
+        
+        private object[] OnEndRequestCommentsForTargetingTypeBasketBaseValue(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> retVal = ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndRequestCommentsForTargetingTypeBasketBaseValue(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRequestCommentsForTargetingTypeBasketBaseValueCompleted(object state) {
+            if ((this.RequestCommentsForTargetingTypeBasketBaseValueCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RequestCommentsForTargetingTypeBasketBaseValueCompleted(this, new RequestCommentsForTargetingTypeBasketBaseValueCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RequestCommentsForTargetingTypeBasketBaseValueAsync(int targetingTypeId, int basketId) {
+            this.RequestCommentsForTargetingTypeBasketBaseValueAsync(targetingTypeId, basketId, null);
+        }
+        
+        public void RequestCommentsForTargetingTypeBasketBaseValueAsync(int targetingTypeId, int basketId, object userState) {
+            if ((this.onBeginRequestCommentsForTargetingTypeBasketBaseValueDelegate == null)) {
+                this.onBeginRequestCommentsForTargetingTypeBasketBaseValueDelegate = new BeginOperationDelegate(this.OnBeginRequestCommentsForTargetingTypeBasketBaseValue);
+            }
+            if ((this.onEndRequestCommentsForTargetingTypeBasketBaseValueDelegate == null)) {
+                this.onEndRequestCommentsForTargetingTypeBasketBaseValueDelegate = new EndOperationDelegate(this.OnEndRequestCommentsForTargetingTypeBasketBaseValue);
+            }
+            if ((this.onRequestCommentsForTargetingTypeBasketBaseValueCompletedDelegate == null)) {
+                this.onRequestCommentsForTargetingTypeBasketBaseValueCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRequestCommentsForTargetingTypeBasketBaseValueCompleted);
+            }
+            base.InvokeAsync(this.onBeginRequestCommentsForTargetingTypeBasketBaseValueDelegate, new object[] {
+                        targetingTypeId,
+                        basketId}, this.onEndRequestCommentsForTargetingTypeBasketBaseValueDelegate, this.onRequestCommentsForTargetingTypeBasketBaseValueCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRequestCommentsForTargetingTypeBasketPortfolioTarget(targetingTypeId, portfolioId, basketId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> TopDown.FacingServer.Backend.Targeting.IFacade.EndRequestCommentsForTargetingTypeBasketPortfolioTarget(System.IAsyncResult result) {
+            return base.Channel.EndRequestCommentsForTargetingTypeBasketPortfolioTarget(result);
+        }
+        
+        private System.IAsyncResult OnBeginRequestCommentsForTargetingTypeBasketPortfolioTarget(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int targetingTypeId = ((int)(inValues[0]));
+            string portfolioId = ((string)(inValues[1]));
+            int basketId = ((int)(inValues[2]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRequestCommentsForTargetingTypeBasketPortfolioTarget(targetingTypeId, portfolioId, basketId, callback, asyncState);
+        }
+        
+        private object[] OnEndRequestCommentsForTargetingTypeBasketPortfolioTarget(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> retVal = ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndRequestCommentsForTargetingTypeBasketPortfolioTarget(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRequestCommentsForTargetingTypeBasketPortfolioTargetCompleted(object state) {
+            if ((this.RequestCommentsForTargetingTypeBasketPortfolioTargetCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RequestCommentsForTargetingTypeBasketPortfolioTargetCompleted(this, new RequestCommentsForTargetingTypeBasketPortfolioTargetCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RequestCommentsForTargetingTypeBasketPortfolioTargetAsync(int targetingTypeId, string portfolioId, int basketId) {
+            this.RequestCommentsForTargetingTypeBasketPortfolioTargetAsync(targetingTypeId, portfolioId, basketId, null);
+        }
+        
+        public void RequestCommentsForTargetingTypeBasketPortfolioTargetAsync(int targetingTypeId, string portfolioId, int basketId, object userState) {
+            if ((this.onBeginRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate == null)) {
+                this.onBeginRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate = new BeginOperationDelegate(this.OnBeginRequestCommentsForTargetingTypeBasketPortfolioTarget);
+            }
+            if ((this.onEndRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate == null)) {
+                this.onEndRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate = new EndOperationDelegate(this.OnEndRequestCommentsForTargetingTypeBasketPortfolioTarget);
+            }
+            if ((this.onRequestCommentsForTargetingTypeBasketPortfolioTargetCompletedDelegate == null)) {
+                this.onRequestCommentsForTargetingTypeBasketPortfolioTargetCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRequestCommentsForTargetingTypeBasketPortfolioTargetCompleted);
+            }
+            base.InvokeAsync(this.onBeginRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate, new object[] {
+                        targetingTypeId,
+                        portfolioId,
+                        basketId}, this.onEndRequestCommentsForTargetingTypeBasketPortfolioTargetDelegate, this.onRequestCommentsForTargetingTypeBasketPortfolioTargetCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRequestCommentsForBgaPortfolioSecurityFactor(portfolioId, securityId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> TopDown.FacingServer.Backend.Targeting.IFacade.EndRequestCommentsForBgaPortfolioSecurityFactor(System.IAsyncResult result) {
+            return base.Channel.EndRequestCommentsForBgaPortfolioSecurityFactor(result);
+        }
+        
+        private System.IAsyncResult OnBeginRequestCommentsForBgaPortfolioSecurityFactor(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string portfolioId = ((string)(inValues[0]));
+            string securityId = ((string)(inValues[1]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRequestCommentsForBgaPortfolioSecurityFactor(portfolioId, securityId, callback, asyncState);
+        }
+        
+        private object[] OnEndRequestCommentsForBgaPortfolioSecurityFactor(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> retVal = ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndRequestCommentsForBgaPortfolioSecurityFactor(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRequestCommentsForBgaPortfolioSecurityFactorCompleted(object state) {
+            if ((this.RequestCommentsForBgaPortfolioSecurityFactorCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RequestCommentsForBgaPortfolioSecurityFactorCompleted(this, new RequestCommentsForBgaPortfolioSecurityFactorCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RequestCommentsForBgaPortfolioSecurityFactorAsync(string portfolioId, string securityId) {
+            this.RequestCommentsForBgaPortfolioSecurityFactorAsync(portfolioId, securityId, null);
+        }
+        
+        public void RequestCommentsForBgaPortfolioSecurityFactorAsync(string portfolioId, string securityId, object userState) {
+            if ((this.onBeginRequestCommentsForBgaPortfolioSecurityFactorDelegate == null)) {
+                this.onBeginRequestCommentsForBgaPortfolioSecurityFactorDelegate = new BeginOperationDelegate(this.OnBeginRequestCommentsForBgaPortfolioSecurityFactor);
+            }
+            if ((this.onEndRequestCommentsForBgaPortfolioSecurityFactorDelegate == null)) {
+                this.onEndRequestCommentsForBgaPortfolioSecurityFactorDelegate = new EndOperationDelegate(this.OnEndRequestCommentsForBgaPortfolioSecurityFactor);
+            }
+            if ((this.onRequestCommentsForBgaPortfolioSecurityFactorCompletedDelegate == null)) {
+                this.onRequestCommentsForBgaPortfolioSecurityFactorCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRequestCommentsForBgaPortfolioSecurityFactorCompleted);
+            }
+            base.InvokeAsync(this.onBeginRequestCommentsForBgaPortfolioSecurityFactorDelegate, new object[] {
+                        portfolioId,
+                        securityId}, this.onEndRequestCommentsForBgaPortfolioSecurityFactorDelegate, this.onRequestCommentsForBgaPortfolioSecurityFactorCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginRequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRequestCommentsForBuPortfolioSecurityTarget(portfolioId, securityId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> TopDown.FacingServer.Backend.Targeting.IFacade.EndRequestCommentsForBuPortfolioSecurityTarget(System.IAsyncResult result) {
+            return base.Channel.EndRequestCommentsForBuPortfolioSecurityTarget(result);
+        }
+        
+        private System.IAsyncResult OnBeginRequestCommentsForBuPortfolioSecurityTarget(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string portfolioId = ((string)(inValues[0]));
+            string securityId = ((string)(inValues[1]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginRequestCommentsForBuPortfolioSecurityTarget(portfolioId, securityId, callback, asyncState);
+        }
+        
+        private object[] OnEndRequestCommentsForBuPortfolioSecurityTarget(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> retVal = ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndRequestCommentsForBuPortfolioSecurityTarget(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRequestCommentsForBuPortfolioSecurityTargetCompleted(object state) {
+            if ((this.RequestCommentsForBuPortfolioSecurityTargetCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RequestCommentsForBuPortfolioSecurityTargetCompleted(this, new RequestCommentsForBuPortfolioSecurityTargetCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RequestCommentsForBuPortfolioSecurityTargetAsync(string portfolioId, string securityId) {
+            this.RequestCommentsForBuPortfolioSecurityTargetAsync(portfolioId, securityId, null);
+        }
+        
+        public void RequestCommentsForBuPortfolioSecurityTargetAsync(string portfolioId, string securityId, object userState) {
+            if ((this.onBeginRequestCommentsForBuPortfolioSecurityTargetDelegate == null)) {
+                this.onBeginRequestCommentsForBuPortfolioSecurityTargetDelegate = new BeginOperationDelegate(this.OnBeginRequestCommentsForBuPortfolioSecurityTarget);
+            }
+            if ((this.onEndRequestCommentsForBuPortfolioSecurityTargetDelegate == null)) {
+                this.onEndRequestCommentsForBuPortfolioSecurityTargetDelegate = new EndOperationDelegate(this.OnEndRequestCommentsForBuPortfolioSecurityTarget);
+            }
+            if ((this.onRequestCommentsForBuPortfolioSecurityTargetCompletedDelegate == null)) {
+                this.onRequestCommentsForBuPortfolioSecurityTargetCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRequestCommentsForBuPortfolioSecurityTargetCompleted);
+            }
+            base.InvokeAsync(this.onBeginRequestCommentsForBuPortfolioSecurityTargetDelegate, new object[] {
+                        portfolioId,
+                        securityId}, this.onEndRequestCommentsForBuPortfolioSecurityTargetDelegate, this.onRequestCommentsForBuPortfolioSecurityTargetCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -4666,18 +5013,75 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(int targetingTypeGroupId, int basketId, string securityId, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[3];
                 _args[0] = targetingTypeGroupId;
                 _args[1] = basketId;
                 _args[2] = securityId;
-                System.IAsyncResult _result = base.BeginInvoke("RequestCommentsForTargetingTypeBasketBase", _args, callback, asyncState);
+                System.IAsyncResult _result = base.BeginInvoke("RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue", _args, callback, asyncState);
                 return _result;
             }
             
-            public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeBasketBase(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForTargetingTypeBasketBase", _args, result)));
+                System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = targetingTypeId;
+                _args[1] = basketId;
+                System.IAsyncResult _result = base.BeginInvoke("RequestCommentsForTargetingTypeBasketBaseValue", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeBasketBaseValue(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForTargetingTypeBasketBaseValue", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = targetingTypeId;
+                _args[1] = portfolioId;
+                _args[2] = basketId;
+                System.IAsyncResult _result = base.BeginInvoke("RequestCommentsForTargetingTypeBasketPortfolioTarget", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForTargetingTypeBasketPortfolioTarget(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForTargetingTypeBasketPortfolioTarget", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = portfolioId;
+                _args[1] = securityId;
+                System.IAsyncResult _result = base.BeginInvoke("RequestCommentsForBgaPortfolioSecurityFactor", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBgaPortfolioSecurityFactor(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForBgaPortfolioSecurityFactor", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = portfolioId;
+                _args[1] = securityId;
+                System.IAsyncResult _result = base.BeginInvoke("RequestCommentsForBuPortfolioSecurityTarget", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBuPortfolioSecurityTarget(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForBuPortfolioSecurityTarget", _args, result)));
                 return _result;
             }
         }

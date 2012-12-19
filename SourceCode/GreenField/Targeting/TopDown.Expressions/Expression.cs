@@ -29,20 +29,33 @@ namespace Aims.Expressions
 
 		public String Name { get; private set; }
 		public IValueAdapter<TValue> Adapter { get; private set; }
-		public TValue Value(CalculationTicket ticket)
+		
+        public TValue Value(CalculationTicket ticket)
         {
+            var value = this.Value(ticket, No.CalculationTracer, No.ExpressionName);
+            return value;
+        }
+        
+        public TValue Value(CalculationTicket ticket, ICalculationTracer tracer, String name)
+        {
+            TValue result;
+            tracer.WriteLine("Expession: " + (name ?? this.Name));
+            tracer.Indent();
             if (this.ticket == ticket)
             {
-                return this.value;
+                result = this.value;
+                tracer.WriteValue("CACHED", result, this.Adapter);
             }
             else
             {
-                var value = this.formula.Calculate(ticket);
+                result = this.formula.Calculate(ticket, tracer);
                 this.ticket = ticket;
-                this.value = value;
-                return value;
+                this.value = result;
             }
+            tracer.Unindent();
+            return result;
         }
+
 
         [DebuggerStepThrough]
         public IEnumerable<IValidationIssue> Validate(CalculationTicket ticket)
@@ -61,5 +74,7 @@ namespace Aims.Expressions
         {
             resolver.Resolve(this);
         }
+
+
     }
 }

@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Linq;
 using System.Diagnostics;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Targeting.Controls.BroadGlobalActive
 {
@@ -40,7 +41,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         private DefaultExpandCollapseStateSetter defaultExpandCollapseStateSetter;
         private ObservableCollection<IGlobeResident> residents;
         private ObservableCollection<BgaFactorItemModel> factors;
-        
+
 
         public EditorViewModel(
             IClientFactory clientFactory,
@@ -93,8 +94,102 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             this.Factors = new ObservableCollection<BgaFactorItemModel>(data.Factors.Items);
             this.RootModel = data;
 
+            var targetingTypeId = this.LastValidInput.TargetingTypeId;
+            var portfolioId = this.LastValidInput.BroadGlobalActivePortfolioId; 
+
+            var registeredExpressions = new List<EditableExpressionModel>();
+            foreach (var factor in factors)
+            {
+                EditableExpressionModel factorExpression = factor.OverlayFactor;
+                var securityId = factor.BottomUpPortfolio.Fund.Id;
+                var requestOverlayFactorCommentsCommand = new DelegateCommand(delegate
+                {
+                    this.RequestOverlayFactorComments(portfolioId, securityId);
+                });
+                factorExpression.RegisterForBeingWatched(this, requestOverlayFactorCommentsCommand);
+                registeredExpressions.Add(factorExpression);
+
+            }
+
+            foreach (var resident in residents)
+            {
+                var basketId = -1;
+                
+                EditableExpressionModel baseExpression = null;
+                EditableExpressionModel portfolioAdjustmentExpression = null;
+                if (resident is BasketCountryModel)
+                {
+                    var r = resident as BasketCountryModel;
+                    basketId = r.Basket.Id;
+                    baseExpression = r.Base;
+                    portfolioAdjustmentExpression = r.PortfolioAdjustment;
+
+                }
+                if (resident is BasketRegionModel)
+                {
+                    var r = resident as BasketRegionModel;
+                    basketId = r.Basket.Id;
+                    baseExpression = r.Base;
+                    portfolioAdjustmentExpression = r.PortfolioAdjustment;
+                }
+
+                if (basketId > -1)
+                {
+                    var requestBaseCommentsCommand = new DelegateCommand(delegate
+                    {
+                        this.RequestBaseComments(targetingTypeId, basketId);
+                    });
+                    baseExpression.RegisterForBeingWatched(this, requestBaseCommentsCommand);
+                    registeredExpressions.Add(baseExpression);
+
+                    var requestPortfolioAdjustmentCommentsCommand = new DelegateCommand(delegate
+                    {
+                        this.RequestPortfolioAdjustmentComments(targetingTypeId, portfolioId, basketId);
+                    });
+                    portfolioAdjustmentExpression.RegisterForBeingWatched(this, requestPortfolioAdjustmentCommentsCommand);
+                    registeredExpressions.Add(portfolioAdjustmentExpression);
+                }
+            }
+
             this.FinishLoading();
             this.OnGotData();
+        }
+
+        private void RequestOverlayFactorComments(string portfolioId, string securityId)
+        {
+            this.StartLoading();
+            var client = this.clientFactory.CreateClient();
+            client.RequestCommentsForBgaPortfolioSecurityFactorCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting comments", args, x => x.Result, this.TakeComments, this.FinishLoading);
+            client.RequestCommentsForBgaPortfolioSecurityFactorAsync(portfolioId, securityId);
+        }
+
+        private void RequestPortfolioAdjustmentComments(int targetingTypeId, string portfolioId, int basketId)
+        {
+            this.StartLoading();
+            var client = this.clientFactory.CreateClient();
+            client.RequestCommentsForTargetingTypeBasketPortfolioTargetCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting comments", args, x => x.Result, this.TakeComments, this.FinishLoading);
+            client.RequestCommentsForTargetingTypeBasketPortfolioTargetAsync(targetingTypeId, portfolioId, basketId);
+        }
+
+        private void RequestBaseComments(Int32 targetingTypeId, Int32 basketId)
+        {
+            this.StartLoading();
+            var client = this.clientFactory.CreateClient();
+            client.RequestCommentsForTargetingTypeBasketBaseValueCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting comments", args, x => x.Result, this.TakeComments, this.FinishLoading);
+            client.RequestCommentsForTargetingTypeBasketBaseValueAsync(targetingTypeId, basketId);
+        }
+
+        public void TakeComments(ObservableCollection<CommentModel> comments)
+        {
+            this.FinishLoading();
+            this.Comments = comments;
+        }
+
+        private ObservableCollection<CommentModel> comments;
+        public ObservableCollection<CommentModel> Comments
+        {
+            get { return this.comments; }
+            set { this.comments = value; this.RaisePropertyChanged(() => this.Comments); }
         }
 
         public void RequestSaving()

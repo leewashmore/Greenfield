@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Commands;
 using Aims.Controls;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls.BasketTargets
 {
@@ -14,7 +15,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
         public const Int32 MaxNumberOfSecurities = 20;
         private SecurityPickerClientFactory securityPickerClientFactory;
 
-        [ImportingConstructor]
+        [ImportingConstructor ]
         public RootViewModel(Settings settings)
         {
             var pickerViewModel = new PickerViewModel(settings.ClientFactory);
@@ -51,6 +52,13 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.SaveCommand = new DelegateCommand(this.Save, this.CanSave);
             editorViewModel.GotData += (s, e) => this.ReactOnDataBeingGotten();
         }
+
+        protected override void TakeDispatcher(Dispatcher dispatcher)
+        {
+            this.EditorViewModel.Dispatcher = dispatcher;
+            this.PickerViewModel.Dispatcher = dispatcher;
+        }
+
 
         protected void ReactOnDataBeingGotten()
         {

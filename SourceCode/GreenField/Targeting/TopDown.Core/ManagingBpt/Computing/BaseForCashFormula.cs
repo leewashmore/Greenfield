@@ -19,15 +19,29 @@ namespace TopDown.Core.ManagingBpt.Computing
 
         public Decimal? Calculate(CalculationTicket ticket)
         {
-            var baseValue = root.Base.Value(ticket);
+            var result = this.Calculate(ticket, No.CalculationTracer);
+            return result;
+        }
+
+
+        public Decimal? Calculate(CalculationTicket ticket, ICalculationTracer tracer)
+        {
+            tracer.WriteLine("Cash base");
+            tracer.Indent();
+            var baseValue = root.Base.Value(ticket, tracer, "Base");
+            Decimal? result;
             if (baseValue.HasValue)
             {
-                return 1m - baseValue.Value;
+                result = 1m - baseValue.Value;
+                tracer.WriteValue("1 - Base", result);
             }
             else
             {
-                return null;
+                result = null;
+                tracer.WriteValue("Nothing", null);
             }
+            tracer.Unindent();
+            return result;
         }
     }
 }

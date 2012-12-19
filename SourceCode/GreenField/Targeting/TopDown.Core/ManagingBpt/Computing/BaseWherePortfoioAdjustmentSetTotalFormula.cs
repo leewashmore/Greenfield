@@ -19,12 +19,23 @@ namespace TopDown.Core.ManagingBpt.Computing
 
         public Decimal? Calculate(CalculationTicket ticket)
         {
-            var models = this.traverser.TraverseGlobe(this.root);
-            var root = this.ComputeBaseTotalWherePortfoioAdjustmentSetValue(models);
-            return root;
+            var result = this.Calculate(ticket, No.CalculationTracer);
+            return result;
+
         }
 
-        protected Decimal? ComputeBaseTotalWherePortfoioAdjustmentSetValue(IEnumerable<IModel> models)
+        public Decimal? Calculate(CalculationTicket ticket, ICalculationTracer tracer)
+        {
+            tracer.WriteLine("Base where portfolio adjustment is set");
+            tracer.Indent();
+            var models = this.traverser.TraverseGlobe(this.root);
+            var result = this.ComputeBaseTotalWherePortfoioAdjustmentSetValue(models, tracer);
+            tracer.WriteValue("Total", result);
+            tracer.Unindent();
+            return result;
+        }
+
+        protected Decimal? ComputeBaseTotalWherePortfoioAdjustmentSetValue(IEnumerable<IModel> models, ICalculationTracer tracer)
         {
             Decimal? total = null;
             foreach (var model in models)
@@ -32,9 +43,9 @@ namespace TopDown.Core.ManagingBpt.Computing
                 var resolver = new BaseTotalWherePortfoioAdjustmentSetValueMultimethod();
                 model.Accept(resolver);
                 var value = resolver.Result;
-
                 if (value.HasValue)
                 {
+                    tracer.WriteValue("+", value);
                     if (!total.HasValue)
                     {
                         total = value;
@@ -47,6 +58,8 @@ namespace TopDown.Core.ManagingBpt.Computing
             }
             return total;
         }
+
+
 
         private class BaseTotalWherePortfoioAdjustmentSetValueMultimethod : IModelResolver
         {
@@ -73,5 +86,8 @@ namespace TopDown.Core.ManagingBpt.Computing
 
             public void Resolve(RegionModel model) { }
         }
+
+
+
     }
 }

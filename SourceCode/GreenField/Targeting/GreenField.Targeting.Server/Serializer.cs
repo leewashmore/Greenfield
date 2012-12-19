@@ -152,26 +152,37 @@ namespace GreenField.Targeting.Server
 
             public IssueModel Result { get; private set; }
 
-            public void Resolve(Aims.Expressions.ValidationIssue issue)
+            public void Resolve(Aims.Expressions.ErrorIssue issue)
             {
-                this.Result = this.serializer.SerializeValidationIssue(issue);
+                this.Result = this.serializer.SerializeErrorIssue(issue);
             }
 
             public void Resolve(Aims.Expressions.CompoundValidationIssue issue)
             {
                 this.Result = this.serializer.SerializeComoundValidationIssue(issue);
             }
+
+            public void Resolve(WariningIssue issue)
+            {
+                this.Result = this.serializer.SerializeWarningIssue(issue);
+            }
         }
 
-        public IssueModel SerializeValidationIssue(Aims.Expressions.ValidationIssue issue)
+        public ErrorModel SerializeErrorIssue(Aims.Expressions.ErrorIssue issue)
         {
-            var result = new IssueModel(issue.Message);
+            var result = new ErrorModel(issue.Message);
             return result;
         }
 
-        public IssueModel SerializeComoundValidationIssue(Aims.Expressions.CompoundValidationIssue issue)
+        public WarningModel SerializeWarningIssue(Aims.Expressions.WariningIssue issue)
         {
-            var result = new IssueModel(issue.Message, this.SerializeValidationIssues(issue.Issues));
+            var result = new WarningModel(issue.Message);
+            return result;
+        }
+
+        public CompoundIssueModel SerializeComoundValidationIssue(Aims.Expressions.CompoundValidationIssue issue)
+        {
+            var result = new CompoundIssueModel(issue.Message, this.SerializeValidationIssues(issue.Issues));
             return result;
         }
 

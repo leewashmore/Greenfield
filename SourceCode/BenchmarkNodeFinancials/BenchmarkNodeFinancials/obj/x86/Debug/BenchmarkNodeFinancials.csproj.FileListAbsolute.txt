@@ -1,0 +1,7 @@
+D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\bin\Debug\BenchmarkNodeFinancials.exe.config
+D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\bin\Debug\BenchmarkNodeFinancials.exe
+D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\bin\Debug\BenchmarkNodeFinancials.pdb
+D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\bin\Debug\log4net.dll
+D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\obj\x86\Debug\BenchmarkNodeFinancials.exe
+D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\obj\x86\Debug\BenchmarkNodeFinancials.pdb

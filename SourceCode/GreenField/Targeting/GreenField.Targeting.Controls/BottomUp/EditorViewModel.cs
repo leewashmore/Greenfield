@@ -7,6 +7,8 @@ using TopDown.FacingServer.Backend.Targeting;
 using System.Collections.ObjectModel;
 using System.Windows;
 using Aims.Data.Client;
+using System.Windows.Threading;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Targeting.Controls.BottomUp
 {
@@ -75,8 +77,45 @@ namespace GreenField.Targeting.Controls.BottomUp
             lines.Add(new BuTotalModel(model.TargetTotal));
             lines.Add(new BuCashModel(model.Cash));
             this.Lines = lines;
+            var portfolioId = this.LastValidInput.BottomUpPortfolioId;
+            var registeredExpressions = new List<EditableExpressionModel>();
+            foreach (var line in model.Items)
+            {
+                EditableExpressionModel targetExpression = line.Target;
+                var securityId = line.Security.Id;
+                var requestBuPortfolioSecurityTargetCommentsCommand = new DelegateCommand(delegate
+                {
+                    this.RequesCommentsForBuPortfolioSecurityTarget(portfolioId, securityId);
+                });
+                targetExpression.RegisterForBeingWatched(this, requestBuPortfolioSecurityTargetCommentsCommand);
+                registeredExpressions.Add(targetExpression);
+
+            }
+
+
             this.FinishLoading();
             this.OnGotData();
+        }
+
+        private void RequesCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId)
+        {
+            this.StartLoading();
+            var client = this.clientFactory.CreateClient();
+            client.RequestCommentsForBuPortfolioSecurityTargetCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting comments", args, x => x.Result, this.TakeComments, this.FinishLoading);
+            client.RequestCommentsForBuPortfolioSecurityTargetAsync(portfolioId, securityId);
+        }
+
+        public void TakeComments(ObservableCollection<CommentModel> comments)
+        {
+            this.FinishLoading();
+            this.Comments = comments;
+        }
+
+        private ObservableCollection<CommentModel> comments;
+        public ObservableCollection<CommentModel> Comments
+        {
+            get { return this.comments; }
+            set { this.comments = value; this.RaisePropertyChanged(() => this.Comments); }
         }
 
         public void RequestSaving()

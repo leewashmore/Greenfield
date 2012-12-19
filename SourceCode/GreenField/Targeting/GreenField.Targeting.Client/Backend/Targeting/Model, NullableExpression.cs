@@ -15,7 +15,6 @@ namespace TopDown.FacingServer.Backend.Targeting
 {
     public partial class NullableExpressionModel : INotifyDataErrorInfo, IExpressionModel
     {
-
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public System.Collections.IEnumerable GetErrors(String propertyName)

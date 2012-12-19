@@ -8,6 +8,7 @@ using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Modularity;
 using TargetingModule = GreenField.Targeting.Controls;
+using System.Windows.Threading;
 
 namespace GreenField.App
 {
@@ -41,7 +42,9 @@ namespace GreenField.App
         protected override void InitializeShell()
         {
             base.InitializeShell();
+            var shell = (Shell)this.Shell;
             Application.Current.RootVisual = (UIElement)this.Shell;
+            this.Container.ComposeExportedValue<Dispatcher>(shell.Dispatcher);
         }
 
         protected override void ConfigureContainer()

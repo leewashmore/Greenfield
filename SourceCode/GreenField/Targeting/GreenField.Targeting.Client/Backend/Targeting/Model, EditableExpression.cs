@@ -21,15 +21,7 @@ namespace TopDown.FacingServer.Backend.Targeting
         public System.Collections.IEnumerable GetErrors(String propertyName)
         {
             var issues = ValidationHelper.GetErrors(propertyName, "EditedValue", this);
-            if (issues.Any())
-            {
-                return issues;
-
-            }
-            else
-            {
-                return issues;
-            }
+            return issues;
         }
 
         public Boolean HasErrors

@@ -173,12 +173,57 @@ namespace GreenField.Web.Services
 
         public IEnumerable<Server.CommentModel> RequestCommentsForBasketPortfolioSecurityTarget(int basketId, string broadGlbalActivePortfolioId, string securityId)
         {
-            throw new NotImplementedException();
+            return this.Watch(String.Format("Getting comments for BasketPortfolioSecurityTarget: basketId - {0}, broadGlbalActivePortfolioId - {1}, securityId - {2}", basketId, broadGlbalActivePortfolioId, securityId), delegate
+            {
+                return this.facade.RequestCommentsForBasketPortfolioSecurityTarget(basketId, broadGlbalActivePortfolioId, securityId);
+            });
         }
 
-        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketBase(int targetingTypeGroupId, int basketId, string securityId)
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(Int32 targetingTypeGroupId, Int32 basketId, String securityId)
         {
-            throw new NotImplementedException();
+            return this.Watch(String.Format("Getting comments for TargetingTypeGroupBasketSecurityBaseValue: basketId - {0}, targetingTypeGroupId - {1}, securityId - {2}", basketId, targetingTypeGroupId, securityId), delegate
+            {
+                return this.facade.RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(targetingTypeGroupId, basketId, securityId);
+            });
+
+        }
+
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId)
+        {
+            return this.Watch(String.Format("Getting comments for TargetingTypeBasketBaseValue: basketId - {0}, targetingTypeId - {1}", basketId, targetingTypeId), delegate
+            {
+                return this.facade.RequestCommentsForTargetingTypeBasketBaseValue(targetingTypeId, basketId);
+            });
+        }
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId)
+        {
+            return this.Watch(String.Format("Getting comments for RequestCommentsForTargetingTypeBasketPortfolioTarget: basketId - {0}, targetingTypeId - {1}, portfolioId - {2}", basketId, targetingTypeId, portfolioId), delegate
+            {
+                return this.facade.RequestCommentsForTargetingTypeBasketPortfolioTarget(targetingTypeId, portfolioId, basketId);
+            });
+        }
+
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId)
+        {
+            return this.Watch(String.Format("Getting comments for RequestCommentsForBgaPortfolioSecurityFactor: portfolioId - {0}, securityId - {1}", portfolioId, securityId), delegate
+            {
+                return this.facade.RequestCommentsForBgaPortfolioSecurityFactor(portfolioId, securityId);
+            });
+        }
+
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId)
+        {
+            return this.Watch(String.Format("Getting comments for RequestCommentsForBuPortfolioSecurityTarget: portfolioId - {0}, securityId - {1}", portfolioId, securityId), delegate
+            {
+                return this.facade.RequestCommentsForBuPortfolioSecurityTarget(portfolioId, securityId);
+            });
         }
     }
+
+
 }

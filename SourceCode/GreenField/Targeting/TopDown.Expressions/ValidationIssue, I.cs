@@ -13,7 +13,8 @@ namespace Aims.Expressions
 
     public interface IValidationIssueResolver
     {
-        void Resolve(ValidationIssue issue);
+        void Resolve(ErrorIssue issue);
         void Resolve(CompoundValidationIssue issue);
+        void Resolve(WariningIssue issue);
     }
 }

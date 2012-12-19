@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls.BasketTargets
 {
@@ -119,6 +120,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
 
         public void RequestData()
         {
+            this.StartLoading();
             var client = this.clientFactory.CreateClient();
             client.GetBasketPickerCompleted += (sender, e) => RuntimeHelper.TakeCareOfResult("Getting baskets", e, x => x.Result, this.TakeData, this.FinishLoading);
             client.GetBasketPickerAsync();
@@ -127,6 +129,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
         public void TakeData(BtPickerModel data)
         {
             this.TargetingTypeGroups = data.TargetingGroups;
+            this.FinishLoading();
         }
 
         public event BasketPickedEventHandler Picking;

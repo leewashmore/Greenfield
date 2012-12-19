@@ -2,16 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Diagnostics;
 
 namespace Aims.Expressions
 {
-    public static class CalculationHelper
+    public class No
     {
-		public const Decimal InsignificantDifference = 0.0000001m;
-		public static Boolean NoDifference(Decimal one, Decimal another)
-		{
-			return Math.Abs(one - another) < InsignificantDifference;
-		}
+        public const String ExpressionName = null;
+
+        private static readonly ICalculationTracer calculationTracer = new NoCalculationTracer();
+        public static ICalculationTracer CalculationTracer { get { return calculationTracer; } }
+
+        private class NoCalculationTracer : ICalculationTracer
+        {
+            public void WriteLine(String line)
+            {
+
+            }
+
+            public void WriteValue(String name, Decimal? value)
+            {
+
+            }
+
+            public void Indent()
+            {
+
+            }
+
+            public void Unindent()
+            {
+
+            }
+
+
+            public void WriteValue<TValue>(string name, TValue value, IValueAdapter<TValue> adapter)
+            {
+                
+            }
+        }
+
     }
 }

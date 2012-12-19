@@ -64,13 +64,25 @@ namespace GreenField.Targeting.Controls
 
         protected virtual void FinishSaving(ObservableCollection<IssueModel> issues)
         {
-            if (issues.Any())
+            var traverser = new IssuesTraverser();
+            var errors = traverser.TraverseAll(issues).OfType<ErrorModel>();
+            if (errors.Any())
             {
                 this.FinishLoading(issues);
             }
             else
             {
-                this.RequestReloading();
+                if (issues.Any())
+                {
+                    this.FinishLoading(issues, delegate
+                    {
+                        this.RequestReloading();
+                    });
+                }
+                else
+                {
+                    this.RequestReloading();
+                }
             }
         }
 
@@ -94,7 +106,7 @@ namespace GreenField.Targeting.Controls
 
 
         private Boolean isRecalculationAutomatic;
-        
+
         public Boolean IsRecalculationAutomatic
         {
             get { return this.isRecalculationAutomatic; }

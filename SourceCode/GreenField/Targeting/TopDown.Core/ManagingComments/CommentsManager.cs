@@ -45,5 +45,55 @@ namespace TopDown.Core.ManagingComments
             }
             return comment;
         }
+
+        public IEnumerable<CommentModel> GetCommentsForTargetingTypeGroupBasketSecurityBaseValue(int targetingTypeGroupId, int basketId, string securityId, IDataManager manager)
+        {
+            var changes = manager.GetTargetingTypeGroupBasketSecurityBaseValueChanges(targetingTypeGroupId, basketId, securityId);
+            var changesetIds = changes.Select(x => x.ChangesetId).ToArray();
+            var changsets = manager.GetTargetingTypeGroupBasketSecurityBaseValueChangesets(changesetIds);
+
+            var result = this.WeldTogether(changes, changsets);
+            return result;
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId, IDataManager manager)
+        {
+            var changes = manager.GetTargetingTypeBasketBaseValueChanges(targetingTypeId, basketId);
+            var changesetIds = changes.Select(x => x.ChangesetId).ToArray();
+            var changsets = manager.GetTargetingTypeBasketBaseValueChangesets(changesetIds);
+
+            var result = this.WeldTogether(changes, changsets);
+            return result;
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId, IDataManager manager)
+        {
+            var changes = manager.GetTargetingTypeBasketPortfolioTargetChanges(targetingTypeId, portfolioId, basketId);
+            var changesetIds = changes.Select(x => x.ChangesetId).ToArray();
+            var changsets = manager.GetTargetingTypeBasketPortfolioTargetChangesets(changesetIds);
+
+            var result = this.WeldTogether(changes, changsets);
+            return result;
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId, IDataManager manager)
+        {
+            var changes = manager.GetBgaPortfolioSecurityFactorChanges(portfolioId, securityId);
+            var changesetIds = changes.Select(x => x.ChangesetId).ToArray();
+            var changsets = manager.GetBgaPortfolioSecurityFactorChangesets(changesetIds);
+
+            var result = this.WeldTogether(changes, changsets);
+            return result;
+        }
+
+        public IEnumerable<CommentModel> RequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId, IDataManager manager)
+        {
+            var changes = manager.GetBuPortfolioSecurityTargetChanges(portfolioId, securityId);
+            var changesetIds = changes.Select(x => x.ChangesetId).ToArray();
+            var changsets = manager.GetBuPortfolioSecurityTargetChangesets(changesetIds);
+
+            var result = this.WeldTogether(changes, changsets);
+            return result;
+        }
     }
 }

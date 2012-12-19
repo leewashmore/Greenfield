@@ -185,6 +185,7 @@ namespace TopDown.Core
         {
             var issues = this.PstManager.Validate(model, ticket);
             if (issues.Any()) return issues;
+
             using (var connection = this.connectionFactory.CreateConnection())
             {
                 CalculationInfo info = new CalculationInfo();
@@ -348,6 +349,79 @@ namespace TopDown.Core
                 var comments = this.commentManager.GetCommentsForBasketPortfolioSecurityTarget(
                     basketId,
                     broadGlbalActivePortfolioId,
+                    securityId,
+                    manager
+                );
+                return comments;
+            }
+        }
+
+        public IEnumerable<ManagingComments.CommentModel> GetCommentsForTargetingTypeGroupBasketSecurityBaseValue(Int32 targetingTypeGroupId, Int32 basketId, String securityId)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.GetCommentsForTargetingTypeGroupBasketSecurityBaseValue(
+                    targetingTypeGroupId,
+                    basketId,
+                    securityId,
+                    manager
+                );
+                return comments;
+            }
+        }
+
+
+        public IEnumerable<ManagingComments.CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.RequestCommentsForTargetingTypeBasketBaseValue(
+                    targetingTypeId,
+                    basketId,
+                    manager
+                );
+                return comments;
+            }
+        }
+
+        public IEnumerable<ManagingComments.CommentModel> RequestCommentsForTargetingTypeBasketPortfolioTarget(int targetingTypeId, string portfolioId, int basketId)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.RequestCommentsForTargetingTypeBasketPortfolioTarget(
+                    targetingTypeId,
+                    portfolioId,
+                    basketId,
+                    manager
+                );
+                return comments;
+            }
+        }
+
+        public IEnumerable<ManagingComments.CommentModel> RequestCommentsForBgaPortfolioSecurityFactor(string portfolioId, string securityId)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.RequestCommentsForBgaPortfolioSecurityFactor(
+                    portfolioId,
+                    securityId,
+                    manager
+                );
+                return comments;
+            }
+        }
+
+        public IEnumerable<ManagingComments.CommentModel> RequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.RequestCommentsForBuPortfolioSecurityTarget(
+                    portfolioId,
                     securityId,
                     manager
                 );

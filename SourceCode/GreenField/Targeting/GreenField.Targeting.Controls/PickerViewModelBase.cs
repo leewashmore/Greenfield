@@ -8,11 +8,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GreenField.Targeting.Controls
 {
     public class PickerViewModelBase : CommunicatingViewModelBase
     {
+        public PickerViewModelBase()
+        {
+        }
+
         public event CancellableEventHandler Reseting;
         protected virtual void OnReseting(CancellableEventArgs args)
         {

@@ -102,11 +102,35 @@
   <wsdl:message name="IFacade_RequestCommentsForBasketPortfolioSecurityTarget_OutputMessage">
     <wsdl:part name="parameters" element="tns:RequestCommentsForBasketPortfolioSecurityTargetResponse" />
   </wsdl:message>
-  <wsdl:message name="IFacade_RequestCommentsForTargetingTypeBasketBase_InputMessage">
-    <wsdl:part name="parameters" element="tns:RequestCommentsForTargetingTypeBasketBase" />
+  <wsdl:message name="IFacade_RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue" />
   </wsdl:message>
-  <wsdl:message name="IFacade_RequestCommentsForTargetingTypeBasketBase_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RequestCommentsForTargetingTypeBasketBaseResponse" />
+  <wsdl:message name="IFacade_RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForTargetingTypeBasketBaseValue_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForTargetingTypeBasketBaseValue" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForTargetingTypeBasketBaseValue_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForTargetingTypeBasketBaseValueResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForTargetingTypeBasketPortfolioTarget_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForTargetingTypeBasketPortfolioTarget" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForTargetingTypeBasketPortfolioTarget_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForTargetingTypeBasketPortfolioTargetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForBgaPortfolioSecurityFactor_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForBgaPortfolioSecurityFactor" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForBgaPortfolioSecurityFactor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForBgaPortfolioSecurityFactorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForBuPortfolioSecurityTarget_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForBuPortfolioSecurityTarget" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestCommentsForBuPortfolioSecurityTarget_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestCommentsForBuPortfolioSecurityTargetResponse" />
   </wsdl:message>
   <wsdl:portType name="IFacade">
     <wsdl:operation name="GetBroadGlobalActive">
@@ -169,9 +193,25 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForBasketPortfolioSecurityTarget" message="tns:IFacade_RequestCommentsForBasketPortfolioSecurityTarget_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForBasketPortfolioSecurityTargetResponse" message="tns:IFacade_RequestCommentsForBasketPortfolioSecurityTarget_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RequestCommentsForTargetingTypeBasketBase">
-      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBase" message="tns:IFacade_RequestCommentsForTargetingTypeBasketBase_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBaseResponse" message="tns:IFacade_RequestCommentsForTargetingTypeBasketBase_OutputMessage" />
+    <wsdl:operation name="RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue" message="tns:IFacade_RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeGroupBasketSecurityBaseValueResponse" message="tns:IFacade_RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForTargetingTypeBasketBaseValue">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBaseValue" message="tns:IFacade_RequestCommentsForTargetingTypeBasketBaseValue_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBaseValueResponse" message="tns:IFacade_RequestCommentsForTargetingTypeBasketBaseValue_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForTargetingTypeBasketPortfolioTarget">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketPortfolioTarget" message="tns:IFacade_RequestCommentsForTargetingTypeBasketPortfolioTarget_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketPortfolioTargetResponse" message="tns:IFacade_RequestCommentsForTargetingTypeBasketPortfolioTarget_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForBgaPortfolioSecurityFactor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForBgaPortfolioSecurityFactor" message="tns:IFacade_RequestCommentsForBgaPortfolioSecurityFactor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForBgaPortfolioSecurityFactorResponse" message="tns:IFacade_RequestCommentsForBgaPortfolioSecurityFactor_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForBuPortfolioSecurityTarget">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForBuPortfolioSecurityTarget" message="tns:IFacade_RequestCommentsForBuPortfolioSecurityTarget_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForBuPortfolioSecurityTargetResponse" message="tns:IFacade_RequestCommentsForBuPortfolioSecurityTarget_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="TargetingOperations" type="tns:IFacade">
@@ -311,8 +351,44 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RequestCommentsForTargetingTypeBasketBase">
-      <soap:operation soapAction="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBase" style="document" />
+    <wsdl:operation name="RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForTargetingTypeBasketBaseValue">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketBaseValue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForTargetingTypeBasketPortfolioTarget">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RequestCommentsForTargetingTypeBasketPortfolioTarget" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForBgaPortfolioSecurityFactor">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RequestCommentsForBgaPortfolioSecurityFactor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestCommentsForBuPortfolioSecurityTarget">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RequestCommentsForBuPortfolioSecurityTarget" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

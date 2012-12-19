@@ -57,7 +57,7 @@ namespace BenchmarkNodeFinancials
                 {
                     List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
                     dataBenchmarkHoldings = dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
-                                                             && record.PORTFOLIO_DATE == lastBusinessDate
+                                                             && record.PORTFOLIO_DATE == Convert.ToDateTime("12/17/2012")
                                                               && record.BENCHMARK_WEIGHT > 0).ToList();
 
                     var benchData = dataBenchmarkHoldings != null ? (from p in dataBenchmarkHoldings
@@ -138,7 +138,7 @@ namespace BenchmarkNodeFinancials
             }
             catch (Exception ex)
             {
-                log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                throw ex;
             }
             return secData;
         }
@@ -621,6 +621,7 @@ namespace BenchmarkNodeFinancials
             {
                 log.Debug("Insertion failed for Benchmark : " + benId);
                 log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                throw ex;
             }
         }
 
