@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Linq;
 using System.Diagnostics;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Targeting.Controls.BroadGlobalActive
 {
@@ -93,8 +94,45 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             this.Factors = new ObservableCollection<BgaFactorItemModel>(data.Factors.Items);
             this.RootModel = data;
 
+            var registeredExpressions = new List<EditableExpressionModel>();
+            foreach (var resident in residents)
+            {
+                if (resident is BasketCountryModel)
+                {
+                    var r = resident as BasketCountryModel;
+                    var requestBaseCommentsCommand = new DelegateCommand(delegate
+                    {
+                        this.RequestComments(this.LastValidInput.TargetingTypeId, r.Basket.Id);
+                    });
+                    var baseExpression = r.Base;
+                    baseExpression.RegisterForBeingWatched(this, requestBaseCommentsCommand);
+                    registeredExpressions.Add(baseExpression);
+                }
+            }
+
             this.FinishLoading();
             this.OnGotData();
+        }
+
+        private void RequestComments(Int32 targetingTypeId, Int32 basketId)
+        {
+            this.StartLoading();
+            var client = this.clientFactory.CreateClient();
+            client.RequestCommentsForTargetingTypeBasketBaseValueCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting comments", args, x => x.Result, this.TakeComments, this.FinishLoading);
+            client.RequestCommentsForTargetingTypeBasketBaseValueAsync(targetingTypeId, basketId);
+        }
+
+        public void TakeComments(ObservableCollection<CommentModel> comments)
+        {
+            this.FinishLoading();
+            this.Comments = comments;
+        }
+
+        private ObservableCollection<CommentModel> comments;
+        public ObservableCollection<CommentModel> Comments
+        {
+            get { return this.comments; }
+            set { this.comments = value; this.RaisePropertyChanged(() => this.Comments); }
         }
 
         public void RequestSaving()

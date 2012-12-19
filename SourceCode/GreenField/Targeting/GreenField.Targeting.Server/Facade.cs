@@ -216,5 +216,13 @@ namespace GreenField.Targeting.Server
             return serializedComments;
             //return new CommentModel[] { new CommentModel("Hey yourself!") };
         }
+
+
+        public IEnumerable<CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId)
+        {
+            var comments = this.facade.RequestCommentsForTargetingTypeBasketBaseValue(targetingTypeId, basketId);
+            var serializedComments = this.serializer.SerializeComments(comments);
+            return serializedComments;
+        }
     }
 }

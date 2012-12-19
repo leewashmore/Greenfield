@@ -187,10 +187,16 @@ namespace GreenField.Targeting.Backend
             {
                 return this.facade.RequestCommentsForTargetingTypeGroupBasketSecurityBaseValue(targetingTypeGroupId, basketId, securityId);
             });
-
+            
         }
 
 
-        
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId)
+        {
+            return this.Watch(String.Format("Getting comments for RequestCommentsForTargetingTypeBasketBaseValue: basketId - {0}, targetingTypeId - {1}", basketId, targetingTypeId), delegate
+            {
+                return this.facade.RequestCommentsForTargetingTypeBasketBaseValue(targetingTypeId, basketId);
+            });
+        }
     }
 }

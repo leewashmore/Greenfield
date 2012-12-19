@@ -370,5 +370,20 @@ namespace TopDown.Core
                 return comments;
             }
         }
+
+
+        public IEnumerable<ManagingComments.CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var comments = this.commentManager.RequestCommentsForTargetingTypeBasketBaseValue(
+                    targetingTypeId,
+                    basketId,
+                    manager
+                );
+                return comments;
+            }
+        }
     }
 }

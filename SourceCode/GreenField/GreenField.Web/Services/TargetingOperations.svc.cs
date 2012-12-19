@@ -188,5 +188,11 @@ namespace GreenField.Web.Services
             });
 
         }
+
+
+        public IEnumerable<Server.CommentModel> RequestCommentsForTargetingTypeBasketBaseValue(int targetingTypeId, int basketId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
