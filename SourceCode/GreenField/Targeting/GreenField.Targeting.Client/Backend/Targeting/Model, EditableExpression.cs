@@ -15,7 +15,6 @@ namespace TopDown.FacingServer.Backend.Targeting
 {
     public partial class EditableExpressionModel : INotifyDataErrorInfo, IExpressionModel
     {
-
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public System.Collections.IEnumerable GetErrors(String propertyName)
@@ -71,17 +70,18 @@ namespace TopDown.FacingServer.Backend.Targeting
             set { this.isFocusSet = value; this.RaisePropertyChanged("IsFocusSet"); }
         }
 
-        
+
 
         protected String OriginalComment { get; private set; }
         protected Decimal? OriginalEditedValue { get; private set; }
-        public Boolean IsModified {
-            get 
+        public Boolean IsModified
+        {
+            get
             {
                 return this.InitialValue != this.EditedValue;
-            } 
+            }
         }
 
-        
+
     }
 }

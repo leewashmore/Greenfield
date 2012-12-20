@@ -62,6 +62,10 @@ namespace TopDown.Core.Persisting
             // used to be Oct 17, 2012
             using (var command = this.Connection.CreateCommand())
             {
+                if (this.TransactionOpt != null)
+                {
+                    command.Transaction = this.TransactionOpt;
+                }
                 command.CommandText = "select top 1 PORTFOLIO_DATE from [" + TableNames.GF_BENCHMARK_HOLDINGS + "] order by [PORTFOLIO_DATE] desc";
                 var something = command.ExecuteScalar();
                 if (something is DBNull || something == null)

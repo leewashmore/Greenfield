@@ -9,6 +9,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.ComponentModel;
+using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace TopDown.FacingServer.Backend.Targeting
 {

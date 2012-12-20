@@ -108,6 +108,7 @@ namespace GreenField.Web.Services
 
         public Server.BasketTargets.PickerModel GetBasketPicker()
         {
+            
             return this.Watch("Unable to get the data for the basket picker.", delegate
             {
                 return this.facade.GetBasketPicker();

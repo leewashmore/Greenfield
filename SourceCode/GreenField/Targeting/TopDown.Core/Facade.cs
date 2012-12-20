@@ -123,7 +123,7 @@ namespace TopDown.Core
                         ticket,
                         ref calculation
                     );
-                    if (!issues.Any())
+                    if (!issues.Any(x => x is ErrorIssue))
                     {
                         this.Calculate(calculation.Id, true);
                     }
