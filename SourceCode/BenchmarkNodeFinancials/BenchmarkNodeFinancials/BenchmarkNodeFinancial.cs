@@ -57,7 +57,7 @@ namespace BenchmarkNodeFinancials
                 {
                     List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
                     dataBenchmarkHoldings = dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
-                                                             && record.PORTFOLIO_DATE == Convert.ToDateTime("12/17/2012")
+                                                             && record.PORTFOLIO_DATE == Convert.ToDateTime(lastBusinessDate)
                                                               && record.BENCHMARK_WEIGHT > 0).ToList();
 
                     var benchData = dataBenchmarkHoldings != null ? (from p in dataBenchmarkHoldings

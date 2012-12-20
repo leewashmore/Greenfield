@@ -133,3 +133,20 @@ The statement has been terminated.
    at BenchmarkNodeFinancials.BenchmarkNodeFinancial.CreateXMLInsertData(List`1 groupedFinalData, AIMSDataEntity entity, String benId) in D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\BenchmarkNodeFinancial.cs:line 617
 2012-12-19 11:06:57,377 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
 2012-12-19 11:12:54,074 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM GROSS. Number of rows: 418
+2012-12-20 05:47:18,554 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
+2012-12-20 05:50:54,936 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM GROSS. Number of rows: 0
+2012-12-20 05:51:03,130 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM LATAM NET. Number of rows: 0
+2012-12-20 05:52:17,540 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM NET. Number of rows: 0
+2012-12-20 05:52:33,775 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM IN NET. Number of rows: 0
+2012-12-20 05:52:39,801 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark S&P PAN AFRICA EX SOUTH AFRICA NET. Number of rows: 0
+2012-12-20 05:52:45,076 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark S&P AEMM MIDDLE EAST NET. Number of rows: 0
+2012-12-20 05:52:51,057 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark GIC CUSTOM NET. Number of rows: 0
+2012-12-20 05:52:58,333 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM SC NET. Number of rows: 0
+2012-12-20 05:53:05,080 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM IN SC NET. Number of rows: 0
+2012-12-20 05:53:10,847 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM LATAM SC NET. Number of rows: 0
+2012-12-20 05:53:34,046 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM IMI NET. Number of rows: 0
+2012-12-20 05:53:39,102 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI FRONTIER NET. Number of rows: 0
+2012-12-20 05:53:39,916 DEBUG BenchmarkNodeFinancials.Program - Application completed successfully on 12/19/2012 12:00:00 AM
+2012-12-20 05:57:02,128 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
+2012-12-20 06:00:11,247 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Insertion Completed for Benchmark MSCI EM GROSS. Number of rows: 418
+2012-12-20 06:53:06,395 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 12/19/2012 12:00:00 AM
