@@ -83,8 +83,8 @@
                                 <local:ToggleBehavior Switch="{Binding IsExpanded, Mode=TwoWay}" />
                             </i:Interaction.Behaviors>
                         </Button>
-                        
-                        
+
+
                     </DataTemplate>
                 </mine:GlobalResidentToDataTemplateConverter.OtherTemplate>
 
@@ -132,7 +132,15 @@
             </mine:GlobalResidentToDataTemplateConverter>
             
             
+            <Style x:Key="rowStyle" TargetType="sdk:DataGridRow" BasedOn="{StaticResource specialDataGridRowStyle}" >
+                
+            </Style>
+
         </ResourceDictionary>
+
+
+
+
     </UserControl.Resources>
 
     <i:Interaction.Behaviors>
@@ -147,7 +155,7 @@
 
         <Grid Grid.Row="0">
 
-            <sdk:DataGrid AutoGenerateColumns="false" ItemsSource="{Binding Residents}">
+            <sdk:DataGrid AutoGenerateColumns="false" ItemsSource="{Binding Residents}" RowStyle="{StaticResource rowStyle}">
                 <i:Interaction.Behaviors>
                     <local:DataGridRowVisibilityBehavior  />
                 </i:Interaction.Behaviors>
@@ -164,7 +172,6 @@
 								/>
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
-
                     </sdk:DataGridTemplateColumn>
 
                     <sdk:DataGridTemplateColumn Header="Benchmark" CellStyle="{StaticResource valueCellStyle}" >

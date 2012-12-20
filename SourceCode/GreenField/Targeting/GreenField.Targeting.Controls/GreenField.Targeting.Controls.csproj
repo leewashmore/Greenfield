@@ -126,7 +126,9 @@
       <DependentUpon>CommentsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="CommentTemplateSelector.cs" />
+    <Compile Include="CustomDataGrid.cs" />
     <Compile Include="EditableColumn.cs" />
+    <Compile Include="ExpressionWithoutValueToOpacityConverter.cs" />
     <Compile Include="ISecurity.cs" />
     <Compile Include="BasketTargets\SecurityPickerClientFactory.cs" />
     <Compile Include="BasketTargets\Settings.cs" />
