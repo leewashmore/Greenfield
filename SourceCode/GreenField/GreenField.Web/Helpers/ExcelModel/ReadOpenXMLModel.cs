@@ -923,6 +923,7 @@ namespace GreenField.Web.Helpers
                         {
                             String deleteUrl = filerec.Location;
                             service.DeleteDocument(deleteUrl);
+                            ICPresentationEntity.DeleteFileMaster(filerec.FileID);
                         }
                         FileURI = service.UploadDocument(ModelReferenceData.IssuerId + ".xls", FileBytes, string.Empty);
                         bool fileRecordCreated = service.SetUploadFileInfo(UserName, "Model_" + issuerId + TimeStamp.ToString("ddMMyyyy") + ".xls",
