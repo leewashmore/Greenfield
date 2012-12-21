@@ -174,7 +174,11 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility();
                     break;
                 case DashboardCategoryType.COMPANY_SNAPSHOT_SUMMARY:
-                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, 
+                                                portfolioSelectorVisibility: Visibility.Visible, 
+                                                effectiveDateSelectorVisibility: Visibility.Collapsed, 
+                                                periodSelectorVisibility: Visibility.Collapsed);
+                                                //updated the above to make the Effective Date selector and the Period Selector not visible
                     break;
                 case DashboardCategoryType.COMPANY_SNAPSHOT_COMPANY_PROFILE:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);

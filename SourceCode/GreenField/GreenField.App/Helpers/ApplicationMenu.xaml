@@ -147,7 +147,7 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <!--<telerik:RadMenuItem x:Name="rmItemComparison" Header="Comparison"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                    </telerik:RadMenuItem>
+                       </telerik:RadMenuItem>
 
                     <telerik:RadMenuItem Header="Valuation" x:Name="rmItemValuation">
                         <telerik:RadMenuItem x:Name="rmItemFairValue" Header="Fair Value" Command="{Binding DashboardCompanyValuationFairValueCommand}"
@@ -155,6 +155,7 @@
                         <telerik:RadMenuItem x:Name="rmItemDCF" Header="Discounted Cash Flows" Command="{Binding DashboardCompanyValuationDiscountedCashFlowCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>
+                    
                     <telerik:RadMenuItem Header="Documents" x:Name="rmItemDocument">
                         <telerik:RadMenuItem x:Name="rmItemDocuments" Header="Documents" Command="{Binding DashboardCompanyDocumentsCommand}"
                                              Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
@@ -171,9 +172,9 @@
                         <telerik:RadMenuItem Header="Context" x:Name="rmItemContext"
                                              Command="{Binding DashboardCompanyChartingContextCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem Header="Valuation" x:Name="rmItemChartingValuation"
+                        <!--<telerik:RadMenuItem Header="Valuation" x:Name="rmItemChartingValuation"
                                              Command="{Binding DashboardCompanyChartingValuationCommand}"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                     </telerik:RadMenuItem>
 
                     <!--<telerik:RadMenuItem Header="Corporate Governance" x:Name="rmItemCorporateGovernance">
