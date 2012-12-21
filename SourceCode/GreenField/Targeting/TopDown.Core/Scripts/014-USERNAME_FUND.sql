@@ -17,4 +17,4 @@ INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonki
 INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'SAF')
 INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'SICVESC')
 INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'STARS')
-INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'LSCF') 
+INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'LSCF')
