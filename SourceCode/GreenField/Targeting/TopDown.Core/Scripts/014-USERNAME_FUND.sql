@@ -11,10 +11,10 @@
 GO
 
 
-INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('bykova', 'GSCF')
-INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('bykova', 'AFRICA')
-INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('bykova', 'MIDEAST')
-INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('bykova', 'SAF')
-INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('bykova', 'SICVESC')
-INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('bykova', 'STARS')
-INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('bykova', 'LSCF')
+INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'GSCF')
+INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'AFRICA')
+INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'MIDEAST')
+INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'SAF')
+INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'SICVESC')
+INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'STARS')
+INSERT INTO [dbo].[USERNAME_FUND] ([USERNAME], [PORTFOLIO_ID]) values ('vfedonkin', 'LSCF')
