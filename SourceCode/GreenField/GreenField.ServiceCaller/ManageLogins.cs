@@ -48,6 +48,7 @@ namespace GreenField.ServiceCaller
             client.ValidateUserAsync(username, password, callback);
             client.ValidateUserCompleted += (se, e) =>
             {
+                
                 if (e.Error == null)
                 {
                     if (callback != null)

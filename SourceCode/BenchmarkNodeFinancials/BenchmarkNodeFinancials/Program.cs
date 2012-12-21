@@ -30,6 +30,9 @@ namespace BenchmarkNodeFinancials
                 DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
                 GF_BENCHMARK_HOLDINGS lastBusinessRecord = dimensionEntity.GF_BENCHMARK_HOLDINGS.
                     OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+
+                log.Debug("Found the last business date to be" + lastBusinessDate);
+
                 if (lastBusinessRecord != null)
                 {
                     if (lastBusinessRecord.PORTFOLIO_DATE != null)

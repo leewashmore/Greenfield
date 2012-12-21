@@ -103,6 +103,7 @@ namespace GreenField.App.ViewModel
                         SessionManager.SESSION.Roles = new List<string>();
 
                         SessionManager.SESSION.UserName = CookieEncription.Decript(result[CookieEncription.Encript("UserName")]);
+                        
                         if (result.Keys.Contains(CookieEncription.Encript("Roles")))
                         {
                             String[] userRolesEncrypted = result[CookieEncription.Encript("Roles")].Split('|');

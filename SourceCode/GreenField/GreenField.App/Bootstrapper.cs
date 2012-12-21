@@ -44,7 +44,9 @@ namespace GreenField.App
             base.InitializeShell();
             var shell = (Shell)this.Shell;
             Application.Current.RootVisual = (UIElement)this.Shell;
+            
             this.Container.ComposeExportedValue<Dispatcher>(shell.Dispatcher);
+
         }
 
         protected override void ConfigureContainer()
@@ -61,6 +63,7 @@ namespace GreenField.App
             this.Container.ComposeExportedValue<TargetingModule.IClientFactory>(settings.ClientFactory);
             this.Container.ComposeExportedValue<TargetingModule.BottomUp.Settings>(settings.BuSettings);
             this.Container.ComposeExportedValue<TargetingModule.BasketTargets.Settings>(settings.BtSettings);
+            
         }
 
         private TargetingModule.GlobalSettings CreateTargetingModuleSettings()

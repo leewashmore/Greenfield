@@ -53,11 +53,18 @@ namespace BenchmarkNodeFinancials
                         .Select(a => a.Value)
                         .ToList();
                 }
+
+                log.Debug("Is able to locate Benchmark Id's file  " + exists);
+
+                int i = 0;
+
                 foreach (String benId in benchmarkIds)
                 {
+                    i = i + 1;
+                    log.Debug("Processing for" + i + "Benchmark begin");
                     List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
                     dataBenchmarkHoldings = dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
-                                                             && record.PORTFOLIO_DATE == Convert.ToDateTime("12/17/2012")
+                                                             && record.PORTFOLIO_DATE == Convert.ToDateTime(lastBusinessDate)
                                                               && record.BENCHMARK_WEIGHT > 0).ToList();
 
                     var benchData = dataBenchmarkHoldings != null ? (from p in dataBenchmarkHoldings
@@ -75,34 +82,48 @@ namespace BenchmarkNodeFinancials
 
                     List<String> asecShortNames = benchData != null ? (from p in benchData
                                                                        select p.AsecShortName).ToList() : null;
-                    //retrieve security Id's              
+                    //retrieve security Id's   
+                    log.Debug("Retrieving Security Data");
                     List<SecurityData> securityData = RetrieveSecurityIds(asecShortNames);
                     List<String> distinctSecurityId = securityData.Select(record => record.SecurityId).ToList();
                     List<String> distinctIssuerId = securityData.Select(record => record.IssuerId).ToList();
 
                     String _securityIds = StringBuilder(distinctSecurityId);
-                    String _issuerIds = StringBuilder(distinctIssuerId);     
+                    String _issuerIds = StringBuilder(distinctIssuerId);
 
+                    entity.CommandTimeout = 50000;
+
+                    log.Debug("Command Timeout added");
+
+                    log.Debug("Retrieving PeriodFinancialData");
                     List<PeriodFinancialForwardRatios> periodFinancialData = new List<PeriodFinancialForwardRatios>();
                     periodFinancialData = entity.usp_GetDataForBenchmarkNodefinancials(_issuerIds, _securityIds).ToList();
 
+                    log.Debug("Retrieving ForwardRatioData");
                     List<BenchmarkNodeFinancialsData> forwardRatioData = new List<BenchmarkNodeFinancialsData>();
                     forwardRatioData = FillBenchmarkNodeFinancials(periodFinancialData, securityData, dataBenchmarkHoldings, benId);
 
+                    log.Debug("Retrieving PeriodRatioData");
                     List<PeriodFinancialPeriodRatios> periodFinancialDataPeriodRatios = new List<PeriodFinancialPeriodRatios>();
                     periodFinancialDataPeriodRatios = entity.usp_GetDataForBenchNodefinPeriodYear(_issuerIds, _securityIds).ToList();
 
+                    log.Debug("Retrieving BothRatioData");
                     List<BenchmarkNodeFinancialsData> bothRatiosData = new List<BenchmarkNodeFinancialsData>();
                     bothRatiosData = FillBenchmarkNodeFinancialsPeriodData(periodFinancialDataPeriodRatios, securityData, dataBenchmarkHoldings, 
                         benId, forwardRatioData);
 
+                    log.Debug("Grouping Starts");
                     //grouping the data and calculating the harmonic mean for insertion into the Benchmark_Node_Financials table
                     List<GroupedBenchmarkNodeData> groupedFinalData = new List<GroupedBenchmarkNodeData>();
                     groupedFinalData = GroupBenchmarkData(bothRatiosData);
 
+                    log.Debug("XML Creation and insertion of data");
                     //creation of an Xml for inserting data into the Benchmark_Node_Financials table
                     CreateXMLInsertData(groupedFinalData, entity, benId);
+
+                    log.Debug("Processing for" + i + "Benchmark ends");
                 }
+                log.Debug("No processing of Benchmarks");
             }
             catch (Exception ex)
             {
@@ -138,7 +159,7 @@ namespace BenchmarkNodeFinancials
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
             return secData;
         }
@@ -621,7 +642,7 @@ namespace BenchmarkNodeFinancials
             {
                 log.Debug("Insertion failed for Benchmark : " + benId);
                 log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
-                throw ex;
+                throw;
             }
         }
 

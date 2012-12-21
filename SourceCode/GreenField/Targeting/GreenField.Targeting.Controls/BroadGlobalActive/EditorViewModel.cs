@@ -320,5 +320,6 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         public void Dispose()
         {
         }
+
     }
 }

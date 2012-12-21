@@ -129,7 +129,7 @@ namespace TopDown.Core.ManagingCalculations
 					issues.Add(exception.Issue);
 				}
 			}
-			if (issues.Any())
+			if (issues.Any(x => x is ErrorIssue))
 			{
 				var issue = new CompoundValidationIssue("Unable to do recalculation.", issues);
 				throw new ValidationException(issue);
@@ -159,7 +159,7 @@ namespace TopDown.Core.ManagingCalculations
 					issues.Add(exception.Issue);
 				}
 
-				if (issues.Any())
+                if (issues.Any(x => x is ErrorIssue))
 				{
 					var issue = new CompoundValidationIssue(
 						"Unable to recalculate the \"" + targetingType.Name + "\" targeting type (ID: " + targetingType.Id + ").",
@@ -190,7 +190,7 @@ namespace TopDown.Core.ManagingCalculations
 
 			// let's see if computations are valid
 			var issues = this.bptManager.Validate(root, ticket).ToList();
-			if (issues.Any())
+            if (issues.Any(x => x is ErrorIssue))
 			{
 				var issue = new CompoundValidationIssue("Unable to recalculate the \"" + portfolio.Name + "\" portfolio (ID: " + portfolio.Id + ").", issues);
 				throw new ValidationException(issue);
@@ -216,7 +216,7 @@ namespace TopDown.Core.ManagingCalculations
 				}
 			}
 
-			if (issues.Any())
+            if (issues.Any(x => x is ErrorIssue))
 			{
 				var issue = new CompoundValidationIssue("Unable to recalculate the \"" + portfolio.Name + "\" portfolio (ID: " + portfolio.Id + ").", issues);
 				throw new ValidationException(issue);
@@ -412,7 +412,7 @@ namespace TopDown.Core.ManagingCalculations
 		protected void MakeSureBpstCoreModelIsValid(CoreModel model, CalculationTicket ticket)
 		{
 			var issues = this.bpstManager.Validate(model, ticket);
-			if (issues.Any())
+            if (issues.Any(x => x is ErrorIssue))
 			{
 				throw new ValidationException(
 					new CompoundValidationIssue(
