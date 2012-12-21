@@ -91,6 +91,10 @@ namespace BenchmarkNodeFinancials
                     String _securityIds = StringBuilder(distinctSecurityId);
                     String _issuerIds = StringBuilder(distinctIssuerId);
 
+                    entity.CommandTimeout = 50000;
+
+                    log.Debug("Command Timeout added");
+
                     log.Debug("Retrieving PeriodFinancialData");
                     List<PeriodFinancialForwardRatios> periodFinancialData = new List<PeriodFinancialForwardRatios>();
                     periodFinancialData = entity.usp_GetDataForBenchmarkNodefinancials(_issuerIds, _securityIds).ToList();
