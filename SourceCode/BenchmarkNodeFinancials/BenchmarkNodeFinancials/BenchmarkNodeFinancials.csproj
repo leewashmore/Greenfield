@@ -97,7 +97,9 @@
     </ServiceReferenceMetadataStorage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="BNFDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BNFDataModel.Designer.cs</LastGenOutput>

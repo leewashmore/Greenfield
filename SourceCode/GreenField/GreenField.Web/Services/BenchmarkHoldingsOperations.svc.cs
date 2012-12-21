@@ -422,7 +422,6 @@ namespace GreenField.Web.Services
                         //Retrieve Benchmark Weight
                         decimal? benchmarkWeight = Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT)
                                                                                                                                     .FirstOrDefault());
-
                         //Calculate Active Position
                         decimal? activePosition = portfolioWeight - benchmarkWeight;
 

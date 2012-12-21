@@ -13,3 +13,4 @@ C:\Projects\GreenfieldRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNod
 C:\Projects\GreenfieldRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\bin\Debug\BenchmarkNodeFinancials.pdb
 C:\Projects\GreenfieldRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\bin\Debug\log4net.dll
 C:\Projects\GreenfieldRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\CurrentRepository\SourceCode\BenchmarkNodeFinancials\BenchmarkNodeFinancials\bin\Debug\BenchmarkIDs.xml
