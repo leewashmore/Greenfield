@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using TopDown.Core.ManagingTargetingTypes;
+using TopDown.Core.Persisting;
 
 namespace TopDown.Core.Gadgets.BasketPicker
 {
@@ -19,9 +20,9 @@ namespace TopDown.Core.Gadgets.BasketPicker
             this.modelSerializer = modelSerializer;
         }
 
-        public RootModel GetRootModel(IEnumerable<TargetingTypeGroup> targetingTypeGroups)
+        public RootModel GetRootModel(IEnumerable<TargetingTypeGroup> targetingTypeGroups, IEnumerable<UsernameBasketInfo> baskets)
         {
-            var result = this.modelBuilder.CreateRootModel(targetingTypeGroups);
+            var result = this.modelBuilder.CreateRootModel(targetingTypeGroups, baskets);
             return result;
         }
 

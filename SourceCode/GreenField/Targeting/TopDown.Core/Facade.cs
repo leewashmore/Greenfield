@@ -211,15 +211,18 @@ namespace TopDown.Core
 
         // backet picker
 
-        public Gadgets.BasketPicker.RootModel GetBasketPickerRootModel()
+        public Gadgets.BasketPicker.RootModel GetBasketPickerRootModel(String username)
         {
             IEnumerable<TargetingTypeGroup> targetingTypeGroups;
+            IEnumerable<UsernameBasketInfo> userBaskets;
             using (var ondemandManager = new OnDemandDataManager(this.connectionFactory, this.dataManagerFactory))
             {
                 var targetingTypeGroupRepository = this.RepositoryManager.ClaimTargetingTypeGroupRepository(ondemandManager);
                 targetingTypeGroups = targetingTypeGroupRepository.GetTargetingTypeGroups();
+                userBaskets = ondemandManager.Claim().GetUsernameBaskets(username);
             }
-            var result = this.BasketPickerManager.GetRootModel(targetingTypeGroups);
+            var result = this.BasketPickerManager.GetRootModel(targetingTypeGroups, userBaskets);
+            
             return result;
         }
 

@@ -63,6 +63,7 @@
     <Compile Include="ManagingPst\ModelValidator.cs" />
     <Compile Include="OnDemandDataManager.cs" />
     <Compile Include="Persisting\CalculationWithChangesets.cs" />
+    <Compile Include="Persisting\Info, UsernameBasket.cs" />
     <Compile Include="Persisting\IChangeInfoBase.cs" />
     <Compile Include="Persisting\IChangesetInfoResolver.cs" />
     <Compile Include="PortfolioManager.cs" />
@@ -336,6 +337,7 @@
     <Compile Include="_Testing\Generator.cs" />
     <Compile Include="_Testing\JsonReaderTester.cs" />
     <Compile Include="_Testing\StorageMock.cs" />
+    <Content Include="Scripts\073-USERNAME_BASKET.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\015-TARGETING_CALCULATION.sql" />

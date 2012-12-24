@@ -6,6 +6,7 @@ using TopDown.Core.ManagingTargetingTypes;
 using TopDown.Core.ManagingBpt;
 using TopDown.Core.ManagingBaskets;
 using System.Diagnostics;
+using TopDown.Core.Persisting;
 
 namespace TopDown.Core.Gadgets.BasketPicker
 {
@@ -21,19 +22,19 @@ namespace TopDown.Core.Gadgets.BasketPicker
             this.basketRenderer = basketRenderer;
         }
 
-        public RootModel CreateRootModel(IEnumerable<TargetingTypeGroup> targetingTypeGroups)
+        public RootModel CreateRootModel(IEnumerable<TargetingTypeGroup> targetingTypeGroups, IEnumerable<UsernameBasketInfo> baskets)
 		{
-			var groups = this.TransformToGroups(targetingTypeGroups);
+			var groups = this.TransformToGroups(targetingTypeGroups, baskets);
 			var result = new RootModel(groups);
 			return result;
 		}
 
-		public IEnumerable<TargetingGroupModel> TransformToGroups(IEnumerable<TargetingTypeGroup> targetingTypeGroups)
+        public IEnumerable<TargetingGroupModel> TransformToGroups(IEnumerable<TargetingTypeGroup> targetingTypeGroups, IEnumerable<UsernameBasketInfo> baskets)
 		{
-			return targetingTypeGroups.Select(x => this.TransformToGroup(x));
+			return targetingTypeGroups.Select(x => this.TransformToGroup(x, baskets));
 		}
 
-		public TargetingGroupModel TransformToGroup(TargetingTypeGroup groupModel)
+        public TargetingGroupModel TransformToGroup(TargetingTypeGroup groupModel, IEnumerable<UsernameBasketInfo> baskets)
 		{
             var result = new TargetingGroupModel(
                 groupModel.Id,
@@ -41,7 +42,8 @@ namespace TopDown.Core.Gadgets.BasketPicker
                 groupModel.GetTargetingTypes()
                     .SelectMany(x => this.basketExtractor.ExtractBaskets(x))
 					.GroupBy(x => x.Id) // getting rid of the same baskets
-                    .Select(x => new BasketModel(x.Key, this.basketRenderer.RenderBasketOnceResolved(x.First()))));
+                    .Select(x => new BasketModel(x.Key, this.basketRenderer.RenderBasketOnceResolved(x.First()))),
+                baskets);
             
             return result;
 		}

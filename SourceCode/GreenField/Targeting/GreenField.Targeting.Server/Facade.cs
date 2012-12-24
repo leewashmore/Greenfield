@@ -128,7 +128,7 @@ namespace GreenField.Targeting.Server
 
         public BasketTargets.PickerModel GetBasketPicker()
         {
-            var model = this.facade.GetBasketPickerRootModel();
+            var model = this.facade.GetBasketPickerRootModel(Username);
             var serializedModel = this.btSerializer.SerializePicker(model);
             return serializedModel;
         }

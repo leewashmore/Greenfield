@@ -95,7 +95,7 @@ namespace TopDown.Web.Controllers
 			{
 				var shouldDrop = base.ShouldDrop(what);
 				var facade = this.CreateJsonFacade(shouldDrop);
-				var json = facade.GetBasketPicker();
+				var json = facade.GetBasketPicker(Username);
 				return json;
 			});
 		}

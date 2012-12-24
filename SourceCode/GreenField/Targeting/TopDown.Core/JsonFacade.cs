@@ -168,9 +168,9 @@ namespace TopDown.Core
             return issuesAsJson;
         }
 
-        public String GetBasketPicker()
+        public String GetBasketPicker(String username)
         {
-            var model = this.facade.GetBasketPickerRootModel();
+            var model = this.facade.GetBasketPickerRootModel(username);
             var json = this.facade.BasketPickerManager.ToJson(model);
             return json;
         }

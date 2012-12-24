@@ -10,6 +10,7 @@ namespace TopDown.Core.Persisting
     {
         IEnumerable<BasketInfo> GetAllBaskets();
 		IEnumerable<UsernameBottomUpPortfolioInfo> GetUsernameBottomUpPortfolios(String username);
+        IEnumerable<UsernameBasketInfo> GetUsernameBaskets(String username);
 
         DateTime GetLastestDateWhichBenchmarkDataIsAvialableOn();
         IEnumerable<BenchmarkInfo> GetBenchmarks(DateTime date);

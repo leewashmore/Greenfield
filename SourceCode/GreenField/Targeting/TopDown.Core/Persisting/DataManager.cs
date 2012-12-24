@@ -364,6 +364,19 @@ namespace TopDown.Core.Persisting
             }
         }
 
+        public IEnumerable<UsernameBasketInfo> GetUsernameBaskets(string username)
+        {
+            using (var builder = this.CreateQueryCommandBuilder<UsernameBasketInfo>())
+            {
+                return builder.Text("select ")
+                    .Field("  [USERNAME]", (info, value) => info.Username = value, true)
+                    .Field(", [BASKET_ID]", (info, value) => info.BasketId = value)
+                    .Text(" from [" + TableNames.USERNAME_BASKET + "]")
+                    .Text(" where [USERNAME] = ").Parameter(username)
+                    .PullAll();
+            }
+        }
+
         // P-S-TO
         public virtual BgaPortfolioSecurityFactorChangesetInfo GetLatestBgaPortfolioSecurityFactorChangeset()
         {
@@ -1626,19 +1639,6 @@ namespace TopDown.Core.Persisting
                 return b.Execute();
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         
     }

@@ -58,7 +58,6 @@ namespace GreenField.Web.Services
 
         public Server.BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId)
         {
-            var user = HttpContext.Current.User;
             return this.Watch("Unable to get the broad global active data for targeting type (ID: " + targetingTypeId + ") and broad global active portfolio (ID: " + bgaPortfolioId + ").", delegate
             {
 
