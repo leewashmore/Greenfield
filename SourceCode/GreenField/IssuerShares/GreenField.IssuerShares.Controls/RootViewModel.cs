@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Regions;
+using Aims.Controls;
 
 namespace GreenField.IssuerShares.Controls
 {
@@ -18,21 +19,41 @@ namespace GreenField.IssuerShares.Controls
     {
         private IClientFactory clientFactory;
 
+        private SecurityPickerClientFactory securityPickerClientFactory;
+
         [ImportingConstructor]
         public RootViewModel(IClientFactory clientFactory)
         {
             this.clientFactory = clientFactory;
             this.CompositionViewModel = new CompositionViewModel();
+
+            this.securityPickerClientFactory = new SecurityPickerClientFactory(clientFactory);
+            
+            var securityPickerViewModel = new SecurityPickerViewModel(
+                new OnlyErrorCommunicationState(this),
+                this.securityPickerClientFactory
+            );
+
+            
+            this.SecurityPickerViewModel = securityPickerViewModel;
+            this.SecurityPickerViewModel.IsEnabled = true;
+
+            this.EditorViewModel = new EditorViewModel();
+            
         }
 
         protected override void Activate()
         {
+            
         }
 
         protected override void Deactivate()
         {
-            throw new NotImplementedException();
         }
+
+        public EditorViewModel EditorViewModel { get; set; }
+
+        public SecurityPickerViewModel SecurityPickerViewModel { get; set; }
 
         private Controls.CompositionViewModel compositionViewModel;
         public CompositionViewModel CompositionViewModel

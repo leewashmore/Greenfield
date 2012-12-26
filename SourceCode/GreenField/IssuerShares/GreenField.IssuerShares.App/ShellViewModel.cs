@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Regions;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.IssuerShares.App
 {
@@ -16,6 +18,14 @@ namespace GreenField.IssuerShares.App
         public ShellViewModel(IRegionManager regionManager)
         {
             this.regionManager = regionManager;
+            this.RunCommand = new DelegateCommand(this.Run);
         }
+
+        public ICommand RunCommand { get; private set; }
+        public void Run()
+        {
+            this.regionManager.RequestNavigate("MainRegion", typeof(GreenField.IssuerShares.Controls.RootView).FullName);
+        }
+
     }
 }

@@ -25,5 +25,11 @@ namespace GreenField.IssuerShares.Server
             var serializedModel = this.serializer.SerializeRoot(model);
             return serializedModel;
         }
+
+
+        public IEnumerable<Aims.Data.Server.SecurityModel> GetIssuerSecurities(String pattern, Int32 atMost, String issuerId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,12 +8,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.ComponentModel.Composition;
+using GreenField.IssuerShares.Client.Backend.IssuerShares;
 
 namespace GreenField.IssuerShares.Controls
 {
-    public interface IClientFactory
+    public class DefaultClientFactory : IClientFactory
     {
-        GreenField.IssuerShares.Client.Backend.IssuerShares.FacadeClient CreateClient();
+
+        public GreenField.IssuerShares.Client.Backend.IssuerShares.FacadeClient CreateClient()
+        {
+            var result = new FacadeClient();
+            return result;
+        }
     }
 }

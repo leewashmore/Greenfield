@@ -14,6 +14,7 @@ using Microsoft.Practices.Prism.Regions;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Modularity;
+using GreenField.IssuerShares.Controls;
 
 namespace GreenField.IssuerShares.App
 {
@@ -38,6 +39,12 @@ namespace GreenField.IssuerShares.App
             catalogs.Add(new AssemblyCatalog(typeof(Controls.Module).Assembly));
         }
 
+        protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
+        {
+            var factory = base.ConfigureDefaultRegionBehaviors();
+            return factory;
+        }
+
         protected override void InitializeShell()
         {
             base.InitializeShell();
@@ -49,9 +56,10 @@ namespace GreenField.IssuerShares.App
         {
             base.ConfigureContainer();
             this.Container.ComposeExportedValue(this.Logger);
+
+            var clientFactory = new DefaultClientFactory();
+            this.Container.ComposeExportedValue<IClientFactory>(clientFactory);
             
-            var clientFactory = new ClientFactoryMock();
-            this.Container.ComposeExportedValue(clientFactory);
         }
     }
 }

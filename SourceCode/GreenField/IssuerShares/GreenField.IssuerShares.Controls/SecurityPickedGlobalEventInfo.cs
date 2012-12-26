@@ -8,12 +8,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.ComponentModel.Composition;
+using Microsoft.Practices.Prism.Events;
 
 namespace GreenField.IssuerShares.Controls
 {
-    public interface IClientFactory
+    public class SecurityPickedGlobalEvent : CompositePresentationEvent<SecurityPickedGlobalEventInfo>
     {
-        GreenField.IssuerShares.Client.Backend.IssuerShares.FacadeClient CreateClient();
+    }
+
+    public class SecurityPickedGlobalEventInfo 
+    {
+        public String SecurityShortName { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.IssuerShares.App
 {
@@ -21,6 +22,8 @@ namespace GreenField.IssuerShares.App
         {
             this.DataContext = viewModel;
             this.InitializeComponent();
+            
         }
+
     }
 }

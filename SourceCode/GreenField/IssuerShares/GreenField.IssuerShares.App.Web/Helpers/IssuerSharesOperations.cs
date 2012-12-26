@@ -7,6 +7,7 @@ using GreenField.IssuerShares.Server;
 using Aims.Core.Sql;
 using System.Configuration;
 using GreenField.IssuerShares.Core;
+using Aims.Core;
 
 namespace GreenField.IssuerShares.App.Web
 {
@@ -17,8 +18,9 @@ namespace GreenField.IssuerShares.App.Web
             var connectionString = ConfigurationManager.ConnectionStrings[""].ConnectionString;
             var connectionFactory = new SqlConnectionFactory(connectionString);
             var dataManagerFactory = new DataManagerFactory();
-            var repositoryManager = 
-            var manager = new Core.ModelManager(connectionFactory, dataManagerFactory, );
+            var repositoryManager = new RepositoryManager(null, null, null, null, null);
+            var modelBuilder = new ModelBuilder();
+            var manager = new Core.ModelManager(connectionFactory, dataManagerFactory, repositoryManager, modelBuilder);
             var serializer = new Serializer(new Aims.Data.Server.Serializer());
             var facade = new Facade(manager, serializer);
             return facade;

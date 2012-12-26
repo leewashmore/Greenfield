@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ServiceModel;
+using Aims.Data.Server;
 
 namespace GreenField.IssuerShares.Server
 {
@@ -11,5 +12,9 @@ namespace GreenField.IssuerShares.Server
     {
         [OperationContract]
         RootModel GetRootModel(String issuerId);
+
+        [OperationContract]
+        IEnumerable<SecurityModel> GetIssuerSecurities(String pattern, Int32 atMost, String issuerId);
+
     }
 }

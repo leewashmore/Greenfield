@@ -20,6 +20,7 @@ namespace GreenField.IssuerShares.Controls
             throw new NotImplementedException();
         }
 
+
         public Boolean IsNavigationTarget(NavigationContext navigationContext)
         {
             return true;
@@ -27,16 +28,18 @@ namespace GreenField.IssuerShares.Controls
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            this.Activate();
+            this.Deactivate();
         }
 
         protected abstract void Activate();
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            this.Deactivate();
+            this.Activate();
         }
 
         protected abstract void Deactivate();
+
+
     }
 }

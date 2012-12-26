@@ -8,12 +8,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.ComponentModel.Composition;
 
-namespace GreenField.IssuerShares.Controls
+namespace Aims.Controls
 {
-    public interface IClientFactory
+    public class ApplicationException : Exception
     {
-        GreenField.IssuerShares.Client.Backend.IssuerShares.FacadeClient CreateClient();
+        public ApplicationException() { }
+        public ApplicationException(String message) : base(message) { }
+        public ApplicationException(String message, Exception inner) : base(message, inner) { }
     }
 }

@@ -22,5 +22,7 @@ namespace GreenField.IssuerShares.Controls
             InitializeComponent();
             this.DataContext = viewModel;
         }
+
+        
     }
 }

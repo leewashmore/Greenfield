@@ -4,11 +4,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:aims="clr-namespace:Aims.Controls;assembly=Aims.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:local="clr-namespace:GreenField.IssuerShares.Controls"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400"
 >
-
-    <StackPanel>
-        <aims:SecurityPickerView />
-    </StackPanel>
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="0 0 5 5">
+                
+                <aims:SecurityPickerView DataContext="{Binding SecurityPickerViewModel}" />
+            </StackPanel>
+        <local:EditorView DataContext="{Binding EditorViewModel}" Grid.Row="1" />
+    </Grid>
+    
+    
     
 </UserControl>

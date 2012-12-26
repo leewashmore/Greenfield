@@ -95,8 +95,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="ClientMock.cs" />
-    <Compile Include="ClientFactoryMock.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -122,9 +120,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Greenfield.IssuerShares.Client\ServiceReferences.ClientConfig">
+      <Link>ServiceReferences.ClientConfig</Link>
+    </Content>
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Targeting\Aims.Controls\Aims.Controls.csproj">
+      <Project>{23635A8E-745F-45D6-A4C7-31B67DA175E2}</Project>
+      <Name>Aims.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GreenField.IssuerShares.Controls\GreenField.IssuerShares.Controls.csproj">
       <Project>{6AB54671-504F-46FC-9CBE-B56E08D409A0}</Project>
       <Name>GreenField.IssuerShares.Controls</Name>

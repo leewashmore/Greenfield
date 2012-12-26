@@ -30,6 +30,7 @@ namespace GreenField.IssuerShares.Controls
 
         public void Initialize()
         {
+            this.regionManager.RegisterViewWithRegion(MainRegion, typeof(InitialView));
             this.regionManager.RegisterViewWithRegion(MainRegion, typeof(RootView));
         }
     }

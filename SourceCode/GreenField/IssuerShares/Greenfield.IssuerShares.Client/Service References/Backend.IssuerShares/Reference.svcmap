@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5261faed-92a4-4858-9004-ad4ca54d407a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:48363/Services/IssuerSharesOperations.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="IssuerSharesOperations.wsdl" MetadataType="Wsdl" ID="ca072d45-cdca-4b1c-9e1d-52a36cb810ee" SourceId="1" SourceUrl="http://localhost:48363/Services/IssuerSharesOperations.svc?wsdl" />
+    <MetadataFile FileName="IssuerSharesOperations.xsd" MetadataType="Schema" ID="a3a89bd7-dcf4-43cf-9073-4e44092a2fd0" SourceId="1" SourceUrl="http://localhost:48363/Services/IssuerSharesOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="IssuerSharesOperations1.xsd" MetadataType="Schema" ID="57580da7-1b4f-40e6-8a14-9fd19e3efe92" SourceId="1" SourceUrl="http://localhost:48363/Services/IssuerSharesOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="IssuerSharesOperations.disco" MetadataType="Disco" ID="9fd9d263-3b7d-444b-b3d6-609039f9a0b5" SourceId="1" SourceUrl="http://localhost:48363/Services/IssuerSharesOperations.svc?disco" />
+    <MetadataFile FileName="IssuerSharesOperations2.xsd" MetadataType="Schema" ID="60950298-4c7e-42ff-ad8a-1be3c43ed24e" SourceId="1" SourceUrl="http://localhost:48363/Services/IssuerSharesOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="IssuerSharesOperations3.xsd" MetadataType="Schema" ID="b8ba34a9-f895-480d-a5ee-f80073c377d7" SourceId="1" SourceUrl="http://localhost:48363/Services/IssuerSharesOperations.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

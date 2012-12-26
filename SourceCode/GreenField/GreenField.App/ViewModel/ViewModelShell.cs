@@ -304,6 +304,8 @@ namespace GreenField.App.ViewModel
                     {
                         SelectorPayload.EntitySelectionData = value;
                         eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(value);
+#warning ADD EVENT TO ACTIVATE SECURITY ON ISSUER SHARES
+                        //eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(value);
                     }
                 }
             }
