@@ -105,7 +105,7 @@
                                 <telerik:SumFunction SourceField="Weight" ResultFormatString="{}{0:n2}%"/>
                             </telerik:GridViewDataColumn.AggregateFunctions>
                         </telerik:GridViewDataColumn>
-                        <telerik:GridViewDataColumn Header="One Day Return" UniqueName="One Day Return"                                                     
+                        <telerik:GridViewDataColumn Header="1-Day" UniqueName="One Day Return"                                                     
                                                  DataMemberBinding="{Binding OneDayReturn}"                                                     
                                                  DataFormatString="{}{0:n1}%"                                                     
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
