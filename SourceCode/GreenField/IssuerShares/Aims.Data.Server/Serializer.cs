@@ -50,7 +50,9 @@ namespace Aims.Data.Server
                 fund.Id,
                 fund.Name,
                 fund.ShortName,
-                fund.Ticker
+                fund.Ticker,
+                fund.IssuerId,
+                fund.SecurityType
             );
             return result;
         }
@@ -62,7 +64,9 @@ namespace Aims.Data.Server
                 security.Name,
                 security.ShortName,
                 security.Ticker,
-                this.SerializeCountry(security.Country)
+                this.SerializeCountry(security.Country),
+                security.IssuerId,
+                security.SecurityType
             );
             return result;
         }

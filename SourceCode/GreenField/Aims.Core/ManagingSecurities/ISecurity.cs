@@ -11,6 +11,8 @@ namespace Aims.Core
         String Name { get; }
         String ShortName { get; }
         String Ticker { get;}
+        String IssuerId { get;  }
+        String SecurityType { get; }
         void Accept(ISecurityResolver resolver);
     }
 

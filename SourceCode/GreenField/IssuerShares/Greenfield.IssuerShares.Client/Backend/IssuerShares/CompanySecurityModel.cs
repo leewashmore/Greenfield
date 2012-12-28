@@ -19,11 +19,9 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares
         {
         }
 
-        public CompanySecurityModel(String id, String name, String shortName, String ticker, CountryModel countryModel)
-            : base(id, name)
+        public CompanySecurityModel(String id, String name, String issuerId, String shortName, String securityType, String ticker, CountryModel countryModel)
+            : base(id, name, issuerId, shortName, securityType, ticker)
         {
-            this.ShortName = shortName;
-            this.Ticker = ticker;
             this.Country = countryModel;
         }
 

@@ -11,10 +11,10 @@ namespace GreenField.IssuerShares.Server
     public interface IFacade
     {
         [OperationContract]
-        RootModel GetRootModel(String issuerId);
+        RootModel GetRootModel(String securityShortName);
 
         [OperationContract]
-        IEnumerable<SecurityModel> GetIssuerSecurities(String pattern, Int32 atMost, String issuerId);
+        IEnumerable<SecurityModel> GetIssuerSecurities(String pattern, Int32 atMost, String securityShortName);
 
     }
 }

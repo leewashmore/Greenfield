@@ -14,6 +14,7 @@ namespace Aims.Core
         private String[] keys;
         private Dictionary<String, List<ISecurity>> map;
         private Dictionary<String, ISecurity> all;
+        private Dictionary<String, ISecurity> byShortName;
 
         /// <summary>
         /// The key is the look-through-fund field, the value is the fund (which is still a security) that holds that field.
@@ -46,6 +47,7 @@ namespace Aims.Core
 			if (!securityInfos.Any()) throw new ApplicationException("There are no securities.");
 
             this.all = new Dictionary<String, ISecurity>();
+            this.byShortName = new Dictionary<String, ISecurity>();
             this.map = new Dictionary<String, List<ISecurity>>();
             var securities = this.CreateSecurities(securityInfos, countryRepository, monitor);
             foreach (var security in securities)
@@ -60,6 +62,7 @@ namespace Aims.Core
                             throw new ApplicationException("There is a security with the same ID already registered.");
                         }
                         this.all.Add(security.Id, security);
+                        this.byShortName.Add(security.ShortName, security);
                     }
                     catch (Exception exception)
                     {
@@ -130,7 +133,10 @@ namespace Aims.Core
                             securityInfo.Ticker,
                             securityInfo.ShortName,
                             securityInfo.Name,
-                            country
+                            country,
+                            securityInfo.IssuerId,
+                            securityInfo.SecurityType
+
                         );
                         security = stock;
                     }
@@ -140,7 +146,9 @@ namespace Aims.Core
                             securityInfo.Id,
                             securityInfo.Ticker,
                             securityInfo.ShortName,
-                            securityInfo.Ticker
+                            securityInfo.Ticker,
+                            securityInfo.IssuerId,
+                            securityInfo.SecurityType
                         );
                         security = fund;
                     }
@@ -157,16 +165,16 @@ namespace Aims.Core
         }
 
         public IEnumerable<ISecurity> FindSomeUsingPattern(
-            String securityNamePattern,
+            String pattern,
             Int32 atMost,
             Predicate<ISecurity> predicate
         )
         {
-            if (String.IsNullOrWhiteSpace(securityNamePattern)) return No.Securities;
+            if (String.IsNullOrWhiteSpace(pattern)) return No.Securities;
 
-            securityNamePattern = securityNamePattern.Trim().ToLower();
+            pattern = pattern.Trim().ToLower();
             var result = new List<ISecurity>();
-            var index = Array.BinarySearch<String>(this.keys, securityNamePattern);
+            var index = Array.BinarySearch<String>(this.keys, pattern);
             if (index < 0)
             {
                 index = ~index;
@@ -186,8 +194,13 @@ namespace Aims.Core
                             index++;
                             if (index >= this.keys.Length) break;
                             key = this.keys[index];
-                            if (!key.StartsWith(securityNamePattern)) break;
-                            result.AddRange(this.map[key].Where(x => predicate(x)));
+                            if (!key.StartsWith(pattern)) break;
+                            var tobeAddedMaybe = this.map[key].Where(x => predicate(x)).ToArray();
+                            foreach (var tobeAdded in tobeAddedMaybe)
+                            {
+                                if (result.Contains(tobeAdded)) continue;
+                                result.Add(tobeAdded);
+                            }
                         }
                         while (result.Count < atMost);
                     }
@@ -207,8 +220,14 @@ namespace Aims.Core
                     index++;
                     if (index >= this.keys.Length) break;
                     key = this.keys[index];
-                    if (!key.StartsWith(securityNamePattern)) break;
-                    result.AddRange(this.map[key].Where(x => predicate(x)));
+                    if (!key.StartsWith(pattern)) break;
+
+                    var tobeAddedMaybe = this.map[key].Where(x => predicate(x)).ToArray();
+                    foreach (var tobeAdded in tobeAddedMaybe)
+                    {
+                        if (result.Contains(tobeAdded)) continue;
+                        result.Add(tobeAdded);
+                    }
                 }
             }
             return result.Take(atMost);
@@ -269,6 +288,19 @@ namespace Aims.Core
         public Boolean IsProrfolioAFund(String portfolioId)
         {
             return this.fundsByLookThroughFund.ContainsKey(portfolioId);
+        }
+
+        public ISecurity FindSecurityByShortName(string securityShortName)
+        {
+            ISecurity found;
+            if (this.byShortName.TryGetValue(securityShortName, out found))
+            {
+                return found;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

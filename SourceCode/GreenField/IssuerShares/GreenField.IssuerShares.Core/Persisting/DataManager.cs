@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
+using Aims.Data.Server;
 
 namespace GreenField.IssuerShares.Core.Persisting
 {
@@ -25,6 +26,22 @@ namespace GreenField.IssuerShares.Core.Persisting
                     .Text(" from [" + TableNames.ISSUER_SHARES_COMPOSITION + "]")
                     .Text(" where [ISSUER_ID] = ")
                         .Parameter(issuerId)
+                    .PullAll();
+            }
+        }
+
+
+        public IEnumerable<Aims.Data.Server.SecurityModel> GetIssuerSecurities(string securityShortName)
+        {
+            using (var builder = this.CreateQueryCommandBuilder<SecurityModel>())
+            {
+                return builder.Text("select ")
+                        .Field("  [TICKER]", (info, value) => info.Id = value, true)
+                        .Field(", [ISSUE_NAME]", (info, value) => info.Name = value, true)
+                    .Text(" from [" + TableNames.GF_SECURITY_BASEVIEW + "]")
+                    .Text(" where [ISSUER_ID] IN ( SELECT [ISSUER_ID] FROM [" + TableNames.GF_SECURITY_BASEVIEW + "] where [ASEC_SEC_SHORT_NAME] = ")
+                        .Parameter(securityShortName)
+                        .Text(" )")
                     .PullAll();
             }
         }

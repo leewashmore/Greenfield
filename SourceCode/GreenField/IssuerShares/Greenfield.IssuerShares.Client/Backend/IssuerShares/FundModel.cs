@@ -18,11 +18,10 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares
         public FundModel()
         {
         }
-        public FundModel(String id, String name, String shortName, String ticker)
-            : base(id, name)
+        public FundModel(String id, String name, String issuerId, String shortName, String securityType, String ticker)
+            : base(id, name, issuerId, shortName, securityType, ticker)
         {
-            this.ShortName = shortName;
-            this.Ticker = ticker;
+            
         }
 
         [DebuggerStepThrough]

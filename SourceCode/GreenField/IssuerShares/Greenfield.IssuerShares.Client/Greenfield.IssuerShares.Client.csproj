@@ -61,6 +61,7 @@
     <Compile Include="Backend\IssuerShares\CountryModel.cs" />
     <Compile Include="Backend\IssuerShares\Extender.cs" />
     <Compile Include="Backend\IssuerShares\FundModel.cs" />
+    <Compile Include="Backend\IssuerShares\ItemModel.cs" />
     <Compile Include="Backend\IssuerShares\SecurityModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Backend.IssuerShares\Reference.cs">
@@ -79,6 +80,28 @@
     <None Include="Service References\Backend.IssuerShares\GreenField.IssuerShares.Client.Backend.IssuerShares.SecurityModel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations.disco" />
+    <None Include="Service References\Backend.IssuerShares\configuration91.svcinfo" />
+    <None Include="Service References\Backend.IssuerShares\configuration.svcinfo" />
+    <None Include="Service References\Backend.IssuerShares\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Targeting\Aims.Data.Client\Aims.Data.Client.csproj">
+      <Project>{69F03A94-4D45-4682-9796-648C752F95E6}</Project>
+      <Name>Aims.Data.Client</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Backend.IssuerShares\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations.wsdl" />
     <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations.xsd">
       <SubType>Designer</SubType>
@@ -89,34 +112,6 @@
     <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="ServiceReferences.ClientConfig" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\Backend.IssuerShares\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Backend.IssuerShares\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Backend.IssuerShares\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Backend.IssuerShares\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Targeting\Aims.Data.Client\Aims.Data.Client.csproj">
-      <Project>{69F03A94-4D45-4682-9796-648C752F95E6}</Project>
-      <Name>Aims.Data.Client</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

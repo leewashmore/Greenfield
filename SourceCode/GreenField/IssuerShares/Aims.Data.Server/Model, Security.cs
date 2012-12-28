@@ -23,5 +23,17 @@ namespace Aims.Data.Server
         [DataMember]
         public String Name { get; set; }
 
+        [DataMember]
+        public String ShortName { get; set; }
+
+        [DataMember]
+        public String Ticker { get; set; }
+
+        [DataMember]
+        public String IssuerId { get; set; }
+
+        [DataMember]
+        public String SecurityType { get; set; }
+
     }
 }

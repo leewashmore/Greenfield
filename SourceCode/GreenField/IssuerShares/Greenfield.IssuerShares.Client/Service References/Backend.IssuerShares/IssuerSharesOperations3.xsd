@@ -1,35 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:48363/Services/IssuerSharesOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" />
-  <xs:import schemaLocation="http://localhost:48363/Services/IssuerSharesOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" />
-  <xs:element name="GetRootModel">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="issuerId" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetRootModelResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" minOccurs="0" name="GetRootModelResult" nillable="true" type="q1:RootModel" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetIssuerSecurities">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="pattern" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="atMost" type="xs:int" />
-        <xs:element minOccurs="0" name="issuerId" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetIssuerSecuritiesResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="GetIssuerSecuritiesResult" nillable="true" type="q2:ArrayOfSecurityModel" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:24883/Services/IssuerSharesOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" />
+  <xs:complexType name="RootModel">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="Issuer" nillable="true" type="q1:IssuerModel" />
+      <xs:element minOccurs="0" name="Items" nillable="true" type="tns:ArrayOfItemModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RootModel" nillable="true" type="tns:RootModel" />
+  <xs:complexType name="ArrayOfItemModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ItemModel" nillable="true" type="tns:ItemModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfItemModel" nillable="true" type="tns:ArrayOfItemModel" />
+  <xs:complexType name="ItemModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Preferred" type="xs:boolean" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="Security" nillable="true" type="q2:SecurityModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ItemModel" nillable="true" type="tns:ItemModel" />
 </xs:schema>

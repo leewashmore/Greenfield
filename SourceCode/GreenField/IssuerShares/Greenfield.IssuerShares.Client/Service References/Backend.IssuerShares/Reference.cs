@@ -153,13 +153,21 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SecurityModel", Namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.IssuerShares.Client.Backend.IssuerShares.FundModel))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.IssuerShares.Client.Backend.IssuerShares.CompanySecurityModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.IssuerShares.Client.Backend.IssuerShares.FundModel))]
     public partial class SecurityModel : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string IdField;
         
+        private string IssuerIdField;
+        
         private string NameField;
+        
+        private string SecurityTypeField;
+        
+        private string ShortNameField;
+        
+        private string TickerField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string Id {
@@ -170,6 +178,19 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
                 if ((object.ReferenceEquals(this.IdField, value) != true)) {
                     this.IdField = value;
                     this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IssuerId {
+            get {
+                return this.IssuerIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuerIdField, value) != true)) {
+                    this.IssuerIdField = value;
+                    this.RaisePropertyChanged("IssuerId");
                 }
             }
         }
@@ -187,24 +208,18 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
             }
         }
         
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityType {
+            get {
+                return this.SecurityTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityTypeField, value) != true)) {
+                    this.SecurityTypeField = value;
+                    this.RaisePropertyChanged("SecurityType");
+                }
             }
         }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FundModel", Namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server")]
-    public partial class FundModel : GreenField.IssuerShares.Client.Backend.IssuerShares.SecurityModel {
-        
-        private string ShortNameField;
-        
-        private string TickerField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string ShortName {
@@ -231,6 +246,15 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
                 }
             }
         }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -239,10 +263,6 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
     public partial class CompanySecurityModel : GreenField.IssuerShares.Client.Backend.IssuerShares.SecurityModel {
         
         private GreenField.IssuerShares.Client.Backend.IssuerShares.CountryModel CountryField;
-        
-        private string ShortNameField;
-        
-        private string TickerField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public GreenField.IssuerShares.Client.Backend.IssuerShares.CountryModel Country {
@@ -256,32 +276,12 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
                 }
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShortName {
-            get {
-                return this.ShortNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShortNameField, value) != true)) {
-                    this.ShortNameField = value;
-                    this.RaisePropertyChanged("ShortName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Ticker {
-            get {
-                return this.TickerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TickerField, value) != true)) {
-                    this.TickerField = value;
-                    this.RaisePropertyChanged("Ticker");
-                }
-            }
-        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FundModel", Namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server")]
+    public partial class FundModel : GreenField.IssuerShares.Client.Backend.IssuerShares.SecurityModel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -334,12 +334,12 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
     public interface IFacade {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/GetRootModel", ReplyAction="http://tempuri.org/IFacade/GetRootModelResponse")]
-        System.IAsyncResult BeginGetRootModel(string issuerId, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetRootModel(string securityShortName, System.AsyncCallback callback, object asyncState);
         
         GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel EndGetRootModel(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/GetIssuerSecurities", ReplyAction="http://tempuri.org/IFacade/GetIssuerSecuritiesResponse")]
-        System.IAsyncResult BeginGetIssuerSecurities(string pattern, int atMost, string issuerId, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetIssuerSecurities(string pattern, int atMost, string securityShortName, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.SecurityModel> EndGetIssuerSecurities(System.IAsyncResult result);
     }
@@ -464,8 +464,8 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade.BeginGetRootModel(string issuerId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetRootModel(issuerId, callback, asyncState);
+        System.IAsyncResult GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade.BeginGetRootModel(string securityShortName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetRootModel(securityShortName, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -474,8 +474,8 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
         }
         
         private System.IAsyncResult OnBeginGetRootModel(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string issuerId = ((string)(inValues[0]));
-            return ((GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade)(this)).BeginGetRootModel(issuerId, callback, asyncState);
+            string securityShortName = ((string)(inValues[0]));
+            return ((GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade)(this)).BeginGetRootModel(securityShortName, callback, asyncState);
         }
         
         private object[] OnEndGetRootModel(System.IAsyncResult result) {
@@ -491,11 +491,11 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
             }
         }
         
-        public void GetRootModelAsync(string issuerId) {
-            this.GetRootModelAsync(issuerId, null);
+        public void GetRootModelAsync(string securityShortName) {
+            this.GetRootModelAsync(securityShortName, null);
         }
         
-        public void GetRootModelAsync(string issuerId, object userState) {
+        public void GetRootModelAsync(string securityShortName, object userState) {
             if ((this.onBeginGetRootModelDelegate == null)) {
                 this.onBeginGetRootModelDelegate = new BeginOperationDelegate(this.OnBeginGetRootModel);
             }
@@ -506,12 +506,12 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
                 this.onGetRootModelCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetRootModelCompleted);
             }
             base.InvokeAsync(this.onBeginGetRootModelDelegate, new object[] {
-                        issuerId}, this.onEndGetRootModelDelegate, this.onGetRootModelCompletedDelegate, userState);
+                        securityShortName}, this.onEndGetRootModelDelegate, this.onGetRootModelCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade.BeginGetIssuerSecurities(string pattern, int atMost, string issuerId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetIssuerSecurities(pattern, atMost, issuerId, callback, asyncState);
+        System.IAsyncResult GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade.BeginGetIssuerSecurities(string pattern, int atMost, string securityShortName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetIssuerSecurities(pattern, atMost, securityShortName, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -522,8 +522,8 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
         private System.IAsyncResult OnBeginGetIssuerSecurities(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string pattern = ((string)(inValues[0]));
             int atMost = ((int)(inValues[1]));
-            string issuerId = ((string)(inValues[2]));
-            return ((GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade)(this)).BeginGetIssuerSecurities(pattern, atMost, issuerId, callback, asyncState);
+            string securityShortName = ((string)(inValues[2]));
+            return ((GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade)(this)).BeginGetIssuerSecurities(pattern, atMost, securityShortName, callback, asyncState);
         }
         
         private object[] OnEndGetIssuerSecurities(System.IAsyncResult result) {
@@ -539,11 +539,11 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
             }
         }
         
-        public void GetIssuerSecuritiesAsync(string pattern, int atMost, string issuerId) {
-            this.GetIssuerSecuritiesAsync(pattern, atMost, issuerId, null);
+        public void GetIssuerSecuritiesAsync(string pattern, int atMost, string securityShortName) {
+            this.GetIssuerSecuritiesAsync(pattern, atMost, securityShortName, null);
         }
         
-        public void GetIssuerSecuritiesAsync(string pattern, int atMost, string issuerId, object userState) {
+        public void GetIssuerSecuritiesAsync(string pattern, int atMost, string securityShortName, object userState) {
             if ((this.onBeginGetIssuerSecuritiesDelegate == null)) {
                 this.onBeginGetIssuerSecuritiesDelegate = new BeginOperationDelegate(this.OnBeginGetIssuerSecurities);
             }
@@ -556,7 +556,7 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
             base.InvokeAsync(this.onBeginGetIssuerSecuritiesDelegate, new object[] {
                         pattern,
                         atMost,
-                        issuerId}, this.onEndGetIssuerSecuritiesDelegate, this.onGetIssuerSecuritiesCompletedDelegate, userState);
+                        securityShortName}, this.onEndGetIssuerSecuritiesDelegate, this.onGetIssuerSecuritiesCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -635,9 +635,9 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginGetRootModel(string issuerId, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginGetRootModel(string securityShortName, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
-                _args[0] = issuerId;
+                _args[0] = securityShortName;
                 System.IAsyncResult _result = base.BeginInvoke("GetRootModel", _args, callback, asyncState);
                 return _result;
             }
@@ -648,11 +648,11 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetIssuerSecurities(string pattern, int atMost, string issuerId, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginGetIssuerSecurities(string pattern, int atMost, string securityShortName, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[3];
                 _args[0] = pattern;
                 _args[1] = atMost;
-                _args[2] = issuerId;
+                _args[2] = securityShortName;
                 System.IAsyncResult _result = base.BeginInvoke("GetIssuerSecurities", _args, callback, asyncState);
                 return _result;
             }

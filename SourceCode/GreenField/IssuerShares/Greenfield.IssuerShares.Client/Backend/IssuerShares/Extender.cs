@@ -41,8 +41,11 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares
             var result = new FundModel(
                 fund.Id,
                 fund.Name,
+                fund.IssuerId,
                 fund.ShortName,
+                fund.SecurityType,
                 fund.Ticker
+
             );
             return result;
         }
@@ -52,7 +55,9 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares
             var result = new CompanySecurityModel(
                 companySecurity.Id,
                 companySecurity.Name,
+                companySecurity.IssuerId,
                 companySecurity.ShortName,
+                companySecurity.SecurityType,
                 companySecurity.Ticker,
                 companySecurity.Country.ToCountryModel()
             );

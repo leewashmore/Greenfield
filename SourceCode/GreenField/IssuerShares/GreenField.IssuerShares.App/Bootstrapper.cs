@@ -59,6 +59,8 @@ namespace GreenField.IssuerShares.App
 
             var clientFactory = new DefaultClientFactory();
             this.Container.ComposeExportedValue<IClientFactory>(clientFactory);
+
+            
             
         }
     }

@@ -65,7 +65,9 @@ namespace GreenField.Targeting.Server
                 fund.Id,
                 fund.Name,
                 fund.ShortName,
-                fund.Ticker
+                fund.Ticker,
+                fund.IssuerId,
+                fund.SecurityType
             );
             return result;
         }
@@ -77,7 +79,9 @@ namespace GreenField.Targeting.Server
                 security.Name,
                 security.ShortName,
                 security.Ticker,
-                this.SerializeCountry(security.Country)
+                this.SerializeCountry(security.Country),
+                security.IssuerId,
+                security.SecurityType
             );
             return result;
         }

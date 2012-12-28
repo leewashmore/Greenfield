@@ -8,14 +8,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Aims.Controls;
-using GreenField.IssuerShares.Client.Backend.IssuerShares;
 
-namespace GreenField.IssuerShares.Controls
+namespace GreenField.IssuerShares.Client.Backend.IssuerShares
 {
-
-    public class EditorViewModel
+    public partial class ItemModel
     {
-        
+        public ICommand RemoveCommand { get; private set; }
+
+        public void InitializeRemoveCommand(ICommand command)
+        {
+            this.RemoveCommand = command;
+        }
     }
 }

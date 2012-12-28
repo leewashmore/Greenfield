@@ -5,7 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using Aims.Core;
 
-namespace TopDown.Core
+namespace Aims.Core
 {
 	public class Monitor : IMonitor
 	{

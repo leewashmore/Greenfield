@@ -1,4 +1,5 @@
 ﻿<configuration>
+    
     <system.serviceModel>
         <bindings>
             <customBinding>
@@ -9,7 +10,7 @@
             </customBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:48363/Services/IssuerSharesOperations.svc"
+            <endpoint address="http://localhost:24883/Services/IssuerSharesOperations.svc"
                 binding="customBinding" bindingConfiguration="CustomBinding_IFacade"
                 contract="Backend.IssuerShares.IFacade" name="CustomBinding_IFacade" />
         </client>

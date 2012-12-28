@@ -7,9 +7,58 @@
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
 
-    <sdk:DataGrid ItemsSource="{Binding Lines}">
-        
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="/GreenField.Targeting.Controls;component/CommonTemplates.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <sdk:DataGrid ItemsSource="{Binding Items}" AutoGenerateColumns="False">
+        <sdk:DataGrid.Columns>
+
+            <sdk:DataGridTemplateColumn Header="Ticker">
+                <sdk:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding Security.Ticker}"  />
+                    </DataTemplate>
+                </sdk:DataGridTemplateColumn.CellTemplate>
+            </sdk:DataGridTemplateColumn>
+
+            <sdk:DataGridTemplateColumn Header="Name">
+                <sdk:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding Security.Name}"  />
+                    </DataTemplate>
+                </sdk:DataGridTemplateColumn.CellTemplate>
+            </sdk:DataGridTemplateColumn>
+
+            <sdk:DataGridTemplateColumn Header="Security Type">
+                <sdk:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding Security.SecurityType}"  />
+                    </DataTemplate>
+                </sdk:DataGridTemplateColumn.CellTemplate>
+            </sdk:DataGridTemplateColumn>
+
+            <sdk:DataGridTemplateColumn Header="Preferred">
+                <sdk:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding Path=Preferred, Mode=TwoWay}" />
+                    </DataTemplate>
+                </sdk:DataGridTemplateColumn.CellTemplate>
+            </sdk:DataGridTemplateColumn>
+
+            <sdk:DataGridTemplateColumn Header="">
+                <sdk:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <HyperlinkButton Command="{Binding RemoveCommand}" Content="Remove" CommandParameter="{Binding}" />
+                    </DataTemplate>
+                </sdk:DataGridTemplateColumn.CellTemplate>
+            </sdk:DataGridTemplateColumn>
+
+        </sdk:DataGrid.Columns>
     </sdk:DataGrid>
     
 </UserControl>

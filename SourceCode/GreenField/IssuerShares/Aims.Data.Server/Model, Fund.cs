@@ -11,18 +11,16 @@ namespace Aims.Data.Server
     public class FundModel : SecurityModel
     {
         [DebuggerStepThrough]
-        public FundModel(String id, String name, String shortName, String ticker)
+        public FundModel(String id, String name, String shortName, String ticker, String issuerId, String securityType)
         {
             this.Id = id;
             this.Name = name;
             this.ShortName = shortName;
             this.Ticker = ticker;
+            this.IssuerId = issuerId;
+            this.SecurityType = securityType;
         }
 
-        [DataMember]
-        public String ShortName { get; set; }
-
-        [DataMember]
-        public String Ticker { get; set; }
+       
     }
 }

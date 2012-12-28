@@ -19,26 +19,27 @@ namespace GreenField.IssuerShares.Controls
     public class SecurityPickerClientFactory : ISecurityPickerClientFactory
     {
 
-        public const Int32 MaxNumberOfSecurities = 20;
+        public const Int32 MaxNumberOfSecurities = 30;
         private class Client : ISecurityPickerClient
         {
             private IClientFactory clientFactory;
-            private String issuerId;
+            private String securityShortName;
 
             [DebuggerStepThrough]
-            public Client(IClientFactory clientFactory, String issuerId)
+            public Client(IClientFactory clientFactory, String securityShortName)
             {
                 this.clientFactory = clientFactory;
-                this.issuerId = issuerId;
+                this.securityShortName = securityShortName;
             }
+
 
             public void RequestSecurities(String pattern, Action<IEnumerable<ISecurity>> callback, Action<Exception> errorHandler)
             {
                 var client = this.clientFactory.CreateClient();
                 client.GetIssuerSecuritiesCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
-                    "Getting securities like \"" + pattern + "\" for issuer (ID: " + this.issuerId + ")", args, x => x.Result.Select(y => Helper.As<ISecurity>(y)), callback, errorHandler);
+                    "Getting securities like \"" + pattern + "\" for security issuer (ID: " + this.securityShortName + ")", args, x => x.Result.Select(y => Helper.As<ISecurity>(y)), callback, errorHandler);
 
-                client.GetIssuerSecuritiesAsync(pattern, MaxNumberOfSecurities, this.issuerId);
+                client.GetIssuerSecuritiesAsync(pattern, MaxNumberOfSecurities, this.securityShortName);
             }
         }
 
@@ -50,14 +51,19 @@ namespace GreenField.IssuerShares.Controls
             this.clientFactory = clientFactory;
         }
 
-        public String IssuerId { get; set; }
+        public void Initialize(string securityShortName)
+        {
+            this.SecurityShortName = securityShortName;
+        }
+
+        public String SecurityShortName { get; private set; }
 
         public ISecurityPickerClient CreateSecurityPickerClient()
         {
-            var issuerIdOpt = this.IssuerId;
-            if (String.IsNullOrEmpty(issuerIdOpt)) throw new ApplicationException("Unable to create the security picker client factory because no security has yet been picked.");
+            var securityShortNameOpt = this.SecurityShortName;
+            if (String.IsNullOrEmpty(securityShortNameOpt)) throw new ApplicationException("Unable to create the security picker client factory because no security has yet been picked.");
 
-            var result = new Client(this.clientFactory, issuerIdOpt);
+            var result = new Client(this.clientFactory, securityShortNameOpt);
             return result;
         }
     }

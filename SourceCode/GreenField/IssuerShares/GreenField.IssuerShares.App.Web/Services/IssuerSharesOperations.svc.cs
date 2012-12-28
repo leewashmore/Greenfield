@@ -37,17 +37,20 @@ namespace GreenField.IssuerShares.App.Web.Services
         
         }
 
-        public Server.RootModel GetRootModel(String issuerId)
+        public Server.RootModel GetRootModel(String securityShortName)
         {
-            return this.facade.GetRootModel(issuerId);
+            return this.facade.GetRootModel(securityShortName);
         }
 
 
-        public IEnumerable<Aims.Data.Server.SecurityModel> GetIssuerSecurities(String pattern, Int32 atMost, String issuerId)
+
+
+
+        public IEnumerable<Aims.Data.Server.SecurityModel> GetIssuerSecurities(string pattern, int atMost, string securityShortName)
         {
-            return this.Watch("Unable to get securities for the pattern \"" + pattern + "\" from the issuer (ID: " + issuerId + ").", delegate
+            return this.Watch("Unable to get securities for the pattern \"" + pattern + "\" from the issuer (ID: " + securityShortName + ").", delegate
             {
-                return this.facade.GetIssuerSecurities(pattern, atMost, issuerId);
+                return this.facade.GetIssuerSecurities(pattern, atMost, securityShortName);
             });
         }
     }

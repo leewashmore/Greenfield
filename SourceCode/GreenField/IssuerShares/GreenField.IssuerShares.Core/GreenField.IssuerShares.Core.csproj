@@ -57,6 +57,10 @@
       <Project>{426D597E-4276-41D2-BE84-D1229501A51A}</Project>
       <Name>Aims.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Aims.Data.Server\Aims.Data.Server.csproj">
+      <Project>{243C3D53-8C51-469E-88E1-9623A3D8292B}</Project>
+      <Name>Aims.Data.Server</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

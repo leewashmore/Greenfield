@@ -14,6 +14,10 @@ namespace TopDown.Core.Testing
         {
             var facade = Helper.CreateFacade(ConnectionString);
             var model = facade.GetBptModel(0, "APG60");
+            model.Factors.Items.First().OverlayFactor.EditedValue = null;
+            var ticket = new CalculationTicket();
+            facade.RecalculateBptModel(model, ticket);
+
             var traverser = new ManagingBpt.GlobeTraverser();
             var lines = traverser.TraverseGlobe(model.Globe);
             var china = lines.OfType<ManagingBpt.BasketRegionModel>().Where(x => x.Countries.Any(y => y.Country.IsoCode == "CN")).FirstOrDefault();
@@ -21,7 +25,7 @@ namespace TopDown.Core.Testing
             
             
             
-            var ticket = new CalculationTicket();
+            
             var otherValue = other.Overlay.Value(ticket);
             var portfolioScaled = china.PortfolioScaled.Value(ticket);
             Trace.WriteLine(portfolioScaled);

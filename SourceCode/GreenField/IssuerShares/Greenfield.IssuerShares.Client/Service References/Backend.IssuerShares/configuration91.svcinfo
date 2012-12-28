@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="iRmHuIoDTJcD7Y+Hg7jIx+mI764=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="O3jYlrHd1mtCRQX7zXiTDabCpbk=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="customBinding" name="CustomBinding_IFacade">
       <properties>
@@ -115,10 +115,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="CustomBinding_IFacade" contract="Backend.IssuerShares.IFacade" bindingType="customBinding" address="http://localhost:48363/Services/IssuerSharesOperations.svc" bindingConfiguration="CustomBinding_IFacade">
+    <endpoint name="CustomBinding_IFacade" contract="Backend.IssuerShares.IFacade" bindingType="customBinding" address="http://localhost:24883/Services/IssuerSharesOperations.svc" bindingConfiguration="CustomBinding_IFacade">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:48363/Services/IssuerSharesOperations.svc</serializedValue>
+          <serializedValue>http://localhost:24883/Services/IssuerSharesOperations.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

@@ -7,7 +7,6 @@ namespace Aims.Data.Client
 {
     public interface IFund : ISecurity
     {
-        String ShortName { get; }
-        String Ticker { get; }
+        
     }
 }

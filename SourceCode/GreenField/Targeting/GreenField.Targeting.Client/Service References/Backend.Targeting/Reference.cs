@@ -727,10 +727,78 @@ namespace TopDown.FacingServer.Backend.Targeting {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FundModel", Namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server")]
     public partial class FundModel : TopDown.FacingServer.Backend.Targeting.SecurityModel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SecurityModel", Namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.CompanySecurityModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.FundModel))]
+    public partial class SecurityModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string IdField;
+        
+        private string IssuerIdField;
+        
+        private string NameField;
+        
+        private string SecurityTypeField;
         
         private string ShortNameField;
         
         private string TickerField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IssuerId {
+            get {
+                return this.IssuerIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuerIdField, value) != true)) {
+                    this.IssuerIdField = value;
+                    this.RaisePropertyChanged("IssuerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityType {
+            get {
+                return this.SecurityTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityTypeField, value) != true)) {
+                    this.SecurityTypeField = value;
+                    this.RaisePropertyChanged("SecurityType");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string ShortName {
@@ -754,44 +822,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.TickerField, value) != true)) {
                     this.TickerField = value;
                     this.RaisePropertyChanged("Ticker");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SecurityModel", Namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.CompanySecurityModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.FundModel))]
-    public partial class SecurityModel : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string IdField;
-        
-        private string NameField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
                 }
             }
         }
@@ -813,10 +843,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private TopDown.FacingServer.Backend.Targeting.CountryModel CountryField;
         
-        private string ShortNameField;
-        
-        private string TickerField;
-        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public TopDown.FacingServer.Backend.Targeting.CountryModel Country {
             get {
@@ -826,32 +852,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.CountryField, value) != true)) {
                     this.CountryField = value;
                     this.RaisePropertyChanged("Country");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShortName {
-            get {
-                return this.ShortNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShortNameField, value) != true)) {
-                    this.ShortNameField = value;
-                    this.RaisePropertyChanged("ShortName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Ticker {
-            get {
-                return this.TickerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TickerField, value) != true)) {
-                    this.TickerField = value;
-                    this.RaisePropertyChanged("Ticker");
                 }
             }
         }

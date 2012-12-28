@@ -13,13 +13,15 @@ namespace Aims.Core
 	public class CompanySecurity : ISecurity
 	{
 		[DebuggerStepThrough]
-        public CompanySecurity(String id, String ticker, String shortName, String name, Country country)
+        public CompanySecurity(String id, String ticker, String shortName, String name, Country country, String issuerId, String securityType)
 		{
 			this.Id = id;
 			this.Ticker = ticker;
 			this.ShortName = shortName;
 			this.Name = name;
 			this.Country = country;
+            this.IssuerId = issuerId;
+            this.SecurityType = securityType;
 		}
 
         public String Id { get; private set; }
@@ -27,6 +29,8 @@ namespace Aims.Core
 		public String ShortName { get; private set; }
 		public String Name { get; private set; }
 		public Country Country { get; private set; }
+        public string IssuerId { get; set; }
+        public string SecurityType { get; set; }
 
 		[DebuggerStepThrough]
 		public override Int32 GetHashCode()
@@ -51,14 +55,20 @@ namespace Aims.Core
         public override string ToString()
         {
             var result = String.Format(
-                "Company security, ID: {0}, Ticker: {1}, Short name: {2}, Name: {3}, Country: {4}",
+                "Company security, ID: {0}, Ticker: {1}, Short name: {2}, Name: {3}, Country: {4}, Issuer ID: {5}, Security type: {6}",
                 this.Id,
                 this.Ticker,
                 this.Name,
                 this.ShortName,
-                this.Country.Name
+                this.Country.Name,
+                this.IssuerId,
+                this.SecurityType
             );
             return result;
         }
+
+
+
+        
     }
 }

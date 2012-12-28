@@ -18,11 +18,16 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares
         {
         }
 
-        public SecurityModel(String id, String name)
+        public SecurityModel(String id, String name, String issuerId, String shortName, String securityType, String ticker)
             : this()
         {
             this.Id = id;
             this.Name = name;
+            this.IssuerId = issuerId;
+            this.ShortName = shortName;
+            this.SecurityType = securityType;
+            this.Ticker = ticker;
+            
         }
 
         public abstract void Accept(ISecurityResolver resolver);

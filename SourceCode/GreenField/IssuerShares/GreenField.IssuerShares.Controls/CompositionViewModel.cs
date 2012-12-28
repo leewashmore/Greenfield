@@ -8,11 +8,86 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Aims.Controls;
+using GreenField.IssuerShares.Client.Backend.IssuerShares;
+using System.Collections.ObjectModel;
+using Microsoft.Practices.Prism.ViewModel;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.IssuerShares.Controls
 {
-    public class CompositionViewModel
+    public class CompositionViewModel : NotificationObject
     {
+        private IClientFactory clientFactory;
+
+        private bool isChanged;
+        public bool IsChanged {
+            get
+            {
+                return isChanged;
+            }
+
+            set
+            {
+                isChanged = value;
+                this.RaisePropertyChanged(() => this.IsChanged);
+            }
+        }
+
+        public CompositionViewModel(IClientFactory clientFactory)
+        {
+            // TODO: Complete member initialization
+            this.clientFactory = clientFactory;
+            this.IsChanged = false;
+            this.RaisePropertyChanged(() => this.IsChanged);
+        }
+
+
+        internal void RequestData(String securityShortName, Action<RootModel> callback)
+        {
+            this.callback = callback;
+            var client = this.clientFactory.CreateClient();
+            client.GetRootModelCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
+                    "Getting composition for security issuer (short name: " + securityShortName + ")", args, x => x.Result, InitializeDataGrid, HandleErrors);
+
+            client.GetRootModelAsync(securityShortName);
+            
+        }
+
+        private Action<RootModel> callback;
+        public ObservableCollection<ItemModel> Items { get; private set; }
+
+        internal void InitializeDataGrid(RootModel model)
+        {
+            
+            
+            this.Items = model.Items;
+            foreach (var item in this.Items)
+            {
+                item.InitializeRemoveCommand(new DelegateCommand<ItemModel>(RemoveItemFromComposition));
+            }
+            this.RaisePropertyChanged(() => this.Items);
+            callback(model);
+        }
+
+        public void RemoveItemFromComposition(ItemModel item)
+        {
+            this.Items.Remove(item);
+            this.IsChanged = true;
+        }
+
+        internal void HandleErrors(Exception e)
+        { }
+
+        internal void AddSecurity(Aims.Data.Client.ISecurity security)
+        {
+            var item = new ItemModel { Security = security.ToSecurityModel(), Preferred = false };
+            item.InitializeRemoveCommand(new DelegateCommand<ItemModel>(RemoveItemFromComposition));
+            this.Items.Add(item);
+            this.IsChanged = true;
+            
+        }
+
         
     }
 }

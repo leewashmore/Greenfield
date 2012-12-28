@@ -10,10 +10,10 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://localhost:48363/Services/IssuerSharesOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:48363/Services/IssuerSharesOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:48363/Services/IssuerSharesOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" />
-      <xsd:import schemaLocation="http://localhost:48363/Services/IssuerSharesOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" />
+      <xsd:import schemaLocation="http://localhost:24883/Services/IssuerSharesOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:24883/Services/IssuerSharesOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:24883/Services/IssuerSharesOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" />
+      <xsd:import schemaLocation="http://localhost:24883/Services/IssuerSharesOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IFacade_GetRootModel_InputMessage">
@@ -62,9 +62,9 @@
   </wsdl:binding>
   <wsdl:service name="IssuerSharesOperations">
     <wsdl:port name="CustomBinding_IFacade" binding="tns:CustomBinding_IFacade">
-      <soap12:address location="http://localhost:48363/Services/IssuerSharesOperations.svc" />
+      <soap12:address location="http://localhost:24883/Services/IssuerSharesOperations.svc" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://localhost:48363/Services/IssuerSharesOperations.svc</wsa10:Address>
+        <wsa10:Address>http://localhost:24883/Services/IssuerSharesOperations.svc</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

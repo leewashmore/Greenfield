@@ -16,20 +16,18 @@ namespace Aims.Data.Server
         }
 
         [DebuggerStepThrough]
-        public CompanySecurityModel(String id, String name, String shortName, String ticker, CountryModel country)
+        public CompanySecurityModel(String id, String name, String shortName, String ticker, CountryModel country, String issuerId, String securityType)
         {
             this.Id = id;
             this.Name = name;
             this.ShortName = shortName;
             this.Ticker = ticker;
             this.Country = country;
+            this.IssuerId = issuerId;
+            this.SecurityType = securityType;
         }
 
-        [DataMember]
-        public String ShortName { get; set; }
-
-        [DataMember]
-        public String Ticker { get; set; }
+        
 
         [DataMember]
         public CountryModel Country { get; set; }

@@ -79,7 +79,6 @@
     <Compile Include="Gadgets\ProtfolioPicker\Model, TargetingType.cs" />
     <Compile Include="Helpers\ChangesetApplierBase.cs" />
     <Compile Include="Helpers\ExceptionToJsonSerializer.cs" />
-    <Compile Include="Helpers\Monitor.cs" />
     <Compile Include="ManagingBenchmarks\BenchmarkManager.cs" />
     <Compile Include="ManagingBenchmarks\BenchmarkRepository.cs" />
     <Compile Include="ManagingBpst\BenchmarkInitializer.cs" />

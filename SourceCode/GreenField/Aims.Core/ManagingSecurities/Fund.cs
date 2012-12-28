@@ -12,18 +12,22 @@ namespace Aims.Core
     public class Fund : ISecurity
     {
         [DebuggerStepThrough]
-        public Fund(String id, String name, String shortName, String ticker)
+        public Fund(String id, String name, String shortName, String ticker, String issuerId, String securityType)
         {
             this.Id = id;
             this.Name = name;
             this.ShortName = shortName;
             this.Ticker = ticker;
+            this.IssuerId = issuerId;
+            this.SecurityType = securityType;
         }
 
         public String Id { get; set; }
         public String Name { get; set; }
         public String ShortName { get; set; }
         public String Ticker { get; set; }
+        public String IssuerId { get; set; }
+        public String SecurityType { get; set; }
 
         [DebuggerStepThrough]
         public void Accept(ISecurityResolver resolver)
@@ -34,13 +38,19 @@ namespace Aims.Core
         public override string ToString()
         {
             var result = String.Format(
-                "Fund, ID: {0}, Ticker: {1}, Short name: {2}, Name: {3}",
+                "Fund, ID: {0}, Ticker: {1}, Short name: {2}, Name: {3}, Issuer ID: {4}, Security type: {5}",
                 this.Id,
                 this.Ticker,
                 this.Name,
-                this.ShortName
+                this.ShortName,
+                this.IssuerId,
+                this.SecurityType
             );
             return result;
         }
+
+
+
+        
     }
 }

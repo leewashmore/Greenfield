@@ -12,12 +12,15 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="0 0 5 5">
                 
-                <aims:SecurityPickerView DataContext="{Binding SecurityPickerViewModel}" />
+                <aims:SecurityPickerView DataContext="{Binding SecurityPickerViewModel}"  />
             </StackPanel>
-        <local:EditorView DataContext="{Binding EditorViewModel}" Grid.Row="1" />
+        <StackPanel  Grid.Row="1">
+            <local:CompositionView DataContext="{Binding CompositionViewModel}" />
+            <Button Content="Save" Height="28" Width="49" Margin="0" DataContext="{Binding}" Command="{Binding SaveCompositionCommand}" />
+        </StackPanel>
     </Grid>
     
     

@@ -11,6 +11,11 @@ using System.Windows.Shapes;
 using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Regions;
 using Aims.Controls;
+using Microsoft.Practices.Prism.Events;
+using GreenField.IssuerShares.Client.Backend.IssuerShares;
+using System.Linq;
+using Aims.Data.Client;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.IssuerShares.Controls
 {
@@ -21,11 +26,13 @@ namespace GreenField.IssuerShares.Controls
 
         private SecurityPickerClientFactory securityPickerClientFactory;
 
+        public ICommand SaveCompositionCommand { get; private set; }
+
         [ImportingConstructor]
-        public RootViewModel(IClientFactory clientFactory)
+        public RootViewModel(IClientFactory clientFactory, IEventAggregator aggregator)
         {
             this.clientFactory = clientFactory;
-            this.CompositionViewModel = new CompositionViewModel();
+            
 
             this.securityPickerClientFactory = new SecurityPickerClientFactory(clientFactory);
             
@@ -36,10 +43,37 @@ namespace GreenField.IssuerShares.Controls
 
             
             this.SecurityPickerViewModel = securityPickerViewModel;
-            this.SecurityPickerViewModel.IsEnabled = true;
+            securityPickerViewModel.SecurityPicked += (s, e) =>
+            {
+                this.CompositionViewModel.AddSecurity(e.Security);
+                this.SecurityPickerViewModel.Clear();
+            };
 
-            this.EditorViewModel = new EditorViewModel();
+
+            this.CompositionViewModel = new CompositionViewModel(clientFactory);
+
+            aggregator.GetEvent<SecurityPickedGlobalEvent>().Subscribe(this.TakeSecurity);
+
+            SaveCompositionCommand = new DelegateCommand(SaveComposition/*, () => this.CompositionViewModel.IsChanged*/);
             
+        }
+
+        public void SaveComposition()
+        { 
+            
+        }
+
+        public void TakeSecurity(SecurityPickedGlobalEventInfo info)
+        {
+            this.securityPickerClientFactory.Initialize(info.SecurityShortName);
+            this.SecurityPickerViewModel.IsEnabled = true;
+            this.CompositionViewModel.RequestData(info.SecurityShortName, UpdateSecurityPickerExclusions);
+        }
+
+        public void UpdateSecurityPickerExclusions(RootModel model)
+        {
+            if (model != null && model.Items != null)
+                this.SecurityPickerViewModel.SetExclusions(model.Items.Select(x => (ISecurity)x.Security));
         }
 
         protected override void Activate()
@@ -51,7 +85,6 @@ namespace GreenField.IssuerShares.Controls
         {
         }
 
-        public EditorViewModel EditorViewModel { get; set; }
 
         public SecurityPickerViewModel SecurityPickerViewModel { get; set; }
 

@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="RootViewModel.cs" />
     <Compile Include="RootViewModelBase.cs" />
+    <Compile Include="SecurityPickedGlobalEventInfo.cs" />
     <Compile Include="SecurityPickerClientFactory.cs" />
   </ItemGroup>
   <ItemGroup>

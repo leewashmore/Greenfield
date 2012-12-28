@@ -39,7 +39,7 @@ namespace GreenField.IssuerShares.Core
                 var ondemandSecurities = new Func<IEnumerable<SecurityInfo>>(delegate
                 {
                     var securities = manager.GetAllSecurities();
-                    return securities;
+                    return securities.Where(x => x.IssuerId != null);
                 });
 
                 var securityRepository = this.repositoryManager.ClaimSecurityRepository(ondemandSecurities, manager);

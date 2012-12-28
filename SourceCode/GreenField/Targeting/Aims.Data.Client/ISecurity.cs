@@ -15,6 +15,10 @@ namespace Aims.Data.Client
     {
         String Id { get; }
         String Name { get; }
+        String SecurityType { get; }
+        String Ticker { get; }
+        String ShortName { get; }
+        String IssuerId { get; }
         void Accept(ISecurityResolver resolver);
     }
 

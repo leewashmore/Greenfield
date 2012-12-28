@@ -28,10 +28,7 @@
   <xs:complexType name="FundModel">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:SecurityModel">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
-        </xs:sequence>
+        <xs:sequence />
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -39,7 +36,11 @@
   <xs:complexType name="SecurityModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SecurityModel" nillable="true" type="tns:SecurityModel" />
@@ -48,8 +49,6 @@
       <xs:extension base="tns:SecurityModel">
         <xs:sequence>
           <xs:element minOccurs="0" name="Country" nillable="true" type="tns:CountryModel" />
-          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

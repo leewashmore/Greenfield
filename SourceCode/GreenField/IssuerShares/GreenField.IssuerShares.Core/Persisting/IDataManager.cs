@@ -8,5 +8,6 @@ namespace GreenField.IssuerShares.Core.Persisting
     public interface IDataManager : Aims.Core.Persisting.IDataManager
     {
         IEnumerable<IssuerSharesCompositionInfo> GetIssuerSharesComposition(String issuerId);
+        IEnumerable<Aims.Data.Server.SecurityModel> GetIssuerSecurities(String securityShortName);
     }
 }

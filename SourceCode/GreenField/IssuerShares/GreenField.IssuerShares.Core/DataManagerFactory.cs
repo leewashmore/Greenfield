@@ -8,14 +8,17 @@ namespace GreenField.IssuerShares.Core
 {
     public class DataManagerFactory : IDataManagerFactory
     {
+
         public IDataManager CreateDataManager(System.Data.SqlClient.SqlConnection connection)
         {
-            throw new NotImplementedException();
+            var manager = new DataManager(connection, null);
+            return manager;
         }
 
         public IDataManager CreateDataManager(System.Data.SqlClient.SqlConnection connection, System.Data.SqlClient.SqlTransaction transactionOpt)
         {
-            throw new NotImplementedException();
+            var manager = new DataManager(connection, transactionOpt);
+            return manager;
         }
     }
 }

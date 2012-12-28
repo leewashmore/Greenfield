@@ -32,6 +32,7 @@ namespace Aims.Core
 
                     return new Issuer(id, name);
                 });
+             
                 this.byId.Add(issuer.Id, issuer);
             }
         }

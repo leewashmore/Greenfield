@@ -1,1 +1,6 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="GreenField.IssuerShares.App.Web.Services.IssuerSharesOperations" CodeBehind="IssuerSharesOperations.svc.cs" %>
+﻿<%@ ServiceHost 
+    Language="C#" 
+    Debug="true" 
+    Service="GreenField.IssuerShares.App.Web.Services.IssuerSharesOperations" 
+    Factory="GreenField.IssuerShares.App.Web.IssuerSharesOperationsHostFactory" 
+    CodeBehind="IssuerSharesOperations.svc.cs" %>

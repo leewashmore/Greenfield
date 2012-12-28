@@ -99,6 +99,7 @@ namespace Aims.Core.Persisting
                     .Field(", [LOOK_THRU_FUND]", (info, value) => info.LookThruFund = value, false)
                     .Field(", [ISSUER_ID]", (info, value) => info.IssuerId = value, false)
                     .Field(", [ISSUER_NAME]", (info, value) => info.IssuerName = value, false)
+                    .Field(", [SECURITY_TYPE]", (info, value) => info.SecurityType = value, false)
                 .Text(" from " + TableNames.GF_SECURITY_BASEVIEW)
                 .PullAll();
             }
