@@ -49,7 +49,7 @@ namespace GreenField.DashboardModule.Views
             logger = logger1;
             dBInteractivity = dbInteractivity;
             eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            this.tbHeader.Text = "Load Models";
+            this.tbHeader.Text = "Model Upload";
         }
         #endregion
 

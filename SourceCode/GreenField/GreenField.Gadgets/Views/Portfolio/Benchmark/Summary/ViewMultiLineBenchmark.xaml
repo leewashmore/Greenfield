@@ -27,7 +27,7 @@
             <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
         <Grid>
-        <TextBlock Text="Multi Line Benchmark UI" HorizontalAlignment="Center"
+        <TextBlock Text="Benchmark UI" HorizontalAlignment="Center"
                    Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center" FontWeight="Bold"/>
         <Grid HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>

@@ -174,7 +174,7 @@ namespace GreenField.Common
         #region Snapshot
         public const string HOLDINGS_TOP_TEN_HOLDINGS = "Top 10 Holdings";
         public const string HOLDINGS_RELATIVE_RISK = "Relative Risk";
-        public const string HOLDINGS_REGION_BREAKDOWN = "Region Breakdown";
+        public const string HOLDINGS_REGION_BREAKDOWN = "Regional Breakdown";
         public const string HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES = "Valuation, Quality, & Growth Measures";
         public const string HOLDINGS_SECTOR_BREAKDOWN = "Sector Breakdown";
         public const string HOLDINGS_RISK_RETURN = "Risk/Return";
@@ -201,14 +201,14 @@ namespace GreenField.Common
         public const string PERFORMANCE_COUNTRY_ACTIVE_POSITION = "Country Active Position";
         public const string PERFORMANCE_SECTOR_ACTIVE_POSITION = "Sector Active Position";
         public const string PERFORMANCE_SECURITY_ACTIVE_POSITION = "Security Active Position";
-        public const string PERFORMANCE_CONTRIBUTOR_DETRACTOR = "Contributor Detractor"; 
+        public const string PERFORMANCE_CONTRIBUTOR_DETRACTOR = "Contributor / Detractor"; 
         #endregion
 
         #region Benchmark Summary
-        public const string BENCHMARKS_MULTILINE_BENCHMARK = "Multi-line Benchmarks UI Component";
-        public const string BENCHMARK_TOP_TEN_CONSTITUENTS = "Top Benchmark Securities";
-        public const string BENCHMARK_HOLDINGS_SECTOR_PIECHART = "Holdings PieChart For Sector";
-        public const string BENCHMARK_HOLDINGS_REGION_PIECHART = "Holdings PieChart For Region";
+        public const string BENCHMARKS_MULTILINE_BENCHMARK = "Benchmark Performance";
+        public const string BENCHMARK_TOP_TEN_CONSTITUENTS = " Top 10 Benchmark Securities";
+        public const string BENCHMARK_HOLDINGS_SECTOR_PIECHART = "Sector Breakdown";
+        public const string BENCHMARK_HOLDINGS_REGION_PIECHART = "Region Breakdown";
         #endregion
 
         #region Benchmark Components
