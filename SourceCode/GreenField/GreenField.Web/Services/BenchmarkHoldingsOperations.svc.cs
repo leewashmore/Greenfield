@@ -235,6 +235,32 @@ namespace GreenField.Web.Services
                             ActivePosition = activePosition
                         });
                     }
+
+                    #region BenchmarkSecurities
+                    List<string> portfolioSecurityID = data.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
+                    List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = benchmarkData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
+                    foreach (GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
+                    {
+
+                        //Calculate Portfolio Weight
+                        decimal? portfolioWeight = 0;
+
+                        //Retrieve Benchmark Weight
+                        decimal? benchmarkWeight = item.BENCHMARK_WEIGHT;
+                        //Calculate Active Position
+                        decimal? activePosition = portfolioWeight - benchmarkWeight;
+
+                        result.Add(new SectorBreakdownData()
+                        {
+                            Sector = item.GICS_SECTOR_NAME,
+                            Industry = item.GICS_INDUSTRY_NAME,
+                            Security = item.ISSUE_NAME,
+                            PortfolioShare = portfolioWeight,
+                            BenchmarkShare = benchmarkWeight,
+                            ActivePosition = activePosition
+                        });
+                    }
+                    #endregion
                     return result;
                     #endregion
                 }
@@ -290,6 +316,33 @@ namespace GreenField.Web.Services
                             ActivePosition = activePosition
                         });
                     }
+
+                    #region BenchmarkSecurities
+
+                    List<string> portfolioSecurityID = data.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
+                    List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = benchmarkData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
+                    foreach (GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
+                    {
+
+                        //Calculate Portfolio Weight
+                        decimal? portfolioWeight = 0;
+
+                        //Retrieve Benchmark Weight
+                        decimal? benchmarkWeight = item.BENCHMARK_WEIGHT;
+                        //Calculate Active Position
+                        decimal? activePosition = portfolioWeight - benchmarkWeight;
+
+                        result.Add(new SectorBreakdownData()
+                        {
+                            Sector = item.GICS_SECTOR_NAME,
+                            Industry = item.GICS_INDUSTRY_NAME,
+                            Security = item.ISSUE_NAME,
+                            PortfolioShare = portfolioWeight,
+                            BenchmarkShare = benchmarkWeight,
+                            ActivePosition = activePosition
+                        });
+                    }
+                    #endregion
                     return result;
                     #endregion
                 }
@@ -380,6 +433,31 @@ namespace GreenField.Web.Services
                             ActivePosition = activePosition
                         });
                     }
+                    #region BenchmarkSecurities
+                    List<string> portfolioSecurityID = data.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
+                    List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = benchmarkData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
+                    foreach (GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
+                    {
+
+                        //Calculate Portfolio Weight
+                        decimal? portfolioWeight = 0;
+
+                        //Retrieve Benchmark Weight
+                        decimal? benchmarkWeight = item.BENCHMARK_WEIGHT;
+                        //Calculate Active Position
+                        decimal? activePosition = portfolioWeight - benchmarkWeight;
+
+                        result.Add(new RegionBreakdownData()
+                        {
+                            Region = item.ASHEMM_PROP_REGION_NAME,
+                            Country = item.COUNTRYNAME,
+                            Security = item.ISSUE_NAME,
+                            PortfolioShare = portfolioWeight,
+                            BenchmarkShare = benchmarkWeight,
+                            ActivePosition = activePosition
+                        });
+                    }
+                    #endregion
                     return result;
                     #endregion
                 }
@@ -435,6 +513,33 @@ namespace GreenField.Web.Services
                             ActivePosition = activePosition
                         });
                     }
+
+                    #region BenchmarkSecurities
+                    List<string> portfolioSecurityID = data.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
+                    List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = benchmarkData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
+                    foreach (GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
+                    {
+
+                        //Calculate Portfolio Weight
+                        decimal? portfolioWeight = 0;
+
+                        //Retrieve Benchmark Weight
+                        decimal? benchmarkWeight = item.BENCHMARK_WEIGHT;
+                        //Calculate Active Position
+                        decimal? activePosition = portfolioWeight - benchmarkWeight;
+
+                        result.Add(new RegionBreakdownData()
+                        {
+                            Region = item.ASHEMM_PROP_REGION_NAME,
+                            Country = item.COUNTRYNAME,
+                            Security = item.ISSUE_NAME,
+                            PortfolioShare = portfolioWeight,
+                            BenchmarkShare = benchmarkWeight,
+                            ActivePosition = activePosition
+                        });
+                    }
+
+                    #endregion
                     return result;
                     #endregion
                 }
