@@ -387,12 +387,12 @@ namespace TopDown.Core.ManagingBpt
             }
 
 
-           // this.InitializeOverlay(
-           //    root,
-           //    securityRepository,
-           //    portfolioRepository,
-           //    portfolioSecurityTargetRepository
-           //);
+            this.InitializeOverlay(
+               root,
+               securityRepository,
+               portfolioRepository,
+               portfolioSecurityTargetRepository
+           );
 
             // required to inject problems to base values
             // we are not interested in the result of validation
