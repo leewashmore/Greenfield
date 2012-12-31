@@ -20,18 +20,18 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:59430/Services/ExcelModelRefreshOperations.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://10.3.48.34/greenfielddev/Services/ExcelModelRefreshOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ExcelModelRefreshOperations7.xsd" MetadataType="Schema" ID="4f2c48d7-a69a-490f-bbe9-a06c3220a697" SourceId="1" SourceUrl="http://localhost:59430/Services/ExcelModelRefreshOperations.svc?xsd=xsd1" />
-    <MetadataFile FileName="ExcelModelRefreshOperations71.xsd" MetadataType="Schema" ID="a33165c2-a3a4-49f9-9561-de47b534d896" SourceId="1" SourceUrl="http://localhost:59430/Services/ExcelModelRefreshOperations.svc?xsd=xsd4" />
-    <MetadataFile FileName="ExcelModelRefreshOperations72.xsd" MetadataType="Schema" ID="e99cca24-c409-4ab1-b05c-135aee04d140" SourceId="1" SourceUrl="http://localhost:59430/Services/ExcelModelRefreshOperations.svc?xsd=xsd3" />
-    <MetadataFile FileName="ExcelModelRefreshOperations73.xsd" MetadataType="Schema" ID="dc820ccc-cde7-4d89-8f08-45b34029b013" SourceId="1" SourceUrl="http://localhost:59430/Services/ExcelModelRefreshOperations.svc?xsd=xsd6" />
-    <MetadataFile FileName="ExcelModelRefreshOperations1.wsdl" MetadataType="Wsdl" ID="1464de16-7c9f-4735-b0fb-2552e43cc7ad" SourceId="1" SourceUrl="http://localhost:59430/Services/ExcelModelRefreshOperations.svc?wsdl" />
-    <MetadataFile FileName="ExcelModelRefreshOperations74.xsd" MetadataType="Schema" ID="e0ad5174-8b99-454b-8ca8-63f01ab8877f" SourceId="1" SourceUrl="http://localhost:59430/Services/ExcelModelRefreshOperations.svc?xsd=xsd0" />
-    <MetadataFile FileName="ExcelModelRefreshOperations1.disco" MetadataType="Disco" ID="23ec56b8-0f6f-466a-b5e8-f3abd427dde7" SourceId="1" SourceUrl="http://localhost:59430/Services/ExcelModelRefreshOperations.svc?disco" />
-    <MetadataFile FileName="ExcelModelRefreshOperations75.xsd" MetadataType="Schema" ID="d965f12f-4f70-4256-818c-3495c4f039d7" SourceId="1" SourceUrl="http://localhost:59430/Services/ExcelModelRefreshOperations.svc?xsd=xsd2" />
-    <MetadataFile FileName="ExcelModelRefreshOperations76.xsd" MetadataType="Schema" ID="6ae8f419-906e-4600-a273-3f1801ceb385" SourceId="1" SourceUrl="http://localhost:59430/Services/ExcelModelRefreshOperations.svc?xsd=xsd5" />
+    <MetadataFile FileName="ExcelModelRefreshOperations.disco" MetadataType="Disco" ID="b1c50d7a-4ae7-4e0b-a4e7-7113e332c6e1" SourceId="1" SourceUrl="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc?disco" />
+    <MetadataFile FileName="ExcelModelRefreshOperations.xsd" MetadataType="Schema" ID="739af94a-c6d2-4679-93db-43f923e707f2" SourceId="1" SourceUrl="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="ExcelModelRefreshOperations1.xsd" MetadataType="Schema" ID="994a54d4-9726-4c66-9a57-31547aae0bbd" SourceId="1" SourceUrl="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="ExcelModelRefreshOperations2.xsd" MetadataType="Schema" ID="4894b043-4baf-40be-a2df-708aab11e6e0" SourceId="1" SourceUrl="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="ExcelModelRefreshOperations3.xsd" MetadataType="Schema" ID="6046aec8-aaff-406c-b5cf-2692c051e034" SourceId="1" SourceUrl="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="ExcelModelRefreshOperations4.xsd" MetadataType="Schema" ID="83c5c37a-05d1-4be7-93ec-143ea46a7eb5" SourceId="1" SourceUrl="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc?xsd=xsd4" />
+    <MetadataFile FileName="ExcelModelRefreshOperations5.xsd" MetadataType="Schema" ID="a2f06189-6499-4125-a6c9-5959f80116e0" SourceId="1" SourceUrl="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc?xsd=xsd5" />
+    <MetadataFile FileName="ExcelModelRefreshOperations6.xsd" MetadataType="Schema" ID="b7ba686e-ab9f-4365-8330-d81cee48cc99" SourceId="1" SourceUrl="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc?xsd=xsd6" />
+    <MetadataFile FileName="ExcelModelRefreshOperations.wsdl" MetadataType="Wsdl" ID="091ac27c-bd57-4764-a2a4-2da6a11ece8d" SourceId="1" SourceUrl="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

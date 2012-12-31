@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="92o/dAYcJaewnvLHVAOYXBKKuJY=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="QVBF63iup0NXUXvnbtbwk/DzNc4=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="ExcelModelRefreshOperations">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="ExcelModelRefreshOperations" contract="ModelRefreshDefinitions.ExcelModelRefreshOperations" bindingType="basicHttpBinding" address="http://localhost:59430/Services/ExcelModelRefreshOperations.svc" bindingConfiguration="ExcelModelRefreshOperations">
+    <endpoint name="ExcelModelRefreshOperations" contract="ModelRefreshDefinitions.ExcelModelRefreshOperations" bindingType="basicHttpBinding" address="http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc" bindingConfiguration="ExcelModelRefreshOperations">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:59430/Services/ExcelModelRefreshOperations.svc</serializedValue>
+          <serializedValue>http://10.3.48.34/GreenfieldDEV/Services/ExcelModelRefreshOperations.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
