@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using Microsoft.Silverlight.Testing;
+using System.Net;
+using System.Net.Browser;
 
 namespace GreenField.ServiceCaller.UnitTest
 {
@@ -18,6 +20,8 @@ namespace GreenField.ServiceCaller.UnitTest
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
+            WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
             RootVisual = UnitTestSystem.CreateTestPage();
         }
 

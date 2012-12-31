@@ -150,10 +150,10 @@
     <ManifestCertificateThumbprint>57CB94FD5CE44477117086D178553D37AA1274CB</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ReutersPlugIn_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <!--
     This section specifies references for the project.
@@ -242,6 +242,7 @@
       <DependentUpon>TaskPaneView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.Config" />
+    <None Include="key.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -267,26 +268,26 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="ReutersPlugIn_TemporaryKey.pfx" />
-    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations.wsdl" />
-    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations.xsd">
+    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations1.wsdl" />
+    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations7.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations1.xsd">
+    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations71.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations2.xsd">
+    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations72.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations3.xsd">
+    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations73.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations4.xsd">
+    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations74.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations5.xsd">
+    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations75.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations6.xsd">
+    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations76.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ModelRefreshDefinitions\ReutersPlugIn.ModelRefreshDefinitions.ExcelModelData.datasource">
@@ -319,7 +320,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations.disco" />
+    <None Include="Service References\ModelRefreshDefinitions\ExcelModelRefreshOperations1.disco" />
   </ItemGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

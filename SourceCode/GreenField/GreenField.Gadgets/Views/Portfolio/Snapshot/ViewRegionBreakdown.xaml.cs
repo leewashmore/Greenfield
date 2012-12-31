@@ -7,6 +7,8 @@ using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
+using System.Collections.ObjectModel;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
 {
@@ -238,5 +240,12 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        private void dgRegionBreakdown_Sorting(object sender, GridViewSortingEventArgs e)
+        {
+            //ObservableCollection<RegionBreakdownData> data = 
+            //    (sender as RadGridView).ItemsSource as ObservableCollection<RegionBreakdownData>;
+            
+        }
     }
 }

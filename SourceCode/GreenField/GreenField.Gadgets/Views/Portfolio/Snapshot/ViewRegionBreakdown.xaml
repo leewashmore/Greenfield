@@ -134,7 +134,8 @@
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"                                         
                                          ElementExporting="dgRegionBreakdown_ElementExporting" 
                                          EnableRowVirtualization="False"
-                                         GridLinesVisibility="None">
+                                         GridLinesVisibility="None"
+                                         Sorting="dgRegionBreakdown_Sorting">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" UniqueName="Security" IsFilterable="True" DataMemberBinding="{Binding Security}" 
                                                         Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
@@ -172,8 +173,8 @@
                             </telerik:GridViewDataColumn>
                         </telerik:RadGridView.Columns>
                         <telerik:RadGridView.GroupDescriptors>
-                            <telerik:GroupDescriptor Member="Region" SortDirection="Ascending"/>
-                            <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>
+                            <telerik:GroupDescriptor Member="RegionSortOrder" SortDirection="Ascending"/>
+                            <telerik:GroupDescriptor Member="CountrySortOrder" SortDirection="Ascending"/>
                         </telerik:RadGridView.GroupDescriptors>
                     </telerik:RadGridView>
                 </Border>

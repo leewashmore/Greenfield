@@ -26,5 +26,9 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public decimal? ActivePosition { get; set; }
+
+        public String RegionSortOrder { get; set; }
+
+        public String CountrySortOrder { get; set; }
     }
 }
