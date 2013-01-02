@@ -166,12 +166,17 @@
                         <telerik:RadMenuItem Header="Price Comparison" x:Name="rmItemPriceComparison"
                                              Command="{Binding DashboardCompanyChartingClosingPriceCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <telerik:RadMenuItem Header="Unrealised Gain/Loss" x:Name="rmItemUnrealisedGainLoss"
+                                             Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem Header="Context" x:Name="rmItemContext"
                                              Command="{Binding DashboardCompanyChartingContextCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!-- TODO clean up
                         <telerik:RadMenuItem Header="Historical Valuations" x:Name="rmItemChartingValuation"
                                              Command="{Binding DashboardCompanyChartingValuationCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        -->
                     </telerik:RadMenuItem>
 
                     <!--<telerik:RadMenuItem Header="Corporate Governance" x:Name="rmItemCorporateGovernance">
