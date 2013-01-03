@@ -53,7 +53,7 @@ namespace TopDown.Core.ManagingPst
 
         public RootModel GetPstRootModel(IDataManager manager, String portfolioId, SecurityRepository securityRepository)
         {
-            var targets = manager.GetPortfolioSecurityTargets(portfolioId);
+            var targets = manager.GetPortfolioSecurityTargets(portfolioId).OrderByDescending(x => x.Target);
             var latestChangeSetInfo = manager.GetLatestPortfolioSecurityTargetChangeSet();
 
             var items = new List<ItemModel>();

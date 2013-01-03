@@ -131,7 +131,9 @@
             IsReadOnly="True"
             Value="{Binding Value}"
             TextAlignment="Right"
-            Style="{StaticResource specialTextBox}" />
+            Style="{StaticResource specialTextBox}" 
+            Background="Transparent" 
+            />
     </DataTemplate>
 
     <DataTemplate x:Key="saveTemplate">
@@ -155,6 +157,7 @@
                 Style="{StaticResource specialTextBox}"
                 BorderBrush="{Binding IsModified, Converter={StaticResource booleanToColorConverter}}"
                 BorderThickness="2"
+                Background="Transparent"
             >
             <i:Interaction.Behaviors>
                 <local:CommentBehavior>
