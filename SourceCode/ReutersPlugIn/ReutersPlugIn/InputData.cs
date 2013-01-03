@@ -21,5 +21,10 @@ namespace ReutersPlugIn
         /// COA Type
         /// </summary>
         public String COAType { get; set; }
+
+        /// <summary>
+        /// Currency
+        /// </summary>
+        public String Currency { get; set; }
     }
 }

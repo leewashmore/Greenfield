@@ -16,38 +16,50 @@ namespace GreenField.ServiceCaller
     {
         public static void LogServiceCall(ILoggerFacade logger, string methodNamespace, DateTime timeStamp, String userName)
         {
-            logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
-                        + ")]|Type[(ServiceCall"
-                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
-                        + ")]|TimeStamp[(" + timeStamp.ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
-                        + ")]", Category.Info, Priority.None);
+            if (logger != null)
+            {
+                logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
+                                + ")]|Type[(ServiceCall"
+                                + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                                + ")]|TimeStamp[(" + timeStamp.ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
+                                + ")]", Category.Info, Priority.None);
+            }
         }
 
         public static void LogServiceCallback(ILoggerFacade logger, string methodNamespace, DateTime timeStamp, string userName)
         {
-            logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
-                        + ")]|Type[(ServiceCallback"
-                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
-                        + ")]|TimeStamp[(" + timeStamp.ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
-                        + ")]", Category.Info, Priority.None);
+            if (logger != null)
+            {
+                logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
+                                + ")]|Type[(ServiceCallback"
+                                + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                                + ")]|TimeStamp[(" + timeStamp.ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
+                                + ")]", Category.Info, Priority.None); 
+            }
         }
 
         public static void LogServiceCallLogin(ILoggerFacade logger, string methodNamespace, DateTime timeStamp, string userName)
         {
-            logger.Log("|LoginID[(" + userName.Replace(Environment.NewLine, " ")
-                        + ")]|Type[(LoginServiceCall"
-                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
-                        + ")]|TimeStamp[(" + timeStamp.ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
-                        + ")]", Category.Info, Priority.None);
+            if (logger != null)
+            {
+                logger.Log("|LoginID[(" + userName.Replace(Environment.NewLine, " ")
+                                + ")]|Type[(LoginServiceCall"
+                                + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                                + ")]|TimeStamp[(" + timeStamp.ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
+                                + ")]", Category.Info, Priority.None); 
+            }
         }
 
         public static void LogServiceCallbackLogin(ILoggerFacade logger, string methodNamespace, DateTime timeStamp, string userName)
         {
-            logger.Log("|LoginID[(" + userName.Replace(Environment.NewLine, " ")
-                        + ")]|Type[(LoginServiceCallback"
-                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
-                        + ")]|TimeStamp[(" + timeStamp.ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
-                        + ")]", Category.Info, Priority.None);
+            if (logger != null)
+            {
+                logger.Log("|LoginID[(" + userName.Replace(Environment.NewLine, " ")
+                                + ")]|Type[(LoginServiceCallback"
+                                + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                                + ")]|TimeStamp[(" + timeStamp.ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
+                                + ")]", Category.Info, Priority.None); 
+            }
         }
     }
 }

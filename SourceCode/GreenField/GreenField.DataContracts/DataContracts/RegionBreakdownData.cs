@@ -25,6 +25,6 @@ namespace GreenField.DataContracts
         public decimal? BenchmarkShare { get; set; }
 
         [DataMember]
-        public decimal? ActivePosition { get; set; }
+        public decimal? ActivePosition { get; set; }        
     }
 }

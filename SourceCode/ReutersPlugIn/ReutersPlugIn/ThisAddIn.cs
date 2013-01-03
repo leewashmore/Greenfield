@@ -153,7 +153,7 @@ namespace ReutersPlugIn
                 }
 
                 ExcelModelRefreshOperationsClient client = new ExcelModelRefreshOperationsClient();                
-                ExcelModelData outputData = client.RetrieveStatementData(inputData.IssuerID);
+                ExcelModelData outputData = client.RetrieveStatementData(inputData.IssuerID, inputData.Currency);
 
                 if (outputData == null)
                 {
@@ -291,6 +291,10 @@ namespace ReutersPlugIn
                 {
                     throw new Exception(MODEL_REFERENCE_WORKSHEET_NAME + ":'COA Type' notation cell is missing at [3,1]");
                 }
+                if ((modelReferenceWorkSheet.Cells[4, 1] as Excel.Range).Value != "Currency")
+                {
+                    throw new Exception(MODEL_REFERENCE_WORKSHEET_NAME + ":'Currency' notation cell is missing at [4,1]");
+                }
 
                 //Model upload sheet content validation
                 Excel.Worksheet modelUploadWorkSheet = excelApp.Worksheets[MODEL_UPLOAD_WORKSHEET_NAME];
@@ -392,6 +396,7 @@ namespace ReutersPlugIn
                 result.IssuerID = Convert.ToString((((Excel.Worksheet)excelApp.Worksheets[MODEL_REFERENCE_WORKSHEET_NAME]).Cells[1, 2] as Excel.Range).Value);
                 result.IssueName = Convert.ToString((((Excel.Worksheet)excelApp.Worksheets[MODEL_REFERENCE_WORKSHEET_NAME]).Cells[2, 2] as Excel.Range).Value);
                 result.COAType = Convert.ToString((((Excel.Worksheet)excelApp.Worksheets[MODEL_REFERENCE_WORKSHEET_NAME]).Cells[3, 2] as Excel.Range).Value);
+                result.Currency = Convert.ToString((((Excel.Worksheet)excelApp.Worksheets[MODEL_REFERENCE_WORKSHEET_NAME]).Cells[4, 2] as Excel.Range).Value);
 
                 return result;
             }
