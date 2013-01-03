@@ -16,5 +16,9 @@ namespace GreenField.IssuerShares.Server
         [OperationContract]
         IEnumerable<SecurityModel> GetIssuerSecurities(String pattern, Int32 atMost, String securityShortName);
 
+        [OperationContract]
+        Server.RootModel UpdateIssueSharesComposition(RootModel model);
+        
+
     }
 }

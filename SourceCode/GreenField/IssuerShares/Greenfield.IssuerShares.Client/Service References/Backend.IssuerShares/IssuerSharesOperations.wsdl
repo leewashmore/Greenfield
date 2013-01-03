@@ -28,6 +28,12 @@
   <wsdl:message name="IFacade_GetIssuerSecurities_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetIssuerSecuritiesResponse" />
   </wsdl:message>
+  <wsdl:message name="IFacade_UpdateIssueSharesComposition_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateIssueSharesComposition" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_UpdateIssueSharesComposition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateIssueSharesCompositionResponse" />
+  </wsdl:message>
   <wsdl:portType name="IFacade">
     <wsdl:operation name="GetRootModel">
       <wsdl:input wsaw:Action="http://tempuri.org/IFacade/GetRootModel" message="tns:IFacade_GetRootModel_InputMessage" />
@@ -36,6 +42,10 @@
     <wsdl:operation name="GetIssuerSecurities">
       <wsdl:input wsaw:Action="http://tempuri.org/IFacade/GetIssuerSecurities" message="tns:IFacade_GetIssuerSecurities_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IFacade/GetIssuerSecuritiesResponse" message="tns:IFacade_GetIssuerSecurities_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateIssueSharesComposition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/UpdateIssueSharesComposition" message="tns:IFacade_UpdateIssueSharesComposition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/UpdateIssueSharesCompositionResponse" message="tns:IFacade_UpdateIssueSharesComposition_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CustomBinding_IFacade" type="tns:IFacade">
@@ -52,6 +62,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetIssuerSecurities">
       <soap12:operation soapAction="http://tempuri.org/IFacade/GetIssuerSecurities" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateIssueSharesComposition">
+      <soap12:operation soapAction="http://tempuri.org/IFacade/UpdateIssueSharesComposition" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

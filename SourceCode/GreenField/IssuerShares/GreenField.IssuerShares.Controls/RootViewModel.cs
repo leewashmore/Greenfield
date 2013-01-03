@@ -16,6 +16,7 @@ using GreenField.IssuerShares.Client.Backend.IssuerShares;
 using System.Linq;
 using Aims.Data.Client;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.ViewModel;
 
 namespace GreenField.IssuerShares.Controls
 {
@@ -26,7 +27,7 @@ namespace GreenField.IssuerShares.Controls
 
         private SecurityPickerClientFactory securityPickerClientFactory;
 
-        public ICommand SaveCompositionCommand { get; private set; }
+        
 
         [ImportingConstructor]
         public RootViewModel(IClientFactory clientFactory, IEventAggregator aggregator)
@@ -54,14 +55,13 @@ namespace GreenField.IssuerShares.Controls
 
             aggregator.GetEvent<SecurityPickedGlobalEvent>().Subscribe(this.TakeSecurity);
 
-            SaveCompositionCommand = new DelegateCommand(SaveComposition/*, () => this.CompositionViewModel.IsChanged*/);
+            
             
         }
 
-        public void SaveComposition()
-        { 
-            
-        }
+        
+
+        
 
         public void TakeSecurity(SecurityPickedGlobalEventInfo info)
         {

@@ -77,7 +77,9 @@ namespace GreenField.IssuerShares.App.Web.Helpers
 
             var commonSerializer = new Aims.Data.Server.Serializer();
             var serializer = new Serializer(commonSerializer);
-            var facade = new Facade(manager, commonSerializer, serializer, connectionFactory, dataManagerFactory, repositoryManager);
+
+            var deserializer = new Deserializer(connectionFactory, dataManagerFactory, repositoryManager);
+            var facade = new Facade(manager, commonSerializer, serializer, deserializer, connectionFactory, dataManagerFactory, repositoryManager);
             //var found = facade.GetIssuerSecurities("SB", 1000, "RUSBERBPN __");
             var model = facade.GetRootModel("RUSBERBPN __");
             

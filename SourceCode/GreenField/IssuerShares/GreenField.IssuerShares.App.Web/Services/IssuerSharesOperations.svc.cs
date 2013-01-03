@@ -53,5 +53,14 @@ namespace GreenField.IssuerShares.App.Web.Services
                 return this.facade.GetIssuerSecurities(pattern, atMost, securityShortName);
             });
         }
+
+
+        public Server.RootModel UpdateIssueSharesComposition(RootModel model)
+        {
+            return this.Watch("Unable to update composition for the issuer (ID: " + model.Issuer.Id + ").", delegate
+            {
+                return this.facade.UpdateIssueSharesComposition(model);
+            });
+        }
     }
 }

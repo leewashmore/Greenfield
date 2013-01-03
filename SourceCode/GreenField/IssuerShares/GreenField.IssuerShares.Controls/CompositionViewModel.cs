@@ -19,6 +19,7 @@ namespace GreenField.IssuerShares.Controls
     public class CompositionViewModel : NotificationObject
     {
         private IClientFactory clientFactory;
+        public DelegateCommand SaveCompositionCommand { get; private set; }
 
         private bool isChanged;
         public bool IsChanged {
@@ -31,17 +32,31 @@ namespace GreenField.IssuerShares.Controls
             {
                 isChanged = value;
                 this.RaisePropertyChanged(() => this.IsChanged);
+                this.SaveCompositionCommand.RaiseCanExecuteChanged();
             }
         }
+
+        
+        
 
         public CompositionViewModel(IClientFactory clientFactory)
         {
             // TODO: Complete member initialization
             this.clientFactory = clientFactory;
+            this.SaveCompositionCommand = new DelegateCommand(SaveComposition, () => this.IsChanged);
             this.IsChanged = false;
             this.RaisePropertyChanged(() => this.IsChanged);
         }
 
+        public void SaveComposition()
+        {
+            var client = this.clientFactory.CreateClient();
+            client.GetRootModelCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
+                    "Updateing composition for issuer (ID: " + this.Issuer.Id + ")", args, x => x.Result, null, HandleErrors);
+            client.UpdateIssueSharesCompositionAsync(new RootModel { Issuer = this.Issuer, Items = this.Items });
+        }
+
+        public IssuerModel Issuer { get; private set; }
 
         internal void RequestData(String securityShortName, Action<RootModel> callback)
         {
@@ -59,8 +74,8 @@ namespace GreenField.IssuerShares.Controls
 
         internal void InitializeDataGrid(RootModel model)
         {
-            
-            
+
+            this.Issuer = model.Issuer;
             this.Items = model.Items;
             foreach (var item in this.Items)
             {

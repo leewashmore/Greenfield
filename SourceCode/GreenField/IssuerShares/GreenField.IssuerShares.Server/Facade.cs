@@ -16,6 +16,7 @@ namespace GreenField.IssuerShares.Server
         private ISqlConnectionFactory connectionFactory;
         private IDataManagerFactory dataManagerFactory;
         private Aims.Data.Server.Serializer commonSerializer;
+        private Deserializer deserializer;
 
         public RepositoryManager RepositoryManager { get; private set; }
         
@@ -23,6 +24,7 @@ namespace GreenField.IssuerShares.Server
             Core.ModelManager modelManager,
             Aims.Data.Server.Serializer commonSerializer,
             Serializer serializer,
+            Deserializer deserializer,
             ISqlConnectionFactory connectionFactory,
             IDataManagerFactory dataManagerFactory,
             RepositoryManager repositoryManager
@@ -34,11 +36,12 @@ namespace GreenField.IssuerShares.Server
             this.dataManagerFactory = dataManagerFactory;
             this.RepositoryManager = repositoryManager;
             this.commonSerializer = commonSerializer;
+            this.deserializer = deserializer;
         }
 
         public RootModel GetRootModel(String securityShortName)
         {
-            using (var ondemandManager = new OnDemandDataManager(this.connectionFactory, this.dataManagerFactory))
+            using (var ondemandManager = CreateOnDemandDataManager())
             {
                 var repository = this.RepositoryManager.ClaimSecurityRepository(ondemandManager);
                 var security = repository.FindSecurityByShortName(securityShortName);
@@ -57,7 +60,7 @@ namespace GreenField.IssuerShares.Server
 
         public IEnumerable<Aims.Data.Server.SecurityModel> GetIssuerSecurities(String pattern, Int32 atMost, String securityShortName)
         {
-            using (var ondemandManager = new OnDemandDataManager(this.connectionFactory, this.dataManagerFactory))
+            using (var ondemandManager = CreateOnDemandDataManager())
             {
                 var repository = this.RepositoryManager.ClaimSecurityRepository(ondemandManager);
                 var security = repository.FindSecurityByShortName(securityShortName);
@@ -82,6 +85,20 @@ namespace GreenField.IssuerShares.Server
             return new OnDemandDataManager(connection, this.dataManagerFactory);
         }
 
-        
+
+
+
+        public RootModel UpdateIssueSharesComposition(RootModel model)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var items = model.Items.ConvertAll<GreenField.IssuerShares.Core.ItemModel>(x => new GreenField.IssuerShares.Core.ItemModel(deserializer.DeserializeSecurity(x.Security), x.Preferred));
+                var tran = connection.BeginTransaction();
+                var dataManager = this.dataManagerFactory.CreateDataManager(connection, tran);
+                var insertRecordsCount = dataManager.UpdateIssuerSharesComposition(model.Issuer.Id, items);
+                tran.Commit();
+                return model;
+            }
+        }
     }
 }
