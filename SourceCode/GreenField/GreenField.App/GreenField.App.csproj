@@ -147,6 +147,7 @@
   <ItemGroup>
     <Content Include="..\GreenField.ServiceCaller\ServiceReferences.ClientConfig">
       <Link>ServiceReferences.ClientConfig</Link>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\OutOfBrowserSettings.xml" />
     <Resource Include="Images\AIMS_Logo.jpg" />
