@@ -15,6 +15,9 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.IssuerShares.Controls;component/CommonTemplates.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <mine:IssuerSecurityShareRecordModelConverter x:Key="issuerSecurityShareRecordModelConverter" />
 
             <Style TargetType="sdk:DataGridColumnHeader" x:Key="headerStyle">
@@ -38,13 +41,13 @@
     
 
 
-        <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" FrozenColumnCount="1" x:Name="grid" Height="300" VerticalScrollBarVisibility="Auto">
+        <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" FrozenColumnCount="1" x:Name="grid" Height="Auto"  VerticalScrollBarVisibility="Auto">
             <sdk:DataGrid.Columns>
 
                 <sdk:DataGridTemplateColumn Header="Date">
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ContentControl Content="{Binding Date, StringFormat='MM/dd/yyyy'}"  />
+                        <ContentControl Style="{StaticResource valueContentStyle}" Content="{Binding Date, StringFormat='MM/dd/yyyy'}"  />
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>
@@ -53,14 +56,14 @@
                 <mine:DataGridDynamicColumnsBehavior
                     HeaderStyle="{StaticResource headerStyle}"
                     ColumnsData="{Binding Items}"
-                    AreEmptyColumnShown="{Binding AreEmptyColumnsShown}"
+                    AreEmptyColumnShown="False"
                     
                 >
                     <mine:DataGridDynamicColumnsBehavior.CellTemplate>
                         <DataTemplate>
                             <!-- the Content="{Binding}" is defined in the code so don't bother setting it here in XAML, it will be overriden -->
                             <!--<ContentControl ContentTemplate="{Binding Converter={StaticResource issuerSecurityShareRecordModelConverter}}"  />-->
-                            <ContentControl   />
+                        <ContentControl Style="{StaticResource valueContentStyle}"  />
                         </DataTemplate>
                     </mine:DataGridDynamicColumnsBehavior.CellTemplate>
                 </mine:DataGridDynamicColumnsBehavior>

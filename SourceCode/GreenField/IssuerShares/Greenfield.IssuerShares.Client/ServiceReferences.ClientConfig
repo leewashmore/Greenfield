@@ -10,7 +10,7 @@
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:59430/Services/IssuerSharesOperations.svc"
+            <endpoint address="http://localhost:24883/Services/IssuerSharesOperations.svc"
                 binding="basicHttpBinding" bindingConfiguration="IssuerSharesOperations"
                 contract="Backend.IssuerShares.IFacade" name="IssuerSharesOperations" />
         </client>

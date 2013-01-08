@@ -91,9 +91,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="ServiceReferences.ClientConfig" />
-    <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations3.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -113,6 +110,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Backend.IssuerShares\IssuerSharesOperations2.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
