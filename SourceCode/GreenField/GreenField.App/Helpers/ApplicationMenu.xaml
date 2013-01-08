@@ -173,7 +173,11 @@
                                              Command="{Binding DashboardCompanyChartingValuationCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>
-
+                    <telerik:RadMenuItem x:Name="rmItemIssuerShares" Header="Issuer Shares">
+                        <telerik:RadMenuItem Header="Issuer Shares Composition" x:Name="rmItemIssuerSharesComposition"
+                                             Command="{Binding IssuerSharesCommand}"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                    </telerik:RadMenuItem>
                     <!--<telerik:RadMenuItem Header="Corporate Governance" x:Name="rmItemCorporateGovernance">
                         <telerik:RadMenuItem x:Name="rmItemQuestionnaire" Header="Questionnaire"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>

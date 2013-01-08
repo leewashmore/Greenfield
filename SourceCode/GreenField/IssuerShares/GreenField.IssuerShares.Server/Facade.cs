@@ -6,6 +6,7 @@ using Aims.Core.Sql;
 using GreenField.IssuerShares.Core.Persisting;
 using System.Data.SqlClient;
 using Aims.Core;
+using DataLoader.Core;
 
 namespace GreenField.IssuerShares.Server
 {
@@ -19,6 +20,11 @@ namespace GreenField.IssuerShares.Server
         private Deserializer deserializer;
 
         public RepositoryManager RepositoryManager { get; private set; }
+
+        public Facade(FacadeSettings settings) : this(settings.ModelManager, settings.CommonSerializer, settings.Serializer, settings.Deserializer, settings.ConnectionFactory, settings.DataManagerFactory, settings.RepositoryManager)
+        { 
+            
+        }
         
         public Facade(
             Core.ModelManager modelManager,
@@ -75,6 +81,68 @@ namespace GreenField.IssuerShares.Server
             }
         }
 
+
+        public IEnumerable<GreenField.IssuerShares.Server.IssuerSecurityShareRecordModel> GetIssuerSharesBySecurityShortName(String securityShortName)
+        {
+            using (var ondemandManager = CreateOnDemandDataManager())
+            {
+                var repository = this.RepositoryManager.ClaimSecurityRepository(ondemandManager);
+                var security = repository.FindSecurityByShortName(securityShortName);
+                if (security != null)
+                {
+                    var securities = repository.FindByIssuer(security.IssuerId).Where(x => x.SecurityType == "EQUITY" || x.SecurityType == "ADR" || x.SecurityType == "GDR");
+
+                    var loader = CreateIssuerSharesLoader();
+
+                    var records = loader.GetShareRecords(security.IssuerId, securities.Select(x => new DataLoader.Core.BackendProd.GF_SECURITY_BASEVIEW { ASEC_SEC_SHORT_NAME = x.ShortName, TICKER = x.Ticker, SECURITY_ID = Convert.ToInt32(x.Id), ISSUER_ID = x.IssuerId, TRADING_CURRENCY = "FAKE CURRENCY" }));
+                    var result = this.serializer.SerializeShareRecords(records);
+
+                    return result;
+                }
+                else
+                {
+                    return new List<GreenField.IssuerShares.Server.IssuerSecurityShareRecordModel>();
+                }
+            }
+        }
+
+        private IssueSharesLoaderExtension CreateIssuerSharesLoader()
+        {
+            var settings = new IssuerSharesSettings
+            {
+                RecordsPerBulk = Settings.RecordsPerBulk,
+                RecordsPerChunk = Settings.RecordsPerChunk,
+                MaxNumberOfDaysToStopExtrapolatingAfter = Settings.MaxNumberOfDaysToStopExtrapolatingAfter,
+                NumberOfDaysAgoToStartLoadingFrom = Settings.NumberOfDaysAgoToStartLoadingFrom != 0 ? Settings.NumberOfDaysAgoToStartLoadingFrom : null, // can be also: null
+                NumberOfDaysBeforeLoadingDateToBeGuaranteeFromHittingGap = Settings.NumberOfDaysBeforeLoadingDateToBeGuaranteeFromHittingGap,
+                WebServiceUri = new Uri(Settings.ODataServiceUri),
+                ConnectionStringToAims = Settings.ConnectionToAims,
+                ConnectionStringToAimsEntities = Settings.ConnectionToAimsEntities
+            };
+
+            var dumper = new TraceDumper();
+
+            var targetPuller = new TargetDataPuller(settings.ConnectionStringToAimsEntities);
+            var sourcePuller = new SourceDataPuller(settings.WebServiceUri, settings.RecordsPerChunk, dumper);
+            var monitor = new DataLoader.Core.Monitor(dumper);
+            var pusher = new IssueSharesPusherExtension(monitor, settings.ConnectionStringToAims, settings.RecordsPerBulk);
+            var filler = new GapsFiller<IssuerShareRecord>(settings.MaxNumberOfDaysToStopExtrapolatingAfter, new IssuerSharesGapFillerAdapter());
+            var transformer = new IssuerSharesTransformer(monitor);
+            var eraser = new IssuerSharesEraser(settings.ConnectionStringToAims);
+            var loader = new IssueSharesLoaderExtension(
+                settings.NumberOfDaysBeforeLoadingDateToBeGuaranteeFromHittingGap,
+                monitor,
+                targetPuller,
+                sourcePuller,
+                transformer,
+                filler,
+                pusher,
+                eraser
+            );
+
+            return loader;
+        }
+
         internal OnDemandDataManager CreateOnDemandDataManager()
         {
             return new OnDemandDataManager(this.connectionFactory, this.dataManagerFactory);
@@ -97,6 +165,10 @@ namespace GreenField.IssuerShares.Server
                 var dataManager = this.dataManagerFactory.CreateDataManager(connection, tran);
                 var insertRecordsCount = dataManager.UpdateIssuerSharesComposition(model.Issuer.Id, items);
                 tran.Commit();
+
+                var loader = CreateIssuerSharesLoader();
+                loader.RunForSpecificIssuers(new []{ model.Issuer.Id } , null);
+                loader.Pusher.ExecuteGetDataProcedure(model.Issuer.Id);
                 return model;
             }
         }

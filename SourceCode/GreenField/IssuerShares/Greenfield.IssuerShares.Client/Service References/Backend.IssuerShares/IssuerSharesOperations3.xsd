@@ -1,24 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:24883/Services/IssuerSharesOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" />
-  <xs:complexType name="RootModel">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Aims.Data.Server" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Aims.Data.Server" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="IssuerModel">
     <xs:sequence>
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="Issuer" nillable="true" type="q1:IssuerModel" />
-      <xs:element minOccurs="0" name="Items" nillable="true" type="tns:ArrayOfItemModel" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="RootModel" nillable="true" type="tns:RootModel" />
-  <xs:complexType name="ArrayOfItemModel">
+  <xs:element name="IssuerModel" nillable="true" type="tns:IssuerModel" />
+  <xs:complexType name="SecurityModel">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ItemModel" nillable="true" type="tns:ItemModel" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfItemModel" nillable="true" type="tns:ArrayOfItemModel" />
-  <xs:complexType name="ItemModel">
+  <xs:element name="SecurityModel" nillable="true" type="tns:SecurityModel" />
+  <xs:complexType name="CompanySecurityModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SecurityModel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Country" nillable="true" type="tns:CountryModel" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CompanySecurityModel" nillable="true" type="tns:CompanySecurityModel" />
+  <xs:complexType name="CountryModel">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Preferred" type="xs:boolean" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="Security" nillable="true" type="q2:SecurityModel" />
+      <xs:element minOccurs="0" name="IsoCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ItemModel" nillable="true" type="tns:ItemModel" />
+  <xs:element name="CountryModel" nillable="true" type="tns:CountryModel" />
+  <xs:complexType name="FundModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SecurityModel">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FundModel" nillable="true" type="tns:FundModel" />
+  <xs:complexType name="ArrayOfSecurityModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SecurityModel" nillable="true" type="tns:SecurityModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSecurityModel" nillable="true" type="tns:ArrayOfSecurityModel" />
 </xs:schema>

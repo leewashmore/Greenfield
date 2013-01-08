@@ -2,17 +2,17 @@
     
     <system.serviceModel>
         <bindings>
-            <customBinding>
-                <binding name="CustomBinding_IFacade">
-                    <binaryMessageEncoding />
-                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+            <basicHttpBinding>
+                <binding name="IssuerSharesOperations" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647" >
+                    <security mode="None" />
                 </binding>
-            </customBinding>
+            </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:24883/Services/IssuerSharesOperations.svc"
-                binding="customBinding" bindingConfiguration="CustomBinding_IFacade"
-                contract="Backend.IssuerShares.IFacade" name="CustomBinding_IFacade" />
+            <endpoint address="http://localhost:59430/Services/IssuerSharesOperations.svc"
+                binding="basicHttpBinding" bindingConfiguration="IssuerSharesOperations"
+                contract="Backend.IssuerShares.IFacade" name="IssuerSharesOperations" />
         </client>
     </system.serviceModel>
 </configuration>

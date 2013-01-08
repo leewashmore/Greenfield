@@ -13,10 +13,12 @@ using GreenField.IssuerShares.Client.Backend.IssuerShares;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
+using System.Linq;
 
 namespace GreenField.IssuerShares.Controls
 {
-    public class CompositionViewModel : NotificationObject
+    public class CompositionViewModel : CommunicatingViewModelBase
     {
         private IClientFactory clientFactory;
         public DelegateCommand SaveCompositionCommand { get; private set; }
@@ -36,40 +38,56 @@ namespace GreenField.IssuerShares.Controls
             }
         }
 
-        
+        public DelegateCommand ClickToAssociateUserCommand { get; private set; }
         
 
-        public CompositionViewModel(IClientFactory clientFactory)
+        public CompositionViewModel(IClientFactory clientFactory, IEventAggregator aggregator)
         {
-            // TODO: Complete member initialization
+            this.aggregator = aggregator;
             this.clientFactory = clientFactory;
             this.SaveCompositionCommand = new DelegateCommand(SaveComposition, () => this.IsChanged);
             this.IsChanged = false;
             this.RaisePropertyChanged(() => this.IsChanged);
         }
 
+        public void HasChangedPreferred(ItemModel item)
+        {
+            this.IsChanged = true;
+        }
+
         public void SaveComposition()
         {
+            this.StartLoading();
             var client = this.clientFactory.CreateClient();
-            client.GetRootModelCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
-                    "Updateing composition for issuer (ID: " + this.Issuer.Id + ")", args, x => x.Result, null, HandleErrors);
+            client.UpdateIssueSharesCompositionCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
+                    "Updateing composition for issuer (ID: " + this.Issuer.Id + ")", args, x => x.Result, ReloadModel, FinishLoading);
             client.UpdateIssueSharesCompositionAsync(new RootModel { Issuer = this.Issuer, Items = this.Items });
+        }
+
+        public void ReloadModel(RootModel model)
+        {
+            this.IsChanged = false;
+            this.FinishLoading();
         }
 
         public IssuerModel Issuer { get; private set; }
 
         internal void RequestData(String securityShortName, Action<RootModel> callback)
         {
+            this.StartLoading();
             this.callback = callback;
             var client = this.clientFactory.CreateClient();
             client.GetRootModelCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
-                    "Getting composition for security issuer (short name: " + securityShortName + ")", args, x => x.Result, InitializeDataGrid, HandleErrors);
+                    "Getting composition for security issuer (short name: " + securityShortName + ")", args, x => x.Result, InitializeDataGrid, FinishLoading);
 
             client.GetRootModelAsync(securityShortName);
             
         }
 
+
+
         private Action<RootModel> callback;
+        private IEventAggregator aggregator;
         public ObservableCollection<ItemModel> Items { get; private set; }
 
         internal void InitializeDataGrid(RootModel model)
@@ -80,19 +98,24 @@ namespace GreenField.IssuerShares.Controls
             foreach (var item in this.Items)
             {
                 item.InitializeRemoveCommand(new DelegateCommand<ItemModel>(RemoveItemFromComposition));
+                item.InitializeChangedPreferredCommand(new DelegateCommand<ItemModel>(HasChangedPreferred));
             }
             this.RaisePropertyChanged(() => this.Items);
             callback(model);
+            CompositionChangedEventInfo info = new CompositionChangedEventInfo { Securities = this.Items.Select(x => Int32.Parse(x.Security.Id)).ToList() };
+            this.aggregator.GetEvent<CompositionChangedEvent>().Publish(info);
+            
         }
 
         public void RemoveItemFromComposition(ItemModel item)
         {
             this.Items.Remove(item);
             this.IsChanged = true;
+            CompositionChangedEventInfo info = new CompositionChangedEventInfo { Securities = this.Items.Select(x => Int32.Parse(x.Security.Id)).ToList() };
+            this.aggregator.GetEvent<CompositionChangedEvent>().Publish(info);
         }
 
-        internal void HandleErrors(Exception e)
-        { }
+        
 
         internal void AddSecurity(Aims.Data.Client.ISecurity security)
         {
@@ -100,6 +123,8 @@ namespace GreenField.IssuerShares.Controls
             item.InitializeRemoveCommand(new DelegateCommand<ItemModel>(RemoveItemFromComposition));
             this.Items.Add(item);
             this.IsChanged = true;
+            CompositionChangedEventInfo info = new CompositionChangedEventInfo { Securities = this.Items.Select(x => Int32.Parse(x.Security.Id)).ToList() };
+            this.aggregator.GetEvent<CompositionChangedEvent>().Publish(info);
             
         }
 

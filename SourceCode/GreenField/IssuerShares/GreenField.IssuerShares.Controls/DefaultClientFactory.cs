@@ -18,6 +18,7 @@ namespace GreenField.IssuerShares.Controls
         public GreenField.IssuerShares.Client.Backend.IssuerShares.FacadeClient CreateClient()
         {
             var result = new FacadeClient();
+            
             return result;
         }
     }

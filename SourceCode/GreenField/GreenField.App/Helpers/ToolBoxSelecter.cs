@@ -234,6 +234,9 @@ namespace GreenField.App.Helpers
                 case DashboardCategoryType.COMPANY_CHARTING_VALUATION:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
+                case DashboardCategoryType.COMPANY_ISSUERSHARES_ISSUER_SHARES_COMPOSITION:
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
+                    break;
                 case DashboardCategoryType.COMPANY_CORPORATE_GOVERNANCE_QUESTIONNAIRE:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;

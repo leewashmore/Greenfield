@@ -31,7 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataLoader.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\DataLoader.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -44,12 +49,22 @@
   <ItemGroup>
     <Compile Include="Deserializer.cs" />
     <Compile Include="Facade.cs" />
+    <Compile Include="FacadeSettings.cs" />
     <Compile Include="IFacade.cs" />
+    <Compile Include="IssueSharesLoaderExtension.cs" />
+    <Compile Include="IssueSharesPusherExtension.cs" />
     <Compile Include="Model, Item.cs" />
     <Compile Include="OnDemandDataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model, Root.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Serializer.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Model, ShareRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Aims.Core\Aims.Core.csproj">
@@ -64,6 +79,16 @@
       <Project>{4979BF56-D21F-41EE-A218-E7D33F82236C}</Project>
       <Name>GreenField.IssuerShares.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

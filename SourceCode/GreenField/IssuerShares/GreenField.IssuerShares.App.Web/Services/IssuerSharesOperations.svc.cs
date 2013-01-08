@@ -39,7 +39,10 @@ namespace GreenField.IssuerShares.App.Web.Services
 
         public Server.RootModel GetRootModel(String securityShortName)
         {
-            return this.facade.GetRootModel(securityShortName);
+            return this.Watch("Unable to get model for the securty (Short name: " + securityShortName + ").", delegate
+            {
+                return this.facade.GetRootModel(securityShortName);
+            });
         }
 
 
@@ -60,6 +63,15 @@ namespace GreenField.IssuerShares.App.Web.Services
             return this.Watch("Unable to update composition for the issuer (ID: " + model.Issuer.Id + ").", delegate
             {
                 return this.facade.UpdateIssueSharesComposition(model);
+            });
+        }
+
+
+        public IEnumerable<IssuerSecurityShareRecordModel> GetIssuerSharesBySecurityShortName(string securityShortName)
+        {
+            return this.Watch("Unable to get share records for the securty (Short name: " + securityShortName + ").", delegate
+            {
+                return this.facade.GetIssuerSharesBySecurityShortName(securityShortName);
             });
         }
     }

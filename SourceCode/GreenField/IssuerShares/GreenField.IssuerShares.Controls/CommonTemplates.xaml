@@ -1,0 +1,96 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:GreenField.IssuerShares.Controls"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:p="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+>
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/GreenField.IssuerShares.Controls;component/CrazyShit.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="TextBlock" x:Key="nicelyMarginedTextboxStyle">
+        <Setter Property="Margin" Value="5 4" />
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="totalTextBlockStyle" BasedOn="{StaticResource nicelyMarginedTextboxStyle}">
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    
+
+
+    <local:BusyIndicatorTemplateSelector x:Key="busyIndicatorTemplateSelector">
+
+        <local:BusyIndicatorTemplateSelector.LoadingTemplate>
+            <DataTemplate>
+                <TextBlock>Loading, please wait</TextBlock>
+            </DataTemplate>
+        </local:BusyIndicatorTemplateSelector.LoadingTemplate>
+
+       
+
+        <local:BusyIndicatorTemplateSelector.ErrorTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Vertical">
+                    <ScrollViewer Content="{Binding}" MaxHeight="300">
+                        <ScrollViewer.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Exception.Message}" TextWrapping="Wrap"></TextBlock>
+                                    <TextBlock Text="{Binding Exception.StackTrace}" TextWrapping="Wrap"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ScrollViewer.ContentTemplate>
+                    </ScrollViewer>
+                    <Button Margin="0 5 0 0" Command="{Binding AcknowledgeCommand}">OK</Button>
+                </StackPanel>
+            </DataTemplate>
+        </local:BusyIndicatorTemplateSelector.ErrorTemplate>
+
+
+    </local:BusyIndicatorTemplateSelector>
+    <local:CommunicationStateModelToBooleanConverter x:Key="communicationStateModelToBooleanConverter" />
+
+
+    <Style TargetType="toolkit:BusyIndicator" x:Key="busyIndicatorStyle" BasedOn="{StaticResource specialBusyIndicator}">
+        <Setter Property="MinWidth" Value="300" />
+    </Style>
+
+    <Style TargetType="sdk:DataGridCell" x:Key="valueCellStyle">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style TargetType="sdk:DataGridCell" x:Key="editableValueCellStyle">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    
+
+    <DataTemplate x:Key="saveTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center" Margin="0 0 5 0">Ready?</TextBlock>
+            <Button Command="{Binding SaveCommand}" Content="Save" />
+        </StackPanel>
+    </DataTemplate>
+
+    
+
+
+    
+
+    <Style TargetType="ContentControl" x:Key="valueContentStyle">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
+
+    <Style TargetType="ContentControl" x:Key="editableValueContentStyle">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+</ResourceDictionary>

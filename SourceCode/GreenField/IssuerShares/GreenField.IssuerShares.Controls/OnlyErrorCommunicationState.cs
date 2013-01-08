@@ -37,7 +37,7 @@ namespace GreenField.IssuerShares.Controls
 
         public void FinishLoading(Exception exception)
         {
-            //this.viewModel.CommunicationStateModel = new ErrorCommunicationStateModel(exception);
+            this.viewModel.CommunicationStateModel = new ErrorCommunicationStateModel(exception);
             this.IsLoading = false;
         }
     }

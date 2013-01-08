@@ -164,6 +164,14 @@ namespace Aims.Core
 
         }
 
+        public IEnumerable<ISecurity> FindByIssuer(String issuerId)
+        {
+            IEnumerable<ISecurity> found;
+            found = all.Where(x => x.Value.IssuerId == issuerId).Select(x => x.Value);
+            return found;
+
+        }
+
         public IEnumerable<ISecurity> FindSomeUsingPattern(
             String pattern,
             Int32 atMost,

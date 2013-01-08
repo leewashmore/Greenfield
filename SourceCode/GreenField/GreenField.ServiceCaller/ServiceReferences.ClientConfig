@@ -86,6 +86,12 @@
          receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647" enableHttpCookieContainer="true"
          maxReceivedMessageSize="2147483647">
           <security mode="None" />
+          
+        </binding>
+        <binding name="IssuerSharesOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+         receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647" enableHttpCookieContainer="true"
+                     maxReceivedMessageSize="2147483647" >
+          <security mode="None" />
         </binding>
       </basicHttpBinding>
     </bindings>
@@ -144,7 +150,9 @@
       <endpoint address="http://localhost:59430/Services/TargetingOperations.svc"
         binding="basicHttpBinding" bindingConfiguration="TargetingOperations"
         contract="Backend.Targeting.IFacade" name="TargetingOperations" />
-
+      <endpoint address="http://localhost:59430/Services/IssuerSharesOperations.svc"
+                binding="basicHttpBinding" bindingConfiguration="IssuerSharesOperations"
+                contract="Backend.IssuerShares.IFacade" name="IssuerSharesOperations" />
     </client>
   </system.serviceModel>
 </configuration>

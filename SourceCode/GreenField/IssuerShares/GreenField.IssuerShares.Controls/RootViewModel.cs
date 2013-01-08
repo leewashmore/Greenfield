@@ -41,7 +41,7 @@ namespace GreenField.IssuerShares.Controls
                 new OnlyErrorCommunicationState(this),
                 this.securityPickerClientFactory
             );
-
+            
             
             this.SecurityPickerViewModel = securityPickerViewModel;
             securityPickerViewModel.SecurityPicked += (s, e) =>
@@ -51,23 +51,23 @@ namespace GreenField.IssuerShares.Controls
             };
 
 
-            this.CompositionViewModel = new CompositionViewModel(clientFactory);
-
+            this.CompositionViewModel = new CompositionViewModel(clientFactory, aggregator);
+            this.compositionViewModel.CommunicationStateChanged += this.WhenCommunicationStateChanges;
+            this.HistoryViewModel = new HistoryViewModel(clientFactory, aggregator);
+            this.historyViewModel.CommunicationStateChanged += this.WhenCommunicationStateChanges;
             aggregator.GetEvent<SecurityPickedGlobalEvent>().Subscribe(this.TakeSecurity);
 
             
             
         }
 
-        
-
-        
-
         public void TakeSecurity(SecurityPickedGlobalEventInfo info)
         {
+            
             this.securityPickerClientFactory.Initialize(info.SecurityShortName);
             this.SecurityPickerViewModel.IsEnabled = true;
             this.CompositionViewModel.RequestData(info.SecurityShortName, UpdateSecurityPickerExclusions);
+            this.HistoryViewModel.RequestData(info.SecurityShortName);
         }
 
         public void UpdateSecurityPickerExclusions(RootModel model)
@@ -99,6 +99,20 @@ namespace GreenField.IssuerShares.Controls
             {
                 this.compositionViewModel = value;
                 this.RaisePropertyChanged(() => this.CompositionViewModel);
+            }
+        }
+
+        private Controls.HistoryViewModel historyViewModel;
+        public HistoryViewModel HistoryViewModel
+        {
+            get
+            {
+                return this.historyViewModel;
+            }
+            set
+            {
+                this.historyViewModel = value;
+                this.RaisePropertyChanged(() => this.HistoryViewModel);
             }
         }
     }

@@ -5,6 +5,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:mine="clr-namespace:GreenField.IssuerShares.Controls"
+    xmlns:local="clr-namespace:GreenField.IssuerShares.Controls"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
     <UserControl.Resources>
@@ -45,7 +48,9 @@
             <sdk:DataGridTemplateColumn Header="Preferred">
                 <sdk:DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <CheckBox IsChecked="{Binding Path=Preferred, Mode=TwoWay}" />
+                        <CheckBox IsChecked="{Binding Path=Preferred, Mode=TwoWay}" mine:CheckBoxChecked.Command="{Binding ChangedPreferredCommand}"  mine:CheckBoxChecked.CommandParameter="{Binding}" >
+                            
+                        </CheckBox>
                     </DataTemplate>
                 </sdk:DataGridTemplateColumn.CellTemplate>
             </sdk:DataGridTemplateColumn>

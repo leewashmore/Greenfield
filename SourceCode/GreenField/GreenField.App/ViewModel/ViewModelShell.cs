@@ -22,6 +22,7 @@ using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.UserSession;
 using System.Reflection;
+using GreenField.IssuerShares.Controls;
 
 namespace GreenField.App.ViewModel
 {
@@ -85,6 +86,7 @@ namespace GreenField.App.ViewModel
                 eventAggregator.GetEvent<ToolboxUpdateEvent>().Subscribe(HandleToolboxUpdateEvent);
             }
             this.InitializeTargetingCommands();
+            this.InitializeIssuerSharesCommands();
 
             BusyIndicatorNotification(true, "Retrieving session information...");
             ServiceClientFactory.ReadCookies((result) =>
@@ -305,6 +307,7 @@ namespace GreenField.App.ViewModel
                         SelectorPayload.EntitySelectionData = value;
                         eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(value);
 #warning ADD EVENT TO ACTIVATE SECURITY ON ISSUER SHARES
+                        eventAggregator.GetEvent<SecurityPickedGlobalEvent>().Publish(new SecurityPickedGlobalEventInfo { SecurityShortName = selectedSecurityInfo.InstrumentID });
                         //eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(value);
                     }
                 }
