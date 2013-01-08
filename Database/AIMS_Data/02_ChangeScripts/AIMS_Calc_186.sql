@@ -37,6 +37,7 @@ as
 	  from PERIOD_FINANCIALS 
      where DATA_ID = 90					-- STLD
 	   and PERIOD_TYPE = 'A'
+	   and FISCAL_TYPE = 'FISCAL'
 	and ISSUER_ID = @ISSUER_ID
 	
 	  group by issuer_id, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE
@@ -49,7 +50,8 @@ as
 	 where DATA_ID = 90					-- STLD
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
---       and AMOUNT_TYPE = 'ACTUAL'	                          
+	   and pf.FISCAL_TYPE = 'FISCAL'
+       and pf.AMOUNT_TYPE = 'ACTUAL'	                          
 	   
 	print ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	set @START = GETDATE()
@@ -60,7 +62,8 @@ as
 	  from PERIOD_FINANCIALS 
      where DATA_ID = 92					-- STLD
 	   and PERIOD_TYPE = 'A'
---				and AMOUNT_TYPE = 'ACTUAL'	                          
+	   and FISCAL_TYPE = 'FISCAL'
+	   and AMOUNT_TYPE = 'ACTUAL'	                          
 	   and ISSUER_ID = @ISSUER_ID
 	 group by issuer_id, PERIOD_YEAR, PERIOD_TYPE, FISCAL_TYPE, CURRENCY, DATA_SOURCE
 	 
@@ -74,7 +77,8 @@ as
 	 where DATA_ID = 92				-- LMIN
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
---       and AMOUNT_TYPE = 'ACTUAL'	
+	   and pf.FISCAL_TYPE = 'FISCAL'
+	   and pf.AMOUNT_TYPE = 'ACTUAL'	
 	   
 	print ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	set @START = GETDATE()

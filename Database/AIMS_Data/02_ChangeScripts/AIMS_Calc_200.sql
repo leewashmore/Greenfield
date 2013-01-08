@@ -16,35 +16,79 @@ CREATE procedure [dbo].[AIMS_Calc_200](
 )
 as
 
+--print 'InCalc 200'
+	-- Calculate the percentage of the amount to use.
+	declare @PERCENTAGE decimal(32,6)
+	declare @PERIOD_END_DATE datetime
+	declare @PERIOD_YEAR integer
+	select @PERCENTAGE = cast(datediff(day, getdate(), MIN(period_end_date)) as decimal(32,6)) / 365.0
+	   ,   @PERIOD_END_DATE = MIN(period_end_date)
+	  from PERIOD_FINANCIALS
+	 where ISSUER_ID = @ISSUER_ID
+	   and DATA_ID = 104
+	   and PERIOD_END_DATE > GETDATE()
+	   and PERIOD_TYPE = 'A'
+	   and FISCAL_TYPE = 'FISCAL'
+--print 'Percentage = ' + cast(@PERCENTAGE as varchar(20))
+--print 'PERIOD_END_DATE = ' + cast(@PERIOD_END_DATE as varchar(32))
+	select @PERIOD_YEAR = PERIOD_YEAR
+	  from PERIOD_FINANCIALS
+	 where ISSUER_ID = @ISSUER_ID
+	   and DATA_ID = 104
+	   and PERIOD_END_DATE = @PERIOD_END_DATE
+	   and PERIOD_TYPE = 'A'
+--print 'PERIOD_YEAR = ' + cast(@PERIOD_YEAR as varchar(32))
 	-- Get the data
 	
-	select pf.* 
-	   into #A
-	  from dbo.PERIOD_FINANCIALS pf 
-	 where DATA_ID = 104			-- QTLE
+	select distinct ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
+		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
+		  , DATA_ID, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE
+		  , (AMOUNT * @PERCENTAGE) as AMOUNT, AMOUNT as AMOUNT100
+	  into #A
+	  from dbo.PERIOD_FINANCIALS pf  
+	 where DATA_ID = 290		-- Earnings
 	   and pf.ISSUER_ID = @ISSUER_ID
-	   and PERIOD_TYPE = 'A'
-	   and period_end_date = (select min(period_end_date) from dbo.PERIOD_FINANCIALS pf  -- to find closest end_date to getdate
-							   where DATA_ID = 104			
-							     and pf.ISSUER_ID = @ISSUER_ID
-						         and period_end_date > getdate() 
-						         and PERIOD_TYPE = 'A')
+	   and pf.PERIOD_TYPE = 'A'
+	   and FISCAL_TYPE = 'FISCAL'
+	   and pf.PERIOD_END_DATE = @PERIOD_END_DATE
+	
+	select distinct ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
+		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
+		  , DATA_ID, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE
+		  , (AMOUNT * (1-@PERCENTAGE)) as AMOUNT
+	  into #B
+	  from dbo.PERIOD_FINANCIALS pf  
+	 where DATA_ID = 290		-- Earnings
+	   and pf.ISSUER_ID = @ISSUER_ID
+	   and pf.PERIOD_TYPE = 'A'
+	   and FISCAL_TYPE = 'FISCAL'
+	   and pf.PERIOD_YEAR = @PERIOD_YEAR + 1
 	
  ---- Total amount for all the fiscal quarters within an year --- 
 
-	select sum(f.amount)as AMOUNT, f.ISSUER_ID,f.FISCAL_TYPE,f.COA_TYPE,f.DATA_SOURCE,f.CURRENCY,datepart(year,getdate())as current_year 
-	into #B         
-         from (select * 
-                       from dbo.PERIOD_FINANCIALS pf
-                      where pf.DATA_ID = 290 -- Earnings
-                        and pf.FISCAL_TYPE = 'FISCAL'
-                        and pf.PERIOD_TYPE = 'A'
-                        and pf.PERIOD_END_DATE > GETDATE()                                      -- previous quarter from today
-                        and pf.PERIOD_END_DATE < DATEADD( month, 12, getdate())   
-					    and pf.ISSUER_ID = @ISSUER_ID
-                     ) f
-     group by f.issuer_id, f.FISCAL_TYPE, f.COA_TYPE, f.DATA_SOURCE, f.CURRENCY
-	having count(distinct PERIOD_TYPE) = 1
+	select distinct ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
+		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
+		  , DATA_ID, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE
+		  , (AMOUNT * @PERCENTAGE) as AMOUNT, AMOUNT as AMOUNT100
+	  into #C
+	  from dbo.PERIOD_FINANCIALS pf  
+	 where DATA_ID = 104		-- Equity
+	   and pf.ISSUER_ID = @ISSUER_ID
+	   and pf.PERIOD_TYPE = 'A'
+	   and FISCAL_TYPE = 'FISCAL'
+	   and pf.PERIOD_END_DATE = @PERIOD_END_DATE
+	
+	select distinct ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
+		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
+		  , DATA_ID, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE
+		  , (AMOUNT * (1-@PERCENTAGE)) as AMOUNT
+	  into #D
+	  from dbo.PERIOD_FINANCIALS pf  
+	 where DATA_ID = 104		-- Equity
+	   and pf.ISSUER_ID = @ISSUER_ID
+	   and pf.PERIOD_TYPE = 'A'
+	   and FISCAL_TYPE = 'FISCAL'
+	   and pf.PERIOD_YEAR = @PERIOD_YEAR + 1
 		
 
 	-- Add the data to the table
@@ -57,15 +101,27 @@ as
 		,  a.ROOT_SOURCE_DATE, 'C', 0, '01/01/1900'				-- These are specific for PERIOD_TYPE = 'C'
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  200 as DATA_ID										-- DATA_ID:200 DATA_ID:200 Forward ROE
-		,  b.AMOUNT /a.AMOUNT as AMOUNT						-- Sum of next 4 quarters NINC**/Next Annual QTLE*
-		,  'Sum of 4 quarters(' + CAST(b.AMOUNT as varchar(32)) + ') / Next Annual NINC(' + CAST(a.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
+		,  case when b.AMOUNT IS NOT NULL and d.AMOUNT IS NOT NULL then ((a.AMOUNT + b.AMOUNT) / (c.AMOUNT + d.AMOUNT))
+				when b.AMOUNT IS     NULL and d.AMOUNT IS NOT NULL then ((a.AMOUNT100) / (c.AMOUNT + d.AMOUNT))
+				when b.AMOUNT IS NOT NULL and d.AMOUNT IS     NULL then ((a.AMOUNT + b.AMOUNT) / (c.AMOUNT100))
+																   else ((a.AMOUNT100) / (c.AMOUNT100)) end	as AMOUNT						-- Sum of next 4 quarters NINC**/Next Annual QTLE*
+
+		,  case when b.AMOUNT IS NOT NULL and d.AMOUNT IS NOT NULL then 'Earning(' + cast(a.AMOUNT as varchar(20)) + ' + ' + cast(b.AMOUNT as varchar(20)) + ') / Equity(' + cast(c.AMOUNT as varchar(20)) + ' + '  + cast(d.AMOUNT as varchar(20)) + ')'
+				when b.AMOUNT IS     NULL and d.AMOUNT IS NOT NULL then 'Earning(' + cast(a.AMOUNT100 as varchar(20)) + ') / Equity(' + cast(c.AMOUNT as varchar(20)) + ' + '  + cast(d.AMOUNT as varchar(20)) + ')'
+				when b.AMOUNT IS NOT NULL and d.AMOUNT IS     NULL then 'Earning(' + cast(a.AMOUNT as varchar(20)) + ' + ' + cast(b.AMOUNT as varchar(20)) + ') / Equity(' + cast(c.AMOUNT100 as varchar(20)) + ')'
+																   else 'Earning(' + cast(a.AMOUNT100 as varchar(20)) + ') / Equity(' + cast(c.AMOUNT100 as varchar(20)) + ')' end as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
-	 inner join	#B b on b.ISSUER_ID = a.ISSUER_ID 
-					and b.DATA_SOURCE = a.DATA_SOURCE --and b.PERIOD_TYPE = a.PERIOD_TYPE
-					and b.CURRENT_YEAR = a.PERIOD_YEAR and b.FISCAL_TYPE = a.FISCAL_TYPE
+	  left join	#B b on b.ISSUER_ID = a.ISSUER_ID 
+					and b.DATA_SOURCE = a.DATA_SOURCE
 					and b.CURRENCY = a.CURRENCY
+	 inner join	#C c on c.ISSUER_ID = a.ISSUER_ID 
+					and c.DATA_SOURCE = a.DATA_SOURCE
+					and c.CURRENCY = a.CURRENCY
+	  left join	#D d on d.ISSUER_ID = a.ISSUER_ID 
+					and d.DATA_SOURCE = a.DATA_SOURCE
+					and d.CURRENCY = a.CURRENCY
 	 where 1=1 	  
 	   and isnull(a.AMOUNT, 0.0) <> 0.0	-- Data validation
 --	 order by a.ISSUER_ID, a.COA_TYPE, a.DATA_SOURCE, a.PERIOD_TYPE, a.PERIOD_YEAR,  a.FISCAL_TYPE, a.CURRENCY
@@ -92,7 +148,6 @@ as
 			  from #A a
 			  left join	#B b on b.ISSUER_ID = a.ISSUER_ID 
 							and b.DATA_SOURCE = a.DATA_SOURCE --and b.PERIOD_TYPE = a.PERIOD_TYPE
-							and b.CURRENT_YEAR = a.PERIOD_YEAR and b.FISCAL_TYPE = a.FISCAL_TYPE
 							and b.CURRENCY = a.CURRENCY
 			 where 1=1 and b.ISSUER_ID is NULL	  
 			) union (	
@@ -114,6 +169,8 @@ as
 	-- Clean up
 	drop table #A
 	drop table #B
+	drop table #C
+	drop table #D
 	
 
 

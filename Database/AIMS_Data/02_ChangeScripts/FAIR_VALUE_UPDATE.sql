@@ -10,6 +10,7 @@ GO
 create procedure FAIR_VALUE_UPDATE (
 	@ISSUER_ID			varchar(20) = NULL		-- The company identifier		
 ,	@VALUE_TYPE			varchar(20) = NULL		-- Default to update all datasources
+,	@VERBOSE			char		= 'Y'	
 )
 as
 

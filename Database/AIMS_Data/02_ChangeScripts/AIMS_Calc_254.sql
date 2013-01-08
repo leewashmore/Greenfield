@@ -83,8 +83,8 @@ as
 			) union	(
 
 			-- Error conditions - missing data 
-			select GETDATE() as LOG_DATE, 254 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
-				,  a.PERIOD_YEAR,  a.PERIOD_END_DATE,  a.FISCAL_TYPE,  a.CURRENCY
+			select GETDATE() as LOG_DATE, 254 as DATA_ID, @ISSUER_ID, b.PERIOD_TYPE
+				,  b.PERIOD_YEAR,  '01/01/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE, b.CURRENCY
 				, 'ERROR calculating 254: Forward P/E Relative to Country Industry.  DATA_ID:187 is missing'
 			  from #B b
 			 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.ISSUER_ID = b.ISSUER_ID

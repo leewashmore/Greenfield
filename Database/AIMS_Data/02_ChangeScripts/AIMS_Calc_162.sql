@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------
 -- Purpose:	This procedure calculates the value for DATA_ID:162 ROIC
 --
---			(NINC-FCDP)/QTEL
+-- (130 – 291 – TTAX) / (QTLE + LMIN + 190 for Year + QTLE + LMIN + 190 for Prior Year)/2), 
 --
 -- Author:	Prerna 
 -- Date:	July 16, 2012
@@ -15,12 +15,12 @@ create procedure [dbo].[AIMS_Calc_162](
 ,	@CALC_LOG			char		= 'Y'			-- Write errors to the CALC_LOG table.
 )
 as
-	-- (130 – 291 – TTAX) / (QTLE + LMIN + 190 for Year + QTLE + LMIN + 190 for Prior Year)/2), 
-
+	
 	-- Get the data
 	select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE
 		  , a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
 		  , a.DATA_ID, (a.AMOUNT - b.AMOUNT - c.AMOUNT) as AMOUNT, ' ' as CALCULATION_DIAGRAM, a.SOURCE_CURRENCY, a.AMOUNT_TYPE
+		 
 	  into #A
 	  from (select * from dbo.PERIOD_FINANCIALS pf 
 			 where DATA_ID = 130					-- 
@@ -39,19 +39,47 @@ as
 				    and pf.PERIOD_TYPE = 'A'
 				 ) c on c.DATA_SOURCE = a.DATA_SOURCE and c.PERIOD_YEAR = a.PERIOD_YEAR 
 					and c.FISCAL_TYPE = a.FISCAL_TYPE and c.CURRENCY = a.CURRENCY
-		  
 
-	select pf.ISSUER_ID, pf.SECURITY_ID, pf.COA_TYPE, pf.DATA_SOURCE, pf.ROOT_SOURCE
-		  , pf.ROOT_SOURCE_DATE, pf.PERIOD_TYPE, pf.PERIOD_YEAR, pf.PERIOD_END_DATE, pf.FISCAL_TYPE, pf.CURRENCY
-		  , 0 as DATA_ID, sum(pf.AMOUNT) as AMOUNT, ' ' as CALCULATION_DIAGRAM, pf.SOURCE_CURRENCY, pf.AMOUNT_TYPE
-	  into #B
+--select 'calc_162 #A' as A, * from #A where currency = 'USD' and data_source = 'PRIMARY' and FISCAL_TYPE = 'CALENDAR' Order by PERIOD_YEAR, PERIOD_TYPE
+	select *
+	  into #B190
 	  from dbo.PERIOD_FINANCIALS pf 
-	 where pf.DATA_ID in (104, 92, 190)					-- QTLE, LMIN, 190
+	 where pf.DATA_ID = 190
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
-	 group by pf.ISSUER_ID, pf.SECURITY_ID, pf.COA_TYPE, pf.DATA_SOURCE, pf.ROOT_SOURCE
-		  , pf.ROOT_SOURCE_DATE, pf.PERIOD_TYPE, pf.PERIOD_YEAR, pf.PERIOD_END_DATE, pf.FISCAL_TYPE, pf.CURRENCY
-		  , pf.SOURCE_CURRENCY, pf.AMOUNT_TYPE
+
+	select *
+	  into #B104
+	  from dbo.PERIOD_FINANCIALS pf 
+	 where pf.DATA_ID = 104				-- QTLE
+	   and pf.ISSUER_ID = @ISSUER_ID
+	   and pf.PERIOD_TYPE = 'A'
+
+	select *
+	  into #B92
+	  from dbo.PERIOD_FINANCIALS pf 
+	 where pf.DATA_ID = 92				-- LMIN
+	   and pf.ISSUER_ID = @ISSUER_ID
+	   and pf.PERIOD_TYPE = 'A'
+
+
+
+
+
+	select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE
+		  , a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
+		  , a.DATA_ID, (a.AMOUNT + isnull(b.AMOUNT, 0.0) + isnull(c.AMOUNT, 0.0)) as AMOUNT, ' ' as CALCULATION_DIAGRAM
+		  , a.SOURCE_CURRENCY, a.AMOUNT_TYPE
+		  , a.AMOUNT as AMOUNT104, b.AMOUNT as AMOUNT92, c.AMOUNT as AMOUNT190
+	  into #B
+	  from #B104 a
+	   left join #B92 b on b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_YEAR = a.PERIOD_YEAR 
+						and b.FISCAL_TYPE = a.FISCAL_TYPE and b.CURRENCY = a.CURRENCY
+						and b.PERIOD_END_DATE = a.PERIOD_END_DATE
+	   left join #B190 c on c.DATA_SOURCE = a.DATA_SOURCE and c.PERIOD_YEAR = a.PERIOD_YEAR 
+						and c.FISCAL_TYPE = a.FISCAL_TYPE and c.CURRENCY = a.CURRENCY
+						and c.PERIOD_END_DATE = a.PERIOD_END_DATE
+
 
 	-- Add the data to the table
 	insert into PERIOD_FINANCIALS(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
@@ -72,7 +100,7 @@ as
 					and b.CURRENCY = a.CURRENCY
 	  left join	#B c on c.ISSUER_ID = a.ISSUER_ID 
 					and c.DATA_SOURCE = a.DATA_SOURCE and c.PERIOD_TYPE = a.PERIOD_TYPE
-					and c.PERIOD_YEAR = a.PERIOD_YEAR-1 and c.FISCAL_TYPE = a.FISCAL_TYPE
+					and c.PERIOD_YEAR+1 = a.PERIOD_YEAR and c.FISCAL_TYPE = a.FISCAL_TYPE
 					and c.CURRENCY = a.CURRENCY
 	 where 1=1 
 	   and isnull(c.AMOUNT, 0.0) <> 0.0	-- Data validation
@@ -136,3 +164,4 @@ as
 
 
 
+--exec AIMS_Calc_162 '223340'

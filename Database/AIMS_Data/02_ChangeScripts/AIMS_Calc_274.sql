@@ -61,7 +61,7 @@ as
 					and a.CURRENCY = c.CURRENCY
 	 where 1=1 
 	   and isnull(c.AMOUNT, 0.0) <> 0.0	-- Data validation
-	   and (a.AMOUNT is not null and b.AMOUNT is not null)	-- Both Numerator values cannot be null
+	   and (a.AMOUNT is not null or b.AMOUNT is not null)	-- Both Numerator values cannot be null
 --	 order by a.ISSUER_ID, a.COA_TYPE, a.DATA_SOURCE, a.PERIOD_TYPE, a.PERIOD_YEAR,  a.FISCAL_TYPE, a.CURRENCY
 
 	if @CALC_LOG = 'Y'

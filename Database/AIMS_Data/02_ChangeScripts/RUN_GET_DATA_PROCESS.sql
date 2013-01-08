@@ -8,7 +8,10 @@ GO
 -- Author:	David Muench
 -- Date:	Oct 18, 2012
 ------------------------------------------------------------------------
-create procedure RUN_GET_DATA_PROCESS 
+create procedure RUN_GET_DATA_PROCESS (
+	@CALC_LOG		char	= 'N'
+,	@VERBOSE		char	= 'N'
+)
 as
 
 	-- Declare the parameter variables for the GET_DATA_PROCESS
@@ -16,7 +19,7 @@ as
 	declare @RUN integer
 	
 	-- Initialize the process
-	exec Get_Data_Process 'START', NULL, NULL, NULL, @RUN_ID OUTPUT;
+	exec Get_Data_Process 'START', NULL, NULL, NULL, NULL, @RUN_ID OUTPUT;
 	print 'Use this RUN_ID='+isnull(cast( @RUN_ID as varchar(10)), 'NULL');
 	set @RUN = @RUN_ID;
 
@@ -26,7 +29,7 @@ as
 	  from NIGHTLY_ISSUER_LIST;
 
 	-- Start the process running.
-	exec Get_Data_Process 'RUN', @RUN, NULL, 'N', @RUN_ID;
+	exec Get_Data_Process 'RUN', @RUN, NULL, @CALC_LOG, @VERBOSE, @RUN_ID;
 
 go
 

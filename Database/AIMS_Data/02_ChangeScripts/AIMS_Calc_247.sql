@@ -23,7 +23,8 @@ print 'In calc_247'
 	 where DATA_ID = 198					
 	   and sb.ISSUER_ID = @ISSUER_ID;
 
-select 'Calc_247 #A' as A, * from #A
+--select 'Calc_247 #A' as A, * from #A
+
 	select bf.*, sb.SECURITY_ID
 	  into #B
 	  from dbo.BENCHMARK_NODE_FINANCIALS bf
@@ -34,7 +35,8 @@ select 'Calc_247 #A' as A, * from #A
 	   and bf.NODE_NAME1 = 'INDUSTRY'
 	   and bf.NODE_NAME2 is null
 	   and bf.PERIOD_TYPE = 'C' ;
-select 'Calc_247 #B' as B, * from #B
+
+--select 'Calc_247 #B' as B, * from #B
 	    
 
 	-- Add the data to the table

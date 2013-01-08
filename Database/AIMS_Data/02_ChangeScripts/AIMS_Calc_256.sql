@@ -23,6 +23,7 @@ as
 	  from dbo.PERIOD_FINANCIALS pf 
 	 where DATA_ID = 90			-- Total Debt
 	   and pf.ISSUER_ID = @ISSUER_ID
+	   and pf.PERIOD_TYPE = 'A'
 	   and period_end_date = (select max(period_end_date) from dbo.PERIOD_FINANCIALS pf  -- to find closest end_date to getdate
 							   where DATA_ID = 90			
 							     and pf.ISSUER_ID = @ISSUER_ID

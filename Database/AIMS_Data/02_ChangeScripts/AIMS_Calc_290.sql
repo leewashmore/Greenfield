@@ -17,9 +17,10 @@ create procedure [dbo].[AIMS_Calc_290](
 as
 	declare @DATA_ID integer
 	select @DATA_ID = case when PREFERRED = 'Y' then 44 else 47 end	-- NINC or CIAC
-	  from ISSUER_SHARES_COMPOSITION
-	 where ISSUER_ID = @ISSUER_ID
-	
+	  from (select max(PREFERRED) as PREFERRED from ISSUER_SHARES_COMPOSITION
+			where ISSUER_ID = @ISSUER_ID) a
+
+--print 'AIMS_Calc_290 @DATA_ID = ' + cast(@DATA_ID	as varchar(20))
 
 	-- Get the data
 	select pf.* 
@@ -43,12 +44,7 @@ as
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
-	 inner join	#A b on b.ISSUER_ID = a.ISSUER_ID and b.AMOUNT_TYPE = a.AMOUNT_TYPE
-					and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
-					and b.PERIOD_YEAR+1 = a.PERIOD_YEAR and b.FISCAL_TYPE = a.FISCAL_TYPE
-					and b.CURRENCY = a.CURRENCY
 	 where 1=1 
-	   and isnull(b.AMOUNT, 0.0) <> 0.0	-- Data validation
 --	 order by a.ISSUER_ID, a.COA_TYPE, a.DATA_SOURCE, a.PERIOD_TYPE, a.PERIOD_YEAR,  a.FISCAL_TYPE, a.CURRENCY
 
 	
@@ -103,6 +99,4 @@ as
 	-- Clean up
 	drop table #A
 	
-
-
-
+-- exec AIMS_CALC_290 '117682'

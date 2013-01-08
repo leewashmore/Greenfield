@@ -13,6 +13,7 @@ GO
 
 CREATE procedure Get_Data_Quarterly(
 	@ISSUER_ID			varchar(20) = NULL
+,	@VERBOSE			char		= 'Y'
 )
 as
 
@@ -38,7 +39,7 @@ as
 
 
 		-- Get COAs for each ISSUER
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Create COAs'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Create COAs'
 
 		select @ISSUER_ID as ISSUER_ID
 			,  dm.COA
@@ -92,10 +93,14 @@ as
 				or sir.PeriodLengthCode = 'M'
 				or ((sir.PeriodLengthCode = 'W') and (sir.PeriodLength IN (12,13,14,25,26,27,38,39,40,51,52,53)))
 			   )
+		   and @CURRENCY_CODE is not NULL
 
 
-	print 'After Create COAs' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Create COAs' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 
 /*
@@ -111,7 +116,7 @@ as
 		 where (PeriodLengthCode = 'W' and PeriodLength IN (12,13,14,25,26,27,38,39,40,51,52,53))
 */
 
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Pivot the data'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Pivot the data'
 
 		-- Pivot the data so that it is easier to use.
 		select ISSUER_ID
@@ -199,14 +204,17 @@ as
 			, PERIOD_YEAR
 
 		-- Done collecting, now output.
-	print 'After Pivot the data' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Pivot the data' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 
 		-------------------
 		-- Interim number 1
 		-------------------
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 1 a'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 1 a'
 		
 		-- Insert the USD currency
 		insert into PERIOD_FINANCIALS
@@ -235,11 +243,14 @@ as
 		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate1 and fx.CURRENCY = 'USD'
 		 where PeriodLength1 is null or PeriodLength1 = 3
 
-	print 'After Interim number 1 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 1 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 		-- Insert the local currency
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 1 b'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 1 b'
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -266,8 +277,11 @@ as
 		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate1 and fx.CURRENCY = o.CURRENCY_CODE
 		 where PeriodLength1 is null or PeriodLength1 = 3
 
-	print 'After Interim number 1 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 1 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 		 
 		-- Need to log data from interim 1 that is not periodlength - 3
@@ -275,7 +289,7 @@ as
 		-------------------
 		-- Interim number 2
 		-------------------
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 a'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 a'
 		-- Insert the USD currency for the ones that have 3 months in the period
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
@@ -303,11 +317,15 @@ as
 		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = 'USD'
 		 where PeriodLength2 is null or PeriodLength2 = 3
 
-	print 'After Interim number 2 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 		-- Insert the local currency
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 b'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 b'
+	
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -334,12 +352,15 @@ as
 		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = o.CURRENCY_CODE
 		 where PeriodLength2 is null or PeriodLength2 = 3
 
-	print 'After Interim number 2 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 
 		-- Insert the USD currency for the ones with 6 month periods
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 c'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 c'
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -367,11 +388,15 @@ as
 		 where PeriodLength2 = 6
 		   and PeriodLength1 = 3
 
-	print 'After Interim number 2 c' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2 c' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 		-- Insert the local currency
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 d'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 d'
+	
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -399,13 +424,17 @@ as
 		 where PeriodLength2 = 6
 		   and PeriodLength1 = 3
 
-	print 'After Interim number 2 d' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2 d' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 
 
 		-- Insert the USD currency for the ones with 6 month periods
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 e'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 e'
+	
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -433,11 +462,14 @@ as
 		 where PeriodLength2 = 6
 		   and (PeriodLength1 is null or PeriodLength1 <> 3)
 
-	print 'After Interim number 2 e' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2 e' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 		-- Insert the local currency
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 f'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 f'
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -465,13 +497,16 @@ as
 		 where PeriodLength2 = 6
 		   and (PeriodLength1 is null or PeriodLength1 <> 3)
 
-	print 'After Interim number 2 f' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2 f' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 
 
 		-- Insert the USD currency for the ones with 6 month periods - Q1
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 g'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 g'
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -499,11 +534,14 @@ as
 		 where PeriodLength2 = 6
 		   and (PeriodLength1 is null or PeriodLength1 <> 3)
 
-	print 'After Interim number 2 g' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2 g' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 		-- Insert the local currency - Q1
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 h'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 h'
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -531,8 +569,11 @@ as
 		 where PeriodLength2 = 6
 		   and (PeriodLength1 is null or PeriodLength1 <> 3)
 
-	print 'After Interim number 2 h' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2 h' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 
 
@@ -540,7 +581,7 @@ as
 		-- Interim number 3
 		--------------------
 		-- Insert the USD currency for the ones that have 3 months in the period
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3 a'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3 a'
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -568,11 +609,14 @@ as
 		 where PeriodLength3 is null or PeriodLength3 = 3
 
 
-	print 'After Interim number 3 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 3 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 		-- Insert the local currency
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3 b'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3 b'
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -599,8 +643,11 @@ as
 		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate3 and fx.CURRENCY = o.CURRENCY_CODE
 		 where PeriodLength3 is null or PeriodLength3 = 3
 
-	print 'After Interim number 3 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 3 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 
 
@@ -608,7 +655,7 @@ as
 		-- Interim number 3
 		--------------------
 		-- Insert the USD currency for the ones that have 3 months in the period
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4 a'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4 a'
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -635,11 +682,14 @@ as
 		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate4 and fx.CURRENCY = 'USD'
 		 where PeriodLength4 is null or PeriodLength4 = 3
 
-	print 'After Interim number 4 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 4 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 		-- Insert the local currency
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4 b'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4 b'
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
 			, ' ' as SECUIRTY_ID
@@ -666,14 +716,17 @@ as
 		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate4 and fx.CURRENCY = o.CURRENCY_CODE
 		 where PeriodLength4 is null or PeriodLength4 = 3
 
-	print 'After Interim number 4 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 4 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 --------------------------
 -- Copy Consensus Data
 --------------------------
 
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - copy consensus data'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - copy consensus data'
 	-- Get a temp list of Period Financial data that relates to this Issuer	
 	select * 
 	  into #PF
@@ -681,12 +734,12 @@ as
 	 where pf.ISSUER_ID = @ISSUER_ID
 	   and pf.DATA_SOURCE = 'REUTERS'
 
-	print 'After #PF' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	if @VERBOSE = 'Y' print 'After #PF' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	set @START = GETDATE()
 	 -- Index it for an easier join
 	 create index PF_idx on #PF(ISSUER_ID ,FISCAL_TYPE, PERIOD_YEAR, PERIOD_TYPE)
 
-	print 'After #PF Index' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+	if @VERBOSE = 'Y' print 'After #PF Index' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 	set @START = GETDATE()
 
 	-- Collect only the Quarterly data from the Consensus table the is NOT in Period Financials.	 	
@@ -703,8 +756,11 @@ as
 	 group by cce.ISSUER_ID, cce.PERIOD_YEAR, cce.PERIOD_TYPE	
 
 				 
-	print 'After collect consensus data' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After collect consensus data' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 	
 	
 	-- Copy Consensus data in where the year&quarter is missing from PERIOD_FINANCIALS
@@ -731,10 +787,10 @@ as
 							when  1 then 104
 							when  3 then 117
 							when  4 then 124
-									end as DATA_ID
-		,  case ESTIMATE_ID when  2 then cce.AMOUNT * ci.OutstandingShares
-							when  6 then cce.AMOUNT * ci.OutstandingShares
-							when  6 then cce.AMOUNT * ci.OutstandingShares
+								end as DATA_ID
+		,  case ESTIMATE_ID when  1 then cce.AMOUNT * ci.OutstandingShares / 1000000
+							when  3 then cce.AMOUNT * ci.OutstandingShares / 1000000
+							when  4 then cce.AMOUNT * ci.OutstandingShares / 1000000
 									else cce.AMOUNT end as AMOUNT
 		,  ' ' asCALCULATION_DIAGRAM
 		,  cce.SOURCE_CURRENCY
@@ -788,8 +844,11 @@ as
 
 
 
-	print 'After copy consensus data' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-	set @START = GETDATE()
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After copy consensus data' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
 
 		-- clean up temp tables
 		drop table #COAs;

@@ -19,8 +19,8 @@ as
 	Set @START = getdate()
 
 	-- Create the Consensus data first, it will be used later
-	print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - Calc_Consensus_Estimates'
-	exec Calc_Consensus_Estimates @ISSUER_ID
+	if @VERBOSE = 'Y' print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - Calc_Consensus_Estimates'
+	exec Calc_Consensus_Estimates @ISSUER_ID, @VERBOSE
 	if @VERBOSE = 'Y' 
 		BEGIN
 			print '*** After Calc_Consensus_Estimates ' + @ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
@@ -28,8 +28,8 @@ as
 		END
 
 	-- Prepare PERIOD_FINANCIALS and write the Annual data into it.
-	print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - Get_Data_Annual'
-	exec Get_Data_Annual @ISSUER_ID
+	if @VERBOSE = 'Y' print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - Get_Data_Annual'
+	exec Get_Data_Annual @ISSUER_ID, @VERBOSE
 	if @VERBOSE = 'Y' 
 		BEGIN
 			print '*** After Get_Data_Annual ' + @ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
@@ -37,8 +37,8 @@ as
 		END
 
 	-- Write the Quarterly data into PERIOD_FINANCIALS.
-	print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - Get_Data_Quarterly'
-	exec Get_Data_Quarterly @ISSUER_ID
+	if @VERBOSE = 'Y' print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - Get_Data_Quarterly'
+	exec Get_Data_Quarterly @ISSUER_ID, @VERBOSE
 	if @VERBOSE = 'Y' 
 		BEGIN
 			print '*** After Get_Data_Quarterly ' + @ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
@@ -46,8 +46,8 @@ as
 		END
 	
 	-- Write the Model data into the PERIOD_FINANCIALS table
-	print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - INTERNAL_FISCAL_EXTRACT'
-	exec INTERNAL_FISCAL_EXTRACT @ISSUER_ID
+	if @VERBOSE = 'Y' print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - INTERNAL_FISCAL_EXTRACT'
+	exec INTERNAL_FISCAL_EXTRACT @ISSUER_ID, @VERBOSE
 	if @VERBOSE = 'Y' 
 		BEGIN
 			print '*** After INTERNAL_FISCAL_EXTRACT ' + @ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
@@ -55,8 +55,8 @@ as
 		END
 	
 	-- Write the Model quarterly data into the PERIOD_FINANCIALS table
-	print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - INTERNAL_QUARTERLY_EXTRACT'
-	exec INTERNAL_QUARTERLY_EXTRACT @ISSUER_ID
+	if @VERBOSE = 'Y' print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - INTERNAL_QUARTERLY_EXTRACT'
+	exec INTERNAL_QUARTERLY_EXTRACT @ISSUER_ID, @VERBOSE
 	if @VERBOSE = 'Y' 
 		BEGIN
 			print '*** After INTERNAL_QUARTERLY_EXTRACT ' + @ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
@@ -64,8 +64,8 @@ as
 		END
 	
 	-- Run all the calculations on the data
-	print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - CALCULATIONS'
-	exec CALCULATIONS @ISSUER_ID, @CALC_LOG
+	if @VERBOSE = 'Y' print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - CALCULATIONS'
+	exec CALCULATIONS @ISSUER_ID, @CALC_LOG, @VERBOSE
 	if @VERBOSE = 'Y' 
 		BEGIN
 			print '*** After CALCULATIONS ' + @ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
@@ -82,7 +82,7 @@ as
 		END
 */
 	-- Update the FAIR_VALUE table
-	print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - FAIR_VALUE_UPDATE'
+	if @VERBOSE = 'Y' print '** ' + CONVERT(varchar(40), getdate(), 121) + ' - FAIR_VALUE_UPDATE'
 	exec FAIR_VALUE_UPDATE @ISSUER_ID, 'PRIMARY'
 	if @VERBOSE = 'Y' 
 		BEGIN
