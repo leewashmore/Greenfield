@@ -303,8 +303,7 @@
                                                      RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="dgFinancialReportExt_ElementExporting"
                                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}" ShowColumnHeaders="False"
                                                      RowLoaded="dgFinancialReport_RowLoaded">
-                                    <!--Lane Working here -->
-                                    <!--DataFormatString="{}{0:n4}%"           , StringFormat=\{0:n1\} -->
+                                    
                                     <telerik:RadGridView.Columns>
                                         <telerik:GridViewDataColumn x:Name="dgvcDataTypeExt" Header="Description" HeaderTextAlignment="Left" 
                                                                     TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" 

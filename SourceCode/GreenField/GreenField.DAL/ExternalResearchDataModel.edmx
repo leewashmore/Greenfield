@@ -178,14 +178,43 @@
       [PERIOD_FINANCIALS_DISPLAY].[MULTIPLIER] AS [MULTIPLIER]
       FROM [dbo].[PERIOD_FINANCIALS_DISPLAY] AS [PERIOD_FINANCIALS_DISPLAY]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.Store.PORTFOLIO_SECURITY_TARGETS" store:Type="Tables" store:Schema="dbo" store:Name="PORTFOLIO_SECURITY_TARGETS">
+      
+      <!-- Pickup Targets -->
+      <!--    <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.Store.PORTFOLIO_SECURITY_TARGETS" store:Type="Tables" store:Schema="dbo" store:Name="PORTFOLIO_SECURITY_TARGETS">
             <DefiningQuery>SELECT 
       [PORTFOLIO_SECURITY_TARGETS].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
       [PORTFOLIO_SECURITY_TARGETS].[SECURITY_ID] AS [SECURITY_ID], 
       [PORTFOLIO_SECURITY_TARGETS].[TARGET_PCT] AS [TARGET_PCT], 
       [PORTFOLIO_SECURITY_TARGETS].[UPDATED] AS [UPDATED]
       FROM [dbo].[PORTFOLIO_SECURITY_TARGETS] AS [PORTFOLIO_SECURITY_TARGETS]</DefiningQuery>
+          </EntitySet> -->
+          <!-- modified 1-3-2012 - LS - Jira: TESTDEVPROJ-512 -->
+          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.Store.PORTFOLIO_SECURITY_TARGETS" store:Type="Tables" store:Schema="dbo" store:Name="PORTFOLIO_SECURITY_TARGETS">
+            <DefiningQuery>
+              SELECT
+              [PORTFOLIO_SECURITY_TARGETS].[PORTFOLIO_ID] AS [PORTFOLIO_ID],
+              [PORTFOLIO_SECURITY_TARGETS].[SECURITY_ID] AS [SECURITY_ID],
+              [PORTFOLIO_SECURITY_TARGETS].[TARGET_PCT] AS [TARGET_PCT],
+              [PORTFOLIO_SECURITY_TARGETS].[UPDATED] AS [UPDATED]
+              FROM [dbo].[PORTFOLIO_SECURITY_TARGETS] AS [PORTFOLIO_SECURITY_TARGETS]
+              UNION
+              SELECT
+              [BU_PORTFOLIO_SECURITY_TARGET].[PORTFOLIO_ID] AS [PORTFOLIO_ID],
+              [BU_PORTFOLIO_SECURITY_TARGET].[SECURITY_ID] AS [SECURITY_ID],
+              [BU_PORTFOLIO_SECURITY_TARGET].[TARGET] AS [TARGET_PCT],
+              NULL AS [UPDATED]
+              FROM [dbo].[BU_PORTFOLIO_SECURITY_TARGET] AS [BU_PORTFOLIO_SECURITY_TARGET]
+              UNION
+              SELECT
+              [BGA_PORTFOLIO_SECURITY_FACTOR].[PORTFOLIO_ID] AS [PORTFOLIO_ID],
+              [BGA_PORTFOLIO_SECURITY_FACTOR].[SECURITY_ID] AS [SECURITY_ID],
+              [BGA_PORTFOLIO_SECURITY_FACTOR].FACTOR AS [TARGET_PCT],
+              NULL AS [UPDATED]
+              FROM [dbo].[BGA_PORTFOLIO_SECURITY_FACTOR] AS [BGA_PORTFOLIO_SECURITY_FACTOR]
+            </DefiningQuery>
           </EntitySet>
+
+
           <EntitySet Name="PRICES" EntityType="ExternalResearchModel.Store.PRICES" store:Type="Tables" store:Schema="dbo" store:Name="PRICES">
             <DefiningQuery>SELECT 
       [PRICES].[SECURITY_ID] AS [SECURITY_ID], 

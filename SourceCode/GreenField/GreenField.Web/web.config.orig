@@ -9,6 +9,7 @@
     <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
     <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
       <section name="GreenField.Web.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+      <section name="GreenField.IssuerShares.Server.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
     </sectionGroup>
   </configSections>
   <appSettings>
@@ -65,8 +66,9 @@
     </scripting>
   </system.web.extensions>
 
-  <!--Original Connection Strings
-  <connectionStrings>
+
+  <!--Original Connection Strings-->
+  <!--<connectionStrings>
     <add name="ResearchEntities" connectionString="metadata=res://*/ResearchDataModel.csdl|res://*/ResearchDataModel.ssdl|res://*/ResearchDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=ND1DDYX96Q1;Initial Catalog=Ashmore_EMM_POC;Persist Security Info=True;User ID=sa;Password=pass@123;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="ExternalResearchEntities" connectionString="metadata=res://*/ExternalResearchDataModel.csdl|res://*/ExternalResearchDataModel.ssdl|res://*/ExternalResearchDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=ND1DDYX96Q1;Initial Catalog=Aims_Data_20;Persist Security Info=True;User ID=sa;Password=pass@123;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="ICPresentationEntities" connectionString="metadata=res://*/ICPresentationDataModel.csdl|res://*/ICPresentationDataModel.ssdl|res://*/ICPresentationDataModel.msl;provider=System.Data.SqlClient;provider connection string='Data Source=ND1DDYX96Q1;Initial Catalog=Ashmore_EMM_POC;Persist Security Info=True;User ID=sa;Password=pass@123;MultipleActiveResultSets=True'" providerName="System.Data.EntityClient" />
@@ -74,6 +76,7 @@
     <add name="ReutersEntities" connectionString="metadata=res://*/ReutersDataModel.csdl|res://*/ReutersDataModel.ssdl|res://*/ReutersDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=ND1DDYX96Q1;Initial Catalog=Reuters;Persist Security Info=True;User ID=sa;Password=pass@123;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="CustomScreeningToolEntities" connectionString="metadata=res://*/CustomScreeningToolDataModel.csdl|res://*/CustomScreeningToolDataModel.ssdl|res://*/CustomScreeningToolDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=ND1DDYX96Q1;Initial Catalog=Aims_Data_06;User ID=sa;Password=pass@123;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="Aims" connectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=Aims;Integrated Security=True"/>
+     <add name="AimsEntities" connectionString="metadata=res://*/AimsModel.csdl|res://*/AimsModel.ssdl|res://*/AimsModel.msl;provider=System.Data.SqlClient;provider connection string='Data Source=lonweb1t.ashmore.local;Initial Catalog=AIMS_Data_QA;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True'" providerName="System.Data.EntityClient" />
   </connectionStrings>-->
 
   <!--Lane's DEV Connection Strings
@@ -85,6 +88,7 @@
     <add name="ReutersEntities" connectionString="metadata=res://*/ReutersDataModel.csdl|res://*/ReutersDataModel.ssdl|res://*/ReutersDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=lonweb1t.ashmore.local;Initial Catalog=Reuters;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="CustomScreeningToolEntities" connectionString="metadata=res://*/CustomScreeningToolDataModel.csdl|res://*/CustomScreeningToolDataModel.ssdl|res://*/CustomScreeningToolDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=ND1DDYYB6Q1\SQLEXPRESS;Initial Catalog=AIMS_Data0608;User ID=sa;Password=India@123;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="Aims" connectionString="Data Source=lonweb1t.ashmore.local;Initial Catalog=AIMS_Data_QA;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True"/>
+     <add name="AimsEntities" connectionString="metadata=res://*/AimsModel.csdl|res://*/AimsModel.ssdl|res://*/AimsModel.msl;provider=System.Data.SqlClient;provider connection string='Data Source=lonweb1t.ashmore.local;Initial Catalog=AIMS_Data_QA;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True'" providerName="System.Data.EntityClient" />
   </connectionStrings>-->
 
 
@@ -97,6 +101,7 @@
     <add name="ReutersEntities" connectionString="metadata=res://*/ReutersDataModel.csdl|res://*/ReutersDataModel.ssdl|res://*/ReutersDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=lonweb1t.ashmore.local;Initial Catalog=Reuters;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="CustomScreeningToolEntities" connectionString="metadata=res://*/CustomScreeningToolDataModel.csdl|res://*/CustomScreeningToolDataModel.ssdl|res://*/CustomScreeningToolDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=ND1DDYYB6Q1\SQLEXPRESS;Initial Catalog=AIMS_Data0608;User ID=sa;Password=India@123;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="Aims" connectionString="Data Source=lonweb1t.ashmore.local;Initial Catalog=AIMS_Data_QA;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True"/>
+    <add name="AimsEntities" connectionString="metadata=res://*/AimsModel.csdl|res://*/AimsModel.ssdl|res://*/AimsModel.msl;provider=System.Data.SqlClient;provider connection string='Data Source=lonweb1t.ashmore.local;Initial Catalog=AIMS_Data_QA;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True'" providerName="System.Data.EntityClient" />
   </connectionStrings>
 
 
@@ -298,6 +303,12 @@
 						 name="TargetingOperations"
 						 contract="GreenField.Targeting.Server.IFacade" />
       </service>
+      <service behaviorConfiguration="basicServiceBehavior" name="GreenField.Web.Services.IssuerSharesOperations">
+        <endpoint address="" behaviorConfiguration="SilverlightFaultBehavior"
+						 binding="basicHttpBinding" bindingConfiguration="basicHttpBinding"
+						 name="IssuerSharesOperations"
+						 contract="GreenField.IssuerShares.Server.IFacade" />
+      </service>
     </services>
     <serviceHostingEnvironment aspNetCompatibilityEnabled="true"
    multipleSiteBindingsEnabled="true" />
@@ -311,5 +322,24 @@
         <value>http://10.101.1.165:90/_vti_bin/lists.asmx</value>
       </setting>
     </GreenField.Web.Properties.Settings>
+    <GreenField.IssuerShares.Server.Properties.Settings>
+      <setting name="RecordsPerBulk" serializeAs="String">
+        <value>2000</value>
+      </setting>
+      <setting name="RecordsPerChunk" serializeAs="String">
+        <value>10000</value>
+      </setting>
+      <setting name="MaxNumberOfDaysToStopExtrapolatingAfter" serializeAs="String">
+        <value>10</value>
+      </setting>
+      <setting name="NumberOfDaysAgoToStartLoadingFrom" serializeAs="String">
+        <value>0</value>
+      </setting>
+      <setting name="NumberOfDaysBeforeLoadingDateToBeGuaranteeFromHittingGap"
+          serializeAs="String">
+        <value>7</value>
+      </setting>
+      
+    </GreenField.IssuerShares.Server.Properties.Settings>
   </applicationSettings>
 </configuration>
