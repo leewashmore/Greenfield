@@ -118,8 +118,15 @@ namespace GreenField.IssuerShares.Controls
         {
             var item = new ItemModel { Security = security.ToSecurityModel(), Preferred = false };
             item.InitializeRemoveCommand(new DelegateCommand<ItemModel>(RemoveItemFromComposition));
-            if (this.Items.Count(x => x.Security.Id == item.Security.Id) == 0)
+
+            if (this.Items.Count(x => x.Security.Id == item.Security.Id) != 0)
+            {
+                MessageBox.Show("Security is already in the composition.");
+            }
+            else
+            {
                 this.Items.Add(item);
+            }
             this.IsChanged = true;
             CompositionChangedEventInfo info = new CompositionChangedEventInfo { Securities = this.Items.Select(x => Int32.Parse(x.Security.Id)).ToList() };
             this.aggregator.GetEvent<CompositionChangedEvent>().Publish(info);
