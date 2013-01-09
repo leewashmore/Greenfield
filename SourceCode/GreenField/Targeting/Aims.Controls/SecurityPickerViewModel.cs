@@ -27,14 +27,6 @@ namespace Aims.Controls
             this.PickSecurityCommand = new DelegateCommand(this.ConsiderPickingSecurity);
             this.Items = new ObservableCollection<ISecurity>();
             this.isEnabled = false;
-            this.Exclusions = new List<ISecurity>();
-        }
-
-        public IEnumerable<ISecurity> Exclusions { get; private set; }
-
-        public void SetExclusions(IEnumerable<ISecurity> exclusions)
-        {
-            this.Exclusions = exclusions;
         }
 
         public ObservableCollection<ISecurity> Items { get; private set; }
@@ -115,14 +107,12 @@ namespace Aims.Controls
         public void TakeData(IEnumerable<ISecurity> securities)
         {
             this.Items.Clear();
-            var map = this.Exclusions.Select(x => x.Ticker);
             foreach (var security in securities)
             {
                 this.Items.Add(security);
-
-                if (map.Contains(security.Ticker))
-                    this.Items.Remove(security);
             }
+            
+           
         }
 
         public void Clear()

@@ -72,10 +72,9 @@ namespace GreenField.IssuerShares.Controls
 
         public IssuerModel Issuer { get; private set; }
 
-        internal void RequestData(String securityShortName, Action<RootModel> callback)
+        internal void RequestData(String securityShortName)
         {
             this.StartLoading();
-            this.callback = callback;
             var client = this.clientFactory.CreateClient();
             client.GetRootModelCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
                     "Getting composition for security issuer (short name: " + securityShortName + ")", args, x => x.Result, InitializeDataGrid, FinishLoading);
@@ -86,7 +85,6 @@ namespace GreenField.IssuerShares.Controls
 
 
 
-        private Action<RootModel> callback;
         private IEventAggregator aggregator;
         public ObservableCollection<ItemModel> Items { get; private set; }
 
@@ -101,7 +99,6 @@ namespace GreenField.IssuerShares.Controls
                 item.InitializeChangedPreferredCommand(new DelegateCommand<ItemModel>(HasChangedPreferred));
             }
             this.RaisePropertyChanged(() => this.Items);
-            callback(model);
             CompositionChangedEventInfo info = new CompositionChangedEventInfo { Securities = this.Items.Select(x => Int32.Parse(x.Security.Id)).ToList() };
             this.aggregator.GetEvent<CompositionChangedEvent>().Publish(info);
             
@@ -121,7 +118,8 @@ namespace GreenField.IssuerShares.Controls
         {
             var item = new ItemModel { Security = security.ToSecurityModel(), Preferred = false };
             item.InitializeRemoveCommand(new DelegateCommand<ItemModel>(RemoveItemFromComposition));
-            this.Items.Add(item);
+            if (this.Items.Count(x => x.Security.Id == item.Security.Id) == 0)
+                this.Items.Add(item);
             this.IsChanged = true;
             CompositionChangedEventInfo info = new CompositionChangedEventInfo { Securities = this.Items.Select(x => Int32.Parse(x.Security.Id)).ToList() };
             this.aggregator.GetEvent<CompositionChangedEvent>().Publish(info);

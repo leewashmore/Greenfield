@@ -38,6 +38,7 @@ namespace GreenField.IssuerShares.Controls
             this.securityPickerClientFactory = new SecurityPickerClientFactory(clientFactory);
             
             var securityPickerViewModel = new SecurityPickerViewModel(
+                
                 new OnlyErrorCommunicationState(this),
                 this.securityPickerClientFactory
             );
@@ -66,14 +67,8 @@ namespace GreenField.IssuerShares.Controls
             
             this.securityPickerClientFactory.Initialize(info.SecurityShortName);
             this.SecurityPickerViewModel.IsEnabled = true;
-            this.CompositionViewModel.RequestData(info.SecurityShortName, UpdateSecurityPickerExclusions);
+            this.CompositionViewModel.RequestData(info.SecurityShortName);
             this.HistoryViewModel.RequestData(info.SecurityShortName);
-        }
-
-        public void UpdateSecurityPickerExclusions(RootModel model)
-        {
-            if (model != null && model.Items != null)
-                this.SecurityPickerViewModel.SetExclusions(model.Items.Select(x => (ISecurity)x.Security));
         }
 
         protected override void Activate()
