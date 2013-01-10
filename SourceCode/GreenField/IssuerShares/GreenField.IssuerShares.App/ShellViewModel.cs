@@ -29,7 +29,7 @@ namespace GreenField.IssuerShares.App
         public void Run()
         {
             this.regionManager.RequestNavigate("MainRegion", typeof(GreenField.IssuerShares.Controls.RootView).FullName);
-            this.aggregator.GetEvent<SecurityPickedGlobalEvent>().Publish(new SecurityPickedGlobalEventInfo { SecurityShortName = "RUSBERBPN" }); //TWTPKHCE, RUSBERBPN
+            this.aggregator.GetEvent<SecurityPickedGlobalEvent>().Publish(new SecurityPickedGlobalEventInfo { SecurityShortName = "TWHTCCORPE" }); //TWTPKHCE, RUSBERBPN, TWHTCCORPE
         }
 
     }

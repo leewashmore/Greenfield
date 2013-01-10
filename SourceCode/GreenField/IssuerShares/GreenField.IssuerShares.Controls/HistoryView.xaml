@@ -57,7 +57,7 @@
                     HeaderStyle="{StaticResource headerStyle}"
                     ColumnsData="{Binding Items}"
                     AreEmptyColumnShown="False"
-                    
+                    ValueFormat="#.000"
                 >
                     <mine:DataGridDynamicColumnsBehavior.CellTemplate>
                         <DataTemplate>

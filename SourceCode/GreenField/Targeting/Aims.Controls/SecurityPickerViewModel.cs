@@ -88,20 +88,26 @@ namespace Aims.Controls
             }
         }
 
+        private string pattern;
         public void RequestData(AutoCompleteRequest request)
         {
-            this.communicationState.StartLoading();
-            var client = this.clientFactory.CreateSecurityPickerClient();
-            client.RequestSecurities(
-                request.Pattern,
-                data =>
-                {
-                    this.TakeData(data);
-                    request.Callback();
-                    this.communicationState.FinishLoading();
-                },
-                this.communicationState.FinishLoading
-            );
+            if (this.pattern != request.Pattern)
+            {
+                this.pattern = request.Pattern;
+                this.communicationState.StartLoading();
+                var client = this.clientFactory.CreateSecurityPickerClient();
+                client.RequestSecurities(
+                    request.Pattern,
+                    data =>
+                    {
+                        this.TakeData(data);
+                        request.Callback();
+                        this.communicationState.FinishLoading();
+                        
+                    },
+                    this.communicationState.FinishLoading
+                );
+            }
         }
 
         public void TakeData(IEnumerable<ISecurity> securities)

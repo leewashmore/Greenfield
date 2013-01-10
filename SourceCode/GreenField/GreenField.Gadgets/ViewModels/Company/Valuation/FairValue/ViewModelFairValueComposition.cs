@@ -544,25 +544,25 @@ namespace GreenField.Gadgets.ViewModels
         {
             MeasuresData.Add(new Measure() { DataId = 236, Measures = "Forward Dividend Yield" });
             MeasuresData.Add(new Measure() { DataId = 198, Measures = "Forward EV/EBITDA" });
-            MeasuresData.Add(new Measure() { DataId = 246, Measures = "Forward EV/EBITDA relative to Country" });
-            MeasuresData.Add(new Measure() { DataId = 247, Measures = "Forward EV/EBITDA relative to Industry" });
-            MeasuresData.Add(new Measure() { DataId = 248, Measures = "Forward EV/EBITDA relative to Country Industry" });
-            MeasuresData.Add(new Measure() { DataId = 237, Measures = "Forward EV/Revenue" });
+            //MeasuresData.Add(new Measure() { DataId = 246, Measures = "Forward EV/EBITDA relative to Country" });
+            //MeasuresData.Add(new Measure() { DataId = 247, Measures = "Forward EV/EBITDA relative to Industry" });
+            //MeasuresData.Add(new Measure() { DataId = 248, Measures = "Forward EV/EBITDA relative to Country Industry" });
+            //MeasuresData.Add(new Measure() { DataId = 237, Measures = "Forward EV/Revenue" });
             MeasuresData.Add(new Measure() { DataId = 238, Measures = "Forward P/NAV" });
-            MeasuresData.Add(new Measure() { DataId = 239, Measures = "Forward P/Appraisal Value" });
+            //MeasuresData.Add(new Measure() { DataId = 239, Measures = "Forward P/Appraisal Value" });
             MeasuresData.Add(new Measure() { DataId = 188, Measures = "Forward P/BV" });
-            MeasuresData.Add(new Measure() { DataId = 249, Measures = "Forward P/BV relative to Country" });
-            MeasuresData.Add(new Measure() { DataId = 250, Measures = "Forward P/BV relative to Industry" });
-            MeasuresData.Add(new Measure() { DataId = 251, Measures = "Forward P/BV relative to Country Industry" });
+            //MeasuresData.Add(new Measure() { DataId = 249, Measures = "Forward P/BV relative to Country" });
+            //MeasuresData.Add(new Measure() { DataId = 250, Measures = "Forward P/BV relative to Industry" });
+            //MeasuresData.Add(new Measure() { DataId = 251, Measures = "Forward P/BV relative to Country Industry" });
             MeasuresData.Add(new Measure() { DataId = 189, Measures = "Forward P/CE" });
             MeasuresData.Add(new Measure() { DataId = 187, Measures = "Forward P/E" });
-            MeasuresData.Add(new Measure() { DataId = 252, Measures = "Forward P/E relative to Country" });
-            MeasuresData.Add(new Measure() { DataId = 253, Measures = "Forward P/E relative to Industry" });
-            MeasuresData.Add(new Measure() { DataId = 254, Measures = "Forward P/E relative to Country Industry" });
-            MeasuresData.Add(new Measure() { DataId = 241, Measures = "Forward P/E to 2 Year Growth" });
-            MeasuresData.Add(new Measure() { DataId = 242, Measures = "Forward P/E to 3 Year Growth" });
-            MeasuresData.Add(new Measure() { DataId = 245, Measures = "Forward P/Embedded Value" });
-            MeasuresData.Add(new Measure() { DataId = 197, Measures = "Forward P/Revenue" });
+            //MeasuresData.Add(new Measure() { DataId = 252, Measures = "Forward P/E relative to Country" });
+            //MeasuresData.Add(new Measure() { DataId = 253, Measures = "Forward P/E relative to Industry" });
+            //MeasuresData.Add(new Measure() { DataId = 254, Measures = "Forward P/E relative to Country Industry" });
+            //MeasuresData.Add(new Measure() { DataId = 241, Measures = "Forward P/E to 2 Year Growth" });
+            //MeasuresData.Add(new Measure() { DataId = 242, Measures = "Forward P/E to 3 Year Growth" });
+            //MeasuresData.Add(new Measure() { DataId = 245, Measures = "Forward P/Embedded Value" });
+            //MeasuresData.Add(new Measure() { DataId = 197, Measures = "Forward P/Revenue" });
 
             return MeasuresData;
         }

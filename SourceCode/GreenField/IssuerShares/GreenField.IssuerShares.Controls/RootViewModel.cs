@@ -62,22 +62,29 @@ namespace GreenField.IssuerShares.Controls
             
         }
 
+        private SecurityPickedGlobalEventInfo selectedSecurity;
+
         public void TakeSecurity(SecurityPickedGlobalEventInfo info)
         {
-            
-            this.securityPickerClientFactory.Initialize(info.SecurityShortName);
-            this.SecurityPickerViewModel.IsEnabled = true;
-            this.CompositionViewModel.RequestData(info.SecurityShortName);
-            this.HistoryViewModel.RequestData(info.SecurityShortName);
+            this.selectedSecurity = info;
+            if (this.isActive && info != null)
+            {
+                this.securityPickerClientFactory.Initialize(info.SecurityShortName);
+                this.SecurityPickerViewModel.IsEnabled = true;
+                this.CompositionViewModel.RequestData(info.SecurityShortName);
+                this.HistoryViewModel.RequestData(info.SecurityShortName);
+            }
         }
 
         protected override void Activate()
         {
-            
+            this.isActive = true;
+            TakeSecurity(this.selectedSecurity);
         }
 
         protected override void Deactivate()
         {
+            this.isActive = false;
         }
 
 
@@ -98,6 +105,7 @@ namespace GreenField.IssuerShares.Controls
         }
 
         private Controls.HistoryViewModel historyViewModel;
+        private bool isActive;
         public HistoryViewModel HistoryViewModel
         {
             get

@@ -63,9 +63,6 @@ namespace GreenField.IssuerShares.Server
             return result;
         }
 
-        public void ExecuteGetDataProc(String issuerId)
-        {
-
-        }
+        
     }
 }

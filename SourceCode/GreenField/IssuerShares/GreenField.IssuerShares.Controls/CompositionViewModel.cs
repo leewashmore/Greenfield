@@ -133,6 +133,11 @@ namespace GreenField.IssuerShares.Controls
             
         }
 
+
+
+        private void HandleErrors(Exception e)
+        { 
         
+        }
     }
 }

@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using Aims.Core;
+using System.Collections.Concurrent;
 
 namespace Aims.Core
 {
 	public class Monitor : IMonitor
 	{
-		public Stack<String> context;
+		public ConcurrentStack<String> context;
 
 		public Monitor()
 		{
-			this.context = new Stack<String>();
+			this.context = new ConcurrentStack<String>();
 		}
 
 		protected void Scope(String message)
@@ -23,7 +24,11 @@ namespace Aims.Core
 
 		protected void Unscope()
 		{
-			this.context.Pop();
+            if (this.context.Any())
+            {
+                string result;
+                this.context.TryPop(out result);
+            }
 		}
 
 		private void RegisterError(Exception exception)

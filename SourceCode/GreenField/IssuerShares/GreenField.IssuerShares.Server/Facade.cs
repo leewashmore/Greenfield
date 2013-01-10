@@ -51,14 +51,11 @@ namespace GreenField.IssuerShares.Server
             {
                 var repository = this.RepositoryManager.ClaimSecurityRepository(ondemandManager);
                 var security = repository.FindSecurityByShortName(securityShortName);
-                if (security != null)
-                {
+                
                     var model = this.modelManager.GetRootModel(security.IssuerId);
                     var serializedModel = this.serializer.SerializeRoot(model);
                     return serializedModel;
-                }
-                else
-                    return new RootModel { Issuer = null, Items = new List<ItemModel>() };
+                
             }
         }
 
@@ -70,14 +67,11 @@ namespace GreenField.IssuerShares.Server
             {
                 var repository = this.RepositoryManager.ClaimSecurityRepository(ondemandManager);
                 var security = repository.FindSecurityByShortName(securityShortName);
-                if (security != null)
-                {
-                    var securities = repository.FindSomeUsingPattern(pattern, atMost, x => x.IssuerId == security.IssuerId && (x.SecurityType == "EQUITY" || x.SecurityType == "ADR" || x.SecurityType == "GDR"));
-                    var result = this.commonSerializer.SerializeSecurities(securities);
-                    return result;
-                }
-                else
-                    return new List<Aims.Data.Server.SecurityModel>();
+                
+                var securities = repository.FindSomeUsingPattern(pattern, atMost, x => x.IssuerId == security.IssuerId && (x.SecurityType == "EQUITY" || x.SecurityType == "ADR" || x.SecurityType == "GDR"));
+                var result = this.commonSerializer.SerializeSecurities(securities);
+                return result;
+                
             }
         }
 
@@ -88,8 +82,7 @@ namespace GreenField.IssuerShares.Server
             {
                 var repository = this.RepositoryManager.ClaimSecurityRepository(ondemandManager);
                 var security = repository.FindSecurityByShortName(securityShortName);
-                if (security != null)
-                {
+                
                     var securities = repository.FindByIssuer(security.IssuerId).Where(x => x.SecurityType == "EQUITY" || x.SecurityType == "ADR" || x.SecurityType == "GDR");
 
                     var loader = CreateIssuerSharesLoader();
@@ -98,11 +91,7 @@ namespace GreenField.IssuerShares.Server
                     var result = this.serializer.SerializeShareRecords(records);
 
                     return result;
-                }
-                else
-                {
-                    return new List<GreenField.IssuerShares.Server.IssuerSecurityShareRecordModel>();
-                }
+                
             }
         }
 

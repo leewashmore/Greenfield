@@ -39,6 +39,7 @@ namespace GreenField.IssuerShares.Controls
 
         internal void RequestData(string securityShortName)
         {
+            itemStorage = null;
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
             client.GetIssuerSharesBySecurityShortNameCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
@@ -49,9 +50,10 @@ namespace GreenField.IssuerShares.Controls
 
         public void StoreData(ObservableCollection<IssuerSecurityShareRecordModel> items)
         {
-            itemStorage = items;
+            
             lines = IssuerSharesHelper.MakeRectangleCollection(items);
             this.Lines = lines;
+            itemStorage = items;
             if (this.securities != null)
             {
                 ShowHistory();

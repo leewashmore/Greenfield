@@ -36,11 +36,11 @@ namespace GreenField.IssuerShares.Controls
             public void RequestSecurities(String pattern, Action<IEnumerable<ISecurity>> callback, Action<Exception> errorHandler)
             {
                 var client = this.clientFactory.CreateClient();
-                
                 client.GetIssuerSecuritiesCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
                     "Getting securities like \"" + pattern + "\" for security issuer (ID: " + this.securityShortName + ")", args, x => x.Result.Select(y => Helper.As<ISecurity>(y)), callback, errorHandler);
                 client.GetIssuerSecuritiesAsync(pattern, MaxNumberOfSecurities, this.securityShortName);
-                
+
+
             }
         }
 

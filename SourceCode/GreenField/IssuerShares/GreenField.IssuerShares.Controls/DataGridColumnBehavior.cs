@@ -25,6 +25,13 @@ namespace GreenField.IssuerShares.Controls
             set { this.SetValue(AreEmptyColumnShownProperty, value); }
         }
 
+        public static readonly DependencyProperty ValueFormatProperty = DependencyProperty.Register("ValueFormatProperty", typeof(String), typeof(DataGridDynamicColumnsBehavior), new PropertyMetadata(null));
+        public String ValueFormat
+        {
+            get { return (String)this.GetValue(ValueFormatProperty); }
+            set { this.SetValue(ValueFormatProperty, value); }
+        }
+
         private static void WhenAreEmptyColumnShownChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var self = d as DataGridDynamicColumnsBehavior;
@@ -108,22 +115,23 @@ namespace GreenField.IssuerShares.Controls
                 }
             }
 
-            var portfolios = e.NewValue as ObservableCollection<IssuerSecurityShareRecordModel>;
-            if (portfolios != null)
+            var records = e.NewValue as ObservableCollection<IssuerSecurityShareRecordModel>;
+            if (records != null)
             {
                 var indexOffset = grid.Columns.Count;
-                foreach (var portfolio in portfolios)
+                foreach (var record in records)
                 {
                     var column = new Column();
                     var index = grid.Columns.Count - indexOffset;
                     column.Binding = new Binding(String.Empty)
                     {
-                        ConverterParameter = portfolio.SecurityId,
+                        ConverterParameter = record.SecurityId,
                         Converter = self
                     };
                     column.CellTemplate = self.CellTemplate;
                     column.HeaderStyle = self.HeaderStyle;
-                    column.Header = new HeaderInfo { Name = portfolio.SecurityTicker, Index = index };
+                    
+                    column.Header = new HeaderInfo { Name = record.SecurityTicker, Index = index };
                     grid.Columns.Add(column);
                 }
             }
@@ -148,7 +156,8 @@ namespace GreenField.IssuerShares.Controls
             var ticker = (int?)parameter;
             //var result = new DataAndIndexWrap(index, line);
             var result = line.Values[ticker];
-            return result;
+            //return result;
+            return String.Format("{0" + (String.IsNullOrEmpty(this.ValueFormat) ? "" : ":" + this.ValueFormat) + "}", result);
             //return value;
         }
 
