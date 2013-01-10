@@ -22,9 +22,11 @@ namespace GreenField.IssuerShares.Server
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.CommandText = "dbo.Get_data";
                     var param = command.CreateParameter();
-                    param.Value = "issuerId";
+                    param.Value = issuerId;
                     param.ParameterName = "ISSUER_ID";
                     command.Parameters.Add(param);
+
+                    
                     connection.Open();
                     var result = command.ExecuteNonQuery();
                 }
