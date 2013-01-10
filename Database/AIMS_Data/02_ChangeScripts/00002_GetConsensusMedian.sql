@@ -33,23 +33,24 @@ Declare
 @netIncomeType int,
 @epsktype int
 
---SET @earnings = (Select Earnings from [Reuters].[dbo].tblCompanyInfo 
---				where XRef IN (Select XRef from GF_SECURITY_BASEVIEW 
---								where ISSUER_ID = @Issuer_Id));
+SET @earnings = (Select Earnings from [Reuters].[dbo].tblCompanyInfo 
+				where XRef IN (Select XRef from GF_SECURITY_BASEVIEW 
+								where ISSUER_ID = @Issuer_Id));
 								
---SET @netIncomeType =   CASE @earnings  
---  WHEN 'EPS' THEN 11  
---  WHEN 'EPSREP' THEN 13   
---  WHEN 'EBG' THEN 12  
---  ELSE null 
---  END
+SET @netIncomeType =   CASE @earnings  
+  WHEN 'EPS' THEN 11  
+  WHEN 'EPSREP' THEN 13   
+  WHEN 'EBG' THEN 12  
+  ELSE null 
+  END
   
---  SET @epsktype =   CASE @earnings  
---  WHEN 'EPS' THEN 8  
---  WHEN 'EPSREP' THEN 9   
---  WHEN 'EBG' THEN 5  
---  ELSE null
---  END 	
+  SET @epsktype =   CASE @earnings  
+  WHEN 'EPS' THEN 8  
+  WHEN 'EPSREP' THEN 9   
+  WHEN 'EBG' THEN 5  
+  ELSE null
+  END 	
+
 
 	-- Select the Actual data 
 	select cce.ISSUER_ID
@@ -76,7 +77,7 @@ Declare
 	   and cce.DATA_SOURCE = @DATA_SOURCE
 	   and substring(cce.PERIOD_TYPE,1,1) = @PERIOD_TYPE
 	   and cce.FISCAL_TYPE = @FISCAL_TYPE
-	   and cce.ESTIMATE_ID in (17,7,11,8,18,19)
+	   and cce.ESTIMATE_ID in (17,7,@netIncomeType,@epsktype,18,19)
 	   and cce.CURRENCY = @CURRENCY
 	   and cce.AMOUNT_TYPE = 'ACTUAL'
 	 order by cce.PERIOD_YEAR
@@ -105,7 +106,7 @@ Declare
 	 where 1=1
 	   and cce.ISSUER_ID = @ISSUER_ID
 	   and cce.DATA_SOURCE = @DATA_SOURCE
-	   and cce.ESTIMATE_ID in (17,7,11,8,18,19)
+	   and cce.ESTIMATE_ID in (17,7,@netIncomeType,@epsktype,18,19)
 	   and substring(cce.PERIOD_TYPE,1,1) = @PERIOD_TYPE
 	   and cce.FISCAL_TYPE = @FISCAL_TYPE
 	   and cce.CURRENCY = @CURRENCY
@@ -115,22 +116,22 @@ Declare
 
 	
 	-- Combine Actual with Estimated so that Actual is always used in case both are present.
-	select isnull(a.ISSUER_ID, e.ISSUER_ID) as ISSUER_ID
-		,  isnull(a.ESTIMATE_ID, e.ESTIMATE_ID) as ESTIMATE_ID
-		,  isnull(a.ESTIMATE_DESC, e.ESTIMATE_DESC) as [ESTIMATE_DESC]
-		,  isnull(a.Period, e.Period) as Period
-		,  isnull(a.AMOUNT_TYPE, e.AMOUNT_TYPE) as AMOUNT_TYPE
-		,  isnull(a.PERIOD_YEAR, e.PERIOD_YEAR) as PERIOD_YEAR
-		,  isnull(a.PERIOD_TYPE, e.PERIOD_TYPE) as PERIOD_TYPE
-		,  isnull(a.AMOUNT, e.AMOUNT) as AMOUNT
+	select isnull(e.ISSUER_ID, a.ISSUER_ID) as ISSUER_ID
+		,  isnull(e.ESTIMATE_ID, a.ESTIMATE_ID) as ESTIMATE_ID
+		,  isnull(e.ESTIMATE_DESC, a.ESTIMATE_DESC) as [ESTIMATE_DESC]
+		,  isnull(e.Period, a.Period) as Period
+		,  isnull(e.AMOUNT_TYPE, a.AMOUNT_TYPE) as AMOUNT_TYPE
+		,  isnull(e.PERIOD_YEAR, a.PERIOD_YEAR) as PERIOD_YEAR
+		,  isnull(e.PERIOD_TYPE, a.PERIOD_TYPE) as PERIOD_TYPE
+		,  isnull(e.AMOUNT, a.AMOUNT) as AMOUNT
 		,  b.AMOUNT as ASHMOREEMM_AMOUNT
-		,  isnull(a.NUMBER_OF_ESTIMATES, e.NUMBER_OF_ESTIMATES) as NUMBER_OF_ESTIMATES
-		,  isnull(a.HIGH, e.HIGH) as HIGH
-		,  isnull(a.LOW, e.LOW) as LOW
-		,  isnull(a.STANDARD_DEVIATION, e.STANDARD_DEVIATION) as STANDARD_DEVIATION
-		,  isnull(a.SOURCE_CURRENCY, e.SOURCE_CURRENCY) as SOURCE_CURRENCY
-		,  isnull(a.DATA_SOURCE, e.DATA_SOURCE) as DATA_SOURCE
-		,  isnull(a.DATA_SOURCE_DATE, e.DATA_SOURCE_DATE) as DATA_SOURCE_DATE
+		,  isnull(e.NUMBER_OF_ESTIMATES, a.NUMBER_OF_ESTIMATES) as NUMBER_OF_ESTIMATES
+		,  isnull(e.HIGH, a.HIGH) as HIGH
+		,  isnull(e.LOW, a.LOW) as LOW
+		,  isnull(e.STANDARD_DEVIATION, a.STANDARD_DEVIATION) as STANDARD_DEVIATION
+		,  isnull(e.SOURCE_CURRENCY, a.SOURCE_CURRENCY) as SOURCE_CURRENCY
+		,  isnull(e.DATA_SOURCE, a.DATA_SOURCE) as DATA_SOURCE
+		,  isnull(e.DATA_SOURCE_DATE, a.DATA_SOURCE_DATE) as DATA_SOURCE_DATE
 		,  a.AMOUNT  as ACTUAL
 		
 	-- Need to get all the possible rows
@@ -157,18 +158,19 @@ Declare
 				    and pf.FISCAL_TYPE = @FISCAL_TYPE
 				    and pf.CURRENCY = @CURRENCY
 				    and pf.ISSUER_ID = @ISSUER_ID
-				 ) b on b.ISSUER_ID = a.ISSUER_ID
-					and (   (b.DATA_ID =  11 and a.ESTIMATE_ID = 17)		-- Revenue
-						 or (b.DATA_ID = 130 and a.ESTIMATE_ID = 7)			-- EBITDA
-						 or (b.DATA_ID =  44 and a.ESTIMATE_ID =11)-- Net Income
-						 or (b.DATA_ID = 131 and a.ESTIMATE_ID =8)	-- EPS
-						 or (b.DATA_ID = 132 and a.ESTIMATE_ID = 18)		-- ROA
-						 or (b.DATA_ID = 133 and a.ESTIMATE_ID = 19)		-- ROE
+				 ) b on b.ISSUER_ID = ae.ISSUER_ID
+					and (   (b.DATA_ID =  11 and ae.ESTIMATE_ID = 17)		-- Revenue
+						 or (b.DATA_ID = 130 and ae.ESTIMATE_ID = 7)			-- EBITDA
+						 or (b.DATA_ID =  44 and ae.ESTIMATE_ID in(11,12,13))-- Net Income
+						 or (b.DATA_ID = 131 and ae.ESTIMATE_ID in(8,9,5))	-- EPS
+						 or (b.DATA_ID = 132 and ae.ESTIMATE_ID = 18)		-- ROA
+						 or (b.DATA_ID = 133 and ae.ESTIMATE_ID = 19)		-- ROE
 						)
-				    and substring(b.PERIOD_TYPE,1,1) = @PERIOD_TYPE
-					and b.FISCAL_TYPE = @FISCAL_TYPE
-					and b.CURRENCY = @CURRENCY
-					and b.AMOUNT_TYPE = 'ESTIMATE'
+				    and b.PERIOD_YEAR = ae.PERIOD_YEAR
+--				    and substring(b.PERIOD_TYPE,1,1) = @PERIOD_TYPE
+--					and b.FISCAL_TYPE = @FISCAL_TYPE
+--					and b.CURRENCY = @CURRENCY
+--					and b.AMOUNT_TYPE = 'ESTIMATE'
 		;
 
 	-- Clean up
