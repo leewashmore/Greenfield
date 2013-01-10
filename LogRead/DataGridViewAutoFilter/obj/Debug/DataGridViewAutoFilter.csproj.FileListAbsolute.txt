@@ -3,3 +3,8 @@ E:\LogRead\DataGridViewAutoFilter\bin\Debug\DataGridViewAutoFilter.dll
 E:\LogRead\DataGridViewAutoFilter\bin\Debug\DataGridViewAutoFilter.pdb
 E:\LogRead\DataGridViewAutoFilter\obj\Debug\DataGridViewAutoFilter.dll
 E:\LogRead\DataGridViewAutoFilter\obj\Debug\DataGridViewAutoFilter.pdb
+C:\AIMS\LogRead\DataGridViewAutoFilter\bin\Debug\DataGridViewAutoFilter.dll
+C:\AIMS\LogRead\DataGridViewAutoFilter\bin\Debug\DataGridViewAutoFilter.pdb
+C:\AIMS\LogRead\DataGridViewAutoFilter\obj\Debug\ResolveAssemblyReference.cache
+C:\AIMS\LogRead\DataGridViewAutoFilter\obj\Debug\DataGridViewAutoFilter.dll
+C:\AIMS\LogRead\DataGridViewAutoFilter\obj\Debug\DataGridViewAutoFilter.pdb

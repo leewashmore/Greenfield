@@ -34,3 +34,15 @@ E:\Repository\LogRead\LogRead\obj\x86\Debug\LogRead.Form1.resources
 E:\Repository\LogRead\LogRead\obj\x86\Debug\LogRead.Properties.Resources.resources
 E:\Repository\LogRead\LogRead\obj\x86\Debug\GenerateResource.read.1.tlog
 E:\Repository\LogRead\LogRead\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\AIMS\LogRead\LogRead\obj\x86\Debug\LogRead.csproj.ResolveComReference.cache
+C:\AIMS\LogRead\LogRead\obj\x86\Debug\LogRead.exe
+C:\AIMS\LogRead\LogRead\obj\x86\Debug\LogRead.pdb
+C:\AIMS\LogRead\LogRead\bin\Debug\LogRead.exe
+C:\AIMS\LogRead\LogRead\bin\Debug\LogRead.pdb
+C:\AIMS\LogRead\LogRead\bin\Debug\DataGridViewAutoFilter.dll
+C:\AIMS\LogRead\LogRead\bin\Debug\DataGridViewAutoFilter.pdb
+C:\AIMS\LogRead\LogRead\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\AIMS\LogRead\LogRead\obj\x86\Debug\LogRead.Form1.resources
+C:\AIMS\LogRead\LogRead\obj\x86\Debug\LogRead.Properties.Resources.resources
+C:\AIMS\LogRead\LogRead\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\AIMS\LogRead\LogRead\obj\x86\Debug\GenerateResource.write.1.tlog

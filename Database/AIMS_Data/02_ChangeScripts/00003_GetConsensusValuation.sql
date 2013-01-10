@@ -1,25 +1,5 @@
-set noexec off
 
---declare  current and required version
---also do it an the end of the script
-declare @RequiredDBVersion as nvarchar(100) = '00002'
-declare @CurrentScriptVersion as nvarchar(100) = '00003'
-
---if current version already in DB, just skip
-if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
- set noexec on 
-
---check that current DB version is Ok
-declare @DBCurrentVersion as nvarchar(100) = (select top 1 ScriptVersion from ChangeScripts order by DateExecuted desc)
-if (@DBCurrentVersion != @RequiredDBVersion)
-begin
-	RAISERROR(N'DB version is "%s", required "%s".', 16, 1, @DBCurrentVersion, @RequiredDBVersion)
-	set noexec on
-end
-
-GO
-
-CREATE procedure [dbo].[GetConsensusEstimatesValuation](
+alter procedure [dbo].[GetConsensusEstimatesValuation](
 	@ISSUER_ID			varchar(20)					-- The company identifier		
 ,	@DATA_SOURCE		varchar(10)  = 'REUTERS'	-- REUTERS, PRIMARY, INDUSTRY
 ,	@PERIOD_TYPE		char(2) = 'A'				-- A, Q
@@ -117,7 +97,7 @@ as
 			union
 			select * from #Estimate
 		   ) a
-	  left join (Select pf.ISSUER_ID, pf.AMOUNT, pf.AMOUNT_TYPE, pf.DATA_ID
+	  left join (Select pf.ISSUER_ID, pf.AMOUNT, pf.AMOUNT_TYPE, pf.DATA_ID, pf.PERIOD_YEAR
 				   from PERIOD_FINANCIALS pf
 				  where 1=1
 				    and pf.DATA_SOURCE = 'PRIMARY'
@@ -133,6 +113,7 @@ as
 						 or (b.DATA_ID = 164 and a.ESTIMATE_ID = 164)		-- P/BV
 						 or (b.DATA_ID = 192 and a.ESTIMATE_ID = 192)		-- DividendYield
 						)
+					and b.PERIOD_YEAR = a.PERIOD_YEAR
 		;
 
 
@@ -146,11 +127,4 @@ as
 
 
 GO
-
-
---indicate thet current script is executed
-declare @CurrentScriptVersion as nvarchar(100) = '00003'
-insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
-
-
 
