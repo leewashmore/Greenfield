@@ -154,7 +154,35 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgPortfolioDetails_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
-            RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+            if (e.Element == ExportElement.Row)
+            {
+                var value = e.Value as PortfolioDetailsData;
+                if (value.Children != null)
+                {
+                    
+                    foreach (var child in value.Children)
+                    {
+                        e.Value = child;
+                        RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+                    }
+                }
+                else
+                {
+                    RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+                }
+            }
+            else
+            {
+                RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+            }
+        }
+
+        private void dgPortfolioDetails_ElementExported(object sender, GridViewElementExportedEventArgs e)
+        {
+            if (e.Element == ExportElement.Row)
+            {
+                var value = e.Context as PortfolioDetailsData;
+            }
         }
         #endregion
 
@@ -377,6 +405,17 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgPortfolioDetails_DataLoaded(object sender, EventArgs e)
         {
+            if (this.DataContextPortfolioDetails.EnableLookThru)
+            {
+                dgPortfolioDetails.Columns["PortfolioName"].IsVisible = true;
+                dgPortfolioDetails.Columns["PortfolioPath"].IsVisible = true;
+            }
+            else
+            {
+                dgPortfolioDetails.Columns["PortfolioName"].IsVisible = false;
+                dgPortfolioDetails.Columns["PortfolioPath"].IsVisible = false;
+            }
+
             if (this.DataContextPortfolioDetails.CheckFilterApplied == 1)
             {
                 this.DataContextPortfolioDetails.CheckFilterApplied--;
@@ -416,5 +455,27 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+
+        private void dgPortfolioDetails_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            GridViewRow row = e.Row as GridViewRow;
+            var data = e.DataElement as PortfolioDetailsData;
+            if (data != null && row != null)
+                row.IsExpandable = data.IsExpanded;
+
+        }
+
+        private void dgPortfolioDetails_DataLoading(object sender, GridViewDataLoadingEventArgs e)
+        {
+            GridViewDataControl dataControl = (GridViewDataControl)sender;
+            if (dataControl.ParentRow != null)
+            {
+                //dataControl is the child gridview
+                dataControl.ShowGroupPanel = false;
+                
+            }
+        }
+
+        
     }
 }

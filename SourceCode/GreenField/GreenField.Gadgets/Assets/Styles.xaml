@@ -94,12 +94,20 @@
         <Setter Property="Height" Value="{StaticResource DefaultGridViewRowHeight}"/>
     </Style>
 
+    <Style TargetType="telerik:GridViewRow" x:Name="bhGridViewRowStyle">
+        <Setter Property="Height" Value="Auto"/>
+    </Style>
+
     <!--GridViewRowStyle-->
     <Style TargetType="telerik:GridViewRow" x:Name="GridViewAlternateRowStyle">
         <Setter Property="Height" Value="{StaticResource DefaultGridViewRowHeight}"/>
         <Setter Property="Background" Value="{StaticResource DefaultGridRowBackground}"/>
     </Style>
 
+    <Style TargetType="telerik:GridViewRow" x:Name="bhGridViewAlternateRowStyle">
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridRowBackground}"/>
+    </Style>
 
     <!--GridViewGroupPanelStyle-->
     <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">

@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\AggregateFunctionEMDataSummary.cs" />
+    <Compile Include="Helpers\CheckedBehavior.cs" />
     <Compile Include="Helpers\ConsensusValuationAmount.cs" />
     <Compile Include="Helpers\ChildExportOptions.xaml.cs">
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>

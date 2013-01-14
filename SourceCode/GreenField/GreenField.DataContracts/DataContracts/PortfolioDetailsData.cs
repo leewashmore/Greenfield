@@ -22,6 +22,15 @@ namespace GreenField.DataContracts
         public string IssueName { get; set; }
 
         [DataMember]
+        public string PortfolioPath { get; set; }
+
+        [DataMember]
+        public string PfcHoldingPortfolio { get; set; }
+
+        [DataMember]
+        public Boolean IsExpanded { get; set; }
+
+        [DataMember]
         public string Ticker { get; set; }
 
         [DataMember]
@@ -131,5 +140,7 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public decimal? FairValue { get; set; }
+
+        public List<PortfolioDetailsData> Children { get; set; }
     }
 }

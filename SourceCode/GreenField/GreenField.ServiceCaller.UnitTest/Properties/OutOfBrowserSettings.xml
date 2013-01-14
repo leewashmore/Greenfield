@@ -1,0 +1,7 @@
+<OutOfBrowserSettings ShortName="GreenField.ServiceCaller.UnitTest Application" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
+  <OutOfBrowserSettings.Blurb>GreenField.ServiceCaller.UnitTest Application on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>
+  <OutOfBrowserSettings.WindowSettings>
+    <WindowSettings Title="GreenField.ServiceCaller.UnitTest Application" />
+  </OutOfBrowserSettings.WindowSettings>
+  <OutOfBrowserSettings.Icons />
+</OutOfBrowserSettings>

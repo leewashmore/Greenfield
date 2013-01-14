@@ -19,7 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
-
+    
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -38,28 +38,32 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>                
             </Grid.ColumnDefinitions>
-
-            <CheckBox Content="Include Benchmark" Grid.Column="0" ToolTipService.ToolTip="Include Benchmark Securities"
+            <CheckBox Content="Group Securities" Grid.Column="0" ToolTipService.ToolTip="Group same securities into one record"
+                      Style="{StaticResource CheckBoxStyle}" MinHeight="15" VerticalAlignment="Center"
+                      VerticalContentAlignment="Center" IsChecked="{Binding IsHoldingsGrouped,Mode=TwoWay}" IsEnabled="{Binding EnableLookThru}" 
+                      />
+            <CheckBox Content="Include Benchmark" Grid.Column="1" ToolTipService.ToolTip="Include Benchmark Securities"
                       Style="{StaticResource CheckBoxStyle}" MinHeight="15" VerticalAlignment="Center"
                       VerticalContentAlignment="Center" IsChecked="{Binding GetBenchmarkData,Mode=TwoWay}" 
-                      Checked="CheckBox_Checked" />
-            <telerik:RadButton Grid.Column="1" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+                      Checked="CheckBox_Checked"  />
+            <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
                                        Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
                 <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
                 <ToolTipService.ToolTip>
                     <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
                 </ToolTipService.ToolTip>
             </telerik:RadButton>
-            <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+            <telerik:RadButton Grid.Column="3" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
                                                Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
                 <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
                 <ToolTipService.ToolTip>
                     <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
                 </ToolTipService.ToolTip>
             </telerik:RadButton>
-            <telerik:RadButton Grid.Column="3" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+            <telerik:RadButton Grid.Column="4" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
                                                Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
                 <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
                 <ToolTipService.ToolTip>
@@ -74,7 +78,7 @@
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                           Style="{StaticResource BusyIndicatorStyle}"
                                           DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
-                    <telerik:RadGridView x:Name="dgPortfolioDetails" 
+                    <telerik:RadGridView x:Name="dgPortfolioDetails"
                                          ShowGroupPanel="True" 
                                          AutoGenerateColumns="False" 
                                          ItemsSource="{Binding SelectedPortfolioDetailsData}"
@@ -91,27 +95,214 @@
                                          RowIndicatorVisibility="Collapsed" 
                                          UseLayoutRounding="True" 
                                          ColumnWidth="Auto" ShowColumnFooters="True"
-                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                         AlternateRowStyle="{StaticResource bhGridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          ShowGroupFooters="True"
                                          GroupPanelBackground="#e4e5e5"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                          GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
-                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         RowStyle="{StaticResource bhGridViewRowStyle}"
                                          ElementExporting="dgPortfolioDetails_ElementExporting"
+                                         ElementExported="dgPortfolioDetails_ElementExported"
                                          ScrollMode="Deferred"
+                                         
                                          AlternationCount="2" 
                                          MinColumnWidth="70" DataLoaded="dgPortfolioDetails_DataLoaded"
+                                         RowLoaded="dgPortfolioDetails_RowLoaded"
+                                         DataLoading="dgPortfolioDetails_DataLoading"
                                          EnableRowVirtualization="True"
                                          EnableColumnVirtualization="False"
-                                         GridLinesVisibility="None">
+                                         GridLinesVisibility="None"
+                                         
+                                         >
+                        <telerik:RadGridView.ChildTableDefinitions>
+                            <telerik:GridViewTableDefinition />
+                                
+                        </telerik:RadGridView.ChildTableDefinitions>
+                        <telerik:RadGridView.HierarchyChildTemplate>
+                            <DataTemplate>
+                                <telerik:RadGridView 
+                                    ItemsSource="{Binding Children}" 
+                                    Name="childGrid" 
+                                    ShowGroupPanel="False" 
+                                    AutoGenerateColumns="False" 
+                                    CanUserFreezeColumns="False" 
+                                    CanUserDeleteRows="False"
+                                    CanUserInsertRows="False"
+                                    IsReadOnly="True"
+                                    CanUserReorderColumns="False" 
+                                    CanUserSortColumns="True"
+                                    FrozenColumnCount="2" 
+                                    
+                                    RowIndicatorVisibility="Collapsed" 
+                                    UseLayoutRounding="True" 
+                                    ColumnWidth="Auto" ShowColumnFooters="True"
+                                    AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                    HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                    ShowGroupFooters="False"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                    RowStyle="{StaticResource GridViewRowStyle}"
+                                    ScrollMode="Deferred"
+                                    AlternationCount="2" 
+                                    MinColumnWidth="70" 
+                                    EnableRowVirtualization="True"
+                                    EnableColumnVirtualization="False"
+                                    GridLinesVisibility="None"
+                                    >
+                                    <telerik:RadGridView.Columns >
+
+                                        <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Name" UniqueName="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False" 
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Portfolio Name" UniqueName="PortfolioName" DataMemberBinding="{Binding PfcHoldingPortfolio}" IsGroupable="False" 
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Portfolio Path" UniqueName="PortfolioPath" DataMemberBinding="{Binding PortfolioPath}" IsGroupable="False" 
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Security Type" UniqueName="Security Type" DataMemberBinding="{Binding SecurityType}" HeaderTextAlignment="Left"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Region Code" UniqueName="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"
+                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
+                                                        HeaderTextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Country" UniqueName="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
+                                                        IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Sector Name" UniqueName="Sector Name" DataMemberBinding="{Binding SectorName}" 
+                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left" HeaderTextAlignment="Left"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Industry Name" UniqueName="Industry Name" DataMemberBinding="{Binding IndustryName}" 
+                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left" HeaderTextAlignment="Left"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
+                                        <telerik:GridViewDataColumn Header="Sub-Industry Name" UniqueName="Sub-Industry Name" HeaderTextAlignment="Left"
+                                                        DataMemberBinding="{Binding SubIndustryName}" IsGroupable="True" TextAlignment="Left"
+                                                        IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
+                                        <telerik:GridViewDataColumn Header="Quantity" UniqueName="Quantity" DataMemberBinding="{Binding BalanceNominal}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
+                                        <telerik:GridViewDataColumn Header="Market Value" UniqueName="Market Value" DataMemberBinding="{Binding DirtyValuePC, StringFormat=c}" TextAlignment="Right" 
+                                                        HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
+                                        <telerik:GridViewDataColumn Header="Model %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
+                                                        DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
+                                                        TextAlignment="Right" HeaderTextAlignment="Right">
+                                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                                <telerik:SumFunction SourceField="ReAshEmmModelWeight" ResultFormatString="{}{0:n4}%" />
+                                            </telerik:GridViewDataColumn.AggregateFunctions>
+                                        </telerik:GridViewDataColumn>
+                                        <telerik:GridViewDataColumn Header="Portfolio %" UniqueName="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
+                                                        DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
+                                                        TextAlignment="Right" HeaderTextAlignment="Right">
+                                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                                <telerik:SumFunction SourceField="RePortfolioWeight" ResultFormatString="{}{0:n4}%" />
+                                            </telerik:GridViewDataColumn.AggregateFunctions>
+                                        </telerik:GridViewDataColumn>
+                                        <telerik:GridViewDataColumn Header="Benchmark %" UniqueName="Benchmark %" DataMemberBinding="{Binding ReBenchmarkWeight}"       
+                                                        DataFormatString="{}{0:n2}%" x:Name="BenchmarkWeight" IsGroupable="False" FooterTextAlignment="Right"
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Right" HeaderTextAlignment="Right">
+                                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                                <telerik:SumFunction SourceField="ReBenchmarkWeight" ResultFormatString="{}{0:n4}%" />
+                                            </telerik:GridViewDataColumn.AggregateFunctions>
+                                        </telerik:GridViewDataColumn>
+                                        <telerik:GridViewDataColumn Header="Active Position %" UniqueName="Active Position %" DataMemberBinding="{Binding ActivePosition}" 
+                                                        DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"/>
+                                        <!--<telerik:GridViewDataColumn Header="Market Cap" UniqueName="Market Cap" DataMemberBinding="{Binding MarketCapUSD, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>-->
+                                        <telerik:GridViewDataColumn Header="Market Cap" UniqueName="Market Cap" DataMemberBinding="{Binding MarketCap, StringFormat=c}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Upside" UniqueName="Upside" DataMemberBinding="{Binding Upside}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Forward P/E" UniqueName="Forward P/E" DataMemberBinding="{Binding ForwardPE}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Forward P/BV" UniqueName="Forward P/BV" DataMemberBinding="{Binding ForwardPBV}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Forward EV/EBITDA" UniqueName="Forward EV/EBITDA" DataMemberBinding="{Binding ForwardEB_EBITDA}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Revenue Growth Current Year" UniqueName="Revenue Growth Current Year" 
+                                                        DataMemberBinding="{Binding RevenueGrowthCurrentYear,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Revenue Growth Next Year" UniqueName="Revenue Growth Next Year" 
+                                                        DataMemberBinding="{Binding RevenueGrowthNextYear,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Net Income Growth Current Year" UniqueName="Net Income Growth Current Year" 
+                                                        DataMemberBinding="{Binding NetIncomeGrowthCurrentYear,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Net Income Growth Next Year" UniqueName="Net Income Growth Next Year" 
+                                                        DataMemberBinding="{Binding NetIncomeGrowthNextYear,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="ROE" UniqueName="ROE" 
+                                                        DataMemberBinding="{Binding ROE,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Net Debt Equity" UniqueName="Net Debt Equity" 
+                                                        DataMemberBinding="{Binding NetDebtEquity}" DataFormatString="{}{0:n1}"
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Freecash Flow Margin" UniqueName="Freecash Flow Margin" 
+                                                        DataMemberBinding="{Binding FreecashFlowMargin,Converter={StaticResource ConvertPercentageValue},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                    </telerik:RadGridView.Columns>
+                                </telerik:RadGridView>
+                            </DataTemplate>
+                        </telerik:RadGridView.HierarchyChildTemplate>
+                        
                         <telerik:RadGridView.Columns >
+                            <!-- -->
                             <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
-                            <telerik:GridViewDataColumn Header="Name" UniqueName="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False" 
+                            <telerik:GridViewDataColumn Header="Name" UniqueName="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False"
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                            <telerik:GridViewDataColumn Header="Portfolio Name" UniqueName="PortfolioName" DataMemberBinding="{Binding PfcHoldingPortfolio}" IsGroupable="False" 
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                            <telerik:GridViewDataColumn Header="Portfolio Path" UniqueName="PortfolioPath" DataMemberBinding="{Binding PortfolioPath}" IsGroupable="False" 
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
