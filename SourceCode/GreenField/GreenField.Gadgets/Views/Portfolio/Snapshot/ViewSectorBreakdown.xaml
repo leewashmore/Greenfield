@@ -131,6 +131,7 @@
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                          GridLinesVisibility="None"
                                          ElementExporting="dgSectorBreakdown_ElementExporting" 
+                                         Sorting="dgSectorBreakdown_Sorting"
                                          EnableRowVirtualization="False">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" UniqueName="Security" IsFilterable="True" IsSortable="True" DataMemberBinding="{Binding Security}" 
@@ -169,8 +170,8 @@
                             </telerik:GridViewDataColumn>
                         </telerik:RadGridView.Columns>
                         <telerik:RadGridView.GroupDescriptors>
-                            <telerik:GroupDescriptor Member="Sector" SortDirection="Ascending"/>
-                            <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>
+                            <telerik:GroupDescriptor Member="SectorSortOrder" SortDirection="Ascending"/>
+                            <telerik:GroupDescriptor Member="IndustrySortOrder" SortDirection="Ascending"/>
                         </telerik:RadGridView.GroupDescriptors>
                     </telerik:RadGridView>
                 </Border>

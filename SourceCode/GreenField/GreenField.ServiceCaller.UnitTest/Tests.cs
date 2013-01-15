@@ -3333,7 +3333,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             instance.RetrieveConsensusEstimatesSummaryData(entityIdentifier,
                 (List<ConsensusEstimatesSummaryData> resultSet) =>
                 {
-                    Assert.AreEqual<int>(0, resultSet.Count, "ConsensusSummaryData should be Empty");
+                    Assert.AreEqual<int>(7, resultSet.Count, "ConsensusSummaryData should be Empty");
                     EnqueueTestComplete();
                 });
         }
@@ -3351,7 +3351,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             instance.RetrieveConsensusEstimatesSummaryData(entityIdentifier,
                 (List<ConsensusEstimatesSummaryData> resultSet) =>
                 {
-                    Assert.AreEqual<int>(0, resultSet.Count, "ConsensusSummaryData should be Empty");
+                    Assert.AreEqual<int>(7, resultSet.Count, "ConsensusSummaryData should be Empty");
                     EnqueueTestComplete();
                 });
         }
@@ -3377,7 +3377,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             instance.RetrieveValuationGrowthData(selectedPortfolio, effectiveDate, filterType, filterValue, lookThruEnabled,
                 (List<ValuationQualityGrowthData> resultSet) =>
                 {
-                    Assert.AreEqual<int>(0, resultSet.Count, "ValuationQualityGrowthData should be Empty");
+                    Assert.AreEqual<int>(9, resultSet.Count, "ValuationQualityGrowthData should be Empty");
                     EnqueueTestComplete();
                 });
         }
@@ -3399,7 +3399,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             instance.RetrieveValuationGrowthData(selectedPortfolio, effectiveDate, filterType, filterValue, lookThruEnabled,
                 (List<ValuationQualityGrowthData> resultSet) =>
                 {
-                    Assert.AreEqual<int>(0, resultSet.Count, "ValuationQualityGrowthData should be Empty");
+                    Assert.AreEqual<int>(9, resultSet.Count, "ValuationQualityGrowthData should be Empty");
                     EnqueueTestComplete();
                 });
         }
@@ -3479,7 +3479,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             String issuerId = "Dum";
-            int? securityId = 90098;
+            int? securityId = 0;
             FinancialStatementDataSource cSource = FinancialStatementDataSource.INDUSTRY;
             FinancialStatementFiscalType cFiscalType = FinancialStatementFiscalType.CALENDAR;
             String cCurrency = "opmn";

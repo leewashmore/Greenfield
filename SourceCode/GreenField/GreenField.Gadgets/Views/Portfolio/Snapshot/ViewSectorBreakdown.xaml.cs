@@ -7,6 +7,10 @@ using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
+using GreenField.DataContracts;
+using System.Collections.ObjectModel;
+using Telerik.Windows.Data;
+using System.Linq;
 
 namespace GreenField.Gadgets.Views
 {
@@ -226,5 +230,159 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         } 
         #endregion
+
+        private void dgSectorBreakdown_Sorting(object sender, GridViewSortingEventArgs e)
+        {
+            List<SectorBreakdownData> datasource = (e.DataControl.ItemsSource as ObservableCollection<SectorBreakdownData>).ToList();
+            DataItemCollection collection = (sender as RadGridView).Items;
+            List<SectorBreakdownData> data = new List<SectorBreakdownData>();
+            foreach (SectorBreakdownData item in collection)
+            {
+                data.Add(item);
+            }
+
+            if ((e.Column as GridViewDataColumn).DataMemberBinding.Path.Path == "Security" ||
+                e.NewSortingState == SortingState.None)
+            {
+                ArrangeSortOrder(data);
+                return;
+            }
+
+            List<String> distinctSectors = data.Select(a => a.Sector).Distinct().ToList();
+            List<OrderedAggregates> orderedSectors = GetRegionAggregates(data, distinctSectors, (e.Column as GridViewDataColumn).DataMemberBinding.Path.Path);
+            orderedSectors = e.NewSortingState == SortingState.Ascending
+                ? orderedSectors.OrderBy(a => a.Aggregate).ToList()
+                : orderedSectors.OrderByDescending(a => a.Aggregate).ToList();
+
+            int sectorCount = 1;
+            foreach (String sector in orderedSectors.Select(a => a.Description))
+            {
+                List<string> distinctIndustries = data.Where(a => a.Sector == sector).OrderBy(a => a.Industry)
+                        .Select(a => a.Industry).Distinct().ToList();
+                List<OrderedAggregates> orderedIndustries = GetCountryAggregates(data, distinctIndustries, sector, (e.Column as GridViewDataColumn).DataMemberBinding.Path.Path);
+                orderedIndustries = e.NewSortingState == SortingState.Ascending
+                    ? orderedIndustries.OrderBy(a => a.Aggregate).ToList()
+                    : orderedIndustries.OrderByDescending(a => a.Aggregate).ToList();
+                int industryCount = 1;
+                foreach (String country in orderedIndustries.Select(a => a.Description))
+                {
+                    foreach (SectorBreakdownData item in datasource)
+                    {
+                        if (item.Sector == sector && item.Industry == country)
+                        {
+                            item.SectorSortOrder = String.Format("{0}. {1}", sectorCount < 10 ? " " + sectorCount.ToString() : sectorCount.ToString("00"), sector);
+                            item.IndustrySortOrder = String.Format("{0}. {1}", industryCount < 10 ? " " + industryCount.ToString() : industryCount.ToString("00"), country);
+                        }
+                    }
+                    industryCount++;
+                }
+                sectorCount++;
+            }           
+            this.dgSectorBreakdown.ItemsSource = new ObservableCollection<SectorBreakdownData>(datasource);
+        }
+
+        public void ArrangeSortOrder(List<SectorBreakdownData> data)
+        {
+            List<String> distinctRegions = data.OrderBy(a => a.Sector)
+                .Select(a => a.Sector).Distinct().ToList();
+            int regionCount = 1;
+            foreach (String region in distinctRegions)
+            {
+                List<string> distinctCountries = data.Where(a => a.Sector == region).OrderBy(a => a.Industry)
+                        .Select(a => a.Industry).Distinct().ToList();
+                int countryCount = 1;
+                foreach (String country in distinctCountries)
+                {
+                    List<SectorBreakdownData> records = data.Where(a => a.Sector == region && a.Industry == country).ToList();
+                    foreach (SectorBreakdownData record in records)
+                    {
+                        record.SectorSortOrder = String.Format("{0}. {1}", regionCount < 10 ? " " + regionCount.ToString() : regionCount.ToString("00"), region);
+                        record.IndustrySortOrder = String.Format("{0}. {1}", countryCount < 10 ? " " + countryCount.ToString() : countryCount.ToString("00"), country);
+                    }
+                    countryCount++;
+                }
+                regionCount++;
+            }
+        }
+
+        private List<OrderedAggregates> GetRegionAggregates(List<SectorBreakdownData> data, List<String> distinctRegions
+            , String propertyName)
+        {
+            List<OrderedAggregates> orderedAggregates = new List<OrderedAggregates>();
+            switch (propertyName)
+            {
+                case "PortfolioShare":
+                    foreach (String description in distinctRegions)
+                    {
+                        decimal? aggregate = data.Where(a => a.Sector == description)
+                            .Sum(a => a.PortfolioShare);
+                        orderedAggregates.Add(new OrderedAggregates() { Aggregate = aggregate, Description = description });
+                    }
+                    break;
+                case "BenchmarkShare":
+                    foreach (String description in distinctRegions)
+                    {
+                        decimal? aggregate = data.Where(a => a.Sector == description)
+                            .Sum(a => a.BenchmarkShare);
+                        orderedAggregates.Add(new OrderedAggregates() { Aggregate = aggregate, Description = description });
+                    }
+                    break;
+                case "ActivePosition":
+                    foreach (String description in distinctRegions)
+                    {
+                        decimal? aggregate = data.Where(a => a.Sector == description)
+                            .Sum(a => a.ActivePosition);
+                        orderedAggregates.Add(new OrderedAggregates() { Aggregate = aggregate, Description = description });
+                    }
+                    break;
+                default:
+                    return null;
+            }
+
+            return orderedAggregates;
+        }
+
+        private List<OrderedAggregates> GetCountryAggregates(List<SectorBreakdownData> data, List<String> distinctCountries
+            , String region, String propertyName)
+        {
+            List<OrderedAggregates> orderedAggregates = new List<OrderedAggregates>();
+            switch (propertyName)
+            {
+                case "PortfolioShare":
+                    foreach (String description in distinctCountries)
+                    {
+                        decimal? aggregate = data.Where(a => a.Sector == region && a.Industry == description)
+                            .Sum(a => a.PortfolioShare);
+                        orderedAggregates.Add(new OrderedAggregates() { Aggregate = aggregate, Description = description });
+                    }
+                    break;
+                case "BenchmarkShare":
+                    foreach (String description in distinctCountries)
+                    {
+                        decimal? aggregate = data.Where(a => a.Sector == region && a.Industry == description)
+                            .Sum(a => a.BenchmarkShare);
+                        orderedAggregates.Add(new OrderedAggregates() { Aggregate = aggregate, Description = description });
+                    }
+                    break;
+                case "ActivePosition":
+                    foreach (String description in distinctCountries)
+                    {
+                        decimal? aggregate = data.Where(a => a.Sector == region && a.Industry == description)
+                            .Sum(a => a.ActivePosition);
+                        orderedAggregates.Add(new OrderedAggregates() { Aggregate = aggregate, Description = description });
+                    }
+                    break;
+                default:
+                    return null;
+            }
+
+            return orderedAggregates;
+        }
+
+        class OrderedAggregates
+        {
+            public String Description { get; set; }
+            public object Aggregate { get; set; }
+        }
     }
 }
