@@ -74,6 +74,7 @@ namespace GreenField.IssuerShares.Controls
 
         internal void RequestData(String securityShortName)
         {
+            this.IsChanged = false;
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
             client.GetRootModelCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
@@ -126,8 +127,9 @@ namespace GreenField.IssuerShares.Controls
             else
             {
                 this.Items.Add(item);
+                this.IsChanged = true;
             }
-            this.IsChanged = true;
+            
             CompositionChangedEventInfo info = new CompositionChangedEventInfo { Securities = this.Items.Select(x => Int32.Parse(x.Security.Id)).ToList() };
             this.aggregator.GetEvent<CompositionChangedEvent>().Publish(info);
             

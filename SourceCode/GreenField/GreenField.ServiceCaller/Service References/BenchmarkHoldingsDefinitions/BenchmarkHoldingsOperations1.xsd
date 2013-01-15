@@ -164,6 +164,7 @@
       <xs:element minOccurs="0" name="FreecashFlowMargin" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="IndustryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsExpanded" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsoCountryCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
@@ -172,7 +173,9 @@
       <xs:element minOccurs="0" name="NetDebtEquity" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="NetIncomeGrowthCurrentYear" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="NetIncomeGrowthNextYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PfcHoldingPortfolio" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioDirtyValuePC" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioPath" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="ProprietaryRegionCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ROE" nillable="true" type="xs:decimal" />

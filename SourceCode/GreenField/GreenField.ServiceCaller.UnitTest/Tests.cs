@@ -8,6 +8,13 @@ using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller.DCFDefinitions;
 using GreenField.DataContracts.DataContracts;
+using System.Linq;
+using System.Xml.Serialization;
+using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
+
 
 namespace Greenfield.ServiceCaller.UnitTest
 {
@@ -857,6 +864,112 @@ namespace Greenfield.ServiceCaller.UnitTest
                 Assert.AreEqual<int>(0, resultSet.Count, "Portfolio Details Data should be Empty");
                 EnqueueTestComplete();
             });
+        }
+
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Max")]
+        public void RetrievePortfolioDetailsDataPortfolioIdentifierActual()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData { PortfolioId = "EMIF" };
+            bool lookThru = true;
+            bool getBenchmark = false;
+            bool excludeCash = false;
+            DateTime effectiveDate = new DateTime(2012, 11, 30);
+            XDocument doc = XDocument.Load("dataset.xml");
+            XmlSerializer serializer = new XmlSerializer(typeof(List<PortfolioDetailsData>));
+            StringReader reader = new StringReader(doc.ToString());
+            var array = (List<PortfolioDetailsData>)serializer.Deserialize(reader);
+            var data = GetGroupedPortfolios(portfolio.PortfolioId, array);
+            var i = 2;
+
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, lookThru, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            {
+                //XmlSerializer serializer = new XmlSerializer(typeof(List<PortfolioDetailsData>));
+                MemoryStream ms = new MemoryStream();
+                StringBuilder sb = new StringBuilder();
+                using (var streamWriter = new StringWriter(sb))
+                {
+                    serializer.Serialize(streamWriter, resultSet);
+                }
+                var xml = sb.ToString();
+
+
+                Assert.AreNotEqual<int>(0, resultSet.Count, "Portfolio Details Data shouldn't be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        private List<PortfolioDetailsData> GetGroupedPortfolios(string portfolioId, List<PortfolioDetailsData> list)
+        {
+            var result = new List<PortfolioDetailsData>();
+            var query = from d in list
+                        //where d.Ticker == "2018 HK"
+                        group d by d.AsecSecShortName into grp
+                        select grp;
+            var groups = query.ToList();
+
+            foreach (var group in groups)
+            {
+                var main = group.Where(x => x.PortfolioPath == portfolioId).FirstOrDefault();
+                if (main == null)
+                {
+                    result.AddRange(group.AsEnumerable());
+                }
+                else
+                {
+                    var holding = new PortfolioDetailsData
+                    {
+                        A_Sec_Instr_Type = group.First().A_Sec_Instr_Type,
+                        ActivePosition = group.Sum(x => x.ActivePosition ?? 0.0m),
+                        AsecSecShortName = group.Key,
+                        AshEmmModelWeight = group.Sum(x => x.AshEmmModelWeight ?? 0.0m),
+                        BalanceNominal = group.Sum(x => x.BalanceNominal ?? 0.0m),
+                        BenchmarkWeight = main.BenchmarkWeight,
+                        DirtyValuePC = group.Sum(x => x.DirtyValuePC ?? 0.0m),
+                        ForwardEB_EBITDA = main.ForwardEB_EBITDA,
+                        ForwardPE = main.ForwardPE,
+                        ForwardPBV = main.ForwardPBV,
+                        FreecashFlowMargin = main.FreecashFlowMargin,
+                        FromDate = main.FromDate,
+                        IndustryName = main.IndustryName,
+                        IsoCountryCode = main.IsoCountryCode,
+                        IssueName = main.IssueName,
+                        IssuerId = main.IssuerId,
+                        MarketCap = main.MarketCap,
+                        MarketCapUSD = main.MarketCapUSD,
+                        NetDebtEquity = main.NetDebtEquity,
+                        NetIncomeGrowthCurrentYear = main.NetIncomeGrowthCurrentYear,
+                        NetIncomeGrowthNextYear = main.NetIncomeGrowthNextYear,
+                        PfcHoldingPortfolio = main.PfcHoldingPortfolio,
+                        PortfolioDirtyValuePC = group.Sum(x => x.PortfolioDirtyValuePC),
+                        PortfolioPath = main.PortfolioPath,
+                        PortfolioWeight = group.Sum(x => x.PortfolioWeight ?? 0.0m),
+                        ProprietaryRegionCode = main.ProprietaryRegionCode,
+                        ReAshEmmModelWeight = group.Sum(x => x.ReAshEmmModelWeight ?? 0.0m),
+                        RePortfolioWeight = group.Sum(x => x.RePortfolioWeight ?? 0.0m),
+                        ReBenchmarkWeight = main.ReBenchmarkWeight,
+                        RevenueGrowthCurrentYear = main.RevenueGrowthCurrentYear,
+                        RevenueGrowthNextYear = main.RevenueGrowthNextYear,
+                        ROE = main.ROE,
+                        SectorName = main.SectorName,
+                        SecurityId = main.SecurityId,
+                        SecurityThemeCode = main.SecurityThemeCode,
+                        SecurityType = main.SecurityType,
+                        SubIndustryName = main.SubIndustryName,
+                        Ticker = main.Ticker,
+                        TradingCurrency = main.TradingCurrency,
+                        Type = main.Type,
+                        Upside = main.Upside,
+                        IsExpanded = true
+
+                    };
+                    result.Add(holding);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -3220,7 +3333,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             instance.RetrieveConsensusEstimatesSummaryData(entityIdentifier,
                 (List<ConsensusEstimatesSummaryData> resultSet) =>
                 {
-                    Assert.AreEqual<int>(0, resultSet.Count, "ConsensusSummaryData should be Empty");
+                    Assert.AreEqual<int>(7, resultSet.Count, "ConsensusSummaryData should be Empty");
                     EnqueueTestComplete();
                 });
         }
@@ -3238,7 +3351,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             instance.RetrieveConsensusEstimatesSummaryData(entityIdentifier,
                 (List<ConsensusEstimatesSummaryData> resultSet) =>
                 {
-                    Assert.AreEqual<int>(0, resultSet.Count, "ConsensusSummaryData should be Empty");
+                    Assert.AreEqual<int>(7, resultSet.Count, "ConsensusSummaryData should be Empty");
                     EnqueueTestComplete();
                 });
         }
@@ -3264,7 +3377,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             instance.RetrieveValuationGrowthData(selectedPortfolio, effectiveDate, filterType, filterValue, lookThruEnabled,
                 (List<ValuationQualityGrowthData> resultSet) =>
                 {
-                    Assert.AreEqual<int>(0, resultSet.Count, "ValuationQualityGrowthData should be Empty");
+                    Assert.AreEqual<int>(9, resultSet.Count, "ValuationQualityGrowthData should be Empty");
                     EnqueueTestComplete();
                 });
         }
@@ -3286,7 +3399,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             instance.RetrieveValuationGrowthData(selectedPortfolio, effectiveDate, filterType, filterValue, lookThruEnabled,
                 (List<ValuationQualityGrowthData> resultSet) =>
                 {
-                    Assert.AreEqual<int>(0, resultSet.Count, "ValuationQualityGrowthData should be Empty");
+                    Assert.AreEqual<int>(9, resultSet.Count, "ValuationQualityGrowthData should be Empty");
                     EnqueueTestComplete();
                 });
         }
@@ -3366,7 +3479,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             String issuerId = "Dum";
-            int? securityId = 90098;
+            int? securityId = 0;
             FinancialStatementDataSource cSource = FinancialStatementDataSource.INDUSTRY;
             FinancialStatementFiscalType cFiscalType = FinancialStatementFiscalType.CALENDAR;
             String cCurrency = "opmn";

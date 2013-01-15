@@ -771,9 +771,7 @@ namespace GreenField.Web.Services
                                 }
                             }
                         }
-                    }
-
-                    List<IndexConstituentsData> brazilResult = result.Where(t => t.Country == "Brazil").ToList();
+                    }                    
                     return result;
                     #endregion
                 }
@@ -822,8 +820,7 @@ namespace GreenField.Web.Services
                                 }
                             }
                         }
-                    }
-                    List<IndexConstituentsData> brazilResult = result.Where(t => t.Country == "Brazil (BR)" && t.ConstituentName == "EMBRAER SA").ToList();
+                    }                   
                     return result;
                     #endregion
                 }
