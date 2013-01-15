@@ -8,6 +8,7 @@ GO
 --
 -- Author:	David Muench
 -- Date:	July 2, 2012
+-- Modified:  Justin Machata 1/14/2013
 -----------------------------------------------------------------------------------
 
 create procedure Get_Data_Annual(
@@ -61,16 +62,48 @@ as
 
 
 	-- Create a temp table that limits the ref data to the latest version
-	select r.*, s.RefNo
-	  into #LATEST
-	  from Reuters.dbo.tblStatementRef s 
-	 inner join (select ReportNumber, FiscalYear, StatementType, Max(UpdateDate) as UpdateDate	
-				   from Reuters.dbo.tblStatementRef
-				  where ReportNumber = @ReportNumber
-				  group by ReportNumber, FiscalYear, StatementType
-				) r on r.ReportNumber = s.ReportNumber and r.FiscalYear = s.FiscalYear 
-					and r.StatementType = s.StatementType and r.UpdateDate = s.UpdateDate
-				  
+	--select r.*, s.RefNo
+	--  into #LATEST
+	--  from Reuters.dbo.tblStatementRef s 
+	-- inner join (select ReportNumber, FiscalYear, StatementType, Max(UpdateDate) as UpdateDate	
+	--			   from Reuters.dbo.tblStatementRef
+	--			  where ReportNumber = @ReportNumber
+	--			  group by ReportNumber, FiscalYear, StatementType
+	--			) r on r.ReportNumber = s.ReportNumber and r.FiscalYear = s.FiscalYear 
+	--				and r.StatementType = s.StatementType and r.UpdateDate = s.UpdateDate
+	
+	
+	
+	--Modified 1/7/13 (JM) to add periodenddate to query 
+	select r.*, s.RefNo, 'M' as PeriodLengthCode
+	, case when s.PeriodLengthCode = 'W' and s.PeriodLength in (11,12,13,14,15) then cast(3 as decimal(32,6))
+					when s.PeriodLengthCode = 'W' and s.PeriodLength in (24,25,26,27,28) then cast(6 as decimal(32,6))
+					when s.PeriodLengthCode = 'W' and s.PeriodLength in (37,38,39,40,41) then cast(9 as decimal(32,6))
+					when s.PeriodLengthCode = 'W' and s.PeriodLength in (50,51,52,53,54) then cast(12 as decimal(32,6))
+					when s.StatementType = 'BAL' then cast(12 as decimal(32,6))
+					else s.PeriodLength end as PeriodLength
+	into #LATEST
+	from Reuters.dbo.tblStatementRef s 
+	inner join (select sr.ReportNumber, sr.FiscalYear, sr.StatementType, sr.PeriodEndDate, MAX(UpdateDate) as UpdateDate	
+					from Reuters..tblStatementRef sr
+					where sr.ReportNumber = @ReportNumber
+					group by sr.ReportNumber, sr.FiscalYear, sr.StatementType, sr.PeriodEndDate) r
+	on  r.ReportNumber = s.ReportNumber and r.FiscalYear = s.FiscalYear 
+					and r.StatementType = s.StatementType and r.PeriodEndDate = s.PeriodEndDate
+					and r.UpdateDate = s.UpdateDate
+	where 1=1
+		   and (   s.StatementType = 'BAL'
+				or s.PeriodLengthCode = 'M'
+				or ((s.PeriodLengthCode = 'W') and (s.PeriodLength IN (11,12,13,14,15,24,25,26,27,28,37,38,39,40,41,50,51,52,53,54)))
+			   )
+		  	
+	--Added 1/7/13 (JM) to check for multiple reporting statements in one fiscal year, i.e. fiscal year end changes 
+	select ReportNumber, FiscalYear, StatementType, COUNT(*) as tally, MAX(PeriodEndDate) as MaxPeriod, MIN(PeriodEndDate) as MinPeriod
+	into #MultipleCheck
+	from #Latest
+	group by ReportNumber, FiscalYear, StatementType
+
+	
 	if @VERBOSE = 'Y'
 		BEGIN
 --			raiserror( 'After Delete SECURITY_ID', 1, 2) WITH NOWAIT
@@ -89,9 +122,9 @@ as
 		,  sr.FiscalYear
 		,  s.COA
 		,  sci.COAType
-		,  case when isnull(sr.RepToConvExRate, 0.0) = 0.0 then 0.0
-				when isnull(s.Amount, 0.0) = 0.0 then 0.0 
-				else (s.Amount/(case when sr.RepToConvExRate <> 0.0 then sr.RepToConvExRate else 1.0 end)) end as ReportedAmount
+		--,  case when isnull(sr.RepToConvExRate, 0.0) = 0.0 then 0.0
+		--		when isnull(s.Amount, 0.0) = 0.0 then 0.0 
+		--		else (s.Amount/(case when sr.RepToConvExRate <> 0.0 then sr.RepToConvExRate else 1.0 end)) end as ReportedAmount
 		,  sr.CurrencyReported
 		,  sr.UpdateDate
 		,  sr.PeriodEndDate
@@ -115,105 +148,81 @@ as
 	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = s.ReportNumber
 	  left join dbo.FX_RATES fx on fx.FX_DATE = sr.PeriodEndDate and fx.CURRENCY = sr.CurrencyReported
 	 inner join dbo.DATA_MASTER dm on dm.COA = s.COA
+	 inner join #MultipleCheck m on m.ReportNumber = sr.ReportNumber and m.FiscalYear = sr.FiscalYear and m.StatementType = sr.StatementType -- added 1/7/13 (JM) to join to multiple check to only pull for period where single reporting per period
 	 where 1=1
 	   and s.ReportNumber = @ReportNumber
 	   and @CURRENCY_CODE is not NULL
-/*	   
-	-- Change the values to fit the number of months only for those rows that have duplicates
-	-- because the company changed reporting dates within the year.
-	select ISSUER_ID
-		,  CurrencyReported as LocalCurrency
-		,  ReportNumber
-		,  FiscalYear
-		,  COA
-		,  COAType
-		,  (ReportedAmount * (cast(month(sr.PeriodEndDate) as decimal(32,6)) / 12.0) as ReportedAmount
-		,  CurrencyReported
-		,  UpdateDate
-		,  PeriodEndDate
-		,  CurrencyConvertedTo
-		,  RepToConvExRate
-		,  PeriodLengthCode
-		,  PeriodLength
-		,  FX_CONV_TYPE
-		,  DATA_ID
-		,  FX_RATE
-		,  AVG90DAYRATE
-		,  AVG12MonthRATE
-		,  ((Amount12Month * (cast(month(sr.PeriodEndDate) as decimal(32,6)) / 12.0))  as Amount12Month 
-		,  ISO_COUNTRY_CODE
-		,  CountryCurrency
-	  into #Reuters2
-	  from #Reuters
+	   and m.tally = 1  --added 1/7/13 (JM) to pull for period where single reporting per period
+
+
+	--Added 1/8/13 (JM) Special Processing for companies with multiple reporting statements per period, i.e. fiscal year end changes
+	--Create #LatestMultiple temp table
+	select a.ReportNumber, a.FiscalYear, a.StatementType, 
+		b.PeriodEndDate as PeriodEndDate1, b.UpdateDate as UpdateDate1, b.RefNo as RefNo1, b.PeriodLength as PeriodLength1, b.PeriodLengthCode as PeriodLengthCode1,
+		c.PeriodEndDate as PeriodEndDate2, c.UpdateDate as UpdateDate2, c.RefNo as RefNo2, c.PeriodLength as PeriodLength2, c.PeriodLengthCode as PeriodLengthCode2,
+		case when c.PeriodLength > 12 then 12/c.PeriodLength  
+		else cast(1 as decimal(32,6)) end as percent2,
+		case when c.PeriodLength > 12 then cast(0 as decimal(32,6))
+		else (12-c.PeriodLength)/b.PeriodLength end as percent1
+	into #MultipleLatest
+	from #MultipleCheck a
+	inner join #LATEST b on a.ReportNumber = b.ReportNumber and a.StatementType = b.StatementType and a.MinPeriod = b.PeriodEndDate and a.FiscalYear = b.FiscalYear
+	inner join #LATEST c on a.ReportNumber = c.ReportNumber and a.StatementType = c.StatementType and a.MaxPeriod = c.PeriodEndDate and a.FiscalYear = c.FiscalYear
+	where a.tally = 2
+	
+	insert into #Reuters			
+	select @ISSUER_ID as ISSUER_ID
+		,  sr.CurrencyReported as LocalCurrency
+		,  sr.ReportNumber
+		,  sr.FiscalYear
+		,  s.COA
+		,  sci.COAType
+		--,  case when isnull(sr.RepToConvExRate, 0.0) = 0.0 then 0.0
+		--		when isnull(s.Amount, 0.0) = 0.0 then 0.0 
+		--		else (s.Amount/(case when sr.RepToConvExRate <> 0.0 then sr.RepToConvExRate else 1.0 end)) end as ReportedAmount
+		,  sr.CurrencyReported
+		,  sr.UpdateDate
+		,  sr.PeriodEndDate
+		,  sr.CurrencyConvertedTo
+		,  sr.RepToConvExRate
+		,  'M' as PeriodLengthCode
+		,  12 as PeriodLength
+		,  dm.FX_CONV_TYPE
+		,  dm.DATA_ID
+		,  fx.FX_RATE
+		,  fx.AVG90DAYRATE
+		,  fx.AVG12MonthRATE
+		,  case when a1.Amount12Month is null then ((s.Amount)/case when RepToConvExRate <> 0.0 then RepToConvExRate else 1.0 end) * (12/a2.PeriodLength2)
+		   else (((s.Amount)/case when RepToConvExRate <> 0.0 then RepToConvExRate else 1.0 end) * (a2.percent2)) + a1.Amount12Month end
+		   as Amount12Month 
+		,  @ISO_COUNTRY_CODE as ISO_COUNTRY_CODE
+		,  @CURRENCY_CODE as CountryCurrency
+	  from Reuters.dbo.tblStd s
+	 inner join Reuters.dbo.tblStatementRef sr on sr.RefNo = s.RefNo and sr.ReportNumber = s.ReportNumber
+	 inner join #MultipleLatest a2 on a2.ReportNumber = sr.ReportNumber and a2.RefNo2 = sr.RefNo and a2.PeriodEndDate2 = sr.PeriodEndDate
+	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = s.ReportNumber
+	  left join dbo.FX_RATES fx on fx.FX_DATE = sr.PeriodEndDate and fx.CURRENCY = sr.CurrencyReported
+	 inner join dbo.DATA_MASTER dm on dm.COA = s.COA
+	 inner join (select sr.ReportNumber
+			, sr.FiscalYear
+			, s.COA
+			, sr.CurrencyReported
+			, ((s.Amount)/case when RepToConvExRate <> 0.0 then RepToConvExRate else 1.0 end) * (a.percent1) as Amount12Month 
+			from Reuters.dbo.tblStd s
+			inner join Reuters.dbo.tblStatementRef sr on sr.RefNo = s.RefNo and sr.ReportNumber = s.ReportNumber
+			inner join #MultipleLatest a on a.ReportNumber = sr.ReportNumber and a.RefNo1 = sr.RefNo and a.PeriodEndDate1 = sr.PeriodEndDate) a1
+			on s.ReportNumber = a1.ReportNumber and s.ReportYear = a1.FiscalYear and s.COA = a1.COA
 	 where 1=1
-	   
-
-
-	-- This SQL combines the values for the amounts when a company
-	select ISSUER_ID
-		,  LocalCurrency
-		,  ReportNumber
-		,  FiscalYear
-		,  COA
-		,  COAType
-		,  sum(ReportedAmount) as ReportedAmount
-		,  CurrencyReported
-		,  UpdateDate
-		,  max(PeriodEndDate) as PeriodEndDate
-		,  CurrencyConvertedTo
-		,  RepToConvExRate
-		,  PeriodLengthCode
-		,  max(PeriodLength) as PeriodLength
-		,  FX_CONV_TYPE
-		,  DATA_ID
-		,  max(FX_RATE) as FX_RATE
-		,  max(AVG90DAYRATE) as AVG90DAYRATE
-		,  max(AVG12MonthRATE) as AVG12MonthRATE
-		,  sum(Amount12Month) as Amount12Month 
-		,  ISO_COUNTRY_CODE
-		,  CountryCurrency
-	  into #Reuters2
-	  from #Reuters
-	 group by 
-	       ISSUER_ID
-		,  LocalCurrency
-		,  ReportNumber
-		,  FiscalYear
-		,  COA
-		,  COAType
-		,  CurrencyReported
-		,  UpdateDate
-		,  CurrencyConvertedTo
-		,  RepToConvExRate
-		,  PeriodLengthCode
---		,  PeriodLength
-		,  FX_CONV_TYPE
-		,  DATA_ID
---		,  FX_RATE
---		,  AVG90DAYRATE
---		,  AVG12MonthRATE
-		,  ISO_COUNTRY_CODE
-		,  CountryCurrency
-
-
-
-
-select 'Get_Data_Annual #Reuters' as GDA, * 
-  from #Reuters2
- where DATA_ID = 3
- order by ISSUER_ID, FiscalYear, DATA_ID, COA
-
-
-*/
-
-
+	   and s.ReportNumber = @ReportNumber
+	   and @CURRENCY_CODE is not NULL
+	   and sr.CurrencyReported = a1.CurrencyReported  --only if the currency reported is the same for the two periods
+	
+	
 	if @VERBOSE = 'Y'
 		BEGIN
 			print 'After #Reuters select' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 			set @START = GETDATE()
 		END
-
-
 
 
 	-- Verify that there is work to do
@@ -263,7 +272,6 @@ select 'Get_Data_Annual #Reuters' as GDA, *
 select 'get_data_annual #Reuters' as A, r.*
   from #Reuters r
  order by r.PeriodEndDate, r.DATA_ID
-
 
 			-- Insert the Reuters data for the currency it was reported in
 			-- So long as that currency is the Country currency or USD
@@ -399,8 +407,6 @@ select 'get_data_annual #Reuters' as A, r.*
 				END
 
 
-
-
 			-- Collect the Consensus data that is not in PF already.
 			select distinct cce.ISSUER_ID, cce.PERIOD_YEAR, min(cce.AMOUNT_TYPE) as AMOUNT_TYPE
 			  into #CCE
@@ -526,11 +532,14 @@ select * from #PF
 								then 'Current(' + cast(pfc.AMOUNT as varchar(20))  + ' * ' + cast((cast(datepart(month, pfc.PERIOD_END_DATE) as decimal(32,6))/12.0) as varchar(20)) + ') + Next1(' + cast(pfn.AMOUNT as varchar(20)) + ' * ' + cast((cast(12-datepart(month, pfn.PERIOD_END_DATE) as decimal(32,6))/12.0) as varchar(20)) + ')'
 								else 'Current(' + cast(pfc.AMOUNT as varchar(20))  + ' * ' + cast((cast(datepart(month, pfc.PERIOD_END_DATE) as decimal(32,6))/12.0) as varchar(20)) + ') + Next2(' + cast(pfc.AMOUNT as varchar(20)) + ' * ' + cast((cast(12-datepart(month, pfc.PERIOD_END_DATE) as decimal(32,6))/12.0) as varchar(20)) + ')' end  as CALCULATION_DIAGRAM
 				,  pfc.SOURCE_CURRENCY
-				,  pfc.AMOUNT_TYPE
+				--,  pfc.AMOUNT_TYPE
+				,  case when pfn.AMOUNT_TYPE is not null 
+								then pfn.AMOUNT_TYPE
+								else pfc.AMOUNT_TYPE end as AMOUNT_TYPE --1/7/13 (JM): modified from pfc.amount_type to new case statement 1/7/13 (JM)
 			  from #PF pfc  -- dbo.PERIOD_FINANCIALS pfc
 			  left join #PF pfn  -- dbo.PERIOD_FINANCIALS pfn 
 						 on pfn.SECURITY_ID = pfc.SECURITY_ID --pfn.ISSUER_ID = pfc.ISSUER_ID     
-						 and pfn.AMOUNT_TYPE = pfc.AMOUNT_TYPE
+						 --and pfn.AMOUNT_TYPE = pfc.AMOUNT_TYPE  --1/7/13 (JM): removed join on amount_type as was not catching when data points that had actual (current) and estimate (next period)
 						 and pfn.DATA_SOURCE = pfc.DATA_SOURCE and pfn.FISCAL_TYPE = pfc.FISCAL_TYPE
 						 and pfn.PERIOD_TYPE = pfc.PERIOD_TYPE and pfn.PERIOD_YEAR = pfc.PERIOD_YEAR+1
 						 and pfn.DATA_ID = pfc.DATA_ID         and pfn.CURRENCY = pfc.CURRENCY
@@ -574,11 +583,12 @@ select * from #PF
 
 		END
 
-go
---  exec Get_Data 125631 -- this issuer has a period end date of Sept. 30
-/*
-select *
-  from PERIOD_FINANCIALS
- where ISSUER_ID = 125631
- order by DATA_ID, PERIOD_YEAR, FISCAL_TYPE
-*/
+		--Clean up
+		drop table #LATEST
+		drop table #MultipleCheck
+		drop table #MultipleLatest
+		drop table #Reuters
+		drop table #CCE
+
+Go
+
