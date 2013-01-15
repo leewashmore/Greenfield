@@ -302,11 +302,11 @@
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
-                            <telerik:GridViewDataColumn Header="Portfolio Name" UniqueName="PortfolioName" DataMemberBinding="{Binding PfcHoldingPortfolio}" IsGroupable="False" 
+                            <telerik:GridViewDataColumn Header="Portfolio Name" UniqueName="Portfolio Name" DataMemberBinding="{Binding PfcHoldingPortfolio}" IsGroupable="False" 
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
-                            <telerik:GridViewDataColumn Header="Portfolio Path" UniqueName="PortfolioPath" DataMemberBinding="{Binding PortfolioPath}" IsGroupable="False" 
+                            <telerik:GridViewDataColumn Header="Portfolio Path" UniqueName="Portfolio Path" DataMemberBinding="{Binding PortfolioPath}" IsGroupable="False" 
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
