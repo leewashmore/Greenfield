@@ -21,7 +21,7 @@ as
 	declare @START		datetime		-- the time the calc starts
 	set @START = GETDATE()
 
-	-- Get the constant information about this Issuer.
+-- Get the constant information about this Issuer.
 	declare @XREF	varchar(20)
 	declare @ReportNumber	varchar(20)
 	declare @ISO_COUNTRY_CODE	varchar(3)
@@ -36,7 +36,8 @@ as
 	select @CURRENCY_CODE = max(CURRENCY_CODE)
 	  from Country_Master
 	 where COUNTRY_CODE = @ISO_COUNTRY_CODE
-
+	 
+	 
 
 		-- Get COAs for each ISSUER
 	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Create COAs'
@@ -58,15 +59,17 @@ as
 					when sir.PeriodLengthCode = 'W' and sir.PeriodLength in (38,39,40) then 9
 					when sir.PeriodLengthCode = 'W' and sir.PeriodLength in (51,52,53) then 12
 					else sir.PeriodLength end as PeriodLength
-			,  si.Amount
+			,  si.Amount/sir.RepToConvExRate as Amount 
 			,  sir.StatementType
 			,  sir.FiscalYear as PERIOD_YEAR
 			,  sir.interimnumber
-
+			, fx.FX_RATE
+			, fx.AVG90DAYRATE
+		
 		  into #COAs
-		  from Reuters.dbo.tblStd s															-- Get the listed COAs
-		 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = s.ReportNumber	-- Get the COAtype
-		 inner join dbo.DATA_MASTER dm on dm.COA = s.COA							-- Allow only selected COAs
+		  from Reuters..tblStdInterim si														-- Get the listed COAs
+		 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = si.ReportNumber	-- Get the COAtype
+		 inner join dbo.DATA_MASTER dm on dm.COA = si.COA							-- Allow only selected COAs
 									  and (  (sci.COAType = 'IND' and dm.INDUSTRIAL = 'Y')
 										  or (sci.COAType = 'FIN' and dm.INSURANCE = 'Y')
 										  or (sci.COAType = 'UTL' and dm.UTILITY = 'Y')
@@ -77,7 +80,6 @@ as
 --																 when 'UTL' then dm.UTILITY
 --																 when 'BNK' then dm.BANK
 --																 else 'N' end
-		 inner join Reuters.dbo.tblStdInterim si on si.ReportNumber = s.ReportNumber and si.COA = s.COA
 		 inner join Reuters.dbo.tblStdInterimRef sir on sir.ReportNumber = si.ReportNumber and sir.RefNo = si.RefNo
 
 		 inner join dbo.FX_RATES fx on fx.FX_DATE = sir.PeriodEndDate and fx.CURRENCY = sir.CurrencyReported
@@ -88,46 +90,31 @@ as
 					   from GF_SECURITY_BASEVIEW group by ISSUER_ID) sm on sm.ISSUER_ID = rx.ISSUER_ID
 		  left join dbo.Country_Master cm on cm.COUNTRY_CODE = sm.ISO_COUNTRY_CODE
 */		 where 1=1
-		   and s.ReportNumber = @ReportNumber
+		   and si.ReportNumber = @ReportNumber
 		   and (   sir.StatementType = 'BAL'
-				or sir.PeriodLengthCode = 'M'
+				or ((sir.PeriodLengthCode = 'M') and (sir.PeriodLength IN (3,6,9,12)))
 				or ((sir.PeriodLengthCode = 'W') and (sir.PeriodLength IN (12,13,14,25,26,27,38,39,40,51,52,53)))
 			   )
 		   and @CURRENCY_CODE is not NULL
-
-
-	if @VERBOSE = 'Y' 
+		   
+		   		   
+if @VERBOSE = 'Y' 
 		BEGIN
 			print 'After Create COAs' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 			set @START = GETDATE()
 		END
 
 
-/*
-	print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Update COAs'
+if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Pivot the data'	
+-- ???? Test for FYE change...what happens? Can we do something for FYE changes?  i.e., take the last 4 periods and re-label as 1,2,3,4 ????
+	-- Pivot the data so that it is easier to use.
 
-		-- Make any weekly values into monthly.
-		update #COAs
-		   set PeriodLengthCode = 'M'
-			,  PeriodLength = case when PeriodLength in (12,13,14) then 3
-								   when PeriodLength in (25,26,27) then 6
-								   when PeriodLength in (38,39,40) then 9
-								   when PeriodLength in (51,52,53) then 12 end
-		 where (PeriodLengthCode = 'W' and PeriodLength IN (12,13,14,25,26,27,38,39,40,51,52,53))
-*/
-
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Pivot the data'
-
-		-- Pivot the data so that it is easier to use.
-		select ISSUER_ID
+	select ISSUER_ID
 			, COA
 			, FX_CONV_TYPE
 			, DATA_ID
 			, COUNTRY_CODE
 			, CURRENCY_CODE
-			, CurrencyConvertedTo
-			, CurrencyReported
-			, RepToConvExRate
 			, StatementType
 			, PERIOD_YEAR
 			, max(UpdateDate1) as UpdateDate1
@@ -146,6 +133,18 @@ as
 			, SUM(Amount2) as Amount2
 			, SUM(Amount3) as Amount3
 			, SUM(Amount4) as Amount4
+			, SUM(FXRate1) as FXRate1
+			, SUM(FXRate2) as FXRate2
+			, SUM(FXRate3) as FXRate3
+			, SUM(FXRate4) as FXRate4
+			, SUM(FXAvgRate1) as FXAvgRate1
+			, SUM(FXAvgRate2) as FXAvgRate2
+			, SUM(FXAvgRate3) as FXAvgRate3
+			, SUM(FXAvgRate4) as FXAvgRate4
+			, MAX(CurrencyReported1) as CurrencyReported1
+			, MAX(CurrencyReported2) as CurrencyReported2
+			, MAX(CurrencyReported3) as CurrencyReported3
+			, MAX(CurrencyReported4) as CurrencyReported4
 		  into #OUT
 		  from (select ISSUER_ID
 					, COA
@@ -153,9 +152,6 @@ as
 					, DATA_ID
 					, COUNTRY_CODE
 					, CURRENCY_CODE
-					, CurrencyConvertedTo
-					, CurrencyReported
-					, RepToConvExRate
 					, StatementType
 					, PERIOD_YEAR
 					, case interimnumber when 1 then UpdateDate else null end as UpdateDate1
@@ -174,6 +170,19 @@ as
 					, case interimnumber when 2 then sum(Amount) else 0.0 end as Amount2
 					, case interimnumber when 3 then sum(Amount) else 0.0 end as Amount3
 					, case interimnumber when 4 then sum(Amount) else 0.0 end as Amount4
+					, case interimnumber when 1 then sum(FX_RATE) else 0.0 end as FXRate1
+					, case interimnumber when 2 then sum(FX_RATE) else 0.0 end as FXRate2
+					, case interimnumber when 3 then sum(FX_RATE) else 0.0 end as FXRate3
+					, case interimnumber when 4 then sum(FX_RATE) else 0.0 end as FXRate4
+					, case interimnumber when 1 then sum(AVG90DAYRATE) else 0.0 end as FXAvgRate1
+					, case interimnumber when 2 then sum(AVG90DAYRATE) else 0.0 end as FXAvgRate2
+					, case interimnumber when 3 then sum(AVG90DAYRATE) else 0.0 end as FXAvgRate3
+					, case interimnumber when 4 then sum(AVG90DAYRATE) else 0.0 end as FXAvgRate4
+					, case interimnumber when 1 then CurrencyReported else null end as CurrencyReported1
+					, case interimnumber when 2 then CurrencyReported else null end as CurrencyReported2
+					, case interimnumber when 3 then CurrencyReported else null end as CurrencyReported3
+					, case interimnumber when 4 then CurrencyReported else null end as CurrencyReported4
+						
 				  from #COAs
 				 where ISSUER_ID = @ISSUER_ID
 				 group by ISSUER_ID
@@ -184,12 +193,10 @@ as
 					, CURRENCY_CODE
 					, UpdateDate
 					, PeriodEndDate
-					, CurrencyConvertedTo
-					, CurrencyReported
-					, RepToConvExRate
 					, StatementType
 					, PERIOD_YEAR
 					, interimnumber
+					, CurrencyReported
 				) a
 		 group by ISSUER_ID
 			, COA
@@ -197,9 +204,6 @@ as
 			, DATA_ID
 			, COUNTRY_CODE
 			, CURRENCY_CODE
-			, CurrencyConvertedTo
-			, CurrencyReported
-			, RepToConvExRate
 			, StatementType
 			, PERIOD_YEAR
 
@@ -210,16 +214,17 @@ as
 			set @START = GETDATE()
 		END
 
-
+			   
 		-------------------
 		-- Interim number 1
 		-------------------
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 1 a'
-		
-		-- Insert the USD currency
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 1: Scenario 1 (USD)'
+
+		--Scenario 1: BAL item or Period Length = 3
+		--in USD
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
+			, ' ' as SECURITY_ID
 			, ' ' as COA_TYPE
 			, 'REUTERS' as DATA_SOURCE
 			, 'REUTERS' as ROOT_SOURCE
@@ -233,27 +238,27 @@ as
 			, 'USD' as CURRENCY
 			, o.Data_ID
 			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT1
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT1 / fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT1 / fx.FX_RATE
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate1, 0.0) <> 0.0 then o.AMOUNT1 / o.FXAvgRate1
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate1, 0.0) <> 0.0 then o.AMOUNT1 / o.FXRate1
 					else 0.0 end AS AMOUNT
 			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
+			, o.CurrencyReported1 as SOURCE_CURRENCY
 			, 'ACTUAL' as AMOUNT_TYPE
 		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate1 and fx.CURRENCY = 'USD'
-		 where PeriodLength1 is null or PeriodLength1 = 3
-
+		 where (StatementType = 'BAL' or PeriodLength1 = 3) and o.PeriodEndDate1 is not null	
+		   
 	if @VERBOSE = 'Y' 
 		BEGIN
-			print 'After Interim number 1 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			print 'After Interim number 1: Scenario 1 (USD)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 			set @START = GETDATE()
 		END
 
-		-- Insert the local currency
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 1 b'
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 1: Scenario 1 (Local)'
+
+		   --in Local Currency
 		insert into PERIOD_FINANCIALS
 		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
+			, ' ' as SECURITY_ID
 			, ' ' as COA_TYPE
 			, 'REUTERS' as DATA_SOURCE
 			, 'REUTERS' as ROOT_SOURCE
@@ -267,461 +272,892 @@ as
 			, CURRENCY_CODE as CURRENCY
 			, o.Data_ID
 			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT1
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT1 * fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT1 * fx.FX_RATE
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate1, 0.0) <> 0.0 then o.AMOUNT1 / o.FXAvgRate1*fx.AVG90DAYRATE
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate1, 0.0) <> 0.0 then o.AMOUNT1 / o.FXRate1 * fx.FX_RATE
 					else 0.0 end AS AMOUNT
 			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
+			, o.CurrencyReported1 as SOURCE_CURRENCY
 			, 'ACTUAL' as AMOUNT_TYPE
 		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate1 and fx.CURRENCY = o.CURRENCY_CODE
-		 where PeriodLength1 is null or PeriodLength1 = 3
-
-	if @VERBOSE = 'Y' 
+		inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate1 and fx.CURRENCY = o.CURRENCY_CODE
+		where (StatementType = 'BAL' or PeriodLength1 = 3) and o.PeriodEndDate1 is not null		
+		   
+		if @VERBOSE = 'Y' 
 		BEGIN
-			print 'After Interim number 1 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			print 'After Interim number 1: Scenario 1 (Local)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+	
+    	-------------------
+		-- Interim number 2
+		-------------------
+
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2: Scenario 1 (USD)'
+	--Scenario 1: BAL item or Period Length = 3
+		--in USD
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate2 as Root_Source_Date
+			, 'Q2' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate2 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate2, 0.0) <> 0.0 then o.AMOUNT2 / o.FXAvgRate2
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate2, 0.0) <> 0.0 then o.AMOUNT2 / o.FXRate2
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported2 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		 where (StatementType = 'BAL' or PeriodLength2 = 3) and o.PeriodEndDate2 is not null		
+		   	
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2: Scenario 1 (USD)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+		   
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2: Scenario 1 (local)'
+		--in Local Currency
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate2 as Root_Source_Date
+			, 'Q2' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate2 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate2, 0.0) <> 0.0 then o.AMOUNT2 / o.FXAvgRate2 * fx.AVG90DAYRATE
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate2, 0.0) <> 0.0 then o.AMOUNT2 / o.FXRate2 * fx.FX_RATE
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported2 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = o.CURRENCY_CODE
+			where (StatementType = 'BAL' or PeriodLength2 = 3) and o.PeriodEndDate2 is not null	
+		   
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2: Scenario 1 (local)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+		
+		
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2: Scenario 2 (USD & Q2)'
+	--Scenario 2: Non-BAL item and Period Length = 6 with no prior period (semi-annual)
+		--in USD for Q2
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate2 as Root_Source_Date
+			, 'Q2' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate2 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate2, 0.0) <> 0.0 then (o.AMOUNT2 / o.FXAvgRate2)/2
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate2, 0.0) <> 0.0 then (o.AMOUNT2 / o.FXRate2)/2
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported2 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		 where StatementType <> 'BAL' and PeriodLength2 = 6 and (PeriodLength1 is null or PeriodLength1 = 0) and o.PeriodEndDate2 is not null
+
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2: Scenario 2 (USD & q2)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+	
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2: Scenario 2 (Local & Q2)'
+		--in local currency for Q2
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate2 as Root_Source_Date
+			, 'Q2' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate2 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate2, 0.0) <> 0.0 then (o.AMOUNT2 / o.FXAvgRate2)/2 * fx.AVG90DAYRATE
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate2, 0.0) <> 0.0 then (o.AMOUNT2 / o.FXRate2)/2 * fx.FX_RATE
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported2 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = o.CURRENCY_CODE
+			where StatementType <> 'BAL' and PeriodLength2 = 6 and (PeriodLength1 is null or PeriodLength1 = 0) and o.PeriodEndDate2 is not null
+	 	
+	 	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2: Scenario 2 (Local & q2)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+		   
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2: Scenario 2 (USD & Q1)'
+		--in USD for Q1 (create this Q1 quarter value)
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate2 as Root_Source_Date
+			, 'Q1' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, DATEADD(s,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate2)-2,0))as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then (o.AMOUNT2 / fx.AVG90DAYRATE)/2
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then (o.AMOUNT2 / fx.FX_RATE)/2
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported2 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx on fx.FX_DATE = DATEADD(d,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate2)-2,0)) and fx.CURRENCY = o.CurrencyReported2
+			 where StatementType <> 'BAL' and PeriodLength2 = 6 and (PeriodLength1 is null or PeriodLength1 = 0) and o.PeriodEndDate2 is not null
+
+	 	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2: Scenario 2 (USD & q1)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2: Scenario 2 (Local & Q1)'
+		--in Local Currency for Q1 (create this Q1 quarter value)
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate2 as Root_Source_Date
+			, 'Q1' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, DATEADD(s,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate2)-2,0))as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, o.CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull( fx1.AVG90DAYRATE, 0.0) <> 0.0 then (o.AMOUNT2 / fx1.AVG90DAYRATE)/2*fx2.AVG90DAYRATE
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx1.FX_RATE, 0.0) <> 0.0 then (o.AMOUNT2 / fx1.FX_RATE)/2*fx2.FX_RATE
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported2 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx1 on fx1.FX_DATE = DATEADD(d,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate2)-2,0)) and fx1.CURRENCY = o.CurrencyReported2
+			inner join dbo.FX_RATES fx2 on fx2.FX_DATE = DATEADD(d,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate2)-2,0)) and fx2.CURRENCY = o.CURRENCY_CODE
+		where StatementType <> 'BAL' and PeriodLength2 = 6 and (PeriodLength1 is null or PeriodLength1 = 0) and o.PeriodEndDate2 is not null
+
+	 	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2: Scenario 2 (Local & q1)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+
+
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2: Scenario 3 (USD)'
+	--Scenario 3: Non-BAL item, prior period reported and this period nets out to length of 3
+		--in USD for Q2
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate2 as Root_Source_Date
+			, 'Q2' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate2 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2 - o.AMOUNT1
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate2, 0.0) <> 0.0  and isnull(o.FXAvgRate1, 0.0) <> 0.0 then (o.AMOUNT2 / o.FXAvgRate2) - (o.AMOUNT1 / o.FXAvgRate1)
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate2, 0.0) <> 0.0 and isnull(o.FXRate1, 0.0) <> 0.0 then (o.AMOUNT2 / o.FXRate2) - (o.AMOUNT1 / o.FXRate1)
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported2 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		 where StatementType <> 'BAL' and (PeriodLength2 - PeriodLength1) = 3 and (PeriodLength1 is not null or PeriodLength1 <> 0) and o.PeriodEndDate2 is not null
+
+
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2: Scenario 3 (USD)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2: Scenario 3 (Local)'
+	--Scenario 3: Non-BAL item, prior period reported and this period nets out to length of 3
+		--in Local for Q2
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate2 as Root_Source_Date
+			, 'Q2' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate2 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, o.CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2 - o.AMOUNT1
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate2, 0.0) <> 0.0  and isnull(o.FXAvgRate1, 0.0) <> 0.0 then ((o.AMOUNT2 / o.FXAvgRate2) *fx2.AVG90DAYRATE) - ((o.AMOUNT1 / o.FXAvgRate1)*fx1.AVG90DAYRATE)
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate2, 0.0) <> 0.0 and isnull(o.FXRate1, 0.0) <> 0.0 then ((o.AMOUNT2 / o.FXRate2)*fx2.FX_RATE) - ((o.AMOUNT1 / o.FXRate1)*fx1.FX_RATE)
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported2 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		  inner join dbo.FX_RATES fx1 on fx1.FX_DATE = o.PeriodEndDate1 and fx1.CURRENCY =  o.CURRENCY_CODE 
+		  inner join dbo.FX_RATES fx2 on fx2.FX_DATE = o.PeriodEndDate2 and fx2.CURRENCY =  o.CURRENCY_CODE 
+		where StatementType <> 'BAL' and (PeriodLength2 - PeriodLength1) = 3 and (PeriodLength1 is not null or PeriodLength1 <> 0) and o.PeriodEndDate2 is not null
+
+
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 2: Scenario 3 (Local)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+
+
+    	-------------------
+		-- Interim number 3
+		-------------------
+
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3: Scenario 1 (USD)'
+	--Scenario 1: BAL item or Period Length = 3
+		--in USD
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate3 as Root_Source_Date
+			, 'Q3' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate3 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT3
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate3, 0.0) <> 0.0 then o.AMOUNT3 / o.FXAvgRate3
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate3, 0.0) <> 0.0 then o.AMOUNT3 / o.FXRate3
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported3 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		 where (StatementType = 'BAL' or PeriodLength3 = 3) and o.PeriodEndDate3 is not null		
+		   	
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 3: Scenario 1 (USD)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+		   
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3: Scenario 1 (local)'
+		--in Local Currency
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate3 as Root_Source_Date
+			, 'Q3' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate3 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT3
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate3, 0.0) <> 0.0 then o.AMOUNT3 / o.FXAvgRate3 * fx.AVG90DAYRATE
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate3, 0.0) <> 0.0 then o.AMOUNT3 / o.FXRate3 * fx.FX_RATE
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported3 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate3 and fx.CURRENCY = o.CURRENCY_CODE
+			where (StatementType = 'BAL' or PeriodLength3 = 3) and o.PeriodEndDate3 is not null	
+		   
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 3: Scenario 1 (local)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+		
+		
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3: Scenario 2 (USD & Q3)'
+	--Scenario 2: Non-BAL item and Period Length = 6 with no prior period (semi-annual)
+		--in USD for Q3
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate3 as Root_Source_Date
+			, 'Q3' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate3 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT3/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate3, 0.0) <> 0.0 then (o.AMOUNT3 / o.FXAvgRate3)/2
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate3, 0.0) <> 0.0 then (o.AMOUNT3 / o.FXRate3)/2
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported3 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		 where StatementType <> 'BAL' and PeriodLength3 = 6 and (PeriodLength2 is null or PeriodLength2 = 0) and o.PeriodEndDate3 is not null
+
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 3: Scenario 2 (USD & Q3)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+	
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3: Scenario 2 (Local & Q3)'
+		--in local currency for Q3
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate3 as Root_Source_Date
+			, 'Q3' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate3 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT3/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate3, 0.0) <> 0.0 then (o.AMOUNT3 / o.FXAvgRate3)/2 * fx.AVG90DAYRATE
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate3, 0.0) <> 0.0 then (o.AMOUNT3 / o.FXRate3)/2 * fx.FX_RATE
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported3 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate3 and fx.CURRENCY = o.CURRENCY_CODE
+			where StatementType <> 'BAL' and PeriodLength3 = 6 and (PeriodLength2 is null or PeriodLength2 = 0) and o.PeriodEndDate3 is not null
+	 	
+	 	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 3: Scenario 2 (Local & q3)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+		   
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3: Scenario 2 (USD & Q2)'
+		--in USD for Q2 (create this Q2 quarter value)
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate3 as Root_Source_Date
+			, 'Q2' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, DATEADD(s,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate3)-2,0))as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT3/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then (o.AMOUNT3 / fx.AVG90DAYRATE)/2
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then (o.AMOUNT3 / fx.FX_RATE)/2
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported3 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx on fx.FX_DATE = DATEADD(d,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate3)-2,0)) and fx.CURRENCY = o.CurrencyReported3
+			 where StatementType <> 'BAL' and PeriodLength3 = 6 and (PeriodLength2 is null or PeriodLength2 = 0) and o.PeriodEndDate3 is not null
+
+	 	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 3: Scenario 2 (USD & q2)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3: Scenario 2 (Local & Q2)'
+		--in Local Currency for Q2 (create this Q2 quarter value)
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate3 as Root_Source_Date
+			, 'Q2' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, DATEADD(s,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate3)-2,0))as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, o.CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT3/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull( fx1.AVG90DAYRATE, 0.0) <> 0.0 then (o.AMOUNT3 / fx1.AVG90DAYRATE)/2*fx2.AVG90DAYRATE
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx1.FX_RATE, 0.0) <> 0.0 then (o.AMOUNT3 / fx1.FX_RATE)/2*fx2.FX_RATE
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported3 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx1 on fx1.FX_DATE = DATEADD(d,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate3)-2,0)) and fx1.CURRENCY = o.CurrencyReported3
+			inner join dbo.FX_RATES fx2 on fx2.FX_DATE = DATEADD(d,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate3)-2,0)) and fx2.CURRENCY = o.CURRENCY_CODE
+		where StatementType <> 'BAL' and PeriodLength3 = 6 and (PeriodLength2 is null or PeriodLength2 = 0) and o.PeriodEndDate3 is not null
+
+	 	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 3: Scenario 2 (Local & q2)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+
+
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3: Scenario 3 (USD)'
+	--Scenario 3: Non-BAL item, prior period reported and this period nets out to length of 3
+		--in USD for Q3
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate3 as Root_Source_Date
+			, 'Q3' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate3 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT3 - o.AMOUNT2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate3, 0.0) <> 0.0  and isnull(o.FXAvgRate2, 0.0) <> 0.0 then (o.AMOUNT3 / o.FXAvgRate3) - (o.AMOUNT2 / o.FXAvgRate2)
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate3, 0.0) <> 0.0 and isnull(o.FXRate2, 0.0) <> 0.0 then (o.Amount3 / o.FXRate3) - (o.AMOUNT2 / o.FXRate2)
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported3 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		 where StatementType <> 'BAL' and (PeriodLength3 - PeriodLength2) = 3 and (PeriodLength2 is not null or PeriodLength2 <> 0) and o.PeriodEndDate3 is not null
+
+
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 3: Scenario 3 (USD)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3: Scenario 3 (Local)'
+	--Scenario 3: Non-BAL item, prior period reported and this period nets out to length of 3
+		--in Local for Q3
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate3 as Root_Source_Date
+			, 'Q3' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate3 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, o.CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT3 - o.AMOUNT2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate3, 0.0) <> 0.0  and isnull(o.FXAvgRate2, 0.0) <> 0.0 then ((o.AMOUNT3 / o.FXAvgRate3) *fx3.AVG90DAYRATE) - ((o.AMOUNT2 / o.FXAvgRate2)*fx2.AVG90DAYRATE)
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate3, 0.0) <> 0.0 and isnull(o.FXRate2, 0.0) <> 0.0 then ((o.AMOUNT3 / o.FXRate3)*fx3.FX_RATE) - ((o.AMOUNT2 / o.FXRate2)*fx2.FX_RATE)
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported3 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		  inner join dbo.FX_RATES fx2 on fx2.FX_DATE = o.PeriodEndDate2 and fx2.CURRENCY =  o.CURRENCY_CODE 
+		  inner join dbo.FX_RATES fx3 on fx3.FX_DATE = o.PeriodEndDate3 and fx3.CURRENCY =  o.CURRENCY_CODE 
+		where StatementType <> 'BAL' and (PeriodLength3 - PeriodLength2) = 3 and (PeriodLength2 is not null or PeriodLength2 <> 0) and o.PeriodEndDate3 is not null
+
+
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 3: Scenario 3 (Local)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+
+    	-------------------
+		-- Interim number 4
+		-------------------
+
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4: Scenario 1 (USD)'
+	--Scenario 1: BAL item or Period Length = 3
+		--in USD
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate4 as Root_Source_Date
+			, 'Q4' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate4 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT4
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate4, 0.0) <> 0.0 then o.AMOUNT4 / o.FXAvgRate4
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate4, 0.0) <> 0.0 then o.AMOUNT4 / o.FXRate4
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported4 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		 where (StatementType = 'BAL' or PeriodLength4 = 3) and o.PeriodEndDate4 is not null		
+		   	
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 4: Scenario 1 (USD)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+		   
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4: Scenario 1 (local)'
+		--in Local Currency
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate4 as Root_Source_Date
+			, 'Q4' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate4 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT4
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate4, 0.0) <> 0.0 then o.AMOUNT4 / o.FXAvgRate4 * fx.AVG90DAYRATE
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate4, 0.0) <> 0.0 then o.AMOUNT4 / o.FXRate4 * fx.FX_RATE
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported4 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate4 and fx.CURRENCY = o.CURRENCY_CODE
+			where (StatementType = 'BAL' or PeriodLength4 = 3) and o.PeriodEndDate4 is not null	
+		   
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 4: Scenario 1 (local)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+		
+		
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4: Scenario 2 (USD & Q4)'
+	--Scenario 2: Non-BAL item and Period Length = 6 with no prior period (semi-annual)
+		--in USD for Q4
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate4 as Root_Source_Date
+			, 'Q4' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate4 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT4/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate4, 0.0) <> 0.0 then (o.AMOUNT4 / o.FXAvgRate4)/2
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate4, 0.0) <> 0.0 then (o.AMOUNT4 / o.FXRate4)/2
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported4 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		 where StatementType <> 'BAL' and PeriodLength4 = 6 and (PeriodLength3 is null or PeriodLength3 = 0) and o.PeriodEndDate4 is not null
+
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 4: Scenario 2 (USD & q4)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+	
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4: Scenario 2 (Local & Q4)'
+		--in local currency for Q4
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate4 as Root_Source_Date
+			, 'Q4' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate4 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT4/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate4, 0.0) <> 0.0 then (o.AMOUNT4 / o.FXAvgRate4)/2 * fx.AVG90DAYRATE
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate4, 0.0) <> 0.0 then (o.AMOUNT4 / o.FXRate4)/2 * fx.FX_RATE
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported4 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate4 and fx.CURRENCY = o.CURRENCY_CODE
+			where StatementType <> 'BAL' and PeriodLength4 = 6 and (PeriodLength3 is null or PeriodLength3 = 0) and o.PeriodEndDate4 is not null
+	 	
+	 	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 4: Scenario 2 (Local & q4)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+		   
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4: Scenario 2 (USD & Q3)'
+		--in USD for Q3 (create this Q3 quarter value)
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate4 as Root_Source_Date
+			, 'Q3' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, DATEADD(s,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate4)-2,0))as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT4/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then (o.AMOUNT4 / fx.AVG90DAYRATE)/2
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then (o.AMOUNT4 / fx.FX_RATE)/2
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported4 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx on fx.FX_DATE = DATEADD(d,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate4)-2,0)) and fx.CURRENCY = o.CurrencyReported4
+			 where StatementType <> 'BAL' and PeriodLength4 = 6 and (PeriodLength3 is null or PeriodLength3 = 0) and o.PeriodEndDate4 is not null
+
+	 	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 4: Scenario 2 (USD & q3)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4: Scenario 2 (Local & Q3)'
+		--in Local Currency for Q3 (create this Q3 quarter value)
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate4 as Root_Source_Date
+			, 'Q3' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, DATEADD(s,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate4)-2,0))as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, o.CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT4/2
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull( fx1.AVG90DAYRATE, 0.0) <> 0.0 then (o.AMOUNT4 / fx1.AVG90DAYRATE)/2*fx2.AVG90DAYRATE
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx1.FX_RATE, 0.0) <> 0.0 then (o.AMOUNT4 / fx1.FX_RATE)/2*fx2.FX_RATE
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported4 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+			inner join dbo.FX_RATES fx1 on fx1.FX_DATE = DATEADD(d,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate4)-2,0)) and fx1.CURRENCY = o.CurrencyReported4
+			inner join dbo.FX_RATES fx2 on fx2.FX_DATE = DATEADD(d,-1,DATEADD(mm,DATEDIFF(m,0,o.PeriodEndDate4)-2,0)) and fx2.CURRENCY = o.CURRENCY_CODE
+		where StatementType <> 'BAL' and PeriodLength4 = 6 and (PeriodLength3 is null or PeriodLength3 = 0) and o.PeriodEndDate4 is not null
+
+	 	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 4: Scenario 2 (Local & q3)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+
+
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4: Scenario 3 (USD)'
+	--Scenario 3: Non-BAL item, prior period reported and this period nets out to length of 3
+		--in USD for Q4
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate4 as Root_Source_Date
+			, 'Q4' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate4 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, 'USD' as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT4 - o.AMOUNT3
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate4, 0.0) <> 0.0  and isnull(o.FXAvgRate3, 0.0) <> 0.0 then (o.AMOUNT4 / o.FXAvgRate4) - (o.AMOUNT3 / o.FXAvgRate3)
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate4, 0.0) <> 0.0 and isnull(o.FXRate3, 0.0) <> 0.0 then (o.AMOUNT4 / o.FXRate4) - (o.AMOUNT3 / o.FXRate3)
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported4 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		 where StatementType <> 'BAL' and (PeriodLength4 - PeriodLength3) = 3 and (PeriodLength3 is not null or PeriodLength3 <> 0) and o.PeriodEndDate4 is not null
+
+
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 4: Scenario 3 (USD)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+
+		if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4: Scenario 3 (Local)'
+	--Scenario 3: Non-BAL item, prior period reported and this period nets out to length of 3
+		--in Local for Q4
+		insert into PERIOD_FINANCIALS
+		select o.ISSUER_ID 
+			, ' ' as SECURITY_ID
+			, ' ' as COA_TYPE
+			, 'REUTERS' as DATA_SOURCE
+			, 'REUTERS' as ROOT_SOURCE
+			, o.UpdateDate4 as Root_Source_Date
+			, 'Q4' as PERIOD_TYPE
+			, o.PERIOD_YEAR
+			, o.PeriodEndDate4 as PeriodEndDate
+		--	, PeriodLength
+		--	, PeriodLengthCode
+			, 'FISCAL' as Fiscal_Type
+			, o.CURRENCY_CODE as CURRENCY
+			, o.Data_ID
+			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT4 - o.AMOUNT3
+					when  o.FX_CONV_TYPE  = 'AVG' and isnull(o.FXAvgRate4, 0.0) <> 0.0  and isnull(o.FXAvgRate3, 0.0) <> 0.0 then ((o.AMOUNT4 / o.FXAvgRate4) *fx4.AVG90DAYRATE) - ((o.AMOUNT3 / o.FXAvgRate3)*fx3.AVG90DAYRATE)
+					when  o.FX_CONV_TYPE  = 'PIT' and isnull(o.FXRate4, 0.0) <> 0.0 and isnull(o.FXRate3, 0.0) <> 0.0 then ((o.AMOUNT4 / o.FXRate4)*fx4.FX_RATE) - ((o.AMOUNT3 / o.FXRate3)*fx3.FX_RATE)
+					else 0.0 end AS AMOUNT
+			, ' ' as CALCULATION_DIAGRAM
+			, o.CurrencyReported4 as SOURCE_CURRENCY
+			, 'ACTUAL' as AMOUNT_TYPE
+		  from #OUT o
+		  inner join dbo.FX_RATES fx3 on fx3.FX_DATE = o.PeriodEndDate3 and fx3.CURRENCY =  o.CURRENCY_CODE 
+		  inner join dbo.FX_RATES fx4 on fx4.FX_DATE = o.PeriodEndDate4 and fx4.CURRENCY =  o.CURRENCY_CODE 
+		where StatementType <> 'BAL' and (PeriodLength4 - PeriodLength3) = 3 and (PeriodLength3 is not null or PeriodLength3 <> 0) and o.PeriodEndDate4 is not null
+
+
+		if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Interim number 4: Scenario 3 (Local)' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 			set @START = GETDATE()
 		END
 
 		 
-		-- Need to log data from interim 1 that is not periodlength - 3
-
-		-------------------
-		-- Interim number 2
-		-------------------
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 a'
-		-- Insert the USD currency for the ones that have 3 months in the period
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate2 as Root_Source_Date
-			, 'Q2' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate2 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, 'USD' as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT2 / fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT2 / fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = 'USD'
-		 where PeriodLength2 is null or PeriodLength2 = 3
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 2 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-		-- Insert the local currency
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 b'
-	
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate2 as Root_Source_Date
-			, 'Q2' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate2 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, CURRENCY_CODE as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT2 * fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT2 * fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = o.CURRENCY_CODE
-		 where PeriodLength2 is null or PeriodLength2 = 3
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 2 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-
-		-- Insert the USD currency for the ones with 6 month periods
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 c'
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate1 as Root_Source_Date
-			, 'Q2' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate2 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, 'USD' as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT2 / fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT2 / fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = 'USD'
-		 where PeriodLength2 = 6
-		   and PeriodLength1 = 3
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 2 c' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-		-- Insert the local currency
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 d'
-	
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate1 as Root_Source_Date
-			, 'Q2' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate2 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, CURRENCY_CODE as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT2 * fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT2 * fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = o.CURRENCY_CODE
-		 where PeriodLength2 = 6
-		   and PeriodLength1 = 3
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 2 d' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-
-
-		-- Insert the USD currency for the ones with 6 month periods
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 e'
-	
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate2 as Root_Source_Date
-			, 'Q2' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate2 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, 'USD' as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2/2
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT2 / 2 / fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT2 / 2 / fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = 'USD'
-		 where PeriodLength2 = 6
-		   and (PeriodLength1 is null or PeriodLength1 <> 3)
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 2 e' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-		-- Insert the local currency
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 f'
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate2 as Root_Source_Date
-			, 'Q2' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate2 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, CURRENCY_CODE as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2 / 2
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT2 / 2 * fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT2 / 2 * fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = o.CURRENCY_CODE
-		 where PeriodLength2 = 6
-		   and (PeriodLength1 is null or PeriodLength1 <> 3)
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 2 f' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-
-
-		-- Insert the USD currency for the ones with 6 month periods - Q1
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 g'
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate2 as Root_Source_Date
-			, 'Q1' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate2 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, 'USD' as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2/2
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT2 / 2 / fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT2 / 2 / fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = 'USD'
-		 where PeriodLength2 = 6
-		   and (PeriodLength1 is null or PeriodLength1 <> 3)
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 2 g' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-		-- Insert the local currency - Q1
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 2 h'
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate2 as Root_Source_Date
-			, 'Q1' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate2 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, CURRENCY_CODE as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT2 / 2
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT2 / 2 * fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT2 / 2 * fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate2 and fx.CURRENCY = o.CURRENCY_CODE
-		 where PeriodLength2 = 6
-		   and (PeriodLength1 is null or PeriodLength1 <> 3)
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 2 h' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-
-
-		--------------------
-		-- Interim number 3
-		--------------------
-		-- Insert the USD currency for the ones that have 3 months in the period
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3 a'
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate3 as Root_Source_Date
-			, 'Q3' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate3 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, 'USD' as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT3
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT3 / fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT3 / fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate3 and fx.CURRENCY = 'USD'
-		 where PeriodLength3 is null or PeriodLength3 = 3
-
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 3 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-		-- Insert the local currency
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 3 b'
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate3 as Root_Source_Date
-			, 'Q3' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate3 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, CURRENCY_CODE as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT3
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT3 * fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT3 * fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate3 and fx.CURRENCY = o.CURRENCY_CODE
-		 where PeriodLength3 is null or PeriodLength3 = 3
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 3 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-
-
-		--------------------
-		-- Interim number 3
-		--------------------
-		-- Insert the USD currency for the ones that have 3 months in the period
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4 a'
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate4 as Root_Source_Date
-			, 'Q4' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate4 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, 'USD' as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT4
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT4 / fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT4 / fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate4 and fx.CURRENCY = 'USD'
-		 where PeriodLength4 is null or PeriodLength4 = 3
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 4 a' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
-		-- Insert the local currency
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Interim number 4 b'
-		insert into PERIOD_FINANCIALS
-		select o.ISSUER_ID 
-			, ' ' as SECUIRTY_ID
-			, ' ' as COA_TYPE
-			, 'REUTERS' as DATA_SOURCE
-			, 'REUTERS' as ROOT_SOURCE
-			, o.UpdateDate4 as Root_Source_Date
-			, 'Q4' as PERIOD_TYPE
-			, o.PERIOD_YEAR
-			, o.PeriodEndDate4 as PeriodEndDate
-		--	, PeriodLength
-		--	, PeriodLengthCode
-			, 'FISCAL' as Fiscal_Type
-			, CURRENCY_CODE as CURRENCY
-			, o.Data_ID
-			, CASE when o.FX_CONV_TYPE  = 'NONE' then o.AMOUNT4
-					when  o.FX_CONV_TYPE  = 'AVG' and isnull(fx.AVG90DAYRATE, 0.0) <> 0.0 then o.AMOUNT4 * fx.AVG90DAYRATE
-					when  o.FX_CONV_TYPE  = 'PIT' and isnull(fx.FX_RATE, 0.0) <> 0.0 then o.AMOUNT4 * fx.FX_RATE
-					else 0.0 end AS AMOUNT
-			, ' ' as CALCULATION_DIAGRAM
-			, o.CurrencyReported as SOURCE_CURRENCY
-			, 'ACTUAL' as AMOUNT_TYPE
-		  from #OUT o
-		 inner join dbo.FX_RATES fx on fx.FX_DATE = o.PeriodEndDate4 and fx.CURRENCY = o.CURRENCY_CODE
-		 where PeriodLength4 is null or PeriodLength4 = 3
-
-	if @VERBOSE = 'Y' 
-		BEGIN
-			print 'After Interim number 4 b' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-			set @START = GETDATE()
-		END
-
+		 
 --------------------------
 -- Copy Consensus Data
 --------------------------
@@ -762,7 +1198,7 @@ as
 			set @START = GETDATE()
 		END
 	
-	
+
 	-- Copy Consensus data in where the year&quarter is missing from PERIOD_FINANCIALS
 	insert into dbo.PERIOD_FINANCIALS (ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE,
 									   ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, 
@@ -814,6 +1250,7 @@ as
 
 
 	-- Copy Consensus data in where the year&quarter is missing from PERIOD_FINANCIALS
+	--also inserting estimate 11 into data id 47
 	insert into dbo.PERIOD_FINANCIALS (ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE,
 									   ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, 
 									   FISCAL_TYPE, CURRENCY, DATA_ID, AMOUNT, CALCULATION_DIAGRAM, 
