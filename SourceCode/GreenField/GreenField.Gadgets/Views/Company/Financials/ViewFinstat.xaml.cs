@@ -63,8 +63,8 @@ namespace GreenField.Gadgets.Views
                 PeriodColumnHeader = periodColumnHeader,
                 PeriodIsYearly = true
             }, isQuarterImplemented: false, navigatingColumnStartIndex: 1);
-            dgFinstat.Columns[8].Header = "Harmonic Avg " + periodColumnHeader[1] + "-" + periodColumnHeader[3];
-            dgFinstat.Columns[9].Header = "Harmonic Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
+            dgFinstat.Columns[8].Header = "Avg " + periodColumnHeader[1] + "-" + periodColumnHeader[3];
+            dgFinstat.Columns[9].Header = "Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
             SettingGridColumnUniqueNames(periodColumnHeader);
 
             PeriodColumns.PeriodColumnUpdate += (e) =>
@@ -72,8 +72,8 @@ namespace GreenField.Gadgets.Views
                 if (e.PeriodColumnNamespace == this.DataContext.GetType().FullName)
                 {
                     PeriodColumns.UpdateColumnInformation(this.dgFinstat, e, false, 1);
-                    dgFinstat.Columns[8].Header = "Harmonic Avg " + e.PeriodColumnHeader[1] + "-" + e.PeriodColumnHeader[3];
-                    dgFinstat.Columns[9].Header = "Harmonic Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
+                    dgFinstat.Columns[8].Header = "Avg " + e.PeriodColumnHeader[1] + "-" + e.PeriodColumnHeader[3];
+                    dgFinstat.Columns[9].Header = "Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
 
                     SettingGridColumnUniqueNames(e.PeriodColumnHeader);
                     this.btnExportExcel.IsEnabled = true;
@@ -459,8 +459,8 @@ namespace GreenField.Gadgets.Views
             dgFinstat.Columns[5].UniqueName = periodColumnHeader[4];
             dgFinstat.Columns[6].UniqueName = periodColumnHeader[5];
             dgFinstat.Columns[7].UniqueName = periodColumnHeader[6];
-            dgFinstat.Columns[8].UniqueName = "Harmonic Avg " + periodColumnHeader[1] + "-" + periodColumnHeader[3];
-            dgFinstat.Columns[9].UniqueName = "Harmonic Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
+            dgFinstat.Columns[8].UniqueName = "Avg " + periodColumnHeader[1] + "-" + periodColumnHeader[3];
+            dgFinstat.Columns[9].UniqueName = "Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
         }
         #endregion
 

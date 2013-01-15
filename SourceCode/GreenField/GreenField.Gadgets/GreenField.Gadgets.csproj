@@ -168,6 +168,7 @@
     <Compile Include="Helpers\PeriodColumnNavigationEvent.cs" />
     <Compile Include="Helpers\PeriodColumns.cs" />
     <Compile Include="Helpers\PortfolioDetails\BenchmarkWeight.cs" />
+    <Compile Include="Helpers\PortfolioDetails\ColumnHeaders.cs" />
     <Compile Include="Helpers\PortfolioDetails\Statistics.cs" />
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
     <Compile Include="Models\DCFCalculationParameters.cs" />
