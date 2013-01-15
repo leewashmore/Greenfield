@@ -407,13 +407,13 @@ namespace GreenField.Gadgets.Views
         {
             if (this.DataContextPortfolioDetails.EnableLookThru)
             {
-                dgPortfolioDetails.Columns["PortfolioName"].IsVisible = true;
-                dgPortfolioDetails.Columns["PortfolioPath"].IsVisible = true;
+                dgPortfolioDetails.Columns["Portfolio Name"].IsVisible = true;
+                dgPortfolioDetails.Columns["Portfolio Path"].IsVisible = true;
             }
             else
             {
-                dgPortfolioDetails.Columns["PortfolioName"].IsVisible = false;
-                dgPortfolioDetails.Columns["PortfolioPath"].IsVisible = false;
+                dgPortfolioDetails.Columns["Portfolio Name"].IsVisible = false;
+                dgPortfolioDetails.Columns["Portfolio Path"].IsVisible = false;
             }
 
             if (this.DataContextPortfolioDetails.CheckFilterApplied == 1)
@@ -448,10 +448,10 @@ namespace GreenField.Gadgets.Views
             //this.dgPortfolioDetails.Columns["Net Income Growth Current Year"].Header = "Net Income Growth " + DateTime.Today.Year.ToString();
             //this.dgPortfolioDetails.Columns["Net Income Growth Next Year"].Header = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
 
-            //this.dgPortfolioDetails.Columns["Revenue Growth Current Year"].UniqueName = "Revenue Growth " + DateTime.Today.Year.ToString();
-            //this.dgPortfolioDetails.Columns["Revenue Growth Next Year"].UniqueName = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
-            //this.dgPortfolioDetails.Columns["Net Income Growth Current Year"].UniqueName = "Net Income Growth " + DateTime.Today.Year.ToString();
-            //this.dgPortfolioDetails.Columns["Net Income Growth Next Year"].UniqueName = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
+            this.dgPortfolioDetails.Columns["Revenue Growth Current Year"].UniqueName = "Revenue Growth " + DateTime.Today.Year.ToString();
+            this.dgPortfolioDetails.Columns["Revenue Growth Next Year"].UniqueName = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
+            this.dgPortfolioDetails.Columns["Net Income Growth Current Year"].UniqueName = "Net Income Growth " + DateTime.Today.Year.ToString();
+            this.dgPortfolioDetails.Columns["Net Income Growth Next Year"].UniqueName = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
             
         }
 

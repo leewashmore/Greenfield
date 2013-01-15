@@ -85,16 +85,16 @@
                                                  CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  Header="MTD" TextAlignment="Right" UniqueName="MTD"
-                                                 DataMemberBinding="{Binding MTDReturn, StringFormat=\{0:n2\}%}" 
+                                                 DataMemberBinding="{Binding MTDReturn, StringFormat=\{0:n1\}%}" 
                                                  HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  Header="QTD" UniqueName="QTD" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                 DataMemberBinding="{Binding QTDReturn, StringFormat=\{0:n2\}%}" TextAlignment="Right"
+                                                 DataMemberBinding="{Binding QTDReturn, StringFormat=\{0:n1\}%}" TextAlignment="Right"
                                                  HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  Header="YTD" UniqueName="YTD" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                 DataMemberBinding="{Binding YTDReturn, StringFormat=\{0:n2\}%}" TextAlignment="Right"
+                                                 DataMemberBinding="{Binding YTDReturn, StringFormat=\{0:n1\}%}" TextAlignment="Right"
                                                  HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  Header="1-Year" UniqueName="1-Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                 DataMemberBinding="{Binding OneYearReturn, StringFormat=\{0:n2\}%}" TextAlignment="Right"
+                                                 DataMemberBinding="{Binding OneYearReturn, StringFormat=\{0:n1\}%}" TextAlignment="Right"
                                                  HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>

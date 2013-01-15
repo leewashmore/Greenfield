@@ -522,6 +522,7 @@ namespace GreenField.Web.Services
                 //Preparing Inflation and ST Interest Rate
                 foreach (FinstatEconomicMarketData item in economicData)
                 {
+                    
                     if (item.FIELD != null)
                     {
                         FinstatDetailData tempData = new FinstatDetailData();
@@ -536,6 +537,8 @@ namespace GreenField.Web.Services
                         tempData.IsPercentage = "Y";
                         tempData.RootSource = _dataSource;
                         tempData.RootSourceDate = DateTime.Now;
+                        if (!String.IsNullOrEmpty(item.FIELD) && item.FIELD.Contains("INFLATION_PCT"))
+                            tempData.Decimals = 1;
                         tempData.Amount = Math.Round((Convert.ToDecimal(item.VALUE) * 100), 1);
                         result.Add(tempData); 
                     }
@@ -623,7 +626,7 @@ namespace GreenField.Web.Services
                             if (countryPE != 0)
                             {
                                 record.SortOrder = 5005;
-                                record.Decimals = 2;
+                                record.Decimals = 1;
                                 record.Amount = Math.Round((item.AMOUNT / countryPE), 2);
                                 relativeResultSet.Add(record);
                             }
@@ -636,7 +639,7 @@ namespace GreenField.Web.Services
                             if (countryPBV != 0)
                             {
                                 record.SortOrder = 5011;
-                                record.Decimals = 2;
+                                record.Decimals = 1;
                                 record.Amount = Math.Round((item.AMOUNT / countryPBV), 2);
                                 relativeResultSet.Add(record);
                             }
@@ -649,7 +652,7 @@ namespace GreenField.Web.Services
                             if (countryROE != 0)
                             {
                                 record.SortOrder = 5017;
-                                record.Decimals = 2;
+                                record.Decimals = 1;
                                 record.Amount = Math.Round((item.AMOUNT / countryROE), 2);
                                 relativeResultSet.Add(record);
                             }                            
@@ -681,7 +684,7 @@ namespace GreenField.Web.Services
                             if (industryPE != 0)
                             {
                                 record.SortOrder = 5007;
-                                record.Decimals = 2;
+                                record.Decimals = 1;
                                 record.Amount = Math.Round((item.AMOUNT / industryPE), 2);
                                 relativeResultSet.Add(record);
                             }
@@ -693,7 +696,7 @@ namespace GreenField.Web.Services
                             if (industryPBV != 0)
                             {
                                 record.SortOrder = 5013;
-                                record.Decimals = 2;
+                                record.Decimals = 1;
                                 record.Amount = Math.Round((item.AMOUNT / industryPBV), 2);
                                 relativeResultSet.Add(record);
                             }
@@ -705,7 +708,7 @@ namespace GreenField.Web.Services
                             if (industryROE != 0)
                             {
                                 record.SortOrder = 5019;
-                                record.Decimals = 2;
+                                record.Decimals = 1;
                                 record.Amount = Math.Round((item.AMOUNT / industryROE), 2); 
                                 relativeResultSet.Add(record);
                             }
