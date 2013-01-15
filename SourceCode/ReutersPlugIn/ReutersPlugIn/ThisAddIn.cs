@@ -3,6 +3,7 @@ using System.ComponentModel;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools;
 using ReutersPlugIn.ModelRefreshDefinitions;
+using System.Reflection;
 
 namespace ReutersPlugIn
 {
@@ -117,7 +118,7 @@ namespace ReutersPlugIn
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             var taskPaneView = new TaskPaneView();
-            this._taskPane = this.CustomTaskPanes.Add(taskPaneView, "Reuters");
+            this._taskPane = this.CustomTaskPanes.Add(taskPaneView, String.Format("Reuters [Version - {0}]", GetRunningVersion()));
             this._taskPane.Visible = false;
 
             AppendMessage("Application Startup", 0);
@@ -428,6 +429,7 @@ namespace ReutersPlugIn
                     throw new Exception("Input Failed...");
                 }
                 AppendMessage("Issuer Id: " + inputData.IssuerID);
+                AppendMessage("Currency: " + inputData.Currency);
                 AppendMessage("Retrieving model data...");
                 dataFetchWorker.RunWorkerAsync(inputData);
                 return;
@@ -439,7 +441,19 @@ namespace ReutersPlugIn
                 ModifyTaskPaneEnabled(true);
                 return;
             }
-        }         
+        }
+
+        private Version GetRunningVersion()
+        {
+            try
+            {
+                return System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion;
+            }
+            catch
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version;
+            }
+        }
         #endregion
     }
 }
