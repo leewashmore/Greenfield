@@ -1465,9 +1465,7 @@ namespace TopDown.Core.Persisting
         {
             using (var builder = this.CreateCommandBuilder())
             {
-                var b = builder.Text("delete from [" + TableNames.BGA_PORTFOLIO_SECURITY_TARGET + "] where 1=0 ");
-                foreach (var i in targetInfos)
-                    b = b.Text(" or ([BGA_PORTFOLIO_ID]='" + i.BroadGlobalActivePortfolioId + "' and [SECURITY_ID]='" + i.SecurityId + "')");
+                var b = builder.Text("delete from [" + TableNames.BGA_PORTFOLIO_SECURITY_TARGET + "] ");
                 return b.Execute();
             }
 
@@ -1479,13 +1477,14 @@ namespace TopDown.Core.Persisting
             var portfolioIdColumn = result.Columns.Add("BGA_PORTFOLIO_ID", typeof(String));
             var securityIdColumn = result.Columns.Add("SECURITY_ID", typeof(String));
             var targetColumn = result.Columns.Add("TARGET", typeof(Decimal));
-
+            var updatedColumn = result.Columns.Add("UPDATED", typeof(DateTime));
             foreach (var item in items)
             {
                 var row = result.NewRow();
                 row[portfolioIdColumn] = item.BroadGlobalActivePortfolioId;
                 row[securityIdColumn] = item.SecurityId;
                 row[targetColumn] = item.Target;
+                row[updatedColumn] = DateTime.Now;
                 result.Rows.Add(row);
             }
 
