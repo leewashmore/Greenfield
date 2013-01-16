@@ -70,6 +70,7 @@
       [DATA_MASTER].[ANNUAL] AS [ANNUAL], 
       [DATA_MASTER].[CURRENT] AS [CURRENT], 
       [DATA_MASTER].[STATEMENT_TYPE] AS [STATEMENT_TYPE], 
+      [DATA_MASTER].[LONG_DESC] AS [LONG_DESC], 
       [DATA_MASTER].[CONVERT_FLAG] AS [CONVERT_FLAG]
       FROM [dbo].[DATA_MASTER] AS [DATA_MASTER]</DefiningQuery>
           </EntitySet>
@@ -112,7 +113,8 @@
           <EntitySet Name="ISSUER_SHARES_COMPOSITION" EntityType="ExternalResearchModel.Store.ISSUER_SHARES_COMPOSITION" store:Type="Tables" store:Schema="dbo" store:Name="ISSUER_SHARES_COMPOSITION">
             <DefiningQuery>SELECT 
       [ISSUER_SHARES_COMPOSITION].[ISSUER_ID] AS [ISSUER_ID], 
-      [ISSUER_SHARES_COMPOSITION].[SECURITY_ID] AS [SECURITY_ID]
+      [ISSUER_SHARES_COMPOSITION].[SECURITY_ID] AS [SECURITY_ID], 
+      [ISSUER_SHARES_COMPOSITION].[PREFERRED] AS [PREFERRED]
       FROM [dbo].[ISSUER_SHARES_COMPOSITION] AS [ISSUER_SHARES_COMPOSITION]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Macroeconomic_Data" EntityType="ExternalResearchModel.Store.Macroeconomic_Data" store:Type="Tables" store:Schema="dbo" store:Name="Macroeconomic_Data">
@@ -196,19 +198,30 @@
       FROM [dbo].[PRICES] AS [PRICES]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.Store.REUTERS_XREF" store:Type="Tables" store:Schema="dbo" store:Name="REUTERS_XREF">
+            <DefiningQuery>
+              SELECT
+              [REUTERS_XREF].[ReportNumber] AS [ReportNumber],
+              [REUTERS_XREF].[Xref] AS [Xref],
+              [REUTERS_XREF].[ISSUER_ID] AS [ISSUER_ID],
+              [REUTERS_XREF].[SECURITY_ID] AS [SECURITY_ID],
+              [REUTERS_XREF].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME],
+              [REUTERS_XREF].[NAME] AS [NAME],
+              [REUTERS_XREF].[PROVIDER] AS [PROVIDER]
+              FROM [dbo].[REUTERS_XREF] AS [REUTERS_XREF]
+            </DefiningQuery>
+          </EntitySet>
+
+          <EntitySet Name="Portfolio_Security_Targets_Union" EntityType="ExternalResearchModel.Store.Portfolio_Security_Targets_Union" store:Type="Views" store:Schema="dbo" store:Name="Portfolio_Security_Targets_Union">
             <DefiningQuery>SELECT 
-      [REUTERS_XREF].[ReportNumber] AS [ReportNumber], 
-      [REUTERS_XREF].[Xref] AS [Xref], 
-      [REUTERS_XREF].[ISSUER_ID] AS [ISSUER_ID], 
-      [REUTERS_XREF].[SECURITY_ID] AS [SECURITY_ID], 
-      [REUTERS_XREF].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME], 
-      [REUTERS_XREF].[NAME] AS [NAME], 
-      [REUTERS_XREF].[PROVIDER] AS [PROVIDER]
-      FROM [dbo].[REUTERS_XREF] AS [REUTERS_XREF]</DefiningQuery>
+      [Portfolio_Security_Targets_Union].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
+      [Portfolio_Security_Targets_Union].[SECURITY_ID] AS [SECURITY_ID], 
+      [Portfolio_Security_Targets_Union].[TARGET_PCT] AS [TARGET_PCT], 
+      [Portfolio_Security_Targets_Union].[UPDATED] AS [UPDATED]
+      FROM [dbo].[Portfolio_Security_Targets_Union] AS [Portfolio_Security_Targets_Union]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CONSENSUS_MASTER">
           <Key>
@@ -235,7 +248,7 @@
           <Property Name="CURRENT" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Country_Master">
           <Key>
@@ -254,7 +267,7 @@
           <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
           <Key>
@@ -295,7 +308,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="DATA_MASTER">
           <Key>
@@ -323,10 +336,11 @@
           <Property Name="ANNUAL" Type="char" MaxLength="1" />
           <Property Name="CURRENT" Type="char" MaxLength="1" />
           <Property Name="STATEMENT_TYPE" Type="varchar" MaxLength="3" />
+          <Property Name="LONG_DESC" Type="varchar" MaxLength="1024" />
           <Property Name="CONVERT_FLAG" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FAIR_VALUE">
           <Key>
@@ -348,7 +362,7 @@
           <Property Name="UPDATED" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FX_RATES">
           <Key>
@@ -363,7 +377,7 @@
           <Property Name="AVG12MonthRATE" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_ISSUER">
           <Key>
@@ -376,7 +390,7 @@
           <Property Name="LastIndustryModelLoad" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES">
           <Key>
@@ -389,7 +403,7 @@
           <Property Name="SHARES_OUTSTANDING" Type="decimal" Nullable="false" Precision="32" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES_COMPOSITION">
           <Key>
@@ -398,9 +412,10 @@
           </Key>
           <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="PREFERRED" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Data">
           <Key>
@@ -418,7 +433,7 @@
           <Property Name="UPDATE_SOURCE" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Display">
           <Key>
@@ -439,7 +454,7 @@
           <Property Name="HELP_TEXT" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.MODEL_INPUTS_CTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.MODEL_INPUTS_CTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="MODEL_INPUTS_CTY">
           <Key>
@@ -454,7 +469,7 @@
           <Property Name="LONG_TERM_GDP_GR" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS">
           <Key>
@@ -492,7 +507,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS_DISPLAY">
           <Key>
@@ -516,7 +531,7 @@
           <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.PORTFOLIO_SECURITY_TARGETS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.PORTFOLIO_SECURITY_TARGETS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PORTFOLIO_SECURITY_TARGETS">
           <Key>
@@ -531,7 +546,7 @@
           <Property Name="UPDATED" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PRICES">
           <Key>
@@ -548,21 +563,33 @@
           <Property Name="ADR_CONV" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Aims_Data_20.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.Portfolio_Security_Targets_Union' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="REUTERS_XREF">
+      <EntityType Name="REUTERS_XREF">
+        <Key>
+          <PropertyRef Name="ReportNumber" />
+          <PropertyRef Name="ISSUER_ID" />
+          <PropertyRef Name="PROVIDER" />
+        </Key>
+        <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+        <Property Name="Xref" Type="varchar" MaxLength="9" />
+        <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+        <Property Name="SECURITY_ID" Type="varchar" MaxLength="20" />
+        <Property Name="ASEC_SEC_SHORT_NAME" Type="varchar" MaxLength="20" />
+        <Property Name="NAME" Type="varchar" MaxLength="100" />
+        <Property Name="PROVIDER" Type="char" Nullable="false" MaxLength="1" />
+      </EntityType>
+
+      <EntityType Name="Portfolio_Security_Targets_Union">
           <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="ISSUER_ID" />
-            <PropertyRef Name="PROVIDER" />
+            <PropertyRef Name="PORTFOLIO_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="TARGET_PCT" />
           </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="Xref" Type="varchar" MaxLength="9" />
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="SECURITY_ID" Type="varchar" MaxLength="20" />
-          <Property Name="ASEC_SEC_SHORT_NAME" Type="varchar" MaxLength="20" />
-          <Property Name="NAME" Type="varchar" MaxLength="100" />
-          <Property Name="PROVIDER" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="PORTFOLIO_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="TARGET_PCT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPDATED" Type="datetime" />
         </EntityType>
         <Function Name="Broker_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
@@ -637,7 +664,6 @@
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
           <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
           <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
-          <Parameter Name="Security_ID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetDCF_NumberOfShares" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
@@ -694,7 +720,6 @@
         <Function Name="GetFreeCashFlows" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IssuerId" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="GetMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetModelConsensusEstimates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
@@ -847,9 +872,6 @@
           <Parameter Name="LOAD_TIME" Type="datetime" Mode="In" />
           <Parameter Name="DOCUMENT_ID" Type="bigint" Mode="In" />
         </Function>
-        <Function Name="RetrieveCOACodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="COA_TYPE" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="RetrieveCOAType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
         </Function>
@@ -860,10 +882,6 @@
         <Function Name="RetrieveDistinctFXRates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="RetrieveRatioComparisonData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityBucketXML" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="RetrieveSecurityPFVMeasureCurrentPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SecurityId" Type="varchar" Mode="In" />
-          <Parameter Name="PFVMeasure" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SaveUpdatedFairValueMeasures" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityId" Type="varchar" Mode="In" />
@@ -900,14 +918,6 @@
           <Parameter Name="securityIdsForPortfolio" Type="varchar(max)" Mode="In" />
           <Parameter Name="issuerIdsForBenchmark" Type="varchar(max)" Mode="In" />
           <Parameter Name="securityIdsForBenchmark" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="usp_GetDCF_ROIC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="YEAR" Type="int" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
         <Function Name="usp_GetMacroDataEMSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="countryCodes" Type="varchar(max)" Mode="In" />
@@ -979,7 +989,6 @@
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
             <Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
             <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
-            <Parameter Name="Security_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusDetail" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailData)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
@@ -1301,6 +1310,7 @@
           <Parameter Name="countryCodes" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
+          <EntitySet Name="Portfolio_Security_Targets_Union" EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" />
 
 
 				</EntityContainer>
@@ -1382,6 +1392,7 @@
 					</Key>
 					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
 					<Property Name="SECURITY_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="PREFERRED" MaxLength="1" FixedLength="true" Unicode="false" />
 				</EntityType>
 				<EntityType Name="Macroeconomic_Data">
 					<Key>
@@ -1646,6 +1657,7 @@
 					<Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
 					<Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
 					<Property Type="String" Name="CONVERT_FLAG" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="LONG_DESC" MaxLength="1024" FixedLength="false" Unicode="false" />
 				</EntityType>
 				<ComplexType Name="ConsensusEstimateDetailData" >
 					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20"/>
@@ -1971,6 +1983,17 @@
           <Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="32" Scale="6" />
           <Property Type="DateTime" Name="UPDATED" Nullable="false" />
         </EntityType>
+        <EntityType Name="Portfolio_Security_Targets_Union">
+          <Key>
+            <PropertyRef Name="PORTFOLIO_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="TARGET_PCT" />
+          </Key>
+          <Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="DateTime" Name="UPDATED" />
+        </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -2033,7 +2056,8 @@
 					<EntitySetMapping Name="ISSUER_SHARES_COMPOSITION">
 						<EntityTypeMapping TypeName="ExternalResearchModel.ISSUER_SHARES_COMPOSITION">
 							<MappingFragment StoreEntitySet="ISSUER_SHARES_COMPOSITION">
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="PREFERRED" ColumnName="PREFERRED" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
 								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
 							</MappingFragment>
 						</EntityTypeMapping>
@@ -2101,25 +2125,26 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
-					<EntitySetMapping Name="REUTERS_XREF">
-						<EntityTypeMapping TypeName="ExternalResearchModel.REUTERS_XREF">
-							<MappingFragment StoreEntitySet="REUTERS_XREF">
-								<ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-								<ScalarProperty Name="Xref" ColumnName="Xref" />
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-								<ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
-								<ScalarProperty Name="NAME" ColumnName="NAME" />
-								<ScalarProperty Name="PROVIDER" ColumnName="PROVIDER" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
 
+          <EntitySetMapping Name="REUTERS_XREF">
+            <EntityTypeMapping TypeName="ExternalResearchModel.REUTERS_XREF">
+              <MappingFragment StoreEntitySet="REUTERS_XREF">
+                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+                <ScalarProperty Name="Xref" ColumnName="Xref" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="PROVIDER" ColumnName="PROVIDER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 
-					<EntitySetMapping Name="DATA_MASTER">
+          <EntitySetMapping Name="DATA_MASTER">
 						<EntityTypeMapping TypeName="ExternalResearchModel.DATA_MASTER">
 							<MappingFragment StoreEntitySet="DATA_MASTER">
-								<ScalarProperty Name="CONVERT_FLAG" ColumnName="CONVERT_FLAG" />
+								<ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
+                <ScalarProperty Name="CONVERT_FLAG" ColumnName="CONVERT_FLAG" />
 								<ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
 								<ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
 								<ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
@@ -2303,8 +2328,6 @@
 						</ResultMapping>
 					</FunctionImportMapping>
 
-					<FunctionImportMapping FunctionImportName="GetMarketCap" FunctionName="ExternalResearchModel.Store.GetMarketCap" />
-
 
 
 					<FunctionImportMapping FunctionImportName="GetFinstatDetail" FunctionName="ExternalResearchModel.Store.GetFinstatDetail">
@@ -2462,7 +2485,6 @@
 							</ComplexTypeMapping>
 						</ResultMapping>
 					</FunctionImportMapping>
-					<FunctionImportMapping FunctionImportName="RetrieveSecurityPFVMeasureCurrentPrice" FunctionName="ExternalResearchModel.Store.RetrieveSecurityPFVMeasureCurrentPrice" />
 					<FunctionImportMapping FunctionImportName="usp_GetDataForValuationQualityGrowth" FunctionName="ExternalResearchModel.Store.usp_GetDataForValuationQualityGrowth">
 						<ResultMapping>
 							<ComplexTypeMapping TypeName="ExternalResearchModel.ValuationQualityGrowthData">
@@ -2638,15 +2660,6 @@
 					<FunctionImportMapping FunctionImportName="RetrieveCOAType" FunctionName="ExternalResearchModel.Store.RetrieveCOAType" />
 					<FunctionImportMapping FunctionImportName="RetrieveDistinctFXRates" FunctionName="ExternalResearchModel.Store.RetrieveDistinctFXRates">
 					</FunctionImportMapping>
-					<FunctionImportMapping FunctionImportName="RetrieveCOACodes" FunctionName="ExternalResearchModel.Store.RetrieveCOACodes">
-						<ResultMapping>
-							<ComplexTypeMapping TypeName="ExternalResearchModel.DataPointsModelUploadData">
-								<ScalarProperty Name="COA" ColumnName="COA" />
-								<ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
-								<ScalarProperty Name="DATA_DESCRIPTION" ColumnName="DATA_DESCRIPTION" />
-							</ComplexTypeMapping>
-						</ResultMapping>
-					</FunctionImportMapping>
 					<FunctionImportMapping FunctionImportName="RetrieveCommodityForecasts" FunctionName="ExternalResearchModel.Store.RetrieveCommodityForecasts" />
 					<FunctionImportMapping FunctionImportName="ModelDeleteInteralStatement" FunctionName="ExternalResearchModel.Store.ModelDeleteInteralStatement" />
 					<FunctionImportMapping FunctionImportName="ModelDeleteInternalData" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalData" />
@@ -2775,6 +2788,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Portfolio_Security_Targets_Union">
+            <EntityTypeMapping TypeName="ExternalResearchModel.Portfolio_Security_Targets_Union">
+              <MappingFragment StoreEntitySet="Portfolio_Security_Targets_Union">
+                <ScalarProperty Name="UPDATED" ColumnName="UPDATED" />
+                <ScalarProperty Name="TARGET_PCT" ColumnName="TARGET_PCT" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -2827,6 +2850,7 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.25" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" Width="1.875" PointX="13" PointY="2.75" Height="1.7879850260416674" />
 			</Diagram>
 		</Diagrams>
 	</Designer>

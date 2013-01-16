@@ -320,6 +320,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<PORTFOLIO_SECURITY_TARGETS> _PORTFOLIO_SECURITY_TARGETS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Portfolio_Security_Targets_Union> Portfolio_Security_Targets_Union
+        {
+            get
+            {
+                if ((_Portfolio_Security_Targets_Union == null))
+                {
+                    _Portfolio_Security_Targets_Union = base.CreateObjectSet<Portfolio_Security_Targets_Union>("Portfolio_Security_Targets_Union");
+                }
+                return _Portfolio_Security_Targets_Union;
+            }
+        }
+        private ObjectSet<Portfolio_Security_Targets_Union> _Portfolio_Security_Targets_Union;
 
         #endregion
         #region AddTo Methods
@@ -450,6 +466,14 @@ namespace GreenField.DAL
         public void AddToPORTFOLIO_SECURITY_TARGETS(PORTFOLIO_SECURITY_TARGETS pORTFOLIO_SECURITY_TARGETS)
         {
             base.AddObject("PORTFOLIO_SECURITY_TARGETS", pORTFOLIO_SECURITY_TARGETS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Portfolio_Security_Targets_Union EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPortfolio_Security_Targets_Union(Portfolio_Security_Targets_Union portfolio_Security_Targets_Union)
+        {
+            base.AddObject("Portfolio_Security_Targets_Union", portfolio_Security_Targets_Union);
         }
 
         #endregion
@@ -700,8 +724,7 @@ namespace GreenField.DAL
         /// <param name="cURRENCY">No Metadata Documentation available.</param>
         /// <param name="eSTIMATE_ID">No Metadata Documentation available.</param>
         /// <param name="pERIOD_YEAR">No Metadata Documentation available.</param>
-        /// <param name="security_ID">No Metadata Documentation available.</param>
-        public ObjectResult<ConsensusEstimateValuation> GetConsensusEstimatesValuation(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String cURRENCY, Nullable<global::System.Int32> eSTIMATE_ID, Nullable<global::System.Int32> pERIOD_YEAR, global::System.String security_ID)
+        public ObjectResult<ConsensusEstimateValuation> GetConsensusEstimatesValuation(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String cURRENCY, Nullable<global::System.Int32> eSTIMATE_ID, Nullable<global::System.Int32> pERIOD_YEAR)
         {
             ObjectParameter iSSUER_IDParameter;
             if (iSSUER_ID != null)
@@ -773,17 +796,7 @@ namespace GreenField.DAL
                 pERIOD_YEARParameter = new ObjectParameter("PERIOD_YEAR", typeof(global::System.Int32));
             }
     
-            ObjectParameter security_IDParameter;
-            if (security_ID != null)
-            {
-                security_IDParameter = new ObjectParameter("Security_ID", security_ID);
-            }
-            else
-            {
-                security_IDParameter = new ObjectParameter("Security_ID", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<ConsensusEstimateValuation>("GetConsensusEstimatesValuation", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter, eSTIMATE_IDParameter, pERIOD_YEARParameter, security_IDParameter);
+            return base.ExecuteFunction<ConsensusEstimateValuation>("GetConsensusEstimatesValuation", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter, eSTIMATE_IDParameter, pERIOD_YEARParameter);
         }
     
         /// <summary>
@@ -4425,6 +4438,30 @@ namespace GreenField.DAL
         private global::System.String _CONVERT_FLAG;
         partial void OnCONVERT_FLAGChanging(global::System.String value);
         partial void OnCONVERT_FLAGChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LONG_DESC
+        {
+            get
+            {
+                return _LONG_DESC;
+            }
+            set
+            {
+                OnLONG_DESCChanging(value);
+                ReportPropertyChanging("LONG_DESC");
+                _LONG_DESC = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LONG_DESC");
+                OnLONG_DESCChanged();
+            }
+        }
+        private global::System.String _LONG_DESC;
+        partial void OnLONG_DESCChanging(global::System.String value);
+        partial void OnLONG_DESCChanged();
 
         #endregion
     
@@ -5387,6 +5424,30 @@ namespace GreenField.DAL
         private global::System.String _SECURITY_ID;
         partial void OnSECURITY_IDChanging(global::System.String value);
         partial void OnSECURITY_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PREFERRED
+        {
+            get
+            {
+                return _PREFERRED;
+            }
+            set
+            {
+                OnPREFERREDChanging(value);
+                ReportPropertyChanging("PREFERRED");
+                _PREFERRED = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PREFERRED");
+                OnPREFERREDChanged();
+            }
+        }
+        private global::System.String _PREFERRED;
+        partial void OnPREFERREDChanging(global::System.String value);
+        partial void OnPREFERREDChanged();
 
         #endregion
     
@@ -6880,6 +6941,143 @@ namespace GreenField.DAL
         }
         private global::System.DateTime _UPDATED;
         partial void OnUPDATEDChanging(global::System.DateTime value);
+        partial void OnUPDATEDChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="Portfolio_Security_Targets_Union")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Portfolio_Security_Targets_Union : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Portfolio_Security_Targets_Union object.
+        /// </summary>
+        /// <param name="pORTFOLIO_ID">Initial value of the PORTFOLIO_ID property.</param>
+        /// <param name="sECURITY_ID">Initial value of the SECURITY_ID property.</param>
+        /// <param name="tARGET_PCT">Initial value of the TARGET_PCT property.</param>
+        public static Portfolio_Security_Targets_Union CreatePortfolio_Security_Targets_Union(global::System.String pORTFOLIO_ID, global::System.String sECURITY_ID, global::System.Decimal tARGET_PCT)
+        {
+            Portfolio_Security_Targets_Union portfolio_Security_Targets_Union = new Portfolio_Security_Targets_Union();
+            portfolio_Security_Targets_Union.PORTFOLIO_ID = pORTFOLIO_ID;
+            portfolio_Security_Targets_Union.SECURITY_ID = sECURITY_ID;
+            portfolio_Security_Targets_Union.TARGET_PCT = tARGET_PCT;
+            return portfolio_Security_Targets_Union;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PORTFOLIO_ID
+        {
+            get
+            {
+                return _PORTFOLIO_ID;
+            }
+            set
+            {
+                if (_PORTFOLIO_ID != value)
+                {
+                    OnPORTFOLIO_IDChanging(value);
+                    ReportPropertyChanging("PORTFOLIO_ID");
+                    _PORTFOLIO_ID = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("PORTFOLIO_ID");
+                    OnPORTFOLIO_IDChanged();
+                }
+            }
+        }
+        private global::System.String _PORTFOLIO_ID;
+        partial void OnPORTFOLIO_IDChanging(global::System.String value);
+        partial void OnPORTFOLIO_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SECURITY_ID
+        {
+            get
+            {
+                return _SECURITY_ID;
+            }
+            set
+            {
+                if (_SECURITY_ID != value)
+                {
+                    OnSECURITY_IDChanging(value);
+                    ReportPropertyChanging("SECURITY_ID");
+                    _SECURITY_ID = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("SECURITY_ID");
+                    OnSECURITY_IDChanged();
+                }
+            }
+        }
+        private global::System.String _SECURITY_ID;
+        partial void OnSECURITY_IDChanging(global::System.String value);
+        partial void OnSECURITY_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal TARGET_PCT
+        {
+            get
+            {
+                return _TARGET_PCT;
+            }
+            set
+            {
+                if (_TARGET_PCT != value)
+                {
+                    OnTARGET_PCTChanging(value);
+                    ReportPropertyChanging("TARGET_PCT");
+                    _TARGET_PCT = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TARGET_PCT");
+                    OnTARGET_PCTChanged();
+                }
+            }
+        }
+        private global::System.Decimal _TARGET_PCT;
+        partial void OnTARGET_PCTChanging(global::System.Decimal value);
+        partial void OnTARGET_PCTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> UPDATED
+        {
+            get
+            {
+                return _UPDATED;
+            }
+            set
+            {
+                OnUPDATEDChanging(value);
+                ReportPropertyChanging("UPDATED");
+                _UPDATED = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UPDATED");
+                OnUPDATEDChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _UPDATED;
+        partial void OnUPDATEDChanging(Nullable<global::System.DateTime> value);
         partial void OnUPDATEDChanged();
 
         #endregion

@@ -778,15 +778,15 @@ namespace GreenField.Web.Services
                 ExternalResearchEntities externalEntity = new ExternalResearchEntities();
 
                 List<CompositeFundData> result = new List<CompositeFundData>();
-                List<PORTFOLIO_SECURITY_TARGETS> portfolioSecurityTargetsData = new List<PORTFOLIO_SECURITY_TARGETS>();
+                List<Portfolio_Security_Targets_Union> portfolioSecurityTargetsData = new List<Portfolio_Security_Targets_Union>();
                 List<GF_BENCHMARK_HOLDINGS> benchmarkData = new List<GF_BENCHMARK_HOLDINGS>();
                 List<GF_PORTFOLIO_HOLDINGS> portfolioHoldingsData = new List<GF_PORTFOLIO_HOLDINGS>();
                 List<CompositeFundData> portfolioTargets = new List<CompositeFundData>();
 
-                #region Fetching and processing PORTFOLIO_SECURITY_TARGETS data
-                portfolioSecurityTargetsData = externalEntity.PORTFOLIO_SECURITY_TARGETS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).ToList();
+                #region Fetching and processing Portfolio_Security_Targets_Union data
+                portfolioSecurityTargetsData = externalEntity.Portfolio_Security_Targets_Union.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).ToList();
 
-                foreach (PORTFOLIO_SECURITY_TARGETS item in portfolioSecurityTargetsData)
+                foreach (Portfolio_Security_Targets_Union item in portfolioSecurityTargetsData)
                 {
                     GF_SECURITY_BASEVIEW specificSecurity = entity.GF_SECURITY_BASEVIEW
                         .Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault();
