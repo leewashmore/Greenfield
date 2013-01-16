@@ -178,43 +178,14 @@
       [PERIOD_FINANCIALS_DISPLAY].[MULTIPLIER] AS [MULTIPLIER]
       FROM [dbo].[PERIOD_FINANCIALS_DISPLAY] AS [PERIOD_FINANCIALS_DISPLAY]</DefiningQuery>
           </EntitySet>
-      
-      <!-- Pickup Targets -->
-      <!--    <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.Store.PORTFOLIO_SECURITY_TARGETS" store:Type="Tables" store:Schema="dbo" store:Name="PORTFOLIO_SECURITY_TARGETS">
+          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.Store.PORTFOLIO_SECURITY_TARGETS" store:Type="Tables" store:Schema="dbo" store:Name="PORTFOLIO_SECURITY_TARGETS">
             <DefiningQuery>SELECT 
       [PORTFOLIO_SECURITY_TARGETS].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
       [PORTFOLIO_SECURITY_TARGETS].[SECURITY_ID] AS [SECURITY_ID], 
       [PORTFOLIO_SECURITY_TARGETS].[TARGET_PCT] AS [TARGET_PCT], 
       [PORTFOLIO_SECURITY_TARGETS].[UPDATED] AS [UPDATED]
       FROM [dbo].[PORTFOLIO_SECURITY_TARGETS] AS [PORTFOLIO_SECURITY_TARGETS]</DefiningQuery>
-          </EntitySet> -->
-          <!-- modified 1-3-2012 - LS - Jira: TESTDEVPROJ-512 -->
-          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.Store.PORTFOLIO_SECURITY_TARGETS" store:Type="Tables" store:Schema="dbo" store:Name="PORTFOLIO_SECURITY_TARGETS">
-            <DefiningQuery>
-              SELECT
-              [PORTFOLIO_SECURITY_TARGETS].[PORTFOLIO_ID] AS [PORTFOLIO_ID],
-              [PORTFOLIO_SECURITY_TARGETS].[SECURITY_ID] AS [SECURITY_ID],
-              [PORTFOLIO_SECURITY_TARGETS].[TARGET_PCT] AS [TARGET_PCT],
-              [PORTFOLIO_SECURITY_TARGETS].[UPDATED] AS [UPDATED]
-              FROM [dbo].[PORTFOLIO_SECURITY_TARGETS] AS [PORTFOLIO_SECURITY_TARGETS]
-              UNION
-              SELECT
-              [BU_PORTFOLIO_SECURITY_TARGET].[PORTFOLIO_ID] AS [PORTFOLIO_ID],
-              [BU_PORTFOLIO_SECURITY_TARGET].[SECURITY_ID] AS [SECURITY_ID],
-              [BU_PORTFOLIO_SECURITY_TARGET].[TARGET] AS [TARGET_PCT],
-              NULL AS [UPDATED]
-              FROM [dbo].[BU_PORTFOLIO_SECURITY_TARGET] AS [BU_PORTFOLIO_SECURITY_TARGET]
-              UNION
-              SELECT
-              [BGA_PORTFOLIO_SECURITY_FACTOR].[PORTFOLIO_ID] AS [PORTFOLIO_ID],
-              [BGA_PORTFOLIO_SECURITY_FACTOR].[SECURITY_ID] AS [SECURITY_ID],
-              [BGA_PORTFOLIO_SECURITY_FACTOR].FACTOR AS [TARGET_PCT],
-              NULL AS [UPDATED]
-              FROM [dbo].[BGA_PORTFOLIO_SECURITY_FACTOR] AS [BGA_PORTFOLIO_SECURITY_FACTOR]
-            </DefiningQuery>
           </EntitySet>
-
-
           <EntitySet Name="PRICES" EntityType="ExternalResearchModel.Store.PRICES" store:Type="Tables" store:Schema="dbo" store:Name="PRICES">
             <DefiningQuery>SELECT 
       [PRICES].[SECURITY_ID] AS [SECURITY_ID], 
@@ -237,7 +208,7 @@
           </EntitySet>
         </EntityContainer>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CONSENSUS_MASTER">
           <Key>
@@ -264,7 +235,7 @@
           <Property Name="CURRENT" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Country_Master">
           <Key>
@@ -283,7 +254,7 @@
           <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
           <Key>
@@ -324,7 +295,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="DATA_MASTER">
           <Key>
@@ -355,7 +326,7 @@
           <Property Name="CONVERT_FLAG" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FAIR_VALUE">
           <Key>
@@ -377,7 +348,7 @@
           <Property Name="UPDATED" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FX_RATES">
           <Key>
@@ -392,7 +363,7 @@
           <Property Name="AVG12MonthRATE" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_ISSUER">
           <Key>
@@ -405,7 +376,7 @@
           <Property Name="LastIndustryModelLoad" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES">
           <Key>
@@ -418,7 +389,7 @@
           <Property Name="SHARES_OUTSTANDING" Type="decimal" Nullable="false" Precision="32" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES_COMPOSITION">
           <Key>
@@ -429,7 +400,7 @@
           <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Data">
           <Key>
@@ -447,7 +418,7 @@
           <Property Name="UPDATE_SOURCE" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Display">
           <Key>
@@ -468,7 +439,7 @@
           <Property Name="HELP_TEXT" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.MODEL_INPUTS_CTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.MODEL_INPUTS_CTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="MODEL_INPUTS_CTY">
           <Key>
@@ -483,7 +454,7 @@
           <Property Name="LONG_TERM_GDP_GR" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS">
           <Key>
@@ -521,7 +492,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS_DISPLAY">
           <Key>
@@ -545,7 +516,7 @@
           <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.PORTFOLIO_SECURITY_TARGETS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.PORTFOLIO_SECURITY_TARGETS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PORTFOLIO_SECURITY_TARGETS">
           <Key>
@@ -560,7 +531,7 @@
           <Property Name="UPDATED" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PRICES">
           <Key>
@@ -577,7 +548,7 @@
           <Property Name="ADR_CONV" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'Aims_Data_20.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="REUTERS_XREF">
           <Key>
@@ -1215,7 +1186,6 @@
 					<FunctionImport Name="ModelDeleteInternalIssuer">
           <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
-					<EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
 					<FunctionImport Name="ModelInsertInternalCommodityAssumptions">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="REF_NO" Mode="In" Type="String" />
@@ -1328,8 +1298,9 @@
           <Parameter Name="countryCodes" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="usp_GetMacroDataEMSummary" ReturnType="Collection(ExternalResearchModel.MacroEMData)">
-            <Parameter Name="countryCodes" Mode="In" Type="String" />
+          <Parameter Name="countryCodes" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
 
 
 				</EntityContainer>
@@ -1910,18 +1881,6 @@
 				<ComplexType Name="CurrenciesList">
 					<Property Type="String" Name="Currency" Nullable="false" MaxLength="3" />
 				</ComplexType>
-				<EntityType Name="PORTFOLIO_SECURITY_TARGETS">
-					<Key>
-						<PropertyRef Name="PORTFOLIO_ID" />
-						<PropertyRef Name="SECURITY_ID" />
-						<PropertyRef Name="TARGET_PCT" />
-						<PropertyRef Name="UPDATED" />
-					</Key>
-					<Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-					<Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="32" Scale="6" />
-					<Property Type="DateTime" Name="UPDATED" Nullable="false" />
-				</EntityType>
 				<ComplexType Name="Internal_Model_Load">
 					<Property Type="Int32" Name="LOAD_ID" Nullable="false" />
 					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
@@ -2000,6 +1959,18 @@
           <Property Type="Int32" Name="Year1" Nullable="false" />
           <Property Type="Decimal" Name="Value" Nullable="false" />
         </ComplexType>
+        <EntityType Name="PORTFOLIO_SECURITY_TARGETS">
+          <Key>
+            <PropertyRef Name="PORTFOLIO_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="TARGET_PCT" />
+            <PropertyRef Name="UPDATED" />
+          </Key>
+          <Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="DateTime" Name="UPDATED" Nullable="false" />
+        </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -2686,16 +2657,6 @@
 					<FunctionImportMapping FunctionImportName="ModelInsertInternalStatement" FunctionName="ExternalResearchModel.Store.ModelInsertInternalStatement" />
 					<FunctionImportMapping FunctionImportName="ModelRetrieveInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelRetrieveInternalIssuer" />
 					<FunctionImportMapping FunctionImportName="ModelDeleteInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalIssuer" />
-					<EntitySetMapping Name="PORTFOLIO_SECURITY_TARGETS">
-						<EntityTypeMapping TypeName="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS">
-							<MappingFragment StoreEntitySet="PORTFOLIO_SECURITY_TARGETS">
-								<ScalarProperty Name="UPDATED" ColumnName="UPDATED" />
-								<ScalarProperty Name="TARGET_PCT" ColumnName="TARGET_PCT" />
-								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-								<ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
 					<FunctionImportMapping FunctionImportName="ModelInsertInternalCommodityAssumptions" FunctionName="ExternalResearchModel.Store.ModelInsertInternalCommodityAssumptions" />
 					<FunctionImportMapping FunctionImportName="ModelDeleteInternalCommodityAssumptions" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalCommodityAssumptions" />
 					<FunctionImportMapping FunctionImportName="ModelUpdateDataInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelUpdateDataInternalIssuer" />
@@ -2804,6 +2765,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="PORTFOLIO_SECURITY_TARGETS">
+            <EntityTypeMapping TypeName="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS">
+              <MappingFragment StoreEntitySet="PORTFOLIO_SECURITY_TARGETS">
+                <ScalarProperty Name="UPDATED" ColumnName="UPDATED" />
+                <ScalarProperty Name="TARGET_PCT" ColumnName="TARGET_PCT" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -2855,7 +2826,7 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
 				<EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
-				<EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.375" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.25" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
