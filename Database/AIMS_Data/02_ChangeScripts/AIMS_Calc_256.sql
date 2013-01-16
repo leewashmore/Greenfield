@@ -18,17 +18,28 @@ as
 
 	-- Get the data
 	
+	declare @PERIOD_TYPE varchar(2)
+	declare @PERIOD_END_DATE datetime
+
+	select @PERIOD_TYPE = MIN(period_type), 
+		@PERIOD_END_DATE = max(period_end_date) 
+	from dbo.PERIOD_FINANCIALS pf  -- to find closest end_date to getdate
+	where DATA_ID = 90  --Total Debt		
+	and pf.ISSUER_ID = @ISSUER_ID
+	and period_end_date < getdate() 
+	and pf.FISCAL_TYPE = 'FISCAL'
+	and pf.AMOUNT_TYPE = 'ACTUAL'
+	group by PERIOD_END_DATE
+
+
 	select pf.* 
-	   into #A
-	  from dbo.PERIOD_FINANCIALS pf 
-	 where DATA_ID = 90			-- Total Debt
-	   and pf.ISSUER_ID = @ISSUER_ID
-	   and pf.PERIOD_TYPE = 'A'
-	   and period_end_date = (select max(period_end_date) from dbo.PERIOD_FINANCIALS pf  -- to find closest end_date to getdate
-							   where DATA_ID = 90			
-							     and pf.ISSUER_ID = @ISSUER_ID
-						         and period_end_date < getdate() )
-	
+		 into #A
+		from dbo.PERIOD_FINANCIALS pf 
+		where DATA_ID = 90			-- Total Debt
+		   and pf.ISSUER_ID = @ISSUER_ID
+		   and pf.PERIOD_TYPE = @PERIOD_TYPE
+		   and pf.FISCAL_TYPE = 'FISCAL'
+		   and period_end_date = @PERIOD_END_DATE	
 	
  
 	-- Add the data to the table
@@ -39,10 +50,10 @@ as
 		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE)
 	select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE
 		,  a.ROOT_SOURCE_DATE, 'C', 0, '01/01/1900'				-- These are specific for PERIOD_TYPE = 'C'
-		,  a.FISCAL_TYPE, a.CURRENCY
-		,  256 as DATA_ID										-- 256 Trailing Total Debt  
-		,  a.AMOUNT as AMOUNT						-- Previous Annual Total Debt (90)*
-		,  'Previous Annual Total Debt(' + CAST(a.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
+		,  '' as FISCAL_TYPE, a.CURRENCY
+		,  256 as DATA_ID										-- 256 Trailing Total Debt
+		,  a.AMOUNT as AMOUNT						
+		,  'Trailing Tax Rate(' + CAST(a.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a	
@@ -60,7 +71,7 @@ as
 			(
 			select GETDATE() as LOG_DATE, 256 as DATA_ID, a.ISSUER_ID, 'C'
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 256 Trailing Total Debt . DATA_ID:90 is NULL or ZERO'
+				, 'ERROR calculating 256 Trailing Total Debt. DATA_ID:90 is NULL or ZERO'
 			  from #A a
 			where isnull(a.AMOUNT, 0.0) = 0.0	 -- Data error	 
 			) union (	
@@ -69,7 +80,7 @@ as
 			-- ERROR - No data at all available
 			select GETDATE() as LOG_DATE, 256 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 256 Trailing Total Debt .  DATA_ID:90 no data' as TXT
+				, 'ERROR calculating 256 Trailing Total Debt.  DATA_ID:90 no data' as TXT
 			  from (select COUNT(*) CNT from #A having COUNT(*) = 0) z
 			) 
 		END
@@ -77,6 +88,10 @@ as
 	-- Clean up
 	drop table #A	
 	
+GO
+
+
+
 
 
 

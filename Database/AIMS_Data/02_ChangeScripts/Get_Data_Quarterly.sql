@@ -39,8 +39,18 @@ as
 	 
 	 
 
-		-- Get COAs for each ISSUER
-	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Create COAs'
+	--figure out which statements have duplicates due to FYE changes
+	select distinct fiscalyear 
+	into #MultipleCheck
+		from(select ReportNumber, FiscalYear, interimnumber,StatementType, COUNT(*) as tally, MAX(PeriodEndDate) as MaxPeriod, MIN(PeriodEndDate) as MinPeriod
+			from Reuters..tblStdInterimRef 
+			where ReportNumber = @ReportNumber
+			group by ReportNumber, FiscalYear, interimnumber, StatementType) a 
+	where a.tally > 1	
+
+
+	-- Get COAs for each ISSUER where there are no duplicates due to FYE changes
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Create COAs: No Dupes'
 
 		select @ISSUER_ID as ISSUER_ID
 			,  dm.COA
@@ -84,25 +94,98 @@ as
 
 		 inner join dbo.FX_RATES fx on fx.FX_DATE = sir.PeriodEndDate and fx.CURRENCY = sir.CurrencyReported
 
-/*		 inner join (select ReportNumber, max(Xref) as Xref, max(ISSUER_ID) as ISSUER_ID, MAX(security_ID) as Securitiy_ID 
-					   from dbo.GF_SECURITY_BASEVIEW group by ReportNumber) rx on rx.ReportNumber = sci.ReportNumber	-- limit the number of companies
-		 inner join (select ISSUER_ID, max(ISO_COUNTRY_CODE) as ISO_COUNTRY_CODE 
-					   from GF_SECURITY_BASEVIEW group by ISSUER_ID) sm on sm.ISSUER_ID = rx.ISSUER_ID
-		  left join dbo.Country_Master cm on cm.COUNTRY_CODE = sm.ISO_COUNTRY_CODE
-*/		 where 1=1
+		 left join #MultipleCheck mc on sir.FiscalYear = mc.FiscalYear 
+		where 1=1
 		   and si.ReportNumber = @ReportNumber
 		   and (   sir.StatementType = 'BAL'
 				or ((sir.PeriodLengthCode = 'M') and (sir.PeriodLength IN (3,6,9,12)))
 				or ((sir.PeriodLengthCode = 'W') and (sir.PeriodLength IN (12,13,14,25,26,27,38,39,40,51,52,53)))
 			   )
 		   and @CURRENCY_CODE is not NULL
-		   
+		   and mc.FiscalYear is NULL  --ensure only statements without duplicates are taken	   
 		   		   
-if @VERBOSE = 'Y' 
+	if @VERBOSE = 'Y' 
 		BEGIN
-			print 'After Create COAs' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			print 'After Create COAs w/no Duplicates' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 			set @START = GETDATE()
 		END
+
+
+	select ROW_NUMBER() OVER(PARTITION BY sir.FiscalYear, sir.StatementType ORDER BY sir.PeriodEndDate DESC) AS "RowNumber", sir.*	
+	into #Partition
+	from Reuters..tblStdInterimRef sir
+	inner join #MultipleCheck mc on sir.FiscalYear = mc.FiscalYear
+	where sir.ReportNumber = @ReportNumber 
+
+	drop table #MultipleCheck
+
+	-- Get COAs for each ISSUER where there are duplicates due to FYE changes and taking the most recent 4 statements, adjusting the interim number as necessary
+	if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Create COAs: Dupes'
+
+		insert into #COAs 
+		select @ISSUER_ID as ISSUER_ID
+			,  dm.COA
+			,  dm.FX_CONV_TYPE
+			,  dm.DATA_ID
+			,  @ISO_COUNTRY_CODE as COUNTRY_CODE
+			,  @CURRENCY_CODE as CURRENCY_CODE
+			,  sir.UpdateDate
+			,  sir.PeriodEndDate
+			,  sir.CurrencyConvertedTo
+			,  sir.CurrencyReported
+			,  sir.RepToConvExRate
+			,  'M' as PeriodLengthCode
+			,  case when sir.PeriodLengthCode = 'W' and sir.PeriodLength in (12,13,14) then 3
+					when sir.PeriodLengthCode = 'W' and sir.PeriodLength in (25,26,27) then 6
+					when sir.PeriodLengthCode = 'W' and sir.PeriodLength in (38,39,40) then 9
+					when sir.PeriodLengthCode = 'W' and sir.PeriodLength in (51,52,53) then 12
+					else sir.PeriodLength end as PeriodLength
+			,  si.Amount/sir.RepToConvExRate as Amount 
+			,  sir.StatementType
+			,  sir.FiscalYear as PERIOD_YEAR
+			,  case when p.RowNumber = 1 then 4
+					when p.RowNumber = 2 then 3
+					when p.RowNumber = 3 then 2
+					when p.RowNumber = 4 then 1 
+					else sir.InterimNumber end as InterimNumber
+			--, sir.interimnumber	
+			, fx.FX_RATE
+			, fx.AVG90DAYRATE
+		from Reuters..tblStdInterim si														-- Get the listed COAs
+		 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = si.ReportNumber	-- Get the COAtype
+		 inner join dbo.DATA_MASTER dm on dm.COA = si.COA							-- Allow only selected COAs
+									  and (  (sci.COAType = 'IND' and dm.INDUSTRIAL = 'Y')
+										  or (sci.COAType = 'FIN' and dm.INSURANCE = 'Y')
+										  or (sci.COAType = 'UTL' and dm.UTILITY = 'Y')
+										  or (sci.COAType = 'BNK' and dm.BANK = 'Y')
+										  )
+--									  and 'Y' = case sci.COAType when 'IND' then dm.INDUSTRIAL
+--																 when 'FIN' then dm.INSURANCE
+--																 when 'UTL' then dm.UTILITY
+--																 when 'BNK' then dm.BANK
+--																 else 'N' end
+		 inner join Reuters.dbo.tblStdInterimRef sir on sir.ReportNumber = si.ReportNumber and sir.RefNo = si.RefNo
+
+		 inner join dbo.FX_RATES fx on fx.FX_DATE = sir.PeriodEndDate and fx.CURRENCY = sir.CurrencyReported
+
+		 inner join #Partition p on  si.ReportNumber = p.ReportNumber and si.RefNo = p.RefNo
+		where 1=1
+		   and si.ReportNumber = @ReportNumber
+		   and (   sir.StatementType = 'BAL'
+				or ((sir.PeriodLengthCode = 'M') and (sir.PeriodLength IN (3,6,9,12)))
+				or ((sir.PeriodLengthCode = 'W') and (sir.PeriodLength IN (12,13,14,25,26,27,38,39,40,51,52,53)))
+			   )
+		   and @CURRENCY_CODE is not NULL
+		   and p.RowNumber < 5
+
+		   		   
+	if @VERBOSE = 'Y' 
+		BEGIN
+			print 'After Create COAs w/ Duplicates' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+			set @START = GETDATE()
+		END
+
+	drop table #Partition
 
 
 if @VERBOSE = 'Y' print '>>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Pivot the data'	

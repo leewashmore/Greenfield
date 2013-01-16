@@ -20,7 +20,7 @@ as
 	select pf.* 
 	  into #A
 	  from dbo.PERIOD_FINANCIALS pf 
-	 where DATA_ID = 117			--OTLO
+	 where DATA_ID = 294			--Cash Earnings Calc
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
 	 order by PERIOD_YEAR
@@ -28,7 +28,7 @@ as
 	select pf.PERIOD_YEAR + 1 as PRIOR_YEAR, pf.PERIOD_YEAR as PERIOD_YEAR,pf.CURRENCY,pf.COA_TYPE,pf.DATA_SOURCE,pf.FISCAL_TYPE,pf.PERIOD_TYPE,pf.ISSUER_ID,pf.AMOUNT,pf.PERIOD_END_DATE
 	  into #B
 	  from dbo.PERIOD_FINANCIALS pf 
-	 where DATA_ID = 117			--OTLO
+	 where DATA_ID = 294			--Cash Earnings Calc
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
 	 order by PERIOD_YEAR
@@ -41,8 +41,8 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  222 as DATA_ID										-- DATA_ID:222 Cash Earnings Growth (YOY)
-		,  (a.AMOUNT /b.AMOUNT)-1 as AMOUNT						--  (OTLO for Period / OTLO for Period-1)-1
-		,  '(OTLO for ('+ CAST(a.PERIOD_YEAR as varchar(32)) + '(' + CAST(a.AMOUNT as varchar(32)) + ') / OTLO for (('+ CAST(b.PERIOD_YEAR as varchar(32)) +')(' + CAST(b.AMOUNT as varchar(32)) + '))) - 1 ' as CALCULATION_DIAGRAM
+		,  (a.AMOUNT /b.AMOUNT)-1 as AMOUNT						--  (Cash Earnings for Period / Cash Earnings for Period-1)-1
+		,  '(Cash Earnings for ('+ CAST(a.PERIOD_YEAR as varchar(32)) + '(' + CAST(a.AMOUNT as varchar(32)) + ') / Cash Earnings for (('+ CAST(b.PERIOD_YEAR as varchar(32)) +')(' + CAST(b.AMOUNT as varchar(32)) + '))) - 1 ' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
@@ -64,14 +64,14 @@ as
 			(
 			select GETDATE() as LOG_DATE, 222 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 222  Cash Earnings Growth (YOY) .  DATA_ID:117 is NULL or ZERO for the period'
+				, 'ERROR calculating 222  Cash Earnings Growth (YOY) .  DATA_ID:294 is NULL or ZERO for the period'
 			  from #B a
 			 where isnull(a.AMOUNT, 0.0) = 0.0	 -- Data error	 
 			) union (	
 			-- Error conditions - missing data 
 			select GETDATE() as LOG_DATE, 222 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 222  Cash Earnings Growth (YOY) .  DATA_ID:117 is missing for the period' as TXT
+				, 'ERROR calculating 222  Cash Earnings Growth (YOY) .  DATA_ID:294 is missing for the period' as TXT
 			  from #A a
 			  left join	#B b on b.ISSUER_ID = a.ISSUER_ID 
 							and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
@@ -83,7 +83,7 @@ as
 			-- ERROR - No data at all available
 			select GETDATE() as LOG_DATE, 222 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 222  Cash Earnings Growth (YOY) .  DATA_ID:117 no data' as TXT
+				, 'ERROR calculating 222  Cash Earnings Growth (YOY) .  DATA_ID:294 no data' as TXT
 			  from (select COUNT(*) CNT from #A having COUNT(*) = 0) z
 			) 
 		END
@@ -92,6 +92,6 @@ as
 	drop table #A
 	drop table #B
 	
-
+GO
 
 

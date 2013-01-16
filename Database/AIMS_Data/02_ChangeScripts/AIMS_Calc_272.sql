@@ -21,14 +21,14 @@ as
 	select pf.* 
 	  into #A
 	  from dbo.PERIOD_FINANCIALS pf  
-	  where DATA_ID = 33		-- SNII(Non-Interest Income, Bank)
+	  where DATA_ID = 17		-- ENII (Net Interest Income)
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
 
 	select pf.* 
 	  into #B
 	  from dbo.PERIOD_FINANCIALS  pf 
-	 where DATA_ID = 264		-- NFAC
+	 where DATA_ID = 264		-- NFAC (Fees & Commissions from Operations)
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
 	   
@@ -36,7 +36,7 @@ as
 	select pf.* 
 	  into #C
 	  from dbo.PERIOD_FINANCIALS  pf 
-	 where DATA_ID = 9			-- SIIB	(Interest Income, Bank)   
+	 where DATA_ID = 33			-- SNII	(Non-Interest Income, Bank)   
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'  
 	   
@@ -50,8 +50,8 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  272 as DATA_ID										-- DATA_ID:272 Trading Income as % of Revenue  
-		,  (a.AMOUNT - b.AMOUNT)/(a.AMOUNT + c.AMOUNT) as AMOUNT			-- (33 - 264)/(33+9)
-		,  '(SNII(' + CAST(a.AMOUNT as varchar(32)) + ') -  NFAC(' + CAST(b.AMOUNT as varchar(32)) + ')) / ( SNII(' + CAST(a.AMOUNT as varchar(32)) + ')' + 'SIIB(' + CAST(c.AMOUNT as varchar(32)) + '))' as CALCULATION_DIAGRAM
+		,  (a.AMOUNT + b.AMOUNT)/(a.AMOUNT + c.AMOUNT) as AMOUNT			-- (17 + 264)/(17 + 33)
+		,  '(ENII(' + CAST(a.AMOUNT as varchar(32)) + ') +  NFAC(' + CAST(b.AMOUNT as varchar(32)) + ')) / ( ENII(' + CAST(a.AMOUNT as varchar(32)) + ')' + 'SNII(' + CAST(c.AMOUNT as varchar(32)) + '))' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
@@ -74,7 +74,7 @@ as
 			(
 			select GETDATE() as LOG_DATE, 272 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 272 Trading Income as % of Revenue.  DATA_ID:33 SNII is NULL or ZERO'
+				, 'ERROR calculating 272 Trading Income as % of Revenue.  DATA_ID:17 ENII is NULL or ZERO'
 			  from #A a
 			  inner join #C c on c.ISSUER_ID = a.ISSUER_ID and c.DATA_SOURCE = a.DATA_SOURCE 
 							and c.PERIOD_TYPE = a.PERIOD_TYPE and c.PERIOD_YEAR = a.PERIOD_YEAR 
@@ -98,7 +98,7 @@ as
 			
 			select GETDATE() as LOG_DATE, 272 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR,  a.PERIOD_END_DATE,  a.FISCAL_TYPE,  a.CURRENCY
-				, 'ERROR calculating 272 Trading Income as % of Revenue  DATA_ID:9 SIIB is missing' as TXT
+				, 'ERROR calculating 272 Trading Income as % of Revenue  DATA_ID:33 SNII is missing' as TXT
 			  from #C a
 			  left join	#A b on b.ISSUER_ID = a.ISSUER_ID 
 							and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
@@ -111,7 +111,7 @@ as
 			-- Error conditions - missing data 
 			select GETDATE() as LOG_DATE, 272 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 272 Trading Income as % of Revenue.  DATA_ID:33 SNII is missing' as TXT
+				, 'ERROR calculating 272 Trading Income as % of Revenue.  DATA_ID:17 ENII is missing' as TXT
 			  from #A a
 			  left join	#B b on b.ISSUER_ID = a.ISSUER_ID  
 							and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
@@ -126,20 +126,20 @@ as
 			-- ERROR - No data at all available
 			select GETDATE() as LOG_DATE, 272 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 272 Trading Income as % of Revenue.  DATA_ID:264 NFAC no data' as TXT
+				, 'ERROR calculating 272 Trading Income as % of Revenue.  DATA_ID:17 ENII no data' as TXT
 			  from (select COUNT(*) CNT from #A having COUNT(*) = 0) z
 			) union (	
 
 			select GETDATE() as LOG_DATE, 272 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 272 Trading Income as % of Revenue.  DATA_ID:33 SNII no data' as TXT
+				, 'ERROR calculating 272 Trading Income as % of Revenue.  DATA_ID:264 NFAC no data' as TXT
 			  from (select COUNT(*) CNT from #B having COUNT(*) = 0) z
 			)
 			 union (	
 
 			select GETDATE() as LOG_DATE, 272 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 272 Trading Income as % of Revenue  DATA_ID:9 SIIB no data' as TXT
+				, 'ERROR calculating 272 Trading Income as % of Revenue  DATA_ID:33 SNII no data' as TXT
 			  from (select COUNT(*) CNT from #C having COUNT(*) = 0) z
 			)
 		END
@@ -149,5 +149,6 @@ as
 	drop table #B
 	drop table #C
 
+GO
 
 

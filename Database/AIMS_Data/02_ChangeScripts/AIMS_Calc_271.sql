@@ -34,7 +34,7 @@ as
 	select pf.* 
 	  into #C
 	  from dbo.PERIOD_FINANCIALS  pf 
-	 where DATA_ID = 9			-- SIIB	(Interest Income, Bank)   
+	 where DATA_ID = 17			-- ENII	(Net Interest Income)   
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'  
 	   
@@ -48,8 +48,8 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  271 as DATA_ID										-- DATA_ID:271 Fees + Commissions as % of Revenue  
-		,  a.AMOUNT /(b.AMOUNT + c.AMOUNT) as AMOUNT			-- 264/(33+9)
-		,   '264(' + CAST(a.AMOUNT as varchar(32)) + ') /( 33(' + CAST(b.AMOUNT as varchar(32)) + ') + 9(' + CAST(c.AMOUNT as varchar(32)) + '))' as CALCULATION_DIAGRAM
+		,  a.AMOUNT /(b.AMOUNT + c.AMOUNT) as AMOUNT			-- 264/(33+17)
+		,   '264(' + CAST(a.AMOUNT as varchar(32)) + ') /( 33(' + CAST(b.AMOUNT as varchar(32)) + ') + 17(' + CAST(c.AMOUNT as varchar(32)) + '))' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
@@ -109,7 +109,7 @@ as
 			-- Error conditions - missing data 
 			select GETDATE() as LOG_DATE, 271 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 271 Fees + Commissions as % of Revenue  DATA_ID:9 SIIB is missing' as TXT
+				, 'ERROR calculating 271 Fees + Commissions as % of Revenue  DATA_ID:17 ENII is missing' as TXT
 			  from #A a
 			  left join	#C b on b.ISSUER_ID = a.ISSUER_ID  
 							and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
@@ -137,7 +137,7 @@ as
 
 			select GETDATE() as LOG_DATE, 271 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 271 Fees + Commissions as % of Revenue  DATA_ID:9 SIIB no data' as TXT
+				, 'ERROR calculating 271 Fees + Commissions as % of Revenue  DATA_ID:17 ENII no data' as TXT
 			  from (select COUNT(*) CNT from #C having COUNT(*) = 0) z
 			)
 		END
@@ -147,5 +147,6 @@ as
 	drop table #B
 	drop table #C
 
+GO
 
 
