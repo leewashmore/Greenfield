@@ -329,6 +329,163 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="IssuerSecurityShareRecordModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server")]
+    public partial class IssuerSecurityShareRecordModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string IssuerIdField;
+        
+        private System.Nullable<int> SecurityIdField;
+        
+        private string SecurityTickerField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerShareRecordModel> SharesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IssuerId {
+            get {
+                return this.IssuerIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuerIdField, value) != true)) {
+                    this.IssuerIdField = value;
+                    this.RaisePropertyChanged("IssuerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> SecurityId {
+            get {
+                return this.SecurityIdField;
+            }
+            set {
+                if ((this.SecurityIdField.Equals(value) != true)) {
+                    this.SecurityIdField = value;
+                    this.RaisePropertyChanged("SecurityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityTicker {
+            get {
+                return this.SecurityTickerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityTickerField, value) != true)) {
+                    this.SecurityTickerField = value;
+                    this.RaisePropertyChanged("SecurityTicker");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerShareRecordModel> Shares {
+            get {
+                return this.SharesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SharesField, value) != true)) {
+                    this.SharesField = value;
+                    this.RaisePropertyChanged("Shares");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="IssuerShareRecordModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server")]
+    public partial class IssuerShareRecordModel : GreenField.IssuerShares.Client.Backend.IssuerShares.ShareRecordModel {
+        
+        private string IssuerIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IssuerId {
+            get {
+                return this.IssuerIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuerIdField, value) != true)) {
+                    this.IssuerIdField = value;
+                    this.RaisePropertyChanged("IssuerId");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ShareRecordModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerShareRecordModel))]
+    public partial class ShareRecordModel : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.DateTime DateField;
+        
+        private System.Nullable<int> SecurityIdField;
+        
+        private decimal SharesOutstandingField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Date {
+            get {
+                return this.DateField;
+            }
+            set {
+                if ((this.DateField.Equals(value) != true)) {
+                    this.DateField = value;
+                    this.RaisePropertyChanged("Date");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> SecurityId {
+            get {
+                return this.SecurityIdField;
+            }
+            set {
+                if ((this.SecurityIdField.Equals(value) != true)) {
+                    this.SecurityIdField = value;
+                    this.RaisePropertyChanged("SecurityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal SharesOutstanding {
+            get {
+                return this.SharesOutstandingField;
+            }
+            set {
+                if ((this.SharesOutstandingField.Equals(value) != true)) {
+                    this.SharesOutstandingField = value;
+                    this.RaisePropertyChanged("SharesOutstanding");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Backend.IssuerShares.IFacade")]
     public interface IFacade {
@@ -342,6 +499,16 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
         System.IAsyncResult BeginGetIssuerSecurities(string pattern, int atMost, string securityShortName, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.SecurityModel> EndGetIssuerSecurities(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/UpdateIssueSharesComposition", ReplyAction="http://tempuri.org/IFacade/UpdateIssueSharesCompositionResponse")]
+        System.IAsyncResult BeginUpdateIssueSharesComposition(GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel model, System.AsyncCallback callback, object asyncState);
+        
+        GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel EndUpdateIssueSharesComposition(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/GetIssuerSharesBySecurityShortName", ReplyAction="http://tempuri.org/IFacade/GetIssuerSharesBySecurityShortNameResponse")]
+        System.IAsyncResult BeginGetIssuerSharesBySecurityShortName(string securityShortName, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerSecurityShareRecordModel> EndGetIssuerSharesBySecurityShortName(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -388,6 +555,44 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class UpdateIssueSharesCompositionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public UpdateIssueSharesCompositionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetIssuerSharesBySecurityShortNameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetIssuerSharesBySecurityShortNameCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerSecurityShareRecordModel> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerSecurityShareRecordModel>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class FacadeClient : System.ServiceModel.ClientBase<GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade>, GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade {
         
         private BeginOperationDelegate onBeginGetRootModelDelegate;
@@ -401,6 +606,18 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
         private EndOperationDelegate onEndGetIssuerSecuritiesDelegate;
         
         private System.Threading.SendOrPostCallback onGetIssuerSecuritiesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginUpdateIssueSharesCompositionDelegate;
+        
+        private EndOperationDelegate onEndUpdateIssueSharesCompositionDelegate;
+        
+        private System.Threading.SendOrPostCallback onUpdateIssueSharesCompositionCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetIssuerSharesBySecurityShortNameDelegate;
+        
+        private EndOperationDelegate onEndGetIssuerSharesBySecurityShortNameDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetIssuerSharesBySecurityShortNameCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -458,6 +675,10 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
         public event System.EventHandler<GetRootModelCompletedEventArgs> GetRootModelCompleted;
         
         public event System.EventHandler<GetIssuerSecuritiesCompletedEventArgs> GetIssuerSecuritiesCompleted;
+        
+        public event System.EventHandler<UpdateIssueSharesCompositionCompletedEventArgs> UpdateIssueSharesCompositionCompleted;
+        
+        public event System.EventHandler<GetIssuerSharesBySecurityShortNameCompletedEventArgs> GetIssuerSharesBySecurityShortNameCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -557,6 +778,98 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
                         pattern,
                         atMost,
                         securityShortName}, this.onEndGetIssuerSecuritiesDelegate, this.onGetIssuerSecuritiesCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade.BeginUpdateIssueSharesComposition(GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel model, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdateIssueSharesComposition(model, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade.EndUpdateIssueSharesComposition(System.IAsyncResult result) {
+            return base.Channel.EndUpdateIssueSharesComposition(result);
+        }
+        
+        private System.IAsyncResult OnBeginUpdateIssueSharesComposition(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel model = ((GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel)(inValues[0]));
+            return ((GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade)(this)).BeginUpdateIssueSharesComposition(model, callback, asyncState);
+        }
+        
+        private object[] OnEndUpdateIssueSharesComposition(System.IAsyncResult result) {
+            GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel retVal = ((GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade)(this)).EndUpdateIssueSharesComposition(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnUpdateIssueSharesCompositionCompleted(object state) {
+            if ((this.UpdateIssueSharesCompositionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.UpdateIssueSharesCompositionCompleted(this, new UpdateIssueSharesCompositionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void UpdateIssueSharesCompositionAsync(GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel model) {
+            this.UpdateIssueSharesCompositionAsync(model, null);
+        }
+        
+        public void UpdateIssueSharesCompositionAsync(GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel model, object userState) {
+            if ((this.onBeginUpdateIssueSharesCompositionDelegate == null)) {
+                this.onBeginUpdateIssueSharesCompositionDelegate = new BeginOperationDelegate(this.OnBeginUpdateIssueSharesComposition);
+            }
+            if ((this.onEndUpdateIssueSharesCompositionDelegate == null)) {
+                this.onEndUpdateIssueSharesCompositionDelegate = new EndOperationDelegate(this.OnEndUpdateIssueSharesComposition);
+            }
+            if ((this.onUpdateIssueSharesCompositionCompletedDelegate == null)) {
+                this.onUpdateIssueSharesCompositionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUpdateIssueSharesCompositionCompleted);
+            }
+            base.InvokeAsync(this.onBeginUpdateIssueSharesCompositionDelegate, new object[] {
+                        model}, this.onEndUpdateIssueSharesCompositionDelegate, this.onUpdateIssueSharesCompositionCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade.BeginGetIssuerSharesBySecurityShortName(string securityShortName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetIssuerSharesBySecurityShortName(securityShortName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerSecurityShareRecordModel> GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade.EndGetIssuerSharesBySecurityShortName(System.IAsyncResult result) {
+            return base.Channel.EndGetIssuerSharesBySecurityShortName(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetIssuerSharesBySecurityShortName(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string securityShortName = ((string)(inValues[0]));
+            return ((GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade)(this)).BeginGetIssuerSharesBySecurityShortName(securityShortName, callback, asyncState);
+        }
+        
+        private object[] OnEndGetIssuerSharesBySecurityShortName(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerSecurityShareRecordModel> retVal = ((GreenField.IssuerShares.Client.Backend.IssuerShares.IFacade)(this)).EndGetIssuerSharesBySecurityShortName(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetIssuerSharesBySecurityShortNameCompleted(object state) {
+            if ((this.GetIssuerSharesBySecurityShortNameCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetIssuerSharesBySecurityShortNameCompleted(this, new GetIssuerSharesBySecurityShortNameCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetIssuerSharesBySecurityShortNameAsync(string securityShortName) {
+            this.GetIssuerSharesBySecurityShortNameAsync(securityShortName, null);
+        }
+        
+        public void GetIssuerSharesBySecurityShortNameAsync(string securityShortName, object userState) {
+            if ((this.onBeginGetIssuerSharesBySecurityShortNameDelegate == null)) {
+                this.onBeginGetIssuerSharesBySecurityShortNameDelegate = new BeginOperationDelegate(this.OnBeginGetIssuerSharesBySecurityShortName);
+            }
+            if ((this.onEndGetIssuerSharesBySecurityShortNameDelegate == null)) {
+                this.onEndGetIssuerSharesBySecurityShortNameDelegate = new EndOperationDelegate(this.OnEndGetIssuerSharesBySecurityShortName);
+            }
+            if ((this.onGetIssuerSharesBySecurityShortNameCompletedDelegate == null)) {
+                this.onGetIssuerSharesBySecurityShortNameCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetIssuerSharesBySecurityShortNameCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetIssuerSharesBySecurityShortNameDelegate, new object[] {
+                        securityShortName}, this.onEndGetIssuerSharesBySecurityShortNameDelegate, this.onGetIssuerSharesBySecurityShortNameCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -660,6 +973,32 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.SecurityModel> EndGetIssuerSecurities(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.SecurityModel> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.SecurityModel>)(base.EndInvoke("GetIssuerSecurities", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginUpdateIssueSharesComposition(GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel model, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = model;
+                System.IAsyncResult _result = base.BeginInvoke("UpdateIssueSharesComposition", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel EndUpdateIssueSharesComposition(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel _result = ((GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel)(base.EndInvoke("UpdateIssueSharesComposition", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetIssuerSharesBySecurityShortName(string securityShortName, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = securityShortName;
+                System.IAsyncResult _result = base.BeginInvoke("GetIssuerSharesBySecurityShortName", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerSecurityShareRecordModel> EndGetIssuerSharesBySecurityShortName(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerSecurityShareRecordModel> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerSecurityShareRecordModel>)(base.EndInvoke("GetIssuerSharesBySecurityShortName", _args, result)));
                 return _result;
             }
         }

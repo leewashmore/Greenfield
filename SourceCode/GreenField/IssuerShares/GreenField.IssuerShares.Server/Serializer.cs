@@ -41,5 +41,43 @@ namespace GreenField.IssuerShares.Server
             );
             return result;
         }
+
+        public IEnumerable<IssuerSecurityShareRecordModel> SerializeShareRecords(IEnumerable<DataLoader.Core.IssuerSecurityShareRecord> records)
+        {
+            var result = records.Select(x => this.SerializeIssuerSecurityShareRecord(x)).ToList();
+            return result;
+        }
+
+        private IssuerSecurityShareRecordModel SerializeIssuerSecurityShareRecord(DataLoader.Core.IssuerSecurityShareRecord x)
+        {
+            var result = new IssuerSecurityShareRecordModel
+                            {
+                                IssuerId = x.IssuerId,
+                                SecurityId = x.SecurityId,
+                                SecurityTicker = x.SecurityTicker,
+                                Shares = this.SerializeIssuerShareRecords(x.Shares)
+                            };
+
+            return result;
+        }
+
+        private IEnumerable<IssuerShareRecordModel> SerializeIssuerShareRecords(IEnumerable<DataLoader.Core.IssuerShareRecord> records)
+        {
+            var result = records.Select(x => this.IssuerShareRecord(x)).ToList();
+            return result;
+        }
+
+        private IssuerShareRecordModel IssuerShareRecord(DataLoader.Core.IssuerShareRecord x)
+        {
+            var result = new IssuerShareRecordModel
+            {
+                IssuerId = x.IssuerId,
+                Date = x.Date,
+                SecurityId = x.SecurityId,
+                SharesOutstanding = x.SharesOutstanding
+            };
+
+            return result;
+        }
     }
 }

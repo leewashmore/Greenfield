@@ -21,4 +21,43 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ItemModel" nillable="true" type="tns:ItemModel" />
+  <xs:complexType name="ArrayOfIssuerSecurityShareRecordModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="IssuerSecurityShareRecordModel" nillable="true" type="tns:IssuerSecurityShareRecordModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfIssuerSecurityShareRecordModel" nillable="true" type="tns:ArrayOfIssuerSecurityShareRecordModel" />
+  <xs:complexType name="IssuerSecurityShareRecordModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Shares" nillable="true" type="tns:ArrayOfIssuerShareRecordModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IssuerSecurityShareRecordModel" nillable="true" type="tns:IssuerSecurityShareRecordModel" />
+  <xs:complexType name="ArrayOfIssuerShareRecordModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="IssuerShareRecordModel" nillable="true" type="tns:IssuerShareRecordModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfIssuerShareRecordModel" nillable="true" type="tns:ArrayOfIssuerShareRecordModel" />
+  <xs:complexType name="IssuerShareRecordModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ShareRecordModel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="IssuerShareRecordModel" nillable="true" type="tns:IssuerShareRecordModel" />
+  <xs:complexType name="ShareRecordModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SharesOutstanding" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ShareRecordModel" nillable="true" type="tns:ShareRecordModel" />
 </xs:schema>

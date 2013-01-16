@@ -10,11 +10,11 @@
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
         <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Add security</TextBlock>
-        <local:AutoCompleteBoxWithEnterWorking
+        <local:AutoCompleteBoxWithEnterWorking 
             ItemsSource="{Binding Items}"
             MinimumPopulateDelay="250"
             FilterMode="None"
-            ValueMemberPath="Name"
+            ValueMemberPath="Ticker"
             SelectedItem="{Binding SelectedSecurity, Mode=TwoWay}"
             Width="200"
             IsEnabled="{Binding IsEnabled}"

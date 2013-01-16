@@ -124,21 +124,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\AggregateFunctionEMDataSummary.cs" />
+    <Compile Include="Helpers\ConsensusValuationAmount.cs" />
     <Compile Include="Helpers\ChildExportOptions.xaml.cs">
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Converters\MarketCapitalizationConverter.cs" />
     <Compile Include="Helpers\Converters\DocumentCategoryConverter.cs" />
+    <Compile Include="Helpers\Converters\OneDecimalPointConverter.cs" />
     <Compile Include="Helpers\Converters\UTCToLocalDateTimeConverter.cs" />
     <Compile Include="Helpers\Converters\MeetingDecisionEntryPFVBuySellInputEnabledConverter.cs" />
     <Compile Include="Helpers\Converters\MeetingMinutesAttendenceRemoveButtonEnabledConverter.cs" />
     <Compile Include="Helpers\Converters\EntityDisplayConverter.cs" />
     <Compile Include="Helpers\Converters\GroupAggregationToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\ReportedCurrencyConverter.cs" />
+    <Compile Include="Helpers\MarketCapitalizationDataPoint.cs" />
     <Compile Include="Helpers\CurrentFairValueMeasures.cs" />
     <Compile Include="Helpers\DataContextProxy.cs" />
     <Compile Include="Helpers\Converters\DraggedItemTemplateConverter.cs" />
     <Compile Include="Helpers\DCFCalculations.cs" />
+    <Compile Include="Helpers\DCFPDFExport.cs" />
     <Compile Include="Helpers\Export\ExportOptions.cs" />
     <Compile Include="Helpers\Converters\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\Export\PDFExporter.cs" />
@@ -146,13 +151,15 @@
     <Compile Include="Helpers\FairValueData.cs" />
     <Compile Include="Helpers\Flipper.cs" />
     <Compile Include="Helpers\FrozenRowsBehavior.cs" />
-    <Compile Include="Helpers\Grid Row Reordering Behavior\BeginningDragEventArgs.cs" />
-    <Compile Include="Helpers\Grid Row Reordering Behavior\DragStartedEventArgs.cs" />
-    <Compile Include="Helpers\Grid Row Reordering Behavior\GridViewDataControlExtensions.cs" />
-    <Compile Include="Helpers\Grid Row Reordering Behavior\ReorderedEventArgs.cs" />
-    <Compile Include="Helpers\Grid Row Reordering Behavior\ReorderingEventArgs.cs" />
-    <Compile Include="Helpers\Grid Row Reordering Behavior\RowReorderBehavior.cs" />
+    <Compile Include="Helpers\Export\Grid Row Reordering Behavior\BeginningDragEventArgs.cs" />
+    <Compile Include="Helpers\Export\Grid Row Reordering Behavior\DragStartedEventArgs.cs" />
+    <Compile Include="Helpers\Export\Grid Row Reordering Behavior\GridViewDataControlExtensions.cs" />
+    <Compile Include="Helpers\Export\Grid Row Reordering Behavior\ReorderedEventArgs.cs" />
+    <Compile Include="Helpers\Export\Grid Row Reordering Behavior\ReorderingEventArgs.cs" />
+    <Compile Include="Helpers\Export\Grid Row Reordering Behavior\RowReorderBehavior.cs" />
     <Compile Include="Helpers\GridRowColorSelector.cs" />
+    <Compile Include="Helpers\HarmonicMeanCalculation.cs" />
+    <Compile Include="Helpers\InceptionDateChecker.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\Converters\PercentageValueConverter.cs" />
     <Compile Include="Helpers\ListUtils.cs" />
@@ -170,7 +177,7 @@
     <Compile Include="Models\FinancialStatementDisplayData.cs" />
     <Compile Include="Models\FiveYearDataModels.cs" />
     <Compile Include="Models\CSTNavigationInfo.cs" />
-    <Compile Include="Models\ICPresentations\ICNavigationInfo.cs" />
+    <Compile Include="Helpers\ICNavigationInfo.cs" />
     <Compile Include="Models\GadgetWithPeriodColumns.cs" />
     <Compile Include="Models\PerformancePeriodData.cs" />
     <Compile Include="Models\PeriodAttributeData.cs" />
@@ -179,323 +186,325 @@
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Models\SensitivityData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\CustomScreeningTool\ViewModelCSTDataFieldSelector.cs" />
-    <Compile Include="ViewModels\DCF\ViewModelAnalysisSummary.cs" />
-    <Compile Include="ViewModels\DCF\ViewModelDCF.cs" />
-    <Compile Include="ViewModels\DCF\ViewModelSummary.cs" />
-    <Compile Include="ViewModels\Documents\ViewModelExcelModelUpload.cs" />
-    <Compile Include="ViewModels\DCF\ViewModelSenitivity.cs" />
-    <Compile Include="ViewModels\Documents\ChildViewModelDocumentsEditDelete.cs" />
-    <Compile Include="ViewModels\DCF\ViewModelTerminalValueCalculations.cs" />
-    <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
-    <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelPreMeetingVoteReport.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelMeetingConfigSchedule.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelPresentationVote.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelPresentationDecisionEntry.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelPresentationMeetingMinutes.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelICPresentationNew.cs" />
-    <Compile Include="ViewModels\Documents\ViewModelDocuments.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelCreateUpdatePresentations.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelMeetings.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelMeetingsAgenda.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelPresentations.cs" />
-    <Compile Include="ViewModels\ViewModelCOASpecific.cs" />
-    <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelValuations.cs" />
-    <Compile Include="ViewModels\ViewModelConsensusEstimateSummary.cs" />
-    <Compile Include="ViewModels\Market Performance\ChildViewModelInsertEntity.cs" />
-    <Compile Include="ViewModels\Market Performance\ViewModelMarketPerformanceSnapshot.cs" />
-    <Compile Include="ViewModels\PortfolioPeriodData.cs" />
-    <Compile Include="ViewModels\ViewModelAssetAllocation.cs" />
-    <Compile Include="ViewModels\ViewModelAttribution.cs" />
-    <Compile Include="ViewModels\ViewModelBasicData.cs" />
-    <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
-    <Compile Include="ViewModels\ViewModelCommodityIndex.cs" />
-    <Compile Include="ViewModels\ViewModelConsensusEstimatesDetails.cs" />
-    <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
-    <Compile Include="ViewModels\CustomScreeningTool\ViewModelCustomScreeningTool.cs" />
-    <Compile Include="ViewModels\ViewModelFairValueComposition.cs" />
-    <Compile Include="ViewModels\ViewModelFairValueCompositionSummary.cs" />
-    <Compile Include="ViewModels\ViewModelFinancialStatements.cs" />
-    <Compile Include="ViewModels\ViewModelDividendYield.cs" />
-    <Compile Include="ViewModels\ViewModelEVEBITDA.cs" />
-    <Compile Include="ViewModels\ViewModelFCFYield.cs" />
-    <Compile Include="ViewModels\ViewModelFinstat.cs" />
-    <Compile Include="ViewModels\DCF\ViewModelFreeCashFlows.cs" />
-    <Compile Include="ViewModels\ViewModelHeatMap.cs" />
-    <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
-    <Compile Include="ViewModels\ViewModelHoldingsPieChartRegion.cs" />
-    <Compile Include="ViewModels\ViewModelIndexConstituents.cs" />
-    <Compile Include="ViewModels\ViewModelMacroDBKeyAnnualReport.cs" />
-    <Compile Include="ViewModels\ViewModelMacroDBKeyAnnualReportEMSummary.cs" />
-    <Compile Include="ViewModels\ViewModelMarketCapitalization.cs" />
-    <Compile Include="ViewModels\ViewModelMultiLineBenchmark.cs" />
-    <Compile Include="ViewModels\ViewModelPBV.cs" />
-    <Compile Include="ViewModels\ViewModelPCE.cs" />
-    <Compile Include="ViewModels\ViewModelPE.cs" />
-    <Compile Include="ViewModels\ViewModelPerformanceGadget.cs" />
-    <Compile Include="ViewModels\ViewModelPerformanceGrid.cs" />
-    <Compile Include="ViewModels\ViewModelPortfolioDetails.cs" />
-    <Compile Include="ViewModels\ViewModelPortfolioRiskReturns.cs" />
-    <Compile Include="ViewModels\ViewModelPRevenue.cs" />
-    <Compile Include="ViewModels\ViewModelQuarterlyResultsComparison.cs" />
-    <Compile Include="ViewModels\ViewModelRegionBreakdown.cs" />
-    <Compile Include="ViewModels\ViewModelRelativePerformance.cs" />
-    <Compile Include="ViewModels\ViewModelRelativePerformanceCountryActivePosition.cs" />
-    <Compile Include="ViewModels\ViewModelRelativePerformanceSectorActivePosition.cs" />
-    <Compile Include="ViewModels\ViewModelRelativePerformanceSecurityActivePosition.cs" />
-    <Compile Include="ViewModels\ViewModelRelativePeroformanceUI.cs" />
-    <Compile Include="ViewModels\ViewModelRiskIndexExposures.cs" />
-    <Compile Include="ViewModels\ViewModelScatterGraph.cs" />
-    <Compile Include="ViewModels\ViewModelSectorBreakdown.cs" />
-    <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
-    <Compile Include="ViewModels\ViewModelSlice1ChartExtension.cs" />
-    <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
-    <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
-    <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
-    <Compile Include="ViewModels\ViewModelValuationQualityGrowth.cs" />
+    <Compile Include="ViewModels\Company\Documents\Models\ViewModelExcelMacroeconomicDataUpload.cs" />
+    <Compile Include="ViewModels\Screening\Stock\ViewModelCSTDataFieldSelector.cs" />
+    <Compile Include="ViewModels\Company\Valuation\DCF\ViewModelDCF.cs" />
+    <Compile Include="ViewModels\Company\Documents\Models\ViewModelExcelModelUpload.cs" />
+    <Compile Include="ViewModels\Company\Documents\Documents\ChildViewModelDocumentsEditDelete.cs" />
+    <Compile Include="ViewModels\Company\Estimates\Consensus\ViewModelEstimates.cs" />
+    <Compile Include="ViewModels\Company\Estimates\Consensus\ViewModelTargetPrice.cs" />
+    <Compile Include="ViewModels\InvestmentCommittee\ViewModelSummaryReport.cs" />
+    <Compile Include="ViewModels\InvestmentCommittee\ViewModelMeetingConfigSchedule.cs" />
+    <Compile Include="ViewModels\InvestmentCommittee\ViewModelPresentationVote.cs" />
+    <Compile Include="ViewModels\InvestmentCommittee\ViewModelPresentationDecisionEntry.cs" />
+    <Compile Include="ViewModels\InvestmentCommittee\ViewModelPresentationMeetingMinutes.cs" />
+    <Compile Include="ViewModels\InvestmentCommittee\ViewModelICPresentationNew.cs" />
+    <Compile Include="ViewModels\Company\Documents\Documents\ViewModelDocuments.cs" />
+    <Compile Include="ViewModels\InvestmentCommittee\ViewModelCreateUpdatePresentations.cs" />
+    <Compile Include="ViewModels\InvestmentCommittee\ViewModelPresentations.cs" />
+    <Compile Include="ViewModels\Company\Snapshot\Summary\ViewModelCOASpecific.cs" />
+    <Compile Include="ViewModels\Company\Estimates\Consensus\ViewModelValuations.cs" />
+    <Compile Include="ViewModels\Company\Snapshot\Summary\ViewModelCompositeFund.cs" />
+    <Compile Include="ViewModels\Company\Snapshot\Summary\ViewModelConsensusEstimateSummary.cs" />
+    <Compile Include="ViewModels\Market\Snapshot\Market Performance\ChildViewModelInsertEntity.cs" />
+    <Compile Include="ViewModels\Market\Snapshot\Market Performance\ViewModelMarketPerformanceSnapshot.cs" />
+    <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelAssetAllocation.cs" />
+    <Compile Include="ViewModels\Portfolio\Performance\Attribution\ViewModelAttribution.cs" />
+    <Compile Include="ViewModels\Company\Snapshot\Summary\ViewModelBasicData.cs" />
+    <Compile Include="ViewModels\Company\Charting\PriceComparison\ViewModelClosingPriceChart.cs" />
+    <Compile Include="ViewModels\Market\Commodities\ViewModelCommodityIndex.cs" />
+    <Compile Include="ViewModels\Company\Estimates\Detailed\ViewModelConsensusEstimatesDetails.cs" />
+    <Compile Include="ViewModels\Portfolio\Performance\RelativePerformance\ViewModelContributorDetractor.cs" />
+    <Compile Include="ViewModels\Screening\Stock\ViewModelCustomScreeningTool.cs" />
+    <Compile Include="ViewModels\Market\Snapshot\Summary\ViewModelEMSummaryMarketData.cs" />
+    <Compile Include="ViewModels\Company\Valuation\FairValue\ViewModelFairValueComposition.cs" />
+    <Compile Include="ViewModels\Company\Snapshot\Summary\ViewModelFairValueCompositionSummary.cs" />
+    <Compile Include="ViewModels\Company\Financials\ViewModelFinancialStatements.cs" />
+    <Compile Include="ViewModels\Company\Charting\Valuation\ViewModelDividendYield.cs" />
+    <Compile Include="ViewModels\Company\Charting\Valuation\ViewModelEVEBITDA.cs" />
+    <Compile Include="ViewModels\Company\Charting\Valuation\ViewModelFCFYield.cs" />
+    <Compile Include="ViewModels\Company\Financials\ViewModelFinstat.cs" />
+    <Compile Include="ViewModels\Company\Valuation\DCF\ViewModelFreeCashFlows.cs" />
+    <Compile Include="ViewModels\Portfolio\Performance\Summary\ViewModelHeatMap.cs" />
+    <Compile Include="ViewModels\Portfolio\Benchmark\Summary\ViewModelHoldingsPieChart.cs" />
+    <Compile Include="ViewModels\Portfolio\Benchmark\Summary\ViewModelHoldingsPieChartRegion.cs" />
+    <Compile Include="ViewModels\Portfolio\Benchmark\Composition\ViewModelIndexConstituents.cs" />
+    <Compile Include="ViewModels\Market\MacroEconomic\CountrySummary\ViewModelMacroDBKeyAnnualReport.cs" />
+    <Compile Include="ViewModels\Market\MacroEconomic\EMSummary\ViewModelMacroDBKeyAnnualReportEMSummary.cs" />
+    <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelMarketCapitalization.cs" />
+    <Compile Include="ViewModels\Portfolio\Benchmark\Summary\ViewModelMultiLineBenchmark.cs" />
+    <Compile Include="ViewModels\Company\Charting\Valuation\ViewModelPBV.cs" />
+    <Compile Include="ViewModels\Company\Charting\Valuation\ViewModelPCE.cs" />
+    <Compile Include="ViewModels\Company\Charting\Valuation\ViewModelPE.cs" />
+    <Compile Include="ViewModels\Portfolio\Performance\Summary\ViewModelPerformanceGadget.cs" />
+    <Compile Include="ViewModels\Portfolio\Performance\Summary\ViewModelPerformanceGrid.cs" />
+    <Compile Include="ViewModels\Portfolio\Holdings\ViewModelPortfolioDetails.cs" />
+    <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelPortfolioRiskReturns.cs" />
+    <Compile Include="ViewModels\Company\Charting\Valuation\ViewModelPRevenue.cs" />
+    <Compile Include="ViewModels\Screening\QuarterlyComparison\ViewModelQuarterlyResultsComparison.cs" />
+    <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelRegionBreakdown.cs" />
+    <Compile Include="ViewModels\Portfolio\Performance\RelativePerformance\ViewModelRelativePerformance.cs" />
+    <Compile Include="ViewModels\Portfolio\Performance\RelativePerformance\ViewModelRelativePerformanceCountryActivePosition.cs" />
+    <Compile Include="ViewModels\Portfolio\Performance\RelativePerformance\ViewModelRelativePerformanceSectorActivePosition.cs" />
+    <Compile Include="ViewModels\Portfolio\Performance\RelativePerformance\ViewModelRelativePerformanceSecurityActivePosition.cs" />
+    <Compile Include="ViewModels\Company\Snapshot\Summary\ViewModelRelativePeroformanceUI.cs" />
+    <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelRiskIndexExposures.cs" />
+    <Compile Include="ViewModels\Company\Charting\Context\ViewModelScatterGraph.cs" />
+    <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelSectorBreakdown.cs" />
+    <Compile Include="ViewModels\Company\Snapshot\Summary\ViewModelSecurityOverview.cs" />
+    <Compile Include="ViewModels\Company\Snapshot\Summary\ViewModelSlice1ChartExtension.cs" />
+    <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelTopHoldings.cs" />
+    <Compile Include="ViewModels\Portfolio\Benchmark\Summary\ViewModelTopBenchmarkSecurities.cs" />
+    <Compile Include="ViewModels\Company\Charting\UnrealizedGainLoss\ViewModelUnrealizedGainLoss.cs" />
+    <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelValuationQualityGrowth.cs" />
     <Compile Include="Helpers\Converters\BasisPointsConverter.cs" />
-    <Compile Include="Views\CustomScreeningTool\ChildViewCSTDataListSave.xaml.cs">
+    <Compile Include="Views\Company\Documents\Models\ViewExcelMacroeconomicDataUpload.xaml.cs">
+      <DependentUpon>ViewExcelMacroeconomicDataUpload.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Screening\Stock\ChildViewCSTDataListSave.xaml.cs">
       <DependentUpon>ChildViewCSTDataListSave.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CustomScreeningTool\ViewCSTDataFieldSelector.xaml.cs">
+    <Compile Include="Views\Screening\Stock\ViewCSTDataFieldSelector.xaml.cs">
       <DependentUpon>ViewCSTDataFieldSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\ViewAnalysisSummary.xaml.cs">
+    <Compile Include="Views\Company\Valuation\DCF\ViewAnalysisSummary.xaml.cs">
       <DependentUpon>ViewAnalysisSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\ViewDCFSummary.xaml.cs">
+    <Compile Include="Views\Company\Valuation\DCF\ViewDCFSummary.xaml.cs">
       <DependentUpon>ViewDCFSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\ViewFreeCashFlows.xaml.cs">
+    <Compile Include="Views\Company\Valuation\DCF\ViewFreeCashFlows.xaml.cs">
       <DependentUpon>ViewFreeCashFlows.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\ViewSensitivity.xaml.cs">
+    <Compile Include="Views\Company\Valuation\DCF\ViewSensitivity.xaml.cs">
       <DependentUpon>ViewSensitivity.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\ViewSensitivityBVPS.xaml.cs">
+    <Compile Include="Views\Company\Valuation\DCF\ViewSensitivityBVPS.xaml.cs">
       <DependentUpon>ViewSensitivityBVPS.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\ViewSensitivityEPS.xaml.cs">
+    <Compile Include="Views\Company\Valuation\DCF\ViewSensitivityEPS.xaml.cs">
       <DependentUpon>ViewSensitivityEPS.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\ViewTerminalValueCalculations.xaml.cs">
+    <Compile Include="Views\Company\Valuation\DCF\ViewTerminalValueCalculations.xaml.cs">
       <DependentUpon>ViewTerminalValueCalculations.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\Documents\ChildViewDocumentsUpload.xaml.cs">
+    <Compile Include="Views\Company\Documents\Documents\ChildViewDocumentsUpload.xaml.cs">
       <DependentUpon>ChildViewDocumentsUpload.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\Documents\ChildViewDocumentsEditDelete.xaml.cs">
+    <Compile Include="Views\Company\Documents\Documents\ChildViewDocumentsEditDelete.xaml.cs">
       <DependentUpon>ChildViewDocumentsEditDelete.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\Documents\ViewExcelModelUpload.xaml.cs">
+    <Compile Include="Views\Company\Documents\Models\ViewExcelModelUpload.xaml.cs">
       <DependentUpon>ViewExcelModelUpload.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
+    <Compile Include="Views\Company\Estimates\Consensus\ViewEstimates.xaml.cs">
       <DependentUpon>ViewEstimates.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml.cs">
+    <Compile Include="Views\Company\Estimates\Consensus\ViewTargetPrice.xaml.cs">
       <DependentUpon>ViewTargetPrice.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewValuations.xaml.cs">
+    <Compile Include="Views\Company\Estimates\Consensus\ViewValuations.xaml.cs">
       <DependentUpon>ViewValuations.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ChildAcceptRequestPresentations.xaml.cs">
-      <DependentUpon>ChildAcceptRequestPresentations.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DCF\Documents\ViewDocuments.xaml.cs">
+    <Compile Include="Views\Company\Documents\Documents\ViewDocuments.xaml.cs">
       <DependentUpon>ViewDocuments.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ChildViewPresentationDateChangeEdit.xaml.cs">
+    <Compile Include="Views\InvestmentCommittee\ChildViewPresentationDateChangeEdit.xaml.cs">
       <DependentUpon>ChildViewPresentationDateChangeEdit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml.cs">
+    <Compile Include="Views\InvestmentCommittee\ChildViewPresentationMeetingMinutesAddAttendee.xaml.cs">
       <DependentUpon>ChildViewPresentationMeetingMinutesAddAttendee.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ViewPreMeetingVoteReport.xaml.cs">
-      <DependentUpon>ViewPreMeetingVoteReport.xaml</DependentUpon>
+    <Compile Include="Views\InvestmentCommittee\ChildViewReSubmitPresentation.xaml.cs">
+      <DependentUpon>ChildViewReSubmitPresentation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ViewPresentationVote.xaml.cs">
+    <Compile Include="Views\InvestmentCommittee\ViewSummaryReport.xaml.cs">
+      <DependentUpon>ViewSummaryReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InvestmentCommittee\ViewPresentationVote.xaml.cs">
       <DependentUpon>ViewPresentationVote.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ViewMeetingConfigurationSchedule.xaml.cs">
+    <Compile Include="Views\InvestmentCommittee\ViewMeetingConfigurationSchedule.xaml.cs">
       <DependentUpon>ViewMeetingConfigurationSchedule.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ViewPresentationMeetingMinutes.xaml.cs">
+    <Compile Include="Views\InvestmentCommittee\ViewPresentationMeetingMinutes.xaml.cs">
       <DependentUpon>ViewPresentationMeetingMinutes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ViewPresentationDecisionEntry.xaml.cs">
+    <Compile Include="Views\InvestmentCommittee\ViewPresentationDecisionEntry.xaml.cs">
       <DependentUpon>ViewPresentationDecisionEntry.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ViewICPresentationNew.xaml.cs">
+    <Compile Include="Views\InvestmentCommittee\ViewICPresentationNew.xaml.cs">
       <DependentUpon>ViewICPresentationNew.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ViewCreateUpdatePresentations.xaml.cs">
+    <Compile Include="Views\InvestmentCommittee\ViewCreateUpdatePresentations.xaml.cs">
       <DependentUpon>ViewCreateUpdatePresentations.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ViewPresentations.xaml.cs">
+    <Compile Include="Views\InvestmentCommittee\ViewPresentations.xaml.cs">
       <DependentUpon>ViewPresentations.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewCOASpecific.xaml.cs">
+    <Compile Include="Views\Company\Snapshot\Summary\ViewCOASpecific.xaml.cs">
       <DependentUpon>ViewCOASpecific.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewConsensusEstimateSummary.xaml.cs">
+    <Compile Include="Views\Company\Snapshot\Summary\ViewCompositeFund.xaml.cs">
+      <DependentUpon>ViewCompositeFund.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Snapshot\Summary\ViewConsensusEstimateSummary.xaml.cs">
       <DependentUpon>ViewConsensusEstimateSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Market Performance\ChildViewInsertSnapshot.xaml.cs">
+    <Compile Include="Views\Market\Snapshot\Market Performance\ChildViewInsertSnapshot.xaml.cs">
       <DependentUpon>ChildViewInsertSnapshot.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Market Performance\ChildViewInsertEntity.xaml.cs">
+    <Compile Include="Views\Market\Snapshot\Market Performance\ChildViewInsertEntity.xaml.cs">
       <DependentUpon>ChildViewInsertEntity.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Market Performance\ViewMarketPerformanceSnapshot.xaml.cs">
+    <Compile Include="Views\Market\Snapshot\Market Performance\ViewMarketPerformanceSnapshot.xaml.cs">
       <DependentUpon>ViewMarketPerformanceSnapshot.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewBasicData.xaml.cs">
+    <Compile Include="Views\Company\Snapshot\Summary\ViewBasicData.xaml.cs">
       <DependentUpon>ViewBasicData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewCommodityIndex.xaml.cs">
+    <Compile Include="Views\Market\Commodities\ViewCommodityIndex.xaml.cs">
       <DependentUpon>ViewCommodityIndex.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CustomScreeningTool\ViewCustomScreeningTool.xaml.cs">
+    <Compile Include="Views\Screening\Stock\ViewCustomScreeningTool.xaml.cs">
       <DependentUpon>ViewCustomScreeningTool.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewEVEBITDA.xaml.cs">
+    <Compile Include="Views\Market\Snapshot\Summary\ViewEMSummaryMarketData.xaml.cs">
+      <DependentUpon>ViewEMSummaryMarketData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Charting\Valuation\ViewEVEBITDA.xaml.cs">
       <DependentUpon>ViewEVEBITDA.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewFairValueComposition.xaml.cs">
+    <Compile Include="Views\Company\Valuation\FairValue\ViewFairValueComposition.xaml.cs">
       <DependentUpon>ViewFairValueComposition.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewFairValueCompositionSummary.xaml.cs">
+    <Compile Include="Views\Company\Snapshot\Summary\ViewFairValueCompositionSummary.xaml.cs">
       <DependentUpon>ViewFairValueCompositionSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewFCFYield.xaml.cs">
+    <Compile Include="Views\Company\Charting\Valuation\ViewFCFYield.xaml.cs">
       <DependentUpon>ViewFCFYield.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewFinancialStatements.xaml.cs">
+    <Compile Include="Views\Company\Financials\ViewFinancialStatements.xaml.cs">
       <DependentUpon>ViewFinancialStatements.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewConsensusEstimatesDetails.xaml.cs">
+    <Compile Include="Views\Company\Estimates\Detailed\ViewConsensusEstimatesDetails.xaml.cs">
       <DependentUpon>ViewConsensusEstimatesDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewDividendYield.xaml.cs">
+    <Compile Include="Views\Company\Charting\Valuation\ViewDividendYield.xaml.cs">
       <DependentUpon>ViewDividendYield.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewFinstat.xaml.cs">
+    <Compile Include="Views\Company\Financials\ViewFinstat.xaml.cs">
       <DependentUpon>ViewFinstat.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewFXEconomicData.xaml.cs">
-      <DependentUpon>ViewFXEconomicData.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ViewHeatMap.xaml.cs">
+    <Compile Include="Views\Portfolio\Performance\Summary\ViewHeatMap.xaml.cs">
       <DependentUpon>ViewHeatMap.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewHoldingsPieChartRegion.xaml.cs">
+    <Compile Include="Views\Portfolio\Benchmark\Summary\ViewHoldingsPieChartRegion.xaml.cs">
       <DependentUpon>ViewHoldingsPieChartRegion.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewMacroDBKeyAnnualReport.xaml.cs">
+    <Compile Include="Views\Market\MacroEconomic\CountrySummary\ViewMacroDBKeyAnnualReport.xaml.cs">
       <DependentUpon>ViewMacroDBKeyAnnualReport.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewMacroDBKeyAnnualReportEMSummary.xaml.cs">
+    <Compile Include="Views\Market\MacroEconomic\EMSummary\ViewMacroDBKeyAnnualReportEMSummary.xaml.cs">
       <DependentUpon>ViewMacroDBKeyAnnualReportEMSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewMultiLineBenchmark.xaml.cs">
+    <Compile Include="Views\Portfolio\Benchmark\Summary\ViewMultiLineBenchmark.xaml.cs">
       <DependentUpon>ViewMultiLineBenchmark.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewPBV.xaml.cs">
+    <Compile Include="Views\Company\Charting\Valuation\ViewPBV.xaml.cs">
       <DependentUpon>ViewPBV.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewPCE.xaml.cs">
+    <Compile Include="Views\Company\Charting\Valuation\ViewPCE.xaml.cs">
       <DependentUpon>ViewPCE.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewPE.xaml.cs">
+    <Compile Include="Views\Company\Charting\Valuation\ViewPE.xaml.cs">
       <DependentUpon>ViewPE.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewPortfolioDetails.xaml.cs">
+    <Compile Include="Views\Portfolio\Holdings\ViewPortfolioDetails.xaml.cs">
       <DependentUpon>ViewPortfolioDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewPRevenue.xaml.cs">
+    <Compile Include="Views\Company\Charting\Valuation\ViewPRevenue.xaml.cs">
       <DependentUpon>ViewPRevenue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewQuarterlyResultsComparison.xaml.cs">
+    <Compile Include="Views\Screening\QuarterlyComparison\ViewQuarterlyResultsComparison.xaml.cs">
       <DependentUpon>ViewQuarterlyResultsComparison.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewRelativePerformanceSecurityActivePosition.xaml.cs">
+    <Compile Include="Views\Portfolio\Performance\RelativePerformance\ViewRelativePerformanceSecurityActivePosition.xaml.cs">
       <DependentUpon>ViewRelativePerformanceSecurityActivePosition.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewRelativePerformanceSectorActivePosition.xaml.cs">
+    <Compile Include="Views\Portfolio\Performance\RelativePerformance\ViewRelativePerformanceSectorActivePosition.xaml.cs">
       <DependentUpon>ViewRelativePerformanceSectorActivePosition.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewAssetAllocation.xaml.cs">
+    <Compile Include="Views\Portfolio\Snapshot\ViewAssetAllocation.xaml.cs">
       <DependentUpon>ViewAssetAllocation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewAttribution.xaml.cs">
+    <Compile Include="Views\Portfolio\Performance\Attribution\ViewAttribution.xaml.cs">
       <DependentUpon>ViewAttribution.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewClosingPriceChart.xaml.cs">
+    <Compile Include="Views\Company\Charting\PriceComparison\ViewClosingPriceChart.xaml.cs">
       <DependentUpon>ViewClosingPriceChart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewRelativePerformanceCountryActivePosition.xaml.cs">
+    <Compile Include="Views\Portfolio\Performance\RelativePerformance\ViewRelativePerformanceCountryActivePosition.xaml.cs">
       <DependentUpon>ViewRelativePerformanceCountryActivePosition.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewContributorDetractor.xaml.cs">
+    <Compile Include="Views\Portfolio\Performance\RelativePerformance\ViewContributorDetractor.xaml.cs">
       <DependentUpon>ViewContributorDetractor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewCustomDateChildWindow.xaml.cs">
+    <Compile Include="Views\Company\Charting\PriceComparison\ViewCustomDateChildWindow.xaml.cs">
       <DependentUpon>ViewCustomDateChildWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewHoldingsPieChart.xaml.cs">
+    <Compile Include="Views\Portfolio\Benchmark\Summary\ViewHoldingsPieChart.xaml.cs">
       <DependentUpon>ViewHoldingsPieChart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewIndexConstituents.xaml.cs">
+    <Compile Include="Views\Portfolio\Benchmark\Composition\ViewIndexConstituents.xaml.cs">
       <DependentUpon>ViewIndexConstituents.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewMarketCapitalization.xaml.cs">
+    <Compile Include="Views\Portfolio\Snapshot\ViewMarketCapitalization.xaml.cs">
       <DependentUpon>ViewMarketCapitalization.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewPerformanceGadget.xaml.cs">
+    <Compile Include="Views\Portfolio\Performance\Summary\ViewPerformanceGadget.xaml.cs">
       <DependentUpon>ViewPerformanceGadget.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewPerformanceGrid.xaml.cs">
+    <Compile Include="Views\Portfolio\Performance\Summary\ViewPerformanceGrid.xaml.cs">
       <DependentUpon>ViewPerformanceGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewPortfolioRiskReturns.xaml.cs">
+    <Compile Include="Views\Portfolio\Snapshot\ViewPortfolioRiskReturns.xaml.cs">
       <DependentUpon>ViewPortfolioRiskReturns.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewRegionBreakdown.xaml.cs">
+    <Compile Include="Views\Portfolio\Snapshot\ViewRegionBreakdown.xaml.cs">
       <DependentUpon>ViewRegionBreakdown.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewRelativePerformance.xaml.cs">
+    <Compile Include="Views\Portfolio\Performance\RelativePerformance\ViewRelativePerformance.xaml.cs">
       <DependentUpon>ViewRelativePerformance.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewRelativePerformanceUI.xaml.cs">
+    <Compile Include="Views\Company\Snapshot\Summary\ViewRelativePerformanceUI.xaml.cs">
       <DependentUpon>ViewRelativePerformanceUI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewRiskIndexExposures.xaml.cs">
+    <Compile Include="Views\Portfolio\Snapshot\ViewRiskIndexExposures.xaml.cs">
       <DependentUpon>ViewRiskIndexExposures.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewScatterGraph.xaml.cs">
+    <Compile Include="Views\Company\Charting\Context\ViewScatterGraph.xaml.cs">
       <DependentUpon>ViewScatterGraph.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewSectorBreakdown.xaml.cs">
+    <Compile Include="Views\Portfolio\Snapshot\ViewSectorBreakdown.xaml.cs">
       <DependentUpon>ViewSectorBreakdown.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewSecurityOverview.xaml.cs">
+    <Compile Include="Views\Company\Snapshot\Summary\ViewSecurityOverview.xaml.cs">
       <DependentUpon>ViewSecurityOverview.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewSlice1ChartExtension.xaml.cs">
+    <Compile Include="Views\Company\Snapshot\Summary\ViewSlice1ChartExtension.xaml.cs">
       <DependentUpon>ViewSlice1ChartExtension.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewTopHoldings.xaml.cs">
+    <Compile Include="Views\Portfolio\Snapshot\ViewTopHoldings.xaml.cs">
       <DependentUpon>ViewTopHoldings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewTopBenchmarkSecurities.xaml.cs">
+    <Compile Include="Views\Portfolio\Benchmark\Summary\ViewTopBenchmarkSecurities.xaml.cs">
       <DependentUpon>ViewTopBenchmarkSecurities.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewUnrealizedGainLoss.xaml.cs">
+    <Compile Include="Views\Company\Charting\UnrealizedGainLoss\ViewUnrealizedGainLoss.xaml.cs">
       <DependentUpon>ViewUnrealizedGainLoss.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewValuationQualityGrowth.xaml.cs">
+    <Compile Include="Views\Portfolio\Snapshot\ViewValuationQualityGrowth.xaml.cs">
       <DependentUpon>ViewValuationQualityGrowth.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -508,327 +517,335 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\CustomScreeningTool\ChildViewCSTDataListSave.xaml">
+    <Page Include="Views\Company\Documents\Models\ViewExcelMacroeconomicDataUpload.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\CustomScreeningTool\ViewCSTDataFieldSelector.xaml">
+    <Page Include="Views\Screening\Stock\ChildViewCSTDataListSave.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DCF\ViewAnalysisSummary.xaml">
+    <Page Include="Views\Screening\Stock\ViewCSTDataFieldSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DCF\ViewDCFSummary.xaml">
+    <Page Include="Views\Company\Valuation\DCF\ViewAnalysisSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Valuation\DCF\ViewDCFSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DCF\ViewFreeCashFlows.xaml">
+    <Page Include="Views\Company\Valuation\DCF\ViewFreeCashFlows.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DCF\ViewSensitivity.xaml">
+    <Page Include="Views\Company\Valuation\DCF\ViewSensitivity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DCF\ViewSensitivityBVPS.xaml">
+    <Page Include="Views\Company\Valuation\DCF\ViewSensitivityBVPS.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DCF\ViewSensitivityEPS.xaml">
+    <Page Include="Views\Company\Valuation\DCF\ViewSensitivityEPS.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DCF\ViewTerminalValueCalculations.xaml">
+    <Page Include="Views\Company\Valuation\DCF\ViewTerminalValueCalculations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DCF\Documents\ChildViewDocumentsUpload.xaml">
+    <Page Include="Views\Company\Documents\Documents\ChildViewDocumentsUpload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DCF\Documents\ChildViewDocumentsEditDelete.xaml">
+    <Page Include="Views\Company\Documents\Documents\ChildViewDocumentsEditDelete.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DCF\Documents\ViewExcelModelUpload.xaml">
+    <Page Include="Views\Company\Documents\Models\ViewExcelModelUpload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml">
+    <Page Include="Views\Company\Estimates\Consensus\ViewEstimates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml">
+    <Page Include="Views\Company\Estimates\Consensus\ViewTargetPrice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewValuations.xaml">
+    <Page Include="Views\Company\Estimates\Consensus\ViewValuations.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ChildAcceptRequestPresentations.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\Company\Documents\Documents\ViewDocuments.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DCF\Documents\ViewDocuments.xaml">
+    <Page Include="Views\InvestmentCommittee\ChildViewPresentationDateChangeEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ICPresentations\ChildViewPresentationDateChangeEdit.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\InvestmentCommittee\ChildViewPresentationMeetingMinutesAddAttendee.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml">
+    <Page Include="Views\InvestmentCommittee\ChildViewReSubmitPresentation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ViewPreMeetingVoteReport.xaml">
+    <Page Include="Views\InvestmentCommittee\ViewSummaryReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ViewPresentationVote.xaml">
+    <Page Include="Views\InvestmentCommittee\ViewPresentationVote.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ViewMeetingConfigurationSchedule.xaml">
+    <Page Include="Views\InvestmentCommittee\ViewMeetingConfigurationSchedule.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ViewPresentationMeetingMinutes.xaml">
+    <Page Include="Views\InvestmentCommittee\ViewPresentationMeetingMinutes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ViewPresentationDecisionEntry.xaml">
+    <Page Include="Views\InvestmentCommittee\ViewPresentationDecisionEntry.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ViewICPresentationNew.xaml">
+    <Page Include="Views\InvestmentCommittee\ViewICPresentationNew.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ViewCreateUpdatePresentations.xaml">
+    <Page Include="Views\InvestmentCommittee\ViewCreateUpdatePresentations.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ViewPresentations.xaml">
+    <Page Include="Views\InvestmentCommittee\ViewPresentations.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewCOASpecific.xaml">
+    <Page Include="Views\Company\Snapshot\Summary\ViewCOASpecific.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewConsensusEstimateSummary.xaml">
+    <Page Include="Views\Company\Snapshot\Summary\ViewCompositeFund.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Market Performance\ChildViewInsertSnapshot.xaml">
+    <Page Include="Views\Company\Snapshot\Summary\ViewConsensusEstimateSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Market Performance\ChildViewInsertEntity.xaml">
+    <Page Include="Views\Market\Snapshot\Market Performance\ChildViewInsertSnapshot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Market\Snapshot\Market Performance\ChildViewInsertEntity.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Market Performance\ViewMarketPerformanceSnapshot.xaml">
+    <Page Include="Views\Market\Snapshot\Market Performance\ViewMarketPerformanceSnapshot.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewBasicData.xaml">
+    <Page Include="Views\Company\Snapshot\Summary\ViewBasicData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewCommodityIndex.xaml">
+    <Page Include="Views\Market\Commodities\ViewCommodityIndex.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CustomScreeningTool\ViewCustomScreeningTool.xaml">
+    <Page Include="Views\Screening\Stock\ViewCustomScreeningTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewEVEBITDA.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\Market\Snapshot\Summary\ViewEMSummaryMarketData.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewFairValueComposition.xaml">
+    <Page Include="Views\Company\Charting\Valuation\ViewEVEBITDA.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewFairValueCompositionSummary.xaml">
+    <Page Include="Views\Company\Valuation\FairValue\ViewFairValueComposition.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewFCFYield.xaml">
+    <Page Include="Views\Company\Snapshot\Summary\ViewFairValueCompositionSummary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewFinancialStatements.xaml">
+    <Page Include="Views\Company\Charting\Valuation\ViewFCFYield.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewConsensusEstimatesDetails.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\Company\Financials\ViewFinancialStatements.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewDividendYield.xaml">
+    <Page Include="Views\Company\Estimates\Detailed\ViewConsensusEstimatesDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewFinstat.xaml">
+    <Page Include="Views\Company\Charting\Valuation\ViewDividendYield.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewFXEconomicData.xaml">
+    <Page Include="Views\Company\Financials\ViewFinstat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewHeatMap.xaml">
+    <Page Include="Views\Portfolio\Performance\Summary\ViewHeatMap.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewHoldingsPieChartRegion.xaml">
+    <Page Include="Views\Portfolio\Benchmark\Summary\ViewHoldingsPieChartRegion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewMacroDBKeyAnnualReport.xaml">
+    <Page Include="Views\Market\MacroEconomic\CountrySummary\ViewMacroDBKeyAnnualReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewMacroDBKeyAnnualReportEMSummary.xaml">
+    <Page Include="Views\Market\MacroEconomic\EMSummary\ViewMacroDBKeyAnnualReportEMSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewMultiLineBenchmark.xaml">
+    <Page Include="Views\Portfolio\Benchmark\Summary\ViewMultiLineBenchmark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewPBV.xaml">
+    <Page Include="Views\Company\Charting\Valuation\ViewPBV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewPCE.xaml">
+    <Page Include="Views\Company\Charting\Valuation\ViewPCE.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewPE.xaml">
+    <Page Include="Views\Company\Charting\Valuation\ViewPE.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewPortfolioDetails.xaml">
+    <Page Include="Views\Portfolio\Holdings\ViewPortfolioDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewPRevenue.xaml">
+    <Page Include="Views\Company\Charting\Valuation\ViewPRevenue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewQuarterlyResultsComparison.xaml">
+    <Page Include="Views\Screening\QuarterlyComparison\ViewQuarterlyResultsComparison.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewRelativePerformanceSecurityActivePosition.xaml">
+    <Page Include="Views\Portfolio\Performance\RelativePerformance\ViewRelativePerformanceSecurityActivePosition.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewRelativePerformanceSectorActivePosition.xaml">
+    <Page Include="Views\Portfolio\Performance\RelativePerformance\ViewRelativePerformanceSectorActivePosition.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewAssetAllocation.xaml">
+    <Page Include="Views\Portfolio\Snapshot\ViewAssetAllocation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewAttribution.xaml">
+    <Page Include="Views\Portfolio\Performance\Attribution\ViewAttribution.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewClosingPriceChart.xaml">
+    <Page Include="Views\Company\Charting\PriceComparison\ViewClosingPriceChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewRelativePerformanceCountryActivePosition.xaml">
+    <Page Include="Views\Portfolio\Performance\RelativePerformance\ViewRelativePerformanceCountryActivePosition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewContributorDetractor.xaml">
+    <Page Include="Views\Portfolio\Performance\RelativePerformance\ViewContributorDetractor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewCustomDateChildWindow.xaml">
+    <Page Include="Views\Company\Charting\PriceComparison\ViewCustomDateChildWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewHoldingsPieChart.xaml">
+    <Page Include="Views\Portfolio\Benchmark\Summary\ViewHoldingsPieChart.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewIndexConstituents.xaml">
+    <Page Include="Views\Portfolio\Benchmark\Composition\ViewIndexConstituents.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewMarketCapitalization.xaml">
+    <Page Include="Views\Portfolio\Snapshot\ViewMarketCapitalization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewPerformanceGadget.xaml">
+    <Page Include="Views\Portfolio\Performance\Summary\ViewPerformanceGadget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewPerformanceGrid.xaml">
+    <Page Include="Views\Portfolio\Performance\Summary\ViewPerformanceGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewPortfolioRiskReturns.xaml">
+    <Page Include="Views\Portfolio\Snapshot\ViewPortfolioRiskReturns.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewRegionBreakdown.xaml">
+    <Page Include="Views\Portfolio\Snapshot\ViewRegionBreakdown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewRelativePerformance.xaml">
+    <Page Include="Views\Portfolio\Performance\RelativePerformance\ViewRelativePerformance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewRelativePerformanceUI.xaml">
+    <Page Include="Views\Company\Snapshot\Summary\ViewRelativePerformanceUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewRiskIndexExposures.xaml">
+    <Page Include="Views\Portfolio\Snapshot\ViewRiskIndexExposures.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewScatterGraph.xaml">
+    <Page Include="Views\Company\Charting\Context\ViewScatterGraph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewSectorBreakdown.xaml">
+    <Page Include="Views\Portfolio\Snapshot\ViewSectorBreakdown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewSecurityOverview.xaml">
+    <Page Include="Views\Company\Snapshot\Summary\ViewSecurityOverview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewSlice1ChartExtension.xaml">
+    <Page Include="Views\Company\Snapshot\Summary\ViewSlice1ChartExtension.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewTopHoldings.xaml">
+    <Page Include="Views\Portfolio\Snapshot\ViewTopHoldings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewTopBenchmarkSecurities.xaml">
+    <Page Include="Views\Portfolio\Benchmark\Summary\ViewTopBenchmarkSecurities.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ViewUnrealizedGainLoss.xaml">
+    <Page Include="Views\Company\Charting\UnrealizedGainLoss\ViewUnrealizedGainLoss.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewValuationQualityGrowth.xaml">
+    <Page Include="Views\Portfolio\Snapshot\ViewValuationQualityGrowth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -888,6 +905,7 @@
   <ItemGroup>
     <Resource Include="Images\AshmoreEMMLogo.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

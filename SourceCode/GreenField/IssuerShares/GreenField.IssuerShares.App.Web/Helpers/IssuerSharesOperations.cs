@@ -76,7 +76,8 @@ namespace GreenField.IssuerShares.App.Web
 
             var commonSerializer = new Aims.Data.Server.Serializer();
             var serializer = new Serializer(commonSerializer);
-            var facade = new Facade(manager, commonSerializer, serializer, connectionFactory, dataManagerFactory, repositoryManager);
+            var deserializer = new Deserializer(connectionFactory, dataManagerFactory, repositoryManager);
+            var facade = new Facade(manager, commonSerializer, serializer, deserializer, connectionFactory, dataManagerFactory, repositoryManager);
             return facade;
         }
 

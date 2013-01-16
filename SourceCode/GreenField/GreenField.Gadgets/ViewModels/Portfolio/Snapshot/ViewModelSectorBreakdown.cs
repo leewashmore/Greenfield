@@ -86,7 +86,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (sectorBreakdownInfo != value)
                 {
-                    sectorBreakdownInfo = value;
+                    sectorBreakdownInfo = ArrangeSortOrder(value);
                     RaisePropertyChanged(() => this.SectorBreakdownInfo);
                 }
             }
@@ -389,5 +389,30 @@ namespace GreenField.Gadgets.ViewModels
             eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
         }
         #endregion
+
+        public ObservableCollection<SectorBreakdownData> ArrangeSortOrder(ObservableCollection<SectorBreakdownData> data)
+        {
+            List<String> distinctRegions = data.OrderBy(a => a.Sector)
+                .Select(a => a.Sector).Distinct().ToList();
+            int regionCount = 1;
+            foreach (String region in distinctRegions)
+            {
+                List<string> distinctCountries = data.Where(a => a.Sector == region).OrderBy(a => a.Industry)
+                        .Select(a => a.Industry).Distinct().ToList();
+                int countryCount = 1;
+                foreach (String country in distinctCountries)
+                {
+                    List<SectorBreakdownData> records = data.Where(a => a.Sector == region && a.Industry == country).ToList();
+                    foreach (SectorBreakdownData record in records)
+                    {
+                        record.SectorSortOrder = String.Format("{0}. {1}", regionCount < 10 ? " " + regionCount.ToString() : regionCount.ToString("00"), region);
+                        record.IndustrySortOrder = String.Format("{0}. {1}", countryCount < 10 ? " " + countryCount.ToString() : countryCount.ToString("00"), country);
+                    }
+                    countryCount++;
+                }
+                regionCount++;
+            }
+            return data;
+        }
     }
 }

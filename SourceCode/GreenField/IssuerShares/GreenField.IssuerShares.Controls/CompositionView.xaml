@@ -5,13 +5,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:mine="clr-namespace:GreenField.IssuerShares.Controls"
+    xmlns:local="clr-namespace:GreenField.IssuerShares.Controls"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
     <UserControl.Resources>
         <ResourceDictionary>
 
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="/GreenField.Targeting.Controls;component/CommonTemplates.xaml" />-->
+                <ResourceDictionary Source="/GreenField.IssuerShares.Controls;component/CommonTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -21,7 +24,7 @@
             <sdk:DataGridTemplateColumn Header="Ticker">
                 <sdk:DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <ContentControl Content="{Binding Security.Ticker}"  />
+                        <ContentControl Content="{Binding Security.Ticker}" Style="{StaticResource valueContentStyle}"  />
                     </DataTemplate>
                 </sdk:DataGridTemplateColumn.CellTemplate>
             </sdk:DataGridTemplateColumn>
@@ -29,7 +32,7 @@
             <sdk:DataGridTemplateColumn Header="Name">
                 <sdk:DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <ContentControl Content="{Binding Security.Name}"  />
+                        <ContentControl Content="{Binding Security.Name}" Style="{StaticResource valueContentStyle}" />
                     </DataTemplate>
                 </sdk:DataGridTemplateColumn.CellTemplate>
             </sdk:DataGridTemplateColumn>
@@ -37,7 +40,7 @@
             <sdk:DataGridTemplateColumn Header="Security Type">
                 <sdk:DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <ContentControl Content="{Binding Security.SecurityType}"  />
+                        <ContentControl Content="{Binding Security.SecurityType}" Style="{StaticResource valueContentStyle}" />
                     </DataTemplate>
                 </sdk:DataGridTemplateColumn.CellTemplate>
             </sdk:DataGridTemplateColumn>
@@ -45,7 +48,9 @@
             <sdk:DataGridTemplateColumn Header="Preferred">
                 <sdk:DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <CheckBox IsChecked="{Binding Path=Preferred, Mode=TwoWay}" />
+                        <CheckBox HorizontalAlignment="Center" Style="{StaticResource valueContentStyle}" IsChecked="{Binding Path=Preferred, Mode=TwoWay}" mine:CheckBoxChecked.Command="{Binding ChangedPreferredCommand}"  mine:CheckBoxChecked.CommandParameter="{Binding}" >
+                            
+                        </CheckBox>
                     </DataTemplate>
                 </sdk:DataGridTemplateColumn.CellTemplate>
             </sdk:DataGridTemplateColumn>
@@ -53,7 +58,7 @@
             <sdk:DataGridTemplateColumn Header="">
                 <sdk:DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <HyperlinkButton Command="{Binding RemoveCommand}" Content="Remove" CommandParameter="{Binding}" />
+                        <HyperlinkButton Command="{Binding RemoveCommand}" Style="{StaticResource valueContentStyle}" Content="Remove" CommandParameter="{Binding}" />
                     </DataTemplate>
                 </sdk:DataGridTemplateColumn.CellTemplate>
             </sdk:DataGridTemplateColumn>

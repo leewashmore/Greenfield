@@ -97,6 +97,11 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CustomScreeningToolDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Properties\DataSources\CustomScreeningToolEntities.datasource" />
+    <None Include="Properties\DataSources\ExternalResearchEntities.datasource" />
+    <None Include="Properties\DataSources\ICPresentationEntities.datasource" />
+    <None Include="Properties\DataSources\ResearchEntities.datasource" />
+    <None Include="Properties\DataSources\ReutersEntities.datasource" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

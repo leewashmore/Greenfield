@@ -45,5 +45,47 @@ namespace GreenField.IssuerShares.Core.Persisting
                     .PullAll();
             }
         }
+
+
+        public Int32 UpdateIssuerSharesComposition(string issuerId, List<ItemModel> items)
+        {
+            var insertCount = 0;
+            using (var builder = this.CreateCommandBuilder())
+            {
+                var b = builder.Text("delete  from " + TableNames.ISSUER_SHARES_COMPOSITION)
+                    .Text(" where ISSUER_ID=")
+                    .Parameter(issuerId);
+                var i = b.Execute();
+
+                foreach (var item in items)
+                {
+
+                    insertCount += InsertIssuerShareCompositionValue(issuerId, item);
+                    
+                }
+
+                return insertCount;
+            }
+        }
+
+        private Int32 InsertIssuerShareCompositionValue(string issuerId, ItemModel item)
+        {
+            using (var builder = this.CreateCommandBuilder())
+            {
+                var query = builder.Text("insert into " + TableNames.ISSUER_SHARES_COMPOSITION + " (ISSUER_ID, SECURITY_ID, PREFERRED)")
+                .Text(" values( ")
+                .Parameter(issuerId)
+                .Text(",")
+                .Parameter(item.Security.Id)
+                .Text(",")
+                .Parameter(item.Preferred ? "Y" : "N")
+                .Text(")");
+                return query.Execute();
+            }
+        }
+
+        
+
+        
     }
 }

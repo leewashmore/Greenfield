@@ -74,6 +74,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\Backend.IssuerShares\GreenField.IssuerShares.Client.Backend.IssuerShares.IssuerSecurityShareRecordModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Backend.IssuerShares\GreenField.IssuerShares.Client.Backend.IssuerShares.RootModel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

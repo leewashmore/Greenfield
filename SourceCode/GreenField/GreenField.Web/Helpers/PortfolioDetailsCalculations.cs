@@ -167,6 +167,8 @@ namespace GreenField.Web.Helpers
                 portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
                 portfolioResult.IssueName = item.ISSUE_NAME;
                 portfolioResult.Ticker = item.TICKER;
+                portfolioResult.PfcHoldingPortfolio = item.A_PFCHOLDINGS_PORLT;
+                portfolioResult.PortfolioPath = item.PORPATH;
                 portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
                 portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
                 portfolioResult.SectorName = item.GICS_SECTOR_NAME;

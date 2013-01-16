@@ -659,7 +659,7 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorNotification(true, "Updating information based on selected preference");
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 4, netColumnCount: 7, isQuarterImplemented: false);
             FinstatDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinstatDetailInfo, out periodRecord,
-                periodRecord, uniqueByGroupDesc: true, additionalFirstDescPropertyName: "HarmonicFirst", additionalSecondDescPropertyName: "HarmonicSecond");
+                periodRecord, uniqueByGroupDesc: true, additionalFirstDescPropertyName: "HarmonicFirst", additionalSecondDescPropertyName: "HarmonicSecond", addPercentSign: false);
             PeriodRecord = periodRecord;
             PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, displayPeriodType: false);
             BusyIndicatorNotification();

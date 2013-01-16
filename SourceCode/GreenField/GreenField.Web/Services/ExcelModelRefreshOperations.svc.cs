@@ -56,7 +56,7 @@ namespace GreenField.Web.Services
         /// <returns>object of type ExcelModelData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public ExcelModelData RetrieveStatementData(string issuerId)
+        public ExcelModelData RetrieveStatementData(string issuerId, String currency)
         {
             List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
             List<FinancialStatementDataModels> resultReuters = new List<FinancialStatementDataModels>();
@@ -80,15 +80,16 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Issuer Id is not Valid");
                 }
-                External_Country_Master countryDetails = entity.External_Country_Master
-                .Where(record => record.COUNTRY_CODE == securityDetails.ISO_COUNTRY_CODE &&
-                 record.COUNTRY_NAME == securityDetails.ASEC_SEC_COUNTRY_NAME)
-                .FirstOrDefault();
+                //External_Country_Master countryDetails = entity.External_Country_Master
+                //.Where(record => record.COUNTRY_CODE == securityDetails.ISO_COUNTRY_CODE &&
+                // record.COUNTRY_NAME == securityDetails.ASEC_SEC_COUNTRY_NAME)
+                //.FirstOrDefault();
                 string issuerID = issuerId;
-                string currency = countryDetails.CURRENCY_CODE;
+                //string currency = countryDetails.CURRENCY_CODE;
                 if (currency != null)
                 {
                     resultReuters = RetrieveFinancialData(issuerID, currency);
+                    resultConsensus = RetrieveModelConsensusData(issuerID, currency);
                     currencyReuters = currency;
                     currencyConsensus = currency;
                 }
@@ -98,29 +99,35 @@ namespace GreenField.Web.Services
                 }
                 if (resultReuters == null || resultReuters.Count == 0)
                 {
-                    if (currency != "USD")
-                    {
-                        resultReuters = RetrieveFinancialData(issuerID, "USD");
-                        currencyReuters = "USD";
-                    }
-                    else
-                    {
-                        resultReuters = new List<FinancialStatementDataModels>();
-                    }
+                    //if (currency != "USD")
+                    //{
+                    //    resultReuters = RetrieveFinancialData(issuerID, "USD");
+                    //    currencyReuters = "USD";
+                    //}
+                    //else
+                    //{
+                    //    resultReuters = new List<FinancialStatementDataModels>();
+                    //}
+
+                    throw new Exception("Data does not exist for the selected currency '" 
+                        + currency + "' and issuer id '" + issuerId + "'.");
+
                 }
                 resultReuters = resultReuters.Where(a => a.PeriodYear != 2300).ToList();
 
                 if (resultConsensus == null || resultConsensus.Count == 0)
                 {
-                    if (currency != "USD")
-                    {
-                        resultConsensus = RetrieveModelConsensusData(issuerID, "USD");
-                        currencyConsensus = "USD";
-                    }
-                    else
-                    {
-                        resultConsensus = new List<ModelConsensusEstimatesData>();
-                    }
+                    //if (currency != "USD")
+                    //{
+                    //    resultConsensus = RetrieveModelConsensusData(issuerID, "USD");
+                    //    currencyConsensus = "USD";
+                    //}
+                    //else
+                    //{
+                    //    resultConsensus = new List<ModelConsensusEstimatesData>();
+                    //}
+                    throw new Exception("Data does not exist for the selected currency '"
+                        + currency + "' and issuer id '" + issuerId + "'.");
                 }
                 
                 if (resultReuters == null || resultReuters.Count == 0)

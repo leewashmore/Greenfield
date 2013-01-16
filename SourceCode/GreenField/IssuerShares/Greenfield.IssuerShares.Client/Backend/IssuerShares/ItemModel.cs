@@ -14,10 +14,15 @@ namespace GreenField.IssuerShares.Client.Backend.IssuerShares
     public partial class ItemModel
     {
         public ICommand RemoveCommand { get; private set; }
-
         public void InitializeRemoveCommand(ICommand command)
         {
             this.RemoveCommand = command;
+        }
+
+        public ICommand ChangedPreferredCommand { get; private set; }
+        public void InitializeChangedPreferredCommand(ICommand command)
+        {
+            this.ChangedPreferredCommand = command;
         }
     }
 }

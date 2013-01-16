@@ -33,7 +33,43 @@
                     </DataTemplate>
                 </mine:LineTemplateSelector.TotalTemplate>
             </mine:LineTemplateSelector>
-            
+
+            <mine:LineTemplateSelector x:Key="tickerCellTemplateSelector">
+                <mine:LineTemplateSelector.SecurityTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Security.Ticker}" Style="{StaticResource nicelyMarginedTextboxStyle}" />
+                    </DataTemplate>
+                </mine:LineTemplateSelector.SecurityTemplate>
+                <mine:LineTemplateSelector.CashTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource totalTextBlockStyle}"></TextBlock>
+                    </DataTemplate>
+                </mine:LineTemplateSelector.CashTemplate>
+                <mine:LineTemplateSelector.TotalTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource totalTextBlockStyle}"></TextBlock>
+                    </DataTemplate>
+                </mine:LineTemplateSelector.TotalTemplate>
+            </mine:LineTemplateSelector>
+
+            <mine:LineTemplateSelector x:Key="countryCellTemplateSelector">
+                <mine:LineTemplateSelector.SecurityTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Security.Country.Name}" Style="{StaticResource nicelyMarginedTextboxStyle}" />
+                    </DataTemplate>
+                </mine:LineTemplateSelector.SecurityTemplate>
+                <mine:LineTemplateSelector.CashTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource totalTextBlockStyle}"></TextBlock>
+                    </DataTemplate>
+                </mine:LineTemplateSelector.CashTemplate>
+                <mine:LineTemplateSelector.TotalTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource totalTextBlockStyle}"></TextBlock>
+                    </DataTemplate>
+                </mine:LineTemplateSelector.TotalTemplate>
+            </mine:LineTemplateSelector>
+
             <mine:LineTemplateSelector x:Key="targetCellTemplateSelector">
                 <mine:LineTemplateSelector.SecurityTemplate>
                     <DataTemplate>
@@ -69,7 +105,22 @@
                     </DataTemplate>
                 </sdk:DataGridTemplateColumn.CellTemplate>
             </sdk:DataGridTemplateColumn>
-            
+            <sdk:DataGridTemplateColumn Header="Ticker">
+                <sdk:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource tickerCellTemplateSelector}}"  Style="{StaticResource valueContentStyle}" />
+                    </DataTemplate>
+                </sdk:DataGridTemplateColumn.CellTemplate>
+            </sdk:DataGridTemplateColumn>
+
+            <sdk:DataGridTemplateColumn Header="Country">
+                <sdk:DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding}" ContentTemplate="{Binding Converter={StaticResource countryCellTemplateSelector}}"  Style="{StaticResource valueContentStyle}" />
+                    </DataTemplate>
+                </sdk:DataGridTemplateColumn.CellTemplate>
+            </sdk:DataGridTemplateColumn>
+
             <sdk:DataGridTemplateColumn Header="Target">
                 <sdk:DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>

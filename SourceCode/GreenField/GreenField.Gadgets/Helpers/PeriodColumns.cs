@@ -261,7 +261,7 @@ namespace GreenField.Gadgets.Helpers
         /// <returns>List of PeriodColumnDisplayData objects</returns>
         public static List<PeriodColumnDisplayData> SetPeriodColumnDisplayInfo<T>(List<T> data, out PeriodRecord periodRecord
             , PeriodRecord periodRecordInfo, List<PeriodColumnGroupingDetail> subGroups = null, bool updatePeriodRecord = true, bool uniqueByGroupDesc = false
-            , String additionalFirstDescPropertyName = null, String additionalSecondDescPropertyName = null)
+            , String additionalFirstDescPropertyName = null, String additionalSecondDescPropertyName = null, bool addPercentSign = true)
         {
             List<PeriodColumnDisplayData> result = new List<PeriodColumnDisplayData>();
             PeriodRecord period = periodRecordInfo;
@@ -562,13 +562,13 @@ namespace GreenField.Gadgets.Helpers
                     if (additionalFirstDescPropertyName != null)
                     {
                         dataFirstAdditionalInfo = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType()
-                            .GetProperty("HarmonicFirst").GetValue(yearFourData, null), dataDecimal, dataPercentage);
+                            .GetProperty("HarmonicFirst").GetValue(yearFourData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage));
                     }
                     object dataSecondAdditionalInfo = null;
                     if (additionalSecondDescPropertyName != null)
                     {
                         dataSecondAdditionalInfo = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType()
-                            .GetProperty("HarmonicSecond").GetValue(yearFourData, null), dataDecimal, dataPercentage);
+                            .GetProperty("HarmonicSecond").GetValue(yearFourData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage));
                     }
                     result.Add(new PeriodColumnDisplayData()
                     {
@@ -653,35 +653,35 @@ namespace GreenField.Gadgets.Helpers
                         QUARTER_SIX_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(quarterSixData, "ReportedCurrency"),
                         QUARTER_SEVEN_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(quarterSevenData, "ReportedCurrency"),
 
-                        DATA_DESC = dataDesc,
+                        DATA_DESC = AddPercentageSignToLabel(dataDesc, dataPercentage ?? false),
                         YEAR_ONE = yearOneData == null ? null : GetFormattedValue(yearOneData.GetType().GetProperty("Amount")
-                        .GetValue(yearOneData, null), dataDecimal, dataPercentage),
+                        .GetValue(yearOneData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         YEAR_TWO = yearTwoData == null ? null : GetFormattedValue(yearTwoData.GetType().GetProperty("Amount")
-                        .GetValue(yearTwoData, null), dataDecimal, dataPercentage),
+                        .GetValue(yearTwoData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         YEAR_THREE = yearThreeData == null ? null : GetFormattedValue(yearThreeData.GetType().GetProperty("Amount")
-                        .GetValue(yearThreeData, null), dataDecimal, dataPercentage),
+                        .GetValue(yearThreeData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         YEAR_FOUR = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("Amount")
-                        .GetValue(yearFourData, null), dataDecimal, dataPercentage),
+                        .GetValue(yearFourData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         YEAR_FIVE = yearFiveData == null ? null : GetFormattedValue(yearFiveData.GetType().GetProperty("Amount")
-                        .GetValue(yearFiveData, null), dataDecimal, dataPercentage),
+                        .GetValue(yearFiveData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         YEAR_SIX = yearSixData == null ? null : GetFormattedValue(yearSixData.GetType().GetProperty("Amount")
-                        .GetValue(yearSixData, null), dataDecimal, dataPercentage),
+                        .GetValue(yearSixData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         YEAR_SEVEN = yearSevenData == null ? null : GetFormattedValue(yearSevenData.GetType().GetProperty("Amount")
-                        .GetValue(yearSevenData, null), dataDecimal, dataPercentage),
+                        .GetValue(yearSevenData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         QUARTER_ONE = quarterOneData == null ? null : GetFormattedValue(quarterOneData.GetType().GetProperty("Amount")
-                        .GetValue(quarterOneData, null), dataDecimal, dataPercentage),
+                        .GetValue(quarterOneData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         QUARTER_TWO = quarterTwoData == null ? null : GetFormattedValue(quarterTwoData.GetType().GetProperty("Amount")
-                        .GetValue(quarterTwoData, null), dataDecimal, dataPercentage),
+                        .GetValue(quarterTwoData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         QUARTER_THREE = quarterThreeData == null ? null : GetFormattedValue(quarterThreeData.GetType().GetProperty("Amount")
-                        .GetValue(quarterThreeData, null), dataDecimal, dataPercentage),
+                        .GetValue(quarterThreeData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         QUARTER_FOUR = quarterFourData == null ? null : GetFormattedValue(quarterFourData.GetType().GetProperty("Amount")
-                        .GetValue(quarterFourData, null), dataDecimal, dataPercentage),
+                        .GetValue(quarterFourData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         QUARTER_FIVE = quarterFiveData == null ? null : GetFormattedValue(quarterFiveData.GetType().GetProperty("Amount")
-                        .GetValue(quarterFiveData, null), dataDecimal, dataPercentage),
+                        .GetValue(quarterFiveData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         QUARTER_SIX = quarterSixData == null ? null : GetFormattedValue(quarterSixData.GetType().GetProperty("Amount")
-                        .GetValue(quarterSixData, null), dataDecimal, dataPercentage),
+                        .GetValue(quarterSixData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                         QUARTER_SEVEN = quarterSevenData == null ? null : GetFormattedValue(quarterSevenData.GetType().GetProperty("Amount")
-                        .GetValue(quarterSevenData, null), dataDecimal, dataPercentage),
+                        .GetValue(quarterSevenData, null), dataDecimal, (dataPercentage.HasValue ? dataPercentage.Value && addPercentSign : dataPercentage)),
                     });
                 }
             }
@@ -689,6 +689,18 @@ namespace GreenField.Gadgets.Helpers
         FINISH:
 
             periodRecord = period;
+            return result;
+        }
+
+        private static string AddPercentageSignToLabel(string description, bool addPercentSign)
+        {
+            var result = description;
+            if (addPercentSign)
+            {
+                if (!result.Contains('%'))
+                    result += ", %";
+            }
+           
             return result;
         }
 

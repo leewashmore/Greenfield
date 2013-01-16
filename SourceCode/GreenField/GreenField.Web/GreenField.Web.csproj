@@ -106,6 +106,7 @@
     <Content Include="Services\ExcelModelRefreshOperations.svc" />
     <Content Include="Services\ExternalResearchOperations.svc" />
     <Content Include="Services\FairValueOperations.svc" />
+    <Content Include="Services\IssuerSharesOperations.svc" />
     <Content Include="Services\MeetingOperations.svc" />
     <Content Include="Services\ModelFXOperations.svc" />
     <Content Include="Services\BenchmarkHoldingsOperations.svc" />
@@ -178,6 +179,9 @@
     <Compile Include="Helpers\PowerPoint\SWOTAnalysis.cs" />
     <Compile Include="Helpers\PowerPoint\VQG.cs" />
     <Compile Include="Helpers\SecurityData.cs" />
+    <Compile Include="IssuerShares\ConfigurationSettings.cs" />
+    <Compile Include="IssuerShares\IssuerSharesInstanceProvider.cs" />
+    <Compile Include="IssuerShares\IssuerSharesServiceHostFactory.cs" />
     <Compile Include="ListUtils.cs" />
     <Compile Include="Services\CustomScreeningToolOperations.svc.cs">
       <DependentUpon>CustomScreeningToolOperations.svc</DependentUpon>
@@ -230,6 +234,9 @@
     </Compile>
     <Compile Include="Services\FairValueOperations.svc.cs">
       <DependentUpon>FairValueOperations.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\IssuerSharesOperations.svc.cs">
+      <DependentUpon>IssuerSharesOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\MeetingOperations.svc.cs">
       <DependentUpon>MeetingOperations.svc</DependentUpon>
@@ -298,6 +305,14 @@
     <ProjectReference Include="..\IssuerShares\Aims.Data.Server\Aims.Data.Server.csproj">
       <Project>{243C3D53-8C51-469E-88E1-9623A3D8292B}</Project>
       <Name>Aims.Data.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IssuerShares\GreenField.IssuerShares.Core\GreenField.IssuerShares.Core.csproj">
+      <Project>{4979BF56-D21F-41EE-A218-E7D33F82236C}</Project>
+      <Name>GreenField.IssuerShares.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IssuerShares\GreenField.IssuerShares.Server\GreenField.IssuerShares.Server.csproj">
+      <Project>{9CE20073-8CED-498D-BD31-EE3FF7B7AA1A}</Project>
+      <Name>GreenField.IssuerShares.Server</Name>
     </ProjectReference>
     <ProjectReference Include="..\Targeting\GreenField.Targeting.Server\GreenField.Targeting.Server.csproj">
       <Project>{6E829E28-5519-4627-960D-12DD9162D156}</Project>

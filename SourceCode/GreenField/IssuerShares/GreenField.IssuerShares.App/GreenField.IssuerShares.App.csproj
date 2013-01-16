@@ -122,6 +122,7 @@
   <ItemGroup>
     <Content Include="..\Greenfield.IssuerShares.Client\ServiceReferences.ClientConfig">
       <Link>ServiceReferences.ClientConfig</Link>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>

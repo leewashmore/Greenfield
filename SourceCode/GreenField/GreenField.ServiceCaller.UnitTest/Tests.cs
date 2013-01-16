@@ -7,6 +7,14 @@ using GreenField.DataContracts;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller.DCFDefinitions;
+using GreenField.DataContracts.DataContracts;
+using System.Linq;
+using System.Xml.Serialization;
+using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
+
 
 namespace Greenfield.ServiceCaller.UnitTest
 {
@@ -856,6 +864,112 @@ namespace Greenfield.ServiceCaller.UnitTest
                 Assert.AreEqual<int>(0, resultSet.Count, "Portfolio Details Data should be Empty");
                 EnqueueTestComplete();
             });
+        }
+
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Max")]
+        public void RetrievePortfolioDetailsDataPortfolioIdentifierActual()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData { PortfolioId = "EMIF" };
+            bool lookThru = true;
+            bool getBenchmark = false;
+            bool excludeCash = false;
+            DateTime effectiveDate = new DateTime(2012, 11, 30);
+            XDocument doc = XDocument.Load("dataset.xml");
+            XmlSerializer serializer = new XmlSerializer(typeof(List<PortfolioDetailsData>));
+            StringReader reader = new StringReader(doc.ToString());
+            var array = (List<PortfolioDetailsData>)serializer.Deserialize(reader);
+            var data = GetGroupedPortfolios(portfolio.PortfolioId, array);
+            var i = 2;
+
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, lookThru, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            {
+                //XmlSerializer serializer = new XmlSerializer(typeof(List<PortfolioDetailsData>));
+                MemoryStream ms = new MemoryStream();
+                StringBuilder sb = new StringBuilder();
+                using (var streamWriter = new StringWriter(sb))
+                {
+                    serializer.Serialize(streamWriter, resultSet);
+                }
+                var xml = sb.ToString();
+
+
+                Assert.AreNotEqual<int>(0, resultSet.Count, "Portfolio Details Data shouldn't be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        private List<PortfolioDetailsData> GetGroupedPortfolios(string portfolioId, List<PortfolioDetailsData> list)
+        {
+            var result = new List<PortfolioDetailsData>();
+            var query = from d in list
+                        //where d.Ticker == "2018 HK"
+                        group d by d.AsecSecShortName into grp
+                        select grp;
+            var groups = query.ToList();
+
+            foreach (var group in groups)
+            {
+                var main = group.Where(x => x.PortfolioPath == portfolioId).FirstOrDefault();
+                if (main == null)
+                {
+                    result.AddRange(group.AsEnumerable());
+                }
+                else
+                {
+                    var holding = new PortfolioDetailsData
+                    {
+                        A_Sec_Instr_Type = group.First().A_Sec_Instr_Type,
+                        ActivePosition = group.Sum(x => x.ActivePosition ?? 0.0m),
+                        AsecSecShortName = group.Key,
+                        AshEmmModelWeight = group.Sum(x => x.AshEmmModelWeight ?? 0.0m),
+                        BalanceNominal = group.Sum(x => x.BalanceNominal ?? 0.0m),
+                        BenchmarkWeight = main.BenchmarkWeight,
+                        DirtyValuePC = group.Sum(x => x.DirtyValuePC ?? 0.0m),
+                        ForwardEB_EBITDA = main.ForwardEB_EBITDA,
+                        ForwardPE = main.ForwardPE,
+                        ForwardPBV = main.ForwardPBV,
+                        FreecashFlowMargin = main.FreecashFlowMargin,
+                        FromDate = main.FromDate,
+                        IndustryName = main.IndustryName,
+                        IsoCountryCode = main.IsoCountryCode,
+                        IssueName = main.IssueName,
+                        IssuerId = main.IssuerId,
+                        MarketCap = main.MarketCap,
+                        MarketCapUSD = main.MarketCapUSD,
+                        NetDebtEquity = main.NetDebtEquity,
+                        NetIncomeGrowthCurrentYear = main.NetIncomeGrowthCurrentYear,
+                        NetIncomeGrowthNextYear = main.NetIncomeGrowthNextYear,
+                        PfcHoldingPortfolio = main.PfcHoldingPortfolio,
+                        PortfolioDirtyValuePC = group.Sum(x => x.PortfolioDirtyValuePC),
+                        PortfolioPath = main.PortfolioPath,
+                        PortfolioWeight = group.Sum(x => x.PortfolioWeight ?? 0.0m),
+                        ProprietaryRegionCode = main.ProprietaryRegionCode,
+                        ReAshEmmModelWeight = group.Sum(x => x.ReAshEmmModelWeight ?? 0.0m),
+                        RePortfolioWeight = group.Sum(x => x.RePortfolioWeight ?? 0.0m),
+                        ReBenchmarkWeight = main.ReBenchmarkWeight,
+                        RevenueGrowthCurrentYear = main.RevenueGrowthCurrentYear,
+                        RevenueGrowthNextYear = main.RevenueGrowthNextYear,
+                        ROE = main.ROE,
+                        SectorName = main.SectorName,
+                        SecurityId = main.SecurityId,
+                        SecurityThemeCode = main.SecurityThemeCode,
+                        SecurityType = main.SecurityType,
+                        SubIndustryName = main.SubIndustryName,
+                        Ticker = main.Ticker,
+                        TradingCurrency = main.TradingCurrency,
+                        Type = main.Type,
+                        Upside = main.Upside,
+                        IsExpanded = true
+
+                    };
+                    result.Add(holding);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -2813,6 +2927,121 @@ namespace Greenfield.ServiceCaller.UnitTest
         }
         #endregion
 
+        #region Macro Database Key Annual Report Data
+        /// <summary>
+        /// RetrieveMacroDatabaseKeyAnnualReportData Test Method - Sample Data
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveMacroDatabaseKeyAnnualReportDataTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String countryCode = "RU";
+            instance.RetrieveMacroDatabaseKeyAnnualReportData(countryCode, (List<MacroDatabaseKeyAnnualReportData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MacroDatabaseKeyAnnualReportData Data Not Available");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMacroDatabaseKeyAnnualReportData Test Method - Sample Data Which does not retrieve any Data -
+        /// should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveMacroDatabaseKeyAnnualReportDataNotAvailableTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String countryCode = "DUMMY";
+            instance.RetrieveMacroDatabaseKeyAnnualReportData(countryCode,
+                (List<MacroDatabaseKeyAnnualReportData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "MacroDatabaseKeyAnnualReportData Data Not Available");
+                    EnqueueTestComplete();
+                });
+        }
+
+        /// <summary>
+        /// RetrieveMacroDatabaseKeyAnnualReportData Null Test Method - currency code as null - 
+        /// should return an empty result set        
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveMacroDatabaseKeyAnnualReportDataNullTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String countryCode = null;
+            instance.RetrieveMacroDatabaseKeyAnnualReportData(countryCode,
+                (List<MacroDatabaseKeyAnnualReportData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "MacroDatabaseKeyAnnualReportData Data Not Available");
+                    EnqueueTestComplete();
+                });
+        }
+
+
+        #endregion
+
+        #region Macro Database Key Annual Report Data EM Summary
+        /// <summary>
+        /// RetrieveMacroDatabaseKeyAnnualReportDataEMSummary Test Method - Sample Data
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String countryCode = "RU";
+            List<String> countryValues = new List<string> { "BR", "RU" };
+            instance.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(countryCode, countryValues,
+                (List<MacroDatabaseKeyAnnualReportData> resultSet) =>
+                {
+                    Assert.IsNotNull(resultSet, "MacroDatabaseKeyAnnualReportDataEMSummary Data Not Available");
+                    EnqueueTestComplete();
+                });
+        }
+
+        /// <summary>
+        /// RetrieveMacroDatabaseKeyAnnualReportDataEMSummary Test Method - Sample Data Which does not retrieve any Data -
+        /// should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryNotAvailableTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String countryCode = "A";
+            List<String> countryValues = new List<string> { "B", "C" };
+            instance.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(countryCode, countryValues,
+                (List<MacroDatabaseKeyAnnualReportData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "MacroDatabaseKeyAnnualReportDataEMSummary Data Not Available");
+                    EnqueueTestComplete();
+                });
+        }
+
+        /// <summary>
+        /// RetrieveMacroDatabaseKeyAnnualReportDataEMSummary Null Test Method - COUNTRY VALUES as null - 
+        /// should return an empty result set        
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryNullTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String countryCode = null;
+            List<String> countryValues = null;
+            instance.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(countryCode, countryValues,
+                (List<MacroDatabaseKeyAnnualReportData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "MacroDatabaseKeyAnnualReportDataEMSummary Data Not Available");
+                    EnqueueTestComplete();
+                });
+        }
+
+        #endregion
+
         #endregion
 
         #region Commodity
@@ -3087,6 +3316,218 @@ namespace Greenfield.ServiceCaller.UnitTest
                 });
         } 
 
+        #endregion
+
+        #region Consensus Estimates Summary Gadget
+
+        /// <summary>
+        /// RetrieveConsensusEstimatesSummaryData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Comparison To Consensus")]
+        public void RetrieveConsensusSummaryDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entityIdentifier = new EntitySelectionData { InstrumentID = null };
+            instance.RetrieveConsensusEstimatesSummaryData(entityIdentifier,
+                (List<ConsensusEstimatesSummaryData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(7, resultSet.Count, "ConsensusSummaryData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+
+        /// <summary>
+        /// RetrieveConsensusEstimatesSummaryData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Comparison To Consensus")]
+        public void RetrieveConsensusSummaryDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            EntitySelectionData entityIdentifier = new EntitySelectionData { InstrumentID = "Dummy" };
+            instance.RetrieveConsensusEstimatesSummaryData(entityIdentifier,
+                (List<ConsensusEstimatesSummaryData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(7, resultSet.Count, "ConsensusSummaryData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+
+        #endregion
+
+        #region Valuation Quality Growth
+
+        /// <summary>
+        /// RetrieveValuationQualityGrowthData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Valuation Quality Growth")]
+        public void RetrieveValuationQualityGrowthDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData selectedPortfolio = new PortfolioSelectionData { PortfolioId = null };
+            DateTime? effectiveDate = Convert.ToDateTime("05/31/2012");
+            String filterType = "Region";
+            String filterValue = "Latin";
+            bool lookThruEnabled = true;
+            instance.RetrieveValuationGrowthData(selectedPortfolio, effectiveDate, filterType, filterValue, lookThruEnabled,
+                (List<ValuationQualityGrowthData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(9, resultSet.Count, "ValuationQualityGrowthData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+
+        /// <summary>
+        /// RetrieveValuationQualityGrowthData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Valuation Quality Growth")]
+        public void RetrieveValuationQualityGrowthDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData selectedPortfolio = new PortfolioSelectionData { PortfolioId = "AB" };
+            DateTime? effectiveDate = Convert.ToDateTime("05/31/2012");
+            String filterType = "R";
+            String filterValue = "L";
+            bool lookThruEnabled = true;
+            instance.RetrieveValuationGrowthData(selectedPortfolio, effectiveDate, filterType, filterValue, lookThruEnabled,
+                (List<ValuationQualityGrowthData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(9, resultSet.Count, "ValuationQualityGrowthData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+
+        #endregion
+
+        #region Quarterly Results Comparison
+        /// <summary>
+        /// RetrieveQuarterlyResultsComparisonData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Quarterly Results Comparison")]
+        public void RetrieveQuarterlyResultsComparisonDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String fieldValue = null;
+            int yearValue = 0;
+            instance.RetrieveQuarterlyResultsData(fieldValue, yearValue,
+                (List<QuarterlyResultsData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "QuarterlyResultsComparisonData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+
+        /// <summary>
+        /// RetrieveQuarterlyResultsComparisonData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Quarterly Results Comparison")]
+        public void RetrieveQuarterlyResultsComparisonDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String fieldValue = "abc";
+            int yearValue = 9000;
+            instance.RetrieveQuarterlyResultsData(fieldValue, yearValue,
+                (List<QuarterlyResultsData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "QuarterlyResultsComparisonData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+        #endregion       
+
+        #region Gadget With Period Columns
+        /// <summary>
+        /// RetrieveCOASpecificData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Gadget With Period Columns")]
+        public void RetrieveCOASpecificDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String issuerId = null;
+            int? securityId = 0;
+            FinancialStatementDataSource cSource = FinancialStatementDataSource.INDUSTRY;
+            FinancialStatementFiscalType cFiscalType = FinancialStatementFiscalType.CALENDAR;
+            String cCurrency = null;
+            instance.RetrieveCOASpecificData(issuerId, securityId, cSource, cFiscalType, cCurrency,
+                (List<COASpecificData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "COASpecificData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+
+        /// <summary>
+        /// RetrieveQuarterlyResultsComparisonData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Gadget With Period Columns")]
+        public void RetrieveCOASpecificDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String issuerId = "Dum";
+            int? securityId = 0;
+            FinancialStatementDataSource cSource = FinancialStatementDataSource.INDUSTRY;
+            FinancialStatementFiscalType cFiscalType = FinancialStatementFiscalType.CALENDAR;
+            String cCurrency = "opmn";
+            instance.RetrieveCOASpecificData(issuerId, securityId, cSource, cFiscalType, cCurrency,
+                (List<COASpecificData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "COASpecificData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+        #endregion
+
+        #region Summary Of EM Data
+        /// <summary>
+        /// RetrieveEMMarketData Test Method - Null Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Summary Of EM Data")]
+        public void RetrieveEMMarketDataNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String selectedPortfolio = null;
+            instance.RetrieveEMSummaryMarketData(selectedPortfolio,
+                (List<EMSummaryMarketData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "EMMarketData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
+
+        /// <summary>
+        /// RetrieveEMMarketData Test Method - Dummy Values
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Summary Of EM Data")]
+        public void RetrieveEMMarketDataDummy()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            String selectedPortfolio = "Dum";
+            instance.RetrieveEMSummaryMarketData(selectedPortfolio,
+                (List<EMSummaryMarketData> resultSet) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.Count, "EMMarketData should be Empty");
+                    EnqueueTestComplete();
+                });
+        }
         #endregion
 
         #endregion
@@ -3379,22 +3820,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             });
         }
 
-        /// <summary>
-        /// DeleteDCFFairValue Test Method - Null
-        /// </summary>
-        [TestMethod]
-        [Asynchronous]
-        [Tag("DCF")]
-        public void DeleteDCFFairValueDataNull()
-        {
-            DBInteractivity instance = new DBInteractivity();
-            EntitySelectionData entitySelectionData = null;
-            instance.DeleteDCFFairValue(entitySelectionData, (bool resultSet) =>
-            {
-                Assert.AreEqual<bool>(false, resultSet, "False should be returned");
-                EnqueueTestComplete();
-            });
-        }
+        
 
         /// <summary>
         /// DeleteDCFFairValue Test Method - Dummy

@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.IssuerShares.Cli
 		{4CEA8059-7841-4E77-8AD2-8688D0BE2B87} = {4CEA8059-7841-4E77-8AD2-8688D0BE2B87}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLoader.Core", "..\..\..\..\data-loader\DataLoader.Core\DataLoader.Core.csproj", "{BCE8CE3D-05C0-42AA-BFA7-20B318DF0D82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{66988C68-E8CC-46A6-AD78-3A47AB1D4C0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66988C68-E8CC-46A6-AD78-3A47AB1D4C0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66988C68-E8CC-46A6-AD78-3A47AB1D4C0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE8CE3D-05C0-42AA-BFA7-20B318DF0D82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE8CE3D-05C0-42AA-BFA7-20B318DF0D82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE8CE3D-05C0-42AA-BFA7-20B318DF0D82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE8CE3D-05C0-42AA-BFA7-20B318DF0D82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

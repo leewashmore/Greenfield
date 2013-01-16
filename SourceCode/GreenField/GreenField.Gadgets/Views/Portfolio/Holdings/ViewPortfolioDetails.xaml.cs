@@ -154,7 +154,35 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgPortfolioDetails_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
-            RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+            if (e.Element == ExportElement.Row)
+            {
+                var value = e.Value as PortfolioDetailsData;
+                if (value.Children != null)
+                {
+                    
+                    foreach (var child in value.Children)
+                    {
+                        e.Value = child;
+                        RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+                    }
+                }
+                else
+                {
+                    RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+                }
+            }
+            else
+            {
+                RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+            }
+        }
+
+        private void dgPortfolioDetails_ElementExported(object sender, GridViewElementExportedEventArgs e)
+        {
+            if (e.Element == ExportElement.Row)
+            {
+                var value = e.Context as PortfolioDetailsData;
+            }
         }
         #endregion
 
@@ -377,6 +405,17 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgPortfolioDetails_DataLoaded(object sender, EventArgs e)
         {
+            if (this.DataContextPortfolioDetails.EnableLookThru)
+            {
+                dgPortfolioDetails.Columns["Portfolio Name"].IsVisible = true;
+                dgPortfolioDetails.Columns["Portfolio Path"].IsVisible = true;
+            }
+            else
+            {
+                dgPortfolioDetails.Columns["Portfolio Name"].IsVisible = false;
+                dgPortfolioDetails.Columns["Portfolio Path"].IsVisible = false;
+            }
+
             if (this.DataContextPortfolioDetails.CheckFilterApplied == 1)
             {
                 this.DataContextPortfolioDetails.CheckFilterApplied--;
@@ -404,17 +443,40 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private void ChangeHeaders()
         {
-            this.dgPortfolioDetails.Columns[19].Header = "Revenue Growth " + DateTime.Today.Year.ToString();
-            this.dgPortfolioDetails.Columns[20].Header = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
-            this.dgPortfolioDetails.Columns[21].Header = "Net Income Growth " + DateTime.Today.Year.ToString();
-            this.dgPortfolioDetails.Columns[22].Header = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
+            //this.dgPortfolioDetails.Columns["Revenue Growth Current Year"].Header = "Revenue Growth " + DateTime.Today.Year.ToString();
+            //this.dgPortfolioDetails.Columns["Revenue Growth Next Year"].Header = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
+            //this.dgPortfolioDetails.Columns["Net Income Growth Current Year"].Header = "Net Income Growth " + DateTime.Today.Year.ToString();
+            //this.dgPortfolioDetails.Columns["Net Income Growth Next Year"].Header = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
 
-            this.dgPortfolioDetails.Columns[19].UniqueName = "Revenue Growth " + DateTime.Today.Year.ToString();
-            this.dgPortfolioDetails.Columns[20].UniqueName = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
-            this.dgPortfolioDetails.Columns[21].UniqueName = "Net Income Growth " + DateTime.Today.Year.ToString();
-            this.dgPortfolioDetails.Columns[22].UniqueName = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
+            this.dgPortfolioDetails.Columns["Revenue Growth Current Year"].UniqueName = "Revenue Growth " + DateTime.Today.Year.ToString();
+            this.dgPortfolioDetails.Columns["Revenue Growth Next Year"].UniqueName = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
+            this.dgPortfolioDetails.Columns["Net Income Growth Current Year"].UniqueName = "Net Income Growth " + DateTime.Today.Year.ToString();
+            this.dgPortfolioDetails.Columns["Net Income Growth Next Year"].UniqueName = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
+            
         }
 
         #endregion
+
+        private void dgPortfolioDetails_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            GridViewRow row = e.Row as GridViewRow;
+            var data = e.DataElement as PortfolioDetailsData;
+            if (data != null && row != null)
+                row.IsExpandable = data.IsExpanded;
+
+        }
+
+        private void dgPortfolioDetails_DataLoading(object sender, GridViewDataLoadingEventArgs e)
+        {
+            GridViewDataControl dataControl = (GridViewDataControl)sender;
+            if (dataControl.ParentRow != null)
+            {
+                //dataControl is the child gridview
+                dataControl.ShowGroupPanel = false;
+                
+            }
+        }
+
+        
     }
 }

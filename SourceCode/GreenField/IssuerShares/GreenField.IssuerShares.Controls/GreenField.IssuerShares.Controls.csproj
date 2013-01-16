@@ -79,20 +79,41 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcknowledgeableCommunicationStateModelBase.cs" />
+    <Compile Include="BusyIndicatorTemplateSelector.cs" />
+    <Compile Include="CheckedBehavior.cs" />
+    <Compile Include="Column.cs" />
+    <Compile Include="CommunicatingViewModelBase.cs" />
+    <Compile Include="CommunicationStateChangedEventArgs.cs" />
+    <Compile Include="CommunicationStateModel, Error.cs" />
+    <Compile Include="CommunicationStateModel, I.cs" />
+    <Compile Include="CommunicationStateModel, Loaded.cs" />
+    <Compile Include="CommunicationStateModel, Loading.cs" />
+    <Compile Include="CommunicationStateModelToBooleanConverter.cs" />
+    <Compile Include="CompositionLoadedEvent.cs" />
     <Compile Include="CompositionView.xaml.cs">
       <DependentUpon>CompositionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="CompositionViewModel.cs" />
+    <Compile Include="DataAndIndexWrap.cs" />
+    <Compile Include="DataGridColumnBehavior.cs" />
     <Compile Include="DefaultClientFactory.cs" />
     <Compile Include="EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditorViewModel.cs" />
+    <Compile Include="HeaderInfo.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="HistoryView.xaml.cs">
+      <DependentUpon>HistoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryViewModel.cs" />
     <Compile Include="IClientFactory.cs" />
     <Compile Include="InitialView.xaml.cs">
       <DependentUpon>InitialView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helper, IssuerShares.cs" />
+    <Compile Include="LineModel.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="OnlyErrorCommunicationState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,15 +122,28 @@
     </Compile>
     <Compile Include="RootViewModel.cs" />
     <Compile Include="RootViewModelBase.cs" />
+    <Compile Include="Converter, SecurityIssuerSharesRecord.cs" />
     <Compile Include="SecurityPickedGlobalEventInfo.cs" />
     <Compile Include="SecurityPickerClientFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CommonTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CompositionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CrazyShit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HistoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

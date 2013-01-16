@@ -32,4 +32,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="UpdateIssueSharesComposition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" minOccurs="0" name="model" nillable="true" type="q3:RootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateIssueSharesCompositionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" minOccurs="0" name="UpdateIssueSharesCompositionResult" nillable="true" type="q4:RootModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetIssuerSharesBySecurityShortName">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="securityShortName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetIssuerSharesBySecurityShortNameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.IssuerShares.Server" minOccurs="0" name="GetIssuerSharesBySecurityShortNameResult" nillable="true" type="q5:ArrayOfIssuerSecurityShareRecordModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

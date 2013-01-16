@@ -136,6 +136,8 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+       
+
         /// <summary>
         /// 
         /// </summary>
@@ -215,6 +217,38 @@ namespace GreenField.Gadgets.ViewModels
                     RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
                 this.RaisePropertyChanged(() => this.GetBenchmarkData);
+            }
+        }
+
+        /// <summary>
+        /// Bool to check whether to group holdings into one record or not
+        /// </summary>
+        private bool isHoldingsGrouped;
+        public bool IsHoldingsGrouped
+        {
+            get
+            {
+                return isHoldingsGrouped;
+            }
+            set
+            {
+                isHoldingsGrouped = value;
+                if (EnableLookThru)
+                {
+                    if (isHoldingsGrouped)
+                    {
+                        if (groupedData != null)
+                        {
+                            SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(groupedData);
+                        }
+                    }
+                    else
+                    {
+                        if (initialData != null)
+                            SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(initialData);
+                    }
+                }
+                this.RaisePropertyChanged(() => this.IsHoldingsGrouped);
             }
         }
 
@@ -429,6 +463,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region CallbackMethods
 
+        private List<PortfolioDetailsData> initialData;
+        private List<PortfolioDetailsData> groupedData;
+
         /// <summary>
         /// CallBack Method for Retrieving Portfolio Names
         /// </summary>
@@ -442,8 +479,24 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
-                    SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>
-                        (CalculatePortfolioValues(result).OrderBy(a => a.ActivePosition).ThenBy(a => a.PortfolioWeight).ToList());
+                    initialData = CalculatePortfolioValues(result).OrderBy(a => a.ActivePosition).ThenBy(a => a.PortfolioWeight).ToList();
+                    if (this.EnableLookThru)
+                    {
+                        groupedData = GetGroupedPortfolios(SelectedPortfolioId.PortfolioId, initialData);
+                        if (isHoldingsGrouped)
+                        {
+                            SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(groupedData);
+                        }
+                        else
+                        {
+                            SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(initialData);
+                        }
+                    }
+                    else
+                    {
+                        SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(initialData);
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -456,6 +509,77 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorStatus = false;
             }
             Logging.LogEndMethod(logger, methodNamespace);
+        }
+
+        private List<PortfolioDetailsData> GetGroupedPortfolios(string portfolioId, List<PortfolioDetailsData> list)
+        {
+            var result = new List<PortfolioDetailsData>();
+            var query = from d in list
+                        group d by d.AsecSecShortName into grp
+                        select grp;
+            var groups = query.ToList();
+
+            foreach (var group in groups)
+            {
+                var main = group.Where(x => x.PortfolioPath == portfolioId).FirstOrDefault();
+                if (main == null || group.Count() == 1)
+                {
+                    result.AddRange(group.AsEnumerable());
+                }
+                else
+                {
+                    var holding = new PortfolioDetailsData
+                    {
+                        A_Sec_Instr_Type = group.First().A_Sec_Instr_Type,
+                        ActivePosition = group.Sum(x => x.ActivePosition ?? 0.0m),
+                        AsecSecShortName = group.Key,
+                        AshEmmModelWeight = group.Sum(x => x.AshEmmModelWeight ?? 0.0m),
+                        BalanceNominal = group.Sum(x => x.BalanceNominal ?? 0.0m),
+                        BenchmarkWeight = main.BenchmarkWeight,
+                        DirtyValuePC = group.Sum(x => x.DirtyValuePC ?? 0.0m),
+                        ForwardEB_EBITDA = main.ForwardEB_EBITDA,
+                        ForwardPE = main.ForwardPE,
+                        ForwardPBV = main.ForwardPBV,
+                        FreecashFlowMargin = main.FreecashFlowMargin,
+                        FromDate = main.FromDate,
+                        IndustryName = main.IndustryName,
+                        IsoCountryCode = main.IsoCountryCode,
+                        IssueName = main.IssueName,
+                        IssuerId = main.IssuerId,
+                        MarketCap = main.MarketCap,
+                        MarketCapUSD = main.MarketCapUSD,
+                        NetDebtEquity = main.NetDebtEquity,
+                        NetIncomeGrowthCurrentYear = main.NetIncomeGrowthCurrentYear,
+                        NetIncomeGrowthNextYear = main.NetIncomeGrowthNextYear,
+                        PfcHoldingPortfolio = String.Join(", ", group.Select(x => x.PfcHoldingPortfolio ).ToArray()),
+                        PortfolioDirtyValuePC = group.Sum(x => x.PortfolioDirtyValuePC),
+                        PortfolioPath = null,
+                        PortfolioWeight = group.Sum(x => x.PortfolioWeight ?? 0.0m),
+                        ProprietaryRegionCode = main.ProprietaryRegionCode,
+                        ReAshEmmModelWeight = group.Sum(x => x.ReAshEmmModelWeight ?? 0.0m),
+                        RePortfolioWeight = group.Sum(x => x.RePortfolioWeight ?? 0.0m),
+                        ReBenchmarkWeight = main.ReBenchmarkWeight,
+                        RevenueGrowthCurrentYear = main.RevenueGrowthCurrentYear,
+                        RevenueGrowthNextYear = main.RevenueGrowthNextYear,
+                        ROE = main.ROE,
+                        SectorName = main.SectorName,
+                        SecurityId = main.SecurityId,
+                        SecurityThemeCode = main.SecurityThemeCode,
+                        SecurityType = main.SecurityType,
+                        SubIndustryName = main.SubIndustryName,
+                        Ticker = main.Ticker,
+                        TradingCurrency = main.TradingCurrency,
+                        Type = main.Type,
+                        Upside = main.Upside,
+                        IsExpanded = true,
+                        Children = group.ToList()
+
+                    };
+                    result.Add(holding);
+                }
+            }
+
+            return result;
         }
 
         #endregion

@@ -62,7 +62,9 @@ namespace TopDown.Core.ManagingBpt
 		)
 		{
             var issues = this.ValidateModelAndPermissions(model, username, ticket);
-			if (issues.Any(x => x is ErrorIssue)) return issues;
+            var traverser = new IssueTraverser();
+            var traversedIssues = traverser.TraverseAll(issues);
+			if (traversedIssues.Any(x => x is ErrorIssue)) return issues;
 
 			try
 			{

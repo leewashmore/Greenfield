@@ -18,7 +18,7 @@ namespace GreenField.Gadgets.ViewModels
     /// </summary>
     public class ViewModelRegionBreakdown : NotificationObject
     {
-        #region Fields        
+        #region Fields
         /// <summary>
         /// MEF Singletons
         /// </summary>
@@ -110,7 +110,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (regionBreakdownInfo != value)
                 {
-                    regionBreakdownInfo = value;
+                    regionBreakdownInfo = ArrangeSortOrder(value);
                     RaisePropertyChanged(() => this.RegionBreakdownInfo);
                 }
             }
@@ -413,5 +413,30 @@ namespace GreenField.Gadgets.ViewModels
             eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
         }
         #endregion
+
+        public ObservableCollection<RegionBreakdownData> ArrangeSortOrder(ObservableCollection<RegionBreakdownData> data)
+        {
+            List<String> distinctRegions = data.OrderBy(a => a.Region)
+                .Select(a => a.Region).Distinct().ToList();
+            int regionCount = 1;
+            foreach (String region in distinctRegions)
+            {
+                List<string> distinctCountries = data.Where(a => a.Region == region).OrderBy(a => a.Country)
+                        .Select(a => a.Country).Distinct().ToList();
+                int countryCount = 1;
+                foreach (String country in distinctCountries)
+                {
+                    List<RegionBreakdownData> records = data.Where(a => a.Region == region && a.Country == country).ToList();
+                    foreach (RegionBreakdownData record in records)
+                    {
+                        record.RegionSortOrder = String.Format("{0}. {1}", regionCount < 10 ? " " + regionCount.ToString() : regionCount.ToString("00"), region);
+                        record.CountrySortOrder = String.Format("{0}. {1}", countryCount < 10 ? " " + countryCount.ToString() : countryCount.ToString("00"), country);
+                    }
+                    countryCount++;
+                }
+                regionCount++;
+            }
+            return data;
+        }
     }
 }

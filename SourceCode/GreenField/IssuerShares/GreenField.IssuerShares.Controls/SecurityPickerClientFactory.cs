@@ -38,8 +38,9 @@ namespace GreenField.IssuerShares.Controls
                 var client = this.clientFactory.CreateClient();
                 client.GetIssuerSecuritiesCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult(
                     "Getting securities like \"" + pattern + "\" for security issuer (ID: " + this.securityShortName + ")", args, x => x.Result.Select(y => Helper.As<ISecurity>(y)), callback, errorHandler);
-
                 client.GetIssuerSecuritiesAsync(pattern, MaxNumberOfSecurities, this.securityShortName);
+
+
             }
         }
 
