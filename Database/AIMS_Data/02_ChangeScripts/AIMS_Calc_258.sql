@@ -18,17 +18,28 @@ as
 
 	-- Get the data
 	
+	declare @PERIOD_TYPE varchar(2)
+	declare @PERIOD_END_DATE datetime
+
+	select @PERIOD_TYPE = MIN(period_type), 
+		@PERIOD_END_DATE = max(period_end_date) 
+	from dbo.PERIOD_FINANCIALS pf  -- to find closest end_date to getdate
+	where DATA_ID = 69			
+	and pf.ISSUER_ID = @ISSUER_ID
+	and period_end_date < getdate() 
+	and pf.FISCAL_TYPE = 'FISCAL'
+	and pf.AMOUNT_TYPE = 'ACTUAL'
+	group by PERIOD_END_DATE
+
+
 	select pf.* 
-	   into #A
-	  from dbo.PERIOD_FINANCIALS pf 
-	 where DATA_ID = 69			-- Long Term Investments
-	   and pf.ISSUER_ID = @ISSUER_ID
-	   and pf.PERIOD_TYPE = 'A'
-	 and period_end_date = (select max(period_end_date) from dbo.PERIOD_FINANCIALS pf  -- to find closest end_date to getdate
-							   where DATA_ID = 69			
-							   and pf.ISSUER_ID = @ISSUER_ID
-						       and period_end_date < getdate() )
-	
+		 into #A
+		from dbo.PERIOD_FINANCIALS pf 
+		where DATA_ID = 69			-- Long Term Investments
+		   and pf.ISSUER_ID = @ISSUER_ID
+		   and pf.PERIOD_TYPE = @PERIOD_TYPE
+		   and pf.FISCAL_TYPE = 'FISCAL'
+		   and period_end_date = @PERIOD_END_DATE	
 	
  
 	-- Add the data to the table
@@ -39,10 +50,10 @@ as
 		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE)
 	select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE
 		,  a.ROOT_SOURCE_DATE, 'C', 0, '01/01/1900'				-- These are specific for PERIOD_TYPE = 'C'
-		,  a.FISCAL_TYPE, a.CURRENCY
+		,  '' as FISCAL_TYPE, a.CURRENCY
 		,  258 as DATA_ID										-- 258 Trailing Long Term Investments 
-		,  a.AMOUNT as AMOUNT						-- Previous Annual Long Term Investments (69)*
-		,  'Previous Annual Long Term Investments(' + CAST(a.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
+		,  a.AMOUNT as AMOUNT						-- Previous Long Term Investments (69)*
+		,  'Previous Long Term Investments(' + CAST(a.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a	
@@ -77,6 +88,6 @@ as
 	-- Clean up
 	drop table #A	
 	
-
+GO
 
 

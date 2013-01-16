@@ -27,7 +27,7 @@ as
 	select pf.* 
 	  into #B
 	  from dbo.PERIOD_FINANCIALS pf 
-	 where DATA_ID = 24					 -- SDPR
+	 where DATA_ID = 291					 -- Depreciation Calc
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
 
@@ -39,8 +39,8 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  221 as DATA_ID										-- DATA_ID:221 Capex/Depreciation
-		,  a.AMOUNT / b.AMOUNT as AMOUNT						-- SCEX /SDPR
-		,  'SCEX(' + CAST(a.AMOUNT as varchar(32)) + ') / SDPR(' + CAST(b.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
+		,  a.AMOUNT / b.AMOUNT as AMOUNT						-- SCEX /Depreciation
+		,  'SCEX(' + CAST(a.AMOUNT as varchar(32)) + ') / Depreciation(' + CAST(b.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
@@ -62,14 +62,14 @@ as
 			(
 			select GETDATE() as LOG_DATE, 221 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 221 Capex/Depreciation.  DATA_ID:24 SDPR is NULL or ZERO'
+				, 'ERROR calculating 221 Capex/Depreciation.  DATA_ID:291 Depreciation Calc is NULL or ZERO'
 			  from #B a
 			 where isnull(a.AMOUNT, 0.0) = 0.0	-- Data error
 			) union (	
 			-- Error conditions - missing data 
 			select GETDATE() as LOG_DATE, 221 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 221 Capex/Depreciation.  DATA_ID:24 SDPR is missing' as TXT
+				, 'ERROR calculating 221 Capex/Depreciation.  DATA_ID:291 Depreciation Calc is missing' as TXT
 			  from #A a
 			  left join	#B b on b.ISSUER_ID = a.ISSUER_ID 
 							and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
@@ -95,7 +95,7 @@ as
 			-- ERROR - No data at all available
 			select GETDATE() as LOG_DATE, 221 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 221 Capex/Depreciation.  DATA_ID:24 SDPR no data' as TXT
+				, 'ERROR calculating 221 Capex/Depreciation.  DATA_ID:291 Depreciation Calc no data' as TXT
 			  from (select COUNT(*) CNT from #A having COUNT(*) = 0) z
 			) union (	
 
@@ -109,7 +109,8 @@ as
 	-- Clean up
 	drop table #A
 	drop table #B
-	
+
+GO	
 
 
 

@@ -21,7 +21,7 @@ as
 	select pf.* 
 	  into #A
 	  from dbo.PERIOD_FINANCIALS pf 
-	 where DATA_ID = 44			--NINC   
+	 where DATA_ID = 290			--Earnings   
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and PERIOD_TYPE = 'A'
 	   	   	   
@@ -29,7 +29,7 @@ as
 	select pf.* 
 	  into #B
 	  from dbo.PERIOD_FINANCIALS pf 
-	 where DATA_ID = 33			--SNII   
+	 where DATA_ID = 17			--ENII   
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and PERIOD_TYPE = 'A'
 	   
@@ -49,9 +49,9 @@ as
 	select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
-		,  278 as DATA_ID										-- DATA_ID:288 Net Income ex-Trading
-		,  a.AMOUNT - b.AMOUNT - c.AMOUNT as AMOUNT		-- (NINC-SNII-NFAC)
-		,  'NINC(' + CAST(a.AMOUNT as varchar(32)) + ') - SNII(' + CAST(b.AMOUNT as varchar(32)) + ') - NFAC (' + CAST(c.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
+		,  278 as DATA_ID										-- DATA_ID:288 Recurring Earnings ex-Trading
+		,  a.AMOUNT - b.AMOUNT + c.AMOUNT as AMOUNT		-- (290-ENII+NFAC)
+		,  'Earnings (' + CAST(a.AMOUNT as varchar(32)) + ') - ENII(' + CAST(b.AMOUNT as varchar(32)) + ') + NFAC (' + CAST(c.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a
@@ -77,7 +77,7 @@ as
 			-- Error conditions - missing data 
 			select GETDATE() as LOG_DATE, 278 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 278 Net Income ex-Trading.  DATA_ID:44  NINC is missing' as TXT
+				, 'ERROR calculating 278 Net Income ex-Trading.  DATA_ID:290 Earnings is missing' as TXT
 			  from #B a
 			  left join	#A b on b.ISSUER_ID = a.ISSUER_ID 
 							and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
@@ -89,7 +89,7 @@ as
 			-- Error conditions - missing data 
 			select GETDATE() as LOG_DATE, 278 as DATA_ID, a.ISSUER_ID, a.PERIOD_TYPE
 				,  a.PERIOD_YEAR,  a.PERIOD_END_DATE,  a.FISCAL_TYPE,  a.CURRENCY
-				, 'ERROR calculating 278 Net Income ex-Trading .  DATA_ID:33 SNII is missing' as TXT
+				, 'ERROR calculating 278 Net Income ex-Trading .  DATA_ID:17 ENII is missing' as TXT
 			  from #A a
 			  left join	#B b on b.ISSUER_ID = a.ISSUER_ID 
 							and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
@@ -113,13 +113,13 @@ as
 			-- ERROR - No data at all available
 			select GETDATE() as LOG_DATE, 278 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 278 Net Income ex-Trading .  DATA_ID:44 NINC no data' as TXT
+				, 'ERROR calculating 278 Net Income ex-Trading .  DATA_ID:290 Earnings no data' as TXT
 			  from (select COUNT(*) CNT from #A having COUNT(*) = 0) z
 			) union (	
 
 			select GETDATE() as LOG_DATE, 278 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 278 Net Income ex-Trading.  DATA_ID:33 SNII no data' as TXT
+				, 'ERROR calculating 278 Net Income ex-Trading.  DATA_ID:17 ENII no data' as TXT
 			  from (select COUNT(*) CNT from #B having COUNT(*) = 0) z
 			)union (	
 
@@ -135,7 +135,7 @@ as
 	drop table #B
 	drop table #C
 	
-	
+GO	
 
 
 

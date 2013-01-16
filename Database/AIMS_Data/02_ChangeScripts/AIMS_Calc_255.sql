@@ -18,17 +18,28 @@ as
 
 	-- Get the data
 	
+	declare @PERIOD_TYPE varchar(2)
+	declare @PERIOD_END_DATE datetime
+
+	select @PERIOD_TYPE = MIN(period_type), 
+		@PERIOD_END_DATE = max(period_end_date) 
+	from dbo.PERIOD_FINANCIALS pf  -- to find closest end_date to getdate
+	where DATA_ID = 51  --Cash and ST Investments		
+	and pf.ISSUER_ID = @ISSUER_ID
+	and period_end_date < getdate() 
+	and pf.FISCAL_TYPE = 'FISCAL'
+	and pf.AMOUNT_TYPE = 'ACTUAL'
+	group by PERIOD_END_DATE
+
+
 	select pf.* 
-	   into #A
-	  from dbo.PERIOD_FINANCIALS pf 
-	 where DATA_ID = 51			-- Cash and Short Term Investments
-	   and pf.ISSUER_ID = @ISSUER_ID
-	   and pf.PERIOD_TYPE = 'A'
-	   and period_end_date = (select max(period_end_date) from dbo.PERIOD_FINANCIALS pf  -- to find closest end_date to getdate
-							   where DATA_ID = 51			
-							     and pf.ISSUER_ID = @ISSUER_ID
-						         and period_end_date < getdate() )
-	
+		 into #A
+		from dbo.PERIOD_FINANCIALS pf 
+		where DATA_ID = 51			--Cash and ST Investments	
+		   and pf.ISSUER_ID = @ISSUER_ID
+		   and pf.PERIOD_TYPE = @PERIOD_TYPE
+		   and pf.FISCAL_TYPE = 'FISCAL'
+		   and period_end_date = @PERIOD_END_DATE	
 	
  
 	-- Add the data to the table
@@ -39,10 +50,10 @@ as
 		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE)
 	select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE
 		,  a.ROOT_SOURCE_DATE, 'C', 0, '01/01/1900'				-- These are specific for PERIOD_TYPE = 'C'
-		,  a.FISCAL_TYPE, a.CURRENCY
-		,  255 as DATA_ID										-- 255 Trailing Cash and Short Term Investments 
-		,  a.AMOUNT as AMOUNT						-- Previous Annual Cash and Short Term Investments (51)*
-		,  'Previous Annual Cash and Short Term Investments(' + CAST(a.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
+		,  '' as FISCAL_TYPE, a.CURRENCY
+		,  255 as DATA_ID										-- 255 Trailing Cash and ST Investments
+		,  a.AMOUNT as AMOUNT						
+		,  'Trailing Cash and ST Investments(' + CAST(a.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY
 		,  a.AMOUNT_TYPE
 	  from #A a	
@@ -60,7 +71,7 @@ as
 			(
 			select GETDATE() as LOG_DATE, 255 as DATA_ID, a.ISSUER_ID, 'C'
 				,  a.PERIOD_YEAR, a.PERIOD_END_DATE, a.FISCAL_TYPE, a.CURRENCY
-				, 'ERROR calculating 255 Trailing Cash and Short Term Investments. DATA_ID:51 is NULL or ZERO'
+				, 'ERROR calculating 255 Trailing Cash and ST Investments. DATA_ID:51 is NULL or ZERO'
 			  from #A a
 			where isnull(a.AMOUNT, 0.0) = 0.0	 -- Data error	 
 			) union (	
@@ -69,14 +80,12 @@ as
 			-- ERROR - No data at all available
 			select GETDATE() as LOG_DATE, 255 as DATA_ID, isnull(@ISSUER_ID, ' ') as ISSUER_ID, ' ' as PERIOD_TYPE
 				,  0 as PERIOD_YEAR,  '1/1/1900' as PERIOD_END_DATE,  ' ' as FISCAL_TYPE,  ' ' as CURRENCY
-				, 'ERROR calculating 255 Trailing Cash and Short Term Investments.  DATA_ID:51 no data' as TXT
+				, 'ERROR calculating 255 Trailing Cash and ST Investments.  DATA_ID:51 no data' as TXT
 			  from (select COUNT(*) CNT from #A having COUNT(*) = 0) z
 			) 
 		END
 		
 	-- Clean up
 	drop table #A	
-	
 
-
-
+GO
