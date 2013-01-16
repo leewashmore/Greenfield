@@ -1054,11 +1054,11 @@ namespace GreenField.Web.Services
             decimal targetSumPortfolio, targetSumBenchmark, value;
             decimal? objTarget = null, objTargetInCountry = null, objBenchmarkWeight = null, objBenchmarkWeightInCountry = null;
 
-            if (portfolioTargets.Select(a => a.SecurityId).ToList().Contains(securityId.ToString()))
-            {
+            //if (portfolioTargets.Select(a => a.SecurityId).ToList().Contains(securityId.ToString()))
+           // {
                 objTarget = check ? portfolioTargets.Where(a => a.IssuerId == issuerId).Sum(a => a.Target)
                     : portfolioTargets.Where(a => a.SecurityId == securityId.ToString()).Sum(a => a.Target);
-            }
+           // }
             //Adjusted Portfolio Target 
             //temp.PortfolioTarget = objTarget != null ? Math.Round(Convert.ToDecimal(objTarget), 1) + "%" : Math.Round(0.0) + "%";
             temp.PortfolioTarget = objTarget != null ? Math.Round(Convert.ToDecimal(objTarget) * 100, 2) : Math.Round(Convert.ToDecimal(0.00)) ;
