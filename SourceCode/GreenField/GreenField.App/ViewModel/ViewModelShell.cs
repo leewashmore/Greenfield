@@ -1754,6 +1754,15 @@ namespace GreenField.App.ViewModel
         {
             get { return new DelegateCommand<object>(DashboardCompanyDocumentsLoadModelCommandMethod); }
         }
+
+
+        /// <summary>
+        /// DashboardCompanyDocumentsMacroeconomicUploadCommand
+        /// </summary>
+        public ICommand DashboardCompanyDocumentsMacroeconomicUploadCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyDocumentsMacroeconomicUploadCommandMethod); }
+        }
         #endregion
 
         #region Charting
@@ -2564,6 +2573,25 @@ namespace GreenField.App.ViewModel
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_DOCUMENTS);
                 UpdateToolBoxSelectorVisibility();
                 regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyDocumentsLoad", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            Logging.LogEndMethod(logger, methodNamespace);
+        }
+
+        private void DashboardCompanyDocumentsMacroeconomicUploadCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_DOCUMENTS);
+                UpdateToolBoxSelectorVisibility();
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyDocumentsMacroeconomicDataUpload", UriKind.Relative));
             }
             catch (Exception ex)
             {

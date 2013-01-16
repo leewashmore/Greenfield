@@ -38,6 +38,7 @@ namespace GreenField.DashboardModule
             #region Documents
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanyDocuments));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanyDocumentsLoad));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanyDocumentsMacroeconomicDataUpload));
             #endregion
 
             #region Estimates
