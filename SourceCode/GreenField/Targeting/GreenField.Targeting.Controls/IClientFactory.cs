@@ -13,6 +13,8 @@ namespace GreenField.Targeting.Controls
 {
     public interface IClientFactory
     {
+        string GetUsername();
+        void Initialize(String username);
         TopDown.FacingServer.Backend.Targeting.FacadeClient CreateClient();
     }
 }

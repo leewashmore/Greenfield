@@ -123,7 +123,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
             client.GetBasketPickerCompleted += (sender, e) => RuntimeHelper.TakeCareOfResult("Getting baskets", e, x => x.Result, this.TakeData, this.FinishLoading);
-            client.GetBasketPickerAsync();
+            client.GetBasketPickerAsync(this.clientFactory.GetUsername());
         }
 
         public void TakeData(BtPickerModel data)

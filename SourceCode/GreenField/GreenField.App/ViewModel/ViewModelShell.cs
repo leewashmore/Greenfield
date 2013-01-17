@@ -72,7 +72,8 @@ namespace GreenField.App.ViewModel
         /// <param name="dbInteractivity">Service IDBInteractivity</param>
         [ImportingConstructor]
         public ViewModelShell(IRegionManager regionManager, IManageSessions manageSessions,
-            ILoggerFacade logger, IEventAggregator eventAggregator, IDBInteractivity dbInteractivity)
+            ILoggerFacade logger, IEventAggregator eventAggregator, IDBInteractivity dbInteractivity,
+            SessionInformationAssigner sessionInformationAssigner)
         {
             this.logger = logger;
             this.regionManager = regionManager;
@@ -104,7 +105,11 @@ namespace GreenField.App.ViewModel
                         SessionManager.SESSION = new Session();
                         SessionManager.SESSION.Roles = new List<string>();
 
-                        SessionManager.SESSION.UserName = CookieEncription.Decript(result[CookieEncription.Encript("UserName")]);
+                        var username = CookieEncription.Decript(result[CookieEncription.Encript("UserName")]);
+                        SessionManager.SESSION.UserName = username;
+                        sessionInformationAssigner.TakeUsername(username);
+
+                       
                         
                         if (result.Keys.Contains(CookieEncription.Encript("Roles")))
                         {

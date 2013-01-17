@@ -97,20 +97,20 @@ namespace GreenField.Web.Services
             });
         }
 
-        public IEnumerable<Server.IssueModel> SaveBroadGlobalActive(Server.BroadGlobalActive.RootModel model)
+        public IEnumerable<Server.IssueModel> SaveBroadGlobalActive(Server.BroadGlobalActive.RootModel model, string username)
         {
             return this.Watch("Unable to save the broad global active data.", delegate
             {
-                return this.facade.SaveBroadGlobalActive(model);
+                return this.facade.SaveBroadGlobalActive(model, username);
             });
         }
 
-        public Server.BasketTargets.PickerModel GetBasketPicker()
+        public Server.BasketTargets.PickerModel GetBasketPicker(string username)
         {
             
             return this.Watch("Unable to get the data for the basket picker.", delegate
             {
-                return this.facade.GetBasketPicker();
+                return this.facade.GetBasketPicker(username);
             });
         }
 
@@ -130,19 +130,19 @@ namespace GreenField.Web.Services
             });
         }
 
-        public IEnumerable<Server.IssueModel> SaveBasketTargets(Server.BasketTargets.RootModel model)
+        public IEnumerable<Server.IssueModel> SaveBasketTargets(Server.BasketTargets.RootModel model, string username)
         {
             return this.Watch("Unable to save the basket targets.", delegate
             {
-                return this.facade.SaveBasketTargets(model);
+                return this.facade.SaveBasketTargets(model, username);
             });
         }
 
-        public Server.BottomUp.PickerModel GetBottomUpPortfolioPicker()
+        public Server.BottomUp.PickerModel GetBottomUpPortfolioPicker(string username)
         {
             return this.Watch("Unable to get the bottom-up portfolio picker data.", delegate
             {
-                return this.facade.GetBottomUpPortfolioPicker();
+                return this.facade.GetBottomUpPortfolioPicker(username);
             });
         }
 
@@ -162,11 +162,11 @@ namespace GreenField.Web.Services
             });
         }
 
-        public IEnumerable<Server.IssueModel> SaveBottomUp(Server.BottomUp.RootModel model)
+        public IEnumerable<Server.IssueModel> SaveBottomUp(Server.BottomUp.RootModel model, string username)
         {
             return this.Watch("Unable to save the bottom-up data.", delegate
             {
-                return this.facade.SaveBottomUp(model);
+                return this.facade.SaveBottomUp(model, username);
             });
         }
 

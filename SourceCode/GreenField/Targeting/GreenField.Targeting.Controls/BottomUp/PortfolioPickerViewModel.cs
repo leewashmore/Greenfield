@@ -32,7 +32,7 @@ namespace GreenField.Targeting.Controls.BottomUp
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
             client.GetBottomUpPortfolioPickerCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Getting picker data for the bottom up editor", args, x => x.Result, this.TakeData, this.FinishLoading);
-            client.GetBottomUpPortfolioPickerAsync();
+            client.GetBottomUpPortfolioPickerAsync(this.clientFactory.GetUsername());
         }
 
         public void TakeData(BuPickerModel model)

@@ -12,6 +12,21 @@ using System.Windows.Threading;
 
 namespace GreenField.App
 {
+    public class SessionInformationAssigner
+    {
+        private TargetingModule.IClientFactory targetingClientFactory;
+        
+        public SessionInformationAssigner(TargetingModule.IClientFactory targetingClientFactory)
+        {
+            this.targetingClientFactory = targetingClientFactory;
+        }
+
+        public void TakeUsername(String username)
+        {
+            this.targetingClientFactory.Initialize(username);
+        }
+    }
+
     public class Bootstrapper : MefBootstrapper
     {
         [Import]
@@ -67,10 +82,12 @@ namespace GreenField.App
         private void InitializeEntitiesForTargetingModule()
         {
             var settings = this.CreateTargetingModuleSettings();
+            var sessionInformationAssigner = new SessionInformationAssigner(settings.ClientFactory);
             this.Container.ComposeExportedValue<TargetingModule.BroadGlobalActive.Settings>(settings.BgaSettings);
             this.Container.ComposeExportedValue<TargetingModule.IClientFactory>(settings.ClientFactory);
             this.Container.ComposeExportedValue<TargetingModule.BottomUp.Settings>(settings.BuSettings);
             this.Container.ComposeExportedValue<TargetingModule.BasketTargets.Settings>(settings.BtSettings);
+            this.Container.ComposeExportedValue<SessionInformationAssigner>(sessionInformationAssigner);    // <---- this is going to be used as an argument for ViewModelShell
             
         }
 
