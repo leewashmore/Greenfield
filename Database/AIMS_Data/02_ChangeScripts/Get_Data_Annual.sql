@@ -269,9 +269,9 @@ as
 
 
 
-select 'get_data_annual #Reuters' as A, r.*
-  from #Reuters r
- order by r.PeriodEndDate, r.DATA_ID
+--select 'get_data_annual #Reuters' as A, r.*
+--  from #Reuters r
+-- order by r.PeriodEndDate, r.DATA_ID
 
 			-- Insert the Reuters data for the currency it was reported in
 			-- So long as that currency is the Country currency or USD
