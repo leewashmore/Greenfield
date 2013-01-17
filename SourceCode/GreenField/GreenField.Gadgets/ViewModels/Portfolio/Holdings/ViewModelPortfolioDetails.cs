@@ -459,6 +459,20 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private bool modelDataAreIncorrect;
+        public bool ModelDataAreIncorrect 
+        { 
+            get
+            {
+                return modelDataAreIncorrect;
+            }
+            set
+            {
+                modelDataAreIncorrect = value;
+                this.RaisePropertyChanged(() => this.ModelDataAreIncorrect);
+            } 
+        }
+
         #endregion
 
         #region CallbackMethods

@@ -122,7 +122,7 @@ namespace GreenField.Targeting.Controls.BottomUp
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
-            client.SaveBottomUpAsync(this.KeptRootModel);
+            client.SaveBottomUpAsync(this.KeptRootModel, this.clientFactory.GetUsername());
             client.SaveBottomUpCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Saving bottom-up", args, x => x.Result, this.FinishSaving, this.FinishLoading);
         }
 

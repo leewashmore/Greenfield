@@ -13,8 +13,8 @@ namespace GreenField.Targeting.Server
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, InstanceContextMode = InstanceContextMode.PerCall)]
     public class Facade : IFacade
     {
-        [Obsolete("Hack!")]
-        public const String Username = "bykova";
+        //[Obsolete("Hack!")]
+        //public const String Username = "bykova";
 
         private Core.Facade facade;
         private BroadGlobalActive.Serializer bgaSerializer;
@@ -115,20 +115,20 @@ namespace GreenField.Targeting.Server
             return serializedSecurities;
         }
 
-        public IEnumerable<IssueModel> SaveBroadGlobalActive(BroadGlobalActive.RootModel serializedModel)
+        public IEnumerable<IssueModel> SaveBroadGlobalActive(BroadGlobalActive.RootModel serializedModel, string username)
         {
             var ticket = new CalculationTicket();
             var model = this.bgaDeserializer.DeserializeRoot(serializedModel);
-            var issues = this.facade.ApplyBroadGlobalActiveModelIfValid(model, Username, ticket);
+            var issues = this.facade.ApplyBroadGlobalActiveModelIfValid(model, username, ticket);
             var serializedIssues = this.serializer.SerializeValidationIssues(issues);
             return serializedIssues;
         }
 
         // basket targets
 
-        public BasketTargets.PickerModel GetBasketPicker()
+        public BasketTargets.PickerModel GetBasketPicker(string username)
         {
-            var model = this.facade.GetBasketPickerRootModel(Username);
+            var model = this.facade.GetBasketPickerRootModel(username);
             var serializedModel = this.btSerializer.SerializePicker(model);
             return serializedModel;
         }
@@ -149,20 +149,20 @@ namespace GreenField.Targeting.Server
             return serializedModel;
         }
 
-        public IEnumerable<IssueModel> SaveBasketTargets(BasketTargets.RootModel model)
+        public IEnumerable<IssueModel> SaveBasketTargets(BasketTargets.RootModel model, string username)
         {
             var deserializedModel = this.btDeserializer.DeserializeRoot(model);
             var ticket = new CalculationTicket();
-            var issues = this.facade.ApplyBpstModelIfValid(deserializedModel, Username, ticket);
+            var issues = this.facade.ApplyBpstModelIfValid(deserializedModel, username, ticket);
             var serializedIssues = this.serializer.SerializeValidationIssues(issues);
             return serializedIssues;
         }
 
         // bottom-up
 
-        public BottomUp.PickerModel GetBottomUpPortfolioPicker()
+        public BottomUp.PickerModel GetBottomUpPortfolioPicker(string username)
         {
-            var models = this.facade.GetBottomUpPortfolios(Username);
+            var models = this.facade.GetBottomUpPortfolios(username);
             var result = this.buSerializer.SerializePicker(models);
             return result;
         }
@@ -183,11 +183,11 @@ namespace GreenField.Targeting.Server
             return serializedModel;
         }
 
-        public IEnumerable<IssueModel> SaveBottomUp(BottomUp.RootModel model)
+        public IEnumerable<IssueModel> SaveBottomUp(BottomUp.RootModel model, string username)
         {
             var deserializedModel = this.buDeserializer.DeserializerRoot(model);
             var ticket = new CalculationTicket();
-            var issues = this.facade.ApplyPstModelIfValid(deserializedModel, Username, ticket);
+            var issues = this.facade.ApplyPstModelIfValid(deserializedModel, username, ticket);
             var serializedIssues = this.serializer.SerializeValidationIssues(issues);
             return serializedIssues;
         }

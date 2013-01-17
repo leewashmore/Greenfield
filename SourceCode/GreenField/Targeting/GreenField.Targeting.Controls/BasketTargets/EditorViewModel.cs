@@ -144,7 +144,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
             client.SaveBasketTargetsCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Saving basket targets", args, x => x.Result, this.FinishSaving, this.FinishLoading);
-            client.SaveBasketTargetsAsync(this.KeptRootModel);
+            client.SaveBasketTargetsAsync(this.KeptRootModel, this.clientFactory.GetUsername());
         }
 
         protected override void RequestReloading(EditorInput input)

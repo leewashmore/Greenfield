@@ -1183,12 +1183,12 @@ namespace TopDown.FacingServer.Backend.Targeting {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GlobeResident", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
         "tive")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.RegionModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BasketCountryModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BgaCountryModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BasketRegionModel))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.OtherModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BasketCountryModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BgaCountryModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.RegionModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BasketRegionModel))]
     public partial class GlobeResident : object, System.ComponentModel.INotifyPropertyChanged {
         
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -1203,17 +1203,17 @@ namespace TopDown.FacingServer.Backend.Targeting {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RegionModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
+    [System.Runtime.Serialization.DataContractAttribute(Name="OtherModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
         "tive")]
-    public partial class RegionModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
+    public partial class OtherModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
         
         private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseField;
         
         private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActiveField;
         
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
+        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.BasketCountryModel> BasketCountriesField;
         
-        private string NameField;
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
         
         private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
         
@@ -1221,11 +1221,11 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaledField;
         
-        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.GlobeResident> ResidentsField;
-        
         private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActiveField;
         
         private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposureField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel> UnsavedBasketCountriesField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel Base {
@@ -1254,6 +1254,19 @@ namespace TopDown.FacingServer.Backend.Targeting {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.BasketCountryModel> BasketCountries {
+            get {
+                return this.BasketCountriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BasketCountriesField, value) != true)) {
+                    this.BasketCountriesField = value;
+                    this.RaisePropertyChanged("BasketCountries");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
             get {
                 return this.BenchmarkField;
@@ -1262,19 +1275,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
                     this.BenchmarkField = value;
                     this.RaisePropertyChanged("Benchmark");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
                 }
             }
         }
@@ -1319,19 +1319,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.GlobeResident> Residents {
-            get {
-                return this.ResidentsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ResidentsField, value) != true)) {
-                    this.ResidentsField = value;
-                    this.RaisePropertyChanged("Residents");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActive {
             get {
                 return this.TrueActiveField;
@@ -1353,6 +1340,19 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
                     this.TrueExposureField = value;
                     this.RaisePropertyChanged("TrueExposure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel> UnsavedBasketCountries {
+            get {
+                return this.UnsavedBasketCountriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UnsavedBasketCountriesField, value) != true)) {
+                    this.UnsavedBasketCountriesField = value;
+                    this.RaisePropertyChanged("UnsavedBasketCountries");
                 }
             }
         }
@@ -1502,58 +1502,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="BgaCountryModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
-        "tive")]
-    public partial class BgaCountryModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
-        
-        private TopDown.FacingServer.Backend.Targeting.CountryModel CountryField;
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
-            get {
-                return this.BenchmarkField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
-                    this.BenchmarkField = value;
-                    this.RaisePropertyChanged("Benchmark");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.CountryModel Country {
-            get {
-                return this.CountryField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
-                    this.CountryField = value;
-                    this.RaisePropertyChanged("Country");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
-            get {
-                return this.OverlayField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
-                    this.OverlayField = value;
-                    this.RaisePropertyChanged("Overlay");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="UnsavedBasketCountryModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
         "tive")]
     public partial class UnsavedBasketCountryModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
@@ -1663,6 +1611,215 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
                     this.PortfolioScaledField = value;
                     this.RaisePropertyChanged("PortfolioScaled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActive {
+            get {
+                return this.TrueActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
+                    this.TrueActiveField = value;
+                    this.RaisePropertyChanged("TrueActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposure {
+            get {
+                return this.TrueExposureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
+                    this.TrueExposureField = value;
+                    this.RaisePropertyChanged("TrueExposure");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BgaCountryModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
+        "tive")]
+    public partial class BgaCountryModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
+        
+        private TopDown.FacingServer.Backend.Targeting.CountryModel CountryField;
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.CountryModel Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RegionModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
+        "tive")]
+    public partial class RegionModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActiveField;
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
+        
+        private string NameField;
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioAdjustmentField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaledField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.GlobeResident> ResidentsField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActiveField;
+        
+        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposureField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel Base {
+            get {
+                return this.BaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
+                    this.BaseField = value;
+                    this.RaisePropertyChanged("Base");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActive {
+            get {
+                return this.BaseActiveField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
+                    this.BaseActiveField = value;
+                    this.RaisePropertyChanged("BaseActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioAdjustment {
+            get {
+                return this.PortfolioAdjustmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
+                    this.PortfolioAdjustmentField = value;
+                    this.RaisePropertyChanged("PortfolioAdjustment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaled {
+            get {
+                return this.PortfolioScaledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
+                    this.PortfolioScaledField = value;
+                    this.RaisePropertyChanged("PortfolioScaled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.GlobeResident> Residents {
+            get {
+                return this.ResidentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ResidentsField, value) != true)) {
+                    this.ResidentsField = value;
+                    this.RaisePropertyChanged("Residents");
                 }
             }
         }
@@ -1846,163 +2003,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
                     this.TrueExposureField = value;
                     this.RaisePropertyChanged("TrueExposure");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="OtherModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
-        "tive")]
-    public partial class OtherModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActiveField;
-        
-        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.BasketCountryModel> BasketCountriesField;
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioAdjustmentField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaledField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActiveField;
-        
-        private TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposureField;
-        
-        private System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel> UnsavedBasketCountriesField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel Base {
-            get {
-                return this.BaseField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BaseField, value) != true)) {
-                    this.BaseField = value;
-                    this.RaisePropertyChanged("Base");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel BaseActive {
-            get {
-                return this.BaseActiveField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BaseActiveField, value) != true)) {
-                    this.BaseActiveField = value;
-                    this.RaisePropertyChanged("BaseActive");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.BasketCountryModel> BasketCountries {
-            get {
-                return this.BasketCountriesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BasketCountriesField, value) != true)) {
-                    this.BasketCountriesField = value;
-                    this.RaisePropertyChanged("BasketCountries");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
-            get {
-                return this.BenchmarkField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
-                    this.BenchmarkField = value;
-                    this.RaisePropertyChanged("Benchmark");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
-            get {
-                return this.OverlayField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
-                    this.OverlayField = value;
-                    this.RaisePropertyChanged("Overlay");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioAdjustment {
-            get {
-                return this.PortfolioAdjustmentField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PortfolioAdjustmentField, value) != true)) {
-                    this.PortfolioAdjustmentField = value;
-                    this.RaisePropertyChanged("PortfolioAdjustment");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel PortfolioScaled {
-            get {
-                return this.PortfolioScaledField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PortfolioScaledField, value) != true)) {
-                    this.PortfolioScaledField = value;
-                    this.RaisePropertyChanged("PortfolioScaled");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueActive {
-            get {
-                return this.TrueActiveField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TrueActiveField, value) != true)) {
-                    this.TrueActiveField = value;
-                    this.RaisePropertyChanged("TrueActive");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.NullableExpressionModel TrueExposure {
-            get {
-                return this.TrueExposureField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
-                    this.TrueExposureField = value;
-                    this.RaisePropertyChanged("TrueExposure");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel> UnsavedBasketCountries {
-            get {
-                return this.UnsavedBasketCountriesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UnsavedBasketCountriesField, value) != true)) {
-                    this.UnsavedBasketCountriesField = value;
-                    this.RaisePropertyChanged("UnsavedBasketCountries");
                 }
             }
         }
@@ -3111,12 +3111,12 @@ namespace TopDown.FacingServer.Backend.Targeting {
         System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.SecurityModel> EndPickSecuritiesFromBasket(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/SaveBroadGlobalActive", ReplyAction="http://tempuri.org/IFacade/SaveBroadGlobalActiveResponse")]
-        System.IAsyncResult BeginSaveBroadGlobalActive(TopDown.FacingServer.Backend.Targeting.BgaRootModel model, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginSaveBroadGlobalActive(TopDown.FacingServer.Backend.Targeting.BgaRootModel model, string username, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> EndSaveBroadGlobalActive(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/GetBasketPicker", ReplyAction="http://tempuri.org/IFacade/GetBasketPickerResponse")]
-        System.IAsyncResult BeginGetBasketPicker(System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetBasketPicker(string username, System.AsyncCallback callback, object asyncState);
         
         TopDown.FacingServer.Backend.Targeting.BtPickerModel EndGetBasketPicker(System.IAsyncResult result);
         
@@ -3131,12 +3131,12 @@ namespace TopDown.FacingServer.Backend.Targeting {
         TopDown.FacingServer.Backend.Targeting.BtRootModel EndRecalculateBasketTargets(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/SaveBasketTargets", ReplyAction="http://tempuri.org/IFacade/SaveBasketTargetsResponse")]
-        System.IAsyncResult BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, string username, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> EndSaveBasketTargets(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/GetBottomUpPortfolioPicker", ReplyAction="http://tempuri.org/IFacade/GetBottomUpPortfolioPickerResponse")]
-        System.IAsyncResult BeginGetBottomUpPortfolioPicker(System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetBottomUpPortfolioPicker(string username, System.AsyncCallback callback, object asyncState);
         
         TopDown.FacingServer.Backend.Targeting.BuPickerModel EndGetBottomUpPortfolioPicker(System.IAsyncResult result);
         
@@ -3151,7 +3151,7 @@ namespace TopDown.FacingServer.Backend.Targeting {
         TopDown.FacingServer.Backend.Targeting.BuRootModel EndRecalculateBottomUp(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/SaveBottomUp", ReplyAction="http://tempuri.org/IFacade/SaveBottomUpResponse")]
-        System.IAsyncResult BeginSaveBottomUp(TopDown.FacingServer.Backend.Targeting.BuRootModel model, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginSaveBottomUp(TopDown.FacingServer.Backend.Targeting.BuRootModel model, string username, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.IssueModel> EndSaveBottomUp(System.IAsyncResult result);
         
@@ -4033,8 +4033,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginSaveBroadGlobalActive(TopDown.FacingServer.Backend.Targeting.BgaRootModel model, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginSaveBroadGlobalActive(model, callback, asyncState);
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginSaveBroadGlobalActive(TopDown.FacingServer.Backend.Targeting.BgaRootModel model, string username, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveBroadGlobalActive(model, username, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4044,7 +4044,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private System.IAsyncResult OnBeginSaveBroadGlobalActive(object[] inValues, System.AsyncCallback callback, object asyncState) {
             TopDown.FacingServer.Backend.Targeting.BgaRootModel model = ((TopDown.FacingServer.Backend.Targeting.BgaRootModel)(inValues[0]));
-            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginSaveBroadGlobalActive(model, callback, asyncState);
+            string username = ((string)(inValues[1]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginSaveBroadGlobalActive(model, username, callback, asyncState);
         }
         
         private object[] OnEndSaveBroadGlobalActive(System.IAsyncResult result) {
@@ -4060,11 +4061,11 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
         }
         
-        public void SaveBroadGlobalActiveAsync(TopDown.FacingServer.Backend.Targeting.BgaRootModel model) {
-            this.SaveBroadGlobalActiveAsync(model, null);
+        public void SaveBroadGlobalActiveAsync(TopDown.FacingServer.Backend.Targeting.BgaRootModel model, string username) {
+            this.SaveBroadGlobalActiveAsync(model, username, null);
         }
         
-        public void SaveBroadGlobalActiveAsync(TopDown.FacingServer.Backend.Targeting.BgaRootModel model, object userState) {
+        public void SaveBroadGlobalActiveAsync(TopDown.FacingServer.Backend.Targeting.BgaRootModel model, string username, object userState) {
             if ((this.onBeginSaveBroadGlobalActiveDelegate == null)) {
                 this.onBeginSaveBroadGlobalActiveDelegate = new BeginOperationDelegate(this.OnBeginSaveBroadGlobalActive);
             }
@@ -4075,12 +4076,13 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 this.onSaveBroadGlobalActiveCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveBroadGlobalActiveCompleted);
             }
             base.InvokeAsync(this.onBeginSaveBroadGlobalActiveDelegate, new object[] {
-                        model}, this.onEndSaveBroadGlobalActiveDelegate, this.onSaveBroadGlobalActiveCompletedDelegate, userState);
+                        model,
+                        username}, this.onEndSaveBroadGlobalActiveDelegate, this.onSaveBroadGlobalActiveCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginGetBasketPicker(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetBasketPicker(callback, asyncState);
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginGetBasketPicker(string username, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetBasketPicker(username, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4089,7 +4091,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         }
         
         private System.IAsyncResult OnBeginGetBasketPicker(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginGetBasketPicker(callback, asyncState);
+            string username = ((string)(inValues[0]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginGetBasketPicker(username, callback, asyncState);
         }
         
         private object[] OnEndGetBasketPicker(System.IAsyncResult result) {
@@ -4105,11 +4108,11 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
         }
         
-        public void GetBasketPickerAsync() {
-            this.GetBasketPickerAsync(null);
+        public void GetBasketPickerAsync(string username) {
+            this.GetBasketPickerAsync(username, null);
         }
         
-        public void GetBasketPickerAsync(object userState) {
+        public void GetBasketPickerAsync(string username, object userState) {
             if ((this.onBeginGetBasketPickerDelegate == null)) {
                 this.onBeginGetBasketPickerDelegate = new BeginOperationDelegate(this.OnBeginGetBasketPicker);
             }
@@ -4119,7 +4122,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
             if ((this.onGetBasketPickerCompletedDelegate == null)) {
                 this.onGetBasketPickerCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetBasketPickerCompleted);
             }
-            base.InvokeAsync(this.onBeginGetBasketPickerDelegate, null, this.onEndGetBasketPickerDelegate, this.onGetBasketPickerCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetBasketPickerDelegate, new object[] {
+                        username}, this.onEndGetBasketPickerDelegate, this.onGetBasketPickerCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4217,8 +4221,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginSaveBasketTargets(model, callback, asyncState);
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, string username, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveBasketTargets(model, username, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4228,7 +4232,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private System.IAsyncResult OnBeginSaveBasketTargets(object[] inValues, System.AsyncCallback callback, object asyncState) {
             TopDown.FacingServer.Backend.Targeting.BtRootModel model = ((TopDown.FacingServer.Backend.Targeting.BtRootModel)(inValues[0]));
-            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginSaveBasketTargets(model, callback, asyncState);
+            string username = ((string)(inValues[1]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginSaveBasketTargets(model, username, callback, asyncState);
         }
         
         private object[] OnEndSaveBasketTargets(System.IAsyncResult result) {
@@ -4244,11 +4249,11 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
         }
         
-        public void SaveBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model) {
-            this.SaveBasketTargetsAsync(model, null);
+        public void SaveBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model, string username) {
+            this.SaveBasketTargetsAsync(model, username, null);
         }
         
-        public void SaveBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model, object userState) {
+        public void SaveBasketTargetsAsync(TopDown.FacingServer.Backend.Targeting.BtRootModel model, string username, object userState) {
             if ((this.onBeginSaveBasketTargetsDelegate == null)) {
                 this.onBeginSaveBasketTargetsDelegate = new BeginOperationDelegate(this.OnBeginSaveBasketTargets);
             }
@@ -4259,12 +4264,13 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 this.onSaveBasketTargetsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveBasketTargetsCompleted);
             }
             base.InvokeAsync(this.onBeginSaveBasketTargetsDelegate, new object[] {
-                        model}, this.onEndSaveBasketTargetsDelegate, this.onSaveBasketTargetsCompletedDelegate, userState);
+                        model,
+                        username}, this.onEndSaveBasketTargetsDelegate, this.onSaveBasketTargetsCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginGetBottomUpPortfolioPicker(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetBottomUpPortfolioPicker(callback, asyncState);
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginGetBottomUpPortfolioPicker(string username, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetBottomUpPortfolioPicker(username, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4273,7 +4279,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         }
         
         private System.IAsyncResult OnBeginGetBottomUpPortfolioPicker(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginGetBottomUpPortfolioPicker(callback, asyncState);
+            string username = ((string)(inValues[0]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginGetBottomUpPortfolioPicker(username, callback, asyncState);
         }
         
         private object[] OnEndGetBottomUpPortfolioPicker(System.IAsyncResult result) {
@@ -4289,11 +4296,11 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
         }
         
-        public void GetBottomUpPortfolioPickerAsync() {
-            this.GetBottomUpPortfolioPickerAsync(null);
+        public void GetBottomUpPortfolioPickerAsync(string username) {
+            this.GetBottomUpPortfolioPickerAsync(username, null);
         }
         
-        public void GetBottomUpPortfolioPickerAsync(object userState) {
+        public void GetBottomUpPortfolioPickerAsync(string username, object userState) {
             if ((this.onBeginGetBottomUpPortfolioPickerDelegate == null)) {
                 this.onBeginGetBottomUpPortfolioPickerDelegate = new BeginOperationDelegate(this.OnBeginGetBottomUpPortfolioPicker);
             }
@@ -4303,7 +4310,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
             if ((this.onGetBottomUpPortfolioPickerCompletedDelegate == null)) {
                 this.onGetBottomUpPortfolioPickerCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetBottomUpPortfolioPickerCompleted);
             }
-            base.InvokeAsync(this.onBeginGetBottomUpPortfolioPickerDelegate, null, this.onEndGetBottomUpPortfolioPickerDelegate, this.onGetBottomUpPortfolioPickerCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetBottomUpPortfolioPickerDelegate, new object[] {
+                        username}, this.onEndGetBottomUpPortfolioPickerDelegate, this.onGetBottomUpPortfolioPickerCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4399,8 +4407,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginSaveBottomUp(TopDown.FacingServer.Backend.Targeting.BuRootModel model, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginSaveBottomUp(model, callback, asyncState);
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginSaveBottomUp(TopDown.FacingServer.Backend.Targeting.BuRootModel model, string username, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveBottomUp(model, username, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4410,7 +4418,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private System.IAsyncResult OnBeginSaveBottomUp(object[] inValues, System.AsyncCallback callback, object asyncState) {
             TopDown.FacingServer.Backend.Targeting.BuRootModel model = ((TopDown.FacingServer.Backend.Targeting.BuRootModel)(inValues[0]));
-            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginSaveBottomUp(model, callback, asyncState);
+            string username = ((string)(inValues[1]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginSaveBottomUp(model, username, callback, asyncState);
         }
         
         private object[] OnEndSaveBottomUp(System.IAsyncResult result) {
@@ -4426,11 +4435,11 @@ namespace TopDown.FacingServer.Backend.Targeting {
             }
         }
         
-        public void SaveBottomUpAsync(TopDown.FacingServer.Backend.Targeting.BuRootModel model) {
-            this.SaveBottomUpAsync(model, null);
+        public void SaveBottomUpAsync(TopDown.FacingServer.Backend.Targeting.BuRootModel model, string username) {
+            this.SaveBottomUpAsync(model, username, null);
         }
         
-        public void SaveBottomUpAsync(TopDown.FacingServer.Backend.Targeting.BuRootModel model, object userState) {
+        public void SaveBottomUpAsync(TopDown.FacingServer.Backend.Targeting.BuRootModel model, string username, object userState) {
             if ((this.onBeginSaveBottomUpDelegate == null)) {
                 this.onBeginSaveBottomUpDelegate = new BeginOperationDelegate(this.OnBeginSaveBottomUp);
             }
@@ -4441,7 +4450,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 this.onSaveBottomUpCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveBottomUpCompleted);
             }
             base.InvokeAsync(this.onBeginSaveBottomUpDelegate, new object[] {
-                        model}, this.onEndSaveBottomUpDelegate, this.onSaveBottomUpCompletedDelegate, userState);
+                        model,
+                        username}, this.onEndSaveBottomUpDelegate, this.onSaveBottomUpCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4882,9 +4892,10 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 return _result;
             }
             
-            public System.IAsyncResult BeginSaveBroadGlobalActive(TopDown.FacingServer.Backend.Targeting.BgaRootModel model, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
+            public System.IAsyncResult BeginSaveBroadGlobalActive(TopDown.FacingServer.Backend.Targeting.BgaRootModel model, string username, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
                 _args[0] = model;
+                _args[1] = username;
                 System.IAsyncResult _result = base.BeginInvoke("SaveBroadGlobalActive", _args, callback, asyncState);
                 return _result;
             }
@@ -4895,8 +4906,9 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetBasketPicker(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
+            public System.IAsyncResult BeginGetBasketPicker(string username, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = username;
                 System.IAsyncResult _result = base.BeginInvoke("GetBasketPicker", _args, callback, asyncState);
                 return _result;
             }
@@ -4934,9 +4946,10 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 return _result;
             }
             
-            public System.IAsyncResult BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
+            public System.IAsyncResult BeginSaveBasketTargets(TopDown.FacingServer.Backend.Targeting.BtRootModel model, string username, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
                 _args[0] = model;
+                _args[1] = username;
                 System.IAsyncResult _result = base.BeginInvoke("SaveBasketTargets", _args, callback, asyncState);
                 return _result;
             }
@@ -4947,8 +4960,9 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetBottomUpPortfolioPicker(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
+            public System.IAsyncResult BeginGetBottomUpPortfolioPicker(string username, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = username;
                 System.IAsyncResult _result = base.BeginInvoke("GetBottomUpPortfolioPicker", _args, callback, asyncState);
                 return _result;
             }
@@ -4985,9 +4999,10 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 return _result;
             }
             
-            public System.IAsyncResult BeginSaveBottomUp(TopDown.FacingServer.Backend.Targeting.BuRootModel model, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
+            public System.IAsyncResult BeginSaveBottomUp(TopDown.FacingServer.Backend.Targeting.BuRootModel model, string username, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
                 _args[0] = model;
+                _args[1] = username;
                 System.IAsyncResult _result = base.BeginInvoke("SaveBottomUp", _args, callback, asyncState);
                 return _result;
             }

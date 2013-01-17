@@ -19,5 +19,17 @@ namespace GreenField.Targeting.Controls
 			var result = new FacadeClient();
 			return result;
 		}
-	}
+
+        public void Initialize(string username)
+        {
+            this.username = username;
+        }
+
+        private string username;
+
+        public string GetUsername()
+        {
+            return username;
+        }
+    }
 }

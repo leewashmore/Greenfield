@@ -436,7 +436,7 @@
         </Grid>
 
         <Grid Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <TextBlock x:Name="txtMessage" FontFamily="Arial" FontSize="9" Height="12" Foreground="Red"
+            <TextBlock x:Name="txtMessage" FontFamily="Arial" FontSize="9" Height="12" Foreground="Red" Visibility="{Binding ModelDataAreIncorrect}"
                        Text=" * The values for Model Weight are not correct as the corresponding View doesn't have relevant data"/>
         </Grid>
     </Grid>
