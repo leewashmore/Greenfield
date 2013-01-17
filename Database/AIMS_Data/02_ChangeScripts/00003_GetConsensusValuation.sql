@@ -1,5 +1,36 @@
+set noexec off
 
-alter procedure [dbo].[GetConsensusEstimatesValuation](
+--declare  current and required version
+--also do it an the end of the script
+declare @RequiredDBVersion as nvarchar(100) = '00002'
+declare @CurrentScriptVersion as nvarchar(100) = '00003'
+
+--if current version already in DB, just skip
+if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
+ set noexec on 
+
+--check that current DB version is Ok
+declare @DBCurrentVersion as nvarchar(100) = (select top 1 ScriptVersion from ChangeScripts order by DateExecuted desc)
+if (@DBCurrentVersion != @RequiredDBVersion)
+begin
+	RAISERROR(N'DB version is "%s", required "%s".', 16, 1, @DBCurrentVersion, @RequiredDBVersion)
+	set noexec on
+end
+
+GO
+
+IF OBJECT_ID ('[dbo].[GetConsensusEstimatesValuation]') IS NOT NULL
+	DROP PROCEDURE [dbo].[GetConsensusEstimatesValuation]
+GO
+
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE procedure [dbo].[GetConsensusEstimatesValuation](
 	@ISSUER_ID			varchar(20)					-- The company identifier		
 ,	@DATA_SOURCE		varchar(10)  = 'REUTERS'	-- REUTERS, PRIMARY, INDUSTRY
 ,	@PERIOD_TYPE		char(2) = 'A'				-- A, Q
@@ -121,10 +152,8 @@ as
 	-- Clean up
 	drop table #Actual;
 	drop table #Estimate;
-
-
-
-
-
 GO
 
+--indicate thet current script is executed
+declare @CurrentScriptVersion as nvarchar(100) = '00003'
+insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())

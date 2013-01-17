@@ -197,20 +197,6 @@
       [PRICES].[ADR_CONV] AS [ADR_CONV]
       FROM [dbo].[PRICES] AS [PRICES]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.Store.REUTERS_XREF" store:Type="Tables" store:Schema="dbo" store:Name="REUTERS_XREF">
-            <DefiningQuery>
-              SELECT
-              [REUTERS_XREF].[ReportNumber] AS [ReportNumber],
-              [REUTERS_XREF].[Xref] AS [Xref],
-              [REUTERS_XREF].[ISSUER_ID] AS [ISSUER_ID],
-              [REUTERS_XREF].[SECURITY_ID] AS [SECURITY_ID],
-              [REUTERS_XREF].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME],
-              [REUTERS_XREF].[NAME] AS [NAME],
-              [REUTERS_XREF].[PROVIDER] AS [PROVIDER]
-              FROM [dbo].[REUTERS_XREF] AS [REUTERS_XREF]
-            </DefiningQuery>
-          </EntitySet>
-
           <EntitySet Name="Portfolio_Security_Targets_Union" EntityType="ExternalResearchModel.Store.Portfolio_Security_Targets_Union" store:Type="Views" store:Schema="dbo" store:Name="Portfolio_Security_Targets_Union">
             <DefiningQuery>SELECT 
       [Portfolio_Security_Targets_Union].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
@@ -565,22 +551,7 @@
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data_QA.dbo.Portfolio_Security_Targets_Union' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-      <EntityType Name="REUTERS_XREF">
-        <Key>
-          <PropertyRef Name="ReportNumber" />
-          <PropertyRef Name="ISSUER_ID" />
-          <PropertyRef Name="PROVIDER" />
-        </Key>
-        <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-        <Property Name="Xref" Type="varchar" MaxLength="9" />
-        <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-        <Property Name="SECURITY_ID" Type="varchar" MaxLength="20" />
-        <Property Name="ASEC_SEC_SHORT_NAME" Type="varchar" MaxLength="20" />
-        <Property Name="NAME" Type="varchar" MaxLength="100" />
-        <Property Name="PROVIDER" Type="char" Nullable="false" MaxLength="1" />
-      </EntityType>
-
-      <EntityType Name="Portfolio_Security_Targets_Union">
+        <EntityType Name="Portfolio_Security_Targets_Union">
           <Key>
             <PropertyRef Name="PORTFOLIO_ID" />
             <PropertyRef Name="SECURITY_ID" />
@@ -664,6 +635,7 @@
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
           <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
           <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+          <Parameter Name="Security_ID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetDCF_NumberOfShares" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
@@ -950,7 +922,6 @@
 					<EntitySet Name="Macroeconomic_Display" EntityType="ExternalResearchModel.Macroeconomic_Display" />
 					<EntitySet Name="PERIOD_FINANCIALS" EntityType="ExternalResearchModel.PERIOD_FINANCIALS" />
 					<EntitySet Name="PERIOD_FINANCIALS_DISPLAY" EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" />
-					<EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.REUTERS_XREF" />
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
           <Parameter Name="SecurityID" Mode="In" Type="String" />
           </FunctionImport>
@@ -989,6 +960,7 @@
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
             <Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
             <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+            <Parameter Name="Security_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusDetail" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailData)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
@@ -1482,20 +1454,6 @@
 					<Property Name="BOLD_FONT" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
 					<Property Name="DECIMALS" Type="Int32" Nullable="false" />
 					<Property Name="MULTIPLIER" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
-				</EntityType>
-				<EntityType Name="REUTERS_XREF">
-					<Key>
-						<PropertyRef Name="ReportNumber" />
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="PROVIDER" />
-					</Key>
-					<Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-					<Property Name="Xref" Type="String" MaxLength="9" Unicode="false" FixedLength="false" />
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="SECURITY_ID" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="ASEC_SEC_SHORT_NAME" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="NAME" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-					<Property Name="PROVIDER" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
 				</EntityType>
 				<ComplexType Name="GetBasicData_Result">
 					<Property Type="Decimal" Name="MARKET_CAPITALIZATION" Nullable="true" Precision="18" Scale="0" />
@@ -2125,20 +2083,6 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
-
-          <EntitySetMapping Name="REUTERS_XREF">
-            <EntityTypeMapping TypeName="ExternalResearchModel.REUTERS_XREF">
-              <MappingFragment StoreEntitySet="REUTERS_XREF">
-                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-                <ScalarProperty Name="Xref" ColumnName="Xref" />
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
-                <ScalarProperty Name="NAME" ColumnName="NAME" />
-                <ScalarProperty Name="PROVIDER" ColumnName="PROVIDER" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
 
           <EntitySetMapping Name="DATA_MASTER">
 						<EntityTypeMapping TypeName="ExternalResearchModel.DATA_MASTER">
@@ -2842,7 +2786,6 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Display" Width="1.5" PointX="2.75" PointY="9.75" Height="2.5571907552083388" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS" Width="1.5" PointX="10.75" PointY="0.75" Height="4.0956022135416674" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" Width="1.5" PointX="4.75" PointY="10.75" Height="2.7494921875000031" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.REUTERS_XREF" Width="1.5" PointX="8.75" PointY="6.375" Height="2.3648893229166656" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="6.5" PointY="9.75" Height="3.7109993489583317" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PRICE" Width="1.5" PointX="0.75" PointY="13.75" Height="1.9802864583333388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.COUNTRY_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />

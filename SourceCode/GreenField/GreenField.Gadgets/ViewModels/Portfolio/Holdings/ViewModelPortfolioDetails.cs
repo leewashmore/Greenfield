@@ -81,7 +81,7 @@ namespace GreenField.Gadgets.ViewModels
             effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
             ExcludeCashSecurities = param.DashboardGadgetPayload.IsExCashSecurityData;
             lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
-
+            this.ModelDataAreIncorrect = Visibility.Collapsed;
             if (eventAggregator != null && effectiveDate != null && SelectedPortfolioId != null && IsActive)
             {
                 BusyIndicatorStatus = true;
@@ -459,8 +459,8 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private bool modelDataAreIncorrect;
-        public bool ModelDataAreIncorrect 
+        private Visibility modelDataAreIncorrect;
+        public Visibility ModelDataAreIncorrect 
         { 
             get
             {
