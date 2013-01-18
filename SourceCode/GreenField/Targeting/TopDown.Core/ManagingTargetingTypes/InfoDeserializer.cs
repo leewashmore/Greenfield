@@ -47,16 +47,17 @@ namespace TopDown.Core.ManagingTargetingTypes
 			PortfolioRepository portfolioRepository
 		)
 		{
-			var result = new List<BottomUpPortfolio>();
-			foreach (var portfolioInfo in portfolioInfos)
-			{
-				var bottomUpPorfolioOpt = portfolioRepository.FindBottomUpPortfolio(portfolioInfo.PortfolioId);
-				if (bottomUpPorfolioOpt != null)
-				{
-					result.Add(bottomUpPorfolioOpt);
-				}
-			}
-			return result;
+            //var result = new List<BottomUpPortfolio>();
+            //foreach (var portfolioInfo in portfolioInfos)
+            //{
+            //    var bottomUpPorfolioOpt = portfolioRepository.FindBottomUpPortfolio(portfolioInfo.PortfolioId);
+            //    if (bottomUpPorfolioOpt != null)
+            //    {
+            //        result.Add(bottomUpPorfolioOpt);
+            //    }
+            //}
+            //return result;
+            return portfolioRepository.GetAllBottomUpPortfolios();
 		}
     }
 }

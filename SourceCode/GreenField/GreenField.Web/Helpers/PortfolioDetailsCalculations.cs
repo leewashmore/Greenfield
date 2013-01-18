@@ -100,6 +100,7 @@ namespace GreenField.Web.Helpers
         /// <returns>List of PortfolioDetailsData</returns>
         public static List<PortfolioDetailsData> AddPortfolioSecurities(List<GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData)
         {
+
             List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
 
             if (dimensionPortfolioHoldingsData == null)
@@ -132,7 +133,9 @@ namespace GreenField.Web.Helpers
                 portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
                             Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
                             Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
-                portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
+                //portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
+               
+
                 portfolioResult.IssuerId = item.ISSUER_ID;
                 result.Add(portfolioResult);
             }

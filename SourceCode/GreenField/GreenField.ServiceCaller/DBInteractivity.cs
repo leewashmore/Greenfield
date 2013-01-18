@@ -1251,6 +1251,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            
             client.Endpoint.Behaviors.Add(new CookieBehavior());
             client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, lookThruEnabled, excludeCash, objGetBenchmark);
             client.RetrievePortfolioDetailsDataCompleted += (se, e) =>

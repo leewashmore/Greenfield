@@ -657,8 +657,8 @@ namespace GreenField.Gadgets.ViewModels
                         if (sumBenchmarkWeight != 0)
                             data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
 
-                        if (sumAshEmmModelWeight != 0)
-                            data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                        //if (sumAshEmmModelWeight != 0)
+                            data.ReAshEmmModelWeight = data.AshEmmModelWeight * 100; // sumAshEmmModelWeight * 100;
 
                         data.ActivePosition = Convert.ToDecimal(data.RePortfolioWeight) - Convert.ToDecimal(data.ReBenchmarkWeight);
                     }
@@ -715,8 +715,8 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (sumModelWeight != 0)
                     {
-                        item.AshEmmModelWeight = item.AshEmmModelWeight / sumModelWeight * 100;
-                        item.ReAshEmmModelWeight = item.AshEmmModelWeight;
+                        item.ReAshEmmModelWeight = item.AshEmmModelWeight * 100; // sumModelWeight * 100;
+                        
                     }
                     else
                     {

@@ -17,6 +17,7 @@ namespace GreenField.Targeting.Controls
 		public TopDown.FacingServer.Backend.Targeting.FacadeClient CreateClient()
 		{
 			var result = new FacadeClient();
+            
 			return result;
 		}
 

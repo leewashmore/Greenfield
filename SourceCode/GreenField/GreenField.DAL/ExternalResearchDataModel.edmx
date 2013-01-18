@@ -95,6 +95,74 @@
       [FX_RATES].[AVG12MonthRATE] AS [AVG12MonthRATE]
       FROM [dbo].[FX_RATES] AS [FX_RATES]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="ExternalResearchModel.Store.GF_SECURITY_BASEVIEW" store:Type="Tables" store:Schema="dbo" store:Name="GF_SECURITY_BASEVIEW">
+            <DefiningQuery>SELECT 
+      [GF_SECURITY_BASEVIEW].[ID] AS [ID], 
+      [GF_SECURITY_BASEVIEW].[GF_ID] AS [GF_ID], 
+      [GF_SECURITY_BASEVIEW].[SECURITY_ID] AS [SECURITY_ID], 
+      [GF_SECURITY_BASEVIEW].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME], 
+      [GF_SECURITY_BASEVIEW].[ISSUE_NAME] AS [ISSUE_NAME], 
+      [GF_SECURITY_BASEVIEW].[ISIN] AS [ISIN], 
+      [GF_SECURITY_BASEVIEW].[SEDOL] AS [SEDOL], 
+      [GF_SECURITY_BASEVIEW].[SECS_INSTYPE] AS [SECS_INSTYPE], 
+      [GF_SECURITY_BASEVIEW].[ASEC_INSTR_TYPE] AS [ASEC_INSTR_TYPE], 
+      [GF_SECURITY_BASEVIEW].[SECURITY_TYPE] AS [SECURITY_TYPE], 
+      [GF_SECURITY_BASEVIEW].[ASEC_FC_SEC_REF] AS [ASEC_FC_SEC_REF], 
+      [GF_SECURITY_BASEVIEW].[LOOK_THRU_FUND] AS [LOOK_THRU_FUND], 
+      [GF_SECURITY_BASEVIEW].[FIFTYTWO_WEEK_LOW] AS [FIFTYTWO_WEEK_LOW], 
+      [GF_SECURITY_BASEVIEW].[FIFTYTWO_WEEK_HIGH] AS [FIFTYTWO_WEEK_HIGH], 
+      [GF_SECURITY_BASEVIEW].[SECURITY_VOLUME_AVG_90D] AS [SECURITY_VOLUME_AVG_90D], 
+      [GF_SECURITY_BASEVIEW].[SECURITY_VOLUME_AVG_6M] AS [SECURITY_VOLUME_AVG_6M], 
+      [GF_SECURITY_BASEVIEW].[SECURITY_VOLUME_AVG_30D] AS [SECURITY_VOLUME_AVG_30D], 
+      [GF_SECURITY_BASEVIEW].[GREENFIELD_FLAG] AS [GREENFIELD_FLAG], 
+      [GF_SECURITY_BASEVIEW].[WACC_COST_EQUITY] AS [WACC_COST_EQUITY], 
+      [GF_SECURITY_BASEVIEW].[WACC_COST_PFD] AS [WACC_COST_PFD], 
+      [GF_SECURITY_BASEVIEW].[WACC_COST_DEBT] AS [WACC_COST_DEBT], 
+      [GF_SECURITY_BASEVIEW].[FLOAT_AMOUNT] AS [FLOAT_AMOUNT], 
+      [GF_SECURITY_BASEVIEW].[CUSIP] AS [CUSIP], 
+      [GF_SECURITY_BASEVIEW].[STOCK_EXCHANGE_ID] AS [STOCK_EXCHANGE_ID], 
+      [GF_SECURITY_BASEVIEW].[ASEC_ISSUED_VOLUME] AS [ASEC_ISSUED_VOLUME], 
+      [GF_SECURITY_BASEVIEW].[ISSUER_ID] AS [ISSUER_ID], 
+      [GF_SECURITY_BASEVIEW].[TRADING_CURRENCY] AS [TRADING_CURRENCY], 
+      [GF_SECURITY_BASEVIEW].[SHARES_OUTSTANDING] AS [SHARES_OUTSTANDING], 
+      [GF_SECURITY_BASEVIEW].[BETA] AS [BETA], 
+      [GF_SECURITY_BASEVIEW].[BARRA_BETA] AS [BARRA_BETA], 
+      [GF_SECURITY_BASEVIEW].[TICKER] AS [TICKER], 
+      [GF_SECURITY_BASEVIEW].[MSCI] AS [MSCI], 
+      [GF_SECURITY_BASEVIEW].[BARRA] AS [BARRA], 
+      [GF_SECURITY_BASEVIEW].[ISO_COUNTRY_CODE] AS [ISO_COUNTRY_CODE], 
+      [GF_SECURITY_BASEVIEW].[ASEC_SEC_COUNTRY_NAME] AS [ASEC_SEC_COUNTRY_NAME], 
+      [GF_SECURITY_BASEVIEW].[ASHEMM_PROPRIETARY_REGION_CODE] AS [ASHEMM_PROPRIETARY_REGION_CODE], 
+      [GF_SECURITY_BASEVIEW].[ASEC_SEC_COUNTRY_ZONE_NAME] AS [ASEC_SEC_COUNTRY_ZONE_NAME], 
+      [GF_SECURITY_BASEVIEW].[ISSUER_NAME] AS [ISSUER_NAME], 
+      [GF_SECURITY_BASEVIEW].[ASHEMM_ONE_LINER_DESCRIPTION] AS [ASHEMM_ONE_LINER_DESCRIPTION], 
+      [GF_SECURITY_BASEVIEW].[BLOOMBERG_DESCRIPTION] AS [BLOOMBERG_DESCRIPTION], 
+      [GF_SECURITY_BASEVIEW].[ASHMOREEMM_INDUSTRY_ANALYST] AS [ASHMOREEMM_INDUSTRY_ANALYST], 
+      [GF_SECURITY_BASEVIEW].[ASHMOREEMM_PRIMARY_ANALYST] AS [ASHMOREEMM_PRIMARY_ANALYST], 
+      [GF_SECURITY_BASEVIEW].[ASHMOREEMM_PORTFOLIO_MANAGER] AS [ASHMOREEMM_PORTFOLIO_MANAGER], 
+      [GF_SECURITY_BASEVIEW].[WEBSITE] AS [WEBSITE], 
+      [GF_SECURITY_BASEVIEW].[FISCAL_YEAR_END] AS [FISCAL_YEAR_END], 
+      [GF_SECURITY_BASEVIEW].[XREF] AS [XREF], 
+      [GF_SECURITY_BASEVIEW].[REPORTNUMBER] AS [REPORTNUMBER], 
+      [GF_SECURITY_BASEVIEW].[GICS_SECTOR] AS [GICS_SECTOR], 
+      [GF_SECURITY_BASEVIEW].[GICS_SECTOR_NAME] AS [GICS_SECTOR_NAME], 
+      [GF_SECURITY_BASEVIEW].[GICS_INDUSTRY] AS [GICS_INDUSTRY], 
+      [GF_SECURITY_BASEVIEW].[GICS_INDUSTRY_NAME] AS [GICS_INDUSTRY_NAME], 
+      [GF_SECURITY_BASEVIEW].[GICS_SUB_INDUSTRY] AS [GICS_SUB_INDUSTRY], 
+      [GF_SECURITY_BASEVIEW].[GICS_SUB_INDUSTRY_NAME] AS [GICS_SUB_INDUSTRY_NAME], 
+      [GF_SECURITY_BASEVIEW].[SHARES_PER_ADR] AS [SHARES_PER_ADR], 
+      [GF_SECURITY_BASEVIEW].[ADR_UNDERLYING_TICKER] AS [ADR_UNDERLYING_TICKER], 
+      [GF_SECURITY_BASEVIEW].[MARKET_CAP_IN_TRADING_CURRENCY] AS [MARKET_CAP_IN_TRADING_CURRENCY], 
+      [GF_SECURITY_BASEVIEW].[CLOSING_PRICE] AS [CLOSING_PRICE], 
+      [GF_SECURITY_BASEVIEW].[LAST_CLOSE_FX_QUO_CURR_TO_USD] AS [LAST_CLOSE_FX_QUO_CURR_TO_USD], 
+      [GF_SECURITY_BASEVIEW].[LAST_CLOSE_DATE] AS [LAST_CLOSE_DATE], 
+      [GF_SECURITY_BASEVIEW].[TOT_CURR_SHRS_OUTST_ALL_CLASS] AS [TOT_CURR_SHRS_OUTST_ALL_CLASS], 
+      [GF_SECURITY_BASEVIEW].[CHG_PCT_MTD] AS [CHG_PCT_MTD], 
+      [GF_SECURITY_BASEVIEW].[CHG_PCT_QTD] AS [CHG_PCT_QTD], 
+      [GF_SECURITY_BASEVIEW].[CHG_PCT_YTD] AS [CHG_PCT_YTD], 
+      [GF_SECURITY_BASEVIEW].[CHG_PCT_1YR] AS [CHG_PCT_1YR]
+      FROM [dbo].[GF_SECURITY_BASEVIEW] AS [GF_SECURITY_BASEVIEW]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="INTERNAL_ISSUER" EntityType="ExternalResearchModel.Store.INTERNAL_ISSUER" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_ISSUER">
             <DefiningQuery>SELECT 
       [INTERNAL_ISSUER].[ISSUER_ID] AS [ISSUER_ID], 
@@ -361,6 +429,78 @@
           <Property Name="FX_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
           <Property Name="AVG90DAYRATE" Type="decimal" Precision="32" Scale="6" />
           <Property Name="AVG12MonthRATE" Type="decimal" Precision="32" Scale="6" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data_QA.dbo.GF_SECURITY_BASEVIEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="GF_SECURITY_BASEVIEW">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="GF_ID" Type="smallint" />
+          <Property Name="SECURITY_ID" Type="varchar" MaxLength="20" />
+          <Property Name="ASEC_SEC_SHORT_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISSUE_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISIN" Type="nvarchar" MaxLength="255" />
+          <Property Name="SEDOL" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECS_INSTYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_INSTR_TYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECURITY_TYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_FC_SEC_REF" Type="int" />
+          <Property Name="LOOK_THRU_FUND" Type="nvarchar" MaxLength="255" />
+          <Property Name="FIFTYTWO_WEEK_LOW" Type="float" />
+          <Property Name="FIFTYTWO_WEEK_HIGH" Type="float" />
+          <Property Name="SECURITY_VOLUME_AVG_90D" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECURITY_VOLUME_AVG_6M" Type="float" />
+          <Property Name="SECURITY_VOLUME_AVG_30D" Type="float" />
+          <Property Name="GREENFIELD_FLAG" Type="nvarchar" MaxLength="255" />
+          <Property Name="WACC_COST_EQUITY" Type="nvarchar" MaxLength="255" />
+          <Property Name="WACC_COST_PFD" Type="nvarchar" MaxLength="255" />
+          <Property Name="WACC_COST_DEBT" Type="nvarchar" MaxLength="255" />
+          <Property Name="FLOAT_AMOUNT" Type="nvarchar" MaxLength="255" />
+          <Property Name="CUSIP" Type="nvarchar" MaxLength="255" />
+          <Property Name="STOCK_EXCHANGE_ID" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_ISSUED_VOLUME" Type="float" />
+          <Property Name="ISSUER_ID" Type="varchar" MaxLength="20" />
+          <Property Name="TRADING_CURRENCY" Type="nvarchar" MaxLength="255" />
+          <Property Name="SHARES_OUTSTANDING" Type="float" />
+          <Property Name="BETA" Type="nvarchar" MaxLength="100" />
+          <Property Name="BARRA_BETA" Type="float" />
+          <Property Name="TICKER" Type="nvarchar" MaxLength="255" />
+          <Property Name="MSCI" Type="nvarchar" MaxLength="255" />
+          <Property Name="BARRA" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISO_COUNTRY_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_SEC_COUNTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_SEC_COUNTRY_ZONE_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISSUER_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHEMM_ONE_LINER_DESCRIPTION" Type="nvarchar" MaxLength="255" />
+          <Property Name="BLOOMBERG_DESCRIPTION" Type="ntext" />
+          <Property Name="ASHMOREEMM_INDUSTRY_ANALYST" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHMOREEMM_PRIMARY_ANALYST" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHMOREEMM_PORTFOLIO_MANAGER" Type="nvarchar" MaxLength="255" />
+          <Property Name="WEBSITE" Type="nvarchar" MaxLength="255" />
+          <Property Name="FISCAL_YEAR_END" Type="nvarchar" MaxLength="255" />
+          <Property Name="XREF" Type="nvarchar" MaxLength="12" />
+          <Property Name="REPORTNUMBER" Type="nvarchar" MaxLength="5" />
+          <Property Name="GICS_SECTOR" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SECTOR_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_INDUSTRY" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SUB_INDUSTRY" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SUB_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="SHARES_PER_ADR" Type="float" />
+          <Property Name="ADR_UNDERLYING_TICKER" Type="nvarchar" MaxLength="255" />
+          <Property Name="MARKET_CAP_IN_TRADING_CURRENCY" Type="float" />
+          <Property Name="CLOSING_PRICE" Type="float" />
+          <Property Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" Type="float" />
+          <Property Name="LAST_CLOSE_DATE" Type="datetime" />
+          <Property Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Type="float" />
+          <Property Name="CHG_PCT_MTD" Type="nvarchar" MaxLength="100" />
+          <Property Name="CHG_PCT_QTD" Type="nvarchar" MaxLength="100" />
+          <Property Name="CHG_PCT_YTD" Type="nvarchar" MaxLength="100" />
+          <Property Name="CHG_PCT_1YR" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data_QA.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -1283,6 +1423,7 @@
           </FunctionImport>
           <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
           <EntitySet Name="Portfolio_Security_Targets_Union" EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" />
+          <EntitySet Name="GF_SECURITY_BASEVIEW_Local" EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local" />
 
 
 				</EntityContainer>
@@ -1951,6 +2092,75 @@
           <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="32" Scale="6" />
           <Property Type="DateTime" Name="UPDATED" />
+        </EntityType>
+        <EntityType Name="GF_SECURITY_BASEVIEW_Local">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int16" Name="GF_ID" />
+          <Property Type="String" Name="SECURITY_ID" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISSUE_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISIN" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SEDOL" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SECS_INSTYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_INSTR_TYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SECURITY_TYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ASEC_FC_SEC_REF" />
+          <Property Type="String" Name="LOOK_THRU_FUND" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="FIFTYTWO_WEEK_LOW" />
+          <Property Type="Double" Name="FIFTYTWO_WEEK_HIGH" />
+          <Property Type="String" Name="SECURITY_VOLUME_AVG_90D" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="SECURITY_VOLUME_AVG_6M" />
+          <Property Type="Double" Name="SECURITY_VOLUME_AVG_30D" />
+          <Property Type="String" Name="GREENFIELD_FLAG" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="WACC_COST_EQUITY" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="WACC_COST_PFD" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="WACC_COST_DEBT" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FLOAT_AMOUNT" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CUSIP" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="STOCK_EXCHANGE_ID" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="ASEC_ISSUED_VOLUME" />
+          <Property Type="String" Name="ISSUER_ID" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TRADING_CURRENCY" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="SHARES_OUTSTANDING" />
+          <Property Type="String" Name="BETA" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="BARRA_BETA" />
+          <Property Type="String" Name="TICKER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MSCI" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BARRA" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISO_COUNTRY_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_SEC_COUNTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_SEC_COUNTRY_ZONE_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISSUER_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHEMM_ONE_LINER_DESCRIPTION" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BLOOMBERG_DESCRIPTION" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHMOREEMM_INDUSTRY_ANALYST" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHMOREEMM_PRIMARY_ANALYST" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHMOREEMM_PORTFOLIO_MANAGER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="WEBSITE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FISCAL_YEAR_END" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="XREF" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="REPORTNUMBER" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SECTOR" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SECTOR_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_INDUSTRY" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="SHARES_PER_ADR" />
+          <Property Type="String" Name="ADR_UNDERLYING_TICKER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="MARKET_CAP_IN_TRADING_CURRENCY" />
+          <Property Type="Double" Name="CLOSING_PRICE" />
+          <Property Type="Double" Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" />
+          <Property Type="DateTime" Name="LAST_CLOSE_DATE" />
+          <Property Type="Double" Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" />
+          <Property Type="String" Name="CHG_PCT_MTD" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CHG_PCT_QTD" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CHG_PCT_YTD" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CHG_PCT_1YR" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -2742,6 +2952,76 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="GF_SECURITY_BASEVIEW_Local">
+            <EntityTypeMapping TypeName="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local">
+              <MappingFragment StoreEntitySet="GF_SECURITY_BASEVIEW">
+                <ScalarProperty Name="CHG_PCT_1YR" ColumnName="CHG_PCT_1YR" />
+                <ScalarProperty Name="CHG_PCT_YTD" ColumnName="CHG_PCT_YTD" />
+                <ScalarProperty Name="CHG_PCT_QTD" ColumnName="CHG_PCT_QTD" />
+                <ScalarProperty Name="CHG_PCT_MTD" ColumnName="CHG_PCT_MTD" />
+                <ScalarProperty Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" ColumnName="TOT_CURR_SHRS_OUTST_ALL_CLASS" />
+                <ScalarProperty Name="LAST_CLOSE_DATE" ColumnName="LAST_CLOSE_DATE" />
+                <ScalarProperty Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" ColumnName="LAST_CLOSE_FX_QUO_CURR_TO_USD" />
+                <ScalarProperty Name="CLOSING_PRICE" ColumnName="CLOSING_PRICE" />
+                <ScalarProperty Name="MARKET_CAP_IN_TRADING_CURRENCY" ColumnName="MARKET_CAP_IN_TRADING_CURRENCY" />
+                <ScalarProperty Name="ADR_UNDERLYING_TICKER" ColumnName="ADR_UNDERLYING_TICKER" />
+                <ScalarProperty Name="SHARES_PER_ADR" ColumnName="SHARES_PER_ADR" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
+                <ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
+                <ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
+                <ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
+                <ScalarProperty Name="REPORTNUMBER" ColumnName="REPORTNUMBER" />
+                <ScalarProperty Name="XREF" ColumnName="XREF" />
+                <ScalarProperty Name="FISCAL_YEAR_END" ColumnName="FISCAL_YEAR_END" />
+                <ScalarProperty Name="WEBSITE" ColumnName="WEBSITE" />
+                <ScalarProperty Name="ASHMOREEMM_PORTFOLIO_MANAGER" ColumnName="ASHMOREEMM_PORTFOLIO_MANAGER" />
+                <ScalarProperty Name="ASHMOREEMM_PRIMARY_ANALYST" ColumnName="ASHMOREEMM_PRIMARY_ANALYST" />
+                <ScalarProperty Name="ASHMOREEMM_INDUSTRY_ANALYST" ColumnName="ASHMOREEMM_INDUSTRY_ANALYST" />
+                <ScalarProperty Name="BLOOMBERG_DESCRIPTION" ColumnName="BLOOMBERG_DESCRIPTION" />
+                <ScalarProperty Name="ASHEMM_ONE_LINER_DESCRIPTION" ColumnName="ASHEMM_ONE_LINER_DESCRIPTION" />
+                <ScalarProperty Name="ISSUER_NAME" ColumnName="ISSUER_NAME" />
+                <ScalarProperty Name="ASEC_SEC_COUNTRY_ZONE_NAME" ColumnName="ASEC_SEC_COUNTRY_ZONE_NAME" />
+                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
+                <ScalarProperty Name="ASEC_SEC_COUNTRY_NAME" ColumnName="ASEC_SEC_COUNTRY_NAME" />
+                <ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
+                <ScalarProperty Name="BARRA" ColumnName="BARRA" />
+                <ScalarProperty Name="MSCI" ColumnName="MSCI" />
+                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
+                <ScalarProperty Name="BARRA_BETA" ColumnName="BARRA_BETA" />
+                <ScalarProperty Name="BETA" ColumnName="BETA" />
+                <ScalarProperty Name="SHARES_OUTSTANDING" ColumnName="SHARES_OUTSTANDING" />
+                <ScalarProperty Name="TRADING_CURRENCY" ColumnName="TRADING_CURRENCY" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="ASEC_ISSUED_VOLUME" ColumnName="ASEC_ISSUED_VOLUME" />
+                <ScalarProperty Name="STOCK_EXCHANGE_ID" ColumnName="STOCK_EXCHANGE_ID" />
+                <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
+                <ScalarProperty Name="FLOAT_AMOUNT" ColumnName="FLOAT_AMOUNT" />
+                <ScalarProperty Name="WACC_COST_DEBT" ColumnName="WACC_COST_DEBT" />
+                <ScalarProperty Name="WACC_COST_PFD" ColumnName="WACC_COST_PFD" />
+                <ScalarProperty Name="WACC_COST_EQUITY" ColumnName="WACC_COST_EQUITY" />
+                <ScalarProperty Name="GREENFIELD_FLAG" ColumnName="GREENFIELD_FLAG" />
+                <ScalarProperty Name="SECURITY_VOLUME_AVG_30D" ColumnName="SECURITY_VOLUME_AVG_30D" />
+                <ScalarProperty Name="SECURITY_VOLUME_AVG_6M" ColumnName="SECURITY_VOLUME_AVG_6M" />
+                <ScalarProperty Name="SECURITY_VOLUME_AVG_90D" ColumnName="SECURITY_VOLUME_AVG_90D" />
+                <ScalarProperty Name="FIFTYTWO_WEEK_HIGH" ColumnName="FIFTYTWO_WEEK_HIGH" />
+                <ScalarProperty Name="FIFTYTWO_WEEK_LOW" ColumnName="FIFTYTWO_WEEK_LOW" />
+                <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
+                <ScalarProperty Name="ASEC_FC_SEC_REF" ColumnName="ASEC_FC_SEC_REF" />
+                <ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
+                <ScalarProperty Name="ASEC_INSTR_TYPE" ColumnName="ASEC_INSTR_TYPE" />
+                <ScalarProperty Name="SECS_INSTYPE" ColumnName="SECS_INSTYPE" />
+                <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
+                <ScalarProperty Name="ISIN" ColumnName="ISIN" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -2794,6 +3074,7 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.25" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" Width="1.875" PointX="13" PointY="2.75" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local" Width="1.5" PointX="11.375" PointY="8.75" Height="13.326070963541667" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
