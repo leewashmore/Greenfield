@@ -336,6 +336,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<GF_SECURITY_BASEVIEW_Local> _GF_SECURITY_BASEVIEW_Local;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<MODEL_UPLOAD_USER_GROUP> MODEL_UPLOAD_USER_GROUP
+        {
+            get
+            {
+                if ((_MODEL_UPLOAD_USER_GROUP == null))
+                {
+                    _MODEL_UPLOAD_USER_GROUP = base.CreateObjectSet<MODEL_UPLOAD_USER_GROUP>("MODEL_UPLOAD_USER_GROUP");
+                }
+                return _MODEL_UPLOAD_USER_GROUP;
+            }
+        }
+        private ObjectSet<MODEL_UPLOAD_USER_GROUP> _MODEL_UPLOAD_USER_GROUP;
 
         #endregion
         #region AddTo Methods
@@ -474,6 +490,14 @@ namespace GreenField.DAL
         public void AddToGF_SECURITY_BASEVIEW_Local(GF_SECURITY_BASEVIEW_Local gF_SECURITY_BASEVIEW_Local)
         {
             base.AddObject("GF_SECURITY_BASEVIEW_Local", gF_SECURITY_BASEVIEW_Local);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the MODEL_UPLOAD_USER_GROUP EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToMODEL_UPLOAD_USER_GROUP(MODEL_UPLOAD_USER_GROUP mODEL_UPLOAD_USER_GROUP)
+        {
+            base.AddObject("MODEL_UPLOAD_USER_GROUP", mODEL_UPLOAD_USER_GROUP);
         }
 
         #endregion
@@ -7611,6 +7635,90 @@ namespace GreenField.DAL
         private global::System.Decimal _LONG_TERM_GDP_GR;
         partial void OnLONG_TERM_GDP_GRChanging(global::System.Decimal value);
         partial void OnLONG_TERM_GDP_GRChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="MODEL_UPLOAD_USER_GROUP")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class MODEL_UPLOAD_USER_GROUP : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new MODEL_UPLOAD_USER_GROUP object.
+        /// </summary>
+        /// <param name="mANAGER_NAME">Initial value of the MANAGER_NAME property.</param>
+        /// <param name="aNALYST_NAME">Initial value of the ANALYST_NAME property.</param>
+        public static MODEL_UPLOAD_USER_GROUP CreateMODEL_UPLOAD_USER_GROUP(global::System.String mANAGER_NAME, global::System.String aNALYST_NAME)
+        {
+            MODEL_UPLOAD_USER_GROUP mODEL_UPLOAD_USER_GROUP = new MODEL_UPLOAD_USER_GROUP();
+            mODEL_UPLOAD_USER_GROUP.MANAGER_NAME = mANAGER_NAME;
+            mODEL_UPLOAD_USER_GROUP.ANALYST_NAME = aNALYST_NAME;
+            return mODEL_UPLOAD_USER_GROUP;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String MANAGER_NAME
+        {
+            get
+            {
+                return _MANAGER_NAME;
+            }
+            set
+            {
+                if (_MANAGER_NAME != value)
+                {
+                    OnMANAGER_NAMEChanging(value);
+                    ReportPropertyChanging("MANAGER_NAME");
+                    _MANAGER_NAME = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("MANAGER_NAME");
+                    OnMANAGER_NAMEChanged();
+                }
+            }
+        }
+        private global::System.String _MANAGER_NAME;
+        partial void OnMANAGER_NAMEChanging(global::System.String value);
+        partial void OnMANAGER_NAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ANALYST_NAME
+        {
+            get
+            {
+                return _ANALYST_NAME;
+            }
+            set
+            {
+                if (_ANALYST_NAME != value)
+                {
+                    OnANALYST_NAMEChanging(value);
+                    ReportPropertyChanging("ANALYST_NAME");
+                    _ANALYST_NAME = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("ANALYST_NAME");
+                    OnANALYST_NAMEChanged();
+                }
+            }
+        }
+        private global::System.String _ANALYST_NAME;
+        partial void OnANALYST_NAMEChanging(global::System.String value);
+        partial void OnANALYST_NAMEChanged();
 
         #endregion
     

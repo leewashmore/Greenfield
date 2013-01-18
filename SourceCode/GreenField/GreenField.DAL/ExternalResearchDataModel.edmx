@@ -215,6 +215,7 @@
       [MODEL_INPUTS_CTY].[LONG_TERM_GDP_GR] AS [LONG_TERM_GDP_GR]
       FROM [dbo].[MODEL_INPUTS_CTY] AS [MODEL_INPUTS_CTY]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="MODEL_UPLOAD_USER_GROUP" EntityType="ExternalResearchModel.Store.MODEL_UPLOAD_USER_GROUP" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PERIOD_FINANCIALS" EntityType="ExternalResearchModel.Store.PERIOD_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="PERIOD_FINANCIALS">
             <DefiningQuery>SELECT 
       [PERIOD_FINANCIALS].[ISSUER_ID] AS [ISSUER_ID], 
@@ -540,16 +541,11 @@
           <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="PREFERRED" Type="char" MaxLength="1" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="Macroeconomic_Data">
           <Key>
             <PropertyRef Name="COUNTRY_CODE" />
             <PropertyRef Name="FIELD" />
             <PropertyRef Name="YEAR1" />
-            <PropertyRef Name="UPDATE_DATE" />
-            <PropertyRef Name="UPDATE_SOURCE" />
           </Key>
           <Property Name="COUNTRY_CODE" Type="char" Nullable="false" MaxLength="4" />
           <Property Name="FIELD" Type="varchar" Nullable="false" MaxLength="30" />
@@ -593,6 +589,14 @@
           <Property Name="RISK_PREM" Type="decimal" Nullable="false" Precision="32" Scale="6" />
           <Property Name="RISK_FREE_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
           <Property Name="LONG_TERM_GDP_GR" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <EntityType Name="MODEL_UPLOAD_USER_GROUP">
+          <Key>
+            <PropertyRef Name="MANAGER_NAME" />
+            <PropertyRef Name="ANALYST_NAME" />
+          </Key>
+          <Property Name="MANAGER_NAME" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ANALYST_NAME" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data_QA.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -1424,6 +1428,7 @@
           <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
           <EntitySet Name="Portfolio_Security_Targets_Union" EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" />
           <EntitySet Name="GF_SECURITY_BASEVIEW_Local" EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local" />
+          <EntitySet Name="MODEL_UPLOAD_USER_GROUP" EntityType="ExternalResearchModel.MODEL_UPLOAD_USER_GROUP" />
 
 
 				</EntityContainer>
@@ -2161,6 +2166,14 @@
           <Property Type="String" Name="CHG_PCT_QTD" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="CHG_PCT_YTD" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="CHG_PCT_1YR" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MODEL_UPLOAD_USER_GROUP">
+          <Key>
+            <PropertyRef Name="MANAGER_NAME" />
+            <PropertyRef Name="ANALYST_NAME" />
+          </Key>
+          <Property Type="String" Name="MANAGER_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ANALYST_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -3022,6 +3035,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MODEL_UPLOAD_USER_GROUP">
+            <EntityTypeMapping TypeName="ExternalResearchModel.MODEL_UPLOAD_USER_GROUP">
+              <MappingFragment StoreEntitySet="MODEL_UPLOAD_USER_GROUP">
+                <ScalarProperty Name="ANALYST_NAME" ColumnName="ANALYST_NAME" />
+                <ScalarProperty Name="MANAGER_NAME" ColumnName="MANAGER_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -3075,6 +3096,7 @@
         <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.25" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" Width="1.875" PointX="13" PointY="2.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local" Width="1.5" PointX="11.375" PointY="8.75" Height="13.326070963541667" />
+        <EntityTypeShape EntityType="ExternalResearchModel.MODEL_UPLOAD_USER_GROUP" Width="1.5" PointX="13.375" PointY="8.75" Height="1.4033821614583388" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
