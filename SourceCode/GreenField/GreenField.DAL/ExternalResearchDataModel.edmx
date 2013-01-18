@@ -1517,8 +1517,6 @@
 						<PropertyRef Name="COUNTRY_CODE" />
 						<PropertyRef Name="FIELD" />
 						<PropertyRef Name="YEAR1" />
-						<PropertyRef Name="UPDATE_DATE" />
-						<PropertyRef Name="UPDATE_SOURCE" />
 					</Key>
 					<Property Name="COUNTRY_CODE" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="true" />
 					<Property Name="FIELD" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />

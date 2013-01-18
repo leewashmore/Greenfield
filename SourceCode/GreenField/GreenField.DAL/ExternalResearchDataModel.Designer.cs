@@ -7195,7 +7195,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.DateTime UPDATE_DATE
         {
@@ -7205,14 +7205,11 @@ namespace GreenField.DAL
             }
             set
             {
-                if (_UPDATE_DATE != value)
-                {
-                    OnUPDATE_DATEChanging(value);
-                    ReportPropertyChanging("UPDATE_DATE");
-                    _UPDATE_DATE = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("UPDATE_DATE");
-                    OnUPDATE_DATEChanged();
-                }
+                OnUPDATE_DATEChanging(value);
+                ReportPropertyChanging("UPDATE_DATE");
+                _UPDATE_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UPDATE_DATE");
+                OnUPDATE_DATEChanged();
             }
         }
         private global::System.DateTime _UPDATE_DATE;
@@ -7222,7 +7219,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String UPDATE_SOURCE
         {
@@ -7232,14 +7229,11 @@ namespace GreenField.DAL
             }
             set
             {
-                if (_UPDATE_SOURCE != value)
-                {
-                    OnUPDATE_SOURCEChanging(value);
-                    ReportPropertyChanging("UPDATE_SOURCE");
-                    _UPDATE_SOURCE = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("UPDATE_SOURCE");
-                    OnUPDATE_SOURCEChanged();
-                }
+                OnUPDATE_SOURCEChanging(value);
+                ReportPropertyChanging("UPDATE_SOURCE");
+                _UPDATE_SOURCE = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("UPDATE_SOURCE");
+                OnUPDATE_SOURCEChanged();
             }
         }
         private global::System.String _UPDATE_SOURCE;
