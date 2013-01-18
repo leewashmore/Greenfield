@@ -26,12 +26,12 @@ namespace GreenField.Targeting.Server
         IEnumerable<SecurityModel> PickSecuritiesFromBasket(String pattern, Int32 atMost, Int32 basketId);
 
         [OperationContract]
-        IEnumerable<IssueModel> SaveBroadGlobalActive(BroadGlobalActive.RootModel model);
+        IEnumerable<IssueModel> SaveBroadGlobalActive(BroadGlobalActive.RootModel model, string username);
 
 		// backet targets
 
         [OperationContract]
-        BasketTargets.PickerModel GetBasketPicker();
+        BasketTargets.PickerModel GetBasketPicker(string username);
 
         [OperationContract]
         BasketTargets.RootModel GetBasketTargets(Int32 targetingTypeGroupId, Int32 basketId);
@@ -40,12 +40,12 @@ namespace GreenField.Targeting.Server
         BasketTargets.RootModel RecalculateBasketTargets(BasketTargets.RootModel model);
 
 		[OperationContract]
-		IEnumerable<IssueModel> SaveBasketTargets(BasketTargets.RootModel model);
+        IEnumerable<IssueModel> SaveBasketTargets(BasketTargets.RootModel model, string username);
 
 		// bottom up
 
         [OperationContract]
-        BottomUp.PickerModel GetBottomUpPortfolioPicker();
+        BottomUp.PickerModel GetBottomUpPortfolioPicker(string username);
 
         [OperationContract]
         BottomUp.RootModel GetBottomUpModel(String bottomUpPortfolioId);
@@ -54,7 +54,7 @@ namespace GreenField.Targeting.Server
         BottomUp.RootModel RecalculateBottomUp(BottomUp.RootModel model);
 
         [OperationContract]
-        IEnumerable<IssueModel> SaveBottomUp(BottomUp.RootModel model);
+        IEnumerable<IssueModel> SaveBottomUp(BottomUp.RootModel model, string username);
 
 
         // comments

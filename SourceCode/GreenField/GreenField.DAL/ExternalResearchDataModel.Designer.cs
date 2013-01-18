@@ -228,22 +228,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<REUTERS_XREF> REUTERS_XREF
-        {
-            get
-            {
-                if ((_REUTERS_XREF == null))
-                {
-                    _REUTERS_XREF = base.CreateObjectSet<REUTERS_XREF>("REUTERS_XREF");
-                }
-                return _REUTERS_XREF;
-            }
-        }
-        private ObjectSet<REUTERS_XREF> _REUTERS_XREF;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<PRICE> PRICES
         {
             get
@@ -418,14 +402,6 @@ namespace GreenField.DAL
         public void AddToPERIOD_FINANCIALS_DISPLAY(PERIOD_FINANCIALS_DISPLAY pERIOD_FINANCIALS_DISPLAY)
         {
             base.AddObject("PERIOD_FINANCIALS_DISPLAY", pERIOD_FINANCIALS_DISPLAY);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the REUTERS_XREF EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToREUTERS_XREF(REUTERS_XREF rEUTERS_XREF)
-        {
-            base.AddObject("REUTERS_XREF", rEUTERS_XREF);
         }
     
         /// <summary>
@@ -724,7 +700,8 @@ namespace GreenField.DAL
         /// <param name="cURRENCY">No Metadata Documentation available.</param>
         /// <param name="eSTIMATE_ID">No Metadata Documentation available.</param>
         /// <param name="pERIOD_YEAR">No Metadata Documentation available.</param>
-        public ObjectResult<ConsensusEstimateValuation> GetConsensusEstimatesValuation(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String cURRENCY, Nullable<global::System.Int32> eSTIMATE_ID, Nullable<global::System.Int32> pERIOD_YEAR)
+        /// <param name="security_ID">No Metadata Documentation available.</param>
+        public ObjectResult<ConsensusEstimateValuation> GetConsensusEstimatesValuation(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String cURRENCY, Nullable<global::System.Int32> eSTIMATE_ID, Nullable<global::System.Int32> pERIOD_YEAR, global::System.String security_ID)
         {
             ObjectParameter iSSUER_IDParameter;
             if (iSSUER_ID != null)
@@ -796,7 +773,17 @@ namespace GreenField.DAL
                 pERIOD_YEARParameter = new ObjectParameter("PERIOD_YEAR", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<ConsensusEstimateValuation>("GetConsensusEstimatesValuation", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter, eSTIMATE_IDParameter, pERIOD_YEARParameter);
+            ObjectParameter security_IDParameter;
+            if (security_ID != null)
+            {
+                security_IDParameter = new ObjectParameter("Security_ID", security_ID);
+            }
+            else
+            {
+                security_IDParameter = new ObjectParameter("Security_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ConsensusEstimateValuation>("GetConsensusEstimatesValuation", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter, eSTIMATE_IDParameter, pERIOD_YEARParameter, security_IDParameter);
         }
     
         /// <summary>
@@ -7250,215 +7237,6 @@ namespace GreenField.DAL
         private global::System.Decimal _ADR_CONV;
         partial void OnADR_CONVChanging(global::System.Decimal value);
         partial void OnADR_CONVChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="REUTERS_XREF")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class REUTERS_XREF : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new REUTERS_XREF object.
-        /// </summary>
-        /// <param name="reportNumber">Initial value of the ReportNumber property.</param>
-        /// <param name="iSSUER_ID">Initial value of the ISSUER_ID property.</param>
-        /// <param name="pROVIDER">Initial value of the PROVIDER property.</param>
-        public static REUTERS_XREF CreateREUTERS_XREF(global::System.String reportNumber, global::System.String iSSUER_ID, global::System.String pROVIDER)
-        {
-            REUTERS_XREF rEUTERS_XREF = new REUTERS_XREF();
-            rEUTERS_XREF.ReportNumber = reportNumber;
-            rEUTERS_XREF.ISSUER_ID = iSSUER_ID;
-            rEUTERS_XREF.PROVIDER = pROVIDER;
-            return rEUTERS_XREF;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String ReportNumber
-        {
-            get
-            {
-                return _ReportNumber;
-            }
-            set
-            {
-                if (_ReportNumber != value)
-                {
-                    OnReportNumberChanging(value);
-                    ReportPropertyChanging("ReportNumber");
-                    _ReportNumber = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("ReportNumber");
-                    OnReportNumberChanged();
-                }
-            }
-        }
-        private global::System.String _ReportNumber;
-        partial void OnReportNumberChanging(global::System.String value);
-        partial void OnReportNumberChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Xref
-        {
-            get
-            {
-                return _Xref;
-            }
-            set
-            {
-                OnXrefChanging(value);
-                ReportPropertyChanging("Xref");
-                _Xref = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Xref");
-                OnXrefChanged();
-            }
-        }
-        private global::System.String _Xref;
-        partial void OnXrefChanging(global::System.String value);
-        partial void OnXrefChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String ISSUER_ID
-        {
-            get
-            {
-                return _ISSUER_ID;
-            }
-            set
-            {
-                if (_ISSUER_ID != value)
-                {
-                    OnISSUER_IDChanging(value);
-                    ReportPropertyChanging("ISSUER_ID");
-                    _ISSUER_ID = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("ISSUER_ID");
-                    OnISSUER_IDChanged();
-                }
-            }
-        }
-        private global::System.String _ISSUER_ID;
-        partial void OnISSUER_IDChanging(global::System.String value);
-        partial void OnISSUER_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String SECURITY_ID
-        {
-            get
-            {
-                return _SECURITY_ID;
-            }
-            set
-            {
-                OnSECURITY_IDChanging(value);
-                ReportPropertyChanging("SECURITY_ID");
-                _SECURITY_ID = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("SECURITY_ID");
-                OnSECURITY_IDChanged();
-            }
-        }
-        private global::System.String _SECURITY_ID;
-        partial void OnSECURITY_IDChanging(global::System.String value);
-        partial void OnSECURITY_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ASEC_SEC_SHORT_NAME
-        {
-            get
-            {
-                return _ASEC_SEC_SHORT_NAME;
-            }
-            set
-            {
-                OnASEC_SEC_SHORT_NAMEChanging(value);
-                ReportPropertyChanging("ASEC_SEC_SHORT_NAME");
-                _ASEC_SEC_SHORT_NAME = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ASEC_SEC_SHORT_NAME");
-                OnASEC_SEC_SHORT_NAMEChanged();
-            }
-        }
-        private global::System.String _ASEC_SEC_SHORT_NAME;
-        partial void OnASEC_SEC_SHORT_NAMEChanging(global::System.String value);
-        partial void OnASEC_SEC_SHORT_NAMEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String NAME
-        {
-            get
-            {
-                return _NAME;
-            }
-            set
-            {
-                OnNAMEChanging(value);
-                ReportPropertyChanging("NAME");
-                _NAME = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("NAME");
-                OnNAMEChanged();
-            }
-        }
-        private global::System.String _NAME;
-        partial void OnNAMEChanging(global::System.String value);
-        partial void OnNAMEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String PROVIDER
-        {
-            get
-            {
-                return _PROVIDER;
-            }
-            set
-            {
-                if (_PROVIDER != value)
-                {
-                    OnPROVIDERChanging(value);
-                    ReportPropertyChanging("PROVIDER");
-                    _PROVIDER = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("PROVIDER");
-                    OnPROVIDERChanged();
-                }
-            }
-        }
-        private global::System.String _PROVIDER;
-        partial void OnPROVIDERChanging(global::System.String value);
-        partial void OnPROVIDERChanged();
 
         #endregion
     

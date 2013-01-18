@@ -197,7 +197,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             this.StartLoading();
             var client = this.clientFactory.CreateClient();
             client.SaveBroadGlobalActiveCompleted += (sender, args) => RuntimeHelper.TakeCareOfResult("Saving data from the editor", args, x => x.Result, this.FinishSaving, this.FinishLoading);
-            client.SaveBroadGlobalActiveAsync(this.RootModel);
+            client.SaveBroadGlobalActiveAsync(this.RootModel, this.clientFactory.GetUsername());
         }
 
         protected override void RequestReloading(EditorInput input)
