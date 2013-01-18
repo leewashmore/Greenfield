@@ -1059,17 +1059,15 @@ namespace GreenField.Web.Services
                 objTarget = check ? portfolioTargets.Where(a => a.IssuerId == issuerId).Sum(a => a.Target)
                     : portfolioTargets.Where(a => a.SecurityId == securityId.ToString()).Sum(a => a.Target);
            // }
-            //Adjusted Portfolio Target 
-            //temp.PortfolioTarget = objTarget != null ? Math.Round(Convert.ToDecimal(objTarget), 1) + "%" : Math.Round(0.0) + "%";
-            temp.PortfolioTarget = objTarget != null ? Math.Round(Convert.ToDecimal(objTarget) * 100, 2) : Math.Round(Convert.ToDecimal(0.00)) ;
+            //Portfolio Target 
+             temp.PortfolioTarget = objTarget != null ? Math.Round(Convert.ToDecimal(objTarget) * 100, 2) : Math.Round(Convert.ToDecimal(0.00)) ;
 
 
             targetSumPortfolio = portfolioCountryTargets.TryGetValue(country, out value) ? value : 0;
             if (targetSumPortfolio != 0)
             {
                 objTargetInCountry = objTarget / targetSumPortfolio;
-                //Adjusted Portfolio Target in Country 
-                //temp.PortfolioTargetInCountry = objTargetInCountry != null ? Math.Round(Convert.ToDecimal(objTargetInCountry), 1) + "%" : Math.Round(0.0) + "%";
+                //Portfolio Target in Country 
                 temp.PortfolioTargetInCountry = objTargetInCountry != null ? Math.Round(Convert.ToDecimal(objTargetInCountry) * 100, 2) : Math.Round(Convert.ToDecimal(0.00));
             }
             temp.Holdings = check ? Math.Round(Convert.ToDecimal(portfolioHoldingsData.Where(a => a.ISSUER_ID == issuerId)
@@ -1082,40 +1080,31 @@ namespace GreenField.Web.Services
                     ? Convert.ToDecimal(benchmarkData.Where(a => a.ISSUER_ID == issuerId).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()) / 100
                     : Convert.ToDecimal(benchmarkData.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()) / 100;
             }
-            //Adjusted Benchmark Weight 
-            //temp.BenchmarkWeight = objBenchmarkWeight != null ? Math.Round(Convert.ToDecimal(objBenchmarkWeight), 1) + "%" : 0.0 + "%";
+            //Benchmark Weight 
             temp.BenchmarkWeight = objBenchmarkWeight != null ? Math.Round(Convert.ToDecimal(objBenchmarkWeight) * 100, 2) : Convert.ToDecimal(0.00);
             targetSumBenchmark = benchmarkCountryData.TryGetValue(country, out value) ? value / 100 : 0;
-            //temp.BenchmarkWeightInCountry = Math.Round(0.00) + "%";
             temp.BenchmarkWeightInCountry = Math.Round(0.00) ;
             if (targetSumBenchmark != 0)
             {
                 objBenchmarkWeightInCountry = objBenchmarkWeight / targetSumBenchmark;
-                //Adjusted Benchmark Weight in Country 
-                //temp.BenchmarkWeightInCountry = objBenchmarkWeightInCountry != null ? Math.Round(Convert.ToDecimal(objBenchmarkWeightInCountry), 1) + "%" 
-                //    : Math.Round(0.0) + "%";
+                //Benchmark Weight in Country 
                 temp.BenchmarkWeightInCountry = objBenchmarkWeightInCountry != null ? Math.Round(Convert.ToDecimal(objBenchmarkWeightInCountry) * 100, 2) 
                     : Math.Round(Convert.ToDecimal(0.00));
             }
 
-            /*
-            temp.ActivePosition = Math.Round(0.00) + "%";
-            temp.ActivePositionInCountry = Math.Round(0.00) + "%";
-             */
+
             temp.ActivePosition = Math.Round(0.00);
             temp.ActivePositionInCountry = Math.Round(0.00);
 
-            if (objBenchmarkWeight != 0 && objTarget != null && objBenchmarkWeight!= null)
+            if (objBenchmarkWeight != null && objTarget != null && objBenchmarkWeight!= null)
             {
-                //Active benchmark calc is incorrect 
-                //temp.ActivePosition = Math.Round(Convert.ToDecimal(objTarget / objBenchmarkWeight), 1);
+                //Active benchmark calc
                 temp.ActivePosition = Math.Round(Convert.ToDecimal(objTarget - objBenchmarkWeight) * 100, 2);
             }
 
-            if (objBenchmarkWeightInCountry != 0 && objTargetInCountry != null && objBenchmarkWeightInCountry!= null)
+            if (objBenchmarkWeightInCountry != null && objTargetInCountry != null && objBenchmarkWeightInCountry!= null)
             {
-                //Active position in country calc is incorrect 
-                //temp.ActivePositionInCountry = Math.Round(Convert.ToDecimal(objTargetInCountry / objBenchmarkWeightInCountry), 1);
+                //Active position in country calc 
                 temp.ActivePositionInCountry = Math.Round(Convert.ToDecimal(objTargetInCountry - objBenchmarkWeightInCountry) * 100, 2);
             }
             return temp;
