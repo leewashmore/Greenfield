@@ -123,9 +123,21 @@
 
             <Button x:Name="btnDownload" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"  Content="Download Model" HorizontalContentAlignment="Center" Width="120" 
                 VerticalAlignment="Top" Click="btnDownload_Click" IsEnabled="{Binding EnableDownload}"/>
-
+            
             <Button x:Name="bOpenFileDialog" Content="Upload Model" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Center"
-                    VerticalAlignment="Top" Width="120" HorizontalAlignment="Left" Click="bOpenFileDialog_Click" />
+                    VerticalAlignment="Top" Width="120" Click="bOpenFileDialog_Click" />
+            <telerik:RadGridView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" ShowGroupPanel="False" IsReadOnly="True"
+                                 ShowColumnHeaders="False" ShowColumnFooters="False" AutoGenerateColumns="False"
+                                 HorizontalAlignment="Left" x:Name="UploadResults" Visibility="{Binding UploadResultsVisibility}" 
+                                 ItemsSource="{Binding UploadResults}" VerticalAlignment="Top" Height="Auto">
+                <telerik:RadGridView.Columns >
+                    <telerik:GridViewDataColumn UniqueName="FileName" DataMemberBinding="{Binding FileName}" 
+                                                        TextAlignment="Left"  />
+                    <telerik:GridViewDataColumn UniqueName="Message" DataMemberBinding="{Binding Message}" 
+                                                        TextAlignment="Left"/>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+            
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

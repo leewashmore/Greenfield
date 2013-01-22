@@ -5986,7 +5986,7 @@ namespace GreenField.ServiceCaller
         /// <param name="fileStream">FileStream</param>
         /// <param name="userName">UserName</param>
         /// <param name="callback">callback</param>
-        public void UploadModelExcelSheet(byte[] fileStream, string userName, Action<string> callback)
+        public void UploadModelExcelSheet(string fileName, byte[] fileStream, string userName, Action<string, string> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -5999,25 +5999,26 @@ namespace GreenField.ServiceCaller
                 {
                     if (callback != null)
                     {
-                        callback(e.Result);
+                        callback(fileName, e.Result);
                     }
                 }
                 else if (e.Error is FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault>)
                 {
                     FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault> fault
                       = e.Error as FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault>;
-                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    //Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                     {
-                        callback(null);
+                        callback(fileName, fault.Reason.ToString());
                     }
                 }
                 else
                 {
-                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    var msg = e.Error.ToString();
+                    //Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                     {
-                        callback(null);
+                        callback(fileName, msg);
                     }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(),

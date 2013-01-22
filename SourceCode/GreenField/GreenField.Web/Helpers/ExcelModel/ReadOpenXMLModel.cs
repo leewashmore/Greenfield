@@ -2900,9 +2900,9 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                ExternalResearchEntities entities = new ExternalResearchEntities();
-                var group = entities.MODEL_UPLOAD_USER_GROUP.Where(x => x.MANAGER_NAME.ToUpper() == userName.ToUpper()).Select(x => x.ANALYST_NAME.ToUpper()).ToList();
-                var data = entities.GF_SECURITY_BASEVIEW_Local.Where(a => 
+                //ExternalResearchEntities entities = new ExternalResearchEntities();
+                var group = ExternalResearchEntity.MODEL_UPLOAD_USER_GROUP.Where(x => x.MANAGER_NAME.ToUpper() == userName.ToUpper()).Select(x => x.ANALYST_NAME.ToUpper()).ToList();
+                var data = ExternalResearchEntity.GF_SECURITY_BASEVIEW_Local.Where(a => 
                     (
                         a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper() || 
                         a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper() ||
