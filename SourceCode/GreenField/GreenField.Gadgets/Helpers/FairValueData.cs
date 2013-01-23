@@ -29,7 +29,30 @@ namespace GreenField.Gadgets.Helpers
                 if (source != value)
                 {
                     source = value;
+                    SourceLabel = value;
+                    if (source == "Primary" || source == "Industry")
+                        SourceLabel += " Analyst";
                     RaisePropertyChanged(() => this.Source);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Source of FairValueDataLabel
+        /// </summary>
+        private String sourceLabel;
+        public string SourceLabel
+        {
+            get
+            {
+                return sourceLabel;
+            }
+            set
+            {
+                if (sourceLabel != value)
+                {
+                    sourceLabel = value;
+                    RaisePropertyChanged(() => this.SourceLabel);
                 }
             }
         }

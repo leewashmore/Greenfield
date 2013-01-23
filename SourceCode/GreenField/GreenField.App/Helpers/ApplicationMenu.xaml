@@ -161,8 +161,10 @@
                                              Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem x:Name="rmItemLoadModel" Header="Model Upload" Command="{Binding DashboardCompanyDocumentsLoadModelCommand}"
                                              Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!-- TODO
                         <telerik:RadMenuItem x:Name="rmItemMacroeconomicUpload" Header="Macroeconomic Data Upload" Command="{Binding DashboardCompanyDocumentsMacroeconomicUploadCommand}"
                                              Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        -->
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem x:Name="rmItemCharting" Header="Charting">
                         <telerik:RadMenuItem Header="Price Comparison" x:Name="rmItemPriceComparison"
