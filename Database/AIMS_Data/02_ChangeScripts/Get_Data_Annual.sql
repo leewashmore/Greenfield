@@ -134,9 +134,9 @@ as
 		,  sr.PeriodLength
 		,  dm.FX_CONV_TYPE
 		,  dm.DATA_ID
-		,  fx.FX_RATE
-		,  fx.AVG90DAYRATE
-		,  fx.AVG12MonthRATE
+		--,  fx.FX_RATE
+		--,  fx.AVG90DAYRATE
+		--,  fx.AVG12MonthRATE
 		,  ((s.Amount)/case when RepToConvExRate <> 0.0 then RepToConvExRate else 1.0 end) * (case when isnull(sr.PeriodLengthCode,'M') = 'M' then 12 else 52 end) / isnull(sr.PeriodLength, 12)
 		   as Amount12Month 
 		,  @ISO_COUNTRY_CODE as ISO_COUNTRY_CODE
@@ -146,7 +146,7 @@ as
 	 inner join Reuters.dbo.tblStatementRef sr on sr.RefNo = s.RefNo and sr.ReportNumber = s.ReportNumber
 	 inner join #LATEST a on a.ReportNumber = sr.ReportNumber and a.RefNo = sr.RefNo and a.UpdateDate = sr.UpdateDate
 	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = s.ReportNumber
-	  left join dbo.FX_RATES fx on fx.FX_DATE = sr.PeriodEndDate and fx.CURRENCY = sr.CurrencyReported
+	  --left join dbo.FX_RATES fx on fx.FX_DATE = sr.PeriodEndDate and fx.CURRENCY = sr.CurrencyReported
 	 inner join dbo.DATA_MASTER dm on dm.COA = s.COA
 	 inner join #MultipleCheck m on m.ReportNumber = sr.ReportNumber and m.FiscalYear = sr.FiscalYear and m.StatementType = sr.StatementType -- added 1/7/13 (JM) to join to multiple check to only pull for period where single reporting per period
 	 where 1=1
@@ -189,9 +189,9 @@ as
 		,  12 as PeriodLength
 		,  dm.FX_CONV_TYPE
 		,  dm.DATA_ID
-		,  fx.FX_RATE
-		,  fx.AVG90DAYRATE
-		,  fx.AVG12MonthRATE
+		--,  fx.FX_RATE
+		--,  fx.AVG90DAYRATE
+		--,  fx.AVG12MonthRATE
 		,  case when a1.Amount12Month is null then ((s.Amount)/case when RepToConvExRate <> 0.0 then RepToConvExRate else 1.0 end) * (12/a2.PeriodLength2)
 		   else (((s.Amount)/case when RepToConvExRate <> 0.0 then RepToConvExRate else 1.0 end) * (a2.percent2)) + a1.Amount12Month end
 		   as Amount12Month 
@@ -201,7 +201,7 @@ as
 	 inner join Reuters.dbo.tblStatementRef sr on sr.RefNo = s.RefNo and sr.ReportNumber = s.ReportNumber
 	 inner join #MultipleLatest a2 on a2.ReportNumber = sr.ReportNumber and a2.RefNo2 = sr.RefNo and a2.PeriodEndDate2 = sr.PeriodEndDate
 	 inner join Reuters.dbo.tblStdCompanyInfo sci on sci.ReportNumber = s.ReportNumber
-	  left join dbo.FX_RATES fx on fx.FX_DATE = sr.PeriodEndDate and fx.CURRENCY = sr.CurrencyReported
+	  --left join dbo.FX_RATES fx on fx.FX_DATE = sr.PeriodEndDate and fx.CURRENCY = sr.CurrencyReported
 	 inner join dbo.DATA_MASTER dm on dm.COA = s.COA
 	 inner join (select sr.ReportNumber
 			, sr.FiscalYear
@@ -273,69 +273,8 @@ as
 --  from #Reuters r
 -- order by r.PeriodEndDate, r.DATA_ID
 
-			-- Insert the Reuters data for the currency it was reported in
-			-- So long as that currency is the Country currency or USD
+			-- Insert the Reuters data in USD
 			insert into #PF --PERIOD_FINANCIALS
-			select r.ISSUER_ID
-				,  ' ' as SECURITY_ID
-				,  ' ' as COA_TYPE
-				,  'REUTERS' as DATA_SOURCE
-				,  'REUTERS' as ROOT_SOURCE
-				,  r.UpdateDate as ROOT_SOURCE_DATE
-				,  'A' as PERIOD_TYPE
-				,  r.FiscalYear as PERIOD_YEAR
-				,  r.PeriodEndDate as PERIOD_END_DATE
-				,  'FISCAL' as FISCAL_TYPE
-				,  r.CurrencyReported as CURRENCY
-				,  r.DATA_ID as DATA_ID
-				,  r.Amount12Month	as AMOUNT
-				,  'Get_Data_Annual Insert into #PF 1' as CALCULATION_DIAGRAM
-				,  r.CurrencyReported as SOURCE_CURRENCY
-				,  'ACTUAL' as AMOUNT_TYPE
-			  from #Reuters r
-			 where (r.CurrencyReported = @CURRENCY_CODE or r.CurrencyReported = 'USD')
-
-			if @VERBOSE = 'Y'
-				BEGIN
-					print 'After insert USD1' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-					set @START = GETDATE()
-					print '>> ' + CONVERT(varchar(40), getdate(), 121) + ' - before insert USD2'
-				END
-				
-			-- Insert the Reuters data, converted to Local currency, for those reported in USD currency
-			insert into #PF  --PERIOD_FINANCIALS
-			select r.ISSUER_ID
-				,  ' ' as SECURITY_ID
-				,  ' ' as COA_TYPE
-				,  'REUTERS' as DATA_SOURCE
-				,  'REUTERS' as ROOT_SOURCE
-				,  r.UpdateDate as ROOT_SOURCE_DATE
-				,  'A' as PERIOD_TYPE
-				,  r.FiscalYear as PERIOD_YEAR
-				,  r.PeriodEndDate as PERIOD_END_DATE
-				,  'FISCAL' as FISCAL_TYPE
-				,  r.CountryCurrency as CURRENCY
-				,  r.DATA_ID as DATA_ID
-				,  case when FX_CONV_TYPE = 'PIT' then r.Amount12Month * r.FX_RATE
-						when FX_CONV_TYPE = 'AVG' then r.Amount12Month * r.AVG12MonthRATE
-						else r.Amount12Month end
-				,  'Get_Data_Annual Insert into #PF 2' as CALCULATION_DIAGRAM
-				,  r.CurrencyReported as SOURCE_CURRENCY
-				,  'ACTUAL' as AMOUNT_TYPE
-			  from #Reuters r
-			 where CurrencyReported = 'USD'
-			   and isnull(r.FX_RATE, 0.0) <> 0.0
-			   and isnull(r.AVG12MonthRATE, 0.0) <> 0.0
-
-			if @VERBOSE = 'Y'
-				BEGIN
-					print 'After insert USD2' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
-					set @START = GETDATE()
-					print '>> ' + CONVERT(varchar(40), getdate(), 121) + ' - before insert non-USD1'
-				END
-				
-			-- Insert the Reuters data, converted to USD, for those reported in the country currency
-			insert into #PF  --PERIOD_FINANCIALS
 			select r.ISSUER_ID
 				,  ' ' as SECURITY_ID
 				,  ' ' as COA_TYPE
@@ -348,32 +287,29 @@ as
 				,  'FISCAL' as FISCAL_TYPE
 				,  'USD' as CURRENCY
 				,  r.DATA_ID as DATA_ID
---				,  case when FX_CONV_TYPE = 'PIT' then r.ReportedAmount * r.FX_RATE
---						when FX_CONV_TYPE = 'AVG' then r.ReportedAmount * r.AVG12MonthRATE
---						else r.ReportedAmount end
-				,  case when FX_CONV_TYPE = 'PIT' then r.Amount12Month / r.FX_RATE
-						when FX_CONV_TYPE = 'AVG' then r.Amount12Month / r.AVG12MonthRATE
-						else r.Amount12Month end
-				,  'Get_Data_Annual Insert into #PF 3' as CALCULATION_DIAGRAM
+				,  case when r.FX_CONV_TYPE = 'PIT' then r.Amount12Month / fx.FX_RATE
+						when FX_CONV_TYPE = 'AVG' then r.Amount12Month / fx.AVG12MonthRATE
+						else r.Amount12Month end as AMOUNT
+--				,  r.Amount12Month	as AMOUNT
+				,  'Get_Data_Annual Insert into #PF USD' as CALCULATION_DIAGRAM
 				,  r.CurrencyReported as SOURCE_CURRENCY
 				,  'ACTUAL' as AMOUNT_TYPE
 			  from #Reuters r
-			 where r.CurrencyReported = r.CountryCurrency
-			   and CurrencyReported <> 'USD'
-			   and isnull(r.FX_RATE, 0.0) <> 0.0
-			   and isnull(r.AVG12MonthRATE, 0.0) <> 0.0
-
-
+			  left join dbo.FX_RATES fx on fx.FX_DATE = r.PeriodEndDate and fx.CURRENCY = r.CurrencyReported
+			 where isnull(fx.FX_RATE, 0.0) <> 0.0
+			   and isnull(fx.AVG12MonthRATE, 0.0) <> 0.0
+			
+			
 			if @VERBOSE = 'Y'
 				BEGIN
-					print 'After insert non-USD1' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+					print 'After insert USD' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 					set @START = GETDATE()
-					print '>> ' + CONVERT(varchar(40), getdate(), 121) + ' - before insert non-USD2'
+					print '>> ' + CONVERT(varchar(40), getdate(), 121) + ' - before insert Local'
 				END
-
-		-- Otherwise
-			-- Insert the Reuters data, converted to Country currency, for those that have a different non-USD currency
-			insert into #PF  --PERIOD_FINANCIALS
+				
+				
+			-- Insert the Reuters data in Local
+			insert into #PF --PERIOD_FINANCIALS
 			select r.ISSUER_ID
 				,  ' ' as SECURITY_ID
 				,  ' ' as COA_TYPE
@@ -384,28 +320,32 @@ as
 				,  r.FiscalYear as PERIOD_YEAR
 				,  r.PeriodEndDate as PERIOD_END_DATE
 				,  'FISCAL' as FISCAL_TYPE
-				,  @currency_code as CURRENCY
+				,  r.CountryCurrency as CURRENCY
 				,  r.DATA_ID as DATA_ID
-				,  case when FX_CONV_TYPE = 'PIT' then r.Amount12Month / r.FX_RATE
-						when FX_CONV_TYPE = 'AVG' then r.Amount12Month / r.AVG12MonthRATE
-						else r.Amount12Month end
-				,  'Get_Data_Annual Insert into #PF 5' as CALCULATION_DIAGRAM
+				,  case when r.FX_CONV_TYPE = 'PIT' then (r.Amount12Month / fx.FX_RATE) * fx2.FX_RATE
+						when FX_CONV_TYPE = 'AVG' then (r.Amount12Month / fx.AVG12MonthRATE) * fx2.AVG12MonthRATE
+						else r.Amount12Month end as AMOUNT
+--				,  r.Amount12Month	as AMOUNT
+				,  'Get_Data_Annual Insert into #PF Local' as CALCULATION_DIAGRAM
 				,  r.CurrencyReported as SOURCE_CURRENCY
 				,  'ACTUAL' as AMOUNT_TYPE
 			  from #Reuters r
-			 inner join dbo.FX_RATES fx on fx.CURRENCY = @CURRENCY_CODE and fx.FX_DATE = r.PeriodEndDate
-			 where r.CurrencyReported <> r.CountryCurrency
-			   and r.CurrencyReported <> 'USD'
-			   and isnull(r.FX_RATE, 0.0) <> 0.0
-			   and isnull(r.AVG12MonthRATE, 0.0) <> 0.0
-
+			  left join dbo.FX_RATES fx on fx.FX_DATE = r.PeriodEndDate and fx.CURRENCY = r.CurrencyReported
+			  left join dbo.FX_RATES fx2 on fx2.FX_DATE = r.PeriodEndDate and fx2.CURRENCY = r.CountryCurrency
+			 where isnull(fx.FX_RATE, 0.0) <> 0.0
+			   and isnull(fx.AVG12MonthRATE, 0.0) <> 0.0
+			   and isnull(fx2.FX_RATE, 0.0) <> 0.0
+			   and isnull(fx2.AVG12MonthRATE, 0.0) <> 0.0
+			
+			
 			if @VERBOSE = 'Y'
 				BEGIN
-					print 'After insert Otherwise1' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
+					print 'After insert Local' + ' ISSUER_ID = ' +@ISSUER_ID + ' - Elapsed Time ' + 	CONVERT(varchar(40), cast(DATEDIFF(millisecond, @START, GETDATE()) as decimal) /1000)
 					set @START = GETDATE()
-					print '>> ' + CONVERT(varchar(40), getdate(), 121) + ' - Copy Consensus data '
+					print '>> ' + CONVERT(varchar(40), getdate(), 121) + ' - before insert Consensus'
 				END
-
+				
+	
 
 			-- Collect the Consensus data that is not in PF already.
 			select distinct cce.ISSUER_ID, cce.PERIOD_YEAR, min(cce.AMOUNT_TYPE) as AMOUNT_TYPE
@@ -589,6 +529,5 @@ select * from #PF
 		drop table #MultipleLatest
 		drop table #Reuters
 		drop table #CCE
-
 Go
 
