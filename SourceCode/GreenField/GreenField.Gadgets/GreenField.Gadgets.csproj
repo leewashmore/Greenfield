@@ -187,6 +187,7 @@
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Models\SensitivityData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Company\Documents\Models\ViewModelExcelMacroeconomicDataUpload.cs" />
     <Compile Include="ViewModels\Screening\Stock\ViewModelCSTDataFieldSelector.cs" />
     <Compile Include="ViewModels\Company\Valuation\DCF\ViewModelDCF.cs" />
     <Compile Include="ViewModels\Company\Documents\Models\ViewModelExcelModelUpload.cs" />
@@ -258,6 +259,9 @@
     <Compile Include="ViewModels\Company\Charting\UnrealizedGainLoss\ViewModelUnrealizedGainLoss.cs" />
     <Compile Include="ViewModels\Portfolio\Snapshot\ViewModelValuationQualityGrowth.cs" />
     <Compile Include="Helpers\Converters\BasisPointsConverter.cs" />
+    <Compile Include="Views\Company\Documents\Models\ViewExcelMacroeconomicDataUpload.xaml.cs">
+      <DependentUpon>ViewExcelMacroeconomicDataUpload.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Screening\Stock\ChildViewCSTDataListSave.xaml.cs">
       <DependentUpon>ChildViewCSTDataListSave.xaml</DependentUpon>
     </Compile>
@@ -511,6 +515,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Helpers\ChildExportOptions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Documents\Models\ViewExcelMacroeconomicDataUpload.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

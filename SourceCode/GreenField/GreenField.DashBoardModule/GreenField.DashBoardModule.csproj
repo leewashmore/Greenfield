@@ -125,6 +125,9 @@
     <Compile Include="Views\Company\Documents\ViewDashboardCompanyDocumentsLoad.xaml.cs">
       <DependentUpon>ViewDashboardCompanyDocumentsLoad.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Company\Documents\ViewDashboardCompanyDocumentsMacroeconomicDataUpload.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyDocumentsMacroeconomicDataUpload.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Investment_Committee\ViewDashboardInvestmentCommitteeDecisionEntry.xaml.cs">
       <DependentUpon>ViewDashboardInvestmentCommitteeDecisionEntry.xaml</DependentUpon>
     </Compile>
@@ -309,6 +312,10 @@
     <Page Include="Views\Company\Documents\ViewDashboardCompanyDocumentsLoad.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Documents\ViewDashboardCompanyDocumentsMacroeconomicDataUpload.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Investment_Committee\ViewDashboardInvestmentCommitteeDecisionEntry.xaml">
       <Generator>MSBuild:Compile</Generator>
