@@ -1,1 +1,3 @@
 THis folder is intended for any Greenfield documents.
+
+Please also refer other documents at O:\PMO\Active Projects\0002 - Greenfield\AIMS Documentation
