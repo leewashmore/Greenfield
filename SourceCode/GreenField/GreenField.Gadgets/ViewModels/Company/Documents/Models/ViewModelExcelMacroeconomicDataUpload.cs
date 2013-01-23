@@ -359,7 +359,7 @@ namespace GreenField.Gadgets.ViewModels
                 uploadWorkbook = value;
                 if (value != null)
                 {
-                    HandleModelWorkbookUploadReferenceSet();
+                   //HandleModelWorkbookUploadReferenceSet();
                 }
                 this.RaisePropertyChanged(() => this.UploadWorkbook);
             }
@@ -394,25 +394,25 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        /// <summary>
-        /// Handle Model Workbook Upload
-        /// </summary>
-        public void HandleModelWorkbookUploadReferenceSet()
-        {
-            try
-            {
-                if (UploadWorkbook != null)
-                {
-                    dbInteractivity.UploadModelExcelSheet(UploadWorkbook, UserSession.SessionManager.SESSION.UserName, RetrieveModelWorkbookUploadCallbackMethod);
-                    BusyIndicatorNotification(true, "Reading the Excel Sheet");
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(logger, ex);
-            }
-        }
+        ///// <summary>
+        ///// Handle Model Workbook Upload
+        ///// </summary>
+        //public void HandleModelWorkbookUploadReferenceSet()
+        //{
+        //    try
+        //    {
+        //        if (UploadWorkbook != null)
+        //        {
+        //            dbInteractivity.UploadModelExcelSheet(UploadWorkbook, UserSession.SessionManager.SESSION.UserName, RetrieveModelWorkbookUploadCallbackMethod);
+        //            BusyIndicatorNotification(true, "Reading the Excel Sheet");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+        //        Logging.LogException(logger, ex);
+        //    }
+        //}
 
         #endregion
 
