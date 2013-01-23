@@ -21,7 +21,7 @@ insert into [REGION_BASKET] ([ID], [DEFINITION]) values (19, '<region-basket nam
 insert into [BASKET] ([ID], [TYPE]) values (20, 'region')
 insert into [REGION_BASKET] ([ID], [DEFINITION]) values (20, '<region-basket name="South Asia" iso-codes="IN, BD, LK" />')
 insert into [BASKET] ([ID], [TYPE]) values (21, 'region')
-insert into [REGION_BASKET] ([ID], [DEFINITION]) values (21, '<region-basket name="Africa" iso-codes="BW, CD, CI, EG, GH, KE, MU, MW, MA, NA, NG, SN, TZ, TN, ZM, ZW" />')
+insert into [REGION_BASKET] ([ID], [DEFINITION]) values (21, '<region-basket name="Africa" iso-codes="BW, CD, CI, EG, GH, KE, MU, MW, MA, NA, NG, SN, TZ, TN, ZM, ZW, SL, RW" />')
 insert into [BASKET] ([ID], [TYPE]) values (22, 'region')
 insert into [REGION_BASKET] ([ID], [DEFINITION]) values (22, '<region-basket name="Middle East" iso-codes="BH, JO, KW, LB, OM, PS, QA, SA, AE" />')
 insert into [BASKET] ([ID], [TYPE]) values (23, 'region')

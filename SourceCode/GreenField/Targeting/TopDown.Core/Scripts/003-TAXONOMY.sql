@@ -92,6 +92,7 @@ insert into TAXONOMY([ID], [DEFINITION]) values (2, '<taxonomy xmlns="urn:TopDow
 		<basket-country basketId="16" />
 		<basket-country basketId="17" />
 		<basket-country basketId="18" />
+		<basket-country basketId="25" />
 	</region>
 	
 	<basket-region basketId="22" />
