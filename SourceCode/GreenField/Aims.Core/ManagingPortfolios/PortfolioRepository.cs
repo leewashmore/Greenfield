@@ -54,6 +54,11 @@ namespace Aims.Core
             return result;
         }
 
+        public IEnumerable<BottomUpPortfolio> GetAllBottomUpPortfolios()
+        {
+            return this.bottomUpPortfolios.Select(x => x.Value);
+        }
+
         public BroadGlobalActivePortfolio FindBroadGlobalActivePortfolio(String portfolioId)
         {
             BroadGlobalActivePortfolio found;

@@ -545,7 +545,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback);
 
-        void UploadModelExcelSheet(byte[] fileStream, string userName, Action<string> callback);
+        void UploadModelExcelSheet(string fileName, byte[] fileStream, string userName, Action<string, string> callback);
 
         #endregion
 

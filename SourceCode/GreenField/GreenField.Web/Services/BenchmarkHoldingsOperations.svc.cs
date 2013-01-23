@@ -1114,6 +1114,8 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime effectiveDate, bool lookThruEnabled, bool excludeCash = false, bool objGetBenchmark = false)
         {
+            
+            
             try
             {
                 List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
@@ -1130,6 +1132,8 @@ namespace GreenField.Web.Services
                 List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData;
                 List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData;
 
+                
+                
                 if (lookThruEnabled)
                 {
                     #region LookThru
@@ -1222,6 +1226,14 @@ namespace GreenField.Web.Services
                                         Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
                     }
                     result = PortfolioDetailsCalculations.AddPortfolioSecurities(dimensionPortfolioHoldingsData, dimensionBenchmarkHoldingsData);
+                    // set portfolio for each record to current portfolio
+                    result.ForEach(r =>
+                    {
+                        r.PortfolioPath = objPortfolioIdentifier.PortfolioId;
+                        r.PfcHoldingPortfolio = objPortfolioIdentifier.PortfolioId;
+                    });
+                    
+                    
 
                     #region BenchmarkSecurities
 
@@ -1367,8 +1379,13 @@ namespace GreenField.Web.Services
         {
             try
             {
+                var portfolios = portfolioDetailsData.Select(x => x.PfcHoldingPortfolio).Distinct().ToList();
+                var externalResearchEntities = new GreenField.DAL.ExternalResearchEntities();
+                var targets = externalResearchEntities.Portfolio_Security_Targets_Union.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
+                var securities = externalResearchEntities.GF_SECURITY_BASEVIEW_Local.ToList();
+                
                 List<SecurityBaseviewData> securityData = new List<SecurityBaseviewData>();
-                securityData = RetrieveSecurityReferenceData();
+                securityData = RetrieveSecurityReferenceData(securities);
                 ExternalResearchEntities entity = new ExternalResearchEntities() { CommandTimeout = 5000 };
                 List<string> securityNames = portfolioDetailsData.Select(a => a.IssueName).ToList();
                 List<PortfolioDetailsExternalData> externalData = new List<PortfolioDetailsExternalData>();
@@ -1444,6 +1461,39 @@ namespace GreenField.Web.Services
 
                     item.Upside = fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault() == null ?
                         null : (fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault().UPSIDE as decimal?) * 100M;
+
+                    var security = securities.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName).FirstOrDefault();
+                    item.AshEmmModelWeight = 0;
+                    if (security != null)
+                    {
+
+                        var target = targets.Where(x => x.SECURITY_ID == security.SECURITY_ID && x.PORTFOLIO_ID == item.PfcHoldingPortfolio);
+                        if (target != null)
+                            item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT);
+
+                        if (item.PfcHoldingPortfolio != item.PortfolioPath)
+                        {
+                            var securityPortfolios = item.PortfolioPath.Split(',');
+                            for (int i = securityPortfolios.Count() - 2; i >= 0; i--)
+                            {
+                                security = securities.Where(x => x.LOOK_THRU_FUND == securityPortfolios[i+1]).FirstOrDefault();
+                                if (security != null)
+                                {
+                                    target = targets.Where(x => x.SECURITY_ID == security.SECURITY_ID && x.PORTFOLIO_ID == securityPortfolios[i]);
+                                    if (target != null)
+                                        item.AshEmmModelWeight = item.AshEmmModelWeight * target.Sum(x => x.TARGET_PCT);
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Unknown look through fund security (LOOK_THRU_FUND: " + securityPortfolios[i] + ")");
+                                }
+                            }
+                        }
+                    }
+                    //else
+                    //{
+                    //    throw new ApplicationException("Unknown security (short name: " + item.AsecSecShortName + ")");
+                    //}
                 }
                 return portfolioDetailsData;
             }
@@ -1489,15 +1539,43 @@ namespace GreenField.Web.Services
         /// Method to Retrieve all securities from GF_SECURITY_BASEVIEW
         /// </summary>
         /// <returns>List of SecurityBaseviewData</returns>
-        private List<SecurityBaseviewData> RetrieveSecurityReferenceData()
+        private List<SecurityBaseviewData> RetrieveSecurityReferenceData(List<GreenField.DAL.GF_SECURITY_BASEVIEW_Local> securities)
         {
             try
             {
-                DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<DimensionEntitiesService.GF_SECURITY_BASEVIEW> data = entity.GF_SECURITY_BASEVIEW.ToList();
+                //DimensionEntitiesService.Entities entity = DimensionEntity;
+                //List<DimensionEntitiesService.GF_SECURITY_BASEVIEW> data;
+                //if (securities == null)
+                //{
+                //    var data = entity.GF_SECURITY_BASEVIEW.ToList();
+                //    List<SecurityBaseviewData> result = new List<SecurityBaseviewData>();
+                //    foreach (DimensionEntitiesService.GF_SECURITY_BASEVIEW record in data)
+                //    {
+                //        result.Add(new SecurityBaseviewData()
+                //        {
+                //            IssueName = record.ISSUE_NAME,
+                //            Ticker = record.TICKER,
+                //            Country = record.ISO_COUNTRY_CODE,
+                //            Sector = record.GICS_SECTOR_NAME,
+                //            Industry = record.GICS_INDUSTRY_NAME,
+                //            SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
+                //            PrimaryAnalyst = record.ASHMOREEMM_PRIMARY_ANALYST,
+                //            Currency = record.TRADING_CURRENCY,
+                //            FiscalYearend = record.FISCAL_YEAR_END,
+                //            Website = record.WEBSITE,
+                //            Description = record.BLOOMBERG_DESCRIPTION,
+                //            SecurityId = record.SECURITY_ID,
+                //            IssuerId = record.ISSUER_ID
+                //        });
+                //    }
 
+                //    return result;
+                //}
+                //else
+                
+                var data = securities.ToList();
                 List<SecurityBaseviewData> result = new List<SecurityBaseviewData>();
-                foreach (DimensionEntitiesService.GF_SECURITY_BASEVIEW record in data)
+                foreach (var record in data)
                 {
                     result.Add(new SecurityBaseviewData()
                     {
@@ -1512,12 +1590,13 @@ namespace GreenField.Web.Services
                         FiscalYearend = record.FISCAL_YEAR_END,
                         Website = record.WEBSITE,
                         Description = record.BLOOMBERG_DESCRIPTION,
-                        SecurityId = record.SECURITY_ID,
+                        SecurityId = Int32.Parse(record.SECURITY_ID),
                         IssuerId = record.ISSUER_ID
                     });
                 }
 
                 return result;
+                
             }
             catch (Exception ex)
             {

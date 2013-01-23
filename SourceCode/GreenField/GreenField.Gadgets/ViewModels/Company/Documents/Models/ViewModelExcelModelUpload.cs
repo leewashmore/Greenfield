@@ -15,6 +15,18 @@ using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    public class UploadItem
+    {
+        public String FileName { get; set; }
+        public byte[] Content { get; set; }
+    }
+
+    public class UploadResult
+    {
+        public String FileName { get; set; }
+        public String Message { get; set; }
+    }
+
     /// <summary>
     /// View-Model for ExcelModelUpload
     /// </summary>
@@ -60,7 +72,8 @@ namespace GreenField.Gadgets.ViewModels
             this.dbInteractivity = param.DBInteractivity;
             this.eventAggregator = param.EventAggregator;
             this.logger = param.LoggerFacade;
-
+            this.UploadResults = new ObservableCollection<UploadResult>();
+            this.UploadResultsVisibility = Visibility.Collapsed;
             if (SelectionData.EntitySelectionData != null && SeriesReferenceSource == null)
             {
                 RetrieveEntitySelectionDataCallBackMethod(SelectionData.EntitySelectionData.Where(a => a.Type == "SECURITY").ToList());
@@ -73,6 +86,8 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
+        
 
         #endregion
 
@@ -344,6 +359,36 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        public List<UploadItem> Uploads { get; set; }
+
+        private ObservableCollection<UploadResult> uploadResults;
+        public ObservableCollection<UploadResult> UploadResults
+        {
+            get
+            { 
+                return uploadResults;
+            }
+            set
+            {
+                uploadResults = value;
+                this.RaisePropertyChanged(() => this.UploadResults);
+            }
+        }
+
+        private Visibility uploadResultsVisibility;
+        public Visibility UploadResultsVisibility
+        {
+            get
+            {
+                return uploadResultsVisibility;
+            }
+            set
+            {
+                uploadResultsVisibility = value;
+                this.RaisePropertyChanged(() => this.UploadResultsVisibility);
+            }
+        }
+
         /// <summary>
         /// Byte Stream of Model-Upload workbook
         /// </summary>
@@ -357,10 +402,10 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 uploadWorkbook = value;
-                if (value != null)
-                {
-                    HandleModelWorkbookUploadReferenceSet();
-                }
+                //if (value != null)
+                //{
+                //    HandleModelWorkbookUploadReferenceSet();
+                //}
                 this.RaisePropertyChanged(() => this.UploadWorkbook);
             }
         }
@@ -394,17 +439,41 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        /// <summary>
-        /// Handle Model Workbook Upload
-        /// </summary>
-        public void HandleModelWorkbookUploadReferenceSet()
+        ///// <summary>
+        ///// Handle Model Workbook Upload
+        ///// </summary>
+        //public void HandleModelWorkbookUploadReferenceSet()
+        //{
+        //    try
+        //    {
+        //        if (UploadWorkbook != null)
+        //        {
+        //            dbInteractivity.UploadModelExcelSheet(UploadWorkbook, UserSession.SessionManager.SESSION.UserName, RetrieveModelWorkbookUploadCallbackMethod);
+        //            BusyIndicatorNotification(true, "Reading the Excel Sheet");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+        //        Logging.LogException(logger, ex);
+        //    }
+        //}
+
+        internal void UploadModels()
         {
             try
             {
-                if (UploadWorkbook != null)
+                BusyIndicatorNotification(true, "Reading the Excel Sheet");
+                fileCount = Uploads.Count;
+                this.UploadResults.Clear();
+                this.UploadResultsVisibility = Visibility.Collapsed;
+                foreach (var upload in Uploads)
                 {
-                    dbInteractivity.UploadModelExcelSheet(UploadWorkbook, UserSession.SessionManager.SESSION.UserName, RetrieveModelWorkbookUploadCallbackMethod);
-                    BusyIndicatorNotification(true, "Reading the Excel Sheet");
+                    if (upload.Content != null)
+                    {
+                        dbInteractivity.UploadModelExcelSheet(upload.FileName, upload.Content, UserSession.SessionManager.SESSION.UserName, RetrieveModelWorkbookUploadCallbackMethod);
+                        
+                    }
                 }
             }
             catch (Exception ex)
@@ -481,14 +550,20 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private int fileCount = 0;
         /// <summary>
         /// callback Method for ModelWorkbook
         /// </summary>
-        public void RetrieveModelWorkbookUploadCallbackMethod(string message)
+        public void RetrieveModelWorkbookUploadCallbackMethod(string fileName, string message)
         {
+            fileCount--;
+            var item = new UploadResult { FileName = fileName, Message = message};
+            this.UploadResults.Add(item);
+            
+            this.UploadResultsVisibility = Visibility.Visible;
             try
             {
-                Prompt.ShowDialog(message);
+                Prompt.ShowDialog(message, fileName);
             }
             catch (Exception ex)
             {
@@ -497,7 +572,11 @@ namespace GreenField.Gadgets.ViewModels
             }
             finally
             {
-                BusyIndicatorNotification();
+                if (fileCount == 0)
+                {
+                    BusyIndicatorNotification();
+                    //this.RaisePropertyChanged(() => this.UploadResults);
+                }
             }
         }
 
@@ -521,5 +600,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+
+        
     }
 }

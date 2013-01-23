@@ -6,6 +6,7 @@ using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
+using System.Collections.Generic;
 
 namespace GreenField.Gadgets.Views
 {
@@ -74,14 +75,22 @@ namespace GreenField.Gadgets.Views
                 bool? userClickedOK = openFileDialog1.ShowDialog();
                 if (userClickedOK == true)
                 {
-                    FileStream fileStream;
-                    byte[] fileByte;
-                    using (fileStream = openFileDialog1.File.OpenRead())
+                    List<UploadItem> uploads = new List<UploadItem>();
+                    foreach (var file in openFileDialog1.Files)
                     {
-                        fileByte = new byte[fileStream.Length];
-                        fileStream.Read(fileByte, 0, Convert.ToInt32(fileStream.Length));
+                        FileStream fileStream;
+                        byte[] fileByte;
+                        using (fileStream = file.OpenRead())
+                        {
+                            fileByte = new byte[fileStream.Length];
+                            fileStream.Read(fileByte, 0, Convert.ToInt32(fileStream.Length));
+                        }
+                        var item = new UploadItem { FileName = file.Name, Content = fileByte };
+                        uploads.Add(item);
+                        //this.DataContextSource.UploadWorkbook = fileByte;
                     }
-                    this.DataContextSource.UploadWorkbook = fileByte;
+                    this.DataContextSource.Uploads = uploads;
+                    this.DataContextSource.UploadModels();
                 }
             }
             catch (Exception ex)

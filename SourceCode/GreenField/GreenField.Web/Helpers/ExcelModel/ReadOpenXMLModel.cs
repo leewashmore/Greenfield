@@ -2900,35 +2900,40 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.
-                        Where(a => a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper() && a.ISSUER_ID == ModelReferenceData.IssuerId).FirstOrDefault();
-                if (data != null)
+                //ExternalResearchEntities entities = new ExternalResearchEntities();
+                var group = ExternalResearchEntity.MODEL_UPLOAD_USER_GROUP.Where(x => x.MANAGER_NAME.ToUpper() == userName.ToUpper()).Select(x => x.ANALYST_NAME.ToUpper()).ToList();
+                var data = ExternalResearchEntity.GF_SECURITY_BASEVIEW_Local.Where(a => 
+                    (
+                        a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper() || 
+                        a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper() ||
+                        group.Contains(a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper()) || 
+                        group.Contains(a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper())
+                    ) 
+                    && 
+                    a.ISSUER_ID == ModelReferenceData.IssuerId).ToList();
+                if (data.Any())
                 {
-                    UserRole = "PRIMARY";
-                    RootSource = "PRIMARY";
-                    return true;
-                }
-                data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper()
-                    && a.ISSUER_ID == ModelReferenceData.IssuerId).FirstOrDefault();
-                if (data != null)
-                {
-                    UserRole = "INDUSTRY";
-                    RootSource = "INDUSTRY";
+                    if (data.Exists(x => x.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper()))
+                    {
+                        UserRole = "PRIMARY";
+                        RootSource = "PRIMARY";
+                    }
+                    else
+                    {
+                        UserRole = "INDUSTRY";
+                        RootSource = "INDUSTRY";
+                    }
                     return true;
                 }
                 else
                 {
-                    UserRole = "";
+                    throw new Exception("The user is not a Valid User");
                 }
-                if (UserRole == "")
-                {
-                    throw new Exception();
-                }
-                return true;
+                
             }
             catch (Exception ex)
             {
-                ExceptionMessage = "The user is not a Valid User";
+                ExceptionMessage = ex.Message;
                 ExceptionTrace.LogException(ex);
                 throw;
             }
