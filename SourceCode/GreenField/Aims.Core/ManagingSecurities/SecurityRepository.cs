@@ -135,8 +135,10 @@ namespace Aims.Core
                             securityInfo.Name,
                             country,
                             securityInfo.IssuerId,
-                            securityInfo.SecurityType
-
+                            securityInfo.SecurityType,
+                            securityInfo.Currency,
+                            securityInfo.Isin,
+                            securityInfo.IsoCountryCode
                         );
                         security = stock;
                     }
@@ -144,11 +146,14 @@ namespace Aims.Core
                     {
                         var fund = new Fund(
                             securityInfo.Id,
-                            securityInfo.Ticker,
+                            securityInfo.Name,
                             securityInfo.ShortName,
                             securityInfo.Ticker,
                             securityInfo.IssuerId,
-                            securityInfo.SecurityType
+                            securityInfo.SecurityType,
+                            securityInfo.Currency,
+                            securityInfo.Isin,
+                            securityInfo.IsoCountryCode
                         );
                         security = fund;
                     }

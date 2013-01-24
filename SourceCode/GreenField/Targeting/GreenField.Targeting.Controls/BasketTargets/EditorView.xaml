@@ -134,10 +134,9 @@
         <local:ShowCommentsWindowBehavior Comments="{Binding Comments}" />
     </i:Interaction.Behaviors>
 
-    <StackPanel Orientation="Vertical">
-        
 
-        <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" FrozenColumnCount="5" x:Name="grid">
+
+        <sdk:DataGrid ItemsSource="{Binding Lines}" AutoGenerateColumns="False" FrozenColumnCount="5" x:Name="grid"  VerticalScrollBarVisibility="Auto">
             <sdk:DataGrid.Columns>
 
                 <sdk:DataGridTemplateColumn Header="Security">
@@ -204,6 +203,5 @@
 
         </sdk:DataGrid>
 
-    </StackPanel>
 
 </UserControl>

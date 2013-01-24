@@ -29,7 +29,7 @@ namespace Aims.Core
         public static CompanySecurity AsCompanySecurity(this ISecurity security)
         {
             var companySecurity = security.TryAsCompanySecurity();
-            if (companySecurity == null) throw new ApplicationException("Give security (" + security + ") cannot be turned into a company security.");
+            if (companySecurity == null) throw new ApplicationException("Given security (" + security + ") cannot be turned into a company security.");
             return companySecurity;
         }
 

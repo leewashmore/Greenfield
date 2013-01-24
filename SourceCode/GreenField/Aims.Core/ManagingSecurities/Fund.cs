@@ -12,7 +12,7 @@ namespace Aims.Core
     public class Fund : ISecurity
     {
         [DebuggerStepThrough]
-        public Fund(String id, String name, String shortName, String ticker, String issuerId, String securityType)
+        public Fund(String id, String name, String shortName, String ticker, String issuerId, String securityType, String currency, String isin, String isoCountryCode)
         {
             this.Id = id;
             this.Name = name;
@@ -20,6 +20,9 @@ namespace Aims.Core
             this.Ticker = ticker;
             this.IssuerId = issuerId;
             this.SecurityType = securityType;
+            this.Currency = currency;
+            this.Isin = isin;
+            this.IsoCountryCode = isoCountryCode;
         }
 
         public String Id { get; set; }
@@ -28,6 +31,9 @@ namespace Aims.Core
         public String Ticker { get; set; }
         public String IssuerId { get; set; }
         public String SecurityType { get; set; }
+        public String Currency { get; set; }
+        public String Isin { get; set; }
+        public String IsoCountryCode { get; set; }
 
         [DebuggerStepThrough]
         public void Accept(ISecurityResolver resolver)
@@ -48,6 +54,8 @@ namespace Aims.Core
             );
             return result;
         }
+
+
 
 
 
