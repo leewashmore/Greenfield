@@ -159,8 +159,10 @@ as
 	-- Clean up
 	drop table #A
 	drop table #B
-	
-
+	drop table #B190
+	drop table #B104
+	drop table #B92
+GO
 
 
 --exec AIMS_Calc_162 '223340'
