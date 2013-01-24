@@ -51,7 +51,7 @@ namespace GreenField.DashboardModule.Views
             logger = logger1;
             dBInteractivity = dbInteractivity;
             eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            this.tbHeader.Text = GadgetNames.INTERNAL_RESEARCH_FINSTAT_REPORT;            
+            this.tbHeader.Text = "";            
         }
         #endregion
 
