@@ -136,6 +136,17 @@
             />
     </DataTemplate>
 
+    <DataTemplate x:Key="backgroundValueTemplate">
+        <local:ValueTextBox
+            IsReadOnly="True"
+            Value="{Binding Value}"
+            TextAlignment="Right"
+            Style="{StaticResource specialTextBox}" 
+            Background="#22FF0000" 
+            />
+    </DataTemplate>
+    
+
     <DataTemplate x:Key="saveTemplate">
         <StackPanel Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center" Margin="0 0 5 0">Ready?</TextBlock>

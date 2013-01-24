@@ -13,7 +13,7 @@ namespace Aims.Core
 	public class CompanySecurity : ISecurity
 	{
 		[DebuggerStepThrough]
-        public CompanySecurity(String id, String ticker, String shortName, String name, Country country, String issuerId, String securityType)
+        public CompanySecurity(String id, String ticker, String shortName, String name, Country country, String issuerId, String securityType, String currency, String isin, String isoCountryCode)
 		{
 			this.Id = id;
 			this.Ticker = ticker;
@@ -22,6 +22,9 @@ namespace Aims.Core
 			this.Country = country;
             this.IssuerId = issuerId;
             this.SecurityType = securityType;
+            this.Currency = Currency;
+            this.Isin = isin;
+            this.IsoCountryCode = isoCountryCode;
 		}
 
         public String Id { get; private set; }
@@ -29,8 +32,11 @@ namespace Aims.Core
 		public String ShortName { get; private set; }
 		public String Name { get; private set; }
 		public Country Country { get; private set; }
-        public string IssuerId { get; set; }
-        public string SecurityType { get; set; }
+        public String IssuerId { get; set; }
+        public String SecurityType { get; set; }
+        public String Currency { get; private set; }
+        public String Isin { get; private set; }
+        public String IsoCountryCode { get; set; }
 
 		[DebuggerStepThrough]
 		public override Int32 GetHashCode()
@@ -66,6 +72,11 @@ namespace Aims.Core
             );
             return result;
         }
+
+
+
+
+
 
 
 

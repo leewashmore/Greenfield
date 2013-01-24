@@ -56,6 +56,20 @@ namespace TopDown.Core.Persisting
             }
         }
 
+        public IEnumerable<PortfolioSecurityTargetsInfo> GetAllTargets()
+        {
+            using (var builder = this.CreateQueryCommandBuilder<PortfolioSecurityTargetsInfo>())
+            {
+                return builder.Text("select ")
+                    .Field("  [PORTFOLIO_ID]", (info, value) => info.PortfolioId = value, true)
+                    .Field(", [SECURITY_ID]", (info, value) => info.SecurityId = value, true)
+                    .Field(", [TARGET_PCT]", (PortfolioSecurityTargetsInfo info, Decimal value) => info.Target = value)
+                    .Field(", [UPDATED]", (PortfolioSecurityTargetsInfo info, DateTime? value) => info.Updated = value)
+                .Text(" from [" + TableNames.BASKET + "]")
+                .PullAll();
+            }
+        }
+
         public virtual DateTime GetLastestDateWhichBenchmarkDataIsAvialableOn()
         {
             DateTime result;

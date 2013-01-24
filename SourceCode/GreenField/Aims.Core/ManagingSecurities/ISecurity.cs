@@ -13,6 +13,9 @@ namespace Aims.Core
         String Ticker { get;}
         String IssuerId { get;  }
         String SecurityType { get; }
+        String Currency { get; }
+        String Isin { get; }
+        String IsoCountryCode { get; }
         void Accept(ISecurityResolver resolver);
     }
 

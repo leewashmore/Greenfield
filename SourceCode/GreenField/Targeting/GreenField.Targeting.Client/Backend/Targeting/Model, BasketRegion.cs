@@ -18,7 +18,12 @@ namespace TopDown.FacingServer.Backend.Targeting
         public Boolean IsExpanded
         {
             get { return this.Parent.IsExpanded && this.isExpanded; }
-            set { this.isExpanded = value; this.RaisePropertyChanged("IsExpanded"); }
+            set { this.isExpanded = value; this.RaisePropertyChanged("IsExpanded"); this.RaisePropertyChanged("ExpandedIcon"); }
+        }
+
+        public String ExpandedIcon
+        {
+            get { return this.isExpanded ? "-" : "+"; }
         }
 
         [DebuggerStepThrough]

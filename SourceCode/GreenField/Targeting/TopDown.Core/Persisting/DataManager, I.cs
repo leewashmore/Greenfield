@@ -137,7 +137,7 @@ namespace TopDown.Core.Persisting
 
         Int32 StartTargetingCalculation(Int32 calculationId);
 
-
+        IEnumerable<PortfolioSecurityTargetsInfo> GetAllTargets();
 
         
     }
