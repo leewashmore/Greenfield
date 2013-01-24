@@ -125,7 +125,8 @@
                                                         IsReadOnlyBinding="{Binding IsReadOnly}"/>
                             <telerik:GridViewDataColumn Header="Upside" 
                                                         UniqueName="Upside"
-                                                        DataMemberBinding="{Binding UpSide,Converter={StaticResource ConverterPercValTwoDecPlace},Mode=TwoWay}"
+                                                        DataMemberBinding="{Binding UpSide, Mode=TwoWay}"
+                                                        DataFormatString="{}{0:p2}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 

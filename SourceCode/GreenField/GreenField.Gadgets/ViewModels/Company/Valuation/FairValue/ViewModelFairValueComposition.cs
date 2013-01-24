@@ -430,7 +430,7 @@ namespace GreenField.Gadgets.ViewModels
                 });
                 temp.Add(new FairValueData()
                 {
-                    Source = "Industry Analyst",
+                    Source = "Industry",
                     Measure = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Measure).FirstOrDefault() : null,
                     Buy = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Buy).FirstOrDefault() : null,
                     Sell = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Sell).FirstOrDefault() : null,
