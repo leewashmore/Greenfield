@@ -22,13 +22,13 @@
     <add key="maxMeetingRecordAppKey" value="50"/>
     <add key="maxPresentationRecordAppKey" value="50"/>
     <add key="aspnet:IgnoreFormActionAttribute" value="true" />
-    <add key="DocumentWebServiceUrl" value="http://10.101.1.165:90/_vti_bin/copy.asmx"/>
-    <add key="ListsWebServiceUrl" value="http://10.101.1.165:90/_vti_bin/lists.asmx"/>
-    <add key="DocumentServerUrl" value="http://10.101.1.165:90/Shared Documents"/>
+    <add key="DocumentWebServiceUrl" value="http://10.3.48.34:90/_vti_bin/copy.asmx"/>
+    <add key="ListsWebServiceUrl" value="http://10.3.48.34:90/_vti_bin/lists.asmx"/>
+    <add key="DocumentServerUrl" value="http://10.3.48.34:90/Shared Documents"/>
     <add key="DocumentLibrary" value="Shared Documents"/>
-    <add key="DocumentServerUserName" value="gtiwari"/>
-    <add key="DocumentServerPassword" value="tower$123"/>
-    <add key="DocumentServerDomain" value="headstrong"/>
+    <add key="DocumentServerUserName" value="hsdev"/>
+    <add key="DocumentServerPassword" value="H$P@55w0rd!"/>
+    <add key="DocumentServerDomain" value="emiemm"/>
     <add key="ConfigurableMeetingMonths" value="3" />
     <add key="ConfigurableMeetingMonths" value="3"/>
     <add key="PortfolioName" value="EMIF"/>
@@ -67,8 +67,8 @@
   </system.web.extensions>
 
 
-  <!--Original Connection Strings-->
-  <!--<connectionStrings>
+  <!--Original Connection Strings
+  <connectionStrings>
     <add name="ResearchEntities" connectionString="metadata=res://*/ResearchDataModel.csdl|res://*/ResearchDataModel.ssdl|res://*/ResearchDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=ND1DDYX96Q1;Initial Catalog=Ashmore_EMM_POC;Persist Security Info=True;User ID=sa;Password=pass@123;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="ExternalResearchEntities" connectionString="metadata=res://*/ExternalResearchDataModel.csdl|res://*/ExternalResearchDataModel.ssdl|res://*/ExternalResearchDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=ND1DDYX96Q1;Initial Catalog=Aims_Data_20;Persist Security Info=True;User ID=sa;Password=pass@123;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="ICPresentationEntities" connectionString="metadata=res://*/ICPresentationDataModel.csdl|res://*/ICPresentationDataModel.ssdl|res://*/ICPresentationDataModel.msl;provider=System.Data.SqlClient;provider connection string='Data Source=ND1DDYX96Q1;Initial Catalog=Ashmore_EMM_POC;Persist Security Info=True;User ID=sa;Password=pass@123;MultipleActiveResultSets=True'" providerName="System.Data.EntityClient" />
@@ -77,7 +77,7 @@
     <add name="CustomScreeningToolEntities" connectionString="metadata=res://*/CustomScreeningToolDataModel.csdl|res://*/CustomScreeningToolDataModel.ssdl|res://*/CustomScreeningToolDataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=ND1DDYX96Q1;Initial Catalog=Aims_Data_06;User ID=sa;Password=pass@123;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
     <add name="Aims" connectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=Aims;Integrated Security=True"/>
      <add name="AimsEntities" connectionString="metadata=res://*/AimsModel.csdl|res://*/AimsModel.ssdl|res://*/AimsModel.msl;provider=System.Data.SqlClient;provider connection string='Data Source=lonweb1t.ashmore.local;Initial Catalog=AIMS_Data_QA;Persist Security Info=True;User ID=WPSuperUser;Password=Password1;MultipleActiveResultSets=True'" providerName="System.Data.EntityClient" />
- </connectionStrings>-->
+ </connectionStrings> -->
 
   <!--Lane's DEV Connection Strings
     <connectionStrings>
@@ -133,6 +133,7 @@
 				 transferMode="Buffered" useDefaultWebProxy="true">
           <readerQuotas maxDepth="2147483647" maxStringContentLength="2147483647"
 					 maxArrayLength="2147483647" maxBytesPerRead="2147483647" maxNameTableCharCount="2147483647" />
+          
           <security mode="None">
             <transport clientCredentialType="None" proxyCredentialType="None"
 						 realm="" />
@@ -215,7 +216,7 @@
           <serviceMetadata httpGetEnabled="true" />
           <serviceDebug includeExceptionDetailInFaults="true" />
           <dataContractSerializer maxItemsInObjectGraph="2147483646" />
-          <serviceThrottling maxConcurrentCalls="1000" maxConcurrentSessions="10000" maxConcurrentInstances="2147483647" />
+          <serviceThrottling maxConcurrentCalls="1000" maxConcurrentSessions="10000" maxConcurrentInstances="2147483647"  />
         </behavior>
         <behavior name="">
           <serviceMetadata httpGetEnabled="true" />
@@ -316,10 +317,10 @@
   <applicationSettings>
     <GreenField.Web.Properties.Settings>
       <setting name="GreenField_Web_DocumentCopyService_Copy" serializeAs="String">
-        <value>http://10.101.1.165:90/_vti_bin/copy.asmx</value>
+        <value>http://10.3.48.34:90/_vti_bin/copy.asmx</value>
       </setting>
       <setting name="GreenField_Web_ListsDefinitions_Lists" serializeAs="String">
-        <value>http://10.101.1.165:90/_vti_bin/lists.asmx</value>
+        <value>http://10.3.48.34:90/_vti_bin/lists.asmx</value>
       </setting>
     </GreenField.Web.Properties.Settings>
     <GreenField.IssuerShares.Server.Properties.Settings>

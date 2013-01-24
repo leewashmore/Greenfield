@@ -88,7 +88,7 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  162 as DATA_ID										-- DATA_ID:162 ROIC
-		,  (isnull(a.AMOUNT, 0.0) /  ((isnull(b.AMOUNT, 0.0)) + c.AMOUNT)/2) as AMOUNT			-- (NINC-FCDP)/QTEL
+		,  (isnull(a.AMOUNT, 0.0) /  (((isnull(b.AMOUNT, 0.0)) + c.AMOUNT)/2)) as AMOUNT			-- (NINC-FCDP)/QTEL
 		,  '(130 – 291 – TTAX)(' + CAST(isnull(a.AMOUNT, 0.0) as varchar(32)) + ') /  (QTLE + LMIN + 190 for Year(' + CAST(isnull(b.AMOUNT, 0.0) as varchar(32)) + ')+(QTLE + LMIN + 190 for Prior Year('  + CAST(c.AMOUNT as varchar(32)) + ')/2) ' as CALCULATION_DIAGRAM
 		,  c.SOURCE_CURRENCY
 		,  c.AMOUNT_TYPE
@@ -159,8 +159,10 @@ as
 	-- Clean up
 	drop table #A
 	drop table #B
-	
-
+	drop table #B190
+	drop table #B104
+	drop table #B92
+GO
 
 
 --exec AIMS_Calc_162 '223340'

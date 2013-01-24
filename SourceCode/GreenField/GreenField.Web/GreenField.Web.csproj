@@ -80,6 +80,7 @@
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
     <Content Include="crossdomain.xml" />
+    <Content Include="Services\MacroeconomicOperations.svc" />
     <Content Include="Services\CustomScreeningToolOperations.svc" />
     <Content Include="Services\DocumentWorkSpaceOperations.svc" />
     <Content Include="HomePage.aspx" />
@@ -183,6 +184,9 @@
     <Compile Include="IssuerShares\IssuerSharesInstanceProvider.cs" />
     <Compile Include="IssuerShares\IssuerSharesServiceHostFactory.cs" />
     <Compile Include="ListUtils.cs" />
+    <Compile Include="Services\MacroeconomicOperations.svc.cs">
+      <DependentUpon>MacroeconomicOperations.svc</DependentUpon>
+    </Compile>
     <Compile Include="Services\CustomScreeningToolOperations.svc.cs">
       <DependentUpon>CustomScreeningToolOperations.svc</DependentUpon>
     </Compile>

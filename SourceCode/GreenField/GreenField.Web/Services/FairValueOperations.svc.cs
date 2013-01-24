@@ -479,7 +479,7 @@ namespace GreenField.Web.Services
             dataList.Add(item1);
 
             FairValueCompositionSummaryData item2 = new FairValueCompositionSummaryData();
-            item2.Source = "Industry Analyst";
+            item2.Source = "Industry";
             item2.Measure = null;
             item2.Buy = null;
             item2.Sell = null;

@@ -161,17 +161,26 @@
                                              Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem x:Name="rmItemLoadModel" Header="Model Upload" Command="{Binding DashboardCompanyDocumentsLoadModelCommand}"
                                              Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!-- TODO
+                        <telerik:RadMenuItem x:Name="rmItemMacroeconomicUpload" Header="Macroeconomic Data Upload" Command="{Binding DashboardCompanyDocumentsMacroeconomicUploadCommand}"
+                                             Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        -->
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem x:Name="rmItemCharting" Header="Charting">
                         <telerik:RadMenuItem Header="Price Comparison" x:Name="rmItemPriceComparison"
                                              Command="{Binding DashboardCompanyChartingClosingPriceCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <telerik:RadMenuItem Header="Unrealised Gain/Loss" x:Name="rmItemUnrealisedGainLoss"
+                                             Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem Header="Context" x:Name="rmItemContext"
                                              Command="{Binding DashboardCompanyChartingContextCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!-- TODO clean up
                         <telerik:RadMenuItem Header="Historical Valuations" x:Name="rmItemChartingValuation"
                                              Command="{Binding DashboardCompanyChartingValuationCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        -->
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem x:Name="rmItemIssuerShares" Header="Issuer Shares">
                         <telerik:RadMenuItem Header="Issuer Shares Composition" x:Name="rmItemIssuerSharesComposition"

@@ -91,7 +91,7 @@
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Source" 
                                                         UniqueName="Source"
-                                                        DataMemberBinding="{Binding Source}"
+                                                        DataMemberBinding="{Binding SourceLabel}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyleBoldText}" 
                                                         HeaderTextAlignment="Left" 
