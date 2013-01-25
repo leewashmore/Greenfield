@@ -123,7 +123,7 @@ namespace GreenField.Web.Helpers
         public static void Generate(string outFile, ICPresentation presentation)
         {
             float listItemSpacing = 15F;
-            string strLogoPath = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\AshmoreEMMLogo.png";
+            string strLogoPath = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\AshmoreLogo.png";
             iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(strLogoPath);
 
             Document doc = new Document(PageSize.A4, 10F, 10F, 10F, 10F);

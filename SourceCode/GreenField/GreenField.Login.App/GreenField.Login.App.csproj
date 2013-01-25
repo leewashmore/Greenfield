@@ -118,6 +118,9 @@
     <Content Include="..\GreenField.ServiceCaller\ServiceReferences.ClientConfig">
       <Link>ServiceReferences.ClientConfig</Link>
     </Content>
+    <Resource Include="Images\AshmoreLogoBackground.jpg" >
+	<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Page Include="Shell.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -137,11 +140,6 @@
       <Project>{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}</Project>
       <Name>GreenField.UserSession</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ASHEMMBackground.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

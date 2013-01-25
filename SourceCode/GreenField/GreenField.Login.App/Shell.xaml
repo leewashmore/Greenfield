@@ -7,7 +7,7 @@
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     mc:Ignorable="d" Width="1200" Height="1000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">   
     <Grid x:Name="LayoutRoot">
-        <Image Source="Images/ASHEMMBackground.jpg" 
+        <Image Source="Images/AshmoreLogoBackground.jpg" 
                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <Grid>
             <Grid.RowDefinitions>

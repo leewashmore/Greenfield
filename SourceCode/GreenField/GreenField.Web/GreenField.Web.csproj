@@ -119,7 +119,7 @@
     <Content Include="Services\SessionOperations.svc" />
     <Content Include="Services\TargetingOperations.svc" />
     <Content Include="Silverlight.js" />
-    <Content Include="Templates\AshmoreEMMLogo.png">
+    <Content Include="Templates\AshmoreLogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\ICPresentationTemplate.pptx">

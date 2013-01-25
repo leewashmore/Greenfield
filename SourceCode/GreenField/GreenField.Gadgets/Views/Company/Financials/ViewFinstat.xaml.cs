@@ -172,7 +172,7 @@ namespace GreenField.Gadgets.Views
             };
 
             Paragraph headerLogoParagraph = new Paragraph() { TextAlignment = RadTextAlignment.Right };
-            Stream stream = Application.GetResourceStream(new Uri(@"/GreenField.Gadgets;component/Images/AshmoreEMMLogo.png", UriKind.RelativeOrAbsolute)).Stream;
+            Stream stream = Application.GetResourceStream(new Uri(@"/GreenField.Gadgets;component/Images/AshmoreLogo.png", UriKind.RelativeOrAbsolute)).Stream;
             Size size = new Size(160, 30);
             ImageInline image = new ImageInline(stream, size, "png");
             headerLogoParagraph.Inlines.Add(image);
