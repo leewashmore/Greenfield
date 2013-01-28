@@ -238,6 +238,8 @@ namespace TopDown.Core.Testing
 				basketRenderer
 			);
 
+            //var fileManager = new TopDown.Core.ManagingCalculations.TradingTargetsFileManager(repositoryManager, dataManagerFactory, connectionFactory);
+
             var commentManager = new Core.ManagingComments.CommentManager();
 
 			var facade = new Facade(

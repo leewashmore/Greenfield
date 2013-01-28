@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using BenchmarkNodeFinancials.DimensionServiceReference;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace BenchmarkNodeFinancials
 {
@@ -21,6 +23,8 @@ namespace BenchmarkNodeFinancials
         /// DimensionServiceReference.Entities object for connection to the views
         /// </summary>
         private static DimensionServiceReference.Entities dimensionEntity;
+
+        private static AIMS_Data_QAEntities entities;
         /// <summary>
         /// log4net required for logging
         /// </summary>
@@ -36,14 +40,19 @@ namespace BenchmarkNodeFinancials
         {
             try
             {
-                dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+                var tableName = "dbo.BENCHMARK_NODE_FINANCIALS_test";
+                var connectionString = ConfigurationManager.ConnectionStrings["AIMS_Data"].ConnectionString;
+                //dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+                entities = new AIMS_Data_QAEntities();
+
+                CleanTable(connectionString, tableName);
                 List<String> benchmarkIds = new List<string>();
-                bool isServiceUp;
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-                if (!isServiceUp)
-                {
-                    throw new Exception("Services are not available");
-                }
+                //bool isServiceUp;
+                //isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                //if (!isServiceUp)
+                //{
+                //    throw new Exception("Services are not available");
+                //}
                 entity = new AIMSDataEntity();
                 bool exists = File.Exists(@"BenchmarkIDs.xml");
                 if (exists)
@@ -56,15 +65,15 @@ namespace BenchmarkNodeFinancials
 
                 log.Debug("Is able to locate Benchmark Id's file  " + exists);
 
-                int i = 0;
+                List<SecurityData> securityStorage = GetAllSecurities();
 
-                foreach (String benId in benchmarkIds)
+                for (int i = 0; i < benchmarkIds.Count; i++)
                 {
-                    i = i + 1;
+                    String benId = benchmarkIds[i];
                     log.Debug("Processing for" + i + "Benchmark begin");
                     List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
-                    dataBenchmarkHoldings = dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
-                                                             && record.PORTFOLIO_DATE == Convert.ToDateTime(lastBusinessDate)
+                    dataBenchmarkHoldings = entities.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
+                                                             && record.PORTFOLIO_DATE == lastBusinessDate
                                                               && record.BENCHMARK_WEIGHT > 0).ToList();
 
                     var benchData = dataBenchmarkHoldings != null ? (from p in dataBenchmarkHoldings
@@ -84,7 +93,7 @@ namespace BenchmarkNodeFinancials
                                                                        select p.AsecShortName).ToList() : null;
                     //retrieve security Id's   
                     log.Debug("Retrieving Security Data");
-                    List<SecurityData> securityData = RetrieveSecurityIds(asecShortNames);
+                    List<SecurityData> securityData = securityStorage.Where(x => asecShortNames.Contains(x.AsecShortName)).ToList();
                     List<String> distinctSecurityId = securityData.Select(record => record.SecurityId).ToList();
                     List<String> distinctIssuerId = securityData.Select(record => record.IssuerId).ToList();
 
@@ -109,7 +118,7 @@ namespace BenchmarkNodeFinancials
 
                     log.Debug("Retrieving BothRatioData");
                     List<BenchmarkNodeFinancialsData> bothRatiosData = new List<BenchmarkNodeFinancialsData>();
-                    bothRatiosData = FillBenchmarkNodeFinancialsPeriodData(periodFinancialDataPeriodRatios, securityData, dataBenchmarkHoldings, 
+                    bothRatiosData = FillBenchmarkNodeFinancialsPeriodData(periodFinancialDataPeriodRatios, securityData, dataBenchmarkHoldings,
                         benId, forwardRatioData);
 
                     log.Debug("Grouping Starts");
@@ -117,9 +126,12 @@ namespace BenchmarkNodeFinancials
                     List<GroupedBenchmarkNodeData> groupedFinalData = new List<GroupedBenchmarkNodeData>();
                     groupedFinalData = GroupBenchmarkData(bothRatiosData);
 
-                    log.Debug("XML Creation and insertion of data");
+                    //log.Debug("XML Creation and insertion of data");
                     //creation of an Xml for inserting data into the Benchmark_Node_Financials table
-                    CreateXMLInsertData(groupedFinalData, entity, benId);
+                    //CreateXMLInsertData(groupedFinalData, entity, benId);
+
+                    log.Debug("Insert data");
+                    InsertData(groupedFinalData, connectionString, benId, tableName);
 
                     log.Debug("Processing for" + i + "Benchmark ends");
                 }
@@ -129,6 +141,18 @@ namespace BenchmarkNodeFinancials
             {
                 log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
+        }
+
+        private List<SecurityData> GetAllSecurities()
+        {
+            List<SecurityData> secData = entities.GF_SECURITY_BASEVIEW.ToList().Select(item => new SecurityData()
+                                    {
+                                        SecurityId = item.SECURITY_ID.ToString(),
+                                        IssuerId = item.ISSUER_ID,
+                                        IssueName = item.ISSUE_NAME,
+                                        AsecShortName = item.ASEC_SEC_SHORT_NAME
+                                    }).ToList();
+            return secData;
         }
 
         /// <summary>
@@ -143,7 +167,7 @@ namespace BenchmarkNodeFinancials
             {
                 foreach (String asec in asecShortNames)
                 {
-                    GF_SECURITY_BASEVIEW item = (dimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_SHORT_NAME == asec).
+                    GF_SECURITY_BASEVIEW item = (entities.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_SHORT_NAME == asec).
                         FirstOrDefault());
                     if (item != null)
                     {
@@ -171,16 +195,17 @@ namespace BenchmarkNodeFinancials
         /// <returns></returns>
         private string StringBuilder(List<String> param)
         {
-            StringBuilder var = new StringBuilder();
-            int check = 1;
-            foreach (String item in param)
-            {
-                check = 0;
-                var.Append(",'" + item + "'");
-            }
-            var = check == 0 ? var.Remove(0, 1) : null;
-            string result = var == null ? null : var.ToString();
-            return result;
+            return String.Join(",", param.Select(x => "'" + x + "'"));
+            //StringBuilder var = new StringBuilder();
+            //int check = 1;
+            //foreach (String item in param)
+            //{
+            //    check = 0;
+            //    var.Append(",'" + item + "'");
+            //}
+            //var = check == 0 ? var.Remove(0, 1) : null;
+            //string result = var == null ? null : var.ToString();
+            //return result;
         }
 
         /// <summary>
@@ -200,62 +225,69 @@ namespace BenchmarkNodeFinancials
                 {
                     foreach (int dataId in periodFinancialData.Select(t => t.DataID).Distinct())
                     {
-                        List<String> dinstinctIssuerIds = periodFinancialData.Where(t => t.DataID == dataId)
-                            .Select(t => t.IssuerID).Distinct().ToList();
-                        List<String> dinstinctSecurityIds = periodFinancialData.Where(t => t.DataID == dataId)
-                            .Select(t => t.SecurityID).Distinct().ToList();
+                        var data = periodFinancialData.Where(t => t.DataID == dataId).ToList();
+                        List<String> dinstinctIssuerIds = data.Select(t => t.IssuerID).Distinct().ToList();
+                        List<String> dinstinctSecurityIds = data.Select(t => t.SecurityID).Distinct().ToList();
                         foreach (String s in dinstinctIssuerIds)
                         {
-                            foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings.Where(t => t.ISSUER_ID == s).ToList())
+                            var security = securityData.Where(p => p.IssuerId == s).FirstOrDefault();
+                            if (security != null)
                             {
-                                BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
-                                obj.BenchmarkName = benId;
-                                obj.IssuerId = s;
-                                obj.SecurityId = securityData.Where(t => t.IssuerId == s).Select(t => t.SecurityId).FirstOrDefault();
-                                obj.IssueName = securityData.Where(t => t.IssuerId == s).Select(t => t.IssueName).FirstOrDefault();
-                                obj.AsecShortName = row.ASEC_SEC_SHORT_NAME;
-                                obj.Region = row.ASHEMM_PROP_REGION_CODE;
-                                obj.Country = row.ISO_COUNTRY_CODE;
-                                obj.Sector = row.GICS_SECTOR;
-                                obj.industry = row.GICS_INDUSTRY;
-                                obj.DataId = dataId;
-                                obj.PeriodType = "C";
-                                obj.PeriodYear = 0;
-                                obj.Currency = "USD";
-                                obj.Amount = periodFinancialData.Where(t => t.IssuerID == s && t.DataID == dataId)
-                                    .Select(t => t.Amount).FirstOrDefault();
-                                obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
-                                obj.BenWeight = row.BENCHMARK_WEIGHT;
-                                obj.TypeNode = "Forw";
-                                forwardRatioData.Add(obj);
+                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings.Where(t => t.ISSUER_ID == s).ToList())
+                                {
+                                    BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
+                                    
+                                    obj.BenchmarkName = benId;
+                                    obj.IssuerId = s;
+                                    obj.SecurityId = security.SecurityId;
+                                    obj.IssueName = security.IssueName;
+                                    obj.AsecShortName = row.ASEC_SEC_SHORT_NAME;
+                                    obj.Region = row.ASHEMM_PROP_REGION_CODE;
+                                    obj.Country = row.ISO_COUNTRY_CODE;
+                                    obj.Sector = row.GICS_SECTOR;
+                                    obj.industry = row.GICS_INDUSTRY;
+                                    obj.DataId = dataId;
+                                    obj.PeriodType = "C";
+                                    obj.PeriodYear = 0;
+                                    obj.Currency = "USD";
+                                    obj.Amount = data.Where(t => t.IssuerID == s && t.DataID == dataId)
+                                        .Select(t => t.Amount).FirstOrDefault();
+                                    obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
+                                    obj.BenWeight = row.BENCHMARK_WEIGHT;
+                                    obj.TypeNode = "Forw";
+                                    forwardRatioData.Add(obj);
+                                }
                             }
                         }
                         foreach (String s in dinstinctSecurityIds)
                         {
-                            foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings
-                                .Where(t => t.ASEC_SEC_SHORT_NAME == (securityData.Where(p => p.SecurityId == s).Select(p => p.AsecShortName)
-                                    .FirstOrDefault())).ToList())
+                            var security = securityData.Where(p => p.SecurityId == s).FirstOrDefault();
+                            if (security != null)
                             {
-                                BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
-                                obj.BenchmarkName = benId;
-                                obj.IssuerId = securityData.Where(t => t.SecurityId == s).Select(t => t.IssuerId).FirstOrDefault();
-                                obj.SecurityId = s;
-                                obj.IssueName = securityData.Where(t => t.SecurityId == s).Select(t => t.IssueName).FirstOrDefault();
-                                obj.AsecShortName = row.ASEC_SEC_SHORT_NAME;
-                                obj.Region = row.ASHEMM_PROP_REGION_CODE;
-                                obj.Country = row.ISO_COUNTRY_CODE;
-                                obj.Sector = row.GICS_SECTOR;
-                                obj.industry = row.GICS_INDUSTRY;
-                                obj.DataId = dataId;
-                                obj.PeriodType = "C";
-                                obj.PeriodYear = 0;
-                                obj.Currency = "USD";
-                                obj.Amount = periodFinancialData.Where(t => t.SecurityID == s && t.DataID == dataId)
-                                    .Select(t => t.Amount).FirstOrDefault();
-                                obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
-                                obj.BenWeight = row.BENCHMARK_WEIGHT;
-                                obj.TypeNode = "Forw";
-                                forwardRatioData.Add(obj);
+                                var list = dataBenchmarkHoldings.Where(t => t.ASEC_SEC_SHORT_NAME == security.AsecShortName).ToList();
+                                foreach (GF_BENCHMARK_HOLDINGS row in list)
+                                {
+                                    BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
+                                    obj.BenchmarkName = benId;
+                                    obj.IssuerId = security.IssuerId;
+                                    obj.SecurityId = s;
+                                    obj.IssueName = security.IssueName;
+                                    obj.AsecShortName = row.ASEC_SEC_SHORT_NAME;
+                                    obj.Region = row.ASHEMM_PROP_REGION_CODE;
+                                    obj.Country = row.ISO_COUNTRY_CODE;
+                                    obj.Sector = row.GICS_SECTOR;
+                                    obj.industry = row.GICS_INDUSTRY;
+                                    obj.DataId = dataId;
+                                    obj.PeriodType = "C";
+                                    obj.PeriodYear = 0;
+                                    obj.Currency = "USD";
+                                    obj.Amount = data.Where(t => t.SecurityID == s && t.DataID == dataId)
+                                        .Select(t => t.Amount).FirstOrDefault();
+                                    obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
+                                    obj.BenWeight = row.BENCHMARK_WEIGHT;
+                                    obj.TypeNode = "Forw";
+                                    forwardRatioData.Add(obj);
+                                }
                             }
                         }
                     }
@@ -287,66 +319,77 @@ namespace BenchmarkNodeFinancials
                 {
                     foreach (int dataId in periodFinancialRatioData.Select(t => t.DataID).Distinct())
                     {
-                        foreach (int perYear in periodFinancialRatioData.Where(t => t.DataID == dataId).Select(t => t.PeriodYear).Distinct())
+                        var data = periodFinancialRatioData.Where(t => t.DataID == dataId).ToList();
+                        var years = data.Select(x => x.PeriodYear).Distinct();
+                        foreach (int perYear in years)
                         {
-                            List<String> dinstinctIssuerIds = periodFinancialRatioData.Where(t => t.DataID == dataId && t.PeriodYear == perYear)
+                            List<String> dinstinctIssuerIds = data.Where(t => t.PeriodYear == perYear)
                                 .Select(t => t.IssuerID).Distinct().ToList();
-                            List<String> dinstinctSecurityIds = periodFinancialRatioData.Where(t => t.DataID == dataId && t.PeriodYear == perYear)
+                            List<String> dinstinctSecurityIds = data.Where(t => t.PeriodYear == perYear)
                                 .Select(t => t.SecurityID).Distinct().ToList();
 
                             foreach (String s in dinstinctIssuerIds)
                             {
-                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings.Where(t => t.ISSUER_ID == s).ToList())
+                                var security = securityData.Where(p => p.IssuerId == s).FirstOrDefault();
+                                if (security != null)
                                 {
-                                    BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
-                                    obj.BenchmarkName = benId;
-                                    obj.IssuerId = s;
-                                    obj.SecurityId = securityData.Where(t => t.IssuerId == s).Select(t => t.SecurityId).FirstOrDefault();
-                                    obj.IssueName = securityData.Where(t => t.IssuerId == s).Select(t => t.IssueName).FirstOrDefault();
-                                    obj.AsecShortName = row.ASEC_SEC_SHORT_NAME;
-                                    obj.Region = row.ASHEMM_PROP_REGION_CODE;
-                                    obj.Country = row.ISO_COUNTRY_CODE;
-                                    obj.Sector = row.GICS_SECTOR;
-                                    obj.industry = row.GICS_INDUSTRY;
-                                    obj.DataId = dataId;
-                                    obj.PeriodType = "A";
-                                    obj.PeriodYear = perYear;
-                                    obj.Currency = "USD";
-                                    obj.Amount = periodFinancialRatioData.Where(t => t.IssuerID == s && t.DataID == dataId && 
-                                        t.PeriodYear == perYear).Select(t => t.Amount).FirstOrDefault();
-                                    obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
-                                    obj.BenWeight = row.BENCHMARK_WEIGHT;
-                                    obj.TypeNode = "Per";
-                                    periodRatiosData.Add(obj);
+                                    var holdings = dataBenchmarkHoldings.Where(t => t.ISSUER_ID == s).ToList();
+                                    foreach (GF_BENCHMARK_HOLDINGS row in holdings)
+                                    {
+                                        BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
+                                        
+                                        obj.BenchmarkName = benId;
+                                        obj.IssuerId = s;
+                                        obj.SecurityId = security.SecurityId;
+                                        obj.IssueName = security.IssueName;
+                                        obj.AsecShortName = row.ASEC_SEC_SHORT_NAME;
+                                        obj.Region = row.ASHEMM_PROP_REGION_CODE;
+                                        obj.Country = row.ISO_COUNTRY_CODE;
+                                        obj.Sector = row.GICS_SECTOR;
+                                        obj.industry = row.GICS_INDUSTRY;
+                                        obj.DataId = dataId;
+                                        obj.PeriodType = "A";
+                                        obj.PeriodYear = perYear;
+                                        obj.Currency = "USD";
+                                        obj.Amount = data.Where(t => t.IssuerID == s && t.DataID == dataId &&
+                                            t.PeriodYear == perYear).Select(t => t.Amount).FirstOrDefault();
+                                        obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
+                                        obj.BenWeight = row.BENCHMARK_WEIGHT;
+                                        obj.TypeNode = "Per";
+                                        periodRatiosData.Add(obj);
+                                    }
                                 }
                             }
 
                             foreach (String s in dinstinctSecurityIds)
                             {
-                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings
-                                    .Where(t => t.ASEC_SEC_SHORT_NAME == (securityData.Where(p => p.SecurityId == s).Select(p => p.AsecShortName)
-                                        .FirstOrDefault())).ToList())
+                                var security = securityData.Where(p => p.SecurityId == s).FirstOrDefault();
+                                if (security != null)
                                 {
-                                    BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
-                                    obj.BenchmarkName = benId;
-                                    obj.IssuerId = securityData.Where(t => t.SecurityId == s).Select(t => t.IssuerId).FirstOrDefault();
-                                    obj.SecurityId = s;
-                                    obj.IssueName = securityData.Where(t => t.SecurityId == s).Select(t => t.IssueName).FirstOrDefault();
-                                    obj.AsecShortName = row.ASEC_SEC_SHORT_NAME;
-                                    obj.Region = row.ASHEMM_PROP_REGION_CODE;
-                                    obj.Country = row.ISO_COUNTRY_CODE;
-                                    obj.Sector = row.GICS_SECTOR;
-                                    obj.industry = row.GICS_INDUSTRY;
-                                    obj.DataId = dataId;
-                                    obj.PeriodType = "A";
-                                    obj.PeriodYear = perYear;
-                                    obj.Currency = "USD";
-                                    obj.Amount = periodFinancialRatioData.Where(t => t.SecurityID == s && t.DataID == dataId && 
-                                        t.PeriodYear == perYear).Select(t => t.Amount).FirstOrDefault();
-                                    obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
-                                    obj.BenWeight = row.BENCHMARK_WEIGHT;
-                                    obj.TypeNode = "Per";
-                                    periodRatiosData.Add(obj);
+                                    var holdings = dataBenchmarkHoldings.Where(t => t.ASEC_SEC_SHORT_NAME == security.AsecShortName).ToList();
+                                    foreach (GF_BENCHMARK_HOLDINGS row in holdings)
+                                    {
+                                        BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
+                                        obj.BenchmarkName = benId;
+                                        obj.IssuerId = security.IssuerId;
+                                        obj.SecurityId = s;
+                                        obj.IssueName = security.IssueName;
+                                        obj.AsecShortName = row.ASEC_SEC_SHORT_NAME;
+                                        obj.Region = row.ASHEMM_PROP_REGION_CODE;
+                                        obj.Country = row.ISO_COUNTRY_CODE;
+                                        obj.Sector = row.GICS_SECTOR;
+                                        obj.industry = row.GICS_INDUSTRY;
+                                        obj.DataId = dataId;
+                                        obj.PeriodType = "A";
+                                        obj.PeriodYear = perYear;
+                                        obj.Currency = "USD";
+                                        obj.Amount = data.Where(t => t.SecurityID == s && t.DataID == dataId &&
+                                            t.PeriodYear == perYear).Select(t => t.Amount).FirstOrDefault();
+                                        obj.InvAmount = obj.Amount != 0 ? 1 / obj.Amount : 0;
+                                        obj.BenWeight = row.BENCHMARK_WEIGHT;
+                                        obj.TypeNode = "Per";
+                                        periodRatiosData.Add(obj);
+                                    }
                                 }
                             }
                         }
@@ -643,6 +686,90 @@ namespace BenchmarkNodeFinancials
                 log.Debug("Insertion failed for Benchmark : " + benId);
                 log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
                 throw;
+            }
+        }
+
+        private void InsertData(List<GroupedBenchmarkNodeData> groupedFinalData, String connectionString, String benId, String tableName)
+        {
+            var table = new DataTable();
+
+            var benchmarkId = new DataColumn("BENCHMARK_ID", typeof(String));
+            table.Columns.Add(benchmarkId);
+
+            var nodeName1 = new DataColumn("NODE_NAME1", typeof(String));
+            table.Columns.Add(nodeName1);
+
+            var nodeId1 = new DataColumn("NODE_ID1", typeof(String));
+            table.Columns.Add(nodeId1);
+
+            var nodeName2 = new DataColumn("NODE_NAME2", typeof(String));
+            table.Columns.Add(nodeName2);
+
+            var nodeId2 = new DataColumn("NODE_ID2", typeof(String));
+            table.Columns.Add(nodeId2);
+
+            var dataId = new DataColumn("DATA_ID", typeof(Int32));
+            table.Columns.Add(dataId);
+
+            var periodType = new DataColumn("PERIOD_TYPE", typeof(String));
+            table.Columns.Add(periodType);
+
+            var periodYear = new DataColumn("PERIOD_YEAR", typeof(Int32));
+            table.Columns.Add(periodYear);
+
+            var currency = new DataColumn("CURRENCY", typeof(String));
+            table.Columns.Add(currency);
+
+            var amount = new DataColumn("AMOUNT", typeof(Decimal));
+            table.Columns.Add(amount);
+
+            var updateDate = new DataColumn("UPDATE_DATE", typeof(DateTime));
+            table.Columns.Add(updateDate);
+
+            foreach (var record in groupedFinalData)
+            {
+                var row = table.NewRow();
+                row[benchmarkId] = record.BenchmarkID;
+                row[nodeName1] = record.NodeName1;
+                row[nodeId1] = record.NodeID1;
+                row[nodeName2] = record.NodeName2;
+                row[nodeId2] = record.NodeID2;
+                row[dataId] = record.DataID;
+                row[periodType] = record.PeriodType;
+                row[periodYear] = record.PeriodYear;
+                row[currency] = record.Currency;
+                row[amount] = record.Amount;
+                row[updateDate] = record.UpdateDate;
+                table.Rows.Add(row);
+            }
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var bulker = new SqlBulkCopy(connection);
+                bulker.DestinationTableName = tableName;
+                bulker.BulkCopyTimeout = 0; // infinite
+                try
+                {
+                    bulker.WriteToServer(table);
+                }
+                catch (Exception exception)
+                {
+                    throw new ApplicationException("Unable to do bulk insert.", exception);
+                }
+            }
+        }
+
+        private void CleanTable(String connectionString, String tableName)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "truncate table " + tableName;
+                    command.ExecuteNonQuery();
+                }
             }
         }
 

@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using Aims.Expressions;
 using System.Diagnostics;
+using System.IO;
+using TopDown.Core.ManagingCalculations;
+using TopDown.Core.Persisting;
+using Aims.Core.Sql;
 
 namespace TopDown.Core.Testing
 {
@@ -35,6 +39,23 @@ namespace TopDown.Core.Testing
         {
             var facade = Helper.CreateFacade(ConnectionString);
             var targetings = facade.GetTargetingTypePortfolioPickerModel();
+        }
+
+        public void TestFileOutput()
+        {
+            var facade = Helper.CreateFacade(ConnectionString);
+            IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
+            var connectionFactory = new SqlConnectionFactory(ConnectionString);
+            var dataManager = dataManagerFactory.CreateDataManager(connectionFactory.CreateConnection(), null);
+            var securityRepository = facade.RepositoryManager.ClaimSecurityRepository(dataManager);
+
+            var fileManager = new TradingTargetsFileManager();
+            var targetings = fileManager.GetFileContent(securityRepository, dataManager);
+            
+            using (StreamWriter sw = new StreamWriter(String.Format(@"C:\temp\AshmoreEMM_Models - as of {0:yyyyMMdd}-{0:HHmmss}.CSV", DateTime.Now)))
+            {
+                sw.Write(targetings);
+            }
         }
     }
 }

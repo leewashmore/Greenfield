@@ -26,10 +26,12 @@ namespace BenchmarkNodeFinancials
         {
             try
             {
-                dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
                 DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
-                GF_BENCHMARK_HOLDINGS lastBusinessRecord = dimensionEntity.GF_BENCHMARK_HOLDINGS.
-                    OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                //dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+                //GF_BENCHMARK_HOLDINGS lastBusinessRecord = dimensionEntity.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+
+                var entities = new AIMS_Data_QAEntities();
+                GF_BENCHMARK_HOLDINGS lastBusinessRecord = entities.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
 
                 log.Debug("Found the last business date to be" + lastBusinessDate);
 

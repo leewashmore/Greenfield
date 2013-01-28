@@ -285,3 +285,8 @@ The statement has been terminated.
 2012-12-21 14:34:48,731 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Processing for9Benchmark ends
 2012-12-21 14:34:48,731 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Processing for10Benchmark begin
 2012-12-21 14:34:55,238 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Retrieving Security Data
+2013-01-25 13:32:29,282 DEBUG BenchmarkNodeFinancials.Program - Found the last business date to be1/24/2013 12:00:00 AM
+2013-01-25 13:33:13,884 DEBUG BenchmarkNodeFinancials.Program - Application initiated on 1/24/2013 12:00:00 AM
+2013-01-25 13:34:12,638 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Is able to locate Benchmark Id's file  True
+2013-01-25 13:34:31,743 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Processing for1Benchmark begin
+2013-01-25 13:35:20,851 DEBUG BenchmarkNodeFinancials.BenchmarkNodeFinancial - Retrieving Security Data
