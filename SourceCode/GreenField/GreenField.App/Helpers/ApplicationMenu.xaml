@@ -176,11 +176,11 @@
                         <telerik:RadMenuItem Header="Context" x:Name="rmItemContext"
                                              Command="{Binding DashboardCompanyChartingContextCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <!-- TODO clean up
+                        
                         <telerik:RadMenuItem Header="Historical Valuations" x:Name="rmItemChartingValuation"
-                                             Command="{Binding DashboardCompanyChartingValuationCommand}"
+                                             Command="{Binding DashboardCompanyChartingValuationCommand}" IsEnabled="False"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        -->
+                        
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem x:Name="rmItemIssuerShares" Header="Issuer Shares">
                         <telerik:RadMenuItem Header="Issuer Shares Composition" x:Name="rmItemIssuerSharesComposition"
