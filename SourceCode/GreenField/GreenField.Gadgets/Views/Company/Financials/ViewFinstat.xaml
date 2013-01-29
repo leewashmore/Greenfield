@@ -212,7 +212,7 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>                               
                             </Grid.RowDefinitions>
-                            <Image Source="/GreenField.Gadgets;component/Images/AshmoreEMMLogo.png" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <Image Source="/GreenField.Gadgets;component/Images/AshmoreLogo.png" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                             <TextBlock Grid.Row="1" Text="{Binding ReportRunDate}" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                        Style="{StaticResource TextBlockStyle}"/>                            
                         </Grid>

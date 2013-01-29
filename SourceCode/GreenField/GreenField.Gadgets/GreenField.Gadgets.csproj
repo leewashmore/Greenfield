@@ -904,9 +904,8 @@
     <Resource Include="Images\Flip.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\AshmoreEMMLogo.png" />
+    <Resource Include="Images\AshmoreLogo.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

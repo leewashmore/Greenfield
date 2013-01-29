@@ -14,7 +14,7 @@ namespace Aims.Core.Persisting
         }
 
         [DebuggerStepThrough]
-        public SecurityInfo(String id, String ticker, String shortName, String name, String isoCountryCode, String lookThruFund, String issuerId, String issuerName, String securityType)
+        public SecurityInfo(String id, String ticker, String shortName, String name, String isoCountryCode, String lookThruFund, String issuerId, String issuerName, String securityType, String currency, String isin)
             : this()
         {
             this.Id = id;
@@ -26,6 +26,8 @@ namespace Aims.Core.Persisting
             this.IssuerId = issuerId;
             this.IssuerName = issuerName;
             this.SecurityType = securityType;
+            this.Currency = currency;
+            this.Isin = isin;
         }
 
         public String Id { get; set; }
@@ -37,5 +39,7 @@ namespace Aims.Core.Persisting
         public String IssuerId { get; set; }
         public String IssuerName { get; set; }
         public String SecurityType { get; set; }
+        public string Currency { get; set; }
+        public string Isin { get; set; }
     }
 }

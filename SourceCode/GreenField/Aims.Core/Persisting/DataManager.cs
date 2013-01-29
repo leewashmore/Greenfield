@@ -100,6 +100,9 @@ namespace Aims.Core.Persisting
                     .Field(", [ISSUER_ID]", (info, value) => info.IssuerId = value, false)
                     .Field(", [ISSUER_NAME]", (info, value) => info.IssuerName = value, false)
                     .Field(", [SECURITY_TYPE]", (info, value) => info.SecurityType = value, false)
+                    .Field(", [TRADING_CURRENCY]", (info, value) => info.Currency = value, false)
+                    .Field(", [ISIN]", (info, value) => info.Isin = value, false)
+                    .Field(", [ISO_COUNTRY_CODE]", (info, value) => info.IsoCountryCode = value, false)
                 .Text(" from " + TableNames.GF_SECURITY_BASEVIEW)
                 .PullAll();
             }

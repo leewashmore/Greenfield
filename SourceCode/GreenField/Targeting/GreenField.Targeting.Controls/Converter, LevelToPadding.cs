@@ -22,7 +22,7 @@ namespace GreenField.Targeting.Controls
             var level = System.Convert.ToInt32(value);
             var amplitude = System.Convert.ToInt32(parameter);
             var indent = level * amplitude;
-            if (indent < 0)
+            if (indent < -5)
             {
                 indent = 0;
             }

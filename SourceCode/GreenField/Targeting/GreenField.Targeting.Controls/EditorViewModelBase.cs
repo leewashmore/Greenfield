@@ -115,6 +115,10 @@ namespace GreenField.Targeting.Controls
                 this.isRecalculationAutomatic = value;
                 this.RequestRecalculatingCommand.RaiseCanExecuteChanged();
                 this.RaisePropertyChanged(() => this.IsRecalculationAutomatic);
+                if (value)
+                {
+                    this.RequestRecalculating();
+                }
             }
         }
     }

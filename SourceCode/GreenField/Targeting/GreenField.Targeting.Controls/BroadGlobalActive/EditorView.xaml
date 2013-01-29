@@ -34,7 +34,10 @@
                         <Button>
                             <Button.Template>
                                 <ControlTemplate>
-                                    <TextBlock Text="{Binding Basket.Name}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
+                                    <StackPanel  Orientation="Horizontal">
+                                        <TextBlock Text="{Binding ExpandedIcon}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}"></TextBlock>
+                                        <TextBlock Text="{Binding Basket.Name}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=-4}" />
+                                    </StackPanel>
                                 </ControlTemplate>
                             </Button.Template>
                             <i:Interaction.Behaviors>
@@ -55,7 +58,10 @@
                         <Button>
                             <Button.Template>
                                 <ControlTemplate>
-                                    <TextBlock Text="{Binding Name}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
+                                    <StackPanel Orientation="Horizontal" Background="#22FF0000">
+                                        <TextBlock Text="{Binding ExpandedIcon}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}"></TextBlock>
+                                        <TextBlock Text="{Binding Name}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=-4}" />
+                                    </StackPanel>
                                 </ControlTemplate>
                             </Button.Template>
                             <i:Interaction.Behaviors>
@@ -67,7 +73,7 @@
 
                 <mine:GlobalResidentToDataTemplateConverter.CountryTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Country.Name}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
+                        <TextBlock FontWeight="Normal" Text="{Binding Country.Name}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" />
                     </DataTemplate>
                 </mine:GlobalResidentToDataTemplateConverter.CountryTemplate>
 
@@ -76,7 +82,10 @@
                         <Button>
                             <Button.Template>
                                 <ControlTemplate>
-                                    <TextBlock Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}" >Other</TextBlock>
+                                    <StackPanel  Orientation="Horizontal" Background="#22FF0000">
+                                        <TextBlock Text="{Binding ExpandedIcon}" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=20}"></TextBlock>
+                                        <TextBlock Text="Other" Padding="{Binding Level, Converter={StaticResource levelToPaddingConverter}, ConverterParameter=-4}" />
+                                    </StackPanel>
                                 </ControlTemplate>
                             </Button.Template>
                             <i:Interaction.Behaviors>
@@ -113,9 +122,17 @@
                 BasketRegionTemplate="{StaticResource editableValueTemplate}"
                 UnsavedBasketCountryTemplate="{StaticResource editableValueTemplate}"
                 DefaultTemplate="{StaticResource valueTemplate}"
+                RegionTemplate="{StaticResource backgroundValueTemplate}"
+                OtherTemplate="{StaticResource backgroundValueTemplate}"
             >
             </mine:GlobalResidentToDataTemplateConverter>
 
+            <mine:GlobalResidentToDataTemplateConverter x:Key="valueTemplateSelector"
+                DefaultTemplate="{StaticResource valueTemplate}"
+                RegionTemplate="{StaticResource backgroundValueTemplate}"
+                OtherTemplate="{StaticResource backgroundValueTemplate}"
+            >
+            </mine:GlobalResidentToDataTemplateConverter>
 
             <DataTemplate x:Key="portfolioAdjustmentTemplate">
                 <ContentControl Content="{Binding PortfolioAdjustment}" ContentTemplate="{StaticResource editableValueTemplate}" Style="{StaticResource editableValueContentStyle}" />
@@ -125,9 +142,12 @@
                 BasketCountryTemplate="{StaticResource portfolioAdjustmentTemplate}"
                 BasketRegionTemplate="{StaticResource portfolioAdjustmentTemplate}"
                 UnsavedBasketCountryTemplate="{StaticResource portfolioAdjustmentTemplate}"
+                RegionTemplate="{StaticResource backgroundValueTemplate}"
+                OtherTemplate="{StaticResource backgroundValueTemplate}"
             >
                 <mine:GlobalResidentToDataTemplateConverter.DefaultTemplate>
                     <DataTemplate />
+                        
                 </mine:GlobalResidentToDataTemplateConverter.DefaultTemplate>
             </mine:GlobalResidentToDataTemplateConverter>
             
@@ -155,7 +175,7 @@
 
         <Grid Grid.Row="0">
 
-            <sdk:DataGrid AutoGenerateColumns="false" ItemsSource="{Binding Residents}" RowStyle="{StaticResource rowStyle}">
+            <sdk:DataGrid AutoGenerateColumns="false" ItemsSource="{Binding Residents}" RowStyle="{StaticResource rowStyle}"  VerticalScrollBarVisibility="Auto">
                 <i:Interaction.Behaviors>
                     <local:DataGridRowVisibilityBehavior  />
                 </i:Interaction.Behaviors>
@@ -177,7 +197,12 @@
                     <sdk:DataGridTemplateColumn Header="Benchmark" CellStyle="{StaticResource valueCellStyle}" >
                         <sdk:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding Benchmark}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />
+                                <!--<ContentControl Content="{Binding Benchmark}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />-->
+                                <ContentControl
+                                    Content="{Binding Benchmark}"
+                                    ContentTemplate="{Binding Converter={StaticResource valueTemplateSelector}}"
+                                    Style="{StaticResource valueContentStyle}"
+								/>
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>
@@ -197,7 +222,12 @@
                     <sdk:DataGridTemplateColumn Header="Base Active" CellStyle="{StaticResource valueCellStyle}">
                         <sdk:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding BaseActive}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />
+                                <!--<ContentControl Content="{Binding BaseActive}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />-->
+                                <ContentControl
+                                    Content="{Binding BaseActive}"
+                                    ContentTemplate="{Binding Converter={StaticResource valueTemplateSelector}}"
+                                    Style="{StaticResource valueContentStyle}"
+								/>
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>
@@ -205,7 +235,12 @@
                     <sdk:DataGridTemplateColumn Header="Overlay" CellStyle="{StaticResource valueCellStyle}">
                         <sdk:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding Overlay}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />
+                                <!--<ContentControl Content="{Binding Overlay}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}" />-->
+                                <ContentControl
+                                    Content="{Binding Overlay}"
+                                    ContentTemplate="{Binding Converter={StaticResource valueTemplateSelector}}"
+                                    Style="{StaticResource valueContentStyle}"
+								/>
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>
@@ -221,7 +256,12 @@
                     <sdk:DataGridTemplateColumn Header="Portfolio Scaled" CellStyle="{StaticResource valueCellStyle}">
                         <sdk:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding PortfolioScaled}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
+                                <!--<ContentControl Content="{Binding PortfolioScaled}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>-->
+                                <ContentControl
+                                    Content="{Binding PortfolioScaled}"
+                                    ContentTemplate="{Binding Converter={StaticResource valueTemplateSelector}}"
+                                    Style="{StaticResource valueContentStyle}"
+								/>
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>
@@ -229,7 +269,12 @@
                     <sdk:DataGridTemplateColumn Header="True Exposure" CellStyle="{StaticResource valueCellStyle}">
                         <sdk:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding TrueExposure}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
+                                <!--<ContentControl Content="{Binding TrueExposure}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>-->
+                                <ContentControl
+                                    Content="{Binding TrueExposure}"
+                                    ContentTemplate="{Binding Converter={StaticResource valueTemplateSelector}}"
+                                    Style="{StaticResource valueContentStyle}"
+								/>
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>
@@ -238,7 +283,12 @@
                     <sdk:DataGridTemplateColumn Header="True Active" CellStyle="{StaticResource valueCellStyle}">
                         <sdk:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding TrueActive}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>
+                                <!--<ContentControl Content="{Binding TrueActive}" ContentTemplate="{StaticResource valueTemplate}" Style="{StaticResource valueContentStyle}"/>-->
+                                <ContentControl
+                                    Content="{Binding TrueActive}"
+                                    ContentTemplate="{Binding Converter={StaticResource valueTemplateSelector}}"
+                                    Style="{StaticResource valueContentStyle}"
+								/>
                             </DataTemplate>
                         </sdk:DataGridTemplateColumn.CellTemplate>
                     </sdk:DataGridTemplateColumn>

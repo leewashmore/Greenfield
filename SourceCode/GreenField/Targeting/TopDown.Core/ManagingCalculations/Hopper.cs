@@ -35,6 +35,8 @@ namespace TopDown.Core.ManagingCalculations
 			this.bpstManager = bpstManager;
 		}
 
+        
+
 		public IEnumerable<BgaPortfolioSecurityTargetInfo> RecalculateEverything(Int32 calculationId, IDataManager manager)
 		{
 			try

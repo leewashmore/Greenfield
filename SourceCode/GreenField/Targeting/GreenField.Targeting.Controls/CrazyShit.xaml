@@ -389,6 +389,7 @@
                     <localprimitives:DataGridFrozenGrid Name="Root">
                         <vsm:VisualStateManager.VisualStateGroups>
                             <vsm:VisualStateGroup x:Name="CommonStates">
+                                
                                 <vsm:VisualState x:Name="Normal">
                                 </vsm:VisualState>
                                 <vsm:VisualState x:Name="NormalAlternatingRow">

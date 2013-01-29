@@ -85,7 +85,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return "Market Performance Snapshot (" + DateTime.Today.ToString("MMMM d, yyyy") + ") - Emerging Markets";
+                return "Market Performance Snapshot (" + DateTime.Today.ToString("MMMM d, yyyy") + ")";
             }
         }
         #endregion
