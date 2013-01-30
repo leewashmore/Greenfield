@@ -22,7 +22,7 @@ namespace Aims.Core
 			this.Country = country;
             this.IssuerId = issuerId;
             this.SecurityType = securityType;
-            this.Currency = Currency;
+            this.Currency = currency;
             this.Isin = isin;
             this.IsoCountryCode = isoCountryCode;
 		}
