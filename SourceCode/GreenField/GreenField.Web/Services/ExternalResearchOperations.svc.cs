@@ -537,7 +537,7 @@ namespace GreenField.Web.Services
                         tempData.IsPercentage = "Y";
                         tempData.RootSource = _dataSource;
                         tempData.RootSourceDate = DateTime.Now;
-                        if (!String.IsNullOrEmpty(item.FIELD) && item.FIELD.Contains("INFLATION_PCT"))
+                        if (!String.IsNullOrEmpty(item.FIELD) && (item.FIELD.Contains("INFLATION_PCT") || item.FIELD.Contains("ST_INTEREST_RATE")))
                             tempData.Decimals = 1;
                         tempData.Amount = Math.Round((Convert.ToDecimal(item.VALUE) * 100), 1);
                         result.Add(tempData); 
