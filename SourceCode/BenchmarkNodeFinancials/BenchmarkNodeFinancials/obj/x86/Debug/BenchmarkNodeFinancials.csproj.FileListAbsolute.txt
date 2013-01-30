@@ -33,3 +33,7 @@ C:\Apps\ConsoleApplication1\BenchmarkIDs.xml
 C:\Apps\ConsoleApplication1\BenchmarkNodeFinancials.exe.config
 C:\Apps\ConsoleApplication1\BenchmarkNodeFinancials.exe
 C:\Apps\ConsoleApplication1\BenchmarkNodeFinancials.pdb
+C:\Apps\Test\BenchmarkIDs.xml
+C:\Apps\Test\BenchmarkNodeFinancials.exe.config
+C:\Apps\Test\BenchmarkNodeFinancials.exe
+C:\Apps\Test\BenchmarkNodeFinancials.pdb

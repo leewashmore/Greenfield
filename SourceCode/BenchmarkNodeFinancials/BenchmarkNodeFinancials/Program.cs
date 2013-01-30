@@ -19,7 +19,7 @@ namespace BenchmarkNodeFinancials
         /// <summary>
         /// DimensionServiceReference.Entities object for connection to the views
         /// </summary>
-        private static DimensionServiceReference.Entities dimensionEntity;
+        //private static DimensionServiceReference.Entities dimensionEntity;
         #endregion
 
         static void Main(string[] args)
