@@ -175,7 +175,7 @@ as
 	drop table #B
 	drop table #C
 	
-
+GO
 
 
 --indicate thet current script is executed
