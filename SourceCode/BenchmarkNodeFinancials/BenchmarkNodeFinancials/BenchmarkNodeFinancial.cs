@@ -65,9 +65,10 @@ namespace BenchmarkNodeFinancials
                     benchmarkIds = doc.Descendants("BenchmarkId")
                         .Select(a => a.Value)
                         .ToList();
+                    log.Debug("Benchmark file is found");
                 }
-
-                log.Debug("Is able to locate Benchmark Id's file  " + exists);
+                else
+                    log.Debug("Benchmark file is not found");
 
                 List<SecurityData> securityStorage = GetAllSecurities();
 
