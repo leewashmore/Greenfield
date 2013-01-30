@@ -112,33 +112,33 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\Backend.Targeting\TargetingOperations.disco" />
+    <None Include="Service References\Backend.Targeting\TargetingOperations1.disco" />
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Service References\Backend.Targeting\TargetingOperations.wsdl" />
-    <None Include="Service References\Backend.Targeting\TargetingOperations.xsd">
+    <None Include="Service References\Backend.Targeting\TargetingOperations1.wsdl" />
+    <None Include="Service References\Backend.Targeting\TargetingOperations8.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Backend.Targeting\TargetingOperations1.xsd">
+    <None Include="Service References\Backend.Targeting\TargetingOperations81.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Backend.Targeting\TargetingOperations2.xsd">
+    <None Include="Service References\Backend.Targeting\TargetingOperations82.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Backend.Targeting\TargetingOperations3.xsd">
+    <None Include="Service References\Backend.Targeting\TargetingOperations83.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Backend.Targeting\TargetingOperations4.xsd">
+    <None Include="Service References\Backend.Targeting\TargetingOperations84.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Backend.Targeting\TargetingOperations5.xsd">
+    <None Include="Service References\Backend.Targeting\TargetingOperations85.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Backend.Targeting\TargetingOperations6.xsd">
+    <None Include="Service References\Backend.Targeting\TargetingOperations86.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Backend.Targeting\TargetingOperations7.xsd">
+    <None Include="Service References\Backend.Targeting\TargetingOperations87.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\Backend.Targeting\TopDown.FacingServer.Backend.Targeting.BgaRootModel.datasource">

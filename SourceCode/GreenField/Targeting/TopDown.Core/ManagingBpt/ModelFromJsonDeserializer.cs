@@ -111,7 +111,8 @@ namespace TopDown.Core.ManagingBpt
                     portfolioScaledTotal,
                     trueExposureGrandTotal,
                     trueActiveGrandTotal,
-                    benchamrkDate
+                    benchamrkDate,
+                    false
                 );
                 return result;
             });

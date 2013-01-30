@@ -74,9 +74,11 @@ namespace TopDown.Core.ManagingBpt
             Int32 targetingTypeId,
             String portfolioId,
             Boolean shouldBenchmarksBeInitialized,
-            IDataManager manager
+            IDataManager manager,
+            String username
         )
         {
+            
             ManagingBpt.RootModel result;
             // getting targeting, taxonomy, base values, overlays data from the database
 
@@ -118,7 +120,7 @@ namespace TopDown.Core.ManagingBpt
             var trueActiveGrandTotal = this.modelBuilder.CreateAddExpression(cash.TrueActive, globe.TrueActive);
             var portfolio = portfolioRepository.GetBroadGlobalActivePortfolio(portfolioId);
             var benchmarkDate = manager.GetLastestDateWhichBenchmarkDataIsAvialableOn();
-
+            var isUserPermittedToSave = manager.IsSavePermittedForBGAUser(username);
             result = new RootModel(
                 targetingType,
                 portfolio,
@@ -132,7 +134,8 @@ namespace TopDown.Core.ManagingBpt
                 portfolioScaledGrandTotal,
                 trueExposureGrandTotal,
                 trueActiveGrandTotal,
-                benchmarkDate
+                benchmarkDate,
+                isUserPermittedToSave
             );
 
             // populating the base and portfolio adjustment columsn first as they don't depend on potentially missing countries

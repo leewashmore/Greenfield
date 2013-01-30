@@ -9,7 +9,7 @@
     <Grid>
         
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Select targeting type group</TextBlock>
+            <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Targeting Type Group</TextBlock>
             <ComboBox
                 Width="150"
                 ItemsSource="{Binding TargetingTypeGroups}"
@@ -24,7 +24,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             
-            <TextBlock Margin="20 0 5 0" VerticalAlignment="Center">Select basket</TextBlock>
+            <TextBlock Margin="20 0 5 0" VerticalAlignment="Center">Basket</TextBlock>
             <ComboBox Width="100" ItemsSource="{Binding Baskets}" SelectedItem="{Binding SelectedBasket, Mode=TwoWay}">
                 <i:Interaction.Behaviors>
                     <local:UndoingCancelledSelectionBehavior Source="{Binding SelectedBasket}" />

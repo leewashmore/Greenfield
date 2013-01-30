@@ -38,10 +38,10 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
                 hasBeenChanged,
                 this.serializer.SerializeNullableExpression(model.PortfolioScaledGrandTotal, ticket),
                 this.serializer.SerializeNullableExpression(model.TrueExposureGrandTotal, ticket),
-                this.serializer.SerializeNullableExpression(model.TrueActiveGrandTotal, ticket)
+                this.serializer.SerializeNullableExpression(model.TrueActiveGrandTotal, ticket),
+                model.IsUserPermittedToSave
             );
             result.Factors = this.SerializeFactors(model.Factors);
-
             return result;
         }
 

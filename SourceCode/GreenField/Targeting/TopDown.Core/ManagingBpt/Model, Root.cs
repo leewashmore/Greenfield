@@ -28,7 +28,8 @@ namespace TopDown.Core.ManagingBpt
             IExpression<Decimal?> portfolioScaledGrandTotalExpression,
             IExpression<Decimal?> trueExposureGrandTotal,
             IExpression<Decimal?> trueActiveGrandTotal,
-            DateTime benchmarkDate
+            DateTime benchmarkDate,
+            Boolean isUserPermittedToSave
         )
         {
             this.TargetingType = targetingType;
@@ -44,6 +45,7 @@ namespace TopDown.Core.ManagingBpt
             this.TrueExposureGrandTotal = trueExposureGrandTotal;
             this.TrueActiveGrandTotal = trueActiveGrandTotal;
             this.BenchmarkDate = benchmarkDate;
+            this.IsUserPermittedToSave = isUserPermittedToSave;
         }
 
         public TargetingType TargetingType { get; private set; }
@@ -59,5 +61,7 @@ namespace TopDown.Core.ManagingBpt
         public DateTime BenchmarkDate { get; private set; }
         public IExpression<Decimal?> TrueExposureGrandTotal { get; private set; }
         public IExpression<Decimal?> TrueActiveGrandTotal { get; private set; }
+
+        public Boolean IsUserPermittedToSave { get; private set; }
     }
 }
