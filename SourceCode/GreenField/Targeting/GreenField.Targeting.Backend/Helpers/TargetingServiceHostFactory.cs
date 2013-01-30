@@ -307,6 +307,7 @@ namespace GreenField.Targeting.Backend.Helpers
                 basketRenderer
             );
 
+
             var commentManager = new TopDown.Core.ManagingComments.CommentManager();
 
             var facade = new Facade(

@@ -44,6 +44,7 @@ namespace TopDown.Core.Persisting
         public const String BGA_PORTFOLIO_SECURITY_FACTOR_CHANGE = "BGA_PORTFOLIO_SECURITY_FACTOR_CHANGE";
 		public const String TARGETING_TYPE_BASKET_BASE_VALUE = "TARGETING_TYPE_BASKET_BASE_VALUE";
         public const String BASKET = "BASKET";
+        public const String PORTFOLIO_SECURITY_TARGETS_UNION = "PORTFOLIO_SECURITY_TARGETS_UNION";
 
     }
 }

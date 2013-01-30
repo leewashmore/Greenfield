@@ -255,6 +255,7 @@ namespace TopDown.Web.Controllers
 				basketRenderer
 			);
 
+
             var commentManager = new Core.ManagingComments.CommentManager();
 			
 			var facade = new Facade(

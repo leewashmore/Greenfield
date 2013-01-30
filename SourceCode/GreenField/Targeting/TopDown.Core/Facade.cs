@@ -313,10 +313,14 @@ namespace TopDown.Core
                     try
                     {
                         var tagrets = this.hopper.RecalculateEverything(calculationId, manager);
-
+                        var fileManager = new TradingTargetsFileManager();
+                        fileManager.GetFileContent(securityRepository, manager);
                         if (seriously)
                         {
+                            
+                            
                             transaction.Commit();
+                            
                         }
                         else
                         {
@@ -431,5 +435,7 @@ namespace TopDown.Core
                 return comments;
             }
         }
+
+        
     }
 }

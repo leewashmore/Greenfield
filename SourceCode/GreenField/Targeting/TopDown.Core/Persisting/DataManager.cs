@@ -65,7 +65,7 @@ namespace TopDown.Core.Persisting
                     .Field(", [SECURITY_ID]", (info, value) => info.SecurityId = value, true)
                     .Field(", [TARGET_PCT]", (PortfolioSecurityTargetsInfo info, Decimal value) => info.Target = value)
                     .Field(", [UPDATED]", (PortfolioSecurityTargetsInfo info, DateTime? value) => info.Updated = value)
-                .Text(" from [" + TableNames.BASKET + "]")
+                .Text(" from [" + TableNames.PORTFOLIO_SECURITY_TARGETS_UNION + "]")
                 .PullAll();
             }
         }
