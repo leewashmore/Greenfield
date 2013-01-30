@@ -81,7 +81,8 @@ namespace TopDown.Core
         // bpt module
         public ManagingBpt.RootModel GetBptModel(
             Int32 targetingTypeId,
-            String portfolioId
+            String portfolioId,
+            String username
         )
         {
             using (var connection = this.connectionFactory.CreateConnection())
@@ -91,8 +92,10 @@ namespace TopDown.Core
                     targetingTypeId,
                     portfolioId,
                     true,
-                    manager
+                    manager,
+                    username
                 );
+                
                 return result;
             }
         }

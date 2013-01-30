@@ -391,6 +391,30 @@ namespace TopDown.Core.Persisting
             }
         }
 
+        private class BGAUserPermissions
+        {
+            public String Username { get; set; }
+            public Int32 IsPermitted { get; set; }
+        }
+
+        public Boolean IsSavePermittedForBGAUser(string username)
+        {
+
+            using (var builder = this.CreateQueryCommandBuilder<BGAUserPermissions>())
+            {
+                var result = builder.Text("select ")
+                    .Field("  [USERNAME]", (info, value) => info.Username = value, true)
+                    .Field(", 1", (info, value) => info.IsPermitted = value)
+                    .Text(" from [" + TableNames.USERNAME_BGA_ACCESS + "]")
+                    .Text(" where [USERNAME] = ").Parameter(username)
+                    .PullFirstOrDefault();
+                if (result != null)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         // P-S-TO
         public virtual BgaPortfolioSecurityFactorChangesetInfo GetLatestBgaPortfolioSecurityFactorChangeset()
         {

@@ -45,7 +45,7 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Margin="5 5 0 0">Target overlays</TextBlock>
+                    <TextBlock Margin="5 5 0 0">Target Overlays</TextBlock>
                     <ItemsControl ItemsSource="{Binding EditorViewModel.Factors}" ItemsPanel="{StaticResource wrappedPanelTemplate}" Margin="0 0 100 0">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -64,10 +64,10 @@
                 </StackPanel>
                 
                 <StackPanel Orientation="Horizontal" Margin="5 5 0 0">
-                    <CheckBox IsChecked="{Binding EditorViewModel.IsRecalculationAutomatic, Mode=TwoWay}" Content="Recalculate automatically?" />
+                    <CheckBox IsChecked="{Binding EditorViewModel.IsRecalculationAutomatic, Mode=TwoWay}" Content="Recalculate Automatically?" />
                     <Button Margin="10 0 0 0" VerticalAlignment="Center" Command="{Binding EditorViewModel.RequestRecalculatingCommand}" Content="Recalculate" />
-                    <TextBlock Margin="20 0 5 0" VerticalAlignment="Center">Benchmark data is as of</TextBlock>
-                    <TextBlock Text="{Binding EditorViewModel.RootModel.BenchmarkDate}" VerticalAlignment="Center" />
+                    <TextBlock Margin="20 0 5 0" VerticalAlignment="Center">Benchmark Data as of</TextBlock>
+                    <TextBlock Text="{Binding EditorViewModel.RootModel.BenchmarkDate, StringFormat='MM/dd/yyyy'}" VerticalAlignment="Center" />
                 </StackPanel>
 
 

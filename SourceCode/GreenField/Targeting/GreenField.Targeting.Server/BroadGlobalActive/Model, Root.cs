@@ -30,7 +30,8 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             Boolean isModified,
             NullableExpressionModel portfolioScaledGranTotal,
             NullableExpressionModel trueExposureGrandTotal,
-            NullableExpressionModel trueActiveGrandTotal
+            NullableExpressionModel trueActiveGrandTotal,
+            Boolean isUserPermittedToSave
         )
         {
             this.TargetingType = targetingType;
@@ -46,6 +47,7 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
             this.PortfolioScaledGrandTotal = portfolioScaledGranTotal;
             this.TrueExposureGrandTotal = trueExposureGrandTotal;
             this.TrueActiveGrandTotal = trueActiveGrandTotal;
+            this.IsUserPermittedToSave = isUserPermittedToSave;
         }
 
         [DataMember]
@@ -89,5 +91,8 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
 
         [DataMember]
         public NullableExpressionModel TrueActiveGrandTotal { get; set; }
+
+        [DataMember]
+        public Boolean IsUserPermittedToSave { get; set; }
     }
 }

@@ -56,12 +56,12 @@ namespace GreenField.Web.Services
             return result;
         }
 
-        public Server.BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId)
+        public Server.BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId, String username)
         {
             return this.Watch("Unable to get the broad global active data for targeting type (ID: " + targetingTypeId + ") and broad global active portfolio (ID: " + bgaPortfolioId + ").", delegate
             {
 
-                return this.facade.GetBroadGlobalActive(targetingTypeId, bgaPortfolioId);
+                return this.facade.GetBroadGlobalActive(targetingTypeId, bgaPortfolioId, username);
             });
         }
 

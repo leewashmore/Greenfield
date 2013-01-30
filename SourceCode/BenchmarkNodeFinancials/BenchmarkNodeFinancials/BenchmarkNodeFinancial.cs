@@ -40,7 +40,7 @@ namespace BenchmarkNodeFinancials
         {
             try
             {
-                var tableName = "dbo.BENCHMARK_NODE_FINANCIALS_test";
+                var tableName = "dbo.BENCHMARK_NODE_FINANCIALS";
                 var connectionString = ConfigurationManager.ConnectionStrings["AIMS_Data"].ConnectionString;
                 //dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
                 entities = new AIMS_Data_QAEntities();
@@ -54,10 +54,14 @@ namespace BenchmarkNodeFinancials
                 //    throw new Exception("Services are not available");
                 //}
                 entity = new AIMSDataEntity();
-                bool exists = File.Exists(@"BenchmarkIDs.xml");
+                var directory = ConfigurationManager.AppSettings["WorkingDirectory"];
+                if (!directory.EndsWith(@"\"))
+                    directory += @"\";
+                var benchmarkFilePath = directory + "BenchmarkIDs.xml";
+                bool exists = File.Exists(benchmarkFilePath);
                 if (exists)
                 {
-                    var doc = XDocument.Load(@"BenchmarkIDs.xml");
+                    var doc = XDocument.Load(benchmarkFilePath);
                     benchmarkIds = doc.Descendants("BenchmarkId")
                         .Select(a => a.Value)
                         .ToList();
@@ -70,7 +74,7 @@ namespace BenchmarkNodeFinancials
                 for (int i = 0; i < benchmarkIds.Count; i++)
                 {
                     String benId = benchmarkIds[i];
-                    log.Debug("Processing for" + i + "Benchmark begin");
+                    log.Debug("Processing for benchmark " + benId + " begin");
                     List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
                     dataBenchmarkHoldings = entities.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
                                                              && record.PORTFOLIO_DATE == lastBusinessDate
@@ -141,10 +145,10 @@ namespace BenchmarkNodeFinancials
                     //creation of an Xml for inserting data into the Benchmark_Node_Financials table
                     //CreateXMLInsertData(groupedFinalData, entity, benId);
 
-                    log.Debug("Insert data");
+                    log.Debug("Insert data: " + groupedFinalData.Count + " records");
                     InsertData(groupedFinalData, connectionString, benId, tableName);
 
-                    log.Debug("Processing for" + i + "Benchmark ends");
+                    log.Debug("Processing for " + benId + " Benchmark ends");
                 }
                 log.Debug("No processing of Benchmarks");
             }

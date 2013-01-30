@@ -74,11 +74,11 @@ namespace GreenField.Targeting.Server
             }
         }
 
-        public BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId)
+        public BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId, String username)
         {
             this.MakeSureRepositoriesAreDroppedIfNeeded();
             var ticket = new CalculationTicket();
-            var model = this.facade.GetBptModel(targetingTypeId, bgaPortfolioId);
+            var model = this.facade.GetBptModel(targetingTypeId, bgaPortfolioId, username);
             var result = this.bgaSerializer.SerializeRoot(model, ticket);
             return result;
         }

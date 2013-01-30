@@ -185,7 +185,8 @@ namespace TopDown.Core.ManagingCalculations
 				targetingType.Id,
 				portfolio.Id,
 				false /* we coundn't care less about benchmarks at this point */,
-				manager
+				manager,
+                "" /* we don't care about username here */
 			);
 
 			var ticket = new CalculationTicket();

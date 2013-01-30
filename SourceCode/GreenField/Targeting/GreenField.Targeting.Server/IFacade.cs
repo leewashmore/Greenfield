@@ -11,7 +11,7 @@ namespace GreenField.Targeting.Server
     public interface IFacade
     {
         [OperationContract]
-        BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId);
+        BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId, String username);
 
         [OperationContract]
         IEnumerable<BroadGlobalActive.Picker.TargetingTypeModel> GetTargetingTypePortfolioPicker();

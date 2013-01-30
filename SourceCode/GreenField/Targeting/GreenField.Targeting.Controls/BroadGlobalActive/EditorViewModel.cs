@@ -69,7 +69,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
                     this.TakeData(data);
                 },
                 this.FinishLoading);
-            client.GetBroadGlobalActiveAsync(targetingTypeId, broadGlobalActivePortfolioId);
+            client.GetBroadGlobalActiveAsync(targetingTypeId, broadGlobalActivePortfolioId, this.clientFactory.GetUsername());
         }
 
         public override void RequestRecalculating()
