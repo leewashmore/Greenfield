@@ -162,7 +162,7 @@ as
 	drop table #A
 	drop table #B
 	
-
+GO
 
 
 
