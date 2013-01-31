@@ -12,6 +12,7 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;
 using GreenField.Common;
 using TargetingModule = GreenField.Targeting.Controls;
+using GreenField.App.Helpers;
 namespace GreenField.App.ViewModel
 {
     // this piece of the ViewModelShell class is related solely to targeting
@@ -35,16 +36,22 @@ namespace GreenField.App.ViewModel
 
         public void NavigateToTargetingBroadGlobalActiveCommand()
         {
+            ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.PORTFOLIO_TARGETING_ASSET_ALLOCATION);
+            UpdateToolBoxSelectorVisibility();
             this.regionManager.RequestNavigate(RegionNames.MAIN_REGION, typeof(TargetingModule.BroadGlobalActive.RootView).FullName);
         }
 
         public void NavigateToTargetingBasketTargetsCommand()
         {
+            ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.PORTFOLIO_TARGETING_STOCK_SELECTION);
+            UpdateToolBoxSelectorVisibility();
             this.regionManager.RequestNavigate(RegionNames.MAIN_REGION, typeof(TargetingModule.BasketTargets.RootView).FullName);
         }
 
         public void NavigateToTargetingBottomUpCommand()
         {
+            ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.PORTFOLIO_TARGETING_BOTTOM_UP);
+            UpdateToolBoxSelectorVisibility();
             this.regionManager.RequestNavigate(RegionNames.MAIN_REGION, typeof(TargetingModule.BottomUp.RootView).FullName);
         }
     }

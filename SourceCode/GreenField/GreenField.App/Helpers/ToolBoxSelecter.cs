@@ -161,13 +161,13 @@ namespace GreenField.App.Helpers
                                                 filterValueSelectorVisibility: Visibility.Collapsed,
                                                 lookThruVisibility: Visibility.Visible);
                     break;
-                case DashboardCategoryType.PORTFOLIO_MODELS_ASSET_ALLOCATION:
+                case DashboardCategoryType.PORTFOLIO_TARGETING_ASSET_ALLOCATION:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategoryType.PORTFOLIO_MODELS_STOCK_SELECTION:
+                case DashboardCategoryType.PORTFOLIO_TARGETING_STOCK_SELECTION:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategoryType.PORTFOLIO_MODELS_BOTTOM_UP:
+                case DashboardCategoryType.PORTFOLIO_TARGETING_BOTTOM_UP:
                     UpdateToolBoxItemVisibility();
                     break;
                 case DashboardCategoryType.PORTFOLIO_MODELS_DIRECT_OVERLAY:
