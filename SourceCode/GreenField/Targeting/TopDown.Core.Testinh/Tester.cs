@@ -17,7 +17,7 @@ namespace TopDown.Core.Testing
         public void Test()
         {
             var facade = Helper.CreateFacade(ConnectionString);
-            var model = facade.GetBptModel(0, "APG60");
+            var model = facade.GetBptModel(0, "APG60", "mrusaev");
             model.Factors.Items.First().OverlayFactor.EditedValue = null;
             var ticket = new CalculationTicket();
             facade.RecalculateBptModel(model, ticket);

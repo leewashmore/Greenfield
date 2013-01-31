@@ -44,9 +44,10 @@ namespace TopDown.Core.ManagingCalculations
             //SecurityRepository securities = repositoryMananer.ClaimSecurityRepository(dataManager);
             var targets = dataManager.GetAllTargets();
             var result = targets.Select(x => new TradingTargetRecord(x.PortfolioId, securityRepository.FindSecurity(x.SecurityId), x.Target)).ToList();
-            
 
-            var groups = result.GroupBy(x => new GroupKey { PortfolioId = x.PortfolioId, CountryCode = x.Security.IsoCountryCode }).Select(x => new { Key = x.Key, Total = x.Sum(y => y.Target)}).ToDictionary(x => x.Key);
+            var groups = result.GroupBy(x => new GroupKey { PortfolioId = x.PortfolioId, CountryCode = x.Security.IsoCountryCode })
+                .Select(x => new { Key = x.Key, Total = x.Sum(y => y.Target) })
+                .ToDictionary(x => x.Key);
             foreach (var r in result)
             {
                 var key = new GroupKey { CountryCode = r.Security.IsoCountryCode, PortfolioId = r.PortfolioId };

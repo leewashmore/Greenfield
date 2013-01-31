@@ -24,6 +24,7 @@ using Aims.Expressions;
 using TopDown.Core.ManagingCalculations;
 using Aims.Core;
 using Aims.Core.Sql;
+using System.Configuration;
 
 namespace TopDown.Core
 {
@@ -317,10 +318,20 @@ namespace TopDown.Core
                     {
                         var tagrets = this.hopper.RecalculateEverything(calculationId, manager);
                         var fileManager = new TradingTargetsFileManager();
-                        fileManager.GetFileContent(securityRepository, manager);
+                        
                         if (seriously)
                         {
-                            
+
+                            string fileContent = fileManager.GetFileContent(securityRepository, manager);
+                            var now = DateTime.Now;
+                            var fileName = "AshmoreEMM_Models - as of " +  now.ToString("yyyyMMdd-hhmmss")  + ".csv";
+                            var directory = ConfigurationManager.AppSettings["TargetingFileOutputDirectory"];
+                            if (!directory.EndsWith(@"\"))
+                                directory += @"\";
+                            using (StreamWriter sw = new StreamWriter(directory + fileName))
+                            {
+                                sw.Write(fileContent);
+                            }
                             
                             transaction.Commit();
                             
