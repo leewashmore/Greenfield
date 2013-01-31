@@ -125,9 +125,16 @@ namespace Aims.Core
 
                     if (String.IsNullOrWhiteSpace(securityInfo.LookThruFund))
                     {
+                        Country country = null;
                         if (String.IsNullOrEmpty(securityInfo.IsoCountryCode)) throw new ApplicationException("Country code is not specified.");
-                        var country = countryRepository.GetCountry(securityInfo.IsoCountryCode);
-
+                        try
+                        {
+                            country = countryRepository.GetCountry(securityInfo.IsoCountryCode);
+                        }
+                        catch (CountryNotFoundException)
+                        {
+                            country = new Country(securityInfo.IsoCountryCode, securityInfo.AsecCountryName);
+                        }
                         var stock = new CompanySecurity(
                             securityInfo.Id,
                             securityInfo.Ticker,
@@ -141,6 +148,7 @@ namespace Aims.Core
                             securityInfo.IsoCountryCode
                         );
                         security = stock;
+                        
                     }
                     else
                     {

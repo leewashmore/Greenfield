@@ -7,6 +7,12 @@ using Aims.Core.Persisting;
 
 namespace Aims.Core
 {
+    public class CountryNotFoundException : ApplicationException
+    {
+        public CountryNotFoundException(string message) : base(message){} 
+        
+    }
+
     public class CountryRepository : KeyedRepository<String, Country>
     {
         [DebuggerStepThrough]
@@ -25,7 +31,7 @@ namespace Aims.Core
         public Country GetCountry(String isoCode)
         {
             var found = base.FindValue(isoCode);
-            if (found == null) throw new ApplicationException("There is no country with the ISO code \"" + isoCode + "\".");
+            if (found == null) throw new CountryNotFoundException("There is no country with the ISO code \"" + isoCode + "\".");
             return found;
         }
 

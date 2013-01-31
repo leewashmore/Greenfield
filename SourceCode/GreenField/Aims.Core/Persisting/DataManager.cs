@@ -103,6 +103,7 @@ namespace Aims.Core.Persisting
                     .Field(", [TRADING_CURRENCY]", (info, value) => info.Currency = value, false)
                     .Field(", [ISIN]", (info, value) => info.Isin = value, false)
                     .Field(", [ISO_COUNTRY_CODE]", (info, value) => info.IsoCountryCode = value, false)
+                    .Field(", [ASEC_SEC_COUNTRY_NAME]", (info, value) => info.AsecCountryName = value, false)
                 .Text(" from " + TableNames.GF_SECURITY_BASEVIEW)
                 .PullAll();
             }
