@@ -20,7 +20,7 @@ namespace GreenField.IssuerShares.Server
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.CommandTimeout = 900;
+                    command.CommandTimeout = 120;
                     command.CommandText = "dbo.Get_data";
                     var param = command.CreateParameter();
                     param.Value = issuerId;

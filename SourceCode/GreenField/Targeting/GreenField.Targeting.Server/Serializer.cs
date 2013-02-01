@@ -61,15 +61,20 @@ namespace GreenField.Targeting.Server
 
         private FundModel SerializeFund(Fund fund)
         {
-            var result = new FundModel(
-                fund.Id,
-                fund.Name,
-                fund.ShortName,
-                fund.Ticker,
-                fund.IssuerId,
-                fund.SecurityType
-            );
-            return result;
+            if (fund != null)
+            {
+                var result = new FundModel(
+                    fund.Id,
+                    fund.Name,
+                    fund.ShortName,
+                    fund.Ticker,
+                    fund.IssuerId,
+                    fund.SecurityType
+                );
+                return result;
+            }
+            else
+                return null;
         }
 
         public CompanySecurityModel SerializeCompanySecurity(CompanySecurity security)

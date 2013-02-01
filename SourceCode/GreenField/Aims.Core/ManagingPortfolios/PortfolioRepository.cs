@@ -23,10 +23,10 @@ namespace Aims.Core
             if (!bottomUpPortfolios.Any()) throw new ApplicationException("There are no bottom up portfolios at all, check your database.");
             this.bottomUpPortfolios = bottomUpPortfolios;
 
-            this.bottomUpPortfolioBySecurityId = this.bottomUpPortfolios.Select(x => x.Value).ToDictionary(x => x.Fund.Id);
+            this.bottomUpPortfolioBySecurityId = this.bottomUpPortfolios.Select(x => x.Value).Where(x => x.Fund != null).ToDictionary(x => x.Fund.Id);
 
             this.broadGlobalActivePortfolios = portfolios
-                .Where(x => !securityRepository.IsProrfolioAFund(x.Id))
+                .Where(x => !x.IsBottomUp)
                 .Select(x => new BroadGlobalActivePortfolio(
                     x.Id,
                     x.Name
@@ -41,7 +41,7 @@ namespace Aims.Core
             var result = new Dictionary<String, BottomUpPortfolio>();
             foreach (var portfolioInfo in portfolioInfos)
             {
-                if (securityRepository.IsProrfolioAFund(portfolioInfo.Id))
+                if (securityRepository.IsPortfolioAFund(portfolioInfo.Id))
                 {
                     var bottomUpPortfolio = new BottomUpPortfolio(
                         portfolioInfo.Id,
@@ -49,6 +49,18 @@ namespace Aims.Core
                         securityRepository.GetFundByPorfolioId(portfolioInfo.Id)
                     );
                     result.Add(bottomUpPortfolio.Id, bottomUpPortfolio);
+                }
+                else
+                {
+                    if (portfolioInfo.IsBottomUp)
+                    {
+                        var bottomUpPortfolio = new BottomUpPortfolio(
+                        portfolioInfo.Id,
+                        portfolioInfo.Name,
+                        null
+                    );
+                        result.Add(bottomUpPortfolio.Id, bottomUpPortfolio);
+                    }
                 }
             }
             return result;

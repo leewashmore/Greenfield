@@ -50,7 +50,7 @@ namespace TopDown.Core.Overlaying
 			// (there is no overlay factor numbers)
 
 			var itemsForPotentialOverlays = targetingType.BottomUpPortfolios						// for all the portoflios defined for the targeting type
-				.Where(x => ! itemsForSavedOverlays.Select(y => y.BottomUpPortfolio).Contains(x))	// get only those which are not in the 'saved' list yet
+				.Where(x => ! itemsForSavedOverlays.Select(y => y.BottomUpPortfolio).Contains(x) && x.Fund != null)	// get only those which are not in the 'saved' list yet
 				.Select(bottomUpPortfolio => {
 					var item = new ItemModel(
 						bottomUpPortfolio,

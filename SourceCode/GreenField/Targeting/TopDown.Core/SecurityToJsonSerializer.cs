@@ -59,10 +59,13 @@ namespace TopDown.Core.ManagingSecurities
 
         public void SerializeFund(Fund fund, IJsonWriter writer)
         {
-            writer.Write(fund.Id, JsonNames.Id);
-            writer.Write(fund.Ticker, JsonNames.Ticker);
-            writer.Write(fund.ShortName, JsonNames.ShortName);
-            writer.Write(fund.Name, JsonNames.Name);
+            if (fund != null)
+            {
+                writer.Write(fund.Id, JsonNames.Id);
+                writer.Write(fund.Ticker, JsonNames.Ticker);
+                writer.Write(fund.ShortName, JsonNames.ShortName);
+                writer.Write(fund.Name, JsonNames.Name);
+            }
         }
     }
 }
