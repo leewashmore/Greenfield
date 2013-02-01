@@ -136,7 +136,8 @@ namespace GreenField.Targeting.Controls.BottomUp
 
         public void GetNotifiedAboutChangedValue(EditableExpressionModel model)
         {
-            this.ConsiderRecalculating();
+            base.ResetRecalculationTimer();
+            //this.ConsiderRecalculating();
         }
 
         public ObservableCollection<IBuLineModel> Lines
