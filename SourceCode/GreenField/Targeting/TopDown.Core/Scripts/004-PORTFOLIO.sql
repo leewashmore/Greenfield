@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[PORTFOLIO](
 	[ID] [varchar](20) NOT NULL,
 	[NAME] [varchar](200) NOT NULL,
+	[IS_BOTTOM_UP] [int] NOT NULL,
  CONSTRAINT [PK_PORTFOLIO] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -8,10 +9,10 @@
 ) ON [PRIMARY]
 
 
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_A', 'PORT_A')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_B', 'PORT_B')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_C', 'PORT_C')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_D', 'PORT_D')
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_A', 'PORT_A', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_B', 'PORT_B', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_C', 'PORT_C', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_D', 'PORT_D', 0)
 --INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_E', 'PORT_E')
 --INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_F', 'PORT_F')
 --INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_G', 'PORT_G')
@@ -35,28 +36,32 @@ INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_D', 'PORT_D')
 --INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_Y', 'PORT_Y')
 --INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PORT_Z', 'PORT_Z')
 
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('AFRICA', 'AFRICA')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('SAF', 'SAF')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('GSCF', 'GSCF')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('LSCF', 'LSCF')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('MIDEAST', 'MIDEAST')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('STARS', 'STARS')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('AP1F', 'AP1F')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('APG60', 'APG60')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('NOMPOOL', 'NOMPOOL')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('SICVESC', 'SICVESC')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('SICVFEF', 'SICVFEF')
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('AFRICA', 'AFRICA', 1)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('SAF', 'SAF', 1)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('GSCF', 'GSCF', 1)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('LSCF', 'LSCF', 1)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('MIDEAST', 'MIDEAST', 1)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('STARS', 'STARS', 1)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('AP1F', 'AP1F', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('APG60', 'APG60', 1)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('NOMPOOL', 'NOMPOOL', 1)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('SICVESC', 'SICVESC', 1)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('SICVFEF', 'SICVFEF', 0)
 
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('USESC', 'USESC')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('ABP', 'ABP')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('BIRCH', 'BIRCH')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('CONN', 'CONN')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('EMIF', 'EMIF')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('EMSF', 'EMSF')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('GRD7', 'GRD7')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('IOWA', 'IOWA')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('KODAK', 'KODAK')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('OPB', 'OPB')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PRIT', 'PRIT')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('SICVEF', 'SICVEF')
-INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('USEF', 'USEF')
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('USESC', 'USESC', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('ABP', 'ABP', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('BIRCH', 'BIRCH', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('CONN', 'CONN', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('EMIF', 'EMIF', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('EMSF', 'EMSF', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('GRD7', 'GRD7', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('IOWA', 'IOWA', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('KODAK', 'KODAK', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('OPB', 'OPB', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PRIT', 'PRIT', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('SICVEF', 'SICVEF', 0)
+INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('USEF', 'USEF', 0)
+GO
+
+ALTER TABLE [dbo].[PORTFOLIO] ADD  CONSTRAINT [DF_PORTFOLIO_IS_BOTTOM_UP]  DEFAULT ((0)) FOR [IS_BOTTOM_UP]
+GO

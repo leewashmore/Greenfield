@@ -51,7 +51,8 @@ namespace GreenField.Targeting.Server.BroadGlobalActive
 				portfolioScaledGrandTotalExpression,
                 trueExposureGrandTotal,
                 trueActiveGrandTotal,
-                model.BenchmarkDate
+                model.BenchmarkDate,
+                model.IsUserPermittedToSave
             );
             return result;
         }

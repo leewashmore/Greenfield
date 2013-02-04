@@ -65,7 +65,7 @@ namespace TopDown.Core.Persisting
                     .Field(", [SECURITY_ID]", (info, value) => info.SecurityId = value, true)
                     .Field(", [TARGET_PCT]", (PortfolioSecurityTargetsInfo info, Decimal value) => info.Target = value)
                     .Field(", [UPDATED]", (PortfolioSecurityTargetsInfo info, DateTime? value) => info.Updated = value)
-                .Text(" from [" + TableNames.BASKET + "]")
+                .Text(" from [" + TableNames.PORTFOLIO_SECURITY_TARGETS_UNION + "]")
                 .PullAll();
             }
         }
@@ -388,6 +388,30 @@ namespace TopDown.Core.Persisting
                     .Text(" from [" + TableNames.USERNAME_BASKET + "]")
                     .Text(" where [USERNAME] = ").Parameter(username)
                     .PullAll();
+            }
+        }
+
+        private class BGAUserPermissions
+        {
+            public String Username { get; set; }
+            public Int32 IsPermitted { get; set; }
+        }
+
+        public Boolean IsSavePermittedForBGAUser(string username)
+        {
+
+            using (var builder = this.CreateQueryCommandBuilder<BGAUserPermissions>())
+            {
+                var result = builder.Text("select ")
+                    .Field("  [USERNAME]", (info, value) => info.Username = value, true)
+                    .Field(", 1", (info, value) => info.IsPermitted = value)
+                    .Text(" from [" + TableNames.USERNAME_BGA_ACCESS + "]")
+                    .Text(" where [USERNAME] = ").Parameter(username)
+                    .PullFirstOrDefault();
+                if (result != null)
+                    return true;
+                else
+                    return false;
             }
         }
 

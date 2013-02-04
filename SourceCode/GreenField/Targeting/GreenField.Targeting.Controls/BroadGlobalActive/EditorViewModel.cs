@@ -69,7 +69,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
                     this.TakeData(data);
                 },
                 this.FinishLoading);
-            client.GetBroadGlobalActiveAsync(targetingTypeId, broadGlobalActivePortfolioId);
+            client.GetBroadGlobalActiveAsync(targetingTypeId, broadGlobalActivePortfolioId, this.clientFactory.GetUsername());
         }
 
         public override void RequestRecalculating()
@@ -101,7 +101,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             foreach (var factor in factors)
             {
                 EditableExpressionModel factorExpression = factor.OverlayFactor;
-                var securityId = factor.BottomUpPortfolio.Fund.Id;
+                var securityId = factor.BottomUpPortfolio.Id;
                 var requestOverlayFactorCommentsCommand = new DelegateCommand(delegate
                 {
                     this.RequestOverlayFactorComments(portfolioId, securityId);

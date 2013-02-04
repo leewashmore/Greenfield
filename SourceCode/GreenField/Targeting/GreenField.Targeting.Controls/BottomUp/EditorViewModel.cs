@@ -97,6 +97,8 @@ namespace GreenField.Targeting.Controls.BottomUp
             this.OnGotData();
         }
 
+        //TODO Sorting implementation (can be started from here: http://stackoverflow.com/questions/6891322/exception-while-trying-to-manually-sort-pagedcollectionview)
+        
         private void RequesCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId)
         {
             this.StartLoading();
@@ -136,7 +138,8 @@ namespace GreenField.Targeting.Controls.BottomUp
 
         public void GetNotifiedAboutChangedValue(EditableExpressionModel model)
         {
-            this.ConsiderRecalculating();
+            base.ResetRecalculationTimer();
+            //this.ConsiderRecalculating();
         }
 
         public ObservableCollection<IBuLineModel> Lines

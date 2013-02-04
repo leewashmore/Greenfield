@@ -103,6 +103,7 @@ namespace Aims.Core.Persisting
                     .Field(", [TRADING_CURRENCY]", (info, value) => info.Currency = value, false)
                     .Field(", [ISIN]", (info, value) => info.Isin = value, false)
                     .Field(", [ISO_COUNTRY_CODE]", (info, value) => info.IsoCountryCode = value, false)
+                    .Field(", [ASEC_SEC_COUNTRY_NAME]", (info, value) => info.AsecCountryName = value, false)
                 .Text(" from " + TableNames.GF_SECURITY_BASEVIEW)
                 .PullAll();
             }
@@ -114,6 +115,7 @@ namespace Aims.Core.Persisting
                 return builder.Text("select ")
                     .Field("  [ID]", (info, value) => info.Id = value, true)
                     .Field(", [NAME]", (info, value) => info.Name = value, true)
+                    .Field(", [IS_BOTTOM_UP]", (PortfolioInfo info, Int32 value) => info.IsBottomUp = (value == 1))
                     .Text(" from [" + TableNames.PORTFOLIO + "]")
                     .PullAll();
             }

@@ -31,7 +31,7 @@ namespace TopDown.Web.Controllers
 				var shouldDrop = base.ShouldDrop(what);
                 var ticket = new CalculationTicket();
 				var facade = this.CreateJsonFacade(shouldDrop);
-				var json = facade.GetBreakdown(targetingId, portfolioId, ticket);
+				var json = facade.GetBreakdown(targetingId, portfolioId, ticket, "mrusaev");
 				return json;
 			});
 		}

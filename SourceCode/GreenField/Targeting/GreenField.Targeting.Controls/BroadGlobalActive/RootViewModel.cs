@@ -131,13 +131,10 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         {
             get
             {
-                var result = this.EditorViewModel != null && this.EditorViewModel.RootModel != null && this.EditorViewModel.RootModel.IsModified;
+                var result = this.EditorViewModel != null && this.EditorViewModel.RootModel != null && this.EditorViewModel.RootModel.IsModified && this.EditorViewModel.RootModel.IsUserPermittedToSave;
                 return result;
             }
         }
-
-
-
        
     }
 }

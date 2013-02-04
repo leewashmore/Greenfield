@@ -60,9 +60,9 @@ namespace TopDown.Core
             return json;
         }
 
-        public String GetBreakdown(Int32 targetingId, String portfolioId, CalculationTicket ticket)
+        public String GetBreakdown(Int32 targetingId, String portfolioId, CalculationTicket ticket, String username)
         {
-            var breakdown = this.facade.GetBptModel(targetingId, portfolioId);
+            var breakdown = this.facade.GetBptModel(targetingId, portfolioId, username);
             var result = this.facade.BptManager.SerializeToJson(breakdown, ticket);
             return result;
         }
