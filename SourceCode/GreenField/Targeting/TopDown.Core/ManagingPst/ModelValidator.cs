@@ -18,6 +18,7 @@ namespace TopDown.Core.ManagingPst
         protected void ValidateRoot(RootModel model, CalculationTicket ticket, List<IValidationIssue> result)
         {
             result.AddRange(model.TargetTotal.Validate(ticket));
+            result.AddRange(model.Cash.Validate(ticket));
             foreach (var item in model.Items)
             {
                 result.AddRange(this.ValidateScope(item.Security.Name, item.Target.Validate()));

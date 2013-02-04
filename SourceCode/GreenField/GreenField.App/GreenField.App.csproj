@@ -150,6 +150,7 @@
       <Link>ServiceReferences.ClientConfig</Link>
       <SubType>Designer</SubType>
     </Content>
+    <Resource Include="Images\gobutton.png" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
     <Resource Include="Images\AIMS_Logo.jpg" />
     <Resource Include="Images\TopHoldings.png" />

@@ -306,7 +306,7 @@ namespace Aims.Core
             }
         }
 
-        public Boolean IsProrfolioAFund(String portfolioId)
+        public Boolean IsPortfolioAFund(String portfolioId)
         {
             return this.fundsByLookThroughFund.ContainsKey(portfolioId);
         }

@@ -9,7 +9,7 @@
     
     <Grid Background="White">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Bottom-up Portfolio</TextBlock>
+            <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Bottom Up Portfolio</TextBlock>
             <ComboBox ItemsSource="{Binding BottomUpPortfolios}" Width="150"
                       SelectedItem="{Binding SelectedBottomUpPortfolio, Mode=TwoWay}">
                 <i:Interaction.Behaviors>

@@ -41,7 +41,10 @@ namespace GreenField.Targeting.Server.BasketTargets
                     targetingTypeGroup,
                     benchmarkRepository
                 );
-                securities.Add(security);
+                if (!securities.Where(x => x.Security.Id == security.Security.Id).Any())
+                {
+                    securities.Add(security);
+                }
             }
             var baseTotalExpression = this.modelBuilder.CreateBaseTotalExpression(securities);
             var benchmarkTotalExpression = this.modelBuilder.CreateBenchmarkTotalExpression(securities);

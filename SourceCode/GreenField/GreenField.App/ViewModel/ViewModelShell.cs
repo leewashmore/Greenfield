@@ -109,12 +109,12 @@ namespace GreenField.App.ViewModel
                         SessionManager.SESSION.UserName = username;
                         sessionInformationAssigner.TakeUsername(username);
 
-                       
-                        
+
+
                         if (result.Keys.Contains(CookieEncription.Encript("Roles")))
                         {
                             String[] userRolesEncrypted = result[CookieEncription.Encript("Roles")].Split('|');
-                            SessionManager.SESSION.Roles = userRolesEncrypted.Select(g => CookieEncription.Decript(g)).ToList(); 
+                            SessionManager.SESSION.Roles = userRolesEncrypted.Select(g => CookieEncription.Decript(g)).ToList();
                         }
                         if (SessionManager.SESSION.Roles != null)
                         {
@@ -307,13 +307,11 @@ namespace GreenField.App.ViewModel
                 {
                     selectedSecurityInfo = value;
                     RaisePropertyChanged(() => this.SelectedSecurityInfo);
-                    if (value != null)
-                    {
-                        SelectorPayload.EntitySelectionData = value;
-                        eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(value);
-                        eventAggregator.GetEvent<SecurityPickedGlobalEvent>().Publish(new SecurityPickedGlobalEventInfo { SecurityShortName = selectedSecurityInfo.InstrumentID });
-                        //eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(value);
-                    }
+                }
+
+                if (value != null)
+                {
+                    SelectorPayload.EntitySelectionData = selectedSecurityInfo;
                 }
             }
         }
@@ -346,6 +344,24 @@ namespace GreenField.App.ViewModel
         }
 
         /// <summary>
+        /// Stores visibility property of the go button
+        /// </summary>
+        private Visibility buttonSelectorVisibility = Visibility.Collapsed;
+        public Visibility ButtonSelectorVisibility
+        {
+            get { return buttonSelectorVisibility; }
+            set
+            {
+                if (buttonSelectorVisibility != Visibility.Visible)
+                    if (value == Visibility.Visible)
+                    {
+                        buttonSelectorVisibility = value;
+                        RaisePropertyChanged(() => this.ButtonSelectorVisibility);
+                    }
+            }
+        }
+
+        /// <summary>
         /// Stores visibility property of the security selector
         /// </summary>
         private Visibility securitySelectorVisibility = Visibility.Collapsed;
@@ -361,6 +377,8 @@ namespace GreenField.App.ViewModel
                     BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
                 }
+
+                ButtonSelectorVisibility = value;
             }
         }
         #endregion
@@ -408,15 +426,15 @@ namespace GreenField.App.ViewModel
                 {
                     selectedPortfolioInfo = value;
                     RaisePropertyChanged(() => this.SelectedPortfolioInfo);
-                    if (value != null)
+                }
+
+                if (value != null)
+                {
+                    SelectorPayload.PortfolioSelectionData = value;
+                    if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
                     {
-                        SelectorPayload.PortfolioSelectionData = value;
-                        if (dbInteractivity != null && filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
-                        {
-                            BusyIndicatorNotification(true, "Retrieving reference data...", false);
-                            dbInteractivity.RetrieveFilterSelectionData(value, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
-                        }
-                        eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
+                        BusyIndicatorNotification(true, "Retrieving reference data...", false);
+                        dbInteractivity.RetrieveFilterSelectionData(value, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
             }
@@ -464,6 +482,7 @@ namespace GreenField.App.ViewModel
                     dbInteractivity.RetrieveAvailableDatesInPortfolios(RetrieveAvailableDatesInPortfoliosCallbackMethod);
                     dbInteractivity.RequestMonthEndDates(this.TakeMonthEndDates);
                 }
+                ButtonSelectorVisibility = value;
             }
         }
         #endregion
@@ -488,7 +507,6 @@ namespace GreenField.App.ViewModel
                         BusyIndicatorNotification(true, "Retrieving reference data...", false);
                         dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, value, RetrieveFilterSelectionDataCallbackMethod);
                     }
-                    eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
                 }
             }
         }
@@ -508,6 +526,7 @@ namespace GreenField.App.ViewModel
                 {
                     SelectedEffectiveDateInfo = null;
                 }
+                ButtonSelectorVisibility = value;
             }
         }
 
@@ -582,7 +601,6 @@ namespace GreenField.App.ViewModel
                         BusyIndicatorNotification(true, "Retrieving reference data...", false);
                         dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, value, RetrieveFilterSelectionDataCallbackMethod);
                     }
-                    eventAggregator.GetEvent<MonthEndDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
                 }
             }
         }
@@ -602,6 +620,7 @@ namespace GreenField.App.ViewModel
                 {
                     SelectedMonthEndDateInfo = null;
                 }
+                ButtonSelectorVisibility = value;
             }
         }
 
@@ -656,6 +675,7 @@ namespace GreenField.App.ViewModel
             {
                 periodSelectorVisibility = value;
                 RaisePropertyChanged(() => this.PeriodSelectorVisibility);
+                ButtonSelectorVisibility = value;
             }
         }
 
@@ -677,7 +697,6 @@ namespace GreenField.App.ViewModel
                 if (value != null)
                 {
                     SelectorPayload.PeriodSelectionData = value;
-                    eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(value);
                 }
             }
         }
@@ -741,8 +760,6 @@ namespace GreenField.App.ViewModel
             {
                 regionCountryNames = value;
                 RaisePropertyChanged(() => this.RegionCountryNames);
-                eventAggregator.GetEvent<RegionFXEvent>().Publish(value);
-
             }
         }
 
@@ -762,6 +779,7 @@ namespace GreenField.App.ViewModel
                     BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveRegionSelectionData(RetrieveRegionSelectionCallbackMethod);
                 }
+                ButtonSelectorVisibility = value;
             }
         }
         #endregion
@@ -821,19 +839,6 @@ namespace GreenField.App.ViewModel
             {
                 countryCode = value;
                 RaisePropertyChanged(() => this.CountryCode);
-                if (value != null)
-                {
-                    for (int i = 0; i < CountryTypeInfo.Count; i++)
-                    {
-                        if (CountryTypeInfo[i].CountryName == value)
-                        {
-                            SelectorPayload.CountrySelectionData = CountryTypeInfo[i].CountryCode;
-                            eventAggregator.GetEvent<CountrySelectionSetEvent>().Publish(SelectorPayload.CountrySelectionData);
-
-                        }
-                    }
-                }
-
             }
         }
 
@@ -877,7 +882,7 @@ namespace GreenField.App.ViewModel
                     BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
                 }
-
+                ButtonSelectorVisibility = value;
             }
         }
         #endregion
@@ -951,7 +956,6 @@ namespace GreenField.App.ViewModel
                         }
                     }
                 RaisePropertyChanged(() => this.SelCommodityId);
-                eventAggregator.GetEvent<CommoditySelectionSetEvent>().Publish(selectorPayload.CommoditySelectedVal);
             }
         }
 
@@ -971,6 +975,7 @@ namespace GreenField.App.ViewModel
                     BusyIndicatorNotification(true, "Retrieving reference data...");
                     dbInteractivity.RetrieveCommoditySelectionData(RetrieveFXCommoditySelectionCallbackMethod);
                 }
+                ButtonSelectorVisibility = value;
             }
         }
         #endregion
@@ -1012,7 +1017,6 @@ namespace GreenField.App.ViewModel
                         SelectedFilterValueInfo = null;
                         SelectorPayload.FilterSelectionData = filterSelData;
                         IsExCashSecurity = false;
-                        eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
                     }
                     else
                     {
@@ -1075,7 +1079,6 @@ namespace GreenField.App.ViewModel
                     if (value != null)
                     {
                         SelectorPayload.FilterSelectionData = value;
-                        eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(value);
                     }
                 }
             }
@@ -1100,6 +1103,7 @@ namespace GreenField.App.ViewModel
                         dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
+                ButtonSelectorVisibility = value;
             }
         }
 
@@ -1114,6 +1118,7 @@ namespace GreenField.App.ViewModel
             {
                 filterValueVisibility = value;
                 RaisePropertyChanged(() => this.FilterValueVisibility);
+                ButtonSelectorVisibility = value;
             }
         }
 
@@ -1128,6 +1133,7 @@ namespace GreenField.App.ViewModel
             {
                 marketCapCashSelectorVisibility = value;
                 RaisePropertyChanged(() => this.MarketCapCashSelectorVisibility);
+                ButtonSelectorVisibility = value;
             }
         }
         #endregion
@@ -1168,7 +1174,6 @@ namespace GreenField.App.ViewModel
             }
         }
 
-
         /// <summary>
         /// Stores selected snapshot - Publishes MarketPerformanceSnapshotReferenceSetEvent on set event
         /// </summary>
@@ -1191,9 +1196,7 @@ namespace GreenField.App.ViewModel
                             MarketPerformanceSnapshotSearchText = value.SnapshotName;
                         }
                         SelectorPayload.MarketSnapshotSelectionData = value;
-                        eventAggregator.GetEvent<MarketPerformanceSnapshotReferenceSetEvent>().Publish(value);
                     }
-
                 }
             }
         }
@@ -1232,6 +1235,7 @@ namespace GreenField.App.ViewModel
                 {
                     RetrieveMarketSnapshotSelectionData();
                 }
+                ButtonSelectorVisibility = value;
             }
         }
 
@@ -1249,8 +1253,6 @@ namespace GreenField.App.ViewModel
                 if (SelectedFilterType == "Show Everything" && value == true)
                     SelectedFilterType = "";
                 selectorPayload.IsExCashSecurityData = value;
-                eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
-
             }
         }
         #endregion
@@ -1267,6 +1269,7 @@ namespace GreenField.App.ViewModel
             {
                 mktCapExCashSelectorVisibility = value;
                 RaisePropertyChanged(() => this.MktCapExCashSelectorVisibility);
+                ButtonSelectorVisibility = value;
             }
         }
         #endregion
@@ -1294,6 +1297,7 @@ namespace GreenField.App.ViewModel
             {
                 nodeSelectorVisibility = value;
                 RaisePropertyChanged(() => this.NodeSelectorVisibility);
+                ButtonSelectorVisibility = value;
             }
         }
 
@@ -1315,7 +1319,6 @@ namespace GreenField.App.ViewModel
                 if (value != null)
                 {
                     SelectorPayload.NodeNameSelectionData = value;
-                    eventAggregator.GetEvent<NodeNameReferenceSetEvent>().Publish(value);
                 }
             }
         }
@@ -1333,6 +1336,7 @@ namespace GreenField.App.ViewModel
             {
                 lookThruSelectorVisibility = value;
                 this.RaisePropertyChanged(() => this.LookThruSelectorVisibility);
+                ButtonSelectorVisibility = value;
             }
         }
 
@@ -1351,7 +1355,6 @@ namespace GreenField.App.ViewModel
                 isLookThruEnabled = value;
                 this.RaisePropertyChanged(() => this.IsLookThruEnabled);
                 selectorPayload.IsLookThruEnabled = value;
-                eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Publish(value);
             }
         }
         #endregion
@@ -1534,6 +1537,7 @@ namespace GreenField.App.ViewModel
             {
                 gadgetSelectorVisibility = value;
                 RaisePropertyChanged(() => this.GadgetSelectorVisibility);
+                ButtonSelectorVisibility = value;
             }
         }
         #endregion
@@ -2126,6 +2130,18 @@ namespace GreenField.App.ViewModel
                 return new DelegateCommand<object>(RetrieveRegionDataCommandMethod);
             }
         }
+
+        /// <summary>
+        /// MarketSnapshotSaveAsCommand
+        /// </summary>
+        public ICommand GoButtonCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(GoButtonCommandMethod);
+            }
+        }
+
         #endregion
         #endregion
         #endregion
@@ -3992,6 +4008,98 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(logger, methodNamespace);
         }
+
+        private void GoButtonCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                // Publishes MonthEndDateReferenceSetEvent on set event
+                if (selectedEffectiveDateInfo != null && MonthEndDateSelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>()
+                                   .Publish(Convert.ToDateTime(selectedEffectiveDateInfo));
+
+                // Publishes SecurityReferenceSetEvent on set event
+                if (selectedSecurityInfo != null && SecuritySelectorVisibility == Visibility.Visible)
+                {
+                    eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(selectedSecurityInfo);
+                    eventAggregator.GetEvent<SecurityPickedGlobalEvent>().Publish(new SecurityPickedGlobalEventInfo { SecurityShortName = selectedSecurityInfo.InstrumentID });
+                    eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(selectedSecurityInfo);
+                }
+
+                // Publishes PortfolioReferenceSetEvent on set event
+                if (selectedPortfolioInfo != null && PortfolioSelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(selectedPortfolioInfo);
+
+                // Publishes EffectiveDateReferenceSetEvent on set event
+                if (selectedEffectiveDateInfo != null && EffectiveDateSelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>()
+                                   .Publish(Convert.ToDateTime(selectedEffectiveDateInfo));
+
+                // Publishes MonthEndDateReferenceSetEvent on set event
+                if (selectedMonthEndDateInfo != null && MonthEndDateSelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<MonthEndDateReferenceSetEvent>()
+                                   .Publish(Convert.ToDateTime(selectedMonthEndDateInfo));
+
+                // Publishes PeriodReferenceSetEvent event
+                if (selectedPeriodType != null && PeriodSelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(selectedPeriodType);
+
+                // Publishes RegionFXEvent event
+                if (regionCountryNames != null && CountrySelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<RegionFXEvent>().Publish(regionCountryNames);
+
+                // Publishes CountrySelectionSetEvent event
+                if (countryCode != null)
+                    for (int i = 0; i < CountryTypeInfo.Count; i++)
+                        if (CountryTypeInfo[i].CountryName == countryCode)
+                        {
+                            SelectorPayload.CountrySelectionData = CountryTypeInfo[i].CountryCode;
+                            eventAggregator.GetEvent<CountrySelectionSetEvent>()
+                                           .Publish(SelectorPayload.CountrySelectionData);
+                        }
+
+                // Publishes CommoditySelectionSetEvent event
+                if (selCommodityId != null && CommoditySelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<CommoditySelectionSetEvent>().Publish(selectorPayload.CommoditySelectedVal);
+
+                // selectedfilterType
+                if (FilterSelectionInfo != null && FilterTypeVisibility == Visibility.Visible)
+                    if (selectedfilterType == "Show Everything")
+                        eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>()
+                                       .Publish(SelectorPayload.FilterSelectionData);
+
+                // Publishes FilterReferenceSetEvent on set event
+                if (selectedFilterValueInfo != null && FilterTypeVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(selectedFilterValueInfo);
+
+                // Publishes MarketPerformanceSnapshotReferenceSetEvent on set event
+                if (SelectedMarketSnapshotSelectionInfo != null && SnapshotSelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<MarketPerformanceSnapshotReferenceSetEvent>()
+                                   .Publish(SelectedMarketSnapshotSelectionInfo);
+
+                // Publishes ExCashSecuritySetEvent event
+                if (MktCapExCashSelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(isExCashSecurity);
+
+                // Publishes NodeNameReferenceSetEvent event
+                if (selectedNodeName != null && NodeSelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<NodeNameReferenceSetEvent>().Publish(selectedNodeName);
+
+                // Publishes LookThruFilterReferenceSetEvent event
+                if (LookThruSelectorVisibility == Visibility.Visible)
+                    eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Publish(isLookThruEnabled);
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            Logging.LogEndMethod(logger, methodNamespace);
+        }
+
         #endregion
 
         #region Callback Methods
@@ -4313,14 +4421,14 @@ namespace GreenField.App.ViewModel
                         break;
                 }
                 param = new DashboardGadgetParam()
-                    {
-                        DBInteractivity = dbInteractivity,
-                        EventAggregator = eventAggregator,
-                        AdditionalInfo = additionalInfo,
-                        LoggerFacade = logger,
-                        DashboardGadgetPayload = SelectorPayload,
-                        RegionManager = regionManager
-                    };
+                {
+                    DBInteractivity = dbInteractivity,
+                    EventAggregator = eventAggregator,
+                    AdditionalInfo = additionalInfo,
+                    LoggerFacade = logger,
+                    DashboardGadgetPayload = SelectorPayload,
+                    RegionManager = regionManager
+                };
             }
             catch (Exception ex)
             {

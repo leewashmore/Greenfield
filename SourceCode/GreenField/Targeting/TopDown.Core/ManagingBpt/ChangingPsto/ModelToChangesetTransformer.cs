@@ -44,7 +44,7 @@ namespace TopDown.Core.ManagingBpt.ChangingPsto
 					{
 						// update
 						return new UpdateChange(
-							model.BottomUpPortfolio.Fund.Id,
+							model.BottomUpPortfolio.Id,
 							value.InitialValue.Value,
 							value.EditedValue.Value,
 							value.Comment
@@ -55,7 +55,7 @@ namespace TopDown.Core.ManagingBpt.ChangingPsto
                 {
                     // delete
                     return new DeleteChange(
-                        model.BottomUpPortfolio.Fund.Id,
+                        model.BottomUpPortfolio.Id,
                         value.InitialValue.Value,
                         value.Comment
                     );
@@ -67,7 +67,7 @@ namespace TopDown.Core.ManagingBpt.ChangingPsto
                 {
                     // insert
                     return new InsertChange(
-                        model.BottomUpPortfolio.Fund.Id,
+                        model.BottomUpPortfolio.Id,
                         value.EditedValue.Value,
                         value.Comment
                     );

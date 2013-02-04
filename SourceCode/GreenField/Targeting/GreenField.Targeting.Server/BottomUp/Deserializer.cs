@@ -32,7 +32,10 @@ namespace GreenField.Targeting.Server.BottomUp
             if (model.SecurityToBeAddedOpt != null)
             {
                 var item = this.DeserializeAdditionalItem(model.SecurityToBeAddedOpt);
-                items.Insert(0, item);
+                if (!items.Where(x => x.Security.Id == item.Security.Id).Any())
+                {
+                    items.Insert(0, item);
+                }
             }
 
 
