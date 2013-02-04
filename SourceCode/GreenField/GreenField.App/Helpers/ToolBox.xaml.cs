@@ -20,6 +20,6 @@ namespace GreenField.App.Helpers
         public ToolBox()
         {            
             InitializeComponent();
-        }        
+        }
     }
 }

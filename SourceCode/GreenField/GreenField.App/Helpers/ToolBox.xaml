@@ -155,7 +155,7 @@
                                         <DataTemplate>
                                             <CheckBox Content="{Binding Path=DisplayText}"
                                           IsChecked="{Binding Path=IsSelected,Mode=TwoWay}"
-                                          Height="16" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" />
+                                          Height="16" HorizontalAlignment="Left" Margin="2"/>
                                         </DataTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -189,11 +189,12 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>                    
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <!--Gadget Selector-->
                 <Grid Visibility="{Binding GadgetSelectorVisibility}" Margin="5,0,0,0" Grid.Column="0">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Gadget" HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadComboBox x:Name="cbGadgetSelector"
@@ -237,7 +238,7 @@
                 
                 <!--Security Selector-->
                 <Grid Visibility="{Binding SecuritySelectorVisibility}" Margin="5,0,0,0" Grid.Column="1">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Security" HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadComboBox x:Name="cbsecuritySelector"
@@ -280,7 +281,7 @@
 
                 <!--Portfolio Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding PortfolioSelectorVisibility}" Grid.Column="2">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20" >
                         <TextBlock Text="Portfolio" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
                                    FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
 
@@ -315,7 +316,7 @@
 
                 <!--Effective Date Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding EffectiveDateSelectorVisibility}" Grid.Column="3">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" 
                                    Width="Auto" Foreground="Black" 
                                   FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>                       
@@ -346,7 +347,7 @@
 
                 <!--Month End Date Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding MonthEndDateSelectorVisibility}" Grid.Column="4">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" 
                                    Width="Auto" Foreground="Black" 
                                   FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
@@ -378,7 +379,7 @@
 
                 <!--Period Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding PeriodSelectorVisibility}" Grid.Column="5">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Period" HorizontalAlignment="Left" VerticalAlignment="Center"  
                                    Style="{StaticResource TextBlockStyle}"
                                    Width="Auto" Foreground="Black" FontWeight="Bold"/>
@@ -408,7 +409,7 @@
 
                 <!--Filter Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding FilterTypeVisibility}" Grid.Column="6">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Filter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" 
                                    Foreground="Black" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadComboBox x:Name="cbFilterSelector"
@@ -439,10 +440,10 @@
                 <!--Value Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding FilterValueVisibility}" Grid.Column="7">
                     <telerik:RadBusyIndicator x:Name="gridBusyIndicator" Style="{StaticResource BusyIndicatorStyle}" 
-                                              MaxHeight="{StaticResource DefaultControlMinHeight}" VerticalAlignment="Top"
+                                              MaxHeight="{StaticResource DefaultControlMinHeight}" Height="20"
                                               BusyContent="{Binding BusyIndicatorContent}" IsBusy="{Binding IsFilterBusyIndicatorBusy}"
                                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" VerticalContentAlignment="Top">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                             <TextBlock Text="Value" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
                                         Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                             <telerik:RadComboBox x:Name="cbValueSelector"
@@ -474,7 +475,7 @@
 
                 <!--NodeName Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding NodeSelectorVisibility}" Grid.Column="8">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Filter Node" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" 
                                    Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                         <telerik:RadComboBox x:Name="cbNodeNameSelector"
@@ -503,7 +504,7 @@
                 
                 <!--Country Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="9">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Country" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" 
                                    Foreground="Black"  Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                         <telerik:RadComboBox x:Name="cbCountrySelector"
@@ -534,7 +535,7 @@
 
                 <!--Commodity Selector-->
                 <Grid Visibility="{Binding CommoditySelectorVisibility}" Margin="5,0,0,0" Grid.Column="10">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Commodity" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
                                     Style="{StaticResource TextBlockStyle}" FontWeight="Bold"
                                    />
@@ -565,7 +566,7 @@
 
                 <!--RegionFX Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding RegionFXSelectorVisibility}" Grid.Column="11">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto"
                                     Style="{StaticResource TextBlockStyle}" FontWeight="Bold" />
                         <telerik:RadDropDownButton HorizontalContentAlignment="Left" DropDownWidth="200" Width="150" 
@@ -599,7 +600,7 @@
                 </Grid>                
                 
                 <Grid Margin="5,0,0,0" Visibility="{Binding LookThruSelectorVisibility}" Grid.Column="13">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <CheckBox Content="LookThru" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20"
                                   Style="{StaticResource CheckBoxStyle}" 
                           IsChecked="{Binding IsLookThruEnabled , Mode=TwoWay}" Grid.Row="0" Name="chkLookThruEnabled" ToolTipService.ToolTip="Check to Enable LookThru" />
@@ -608,7 +609,7 @@
 
                 <!--Snapshot Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding SnapshotSelectorVisibility}" Grid.Column="14">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <TextBlock Text="Snapshot" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
                                        Style="{StaticResource TextBlockStyle}" FontFamily="Arial" FontWeight="Bold"/>
                         <telerik:RadComboBox ItemsSource="{Binding MarketSnapshotSelectorInfo}"
@@ -654,6 +655,16 @@
                     </StackPanel>
                 </Grid>
 
+                <Grid Margin="10,0,0,0" Visibility ="{Binding ButtonSelectorVisibility}" Grid.Column="15">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <telerik:RadButton Name="GoButton" VerticalAlignment="Center" HorizontalAlignment="Left" Width="60" Height="20"
+                                               Margin="5,5,5,5"  Command="{Binding GoButtonCommand}" Content="Go"
+                                               Style="{StaticResource RadButtonStyle}">
+                            <!-- <Image Source="/GreenField.App;component/Images/gobutton.png" /> -->
+                        </telerik:RadButton>
+                        
+                    </StackPanel>
+                </Grid>
             </Grid>
         </ScrollViewer>
     </Grid>
