@@ -6,3 +6,18 @@ SimpleXmlReplacer.exe fileName xPath attributeName newVAlue
 Usage example:
 SimpleXmlReplacer.exe  "C:\TEMP\ServiceReferences.ClientConfig" //system.serviceModel/client/endpoint[@contract='ProxyDataDefinitions.ProxyDataOperations'] address testValue
 
+
+XmlReplacer.exe - extended version of SimpleXmlReplacer.exe. Can be used to update inner text of node
+
+Usage: 
+XmlReplacer.exe fileName xPath attributeName newVAlue
+
+Usage example:
+
+1. This example will update attribute value similar to SimpleXmlReplacer
+XmlReplacer.exe  "C:\TEMP\ServiceReferences.ClientConfig" //system.serviceModel/client/endpoint[@contract='ProxyDataDefinitions.ProxyDataOperations'] address testValue
+
+2. This example will update innerText of node if node doesn't have innerText attribute
+XmlReplacer.exe  "C:\TEMP\ServiceReferences.ClientConfig" //system.serviceModel/client/endpoint[@contract='ProxyDataDefinitions.ProxyDataOperations'] innerText testValue
+
+
