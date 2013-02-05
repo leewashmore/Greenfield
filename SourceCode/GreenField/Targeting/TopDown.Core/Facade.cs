@@ -351,7 +351,10 @@ namespace TopDown.Core
                     catch (Exception e)
                     {
                         transaction.Rollback();
-                        this.dataManagerFactory.CreateDataManager(connection, null).FinishTargetingCalculationUnsafe(calculationId, 2, e.ToString());
+                        if (seriously)
+                        {
+                            this.dataManagerFactory.CreateDataManager(connection, null).FinishTargetingCalculationUnsafe(calculationId, 2, e.ToString());
+                        }
                         return new List<TargetRecord>();
                     }
                 }

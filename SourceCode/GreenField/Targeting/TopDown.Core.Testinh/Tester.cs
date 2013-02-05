@@ -41,6 +41,14 @@ namespace TopDown.Core.Testing
             var targetings = facade.GetTargetingTypePortfolioPickerModel();
         }
 
+        public void TestHopper()
+        {
+            var facade = Helper.CreateFacade(ConnectionString);
+            var test = facade.Calculate(34, false);
+            var records = test.Where(x => x.Portfolio.Id == "EMIF").ToList();
+            var sum = records.Sum(x => x.Target);
+        }
+
         public void TestFileOutput()
         {
             var facade = Helper.CreateFacade(ConnectionString);
