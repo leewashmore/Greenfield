@@ -46,6 +46,7 @@ namespace TopDown.Core.Testing
             var facade = Helper.CreateFacade(ConnectionString);
             var test = facade.Calculate(34, false);
             var records = test.Where(x => x.Portfolio.Id == "EMIF").ToList();
+            var sum = records.Sum(x => x.Target);
         }
 
         public void TestFileOutput()
