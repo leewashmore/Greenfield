@@ -78,14 +78,18 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <helpers:ToolBox Grid.Column="0" x:Name="ctrToolBox" HorizontalAlignment="Left"/>
 
-                        <TextBlock Grid.Column="1" Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"
+                        <telerik:RadButton Grid.Column="1" Name="EnableMenus" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0" 
+                                Command="{Binding EnableMenusCommand}" Content="     " IsBackgroundVisible="False">
+                        </telerik:RadButton>
+                        <TextBlock Grid.Column="2" Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"
                                  x:Name="tbUserName" Foreground="Black" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                                   <!--ToolTipService.ToolTip="{Binding Version}"/>-->
-                        <HyperlinkButton Grid.Column="2" Content="LogOut" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"
+                        <!--ToolTipService.ToolTip="{Binding Version}"/>-->
+                        <HyperlinkButton Grid.Column="3" Content="LogOut" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"
                                  x:Name="hypbtnLogout" Foreground="Black" Command="{Binding LogOutCommand}" FontFamily="Arial" FontSize="9" FontWeight="Bold"/>
                     </Grid>
                 </Border>

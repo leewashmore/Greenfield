@@ -658,7 +658,7 @@
                 <Grid Margin="10,0,0,0" Visibility ="{Binding ButtonSelectorVisibility}" Grid.Column="15">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <telerik:RadButton Name="GoButton" VerticalAlignment="Center" HorizontalAlignment="Left" Width="60" Height="20"
-                                               Margin="5,5,5,5"  Command="{Binding GoButtonCommand}" Content="Go"
+                                               Margin="5,5,5,5" Command="{Binding GoButtonCommand}" Content="Go"
                                                Style="{StaticResource RadButtonStyle}">
                             <!-- <Image Source="/GreenField.App;component/Images/gobutton.png" /> -->
                         </telerik:RadButton>

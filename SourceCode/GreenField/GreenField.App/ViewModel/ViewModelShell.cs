@@ -217,6 +217,18 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.RoleIsIC);
             }
         }
+
+        private Boolean _enableGadget = false;
+        public Boolean EnableGadget
+        {
+            get { return _enableGadget; }
+            set
+            {
+                _enableGadget = value;
+                RaisePropertyChanged(() => this.EnableGadget);
+            }
+        }
+        
         #endregion
 
         #region Application Menu
@@ -1597,6 +1609,14 @@ namespace GreenField.App.ViewModel
             get { return new DelegateCommand<object>(LogOutCommandMethod); }
         }
 
+        /// <summary>
+        /// EnableMenusCommand
+        /// </summary>
+        public ICommand EnableMenusCommand
+        {
+            get { return new DelegateCommand<object>(EnableMenusCommandMethod); }
+        }
+
         #region Dashboard
         #region Company
         #region Snapshot
@@ -2197,6 +2217,24 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region ICommand Methods
+
+        
+        /// <summary>
+        /// EnableMenusCommand Execution Method - trigges many enabling
+        /// </summary>
+        /// <param name="param">SenderInfo</param>
+        private void EnableMenusCommandMethod(object param)
+        {
+            try
+            {
+                EnableGadget = !EnableGadget;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+        }
 
         /// <summary>
         /// LogoutCommand Execution Method - Navigate to Login Page

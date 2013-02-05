@@ -22,7 +22,7 @@
 
             <!--Markets SubMenu-->
             <telerik:RadPanelBarItem Header="Markets" x:Name="pbItemMarkets" HorizontalAlignment="Stretch"
-                                     Style="{StaticResource PanelBarItemStyle}">
+                                     Style="{StaticResource PanelBarItemStyle}" IsEnabled="{Binding EnableGadget}">
                 <telerik:RadMenu x:Name="radMenuMarkets" ClickToOpen="False" Orientation="Vertical"  
                                  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Style="{StaticResource RadMenuStyle}" >
 
@@ -53,11 +53,11 @@
                 <telerik:RadMenu x:Name="radMenuPortfolio" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
 
-                    <telerik:RadMenuItem x:Name="rmItemPortfolioSnapshot" Header="Snapshot" Command="{Binding DashboardPortfolioSnapshotCommand}" />
+                    <telerik:RadMenuItem x:Name="rmItemPortfolioSnapshot" Header="Snapshot" Command="{Binding DashboardPortfolioSnapshotCommand}" IsEnabled="{Binding EnableGadget}" />
 
-                    <telerik:RadMenuItem x:Name="rmItemHoldings" Header="Holdings" Command="{Binding DashboardPortfolioHoldingsCommand}" />
+                    <telerik:RadMenuItem x:Name="rmItemHoldings" Header="Holdings" Command="{Binding DashboardPortfolioHoldingsCommand}" IsEnabled="{Binding EnableGadget}" />
 
-                    <telerik:RadMenuItem x:Name="rmItemPerformance" Header="Performance">
+                    <telerik:RadMenuItem x:Name="rmItemPerformance" Header="Performance" IsEnabled="{Binding EnableGadget}">
                         <telerik:RadMenuItem x:Name="rmItemPortfolioSummary" Header="Summary" 
                                              Command="{Binding DashboardPortfolioPerformanceSummaryCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
@@ -69,7 +69,7 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Header="Benchmark" x:Name="rmItemBenchmark">
+                    <telerik:RadMenuItem Header="Benchmark" x:Name="rmItemBenchmark" IsEnabled="{Binding EnableGadget}">
                         <telerik:RadMenuItem x:Name="rmItemBenchmarkSummary" Header="Summary"
                                              Command="{Binding DashboardPortfolioBenchmarkSummaryCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
@@ -105,7 +105,7 @@
             </telerik:RadPanelBarItem>
 
             <!--Company SubMenu-->
-            <telerik:RadPanelBarItem Header="Company" x:Name="pbItemCompany" Style="{StaticResource PanelBarItemStyle}">
+            <telerik:RadPanelBarItem Header="Company" x:Name="pbItemCompany" Style="{StaticResource PanelBarItemStyle}" IsEnabled="{Binding EnableGadget}">
                 <telerik:RadMenu x:Name="radMenuCompany" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
 
@@ -198,7 +198,7 @@
             </telerik:RadPanelBarItem>
 
             <!--Screening SubMenu-->
-            <telerik:RadPanelBarItem Header="Screening" x:Name="pbItemScreening" Style="{StaticResource PanelBarItemStyle}">
+            <telerik:RadPanelBarItem Header="Screening" x:Name="pbItemScreening" Style="{StaticResource PanelBarItemStyle}" IsEnabled="{Binding EnableGadget}">
                 <telerik:RadMenu x:Name="radMenuScreening" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
                     <telerik:RadMenuItem x:Name="rmItemStock" Header="Stock" Command="{Binding DashboardCustomScreeningToolCommand}"
@@ -211,7 +211,7 @@
 
             <!--InvestmentCommittee SubMenu-->
             <telerik:RadPanelBarItem Header="Investment Committee" x:Name="pbItemInvestmentCommittee" Style="{StaticResource PanelBarItemStyle}"
-                                     IsEnabled="{Binding RoleIsIC}">
+                                      IsEnabled="{Binding EnableGadget}"> <!-- IsEnabled="{Binding RoleIsIC}"-->
                 <telerik:RadMenu x:Name="radMenuInvestmentCommittee" ClickToOpen="False" Orientation="Vertical"  
                                  VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
                     <telerik:RadMenuItem x:Name="rmItemCreateEdit" Header="Create/Edit"
@@ -226,7 +226,7 @@
             </telerik:RadPanelBarItem>
 
             <!--Admin SubMenu-->
-            <telerik:RadPanelBarItem Header="Admin" x:Name="pbItemAdmin" Style="{StaticResource PanelBarItemStyle}">
+            <telerik:RadPanelBarItem Header="Admin" x:Name="pbItemAdmin" Style="{StaticResource PanelBarItemStyle}" IsEnabled="{Binding EnableGadget}">
                 <telerik:RadMenu x:Name="radMenuAdmin" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
                     <telerik:RadMenuItem x:Name="rmItemInvestmentCommittee" Header="Investment Committee">
@@ -241,14 +241,14 @@
 
             <!--Gadgets SubMenu-->
             <telerik:RadPanelBarItem Header="Dashboard" x:Name="pbItemDashboard" Style="{StaticResource PanelBarItemStyle}"
-                                     Command="{Binding MyDashboardCommand}">
+                                     IsEnabled="{Binding EnableGadget}"> <!-- TODO Command="{Binding MyDashboardCommand}"-->
                 <!--<telerik:RadMenu x:Name="radMenuGadgets" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
                 </telerik:RadMenu>-->
             </telerik:RadPanelBarItem>
 
             <!--Others SubMenu-->
-            <telerik:RadPanelBarItem Header="Others" x:Name="pbItemOthers" Style="{StaticResource PanelBarItemStyle}">
+            <telerik:RadPanelBarItem Header="Others" x:Name="pbItemOthers" Style="{StaticResource PanelBarItemStyle}" IsEnabled="{Binding EnableGadget}">
                 <telerik:RadMenu x:Name="radMenuOthers" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
                     <telerik:RadMenuItem Header="User Management"  Command="{Binding UserManagementCommand}" />
