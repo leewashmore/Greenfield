@@ -29,14 +29,21 @@ namespace TopDown.Core.Testing
 				TValue found;
 				if (this.map.TryGetValue(key, out found))
 				{
-					if (Object.ReferenceEquals(found, null))
-					{
-						this.map[key] = value;
-					}
-					else
-					{
-						throw new ApplicationException("There is an entry with the same key \"" + key + "\" already.");
-					}
+                    if (Object.ReferenceEquals(value, null))
+                    {
+                        this.map.Remove(key);
+                    }
+                    else
+                    {
+                        if (Object.ReferenceEquals(found, null))
+                        {
+                            this.map[key] = value;
+                        }
+                        else
+                        {
+                            throw new ApplicationException("There is an entry with the same key \"" + key + "\" already.");
+                        }
+                    }
 				}
 				else
 				{
