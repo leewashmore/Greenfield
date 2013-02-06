@@ -124,7 +124,7 @@ namespace ICPSystemAlert
         public static void Generate(string outFile, ICPresentation presentation)
         {
             float listItemSpacing = 15F;
-            string strLogoPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\AshmoreEMMLogo.png";
+            string strLogoPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\AshmoreLogo.png";
             iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(strLogoPath);
 
             Document doc = new Document(PageSize.A4, 10F, 10F, 10F, 10F);
