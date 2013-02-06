@@ -24,7 +24,7 @@ namespace GreenField.DataContracts
        public Decimal? FPorAshRcCtn1d { get; set; }
 
        [DataMember]
-       public Decimal? FBm1AshRcCtn1d { get; set; }
+       public Decimal? BM1_RC_TWR_1D { get; set; }
 
        [DataMember]
        public Decimal? FBm1AshAssetAlloc1d { get; set; }
@@ -42,7 +42,7 @@ namespace GreenField.DataContracts
        public Decimal? FPorAshRcCtn1w { get; set; }
 
        [DataMember]
-       public Decimal? FBm1AshRcCtn1w { get; set; }
+       public Decimal? BM1_RC_TWR_1W { get; set; }
 
        [DataMember]
        public Decimal? FBm1AshAssetAlloc1w { get; set; }
@@ -60,7 +60,7 @@ namespace GreenField.DataContracts
        public Decimal? FPorAshRcCtnMtd { get; set; }
 
        [DataMember]
-       public Decimal? FBm1AshRcCtnMtd { get; set; }
+       public Decimal? BM1_RC_TWR_MTD { get; set; }
 
        [DataMember]
        public Decimal? FBm1AshAssetAllocMtd { get; set; }
@@ -78,7 +78,7 @@ namespace GreenField.DataContracts
        public Decimal? FPorAshRcCtnQtd { get; set; }
 
        [DataMember]
-       public Decimal? FBm1AshRcCtnQtd { get; set; }
+       public Decimal? BM1_RC_TWR_QTD { get; set; }
 
        [DataMember]
        public Decimal? FBm1AshAssetAllocQtd { get; set; }
@@ -96,7 +96,7 @@ namespace GreenField.DataContracts
        public Decimal? FPorAshRcCtnYtd { get; set; }
 
        [DataMember]
-       public Decimal? FBm1AshRcCtnYtd { get; set; }
+       public Decimal? BM1_RC_TWR_YTD { get; set; }
 
        [DataMember]
        public Decimal? FBm1AshAssetAllocYtd { get; set; }
@@ -114,7 +114,7 @@ namespace GreenField.DataContracts
        public Decimal? FPorAshRcCtn1y { get; set; }
 
        [DataMember]
-       public Decimal? FBm1AshRcCtn1y { get; set; }
+       public Decimal? BM1_RC_TWR_1Y { get; set; }
 
        [DataMember]
        public Decimal? FBm1AshAssetAlloc1y { get; set; }
