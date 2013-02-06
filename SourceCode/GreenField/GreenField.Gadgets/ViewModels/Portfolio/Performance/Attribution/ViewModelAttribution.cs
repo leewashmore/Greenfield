@@ -151,7 +151,7 @@ namespace GreenField.Gadgets.ViewModels
                                 entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt1d;
                                 entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt1d;
                                 entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn1d;
-                                entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn1d;
+                                entry.BenchmarkReturn = AttributionDataInfo[i].BM1_RC_TWR_1D;
                                 entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1d;
                                 entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1d;
                                 resultd.Add(entry);
@@ -184,7 +184,7 @@ namespace GreenField.Gadgets.ViewModels
                                 entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt1w;
                                 entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt1w;
                                 entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn1w;
-                                entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn1w;
+                                entry.BenchmarkReturn = AttributionDataInfo[i].BM1_RC_TWR_1W;
                                 entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1w;
                                 entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1w;
                                 result.Add(entry);
@@ -224,7 +224,7 @@ namespace GreenField.Gadgets.ViewModels
                                     entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtMtd;
                                     entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtMtd;
                                     entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnMtd;
-                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnMtd;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].BM1_RC_TWR_MTD;
                                     entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocMtd;
                                     entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecMtd;
                                     resultMtd.Add(entry);
@@ -265,7 +265,7 @@ namespace GreenField.Gadgets.ViewModels
                                     entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtQtd;
                                     entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtQtd;
                                     entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnQtd;
-                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnQtd;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].BM1_RC_TWR_QTD;
                                     entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocQtd;
                                     entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecQtd;
                                     resultQtd.Add(entry);
@@ -306,7 +306,7 @@ namespace GreenField.Gadgets.ViewModels
                                     entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtYtd;
                                     entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtYtd;
                                     entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnYtd;
-                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnYtd;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].BM1_RC_TWR_YTD;
                                     entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocYtd;
                                     entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecYtd;
                                     resultYTD.Add(entry);
@@ -347,7 +347,7 @@ namespace GreenField.Gadgets.ViewModels
                                     entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt1y;
                                     entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt1y;
                                     entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn1y;
-                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn1y;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].BM1_RC_TWR_1Y;
                                     entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1y;
                                     entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1y;
                                     result1Y.Add(entry);

@@ -294,12 +294,12 @@
       <xs:element minOccurs="0" name="FBm1AshAssetAllocMtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshAssetAllocQtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshAssetAllocYtd" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtn1d" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtn1w" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtn1y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtnMtd" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtnQtd" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtnYtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_1D" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_1W" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_1Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_MTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_QTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_YTD" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshSecSelec1d" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshSecSelec1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshSecSelec1y" nillable="true" type="xs:decimal" />
