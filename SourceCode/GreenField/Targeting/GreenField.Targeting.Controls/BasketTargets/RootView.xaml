@@ -39,7 +39,7 @@
                     <CheckBox IsEnabled="{Binding SecurityPickerViewModel.IsEnabled}"  IsChecked="{Binding EditorViewModel.AreEmptyColumnsShown, Mode=TwoWay}" Content="Show default columns?" />
                     <CheckBox IsChecked="{Binding EditorViewModel.IsRecalculationAutomatic, Mode=TwoWay}" Content="Recalculate Automatically?" Margin="20 0 0 0" />
                     <Button Command="{Binding EditorViewModel.RequestRecalculatingCommand}" Margin="10 0 0 0" VerticalAlignment="Center" Content="Recalculate" />
-                    <TextBlock VerticalAlignment="Center" Margin="20 0 5 0">!!Benchmark Data as of</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="20 0 5 0">Benchmark Data as of</TextBlock>
                     <TextBlock Text="{Binding EditorViewModel.KeptRootModel.BenchmarkDate, StringFormat='MM/dd/yyyy'}" VerticalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
