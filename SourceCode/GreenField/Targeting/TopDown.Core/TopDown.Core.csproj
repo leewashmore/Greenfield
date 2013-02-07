@@ -341,6 +341,7 @@
     <Compile Include="_Testing\JsonReaderTester.cs" />
     <Compile Include="_Testing\StorageMock.cs" />
     <Content Include="Scripts\073-USERNAME_BASKET.sql" />
+    <Content Include="Scripts\074-USERNAME_BGA_ACCESS.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\015-TARGETING_CALCULATION.sql" />
