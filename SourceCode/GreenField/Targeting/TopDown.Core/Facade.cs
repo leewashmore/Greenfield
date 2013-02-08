@@ -31,13 +31,17 @@ namespace TopDown.Core
     public class Facade
     {
         private IDataManagerFactory dataManagerFactory;
+        private IUsersDataManagerFactory dataUsersManagerFactory;
         private ISqlConnectionFactory connectionFactory;
         private ManagingCalculations.Hopper hopper;
         private ManagingComments.CommentManager commentManager;
+        private ISqlConnectionFactory usersConnectionFactory;
 
         public Facade(
             ISqlConnectionFactory connectionFactory,
+            ISqlConnectionFactory usersConnectionFactory,
             IDataManagerFactory dataManagerFactory,
+            IUsersDataManagerFactory dataUsersManagerFactory,
             RepositoryManager repositoryManager,
             ManagingBpt.ModelManager bptManager,
             ExpressionPicker expressionPicker,
@@ -52,8 +56,10 @@ namespace TopDown.Core
             ManagingComments.CommentManager commentsManager
         )
         {
+            this.usersConnectionFactory = usersConnectionFactory;
             this.connectionFactory = connectionFactory;
             this.dataManagerFactory = dataManagerFactory;
+            this.dataUsersManagerFactory = dataUsersManagerFactory;
             this.RepositoryManager = repositoryManager;
             this.BptManager = bptManager;
             this.ExpressionPicker = expressionPicker;
@@ -113,17 +119,31 @@ namespace TopDown.Core
 
         public IEnumerable<IValidationIssue> ApplyBroadGlobalActiveModelIfValid(ManagingBpt.RootModel root, String username, CalculationTicket ticket)
         {
+            string userEmail = "";
+            using (var connection = this.usersConnectionFactory.CreateConnection())
+            {
+                var manager = this.dataUsersManagerFactory.CreateDataManager(connection, null);
+                userEmail = manager.GetUserEmail(username);
+            }
+
             using (var connection = this.connectionFactory.CreateConnection())
             {
                 using (var ondemandManager = this.CreateOnDemandDataManager(connection))
                 {
                     var targetingTypeRepository = this.RepositoryManager.ClaimTargetingTypeRepository(ondemandManager);
+                    var securityRepository = this.RepositoryManager.ClaimSecurityRepository(ondemandManager);
+                    var basketRepository = this.RepositoryManager.ClaimBasketRepository(ondemandManager);
+                    var portfolioRepository = this.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
                     var calculation = new CalculationInfo();
                     var issues = this.BptManager.ApplyIfValid(
                         root,
                         username,
+                        userEmail,
                         connection,
                         targetingTypeRepository,
+                        securityRepository,
+                        basketRepository,
+                        portfolioRepository,
                         ticket,
                         ref calculation
                     );
@@ -189,11 +209,18 @@ namespace TopDown.Core
         {
             var issues = this.PstManager.Validate(model, ticket);
             if (issues.Any()) return issues;
+            string userEmail = "";
+            using (var connection = this.usersConnectionFactory.CreateConnection())
+            {
+                var manager = this.dataUsersManagerFactory.CreateDataManager(connection, null);
+                userEmail = manager.GetUserEmail(username);
+            }
 
             using (var connection = this.connectionFactory.CreateConnection())
             {
                 CalculationInfo info = new CalculationInfo();
-                var retVal = this.PstManager.ApplyIsValid(model, username, connection, ticket, ref info);
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var retVal = this.PstManager.ApplyIsValid(model, username, userEmail, connection, ticket, this.RepositoryManager.ClaimSecurityRepository(manager), ref info);
                 if (!retVal.Any())
                 {
                     this.Calculate(info.Id, true);
@@ -281,10 +308,18 @@ namespace TopDown.Core
 #warning NEXT: make sure everybody validates before opening a  connection
             var issues = this.BpstManager.Validate(model, ticket);
             if (issues.Any()) return issues;
+            string userEmail = "";
+            using (var connection = this.usersConnectionFactory.CreateConnection())
+            {
+                var manager = this.dataUsersManagerFactory.CreateDataManager(connection, null);
+                userEmail = manager.GetUserEmail(username);
+            }
+
             using (var connection = this.connectionFactory.CreateConnection())
             {
                 CalculationInfo calculationInfo = new CalculationInfo();
-                var retVal = this.BpstManager.ApplyIfValid(model, username, connection, ticket, ref calculationInfo);
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                var retVal = this.BpstManager.ApplyIfValid(model, username, userEmail, connection, ticket, this.RepositoryManager.ClaimSecurityRepository(manager), this.RepositoryManager.ClaimBasketRepository(manager), ref calculationInfo);
                 if (!retVal.Any())
                 {
                     this.Calculate(calculationInfo.Id, true);

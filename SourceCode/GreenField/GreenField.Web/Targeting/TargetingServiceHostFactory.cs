@@ -33,6 +33,7 @@ namespace GreenField.Web.Targeting
         {
             this.settings = CreateFacadeSettings(
                 ConfigurationSettings.AimsConnectionString,
+                ConfigurationSettings.UsersConnectionString,
                 ConfigurationSettings.ShouldDropRepositoriesOnEachReload
             );
         }
@@ -80,11 +81,11 @@ namespace GreenField.Web.Targeting
             }
         }
 
-        protected static GreenField.Targeting.Server.FacadeSettings CreateFacadeSettings(String connectionString, Boolean shouldDropRepositories)
+        protected static GreenField.Targeting.Server.FacadeSettings CreateFacadeSettings(String connectionString, String usersConnectionString, Boolean shouldDropRepositories)
         {
             try
             {
-                return CreateFacadeSettingsUnsafe(connectionString, shouldDropRepositories);
+                return CreateFacadeSettingsUnsafe(connectionString, usersConnectionString, shouldDropRepositories);
             }
             catch (Exception exception)
             {
@@ -92,7 +93,7 @@ namespace GreenField.Web.Targeting
             }
         }
 
-        private static GreenField.Targeting.Server.FacadeSettings CreateFacadeSettingsUnsafe(String connectionString, Boolean shouldDropRepositories)
+        private static GreenField.Targeting.Server.FacadeSettings CreateFacadeSettingsUnsafe(String connectionString, String usersConnectionString, Boolean shouldDropRepositories)
         {
             var infoCopier = new InfoCopier();
             var cache = HttpContext.Current.Cache;
@@ -107,7 +108,9 @@ namespace GreenField.Web.Targeting
             var securityManager = new SecurityManager(securityRepositoryCache, monitor);
 
             IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
+            IUsersDataManagerFactory usersDataManagerFactory = new UsersDataManagerFactory();
             var connectionFactory = new SqlConnectionFactory(connectionString);
+            var usersConnectionFactory = new SqlConnectionFactory(usersConnectionString);
             var portfolioRepositoryCache = new CacheStorage<PortfolioRepository>(cache);
             var portfolioSerialzer = new TopDown.Core.ManagingPortfolios.PortfolioToJsonSerializer(securitySerializer);
             var portfolioManager = new TopDown.Core.ManagingPortfolios.PortfolioManager(
@@ -317,7 +320,9 @@ namespace GreenField.Web.Targeting
             var commentManager = new TopDown.Core.ManagingComments.CommentManager();
             var facade = new Facade(
                 connectionFactory,
+                usersConnectionFactory,
                 dataManagerFactory,
+                usersDataManagerFactory,
                 repositoryManager,
                 bptManager,
                 picker,

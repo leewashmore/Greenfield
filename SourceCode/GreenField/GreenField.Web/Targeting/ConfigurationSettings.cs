@@ -8,6 +8,18 @@ namespace GreenField.Web.Targeting
 {
     public class ConfigurationSettings
     {
+        private const String UsersConnectionStringKey = "ApplicationServices";
+        public static String UsersConnectionString
+        {
+            get
+            {
+                var connectionStringElementOpt = ConfigurationManager.ConnectionStrings[UsersConnectionStringKey];
+                if (connectionStringElementOpt == null) throw new ApplicationException("There is no \"" + AimsConnectionStringKey + "\" connection string in the config file.");
+                return connectionStringElementOpt.ConnectionString;
+            }
+        }
+
+
         private const String AimsConnectionStringKey = "Aims";
         public static String AimsConnectionString
         {
