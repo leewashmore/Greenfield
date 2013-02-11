@@ -446,6 +446,12 @@ namespace GreenField.Web.Services
         {
             try
             {
+                // use cache if available
+                var fromCache = (List<EntitySelectionData>)new DefaultCacheProvider().Get("EntitySelectionDataCache");
+                if (fromCache != null)
+                    return fromCache;
+
+                // otherwise fetch the data and cache it
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
@@ -487,6 +493,9 @@ namespace GreenField.Web.Services
                         });
                     }
                 }
+
+                new DefaultCacheProvider().Set("EntitySelectionDataCache", result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+
                 return result;
             }
             catch (Exception ex)

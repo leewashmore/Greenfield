@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Resources;
+using System.Runtime.Caching;
 using System.Text;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
@@ -102,6 +103,12 @@ namespace GreenField.Web.Services
         {
             try
             {
+                // use cache if available
+                var fromCache = (List<PortfolioSelectionData>) new DefaultCacheProvider().Get("PortfolioSelectionDataCache");
+                if (fromCache != null)
+                    return fromCache;
+
+                // otherwise fetch the data and cache it
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
@@ -122,6 +129,8 @@ namespace GreenField.Web.Services
                     data.PortfolioThemeSubGroupName = item.PORTFOLIO_THEME_SUBGROUP_NAME;
                     result.Add(data);
                 }
+
+                new DefaultCacheProvider().Set("PortfolioSelectionDataCache", result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
 
                 return result;
             }
@@ -1052,6 +1061,12 @@ namespace GreenField.Web.Services
         {
             try
             {
+                // use cache if available
+                var fromCache = (List<FilterSelectionData>)new DefaultCacheProvider().Get("FilterSelectionDataCache");
+                if (fromCache != null)
+                    return fromCache;
+
+                // otherwise fetch the data and cache it
                 if (selectedPortfolio == null)
                     return new List<FilterSelectionData>();
                 if (effectiveDate == null)
@@ -1090,6 +1105,8 @@ namespace GreenField.Web.Services
                     .OrderBy(record => record.FilterValues)
                     .ToList();
                 result.AddRange(distinctIndustries);
+
+                new DefaultCacheProvider().Set("FilterSelectionDataCache", result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
 
                 return result;
             }
@@ -2795,6 +2812,12 @@ namespace GreenField.Web.Services
         {
             try
             {
+                // use cache if available
+                var fromCache = (List<DateTime>)new DefaultCacheProvider().Get("AvailableDatesInPortfoliosCache");
+                if (fromCache != null)
+                    return fromCache;
+
+                // otherwise fetch the data and cache it
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
@@ -2815,6 +2838,8 @@ namespace GreenField.Web.Services
 
                 availableDateList = GetDateListFromString(availableDates);
                 availableDateList.Sort();
+
+                new DefaultCacheProvider().Set("AvailableDatesInPortfoliosCache", availableDateList, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
 
                 return availableDateList;
             }

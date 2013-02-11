@@ -580,6 +580,12 @@ namespace GreenField.Web.Services
         {
             try
             {
+                // use cache if available
+                var fromCache = (List<MarketSnapshotSelectionData>)new DefaultCacheProvider().Get("MarketSnapshotSelectionDataCache");
+                if (fromCache != null)
+                    return fromCache;
+
+                // otherwise fetch the data and cache it
                 if (String.IsNullOrEmpty(userName))
                     return new List<MarketSnapshotSelectionData>();
 
@@ -588,6 +594,7 @@ namespace GreenField.Web.Services
                     .OrderBy(record => record.SnapshotName)
                     .ToList<MarketSnapshotSelectionData>();
 
+                new DefaultCacheProvider().Set("MarketSnapshotSelectionDataCache", userPreference, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
                 return userPreference;
             }
             catch (Exception ex)
@@ -3209,8 +3216,14 @@ namespace GreenField.Web.Services
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<DateTime> GetLastDayOfMonths()
-        { 
-           DimensionEntitiesService.Entities entity = DimensionEntity;
+        {
+            // use cache if available
+            var fromCache = (List<DateTime>)new DefaultCacheProvider().Get("LastDayOfMonthsCache");
+            if (fromCache != null)
+                return fromCache;
+
+            // otherwise fetch the data and cache it
+            DimensionEntitiesService.Entities entity = DimensionEntity;
     
            /* var q =
                 (entity.GF_PERF_TOPLEVELMONTH.Select(g => new { g.TO_DATE })).ToList()
@@ -3226,8 +3239,7 @@ namespace GreenField.Web.Services
 					.OrderByDescending(x => x)
 					.Take(13);
 
-
-
+            new DefaultCacheProvider().Set("LastDayOfMonthsCache", q.ToList(), Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
             return q.ToList();
         }
     }

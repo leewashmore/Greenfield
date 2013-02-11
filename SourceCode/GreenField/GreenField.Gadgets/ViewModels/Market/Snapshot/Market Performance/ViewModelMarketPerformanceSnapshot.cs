@@ -257,8 +257,9 @@ namespace GreenField.Gadgets.ViewModels
             //RetrieveEntitySelectionData Service Call
             if (SelectionData.EntitySelectionData != null && EntitySelectionInfo == null)
             {
-                BusyIndicatorNotification(true, "Retrieving reference data...");
+                BusyIndicatorNotification(true, "Retrieving entity selection data ...");
                 RetrieveEntitySelectionDataCallbackMethod(SelectionData.EntitySelectionData);
+                BusyIndicatorNotification(true, "Retrieving entity selection data ... done.");
             }
             //Subscribe to MarketPerformanceSnapshotNameReferenceSetEvent to receive snapshot selection from shell
             if (eventAggregator != null)
