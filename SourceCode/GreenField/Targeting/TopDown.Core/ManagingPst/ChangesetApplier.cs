@@ -61,7 +61,7 @@ namespace TopDown.Core.ManagingPst
                 change.Accept(resolver);
             }
 
-            result.Body = "The following changes were made to the " + this.PortfolioName + "\n\n" + result.Body;
+            result.Body = "The following changes were made to " + this.PortfolioName + "\n\n" + result.Body;
 
             result.Subject = "Targeting: Stock Selection changes in " + this.PortfolioName;
             return result;

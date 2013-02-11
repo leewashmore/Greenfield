@@ -112,7 +112,7 @@ namespace TopDown.Core.ManagingBpst
             var ttgbsbvChanges = this.ttgbsbvChangesetApplier.PrepareToSend(ttgbsbvChangeset, manager, securityRepository);
 
 
-            mail.Body = "The following changes were made to the " + basketName + "\n" + (ttgbsbvChangeset != null ? String.Join("\n", ttgbsbvChanges) : "\n") + ( bpstChangeset != null ? String.Join("\n", bpstChanges) : "");
+            mail.Body = "The following changes were made to " + basketName + "\n" + (ttgbsbvChangeset != null ? String.Join("\n", ttgbsbvChanges) : "\n") + ( bpstChangeset != null ? String.Join("\n", bpstChanges) : "");
             mail.Subject = "Targeting: Stock Selection changes in " + basketName;
             MailSender.SendTargetingAlert(mail, userEmail);
         }
