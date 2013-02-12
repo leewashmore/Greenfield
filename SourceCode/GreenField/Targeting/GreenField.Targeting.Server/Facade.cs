@@ -7,6 +7,7 @@ using Aims.Expressions;
 using System.Diagnostics;
 using Core = TopDown.Core;
 using Aims.Data.Server;
+using System.Net.Mail;
 
 namespace GreenField.Targeting.Server
 {
@@ -93,6 +94,7 @@ namespace GreenField.Targeting.Server
 
         public BroadGlobalActive.RootModel RecalculateBroadGlobalActive(BroadGlobalActive.RootModel serializedModel)
         {
+            
             this.MakeSureRepositoriesAreDroppedIfNeeded();
             var ticket = new CalculationTicket();
             var model = this.bgaDeserializer.DeserializeRoot(serializedModel);

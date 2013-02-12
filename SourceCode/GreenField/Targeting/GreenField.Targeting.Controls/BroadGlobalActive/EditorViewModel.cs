@@ -101,7 +101,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             foreach (var factor in factors)
             {
                 EditableExpressionModel factorExpression = factor.OverlayFactor;
-                var securityId = factor.BottomUpPortfolio.Id;
+                var securityId = factor.BottomUpPortfolio.Fund.Id;
                 var requestOverlayFactorCommentsCommand = new DelegateCommand(delegate
                 {
                     this.RequestOverlayFactorComments(portfolioId, securityId);

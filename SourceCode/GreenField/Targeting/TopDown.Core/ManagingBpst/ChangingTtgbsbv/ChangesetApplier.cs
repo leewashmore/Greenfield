@@ -6,6 +6,7 @@ using TopDown.Core.Persisting;
 using System.Diagnostics;
 using System.Data.SqlClient;
 using Aims.Expressions;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpst.ChangingTtgbsbv
 {
@@ -156,6 +157,87 @@ namespace TopDown.Core.ManagingBpst.ChangingTtgbsbv
             manager.UpdateTargetingTypeGroupBasketSecurityBaseValue(info);
         }
 
-      
+
+
+        internal List<String> PrepareToSend(Changeset changeset, IDataManager manager, Aims.Core.SecurityRepository securityRepository)
+        {
+            var result = new List<String>();
+            if (changeset != null)
+            {
+                var date = DateTime.Now;
+                foreach (var change in changeset.Changes)
+                {
+                    var resolver = new Mail_IChangeResolver(this, manager, securityRepository, result, changeset.Username, date);
+                    change.Accept(resolver);
+                }
+            }
+
+            return result;
+        }
+
+        private class Mail_IChangeResolver : IChangeResolver
+        {
+            private ChangesetApplier applier;
+            private IDataManager manager;
+            private List<String> mail;
+            private String username;
+            private DateTime date;
+            private SecurityRepository securityRepository;
+
+            public Mail_IChangeResolver(ChangesetApplier applier, IDataManager manager, SecurityRepository securityRepository, List<String> mail, String username, DateTime date)
+            {
+                this.applier = applier;
+                this.manager = manager;
+                this.mail = mail;
+                this.username = username;
+                this.date = date;
+                this.securityRepository = securityRepository;
+            }
+
+            public void Resolve(DeleteChange change)
+            {
+                this.applier.MailDeleteChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date);
+            }
+
+            public void Resolve(InsertChange change)
+            {
+                this.applier.MailInsertChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date);
+            }
+
+            public void Resolve(UpdateChange change)
+            {
+                this.applier.MailUpdateChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date);
+            }
+        }
+
+        internal void MailUpdateChange(UpdateChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var security = securityRepository.FindSecurity(change.SecurityId);
+            bodyAppendix.AppendLine("Adjustment for BASE of " + security.Name + "(" + security.ShortName + ") from " + change.BaseValueBefore + " to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
+
+        internal void MailInsertChange(InsertChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var security = securityRepository.FindSecurity(change.SecurityId);
+            bodyAppendix.AppendLine("Adjustment for BASE: " + security.Name + "(" + security.ShortName + ") was added to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
+
+        internal void MailDeleteChange(DeleteChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var security = securityRepository.FindSecurity(change.SecurityId);
+            bodyAppendix.AppendLine("Adjustment for BASE: " + security.Name + "(" + security.ShortName + ") was removed [last target was " + change.BaseValueBefore + "]");
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
     }
 }

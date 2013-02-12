@@ -7,6 +7,10 @@ using TopDown.Core.ManagingTaxonomies;
 using TopDown.Core.Persisting;
 using Aims.Expressions;
 using TopDown.Core.ManagingCalculations;
+using Aims.Core;
+using TopDown.Core.ManagingBaskets;
+using System.Net.Mail;
+using TopDown.Core.Helpers;
 
 namespace TopDown.Core.ManagingBpt
 {
@@ -56,7 +60,11 @@ namespace TopDown.Core.ManagingBpt
 			Taxonomy taxonomy,
 			RepositoryManager repositoryManager,
 			String username,
+            String userEmail,
 			SqlConnection connection,
+            SecurityRepository securityRepository,
+            BasketRepository basketRepository,
+            PortfolioRepository portfolioRepository,
             CalculationTicket ticket,
             ref CalculationInfo info
 		)
@@ -68,7 +76,8 @@ namespace TopDown.Core.ManagingBpt
 
 			try
 			{
-				this.Apply(model, taxonomy, repositoryManager, username, connection, ref info);
+				this.Apply(model, taxonomy, repositoryManager, username, userEmail, connection, 
+                    securityRepository, basketRepository,  portfolioRepository, ref info);
 				return issues;
 			}
 			catch (ValidationException exception)
@@ -82,7 +91,11 @@ namespace TopDown.Core.ManagingBpt
 			Taxonomy taxonomy,
 			RepositoryManager repositoryManager,
 			String username,
+            String userEmail,
 			SqlConnection connection,
+            SecurityRepository securityRepository, 
+            BasketRepository basketRepository,
+            PortfolioRepository portfolioRepository,
             ref CalculationInfo calculationInfo
 		)
 		{
@@ -123,11 +136,27 @@ namespace TopDown.Core.ManagingBpt
                     this.ttbptChangesetApplier.Apply(calculationInfo.Id, ttbptChangesetOpt, manager);
 				}
 
+                SendNotification(model.TargetingType.Name, model.Portfolio.Name, pstoChangesetOpt, ttbbvChangesetOpt, ttbptChangesetOpt, manager, securityRepository, basketRepository, portfolioRepository, userEmail);
 //#warning HACK!!! prevent test changes to DB
 				//transaction.Rollback();
                 transaction.Commit();
 			}
 		}
+
+        private void SendNotification(String ttName, String portfolioName, ChangingPsto.Changeset pstoChangeset, ChangingTtbbv.Changeset ttbbvChangeset, ChangingTtbpt.Changeset ttbptChangeset, IDataManager manager, SecurityRepository securityRepository, BasketRepository basketRepository, PortfolioRepository portfolioRepository, string userEmail)
+        {
+            MailMessage mail = new MailMessage();
+            mail.IsBodyHtml = false;
+
+            var pstoChanges = this.pstoChangesetApplier.PrepareToSend(pstoChangeset, manager, securityRepository, portfolioRepository, portfolioName);
+            var ttbbvChanges = this.ttbbvChangesetApplier.PrepareToSend(ttbbvChangeset, manager, securityRepository, basketRepository, ttName);
+            var ttbptChanges = this.ttbptChangesetApplier.PrepareToSend(ttbptChangeset, manager, securityRepository, basketRepository, ttName, portfolioName);
+
+
+            mail.Body = "The following Asset Allocation changes were made to the Global Active Accounts:\n" + (ttbbvChangeset != null ? String.Join("\n", ttbbvChanges) : "\n") + (ttbptChangeset != null ? String.Join("\n", ttbptChanges) : "\n") + (pstoChangeset != null ? String.Join("\n", pstoChanges) : "");
+            mail.Subject = "Targeting: Asset Allocation Changes";
+            MailSender.SendTargetingAlert(mail, userEmail);
+        }
 
         public IEnumerable<IValidationIssue> ValidateModelAndPermissions(RootModel model, String username, CalculationTicket ticket)
 		{

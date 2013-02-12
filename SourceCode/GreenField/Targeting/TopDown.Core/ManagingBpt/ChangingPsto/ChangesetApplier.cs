@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using TopDown.Core.Persisting;
 using System.Diagnostics;
 using Aims.Expressions;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpt.ChangingPsto
 {
@@ -154,7 +155,93 @@ namespace TopDown.Core.ManagingBpt.ChangingPsto
             manager.DeleteBgaPortfolioSecurityFactor(changeset.PortfolioId, change.SecurityId);
         }
 
+        internal List<String> PrepareToSend(Changeset changeset, IDataManager manager, Aims.Core.SecurityRepository securityRepository, PortfolioRepository portfolioRepository, string portfolioName)
+        {
+            var result = new List<String>();
+
+            if (changeset != null)
+            {
+                var date = DateTime.Now;
+                foreach (var change in changeset.Changes)
+                {
+                    var resolver = new Mail_IChangeResolver(this, manager, securityRepository, portfolioRepository, result, changeset.Username, date, portfolioName);
+                    change.Accept(resolver);
+                }
+
+            }
+            return result;
+        }
+
+        private class Mail_IChangeResolver : IChangeResolver
+        {
+            private ChangesetApplier applier;
+            private IDataManager manager;
+            private List<String> mail;
+            private String username;
+            private DateTime date;
+            private SecurityRepository securityRepository;
+            private String portfolioName;
+            private PortfolioRepository portfolioRepository;
 
 
+            public Mail_IChangeResolver(ChangesetApplier applier, IDataManager manager, SecurityRepository securityRepository, PortfolioRepository portfolioRepository, List<String> mail, String username, DateTime date, String portfolioName)
+            {
+                this.applier = applier;
+                this.manager = manager;
+                this.mail = mail;
+                this.username = username;
+                this.date = date;
+                this.securityRepository = securityRepository;
+                this.portfolioName = portfolioName;
+                this.portfolioRepository = portfolioRepository;
+            }
+
+            public void Resolve(DeleteChange change)
+            {
+                this.applier.MailDeleteChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date, this.portfolioName, this.portfolioRepository);
+            }
+
+            public void Resolve(InsertChange change)
+            {
+                this.applier.MailInsertChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date, this.portfolioName, this.portfolioRepository);
+            }
+
+            public void Resolve(UpdateChange change)
+            {
+                this.applier.MailUpdateChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date, this.portfolioName, this.portfolioRepository);
+            }
+
+            
+        }
+
+        internal void MailUpdateChange(UpdateChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date, String portfolioName, PortfolioRepository portfolioRepository)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var portfolio = portfolioRepository.ResolveToBottomUpPortfolio(change.SecurityId);
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from " + change.TargetBefore + " to " + change.TargetAfter);
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
+
+        internal void MailInsertChange(InsertChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date, String portfolioName, PortfolioRepository portfolioRepository)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var portfolio = portfolioRepository.ResolveToBottomUpPortfolio(change.SecurityId);
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from [empty] to " + change.TargetOverlayAfter);
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
+
+        internal void MailDeleteChange(DeleteChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date, String portfolioName, PortfolioRepository portfolioRepository)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var portfolio = portfolioRepository.ResolveToBottomUpPortfolio(change.SecurityId);
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from " + change.TargetOverlayBefore + " to [empty]");
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
     }
 }

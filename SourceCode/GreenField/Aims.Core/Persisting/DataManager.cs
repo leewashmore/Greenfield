@@ -125,9 +125,13 @@ namespace Aims.Core.Persisting
             using (var builder = this.CreateQueryCommandBuilder<CountryInfo>())
             {
                 return builder.Text("select ")
-                    .Field("  [COUNTRY_CODE]", (field, value) => field.CountryCode = value, false)
-                    .Field(", [COUNTRY_NAME]", (field, value) => field.CountryName = value, false)
-                    .Text(" from [" + TableNames.Country_Master + "]")
+                    .Field("  a.[COUNTRY_CODE]", (field, value) => field.CountryCode = value, false)
+                    .Field(", a.[COUNTRY_NAME]", (field, value) => field.CountryName = value, false)
+                    .Text(@" from (SELECT ISO_COUNTRY_CODE country_code, ASEC_SEC_COUNTRY_NAME country_name
+  FROM " + TableNames.GF_SECURITY_BASEVIEW + @" where ISO_COUNTRY_CODE is not null and ASEC_SEC_COUNTRY_NAME is not null
+union
+  select country_code, country_name
+  from " + TableNames.Country_Master + " ) a")
                     .PullAll();
             }
         }

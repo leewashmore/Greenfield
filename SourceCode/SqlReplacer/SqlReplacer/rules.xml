@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rules>
+  <rule from="\[GreenfieldQA\]\." to="[AIMS_Config]." />
+  <rule from="GreenfieldQA\." to="[AIMS_Config]." />
+  <rule from="\[AIMS_Data_QA\]\." to="[AIMS_Main]." />
+  <rule from="AIMS_Data_QA\." to="[AIMS_Main]." />
+  <rule from="\[Reuters\]\." to="[AIMS_Reuters]." />
+  <rule from="Reuters\." to="[AIMS_Reuters]." />
+  <rule from="\[aspnetdb_QA\]\." to="[AIMS_Users]." />
+  <rule from="aspnetdb_QA\." to="[AIMS_Users]." />
+</rules>

@@ -319,8 +319,12 @@ namespace TopDown.Core.ManagingBpt
         public IEnumerable<IValidationIssue> ApplyIfValid(
             RootModel root,
             String username,
+            String userEmail,
             SqlConnection connection,
             TargetingTypeRepository targetingTypeRepository,
+            SecurityRepository securityRepository, 
+            BasketRepository basketRepository,
+            PortfolioRepository portfolioRepository,
             CalculationTicket ticket,
             ref CalculationInfo info
         )
@@ -331,7 +335,11 @@ namespace TopDown.Core.ManagingBpt
                 targetingType.Taxonomy,
                 this.repositoryManager,
                 username,
+                userEmail,
                 connection,
+                securityRepository,
+                basketRepository,
+                portfolioRepository,
                 ticket,
                 ref info
             );

@@ -6,6 +6,9 @@ using System.Data.SqlClient;
 using TopDown.Core.Persisting;
 using System.Diagnostics;
 using Aims.Expressions;
+using System.Net.Mail;
+using Aims.Core;
+using TopDown.Core.ManagingBaskets;
 
 namespace TopDown.Core.ManagingBpst.ChangingBpst
 {
@@ -37,6 +40,90 @@ namespace TopDown.Core.ManagingBpst.ChangingBpst
             );
             manager.InsertBasketPortfolioSecurityTargetChangeset(changesetInfo);
         }
+
+        public List<String> PrepareToSend(Changeset changeset, IDataManager manager, SecurityRepository securityRepository)
+        {
+            
+            var result = new List<String>();
+            if (changeset != null)
+            {
+                var date = DateTime.Now;
+                foreach (var change in changeset.Changes)
+                {
+                    var resolver = new Mail_IChangeResolver(this, manager, securityRepository, result, changeset.Username, date);
+                    change.Accept(resolver);
+                }
+            }
+            
+            return result;
+        }
+
+
+        private class Mail_IChangeResolver : IChangeResolver
+        {
+            private PortfolioTargetChangesetApplier applier;
+            private IDataManager manager;
+            private List<String> mail;
+            private String username;
+            private DateTime date;
+            private SecurityRepository securityRepository;
+
+            public Mail_IChangeResolver(PortfolioTargetChangesetApplier applier, IDataManager manager, SecurityRepository securityRepository, List<String> mail, String username, DateTime date)
+            {
+                this.applier = applier;
+                this.manager = manager;
+                this.mail = mail;
+                this.username = username;
+                this.date = date;
+                this.securityRepository = securityRepository;
+            }
+
+            public void Resolve(DeleteChange change)
+            {
+                this.applier.MailDeleteChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date);
+            }
+
+            public void Resolve(InsertChange change)
+            {
+                this.applier.MailInsertChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date);
+            }
+
+            public void Resolve(UpdateChange change)
+            {
+                this.applier.MailUpdateChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date);
+            }
+        }
+
+        internal void MailUpdateChange(UpdateChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var security = securityRepository.FindSecurity(change.SecurityId);
+            bodyAppendix.AppendLine("Adjustment for Portfolio " + change.PortfolioId + " of " + security.Name + "(" + security.ShortName + ") from " + change.TargetBefore + " to " + change.TargetAfter);
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
+
+        internal void MailInsertChange(InsertChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var security = securityRepository.FindSecurity(change.SecurityId);
+            bodyAppendix.AppendLine("Adjustment for Portfolio " + change.PortfolioId + ": " + security.Name + "(" + security.ShortName + ") was added to " + change.TargetAfter);
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
+
+        internal void MailDeleteChange(DeleteChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var security = securityRepository.FindSecurity(change.SecurityId);
+            bodyAppendix.AppendLine("Adjustment for Portfolio " + change.PortfolioId + ": " + security.Name + "(" + security.ShortName + ") was removed [last target was " + change.TargetBefore + "]");
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
+        
 
         protected override IEnumerator<Int32> RequestChangeIds(Int32 howMany, IDataManager manager)
         {
@@ -153,5 +240,7 @@ namespace TopDown.Core.ManagingBpst.ChangingBpst
             manager.InsertBasketPortfolioSecurityTargetChange(changeInfo);
             manager.DeleteBasketPortfolioSecurityTarget(changeset.BasketId, change.PortfolioId, change.SecurityId);
         }
+
+        
     }
 }

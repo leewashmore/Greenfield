@@ -10,6 +10,7 @@ using System.IO;
 using Aims.Expressions;
 using TopDown.Core.ManagingCalculations;
 using Aims.Core;
+using TopDown.Core.Helpers;
 
 namespace TopDown.Core.ManagingPst
 {
@@ -109,7 +110,7 @@ namespace TopDown.Core.ManagingPst
             return result;
         }
 
-        public IEnumerable<IValidationIssue> ApplyIsValid(RootModel composition, String username, SqlConnection connection, CalculationTicket ticket, ref CalculationInfo info)
+        public IEnumerable<IValidationIssue> ApplyIsValid(RootModel composition, String username, String userEmail, SqlConnection connection, CalculationTicket ticket, SecurityRepository securityRepository, ref CalculationInfo info)
         {
             var issues = this.modelValidator.ValidateRoot(composition, ticket);
             if (issues.Any()) return issues;
@@ -125,6 +126,9 @@ namespace TopDown.Core.ManagingPst
 
                         info = this.calculationRequester.RequestCalculation(manager);
                         this.applier.Apply(info.Id, changesetOpt, manager);
+
+                        var message = this.applier.PrepareToSend(changesetOpt, manager, securityRepository);
+                        MailSender.SendTargetingAlert(message, userEmail);
                         // it's important to drop the repository (or at least part of it if you can manage to carefully resolve everything) as we changed the composition
                         this.repositoryManager.DropRepository();
                         transaction.Commit();
