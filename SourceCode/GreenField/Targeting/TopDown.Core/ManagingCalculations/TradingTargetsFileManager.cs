@@ -81,7 +81,7 @@ namespace TopDown.Core.ManagingCalculations
             foreach (var line in lines)
             {
                 if (line.Target != 0)
-                    sb.AppendLine(String.Format("{0:yyyymmdd},M_{1},{2},{3},{4},{5},{6},{7},{8},{9}", dt, line.PortfolioId, line.Security.ShortName, line.Security.IsoCountryCode, line.Security.Currency, line.PercentByContry, line.SumByCountry, line.Target, line.Security.Ticker, line.Security.Isin));
+                    sb.AppendLine(String.Format("{0:yyyyMMdd},M_{1},{2},{3},{4},{5},{6},{7},{8},{9}", dt, line.PortfolioId, line.Security.ShortName, line.Security.IsoCountryCode, line.Security.Currency, line.PercentByContry, line.SumByCountry, line.Target, line.Security.Ticker, line.Security.Isin));
             }
 
             return sb.ToString();
