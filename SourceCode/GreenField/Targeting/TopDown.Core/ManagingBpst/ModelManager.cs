@@ -269,13 +269,13 @@ namespace TopDown.Core.ManagingBpst
         }
 
         
-        public IEnumerable<IValidationIssue> ApplyIfValid(RootModel model, String username, SqlConnection connection, CalculationTicket ticket, ref CalculationInfo calculationInfo)
+        public IEnumerable<IValidationIssue> ApplyIfValid(RootModel model, String username, String userEmail, SqlConnection connection, CalculationTicket ticket, SecurityRepository securityRepository, BasketRepository basketRepository, ref CalculationInfo calculationInfo)
         {
             var issues = this.Validate(model, ticket);
             if (issues.Any()) return issues;
             try
             {
-                this.modelApplier.Apply(model, username, connection, ref calculationInfo);
+                this.modelApplier.Apply(model, username, userEmail, connection, securityRepository, basketRepository, ref calculationInfo);
                 return No.ValidationIssues;
             }
             catch (ValidationException exception)

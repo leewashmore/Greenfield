@@ -6,6 +6,8 @@ using System.Data.SqlClient;
 using TopDown.Core.Persisting;
 using System.Diagnostics;
 using Aims.Expressions;
+using TopDown.Core.ManagingBaskets;
+using Aims.Core;
 
 namespace TopDown.Core.ManagingBpt.ChangingTtbbv
 {
@@ -154,6 +156,121 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbbv
             );
             manager.InsertTargetingTypeBasketBaseValueChange(changeInfo);
             manager.DeleteTargetingTypeBasketBaseValue(changeset.TargetingTypeId, change.BasketId);
-        }        
+        }
+
+        internal List<String> PrepareToSend(Changeset changeset, IDataManager manager, Aims.Core.SecurityRepository securityRepository, ManagingBaskets.BasketRepository basketRepository, string ttName)
+        {
+            var result = new List<String>();
+            if (changeset != null)
+            {
+                var date = DateTime.Now;
+                foreach (var change in changeset.Changes)
+                {
+                    var resolver = new Mail_IChangeResolver(this, manager, securityRepository, basketRepository, result, changeset.Username, date, ttName);
+                    change.Accept(resolver);
+                }
+            }
+
+            return result;
+        }
+
+        private class Mail_IChangeResolver : IChangeResolver
+        {
+            private ChangesetApplier applier;
+            private IDataManager manager;
+            private List<String> mail;
+            private String username;
+            private DateTime date;
+            private SecurityRepository securityRepository;
+            private String ttName;
+            private BasketRepository basketRepository;
+
+
+            public Mail_IChangeResolver(ChangesetApplier applier, IDataManager manager, SecurityRepository securityRepository, BasketRepository basketRepository, List<String> mail, String username, DateTime date, String ttName)
+            {
+                this.applier = applier;
+                this.manager = manager;
+                this.mail = mail;
+                this.username = username;
+                this.date = date;
+                this.securityRepository = securityRepository;
+                this.ttName = ttName;
+                this.basketRepository = basketRepository;
+            }
+
+            public void Resolve(DeleteChange change)
+            {
+                this.applier.MailDeleteChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date, this.ttName, this.basketRepository);
+            }
+
+            public void Resolve(InsertChange change)
+            {
+                this.applier.MailInsertChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date, this.ttName, this.basketRepository);
+            }
+
+            public void Resolve(UpdateChange change)
+            {
+                this.applier.MailUpdateChange(change, this.manager, this.securityRepository, this.mail, this.username, this.date, this.ttName, this.basketRepository);
+            }
+
+
+        }
+
+        internal void MailUpdateChange(UpdateChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date, String ttName, BasketRepository basketRepository)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var basket = basketRepository.GetBasket(change.BasketId);
+            string basketName = "";
+            if (basket.TryAsCountryBasket() != null)
+            {
+                basketName = basket.AsCountryBasket().Country.Name;
+            }
+            else
+            {
+                basketName = basket.AsRegionBasket().Name;
+            }
+            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from " + change.BaseValueBefore + " to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
+
+        internal void MailInsertChange(InsertChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date, String ttName, BasketRepository basketRepository)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var basket = basketRepository.GetBasket(change.BasketId);
+            string basketName = "";
+            if (basket.TryAsCountryBasket() != null)
+            {
+                basketName = basket.AsCountryBasket().Country.Name;
+            }
+            else
+            {
+                basketName = basket.AsRegionBasket().Name;
+            }
+            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from [empty] to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
+
+        internal void MailDeleteChange(DeleteChange change, IDataManager dataManager, SecurityRepository securityRepository, List<String> mailMessage, String username, DateTime date, String ttName, BasketRepository basketRepository)
+        {
+            StringBuilder bodyAppendix = new StringBuilder("\n");
+            bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
+            var basket = basketRepository.GetBasket(change.BasketId);
+            string basketName = "";
+            if (basket.TryAsCountryBasket() != null)
+            {
+                basketName = basket.AsCountryBasket().Country.Name;
+            }
+            else
+            {
+                basketName = basket.AsRegionBasket().Name;
+            }
+            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from " + change.BaseValueBefore + " to [empty]");
+            bodyAppendix.AppendLine("COMMENT: " + change.Comment);
+            mailMessage.Add(bodyAppendix.ToString());
+        }
     }
 }
