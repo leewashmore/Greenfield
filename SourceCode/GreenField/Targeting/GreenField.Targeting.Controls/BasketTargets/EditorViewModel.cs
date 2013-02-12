@@ -159,7 +159,7 @@ namespace GreenField.Targeting.Controls.BasketTargets
             // important step: datagrid needs to know how many columns are required to fit all the portfolios
             this.Portfolios = model.Portfolios;
 
-            var lines = model.Securities.Select(x => Helper.As<IBtLineModel>(x)).ToList();
+            var lines = model.Securities.OrderBy(x => x.Security.Name).Select(x => Helper.As<IBtLineModel>(x)).ToList();
             lines.Add(model);
             this.Lines = lines;
 
