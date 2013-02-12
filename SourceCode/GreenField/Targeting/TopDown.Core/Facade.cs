@@ -390,7 +390,7 @@ namespace TopDown.Core
                         {
                             this.dataManagerFactory.CreateDataManager(connection, null).FinishTargetingCalculationUnsafe(calculationId, 2, e.ToString());
                         }
-                        return new List<TargetRecord>();
+                        throw e;
                     }
                 }
             }
