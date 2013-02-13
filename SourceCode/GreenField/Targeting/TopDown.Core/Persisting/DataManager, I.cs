@@ -139,6 +139,7 @@ namespace TopDown.Core.Persisting
 
         IEnumerable<PortfolioSecurityTargetsInfo> GetAllTargets();
         Boolean IsSavePermittedForBGAUser(string username);
+        Boolean IsUserCanCreateOutputFile(string username);
         
     }
 }

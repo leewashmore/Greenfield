@@ -99,6 +99,7 @@ namespace GreenField.Targeting.Controls.BottomUp
 
         //TODO Sorting implementation (can be started from here: http://stackoverflow.com/questions/6891322/exception-while-trying-to-manually-sort-pagedcollectionview)
         
+
         private void RequesCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId)
         {
             this.StartLoading();

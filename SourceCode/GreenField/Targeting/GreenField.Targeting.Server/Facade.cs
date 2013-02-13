@@ -126,6 +126,11 @@ namespace GreenField.Targeting.Server
             return serializedIssues;
         }
 
+        public void CreateTargetingFile(string username)
+        {
+            facade.CreateTargetingFile(username);
+        }
+
         // basket targets
 
         public BasketTargets.PickerModel GetBasketPicker(string username)
@@ -247,6 +252,11 @@ namespace GreenField.Targeting.Server
             var comments = this.facade.RequestCommentsForBuPortfolioSecurityTarget(portfolioId, securityId);
             var serializedComments = this.serializer.SerializeComments(comments);
             return serializedComments;
+        }
+
+        public bool IsUserPermittedToCreateOutputFile(string username)
+        {
+            return this.facade.IsUserPermittedToCreateOutputFile(username);
         }
     }
 }

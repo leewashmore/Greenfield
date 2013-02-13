@@ -107,7 +107,7 @@ namespace GreenField.Web.Targeting
             var securitySerializer = new SecurityToJsonSerializer(countrySerializer);
             var securityManager = new SecurityManager(securityRepositoryCache, monitor);
 
-            IDataManagerFactory dataManagerFactory = new FakeDataManagerFactory();
+            IDataManagerFactory dataManagerFactory = new DataManagerFactory();
             IUsersDataManagerFactory usersDataManagerFactory = new UsersDataManagerFactory();
             var connectionFactory = new SqlConnectionFactory(connectionString);
             var usersConnectionFactory = new SqlConnectionFactory(usersConnectionString);

@@ -20,6 +20,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="IssueModel" nillable="true" type="tns:IssueModel" />
+  <xs:complexType name="WarningModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IssueModel">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WarningModel" nillable="true" type="tns:WarningModel" />
+  <xs:complexType name="ErrorModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IssueModel">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ErrorModel" nillable="true" type="tns:ErrorModel" />
   <xs:complexType name="CompoundIssueModel">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:IssueModel">
@@ -30,22 +46,6 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="CompoundIssueModel" nillable="true" type="tns:CompoundIssueModel" />
-  <xs:complexType name="ErrorModel">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:IssueModel">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="ErrorModel" nillable="true" type="tns:ErrorModel" />
-  <xs:complexType name="WarningModel">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:IssueModel">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="WarningModel" nillable="true" type="tns:WarningModel" />
   <xs:complexType name="EditableExpressionModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
