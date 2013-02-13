@@ -920,9 +920,9 @@ namespace TopDown.FacingServer.Backend.Targeting {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="IssueModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.CompoundIssueModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.ErrorModel))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.WarningModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.ErrorModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.CompoundIssueModel))]
     public partial class IssueModel : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string MessageField;
@@ -952,6 +952,18 @@ namespace TopDown.FacingServer.Backend.Targeting {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WarningModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
+    public partial class WarningModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ErrorModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
+    public partial class ErrorModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CompoundIssueModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
     public partial class CompoundIssueModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
         
@@ -969,18 +981,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 }
             }
         }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ErrorModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
-    public partial class ErrorModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="WarningModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server")]
-    public partial class WarningModel : TopDown.FacingServer.Backend.Targeting.IssueModel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1201,8 +1201,8 @@ namespace TopDown.FacingServer.Backend.Targeting {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.OtherModel))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BasketCountryModel))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.UnsavedBasketCountryModel))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.RegionModel))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BgaCountryModel))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.RegionModel))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TopDown.FacingServer.Backend.Targeting.BasketRegionModel))]
     public partial class GlobeResident : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -1659,6 +1659,58 @@ namespace TopDown.FacingServer.Backend.Targeting {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BgaCountryModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
+        "tive")]
+    public partial class BgaCountryModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
+        
+        private TopDown.FacingServer.Backend.Targeting.CountryModel CountryField;
+        
+        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
+            get {
+                return this.BenchmarkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
+                    this.BenchmarkField = value;
+                    this.RaisePropertyChanged("Benchmark");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.CountryModel Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
+            get {
+                return this.OverlayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
+                    this.OverlayField = value;
+                    this.RaisePropertyChanged("Overlay");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RegionModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
         "tive")]
     public partial class RegionModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
@@ -1809,58 +1861,6 @@ namespace TopDown.FacingServer.Backend.Targeting {
                 if ((object.ReferenceEquals(this.TrueExposureField, value) != true)) {
                     this.TrueExposureField = value;
                     this.RaisePropertyChanged("TrueExposure");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="BgaCountryModel", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server.BroadGlobalAc" +
-        "tive")]
-    public partial class BgaCountryModel : TopDown.FacingServer.Backend.Targeting.GlobeResident {
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel BenchmarkField;
-        
-        private TopDown.FacingServer.Backend.Targeting.CountryModel CountryField;
-        
-        private TopDown.FacingServer.Backend.Targeting.ExpressionModel OverlayField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Benchmark {
-            get {
-                return this.BenchmarkField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BenchmarkField, value) != true)) {
-                    this.BenchmarkField = value;
-                    this.RaisePropertyChanged("Benchmark");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.CountryModel Country {
-            get {
-                return this.CountryField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
-                    this.CountryField = value;
-                    this.RaisePropertyChanged("Country");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TopDown.FacingServer.Backend.Targeting.ExpressionModel Overlay {
-            get {
-                return this.OverlayField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OverlayField, value) != true)) {
-                    this.OverlayField = value;
-                    this.RaisePropertyChanged("Overlay");
                 }
             }
         }
@@ -3204,6 +3204,16 @@ namespace TopDown.FacingServer.Backend.Targeting {
         System.IAsyncResult BeginRequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBuPortfolioSecurityTarget(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/CreateTargetingFile", ReplyAction="http://tempuri.org/IFacade/CreateTargetingFileResponse")]
+        System.IAsyncResult BeginCreateTargetingFile(string username, System.AsyncCallback callback, object asyncState);
+        
+        void EndCreateTargetingFile(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IFacade/IsUserPermittedToCreateOutputFile", ReplyAction="http://tempuri.org/IFacade/IsUserPermittedToCreateOutputFileResponse")]
+        System.IAsyncResult BeginIsUserPermittedToCreateOutputFile(string username, System.AsyncCallback callback, object asyncState);
+        
+        bool EndIsUserPermittedToCreateOutputFile(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -3592,6 +3602,25 @@ namespace TopDown.FacingServer.Backend.Targeting {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class IsUserPermittedToCreateOutputFileCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public IsUserPermittedToCreateOutputFileCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class FacadeClient : System.ServiceModel.ClientBase<TopDown.FacingServer.Backend.Targeting.IFacade>, TopDown.FacingServer.Backend.Targeting.IFacade {
         
         private BeginOperationDelegate onBeginGetBroadGlobalActiveDelegate;
@@ -3714,6 +3743,18 @@ namespace TopDown.FacingServer.Backend.Targeting {
         
         private System.Threading.SendOrPostCallback onRequestCommentsForBuPortfolioSecurityTargetCompletedDelegate;
         
+        private BeginOperationDelegate onBeginCreateTargetingFileDelegate;
+        
+        private EndOperationDelegate onEndCreateTargetingFileDelegate;
+        
+        private System.Threading.SendOrPostCallback onCreateTargetingFileCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginIsUserPermittedToCreateOutputFileDelegate;
+        
+        private EndOperationDelegate onEndIsUserPermittedToCreateOutputFileDelegate;
+        
+        private System.Threading.SendOrPostCallback onIsUserPermittedToCreateOutputFileCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -3806,6 +3847,10 @@ namespace TopDown.FacingServer.Backend.Targeting {
         public event System.EventHandler<RequestCommentsForBgaPortfolioSecurityFactorCompletedEventArgs> RequestCommentsForBgaPortfolioSecurityFactorCompleted;
         
         public event System.EventHandler<RequestCommentsForBuPortfolioSecurityTargetCompletedEventArgs> RequestCommentsForBuPortfolioSecurityTargetCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CreateTargetingFileCompleted;
+        
+        public event System.EventHandler<IsUserPermittedToCreateOutputFileCompletedEventArgs> IsUserPermittedToCreateOutputFileCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -4765,6 +4810,97 @@ namespace TopDown.FacingServer.Backend.Targeting {
                         securityId}, this.onEndRequestCommentsForBuPortfolioSecurityTargetDelegate, this.onRequestCommentsForBuPortfolioSecurityTargetCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginCreateTargetingFile(string username, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginCreateTargetingFile(username, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void TopDown.FacingServer.Backend.Targeting.IFacade.EndCreateTargetingFile(System.IAsyncResult result) {
+            base.Channel.EndCreateTargetingFile(result);
+        }
+        
+        private System.IAsyncResult OnBeginCreateTargetingFile(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string username = ((string)(inValues[0]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginCreateTargetingFile(username, callback, asyncState);
+        }
+        
+        private object[] OnEndCreateTargetingFile(System.IAsyncResult result) {
+            ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndCreateTargetingFile(result);
+            return null;
+        }
+        
+        private void OnCreateTargetingFileCompleted(object state) {
+            if ((this.CreateTargetingFileCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.CreateTargetingFileCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void CreateTargetingFileAsync(string username) {
+            this.CreateTargetingFileAsync(username, null);
+        }
+        
+        public void CreateTargetingFileAsync(string username, object userState) {
+            if ((this.onBeginCreateTargetingFileDelegate == null)) {
+                this.onBeginCreateTargetingFileDelegate = new BeginOperationDelegate(this.OnBeginCreateTargetingFile);
+            }
+            if ((this.onEndCreateTargetingFileDelegate == null)) {
+                this.onEndCreateTargetingFileDelegate = new EndOperationDelegate(this.OnEndCreateTargetingFile);
+            }
+            if ((this.onCreateTargetingFileCompletedDelegate == null)) {
+                this.onCreateTargetingFileCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnCreateTargetingFileCompleted);
+            }
+            base.InvokeAsync(this.onBeginCreateTargetingFileDelegate, new object[] {
+                        username}, this.onEndCreateTargetingFileDelegate, this.onCreateTargetingFileCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult TopDown.FacingServer.Backend.Targeting.IFacade.BeginIsUserPermittedToCreateOutputFile(string username, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginIsUserPermittedToCreateOutputFile(username, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool TopDown.FacingServer.Backend.Targeting.IFacade.EndIsUserPermittedToCreateOutputFile(System.IAsyncResult result) {
+            return base.Channel.EndIsUserPermittedToCreateOutputFile(result);
+        }
+        
+        private System.IAsyncResult OnBeginIsUserPermittedToCreateOutputFile(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string username = ((string)(inValues[0]));
+            return ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).BeginIsUserPermittedToCreateOutputFile(username, callback, asyncState);
+        }
+        
+        private object[] OnEndIsUserPermittedToCreateOutputFile(System.IAsyncResult result) {
+            bool retVal = ((TopDown.FacingServer.Backend.Targeting.IFacade)(this)).EndIsUserPermittedToCreateOutputFile(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnIsUserPermittedToCreateOutputFileCompleted(object state) {
+            if ((this.IsUserPermittedToCreateOutputFileCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.IsUserPermittedToCreateOutputFileCompleted(this, new IsUserPermittedToCreateOutputFileCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void IsUserPermittedToCreateOutputFileAsync(string username) {
+            this.IsUserPermittedToCreateOutputFileAsync(username, null);
+        }
+        
+        public void IsUserPermittedToCreateOutputFileAsync(string username, object userState) {
+            if ((this.onBeginIsUserPermittedToCreateOutputFileDelegate == null)) {
+                this.onBeginIsUserPermittedToCreateOutputFileDelegate = new BeginOperationDelegate(this.OnBeginIsUserPermittedToCreateOutputFile);
+            }
+            if ((this.onEndIsUserPermittedToCreateOutputFileDelegate == null)) {
+                this.onEndIsUserPermittedToCreateOutputFileDelegate = new EndOperationDelegate(this.OnEndIsUserPermittedToCreateOutputFile);
+            }
+            if ((this.onIsUserPermittedToCreateOutputFileCompletedDelegate == null)) {
+                this.onIsUserPermittedToCreateOutputFileCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnIsUserPermittedToCreateOutputFileCompleted);
+            }
+            base.InvokeAsync(this.onBeginIsUserPermittedToCreateOutputFileDelegate, new object[] {
+                        username}, this.onEndIsUserPermittedToCreateOutputFileDelegate, this.onIsUserPermittedToCreateOutputFileCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -5115,6 +5251,31 @@ namespace TopDown.FacingServer.Backend.Targeting {
             public System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> EndRequestCommentsForBuPortfolioSecurityTarget(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel> _result = ((System.Collections.ObjectModel.ObservableCollection<TopDown.FacingServer.Backend.Targeting.CommentModel>)(base.EndInvoke("RequestCommentsForBuPortfolioSecurityTarget", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginCreateTargetingFile(string username, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = username;
+                System.IAsyncResult _result = base.BeginInvoke("CreateTargetingFile", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndCreateTargetingFile(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("CreateTargetingFile", _args, result);
+            }
+            
+            public System.IAsyncResult BeginIsUserPermittedToCreateOutputFile(string username, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = username;
+                System.IAsyncResult _result = base.BeginInvoke("IsUserPermittedToCreateOutputFile", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndIsUserPermittedToCreateOutputFile(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("IsUserPermittedToCreateOutputFile", _args, result)));
                 return _result;
             }
         }

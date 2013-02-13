@@ -339,6 +339,35 @@ namespace TopDown.Core
             }
         }
 
+        public void CreateTargetingFile(string username)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var managerOfRepositories = this.dataManagerFactory.CreateDataManager(connection, null);
+                var securityRepository = this.RepositoryManager.ClaimSecurityRepository(managerOfRepositories);
+                using (var transaction = connection.BeginTransaction())
+                {
+                    var manager = this.dataManagerFactory.CreateDataManager(connection, transaction);
+                    CreateTargetingFile(securityRepository, manager);
+                }
+            }
+        }
+
+        public void CreateTargetingFile(SecurityRepository securityRepository, IDataManager manager)
+        {
+            var fileManager = new TradingTargetsFileManager();
+            string fileContent = fileManager.GetFileContent(securityRepository, manager);
+            var now = DateTime.Now;
+            var fileName = "AshmoreEMM_Models - as of " + now.ToString("yyyyMMdd-hhmmss") + ".csv";
+            var directory = ConfigurationManager.AppSettings["TargetingFileOutputDirectory"];
+            if (!directory.EndsWith(@"\"))
+                directory += @"\";
+            using (StreamWriter sw = new StreamWriter(directory + fileName))
+            {
+                sw.Write(fileContent);
+            }
+        }
+
         public IEnumerable<TargetRecord> Calculate(Int32 calculationId, Boolean seriously)
         {
             using (var connection = this.connectionFactory.CreateConnection())
@@ -352,21 +381,12 @@ namespace TopDown.Core
                     try
                     {
                         var tagrets = this.hopper.RecalculateEverything(calculationId, manager);
-                        var fileManager = new TradingTargetsFileManager();
+                        
                         
                         if (seriously)
                         {
 
-                            string fileContent = fileManager.GetFileContent(securityRepository, manager);
-                            var now = DateTime.Now;
-                            var fileName = "AshmoreEMM_Models - as of " +  now.ToString("yyyyMMdd-hhmmss")  + ".csv";
-                            var directory = ConfigurationManager.AppSettings["TargetingFileOutputDirectory"];
-                            if (!directory.EndsWith(@"\"))
-                                directory += @"\";
-                            using (StreamWriter sw = new StreamWriter(directory + fileName))
-                            {
-                                sw.Write(fileContent);
-                            }
+                            CreateTargetingFile(securityRepository, manager);
                             
                             transaction.Commit();
                             
@@ -488,6 +508,15 @@ namespace TopDown.Core
             }
         }
 
-        
+
+
+        public bool IsUserPermittedToCreateOutputFile(string username)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                return manager.IsUserCanCreateOutputFile(username);
+            }
+        }
     }
 }

@@ -347,6 +347,7 @@
     <Compile Include="_Testing\StorageMock.cs" />
     <Content Include="Scripts\073-USERNAME_BASKET.sql" />
     <Content Include="Scripts\074-USERNAME_BGA_ACCESS.sql" />
+    <Content Include="Scripts\075-USERNAME_CAN_CREATE_TARGETING_FILE.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\015-TARGETING_CALCULATION.sql" />

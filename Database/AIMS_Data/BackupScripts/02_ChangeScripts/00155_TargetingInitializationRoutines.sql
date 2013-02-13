@@ -19,7 +19,6 @@ end
 
 GO
 
-
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TARGETING_TYPE_BASKET_PORTFOLIO_TARGET]') AND type in (N'U'))
 BEGIN
 	IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FK_TARGETING_TYPE_BASKET_PORTFOLIO_TARGET_TARGETING_TYPE]'))
@@ -324,6 +323,12 @@ BEGIN
 END
 GO
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[USERNAME_CAN_CREATE_TARGETING_FILE]') AND type in (N'U'))
+BEGIN
+	DROP TABLE [dbo].[USERNAME_CAN_CREATE_TARGETING_FILE]
+END
+GO
+
 --- an analogue of Oracle sequiences
 
 CREATE TABLE [dbo].[SEQUENCE](
@@ -497,6 +502,7 @@ insert into TAXONOMY([ID], [DEFINITION]) values (2, '<taxonomy xmlns="urn:TopDow
 		<basket-country basketId="16" />
 		<basket-country basketId="17" />
 		<basket-country basketId="18" />
+		<basket-country basketId="25" />
 	</region>
 	
 	<basket-region basketId="22" />
@@ -567,6 +573,7 @@ INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('OPB', 'OPB', 0)
 INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('PRIT', 'PRIT', 0)
 INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('SICVEF', 'SICVEF', 0)
 INSERT INTO [dbo].[PORTFOLIO] ([ID], [NAME]) values ('USEF', 'USEF', 0)
+GO
 
 ALTER TABLE [dbo].[PORTFOLIO] ADD  CONSTRAINT [DF_PORTFOLIO_IS_BOTTOM_UP]  DEFAULT ((0)) FOR [IS_BOTTOM_UP]
 GO
@@ -655,7 +662,7 @@ insert into [REGION_BASKET] ([ID], [DEFINITION]) values (19, '<region-basket nam
 insert into [BASKET] ([ID], [TYPE]) values (20, 'region')
 insert into [REGION_BASKET] ([ID], [DEFINITION]) values (20, '<region-basket name="South Asia" iso-codes="IN, BD, LK" />')
 insert into [BASKET] ([ID], [TYPE]) values (21, 'region')
-insert into [REGION_BASKET] ([ID], [DEFINITION]) values (21, '<region-basket name="Africa" iso-codes="BW, CD, CI, EG, GH, KE, MU, MW, MA, NA, NG, SN, TZ, TN, ZM, ZW" />')
+insert into [REGION_BASKET] ([ID], [DEFINITION]) values (21, '<region-basket name="Africa" iso-codes="BW, CD, CI, EG, GH, KE, MU, MW, MA, NA, NG, SN, TZ, TN, ZM, ZW, SL, RW" />')
 insert into [BASKET] ([ID], [TYPE]) values (22, 'region')
 insert into [REGION_BASKET] ([ID], [DEFINITION]) values (22, '<region-basket name="Middle East" iso-codes="BH, JO, KW, LB, OM, PS, QA, SA, AE" />')
 insert into [BASKET] ([ID], [TYPE]) values (23, 'region')
@@ -3620,7 +3627,8 @@ INSERT [dbo].[USERNAME_BASKET] ([USERNAME], [BASKET_ID]) VALUES (N'vfedonkin', 2
 INSERT [dbo].[USERNAME_BASKET] ([USERNAME], [BASKET_ID]) VALUES (N'vfedonkin', 22)
 INSERT [dbo].[USERNAME_BASKET] ([USERNAME], [BASKET_ID]) VALUES (N'vfedonkin', 23)
 INSERT [dbo].[USERNAME_BASKET] ([USERNAME], [BASKET_ID]) VALUES (N'vfedonkin', 24)
-GO 
+
+
 
 CREATE TABLE [dbo].[USERNAME_BGA_ACCESS](
 	[USERNAME] [varchar](50) NOT NULL,
@@ -3630,8 +3638,16 @@ CREATE TABLE [dbo].[USERNAME_BGA_ACCESS](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+CREATE TABLE [dbo].[USERNAME_CAN_CREATE_TARGETING_FILE](
+	[USERNAME] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_USERNAME_CAN_CREATE_TARGETING_FILE] PRIMARY KEY CLUSTERED 
+(
+	[USERNAME] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
 GO
-
 --indicate thet current script is executed
 declare @CurrentScriptVersion as nvarchar(100) = '00155'
 insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
+
+

@@ -56,6 +56,20 @@ namespace GreenField.Web.Services
             return result;
         }
 
+        protected void Watch(String failureMessage, Action action)
+        {
+            
+            try
+            {
+                action();
+            }
+            catch (Exception exception)
+            {
+                throw new ApplicationException(failureMessage + " Reason: " + exception.Message, exception);
+            }
+            return;
+        }
+
         public Server.BroadGlobalActive.RootModel GetBroadGlobalActive(Int32 targetingTypeId, String bgaPortfolioId, String username)
         {
             return this.Watch("Unable to get the broad global active data for targeting type (ID: " + targetingTypeId + ") and broad global active portfolio (ID: " + bgaPortfolioId + ").", delegate
@@ -221,6 +235,22 @@ namespace GreenField.Web.Services
             return this.Watch(String.Format("Getting comments for RequestCommentsForBuPortfolioSecurityTarget: portfolioId - {0}, securityId - {1}", portfolioId, securityId), delegate
             {
                 return this.facade.RequestCommentsForBuPortfolioSecurityTarget(portfolioId, securityId);
+            });
+        }
+
+        public void CreateTargetingFile(string username)
+        {
+            this.Watch(String.Format("Creating targeting file from CreateTargetingFile: username - {0}", username), delegate
+            {
+                this.facade.CreateTargetingFile(username);
+            });
+        }
+
+        public Boolean IsUserPermittedToCreateOutputFile(string username)
+        {
+            return this.Watch(String.Format("Get user permissions from IsUserPermittedToCreateOutputFile: username - {0}", username), delegate
+            {
+                return this.facade.IsUserPermittedToCreateOutputFile(username);
             });
         }
     }
