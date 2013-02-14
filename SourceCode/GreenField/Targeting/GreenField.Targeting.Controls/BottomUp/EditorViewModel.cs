@@ -74,8 +74,8 @@ namespace GreenField.Targeting.Controls.BottomUp
             this.KeptRootModel = model;
             this.RegisterInChangeWatcher(model);
             var lines = Helper.ToObservableCollection(model.Items.Select(x => Helper.As<IBuLineModel>(x)));
-            lines.Add(new BuTotalModel(model.TargetTotal));
             lines.Add(new BuCashModel(model.Cash));
+            lines.Add(new BuTotalModel(model.TargetTotal));
             this.Lines = lines;
             var portfolioId = this.LastValidInput.BottomUpPortfolioId;
             var registeredExpressions = new List<EditableExpressionModel>();
