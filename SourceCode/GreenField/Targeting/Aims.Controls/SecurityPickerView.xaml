@@ -14,7 +14,7 @@
             ItemsSource="{Binding Items}"
             MinimumPopulateDelay="250"
             FilterMode="None"
-            ValueMemberPath="Ticker"
+            ValueMemberPath="ShortName"
             SelectedItem="{Binding SelectedSecurity, Mode=TwoWay}"
             Width="200"
             IsEnabled="{Binding IsEnabled}"
