@@ -11,7 +11,7 @@ namespace TopDown.Core.ManagingBenchmarks
     public class BenchmarkRepository
     {
         private Dictionary<String, IGrouping<String, BenchmarkInfo>> benchmarksByBenchmarkId;
-        private ILookup<String, BenchmarkInfo> benchmarkByTicker;
+        private ILookup<String, BenchmarkInfo> benchmarkByShortName;
         private ILookup<String, BenchmarkInfo> benchmarkByCountry;
 
         protected BenchmarkRepository()
@@ -32,7 +32,7 @@ namespace TopDown.Core.ManagingBenchmarks
                 .GroupBy(x => x.BenchmarkId)
                 .ToDictionary(x => x.Key);
             
-			this.benchmarkByTicker = benchmarks.ToLookup(x => x.Ticker);
+			this.benchmarkByShortName = benchmarks.ToLookup(x => x.AsecSecShortName);
             this.benchmarkByCountry = benchmarks.ToLookup(x => x.IsoCountryCode);
         }
 
@@ -75,10 +75,10 @@ namespace TopDown.Core.ManagingBenchmarks
 
         public IEnumerable<BenchmarkInfo> TryGetBySecurity(ISecurity security)
         {
-            var ticker = security.Ticker;
-            if (this.benchmarkByTicker.Contains(ticker))
+            var shortName = security.ShortName;
+            if (this.benchmarkByShortName.Contains(shortName))
             {
-                var benchmarks = this.benchmarkByTicker[ticker];
+                var benchmarks = this.benchmarkByShortName[shortName];
                 return benchmarks.OrderByDescending(x => x.PortfolioDate);
             }
             else

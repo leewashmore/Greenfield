@@ -29,5 +29,11 @@ namespace TopDown.Core.Helpers
 
             Send(message);
         }
+
+        public static String TransformTargetToString(Decimal? target)
+        {
+
+            return target.HasValue ? Math.Round(target.Value * 100, 2).ToString() : null;
+        }
     }
 }
