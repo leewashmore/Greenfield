@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
 using Aims.Core.Persisting;
 
@@ -28,10 +25,7 @@ namespace Aims.Core
         }
 		public CountryRepository ClaimCountryRepository(IDataManager manager)
 		{
-			return this.countryRepositoryStorage.Claim(CountryRepositoryStorageKey, delegate
-			{
-				return this.CreateCountryRepository(manager);
-			});
+			return this.countryRepositoryStorage.Claim(CountryRepositoryStorageKey, () => this.CreateCountryRepository(manager));
 		}
 		protected CountryRepository CreateCountryRepository(IDataManager manager)
 		{
