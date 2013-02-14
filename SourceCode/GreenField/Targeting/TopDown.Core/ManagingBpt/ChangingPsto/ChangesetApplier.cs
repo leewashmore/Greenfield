@@ -7,6 +7,7 @@ using TopDown.Core.Persisting;
 using System.Diagnostics;
 using Aims.Expressions;
 using Aims.Core;
+using TopDown.Core.Helpers;
 
 namespace TopDown.Core.ManagingBpt.ChangingPsto
 {
@@ -219,7 +220,7 @@ namespace TopDown.Core.ManagingBpt.ChangingPsto
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var portfolio = portfolioRepository.ResolveToBottomUpPortfolio(change.SecurityId);
-            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from " + change.TargetBefore*100 + " to " + change.TargetAfter*100);
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from " + MailSender.TransformTargetToString(change.TargetBefore) + " to " + MailSender.TransformTargetToString(change.TargetAfter));
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -229,7 +230,7 @@ namespace TopDown.Core.ManagingBpt.ChangingPsto
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var portfolio = portfolioRepository.ResolveToBottomUpPortfolio(change.SecurityId);
-            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from [empty] to " + change.TargetOverlayAfter*100);
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from [empty] to " + MailSender.TransformTargetToString(change.TargetOverlayAfter));
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -239,7 +240,7 @@ namespace TopDown.Core.ManagingBpt.ChangingPsto
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var portfolio = portfolioRepository.ResolveToBottomUpPortfolio(change.SecurityId);
-            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from " + change.TargetOverlayBefore*100 + " to [empty]");
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from " + MailSender.TransformTargetToString(change.TargetOverlayBefore) + " to [empty]");
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }

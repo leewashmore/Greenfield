@@ -9,6 +9,7 @@ using Aims.Expressions;
 using System.Net.Mail;
 using Aims.Core;
 using TopDown.Core.ManagingBaskets;
+using TopDown.Core.Helpers;
 
 namespace TopDown.Core.ManagingBpst.ChangingBpst
 {
@@ -99,7 +100,7 @@ namespace TopDown.Core.ManagingBpst.ChangingBpst
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine("Adjustment for Portfolio " + change.PortfolioId + " of " + security.Name + "(" + security.ShortName + ") from " + change.TargetBefore*100 + " to " + change.TargetAfter*100);
+            bodyAppendix.AppendLine("Adjustment for Portfolio " + change.PortfolioId + " of " + security.Name + "(" + security.ShortName + ") from " + MailSender.TransformTargetToString(change.TargetBefore) + " to " + MailSender.TransformTargetToString(change.TargetAfter));
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -109,7 +110,7 @@ namespace TopDown.Core.ManagingBpst.ChangingBpst
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine("Adjustment for Portfolio " + change.PortfolioId + ": " + security.Name + "(" + security.ShortName + ") was added to " + change.TargetAfter*100);
+            bodyAppendix.AppendLine("Adjustment for Portfolio " + change.PortfolioId + ": " + security.Name + "(" + security.ShortName + ") was added to " + MailSender.TransformTargetToString(change.TargetAfter));
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -119,7 +120,7 @@ namespace TopDown.Core.ManagingBpst.ChangingBpst
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine("Adjustment for Portfolio " + change.PortfolioId + ": " + security.Name + "(" + security.ShortName + ") was removed [last target was " + change.TargetBefore*100 + "]");
+            bodyAppendix.AppendLine("Adjustment for Portfolio " + change.PortfolioId + ": " + security.Name + "(" + security.ShortName + ") was removed [last target was " + MailSender.TransformTargetToString(change.TargetBefore) + "]");
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
