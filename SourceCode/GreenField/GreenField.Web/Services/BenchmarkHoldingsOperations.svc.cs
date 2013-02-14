@@ -1324,14 +1324,14 @@ namespace GreenField.Web.Services
 
 #if DEBUG
                 swRetrieveExternalResearchData.Start();
-                Trace.WriteLine(string.Format("{0}: Passed to RetrieveExternalResearchData", DateTime.Now));
-                XMLStringValue(result);
+                //Trace.WriteLine(string.Format("{0}: Passed to RetrieveExternalResearchData", DateTime.Now));
+                //XMLStringValue(result);
 #endif
                 result = RetrieveExternalResearchData(result);
 #if DEBUG
-                Trace.WriteLine(string.Format("{0}: returned from RetrieveExternalResearchData", DateTime.Now));
-                Trace.WriteLine("");
-                XMLStringValue(result);
+                //Trace.WriteLine(string.Format("{0}: returned from RetrieveExternalResearchData", DateTime.Now));
+                //Trace.WriteLine("");
+                //XMLStringValue(result);
 
                 swRetrieveExternalResearchData.Stop();
                 timeRetrieveExternalResearchData = DateTime.Now;
@@ -1512,45 +1512,46 @@ namespace GreenField.Web.Services
                 timePortfolio_Security_Targets_Union = DateTime.Now;
                 swGF_SECURITY_BASEVIEW_Local.Start();
 #endif
-                var securities = externalResearchEntities.GF_SECURITY_BASEVIEW_Local.ToList();
-
-                //Trace.WriteLine(string.Format("{0}: returned from GF_SECURITY_BASEVIEW_Local", DateTime.Now));
-                //Trace.WriteLine("");
-                //XMLStringValue(securities);
+                //var securities = externalResearchEntities.GF_SECURITY_BASEVIEW_Local.ToList();
 
 #if DEBUG
                 swGF_SECURITY_BASEVIEW_Local.Stop();
                 timeGF_SECURITY_BASEVIEW_Local = DateTime.Now;
 #endif
                 
-                List<SecurityBaseviewData> securityData = new List<SecurityBaseviewData>();
+                //List<SecurityBaseviewData> securityData = new List<SecurityBaseviewData>();
 #if DEBUG
                 swRetrieveSecurityReferenceData.Start();
 #endif
-                securityData = RetrieveSecurityReferenceData(securities);
+                //securityData = RetrieveSecurityReferenceData(securities);
 #if DEBUG
                 swRetrieveSecurityReferenceData.Stop();
                 timeRetrieveSecurityReferenceData = DateTime.Now;
 #endif
                 ExternalResearchEntities entity = new ExternalResearchEntities() { CommandTimeout = 5000 };
-                List<string> securityNames = portfolioDetailsData.Select(a => a.IssueName).ToList();
+                List<string> securityAsecSecShortName = portfolioDetailsData.Select(a => a.AsecSecShortName).ToList();
                 List<PortfolioDetailsExternalData> externalData = new List<PortfolioDetailsExternalData>();
                 List<FAIR_VALUE> fairValueData = new List<FAIR_VALUE>();
                 int check = 1;
                 StringBuilder securityIDPortfolio = new StringBuilder();
                 StringBuilder issuerIDPortfolio = new StringBuilder();
 
-                foreach (String issueName in securityNames)
+                SecurityReferenceOperations securityReferenceOperations = new SecurityReferenceOperations();
+                List<EntitySelectionData> newSecurities = securityReferenceOperations.RetrieveEntitySelectionData();
+
+                foreach (String asecSecShortName in securityAsecSecShortName)
                 {
-                    SecurityBaseviewData securityDetails = securityData.Where(record => record.IssueName == issueName).FirstOrDefault();
+                    //SecurityBaseviewData securityDetails = securityData.Where(record => record.IssueName == issueName).FirstOrDefault();
+                    var securityDetails = newSecurities.Where(record => record.InstrumentID == asecSecShortName).FirstOrDefault();
+
                     if (securityDetails != null)
                     {
                         check = 0;
                         securityIDPortfolio.Append(",'" + securityDetails.SecurityId + "'");
                         issuerIDPortfolio.Append(",'" + securityDetails.IssuerId + "'");
-                        if (portfolioDetailsData.Where(a => a.IssueName == issueName).FirstOrDefault() != null)
+                        if (portfolioDetailsData.Where(a => a.AsecSecShortName == asecSecShortName).FirstOrDefault() != null)
                         {
-                            portfolioDetailsData.Where(a => a.IssueName == issueName).FirstOrDefault().SecurityId = Convert.ToString(securityDetails.SecurityId);
+                            portfolioDetailsData.Where(a => a.AsecSecShortName == asecSecShortName).FirstOrDefault().SecurityId = Convert.ToString(securityDetails.SecurityId);
                         }
                     }
                 }
@@ -1622,12 +1623,12 @@ namespace GreenField.Web.Services
                     item.Upside = fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault() == null ?
                         null : (fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault().UPSIDE as decimal?) * 100M;
 
-                    var security = securities.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName).FirstOrDefault();
+                    var security = newSecurities.Where(x => x.InstrumentID == item.AsecSecShortName).FirstOrDefault();
                     item.AshEmmModelWeight = 0;
                     if (security != null)
                     {
 
-                        var target = targets.Where(x => x.SECURITY_ID == security.SECURITY_ID && x.PORTFOLIO_ID == item.PfcHoldingPortfolio);
+                        var target = targets.Where(x => x.SECURITY_ID == security.SecurityId && x.PORTFOLIO_ID == item.PfcHoldingPortfolio);
                         if (target != null)
                             item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT);
 
@@ -1636,10 +1637,10 @@ namespace GreenField.Web.Services
                             var securityPortfolios = item.PortfolioPath.Split(',');
                             for (int i = securityPortfolios.Count() - 2; i >= 0; i--)
                             {
-                                security = securities.Where(x => x.LOOK_THRU_FUND == securityPortfolios[i+1]).FirstOrDefault();
+                                security = newSecurities.Where(x => x.LOOK_THRU_FUND == securityPortfolios[i + 1]).FirstOrDefault();
                                 if (security != null)
                                 {
-                                    target = targets.Where(x => x.SECURITY_ID == security.SECURITY_ID && x.PORTFOLIO_ID == securityPortfolios[i]);
+                                    target = targets.Where(x => x.SECURITY_ID == security.SecurityId && x.PORTFOLIO_ID == securityPortfolios[i]);
                                     if (target != null)
                                         item.AshEmmModelWeight = item.AshEmmModelWeight * target.Sum(x => x.TARGET_PCT);
                                 }

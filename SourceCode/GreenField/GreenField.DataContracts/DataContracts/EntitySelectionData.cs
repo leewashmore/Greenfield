@@ -26,6 +26,15 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public String InstrumentID { get; set; }
+
+        [DataMember]
+        public String SecurityId { get; set; }
+
+        [DataMember]
+        public String IssuerId { get; set; }
+
+        [DataMember]
+        public String LOOK_THRU_FUND { get; set; }
     }
 
 

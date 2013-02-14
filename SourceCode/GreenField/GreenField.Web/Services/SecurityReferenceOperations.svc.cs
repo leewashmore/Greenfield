@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Resources;
 using System.ServiceModel;
@@ -458,12 +459,43 @@ namespace GreenField.Web.Services
                 if (!isServiceUp)
                     throw new Exception("Services are not available");
 
+
                 List<DimensionEntitiesService.GF_SELECTION_BASEVIEW> data = DimensionEntity.GF_SELECTION_BASEVIEW.ToList();
+#if DEBUG
+                Stopwatch swDimensionSec = new Stopwatch();
+                DateTime timedimensionSec = new DateTime();
+                Stopwatch swLocalSec = new Stopwatch();
+                DateTime timelocalSec = new DateTime();
+
+                swDimensionSec.Start();
+#endif
+
+                //List<DimensionEntitiesService.GF_SECURITY_BASEVIEW> securities2 = DimensionEntity.GF_SECURITY_BASEVIEW.ToList();
+
+#if DEBUG
+                swDimensionSec.Stop();
+                timedimensionSec = DateTime.Now;
+
+                swLocalSec.Start();
+#endif
+
+                var securities = new GreenField.DAL.ExternalResearchEntities().GF_SECURITY_BASEVIEW_Local.ToList();
+
+#if DEBUG
+                swLocalSec.Stop();
+                timelocalSec = DateTime.Now;
+
+                Trace.WriteLine(string.Format("{1}: 1. DimensionEntity.GF_SECURITY_BASEVIEW = {0} seconds.", (swDimensionSec.ElapsedMilliseconds / 1000.00).ToString(), timedimensionSec.ToString()));
+                Trace.WriteLine(string.Format("{1}: 2. GF_SECURITY_BASEVIEW_Local = {0} seconds.", (swLocalSec.ElapsedMilliseconds / 1000.00).ToString(), timelocalSec.ToString()));
+#endif
+
                 List<EntitySelectionData> result = new List<EntitySelectionData>();
                 if (data != null)
                 {
                     foreach (DimensionEntitiesService.GF_SELECTION_BASEVIEW record in data)
                     {
+                        var security = securities.Where(sec => sec.ASEC_SEC_SHORT_NAME == record.INSTRUMENT_ID).FirstOrDefault();
+                    
                         result.Add(new EntitySelectionData()
                         {
                             SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
@@ -471,7 +503,10 @@ namespace GreenField.Web.Services
                             LongName = record.LONG_NAME == null ? String.Empty : record.LONG_NAME,
                             InstrumentID = record.INSTRUMENT_ID == null ? String.Empty : record.INSTRUMENT_ID,
                             Type = record.TYPE == null ? String.Empty : record.TYPE,
-                            SecurityType = record.SECURITY_TYPE == null ? String.Empty : record.SECURITY_TYPE
+                            SecurityType = record.SECURITY_TYPE == null ? String.Empty : record.SECURITY_TYPE,
+                            SecurityId = security != null ? security.SECURITY_ID : null,
+                            IssuerId = security != null ? security.ISSUER_ID : null,
+                            LOOK_THRU_FUND = security != null ? security.LOOK_THRU_FUND : null
                         });
                     }
                 }
