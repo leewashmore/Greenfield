@@ -215,7 +215,7 @@ namespace TopDown.Core.ManagingBpst.ChangingTtgbsbv
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine("Adjustment for BASE of " + security.Name + "(" + security.ShortName + ") from " + change.BaseValueBefore + " to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("Adjustment for BASE of " + security.Name + "(" + security.ShortName + ") from " + change.BaseValueBefore*100 + " to " + change.BaseValueAfter*100);
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -225,7 +225,7 @@ namespace TopDown.Core.ManagingBpst.ChangingTtgbsbv
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine("Adjustment for BASE: " + security.Name + "(" + security.ShortName + ") was added to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("Adjustment for BASE: " + security.Name + "(" + security.ShortName + ") was added to " + change.BaseValueAfter*100);
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -235,7 +235,7 @@ namespace TopDown.Core.ManagingBpst.ChangingTtgbsbv
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine("Adjustment for BASE: " + security.Name + "(" + security.ShortName + ") was removed [last target was " + change.BaseValueBefore + "]");
+            bodyAppendix.AppendLine("Adjustment for BASE: " + security.Name + "(" + security.ShortName + ") was removed [last target was " + change.BaseValueBefore*100 + "]");
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }

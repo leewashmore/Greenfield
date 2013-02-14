@@ -230,7 +230,7 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbbv
             {
                 basketName = basket.AsRegionBasket().Name;
             }
-            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from " + change.BaseValueBefore + " to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from " + change.BaseValueBefore*100 + " to " + change.BaseValueAfter*100);
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -249,7 +249,7 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbbv
             {
                 basketName = basket.AsRegionBasket().Name;
             }
-            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from [empty] to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from [empty] to " + change.BaseValueAfter*100);
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -268,7 +268,7 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbbv
             {
                 basketName = basket.AsRegionBasket().Name;
             }
-            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from " + change.BaseValueBefore + " to [empty]");
+            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from " + change.BaseValueBefore*100 + " to [empty]");
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }

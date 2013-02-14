@@ -110,7 +110,7 @@ namespace TopDown.Core.ManagingPst
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine(security.Name + "(" + security.ShortName + ") from " + change.TargetBefore + " to " + change.TargetAfter);
+            bodyAppendix.AppendLine(security.Name + "(" + security.ShortName + ") from " + change.TargetBefore*100 + " to " + change.TargetAfter*100);
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Body += bodyAppendix;
             
@@ -123,7 +123,7 @@ namespace TopDown.Core.ManagingPst
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine(security.Name + "(" + security.ShortName + ") was removed [last target was " + change.TargetBefore + "]");
+            bodyAppendix.AppendLine(security.Name + "(" + security.ShortName + ") was removed [last target was " + change.TargetBefore*100 + "]");
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Body += bodyAppendix;
         }
@@ -135,7 +135,7 @@ namespace TopDown.Core.ManagingPst
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine(security.Name + "(" + security.ShortName + ") was added to " + change.TargetAfter);
+            bodyAppendix.AppendLine(security.Name + "(" + security.ShortName + ") was added to " + change.TargetAfter*100);
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Body += bodyAppendix;
         }

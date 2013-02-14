@@ -232,7 +232,7 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbpt
             {
                 basketName = basket.AsRegionBasket().Name;
             }
-            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + basketName + " for " + ttName + " from " + change.TargetBefore + " to " + change.TargetAfter);
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + basketName + " for " + ttName + " from " + change.TargetBefore*100 + " to " + change.TargetAfter*100);
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -251,7 +251,7 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbpt
             {
                 basketName = basket.AsRegionBasket().Name;
             }
-            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + basketName + " for " + ttName + " from [empty] to " + change.TargetAfter);
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + basketName + " for " + ttName + " from [empty] to " + change.TargetAfter*100);
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -270,7 +270,7 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbpt
             {
                 basketName = basket.AsRegionBasket().Name;
             }
-            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + basketName + " for " + ttName + " from " + change.TargetBefore + " to [empty]");
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + basketName + " for " + ttName + " from " + change.TargetBefore*100 + " to [empty]");
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }

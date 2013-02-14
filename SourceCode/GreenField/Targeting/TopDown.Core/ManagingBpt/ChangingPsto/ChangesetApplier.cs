@@ -219,7 +219,7 @@ namespace TopDown.Core.ManagingBpt.ChangingPsto
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var portfolio = portfolioRepository.ResolveToBottomUpPortfolio(change.SecurityId);
-            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from " + change.TargetBefore + " to " + change.TargetAfter);
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from " + change.TargetBefore*100 + " to " + change.TargetAfter*100);
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -229,7 +229,7 @@ namespace TopDown.Core.ManagingBpt.ChangingPsto
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var portfolio = portfolioRepository.ResolveToBottomUpPortfolio(change.SecurityId);
-            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from [empty] to " + change.TargetOverlayAfter);
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from [empty] to " + change.TargetOverlayAfter*100);
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -239,7 +239,7 @@ namespace TopDown.Core.ManagingBpt.ChangingPsto
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var portfolio = portfolioRepository.ResolveToBottomUpPortfolio(change.SecurityId);
-            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from " + change.TargetOverlayBefore + " to [empty]");
+            bodyAppendix.AppendLine(portfolioName + " Adjustment in " + portfolio.Name + " from " + change.TargetOverlayBefore*100 + " to [empty]");
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
