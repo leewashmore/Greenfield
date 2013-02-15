@@ -70,7 +70,11 @@ namespace Aims.Core
                     }
                 });
                 var tobeIndexed = security.Ticker + " " + security.ShortName + " " + security.Name;
-                var keys = tobeIndexed.Split(splitters.ToArray()).Select(x => x.Trim().ToLower()).Where(x => !String.IsNullOrWhiteSpace(x));
+                var keys = tobeIndexed.Split(splitters.ToArray()).Select(x => x.Trim().ToLower()).Where(x => !String.IsNullOrWhiteSpace(x)).ToList();
+                if (!String.IsNullOrWhiteSpace(security.Name))
+                    keys.Add(security.Name.ToLower());
+                if (!String.IsNullOrWhiteSpace(security.Ticker))
+                    keys.Add(security.Ticker.ToLower());
                 foreach (var key in keys)
                 {
                     if (skipWords.Contains(key)) continue;
