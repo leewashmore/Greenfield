@@ -13,32 +13,41 @@ namespace GreenField.Web.Helpers
 
     public class DefaultCacheProvider : ICacheProvider
     {
-        private ObjectCache Cache
+        private ObjectCache cache
         {
             get { return MemoryCache.Default; }
         }
 
         public object Get(string key)
         {
-            return Cache[key];
+            return cache[key];
         }
 
         public void Set(string key, object data, int cacheTime)
         {
             CacheItemPolicy policy = new CacheItemPolicy();
-            policy.AbsoluteExpiration = DateTime.Now + TimeSpan.FromMinutes(cacheTime);
+            policy.AbsoluteExpiration = DateTime.Now.AddMinutes(cacheTime);
 
-            Cache.Add(new CacheItem(key, data), policy);
+            cache.Add(new CacheItem(key, data), policy);
+            cache.Add(new CacheItem(key + "Policy", data), null);
         }
 
         public bool IsSet(string key)
         {
-            return (Cache[key] != null);
+            return (cache[key] != null);
         }
 
         public void Invalidate(string key)
         {
-            Cache.Remove(key);
+            cache.Remove(key);
+        }
+
+        public void InvalidateAll()
+        {
+            //MemoryCache.Default.Dispose(); possible threading issues
+            //TODO needs to test
+            foreach (var element in MemoryCache.Default)
+                MemoryCache.Default.Remove(element.Key);
         }
     }
 }
