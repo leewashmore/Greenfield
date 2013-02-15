@@ -9,6 +9,8 @@ using System.Web.Caching;
 using System.Diagnostics;
 using Aims.Core.Sql;
 using GreenField.IssuerShares.Server;
+using System.Runtime.Caching;
+using System.Configuration;
 
 namespace GreenField.Web.IssuerShares
 {
@@ -51,8 +53,8 @@ namespace GreenField.Web.IssuerShares
         private class CacheStorage<TValue> : IStorage<TValue>
             where TValue : class
         {
-            private Cache cache;
-            public CacheStorage(Cache cache)
+            private ObjectCache cache;
+            public CacheStorage(ObjectCache cache)
             {
                 this.cache = cache;
             }
@@ -74,7 +76,9 @@ namespace GreenField.Web.IssuerShares
                     }
                     else
                     {
-                        this.cache.Insert(key, value);
+                        CacheItemPolicy policy = new CacheItemPolicy();
+                        policy.AbsoluteExpiration = DateTime.Now.AddMinutes(Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+                        this.cache.Set(key, value, policy);
                     }
                 }
             }
@@ -99,7 +103,7 @@ namespace GreenField.Web.IssuerShares
             var dataManagerFactory = new GreenField.IssuerShares.Core.DataManagerFactory();
 
 
-            var cache = HttpContext.Current.Cache;
+            var cache = MemoryCache.Default;
             var monitor = new Monitor();
 
             var countryRepositoryStorage = new CacheStorage<CountryRepository>(cache);

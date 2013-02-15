@@ -22,6 +22,8 @@ using TopDown.Core.Gadgets.PortfolioPicker;
 using Server = GreenField.Targeting.Server;
 using Aims.Core;
 using Aims.Core.Sql;
+using System.Runtime.Caching;
+using System.Configuration;
 
 namespace GreenField.Web.Targeting
 {
@@ -52,8 +54,8 @@ namespace GreenField.Web.Targeting
         private class CacheStorage<TValue> : IStorage<TValue>
             where TValue : class
         {
-            private Cache cache;
-            public CacheStorage(Cache cache)
+            private ObjectCache cache;
+            public CacheStorage(ObjectCache cache)
             {
                 this.cache = cache;
             }
@@ -75,7 +77,9 @@ namespace GreenField.Web.Targeting
                     }
                     else
                     {
-                        this.cache.Insert(key, value);
+                        CacheItemPolicy policy = new CacheItemPolicy();
+                        policy.AbsoluteExpiration = DateTime.Now.AddMinutes(Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+                        this.cache.Set(key, value, policy);
                     }
                 }
             }
@@ -96,7 +100,7 @@ namespace GreenField.Web.Targeting
         private static GreenField.Targeting.Server.FacadeSettings CreateFacadeSettingsUnsafe(String connectionString, String usersConnectionString, Boolean shouldDropRepositories)
         {
             var infoCopier = new InfoCopier();
-            var cache = HttpContext.Current.Cache;
+            var cache = MemoryCache.Default;
             var countryRepositoryStorage = new CacheStorage<CountryRepository>(cache);
             var countrySerializer = new CountryToJsonSerializer();
             var countryManager = new CountryManager(countryRepositoryStorage);
