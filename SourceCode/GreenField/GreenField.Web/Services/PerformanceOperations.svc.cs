@@ -581,7 +581,7 @@ namespace GreenField.Web.Services
             try
             {
                 // use cache if available
-                var fromCache = (List<MarketSnapshotSelectionData>)new DefaultCacheProvider().Get("MarketSnapshotSelectionDataCache");
+                var fromCache = (List<MarketSnapshotSelectionData>)new DefaultCacheProvider().Get(CacheKeyNames.MarketSnapshotSelectionDataCache);
                 if (fromCache != null)
                     return fromCache;
 
@@ -594,7 +594,7 @@ namespace GreenField.Web.Services
                     .OrderBy(record => record.SnapshotName)
                     .ToList<MarketSnapshotSelectionData>();
 
-                new DefaultCacheProvider().Set("MarketSnapshotSelectionDataCache", userPreference, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+                new DefaultCacheProvider().Set(CacheKeyNames.MarketSnapshotSelectionDataCache, userPreference, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
                 return userPreference;
             }
             catch (Exception ex)
@@ -3218,7 +3218,7 @@ namespace GreenField.Web.Services
         public List<DateTime> GetLastDayOfMonths()
         {
             // use cache if available
-            var fromCache = (List<DateTime>)new DefaultCacheProvider().Get("LastDayOfMonthsCache");
+            var fromCache = (List<DateTime>)new DefaultCacheProvider().Get(CacheKeyNames.LastDayOfMonthsCache);
             if (fromCache != null)
                 return fromCache;
 
@@ -3239,7 +3239,7 @@ namespace GreenField.Web.Services
 					.OrderByDescending(x => x)
 					.Take(13);
 
-            new DefaultCacheProvider().Set("LastDayOfMonthsCache", q.ToList(), Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+            new DefaultCacheProvider().Set(CacheKeyNames.LastDayOfMonthsCache, q.ToList(), Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
             return q.ToList();
         }
     }

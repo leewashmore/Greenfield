@@ -448,7 +448,7 @@ namespace GreenField.Web.Services
             try
             {
                 // use cache if available
-                var fromCache = (List<EntitySelectionData>)new DefaultCacheProvider().Get("EntitySelectionDataCache");
+                var fromCache = (List<EntitySelectionData>)new DefaultCacheProvider().Get(CacheKeyNames.EntitySelectionDataCache);
                 if (fromCache != null)
                     return fromCache;
 
@@ -529,7 +529,7 @@ namespace GreenField.Web.Services
                     }
                 }
 
-                new DefaultCacheProvider().Set("EntitySelectionDataCache", result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+                new DefaultCacheProvider().Set(CacheKeyNames.EntitySelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
 
                 return result;
             }

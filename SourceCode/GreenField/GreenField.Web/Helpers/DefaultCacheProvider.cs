@@ -3,6 +3,19 @@ using System.Runtime.Caching;
 
 namespace GreenField.Web.Helpers
 {
+    public sealed class CacheKeyNames
+    {
+        public const string FilterSelectionDataCache = "FilterSelectionDataCache";
+        public const string PortfolioSelectionDataCache = "PortfolioSelectionDataCache";
+        public const string AvailableDatesInPortfoliosCache = "AvailableDatesInPortfoliosCache";
+        public const string CountrySelectionDataCache = "CountrySelectionDataCache";
+        public const string RegionSelectionDataCache = "RegionSelectionDataCache";
+        public const string FXCommodityDataCache = "FXCommodityDataCache";
+        public const string MarketSnapshotSelectionDataCache = "MarketSnapshotSelectionDataCache";
+        public const string LastDayOfMonthsCache = "LastDayOfMonthsCache";
+        public const string EntitySelectionDataCache = "EntitySelectionDataCache";
+    }
+    
     public interface ICacheProvider
     {
         object Get(string key);
@@ -27,6 +40,7 @@ namespace GreenField.Web.Helpers
         {
             CacheItemPolicy policy = new CacheItemPolicy();
             policy.AbsoluteExpiration = DateTime.Now.AddMinutes(cacheTime);
+            //TODO policy.RemovedCallback = new CacheEntryRemovedCallback (ItemRemoved);
 
             cache.Add(new CacheItem(key, data), policy);
             cache.Add(new CacheItem(key + "Policy", data), null);
