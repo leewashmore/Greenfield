@@ -7,6 +7,11 @@ using System.Configuration;
 
 namespace TopDown.Core.Helpers
 {
+    public class EmailNotificationException : ApplicationException
+    {
+        public EmailNotificationException(String message, Exception e) : base(message, e) { }
+    }
+
     public class MailSender
     {
         public static void Send(MailMessage mail)

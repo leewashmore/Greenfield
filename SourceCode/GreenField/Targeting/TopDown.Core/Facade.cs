@@ -25,6 +25,7 @@ using TopDown.Core.ManagingCalculations;
 using Aims.Core;
 using Aims.Core.Sql;
 using System.Configuration;
+using TopDown.Core.Helpers;
 
 namespace TopDown.Core
 {
@@ -128,30 +129,45 @@ namespace TopDown.Core
 
             using (var connection = this.connectionFactory.CreateConnection())
             {
-                using (var ondemandManager = this.CreateOnDemandDataManager(connection))
+                try
                 {
-                    var targetingTypeRepository = this.RepositoryManager.ClaimTargetingTypeRepository(ondemandManager);
-                    var securityRepository = this.RepositoryManager.ClaimSecurityRepository(ondemandManager);
-                    var basketRepository = this.RepositoryManager.ClaimBasketRepository(ondemandManager);
-                    var portfolioRepository = this.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
-                    var calculation = new CalculationInfo();
-                    var issues = this.BptManager.ApplyIfValid(
-                        root,
-                        username,
-                        userEmail,
-                        connection,
-                        targetingTypeRepository,
-                        securityRepository,
-                        basketRepository,
-                        portfolioRepository,
-                        ticket,
-                        ref calculation
-                    );
-                    if (!issues.Any(x => x is ErrorIssue))
+                    using (var ondemandManager = this.CreateOnDemandDataManager(connection))
                     {
-                        this.Calculate(calculation.Id, true);
+                        var targetingTypeRepository = this.RepositoryManager.ClaimTargetingTypeRepository(ondemandManager);
+                        var securityRepository = this.RepositoryManager.ClaimSecurityRepository(ondemandManager);
+                        var basketRepository = this.RepositoryManager.ClaimBasketRepository(ondemandManager);
+                        var portfolioRepository = this.RepositoryManager.ClaimPortfolioRepository(ondemandManager);
+                        var calculation = new CalculationInfo();
+                        var issues = this.BptManager.ApplyIfValid(
+                            root,
+                            username,
+                            userEmail,
+                            connection,
+                            targetingTypeRepository,
+                            securityRepository,
+                            basketRepository,
+                            portfolioRepository,
+                            ticket,
+                            ref calculation
+                        );
+                        if (!issues.Any(x => x is ErrorIssue))
+                        {
+                            this.Calculate(calculation.Id, true);
+                        }
+                        return issues;
                     }
-                    return issues;
+                }
+                catch (EmailNotificationException e)
+                {
+                    throw new ApplicationException("Notification email cannot be sent. Data haven't been saved yet. You can try again. If the problem persist contact IT department.", e);
+                }
+                catch (CalculationException e)
+                {
+                    throw new ApplicationException("You change has been saved but portfolio recalculation went wrong. Contact IT department to restart recalculations.", e);
+                }
+                catch (OutputTargetingFileException e)
+                {
+                    throw new ApplicationException("You change has been saved but targeting output file cannot be saved. Contact IT department to restart recalculations.", e);
                 }
             }
         }
@@ -218,14 +234,29 @@ namespace TopDown.Core
 
             using (var connection = this.connectionFactory.CreateConnection())
             {
-                CalculationInfo info = new CalculationInfo();
-                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
-                var retVal = this.PstManager.ApplyIsValid(model, username, userEmail, connection, ticket, this.RepositoryManager.ClaimSecurityRepository(manager), ref info);
-                if (!retVal.Any())
+                try
                 {
-                    this.Calculate(info.Id, true);
+                    CalculationInfo info = new CalculationInfo();
+                    var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                    var retVal = this.PstManager.ApplyIsValid(model, username, userEmail, connection, ticket, this.RepositoryManager.ClaimSecurityRepository(manager), ref info);
+                    if (!retVal.Any())
+                    {
+                        this.Calculate(info.Id, true);
+                    }
+                    return retVal;
                 }
-                return retVal;
+                catch (EmailNotificationException e)
+                {
+                    throw new ApplicationException("Notification email cannot be sent. Data haven't been saved yet. You can try again. If the problem persist contact IT department.", e);
+                }
+                catch (CalculationException e)
+                {
+                    throw new ApplicationException("You change has been saved but portfolio recalculation went wrong. Contact IT department to restart recalculations.", e);
+                }
+                catch (OutputTargetingFileException e)
+                {
+                    throw new ApplicationException("You change has been saved but targeting output file cannot be saved. Contact IT department to restart recalculations.", e);
+                }
             }
         }
 
@@ -317,14 +348,29 @@ namespace TopDown.Core
 
             using (var connection = this.connectionFactory.CreateConnection())
             {
-                CalculationInfo calculationInfo = new CalculationInfo();
-                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
-                var retVal = this.BpstManager.ApplyIfValid(model, username, userEmail, connection, ticket, this.RepositoryManager.ClaimSecurityRepository(manager), this.RepositoryManager.ClaimBasketRepository(manager), ref calculationInfo);
-                if (!retVal.Any())
+                try
                 {
-                    this.Calculate(calculationInfo.Id, true);
+                    CalculationInfo calculationInfo = new CalculationInfo();
+                    var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                    var retVal = this.BpstManager.ApplyIfValid(model, username, userEmail, connection, ticket, this.RepositoryManager.ClaimSecurityRepository(manager), this.RepositoryManager.ClaimBasketRepository(manager), ref calculationInfo);
+                    if (!retVal.Any())
+                    {
+                        this.Calculate(calculationInfo.Id, true);
+                    }
+                    return retVal;
                 }
-                return retVal;
+                catch (EmailNotificationException e)
+                {
+                    throw new ApplicationException("Notification email cannot be sent. Data haven't been saved yet. You can try again. If the problem persist contact IT department.", e);
+                }
+                catch (CalculationException e)
+                {
+                    throw new ApplicationException("You change has been saved but portfolio recalculation went wrong. Contact IT department to restart recalculations.", e);
+                }
+                catch (OutputTargetingFileException e)
+                {
+                    throw new ApplicationException("You change has been saved but targeting output file cannot be saved. Contact IT department to restart recalculations.", e);
+                }
             }
         }
 
@@ -339,6 +385,19 @@ namespace TopDown.Core
             }
         }
 
+        public void RequestRecalculation(string username)
+        {
+            using (var connection = this.connectionFactory.CreateConnection())
+            {
+                var calculationRequester = new CalculationRequester();
+                var manager = this.dataManagerFactory.CreateDataManager(connection, null);
+                if (manager.IsUserCanCreateOutputFile(username))
+                {
+                    this.Calculate(calculationRequester.RequestCalculation(manager).Id, true);
+                }
+            }
+        }
+
         public void CreateTargetingFile(string username)
         {
             using (var connection = this.connectionFactory.CreateConnection())
@@ -348,23 +407,33 @@ namespace TopDown.Core
                 using (var transaction = connection.BeginTransaction())
                 {
                     var manager = this.dataManagerFactory.CreateDataManager(connection, transaction);
-                    CreateTargetingFile(securityRepository, manager);
+                    if (manager.IsUserCanCreateOutputFile(username))
+                    {
+                        CreateTargetingFile(securityRepository, manager);
+                    }
                 }
             }
         }
 
         public void CreateTargetingFile(SecurityRepository securityRepository, IDataManager manager)
         {
-            var fileManager = new TradingTargetsFileManager();
-            string fileContent = fileManager.GetFileContent(securityRepository, manager);
-            var now = DateTime.Now;
-            var fileName = "AshmoreEMM_Models - as of " + now.ToString("yyyyMMdd-hhmmss") + ".csv";
-            var directory = ConfigurationManager.AppSettings["TargetingFileOutputDirectory"];
-            if (!directory.EndsWith(@"\"))
-                directory += @"\";
-            using (StreamWriter sw = new StreamWriter(directory + fileName))
+            try
             {
-                sw.Write(fileContent);
+                var fileManager = new TradingTargetsFileManager();
+                string fileContent = fileManager.GetFileContent(securityRepository, manager);
+                var now = DateTime.Now;
+                var fileName = "AshmoreEMM_Models - as of " + now.ToString("yyyyMMdd-hhmmss") + ".csv";
+                var directory = ConfigurationManager.AppSettings["TargetingFileOutputDirectory"];
+                if (!directory.EndsWith(@"\"))
+                    directory += @"\";
+                using (StreamWriter sw = new StreamWriter(directory + fileName))
+                {
+                    sw.Write(fileContent);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new OutputTargetingFileException("See inner exception for details", e);
             }
         }
 
@@ -375,33 +444,38 @@ namespace TopDown.Core
                 var managerOfRepositories = this.dataManagerFactory.CreateDataManager(connection, null);
                 var securityRepository = this.RepositoryManager.ClaimSecurityRepository(managerOfRepositories);
                 var portfolioRepository = this.RepositoryManager.ClaimPortfolioRepository(managerOfRepositories);
+                IEnumerable<BgaPortfolioSecurityTargetInfo> targets = null;
                 using (var transaction = connection.BeginTransaction())
                 {
                     var manager = this.dataManagerFactory.CreateDataManager(connection, transaction);
                     try
                     {
-                        var tagrets = this.hopper.RecalculateEverything(calculationId, manager);
-                        
-                        
+                        targets = this.hopper.RecalculateEverything(calculationId, manager);
+
+
                         if (seriously)
                         {
 
                             CreateTargetingFile(securityRepository, manager);
-                            
+
                             transaction.Commit();
-                            
+
                         }
                         else
                         {
                             transaction.Rollback();
                         }
 
-                        var result = tagrets.Select(x => new TargetRecord(
-                        portfolioRepository.GetBroadGlobalActivePortfolio(x.BroadGlobalActivePortfolioId),
-                        securityRepository.GetSecurity(x.SecurityId),
-                        x.Target
-                            )).ToArray();
-                        return result;
+                        
+                    }
+                    catch (OutputTargetingFileException e)
+                    {
+                        transaction.Rollback();
+                        if (seriously)
+                        {
+                            this.dataManagerFactory.CreateDataManager(connection, null).FinishTargetingCalculationUnsafe(calculationId, 2, e.ToString());
+                        }
+                        throw;
                     }
                     catch (Exception e)
                     {
@@ -410,8 +484,15 @@ namespace TopDown.Core
                         {
                             this.dataManagerFactory.CreateDataManager(connection, null).FinishTargetingCalculationUnsafe(calculationId, 2, e.ToString());
                         }
-                        throw e;
+                        throw new CalculationException("See inner exception for details", e);
                     }
+
+                    var result = targets.Select(x => new TargetRecord(
+                        portfolioRepository.GetBroadGlobalActivePortfolio(x.BroadGlobalActivePortfolioId),
+                        securityRepository.GetSecurity(x.SecurityId),
+                        x.Target
+                            )).ToArray();
+                    return result;
                 }
             }
         }

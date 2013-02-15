@@ -9,6 +9,11 @@ using Aims.Core.Sql;
 
 namespace TopDown.Core.ManagingCalculations
 {
+    public class OutputTargetingFileException : ApplicationException
+    {
+        public OutputTargetingFileException(String message, Exception e) : base(message, e) { }
+    }
+
     public class TradingTargetsFileManager
     {
 

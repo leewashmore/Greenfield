@@ -126,6 +126,11 @@ namespace GreenField.Targeting.Server
             return serializedIssues;
         }
 
+        public void RequestRecalculation(string username)
+        {
+            facade.RequestRecalculation(username);
+        }
+
         public void CreateTargetingFile(string username)
         {
             facade.CreateTargetingFile(username);

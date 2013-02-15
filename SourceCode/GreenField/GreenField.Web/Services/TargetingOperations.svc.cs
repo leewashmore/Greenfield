@@ -253,6 +253,15 @@ namespace GreenField.Web.Services
                 return this.facade.IsUserPermittedToCreateOutputFile(username);
             });
         }
+
+
+        public void RequestRecalculation(string username)
+        {
+            this.Watch(String.Format("Request recalculation from RequestRecalculation: username - {0}", username), delegate
+            {
+                this.facade.RequestRecalculation(username);
+            });
+        }
     }
 
 

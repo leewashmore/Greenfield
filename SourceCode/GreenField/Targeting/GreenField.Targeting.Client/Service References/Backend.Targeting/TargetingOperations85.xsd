@@ -73,31 +73,25 @@
     <xs:sequence />
   </xs:complexType>
   <xs:element name="GlobeResident" nillable="true" type="tns:GlobeResident" />
-  <xs:complexType name="OtherModel">
+  <xs:complexType name="RegionModel">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:GlobeResident">
         <xs:sequence>
           <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Base" nillable="true" type="q23:NullableExpressionModel" />
           <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="BaseActive" nillable="true" type="q24:NullableExpressionModel" />
-          <xs:element minOccurs="0" name="BasketCountries" nillable="true" type="tns:ArrayOfBasketCountryModel" />
           <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Benchmark" nillable="true" type="q25:ExpressionModel" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
           <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Overlay" nillable="true" type="q26:ExpressionModel" />
           <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioAdjustment" nillable="true" type="q27:NullableExpressionModel" />
           <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioScaled" nillable="true" type="q28:NullableExpressionModel" />
+          <xs:element minOccurs="0" name="Residents" nillable="true" type="tns:ArrayOfGlobeResident" />
           <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TrueActive" nillable="true" type="q29:NullableExpressionModel" />
           <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TrueExposure" nillable="true" type="q30:NullableExpressionModel" />
-          <xs:element minOccurs="0" name="UnsavedBasketCountries" nillable="true" type="tns:ArrayOfUnsavedBasketCountryModel" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="OtherModel" nillable="true" type="tns:OtherModel" />
-  <xs:complexType name="ArrayOfBasketCountryModel">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="BasketCountryModel" nillable="true" type="tns:BasketCountryModel" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfBasketCountryModel" nillable="true" type="tns:ArrayOfBasketCountryModel" />
+  <xs:element name="RegionModel" nillable="true" type="tns:RegionModel" />
   <xs:complexType name="BasketCountryModel">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:GlobeResident">
@@ -146,39 +140,20 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="UnsavedBasketCountryModel" nillable="true" type="tns:UnsavedBasketCountryModel" />
-  <xs:complexType name="RegionModel">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:GlobeResident">
-        <xs:sequence>
-          <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Base" nillable="true" type="q52:NullableExpressionModel" />
-          <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="BaseActive" nillable="true" type="q53:NullableExpressionModel" />
-          <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Benchmark" nillable="true" type="q54:ExpressionModel" />
-          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-          <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Overlay" nillable="true" type="q55:ExpressionModel" />
-          <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioAdjustment" nillable="true" type="q56:NullableExpressionModel" />
-          <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioScaled" nillable="true" type="q57:NullableExpressionModel" />
-          <xs:element minOccurs="0" name="Residents" nillable="true" type="tns:ArrayOfGlobeResident" />
-          <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TrueActive" nillable="true" type="q58:NullableExpressionModel" />
-          <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TrueExposure" nillable="true" type="q59:NullableExpressionModel" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="RegionModel" nillable="true" type="tns:RegionModel" />
   <xs:complexType name="BasketRegionModel">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:GlobeResident">
         <xs:sequence>
-          <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Base" nillable="true" type="q60:EditableExpressionModel" />
-          <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="BaseActive" nillable="true" type="q61:NullableExpressionModel" />
-          <xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Basket" nillable="true" type="q62:RegionBasketModel" />
-          <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Benchmark" nillable="true" type="q63:ExpressionModel" />
+          <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Base" nillable="true" type="q52:EditableExpressionModel" />
+          <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="BaseActive" nillable="true" type="q53:NullableExpressionModel" />
+          <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Basket" nillable="true" type="q54:RegionBasketModel" />
+          <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Benchmark" nillable="true" type="q55:ExpressionModel" />
           <xs:element minOccurs="0" name="Countries" nillable="true" type="tns:ArrayOfBgaCountryModel" />
-          <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Overlay" nillable="true" type="q64:ExpressionModel" />
-          <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioAdjustment" nillable="true" type="q65:EditableExpressionModel" />
-          <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioScaled" nillable="true" type="q66:NullableExpressionModel" />
-          <xs:element xmlns:q67="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TrueActive" nillable="true" type="q67:NullableExpressionModel" />
-          <xs:element xmlns:q68="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TrueExposure" nillable="true" type="q68:NullableExpressionModel" />
+          <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Overlay" nillable="true" type="q56:ExpressionModel" />
+          <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioAdjustment" nillable="true" type="q57:EditableExpressionModel" />
+          <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioScaled" nillable="true" type="q58:NullableExpressionModel" />
+          <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TrueActive" nillable="true" type="q59:NullableExpressionModel" />
+          <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TrueExposure" nillable="true" type="q60:NullableExpressionModel" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -190,6 +165,31 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfBgaCountryModel" nillable="true" type="tns:ArrayOfBgaCountryModel" />
+  <xs:complexType name="OtherModel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:GlobeResident">
+        <xs:sequence>
+          <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Base" nillable="true" type="q61:NullableExpressionModel" />
+          <xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="BaseActive" nillable="true" type="q62:NullableExpressionModel" />
+          <xs:element minOccurs="0" name="BasketCountries" nillable="true" type="tns:ArrayOfBasketCountryModel" />
+          <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Benchmark" nillable="true" type="q63:ExpressionModel" />
+          <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="Overlay" nillable="true" type="q64:ExpressionModel" />
+          <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioAdjustment" nillable="true" type="q65:NullableExpressionModel" />
+          <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="PortfolioScaled" nillable="true" type="q66:NullableExpressionModel" />
+          <xs:element xmlns:q67="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TrueActive" nillable="true" type="q67:NullableExpressionModel" />
+          <xs:element xmlns:q68="http://schemas.datacontract.org/2004/07/GreenField.Targeting.Server" minOccurs="0" name="TrueExposure" nillable="true" type="q68:NullableExpressionModel" />
+          <xs:element minOccurs="0" name="UnsavedBasketCountries" nillable="true" type="tns:ArrayOfUnsavedBasketCountryModel" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OtherModel" nillable="true" type="tns:OtherModel" />
+  <xs:complexType name="ArrayOfBasketCountryModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BasketCountryModel" nillable="true" type="tns:BasketCountryModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBasketCountryModel" nillable="true" type="tns:ArrayOfBasketCountryModel" />
   <xs:complexType name="ArrayOfUnsavedBasketCountryModel">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="UnsavedBasketCountryModel" nillable="true" type="tns:UnsavedBasketCountryModel" />
