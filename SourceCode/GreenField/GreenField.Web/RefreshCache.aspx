@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    
+        Refresh cache
     </div>
     </form>
 </body>
