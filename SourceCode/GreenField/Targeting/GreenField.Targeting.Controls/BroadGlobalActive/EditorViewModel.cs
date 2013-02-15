@@ -322,6 +322,28 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         {
         }
 
+        public void Recalculate()
+        {
+            this.StartLoading();
+            var client = this.clientFactory.CreateClient();
+            client.RequestRecalculationCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(client_RequestRecalculationCompleted);
+            client.RequestRecalculationAsync(this.clientFactory.GetUsername());
+        }
+
+        void client_RequestRecalculationCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                this.FinishLoading(e.Error);
+            }
+            else
+            {
+                // Recalculation is done but message box is only setup to show messages through exceptions. Needs to be changed in the future.
+                this.FinishLoading(new Exception("Everything has been recalculated"));
+            }
+        }
+
+        
         public void CreateFile()
         {
             this.StartLoading();

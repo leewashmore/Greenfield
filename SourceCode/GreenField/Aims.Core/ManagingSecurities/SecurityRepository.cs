@@ -219,7 +219,7 @@ namespace Aims.Core
                             var tobeAddedMaybe = this.map[key].Where(x => predicate(x)).ToArray();
                             foreach (var tobeAdded in tobeAddedMaybe)
                             {
-                                if (result.Contains(tobeAdded)) continue;
+                                if (result.Select(x => x.Id).Contains(tobeAdded.Id)) continue;
                                 result.Add(tobeAdded);
                             }
                         }
@@ -246,7 +246,7 @@ namespace Aims.Core
                     var tobeAddedMaybe = this.map[key].Where(x => predicate(x)).ToArray();
                     foreach (var tobeAdded in tobeAddedMaybe)
                     {
-                        if (result.Contains(tobeAdded)) continue;
+                        if (result.Select(x => x.Id).Contains(tobeAdded.Id)) continue;
                         result.Add(tobeAdded);
                     }
                 }

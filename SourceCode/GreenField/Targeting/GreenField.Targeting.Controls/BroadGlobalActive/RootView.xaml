@@ -42,7 +42,8 @@
                 <StackPanel Orientation="Horizontal" >
                     <mine:PickerView DataContext="{Binding PickerViewModel}" Margin="5 5 0 0" />
                     <ContentControl Content="{Binding}" ContentTemplate="{StaticResource saveTemplate}" Margin="20 4 0 0" />
-                    <Button Command="{Binding RequestFileCreationCommand}" HorizontalAlignment="Right" Margin="40 4 0 0" Visibility="{Binding EditorViewModel.IsFileButtonVisible}" VerticalAlignment="Center" Content="Create Targeting Output File" />
+                    <Button Command="{Binding RequestRecalculationCommand}" HorizontalAlignment="Right" Margin="40 4 0 0" Visibility="{Binding EditorViewModel.IsFileButtonVisible}" VerticalAlignment="Center" Content="Request Overall Recalculation" />
+                    <Button Command="{Binding RequestFileCreationCommand}" HorizontalAlignment="Right" Margin="10 4 0 0" Visibility="{Binding EditorViewModel.IsFileButtonVisible}" VerticalAlignment="Center" Content="Create Targeting Output File" />
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical">

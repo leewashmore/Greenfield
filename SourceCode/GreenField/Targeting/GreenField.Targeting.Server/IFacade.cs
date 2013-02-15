@@ -82,5 +82,8 @@ namespace GreenField.Targeting.Server
 
         [OperationContract]
         Boolean IsUserPermittedToCreateOutputFile(string username);
+
+        [OperationContract]
+        void RequestRecalculation(string username);
     }
 }

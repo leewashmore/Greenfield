@@ -61,6 +61,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             editorViewModel.GotData += (sender, e) => this.SaveCommand.RaiseCanExecuteChanged();
 
             this.RequestFileCreationCommand = new DelegateCommand(this.EditorViewModel.CreateFile);
+            this.RequestRecalculationCommand = new DelegateCommand(this.EditorViewModel.Recalculate);
             
         }
 
@@ -156,6 +157,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         }
 
         public DelegateCommand RequestFileCreationCommand { get; private set; }
+        public DelegateCommand RequestRecalculationCommand { get; private set; }
        
     }
 }
