@@ -88,7 +88,7 @@ namespace GreenField.Web.Services
         public List<CountrySelectionData> RetrieveCountrySelectionData()
         {
             // use cache if available
-            var fromCache = (List<CountrySelectionData>)new DefaultCacheProvider().Get("CountrySelectionDataCache");
+            var fromCache = (List<CountrySelectionData>)new DefaultCacheProvider().Get(CacheKeyNames.CountrySelectionDataCache);
             if (fromCache != null)
                 return fromCache;
 
@@ -104,7 +104,7 @@ namespace GreenField.Web.Services
                 entry.CountryName = countryData[i].COUNTRY_NAME;
                 result.Add(entry);
             }
-            new DefaultCacheProvider().Set("CountrySelectionDataCache", result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+            new DefaultCacheProvider().Set(CacheKeyNames.CountrySelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
             return result;
         }
         /// <summary>
@@ -116,7 +116,7 @@ namespace GreenField.Web.Services
         public List<RegionSelectionData> RetrieveRegionSelectionData()
         {
             // use cache if available
-            var fromCache = (List<RegionSelectionData>)new DefaultCacheProvider().Get("RegionSelectionDataCache");
+            var fromCache = (List<RegionSelectionData>)new DefaultCacheProvider().Get(CacheKeyNames.RegionSelectionDataCache);
             if (fromCache != null)
                 return fromCache;
 
@@ -134,7 +134,7 @@ namespace GreenField.Web.Services
                 entry.CountryNames = countryData[i].COUNTRY_NAME;
                 result.Add(entry);
             }
-            new DefaultCacheProvider().Set("RegionSelectionDataCache", result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+            new DefaultCacheProvider().Set(CacheKeyNames.RegionSelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
             return result;        
         }
         /// <summary>
@@ -360,7 +360,7 @@ namespace GreenField.Web.Services
         public List<FXCommodityData> RetrieveCommoditySelectionData()
         {
             // use cache if available
-            var fromCache = (List<FXCommodityData>)new DefaultCacheProvider().Get("FXCommodityDataCache");
+            var fromCache = (List<FXCommodityData>)new DefaultCacheProvider().Get(CacheKeyNames.FXCommodityDataCache);
             if (fromCache != null)
                 return fromCache;
 
@@ -376,7 +376,7 @@ namespace GreenField.Web.Services
                 result.Add(data);
             }
             result.Add(new FXCommodityData { CommodityId = GreenfieldConstants.COMMODITY_ALL});
-            new DefaultCacheProvider().Set("FXCommodityDataCache", result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+            new DefaultCacheProvider().Set(CacheKeyNames.FXCommodityDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
             return result;
         }
     }

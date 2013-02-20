@@ -12,7 +12,7 @@ namespace GreenField.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            new DefaultCacheProvider().Get("sdf");
+            new DefaultCacheProvider().InvalidateAll();
         }
     }
 }
