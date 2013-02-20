@@ -58,7 +58,7 @@
 </head>
 <body>
     <form id="form1" runat="server" style="height:100%">
-    <div id="silverlightControlHost">
+        <div id="silverlightControlHost">
         <object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="100%" height="100%">
 		  <param name="source" value="ClientBin/GreenField.Login.App.xap?<%=Guid.NewGuid().ToString() %>"/>
 		  <param name="onError" value="onSilverlightError" />
