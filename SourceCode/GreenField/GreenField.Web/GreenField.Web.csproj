@@ -84,6 +84,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Bridge.aspx" />
+    <Content Include="Bridge.htm" />
     <Content Include="ClientAccessPolicy.xml" />
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
@@ -164,6 +166,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bridge.aspx.cs">
+      <DependentUpon>Bridge.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Bridge.aspx.designer.cs">
+      <DependentUpon>Bridge.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DataContracts\RelativePerformanceQueryData.cs" />
     <Compile Include="DataContracts\ExcelModelDataPoints.cs" />
     <Compile Include="DataContracts\ExcelModelUpload.cs" />

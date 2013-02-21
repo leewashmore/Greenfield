@@ -88,7 +88,7 @@ namespace GreenField.Web
         {
             new DefaultCacheProvider().Invalidate(CacheKeyNames.EntitySelectionDataCache);
             new SecurityReferenceOperations().RetrieveEntitySelectionData();
-            Response.Redirect("RefreshCache.aspx");
+            Server.Transfer("Bridge.aspx");
         }
 
         protected void RefreshAll_Click(object sender, EventArgs e)
@@ -105,8 +105,8 @@ namespace GreenField.Web
             new ModelFXOperations().RetrieveCommoditySelectionData();
             new PerformanceOperations().RetrieveMarketSnapshotSelectionData("JADHAVK");
             new PerformanceOperations().GetLastDayOfMonths();
-            
-            Response.Redirect("RefreshCache.aspx");
+
+            Response.Redirect("Bridge.aspx");
         }
     }
 }
