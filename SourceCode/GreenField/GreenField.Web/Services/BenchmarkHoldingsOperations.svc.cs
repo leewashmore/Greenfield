@@ -135,7 +135,7 @@ namespace GreenField.Web.Services
                     result.Add(data);
                 }
 
-                new DefaultCacheProvider().Set(CacheKeyNames.PortfolioSelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+                new DefaultCacheProvider().Set(CacheKeyNames.PortfolioSelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
 
                 return result;
             }
@@ -1111,7 +1111,7 @@ namespace GreenField.Web.Services
                     .ToList();
                 result.AddRange(distinctIndustries);
 
-                new DefaultCacheProvider().Set(CacheKeyNames.FilterSelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+                new DefaultCacheProvider().Set(CacheKeyNames.FilterSelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
 
                 return result;
             }
@@ -2996,7 +2996,7 @@ namespace GreenField.Web.Services
                 availableDateList = GetDateListFromString(availableDates);
                 availableDateList.Sort();
 
-                new DefaultCacheProvider().Set(CacheKeyNames.AvailableDatesInPortfoliosCache, availableDateList, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+                new DefaultCacheProvider().Set(CacheKeyNames.AvailableDatesInPortfoliosCache, availableDateList, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
 
                 return availableDateList;
             }

@@ -39,7 +39,7 @@
             Text="Reset Entities" /> &nbsp;* includes SECURITY, BENCHMARK, INDEX, COMMODITY, and CURRENCY
             <br /><br />
         <asp:Button ID="btnResetAll" runat="server" onclick="RefreshAll_Click" 
-            Text="Reset All" />
+            Text="Reset All" /> *except Entities
     </div>
     </form>
 </body>
