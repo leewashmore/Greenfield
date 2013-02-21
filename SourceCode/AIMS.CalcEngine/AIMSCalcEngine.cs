@@ -114,8 +114,8 @@ namespace AIMS.CalcEngine
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.InnerException);
-                Console.WriteLine(e.StackTrace);
+               print(e.InnerException.ToString());
+               print(e.StackTrace);
 
 
                 if (conn != null)
@@ -164,7 +164,7 @@ namespace AIMS.CalcEngine
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
+                print(e.StackTrace);
                 DoUpdateProcessStatus(conn, index, "Failed");
                 print("Failed to process issuer " + issuerId[index]);
                 if (conn != null)
