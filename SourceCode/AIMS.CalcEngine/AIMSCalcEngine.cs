@@ -69,8 +69,8 @@ namespace AIMS.CalcEngine
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
+                print(e.Message);
+                print(e.StackTrace);
             }
         }
 
@@ -114,8 +114,8 @@ namespace AIMS.CalcEngine
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.InnerException);
-                Console.WriteLine(e.StackTrace);
+                print(e.InnerException.ToString());
+                print(e.StackTrace);
 
 
                 if (conn != null)
@@ -207,8 +207,8 @@ namespace AIMS.CalcEngine
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Source);
-                Console.WriteLine(e.StackTrace);
+                print(e.Source);
+                print(e.StackTrace);
                 if (conn != null)
                 {
                     conn.Close();
@@ -291,9 +291,9 @@ namespace AIMS.CalcEngine
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.InnerException);
-                Console.WriteLine(e.StackTrace);
-                Console.WriteLine(e.Message);
+                print(e.InnerException.ToString());
+                print(e.StackTrace);
+                
                 if (conn != null)
                 {
                     conn.Close();
