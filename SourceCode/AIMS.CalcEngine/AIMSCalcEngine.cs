@@ -1,73 +1,71 @@
 ﻿using System;
-using System.Threading;
-using System.Data.SqlClient;
-using System.Data;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Threading;
+using AIMS.CalcEngine.Properties;
 
 namespace AIMS.CalcEngine
 {
     public class AIMS_CalcEngine
     {
         private static ManualResetEvent[] resetEvents;
-        private static String[] issuerId = null;
-        private static int runId = 0;
+        private static String[] issuerId;
+        private static int _runId;
         private static String runMode = "F";
+
         private static void Main(string[] args)
         {
-            int numberOfThreads = Properties.Settings.Default.NumberOfThreads;
-            if (args!=null && args[0] != null)
+            int numberOfThreads = Settings.Default.NumberOfThreads;
+            if (args != null && args[0] != null)
             {
                 runMode = args[0];
             }
-            runId = Get_Data_Process("START");
+            _runId = Get_Data_Process("START");
             RunCalcEngine(numberOfThreads);
         }
-        static void RunCalcEngine(int numberOfThreads)
+
+        private static void RunCalcEngine(int numberOfThreads)
         {
             try
-            {   
-                int threadCount = 0;
-                
-               print("Start Getting list of all issuers to process ");
+            {
+                print("Start Getting list of all issuers to process ");
                 //int runId = Get_Data_Process();
                 List<String> issuerList = GetAllIssuers();
                 print("End Getting list of all issuers to process ");
                 String[] issuerListArr = issuerList.ToArray();
                 int startIndex = 0;
-                print("Begin processing all issuers " );
-                while(startIndex < issuerListArr.Length)
+                print("Begin processing all issuers ");
+                while (startIndex < issuerListArr.Length)
                 {
+                    int threadCount;
                     if (issuerListArr.Length - startIndex > numberOfThreads)
                     {
                         threadCount = numberOfThreads;
                     }
                     else
                     {
-                        threadCount= issuerListArr.Length-startIndex;
+                        threadCount = issuerListArr.Length - startIndex;
                     }
 
-                     resetEvents = new ManualResetEvent[threadCount];
+                    resetEvents = new ManualResetEvent[threadCount];
                     issuerId = new String[threadCount];
-                    for(int i = 0 ; i<threadCount;i++,startIndex++)
+                    for (int i = 0; i < threadCount; i++,startIndex++)
                     {
-                        issuerId[i]=issuerListArr[startIndex];
-                     
+                        issuerId[i] = issuerListArr[startIndex];
                     }
 
                     for (int i = 0; i < issuerId.Length; i++)
                     {
                         resetEvents[i] = new ManualResetEvent(false);
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(DoWork), (object)i);
+                        ThreadPool.QueueUserWorkItem(DoWork, i);
                     }
                     
-
                     WaitHandle.WaitAll(resetEvents);
                     print("Total issuers processed = " + startIndex);
-
                 }
                 DoFinalUpdateStatus();
-               print("Get_Data Completed Successfully " );
-
+                print("Get_Data Completed Successfully ");
             }
             catch (Exception e)
             {
@@ -75,43 +73,44 @@ namespace AIMS.CalcEngine
                 Console.WriteLine(e.StackTrace);
             }
         }
-        static void print(String message)
+
+        private static void print(String message)
         {
             Console.WriteLine(DateTime.Now + " : " + message);
         }
-        static List<String> GetAllIssuers()
+
+        private static List<String> GetAllIssuers()
         {
             SqlConnection conn = null;
-            SqlDataReader reader = null;
-            List<string> issuerList = new List<string>();
+            var issuerList = new List<string>();
 
             try
             {
                 print("Begin Get list of all the issuers to process");
 
-                conn = new System.Data.SqlClient.SqlConnection();
+                conn = new SqlConnection {ConnectionString = Settings.Default.ConnectionString};
                 //conn.ConnectionString = "integrated security=SSPI;data source=lonweb1t.ashmore.local;" + "persist security info=False;initial catalog=UAT_AIMS";
-                conn.ConnectionString =  Properties.Settings.Default.ConnectionString;
                 conn.Open();
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "Select issuer_id from Get_Data_issuer_List where status_txt ='READY' and RUN_ID = " + runId;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandTimeout = 0;
-                cmd.Connection = conn;
-                                // Insert code to process data.
-                
-                reader = cmd.ExecuteReader();
+                var cmd = new SqlCommand
+                    {
+                        CommandText =
+                            "Select issuer_id from Get_Data_issuer_List where status_txt ='READY' and RUN_ID = " +
+                            _runId,
+                        CommandType = CommandType.Text,
+                        CommandTimeout = 0,
+                        Connection = conn
+                    };
+                // Insert code to process data.
+
+                SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    
                     issuerList.Add(reader["ISSUER_ID"].ToString());
                 }
 
                 print("End Get list of all the issuers to process");
 
                 return issuerList;
-
-
             }
             catch (Exception e)
             {
@@ -125,49 +124,43 @@ namespace AIMS.CalcEngine
                     conn = null;
                 }
                 return null;
-                
             }
             finally
             {
-               
                 if (conn != null)
                 {
                     conn.Close();
                     conn = null;
                 }
-               
-                               
             }
         }
 
 
-
         private static void DoWork(object o)
         {
-            int index = (int)o;
+            var index = (int) o;
             SqlConnection conn = null;
             try
             {
-                print("Begin processing " + issuerId[index] );
-                conn = new System.Data.SqlClient.SqlConnection();
-                conn.ConnectionString = Properties.Settings.Default.ConnectionString;
+                print("Begin processing " + issuerId[index]);
+                conn = new SqlConnection {ConnectionString = Settings.Default.ConnectionString};
                 conn.Open();
-                DoUpdateProcessStatus(conn, index,"Running");
-                SqlCommand cmd = new SqlCommand("Get_Data", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandTimeout = 0;
+                DoUpdateProcessStatus(conn, index, "Running");
+                var cmd = new SqlCommand("Get_Data", conn)
+                    {
+                        CommandType = CommandType.StoredProcedure,
+                        CommandTimeout = 0
+                    };
                 cmd.Parameters.Add(new SqlParameter("@ISSUER_ID", SqlDbType.VarChar));
                 cmd.Parameters["@Issuer_Id"].Value = issuerId[index];
                 cmd.Parameters.Add(new SqlParameter("@RUN_MODE", SqlDbType.VarChar));
                 cmd.Parameters["@RUN_MODE"].Value = runMode;
 
-                 // Insert code to process data.
+                // Insert code to process data.
                 cmd.ExecuteScalar();
                 cmd.Parameters.Clear();
                 DoUpdateProcessStatus(conn, index, "Finished");
                 print("End process issuer " + issuerId[index]);
-
-
             }
             catch (Exception e)
             {
@@ -189,22 +182,22 @@ namespace AIMS.CalcEngine
                 }
                 resetEvents[index].Set();
             }
-
         }
+
         private static void DoFinalUpdateStatus()
         {
             SqlConnection conn = null;
             try
             {
-                SqlCommand cmd = new SqlCommand();
-                conn = new System.Data.SqlClient.SqlConnection();
-                conn.ConnectionString = Properties.Settings.Default.ConnectionString;
+                var cmd = new SqlCommand();
+                conn = new SqlConnection {ConnectionString = Settings.Default.ConnectionString};
                 conn.Open();
                 String strQuery = "		update GET_DATA_RUN " +
-                                    " set STATUS_TXT = 'Done' " +
-                                    ",   END_TIME = GETDATE() " +
-                                    ",   ISSUER_COUNT = (select COUNT(*) from GET_DATA_ISSUER_LIST where RUN_ID = " + runId + " ) " +
-                                    "  where RUN_ID = " + runId;
+                                  " set STATUS_TXT = 'Done' " +
+                                  ",   END_TIME = GETDATE() " +
+                                  ",   ISSUER_COUNT = (select COUNT(*) from GET_DATA_ISSUER_LIST where RUN_ID = " +
+                                  _runId + " ) " +
+                                  "  where RUN_ID = " + _runId;
                 Console.WriteLine(strQuery);
                 cmd.CommandText = strQuery;
                 cmd.CommandType = CommandType.Text;
@@ -224,79 +217,76 @@ namespace AIMS.CalcEngine
             }
             finally
             {
-              
                 if (conn != null)
                 {
                     conn.Close();
                     conn = null;
                 }
-                
             }
         }
 
-        private static void DoUpdateProcessStatus(SqlConnection conn,int index, String runStatus)
+        private static void DoUpdateProcessStatus(SqlConnection conn, int index, String runStatus)
         {
             String strQuery = "";
             if (runStatus.Equals("Running"))
             {
                 strQuery = "update GET_DATA_ISSUER_LIST " +
-                                       "set START_TIME = GETDATE() " +
-                                        ",  PROCESS_ID = @@SPID" +
-                                        ",  STATUS_TXT = 'Active'" +
-                                        " where RUN_ID =" + runId +
-                                        "  and ISSUER_ID = '" + issuerId[index]+"'";
+                           "set START_TIME = GETDATE() " +
+                           ",  PROCESS_ID = @@SPID" +
+                           ",  STATUS_TXT = 'Active'" +
+                           " where RUN_ID =" + _runId +
+                           "  and ISSUER_ID = '" + issuerId[index] + "'";
             }
-            else if(runStatus.Equals("Finished"))
+            else if (runStatus.Equals("Finished"))
             {
                 strQuery = "update GET_DATA_ISSUER_LIST " +
-                                    "set END_TIME = GETDATE() " +
-                                     ",  STATUS_TXT = 'Complete'" +
-                                     " where RUN_ID =" + runId +
-                                     "  and ISSUER_ID = '" + issuerId[index]+"'";
+                           "set END_TIME = GETDATE() " +
+                           ",  STATUS_TXT = 'Complete'" +
+                           " where RUN_ID =" + _runId +
+                           "  and ISSUER_ID = '" + issuerId[index] + "'";
             }
             else if (runStatus.Equals("Failed"))
             {
                 strQuery = "update GET_DATA_ISSUER_LIST " +
-                                    "set END_TIME = GETDATE() " +
-                                     ",  STATUS_TXT = 'Failed'" +
-                                     " where RUN_ID =" + runId +
-                                     "  and ISSUER_ID = '" + issuerId[index] + "'";
+                           "set END_TIME = GETDATE() " +
+                           ",  STATUS_TXT = 'Failed'" +
+                           " where RUN_ID =" + _runId +
+                           "  and ISSUER_ID = '" + issuerId[index] + "'";
             }
-            
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = strQuery;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandTimeout = 0;
-            cmd.Connection = conn;
+
+            var cmd = new SqlCommand
+                {
+                    CommandText = strQuery,
+                    CommandType = CommandType.Text,
+                    CommandTimeout = 0,
+                    Connection = conn
+                };
             cmd.ExecuteScalar();
-
-
         }
 
 
         private static int Get_Data_Process(String command)
         {
             SqlConnection conn = null;
-            int runId=0;
 
             try
             {
-                conn = new System.Data.SqlClient.SqlConnection();
+                conn = new SqlConnection {ConnectionString = Settings.Default.ConnectionString};
                 //conn.ConnectionString = "integrated security=SSPI;data source=lonweb1t.ashmore.local;" + "persist security info=False;initial catalog=UAT_AIMS";
-                conn.ConnectionString = Properties.Settings.Default.ConnectionString;
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("Get_Data_Process_Thread", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandTimeout = 0;
-                cmd.Parameters.Add(new SqlParameter("@COMMAND",SqlDbType.VarChar));
+                var cmd = new SqlCommand("Get_Data_Process_Thread", conn)
+                    {
+                        CommandType = CommandType.StoredProcedure,
+                        CommandTimeout = 0
+                    };
+                cmd.Parameters.Add(new SqlParameter("@COMMAND", SqlDbType.VarChar));
                 cmd.Parameters["@COMMAND"].Value = command;
                 cmd.Parameters.Add(new SqlParameter("@RUN_MODE", SqlDbType.VarChar));
                 cmd.Parameters["@RUN_MODE"].Value = runMode;
-                SqlParameter sqlParam = new SqlParameter("@RUN_ID_OUT", SqlDbType.Int);
-                sqlParam.Direction = ParameterDirection.Output;
+                var sqlParam = new SqlParameter("@RUN_ID_OUT", SqlDbType.Int) {Direction = ParameterDirection.Output};
                 cmd.Parameters.Add(sqlParam);
                 cmd.ExecuteScalar();
-                runId = Convert.ToInt32(cmd.Parameters["@RUN_ID_OUT"].Value);
+                int runId = Convert.ToInt32(cmd.Parameters["@RUN_ID_OUT"].Value);
                 return runId;
             }
             catch (Exception e)
@@ -310,21 +300,15 @@ namespace AIMS.CalcEngine
                     conn = null;
                 }
                 return 0;
-
             }
             finally
             {
-              
                 if (conn != null)
                 {
                     conn.Close();
                     conn = null;
                 }
-
-
             }
         }
-
-
     }
 }
