@@ -26,7 +26,7 @@ namespace AIMS.CalcEngine.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("integrated security=SSPI;data source=lonweb1t.ashmore.local;persist security info" +
-            "=False;initial catalog=UAT_AIMS")]
+            "=False;initial catalog=AIMS_MAIN")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

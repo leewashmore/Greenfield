@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ConnectionString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">integrated security=SSPI;data source=lonweb1t.ashmore.local;persist security info=False;initial catalog=UAT_AIMS</Value>
+      <Value Profile="(Default)">integrated security=SSPI;data source=lonweb1t.ashmore.local;persist security info=False;initial catalog=AIMS_MAIN</Value>
     </Setting>
     <Setting Name="NumberOfThreads" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
