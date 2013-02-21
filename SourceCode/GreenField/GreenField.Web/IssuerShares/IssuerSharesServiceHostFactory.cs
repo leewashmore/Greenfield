@@ -77,7 +77,7 @@ namespace GreenField.Web.IssuerShares
                     else
                     {
                         CacheItemPolicy policy = new CacheItemPolicy();
-                        policy.AbsoluteExpiration = DateTime.Now.AddMinutes(Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+                        policy.AbsoluteExpiration = DateTime.Now.AddMinutes(Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
                         this.cache.Set(key, value, policy);
                     }
                 }

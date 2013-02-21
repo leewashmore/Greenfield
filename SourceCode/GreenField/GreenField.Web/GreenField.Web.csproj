@@ -88,7 +88,7 @@
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
     <Content Include="crossdomain.xml" />
-    <Content Include="RefreshCache.aspx" />
+    <Content Include="ResetCache.aspx" />
     <Content Include="Services\MacroeconomicOperations.svc" />
     <Content Include="Services\CustomScreeningToolOperations.svc" />
     <Content Include="Services\DocumentWorkSpaceOperations.svc" />
@@ -194,12 +194,12 @@
     <Compile Include="IssuerShares\IssuerSharesInstanceProvider.cs" />
     <Compile Include="IssuerShares\IssuerSharesServiceHostFactory.cs" />
     <Compile Include="ListUtils.cs" />
-    <Compile Include="RefreshCache.aspx.cs">
-      <DependentUpon>RefreshCache.aspx</DependentUpon>
+    <Compile Include="ResetCache.aspx.cs">
+      <DependentUpon>ResetCache.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RefreshCache.aspx.designer.cs">
-      <DependentUpon>RefreshCache.aspx</DependentUpon>
+    <Compile Include="ResetCache.aspx.designer.cs">
+      <DependentUpon>ResetCache.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\MacroeconomicOperations.svc.cs">
       <DependentUpon>MacroeconomicOperations.svc</DependentUpon>

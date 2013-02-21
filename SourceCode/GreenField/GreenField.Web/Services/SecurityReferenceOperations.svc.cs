@@ -529,7 +529,7 @@ namespace GreenField.Web.Services
                     }
                 }
 
-                new DefaultCacheProvider().Set(CacheKeyNames.EntitySelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+                new DefaultCacheProvider().Set(CacheKeyNames.EntitySelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
 
                 return result;
             }

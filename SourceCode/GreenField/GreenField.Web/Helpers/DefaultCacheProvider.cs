@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Runtime.Caching;
 using System.Collections.Generic;
+using System.Runtime.Caching;
 
 namespace GreenField.Web.Helpers
 {
@@ -14,6 +14,10 @@ namespace GreenField.Web.Helpers
         public const string CURRENCY = "CURRENCY";
          */
 
+        // TODO following have input parameters and need a cache matrix
+        // RetrieveFilterSelectionData
+        // RetrieveMarketSnapshotSelectionData
+
         public const string EntitySelectionDataCache = "EntitySelectionDataCache";
         public const string FilterSelectionDataCache = "FilterSelectionDataCache";
         public const string PortfolioSelectionDataCache = "PortfolioSelectionDataCache";
@@ -21,7 +25,7 @@ namespace GreenField.Web.Helpers
         public const string AvailableDatesInPortfoliosCache = "AvailableDatesInPortfoliosCache";
         public const string CountrySelectionDataCache = "CountrySelectionDataCache";
         public const string RegionSelectionDataCache = "RegionSelectionDataCache";
-        
+
         public const string FXCommodityDataCache = "FXCommodityDataCache";
         public const string MarketSnapshotSelectionDataCache = "MarketSnapshotSelectionDataCache";
         public const string LastDayOfMonthsCache = "LastDayOfMonthsCache";
@@ -51,27 +55,42 @@ namespace GreenField.Web.Helpers
 
         public object Get(string key)
         {
+            if (cache[key + "Policy"] == null)
+                return null;
+
             return cache[key];
         }
 
         public void Set(string key, object data, int cacheTime)
         {
-            CacheItemPolicy policy = new CacheItemPolicy();
-            policy.AbsoluteExpiration = DateTime.Now.AddMinutes(cacheTime);
+            var policy = new CacheItemPolicy {AbsoluteExpiration = DateTime.Now.AddMinutes(cacheTime)};
             //Hint: can also use policy.RemovedCallback = new CacheEntryRemovedCallback (ItemRemoved);
 
             cache.Add(new CacheItem(key, data), policy);
             cache.Add(new CacheItem(key + "Policy", policy), null);
         }
 
+        // Not used
+        public bool IsSet(string key)
+        {
+            return (cache[key] != null);
+        }
+
+        public void Invalidate(string key)
+        {
+            MemoryCache.Default.Remove(key);
+            MemoryCache.Default.Remove(key + "Policy");
+        }
+
         public CacheExpiration GetExpiration(string key)
         {
-            if ((CacheItemPolicy)cache[key + "Policy"] != null)
+            if (cache[key + "Policy"] != null)
             {
-                CacheExpiration cacheExpiration = new CacheExpiration();
-                
-                cacheExpiration.CacheKeyName = key;
-                cacheExpiration.AbsoluteExpiration = ((CacheItemPolicy)cache[key + "Policy"]).AbsoluteExpiration;
+                var cacheExpiration = new CacheExpiration
+                    {
+                        CacheKeyName = key,
+                        AbsoluteExpiration = ((CacheItemPolicy) cache[key + "Policy"]).AbsoluteExpiration
+                    };
 
                 switch (key)
                 {
@@ -114,40 +133,29 @@ namespace GreenField.Web.Helpers
 
         public List<CacheExpiration> GetAllExpirations()
         {
-            List<CacheExpiration> dates = new List<CacheExpiration>();
-
-            dates.Add(GetExpiration(CacheKeyNames.EntitySelectionDataCache));
-            dates.Add(GetExpiration(CacheKeyNames.FilterSelectionDataCache));
-            dates.Add(GetExpiration(CacheKeyNames.PortfolioSelectionDataCache));
-
-            dates.Add(GetExpiration(CacheKeyNames.AvailableDatesInPortfoliosCache));
-            dates.Add(GetExpiration(CacheKeyNames.CountrySelectionDataCache));
-            dates.Add(GetExpiration(CacheKeyNames.RegionSelectionDataCache));
-
-            dates.Add(GetExpiration(CacheKeyNames.FXCommodityDataCache));
-            dates.Add(GetExpiration(CacheKeyNames.MarketSnapshotSelectionDataCache));
-            dates.Add(GetExpiration(CacheKeyNames.LastDayOfMonthsCache));
+            var dates = new List<CacheExpiration>
+                {
+                    GetExpiration(CacheKeyNames.EntitySelectionDataCache),
+                    GetExpiration(CacheKeyNames.FilterSelectionDataCache),
+                    GetExpiration(CacheKeyNames.PortfolioSelectionDataCache),
+                    GetExpiration(CacheKeyNames.AvailableDatesInPortfoliosCache),
+                    GetExpiration(CacheKeyNames.CountrySelectionDataCache),
+                    GetExpiration(CacheKeyNames.RegionSelectionDataCache),
+                    GetExpiration(CacheKeyNames.FXCommodityDataCache),
+                    GetExpiration(CacheKeyNames.MarketSnapshotSelectionDataCache),
+                    GetExpiration(CacheKeyNames.LastDayOfMonthsCache)
+                };
 
             return dates;
         }
 
-        // Not used
-        public bool IsSet(string key)
-        {
-            return (cache[key] != null);
-        }
-
-        public void Invalidate(string key)
-        {
-            cache.Remove(key);
-        }
-
-        public void InvalidateAll()
+        public void InvalidateAllExceptEntity()
         {
             //MemoryCache.Default.Dispose(); possible threading issues
             //TODO needs to test
             foreach (var element in MemoryCache.Default)
-                MemoryCache.Default.Remove(element.Key);
+                if (element.Key != CacheKeyNames.EntitySelectionDataCache)
+                    Invalidate(element.Key);
         }
     }
 }
