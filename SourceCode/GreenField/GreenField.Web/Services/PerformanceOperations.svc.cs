@@ -594,7 +594,7 @@ namespace GreenField.Web.Services
                     .OrderBy(record => record.SnapshotName)
                     .ToList<MarketSnapshotSelectionData>();
 
-                new DefaultCacheProvider().Set(CacheKeyNames.MarketSnapshotSelectionDataCache, userPreference, Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+                new DefaultCacheProvider().Set(CacheKeyNames.MarketSnapshotSelectionDataCache, userPreference, Int32.Parse(ConfigurationManager.AppSettings["PerformanceCacheTime"]));
                 return userPreference;
             }
             catch (Exception ex)
@@ -3239,7 +3239,7 @@ namespace GreenField.Web.Services
 					.OrderByDescending(x => x)
 					.Take(13);
 
-            new DefaultCacheProvider().Set(CacheKeyNames.LastDayOfMonthsCache, q.ToList(), Int32.Parse(ConfigurationManager.AppSettings["CacheTime"]));
+            new DefaultCacheProvider().Set(CacheKeyNames.LastDayOfMonthsCache, q.ToList(), Int32.Parse(ConfigurationManager.AppSettings["PerformanceCacheTime"]));
             return q.ToList();
         }
     }
