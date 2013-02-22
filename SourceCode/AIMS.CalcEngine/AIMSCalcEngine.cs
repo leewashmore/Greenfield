@@ -87,7 +87,7 @@ namespace AIMS.CalcEngine
             try
             {
                 print("Begin Get list of all the issuers to process");
-                conn = new SqlConnection {ConnectionString = Settings.Default.ConnectionString};
+                conn = new SqlConnection { ConnectionString = ConnectionString.AimsMainConnectionString};
                 //conn.ConnectionString = "integrated security=SSPI;data source=lonweb1t.ashmore.local;" + "persist security info=False;initial catalog=UAT_AIMS";
                 conn.Open();
                 var cmd = new SqlCommand
@@ -142,7 +142,7 @@ namespace AIMS.CalcEngine
             try
             {
                 print("Begin processing " + issuerId[index]);
-                conn = new SqlConnection {ConnectionString = Settings.Default.ConnectionString};
+                conn = new SqlConnection { ConnectionString = ConnectionString.AimsMainConnectionString };
                 conn.Open();
                 DoUpdateProcessStatus(conn, index, "Running");
                 var cmd = new SqlCommand("Get_Data", conn)
@@ -189,7 +189,7 @@ namespace AIMS.CalcEngine
             try
             {
                 var cmd = new SqlCommand();
-                conn = new SqlConnection {ConnectionString = Settings.Default.ConnectionString};
+                conn = new SqlConnection { ConnectionString = ConnectionString.AimsMainConnectionString };
                 conn.Open();
                 String strQuery = "		update GET_DATA_RUN " +
                                   " set STATUS_TXT = 'Done' " +
@@ -270,7 +270,7 @@ namespace AIMS.CalcEngine
 
             try
             {
-                conn = new SqlConnection {ConnectionString = Settings.Default.ConnectionString};
+                conn = new SqlConnection { ConnectionString = ConnectionString.AimsMainConnectionString };
                 //conn.ConnectionString = "integrated security=SSPI;data source=lonweb1t.ashmore.local;" + "persist security info=False;initial catalog=UAT_AIMS";
                 conn.Open();
                 var cmd = new SqlCommand("Get_Data_Process_Thread", conn)
