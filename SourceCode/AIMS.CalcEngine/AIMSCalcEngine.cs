@@ -87,7 +87,6 @@ namespace AIMS.CalcEngine
             try
             {
                 print("Begin Get list of all the issuers to process");
-
                 conn = new SqlConnection {ConnectionString = Settings.Default.ConnectionString};
                 //conn.ConnectionString = "integrated security=SSPI;data source=lonweb1t.ashmore.local;" + "persist security info=False;initial catalog=UAT_AIMS";
                 conn.Open();
