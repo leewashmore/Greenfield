@@ -198,7 +198,7 @@ namespace AIMS.CalcEngine
                                   ",   ISSUER_COUNT = (select COUNT(*) from GET_DATA_ISSUER_LIST where RUN_ID = " +
                                   _runId + " ) " +
                                   "  where RUN_ID = " + _runId;
-                Console.WriteLine(strQuery);
+                //Console.WriteLine(strQuery);
                 cmd.CommandText = strQuery;
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandTimeout = 0;
