@@ -87,6 +87,7 @@ namespace AIMS.CalcEngine
             try
             {
                 print("Begin Get list of all the issuers to process");
+
                 conn = new SqlConnection {ConnectionString = Settings.Default.ConnectionString};
                 //conn.ConnectionString = "integrated security=SSPI;data source=lonweb1t.ashmore.local;" + "persist security info=False;initial catalog=UAT_AIMS";
                 conn.Open();
@@ -197,7 +198,7 @@ namespace AIMS.CalcEngine
                                   ",   ISSUER_COUNT = (select COUNT(*) from GET_DATA_ISSUER_LIST where RUN_ID = " +
                                   _runId + " ) " +
                                   "  where RUN_ID = " + _runId;
-                //Console.WriteLine(strQuery);
+                Console.WriteLine(strQuery);
                 cmd.CommandText = strQuery;
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandTimeout = 0;
