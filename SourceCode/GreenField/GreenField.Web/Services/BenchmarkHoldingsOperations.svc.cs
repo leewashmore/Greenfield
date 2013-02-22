@@ -1066,10 +1066,13 @@ namespace GreenField.Web.Services
         {
             try
             {
+                /* TODO
+                
                 // use cache if available
                 var fromCache = (List<FilterSelectionData>)new DefaultCacheProvider().Get(CacheKeyNames.FilterSelectionDataCache);
                 if (fromCache != null)
                     return fromCache;
+                 */
 
                 // otherwise fetch the data and cache it
                 if (selectedPortfolio == null)
@@ -1111,7 +1114,7 @@ namespace GreenField.Web.Services
                     .ToList();
                 result.AddRange(distinctIndustries);
 
-                new DefaultCacheProvider().Set(CacheKeyNames.FilterSelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
+                //new DefaultCacheProvider().Set(CacheKeyNames.FilterSelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
 
                 return result;
             }
@@ -1323,6 +1326,12 @@ namespace GreenField.Web.Services
                 }
 
 #if DEBUG
+                Trace.WriteLine(string.Format("\n1. _____________________________________________________________________________________"));
+                Trace.WriteLine(string.Format("{1}: RetrievePortfolioDetailsData for {0}\n", objPortfolioIdentifier.PortfolioId, timeRetrievePortfolioDetailsData.ToString()));
+                Trace.WriteLine(string.Format("{1}: 1. Dimension: GF_PORTFOLIO_LTHOLDINGS = {0} seconds.", (swGF_PORTFOLIO_LTHOLDINGS.ElapsedMilliseconds / 1000.00).ToString(), timeGF_PORTFOLIO_LTHOLDINGS.ToString()));
+                Trace.WriteLine(string.Format("{1}: 2. Dimension: GF_BENCHMARK_HOLDINGS = {0} seconds.", (swGF_BENCHMARK_HOLDINGS.ElapsedMilliseconds / 1000.00).ToString(), timeGF_BENCHMARK_HOLDINGS.ToString()));
+                Trace.WriteLine(string.Format("{1}: 3. AddPortfolioSecurities = {0} seconds.", (swAddPortfolioSecurities.ElapsedMilliseconds / 1000.00).ToString(), timeAddPortfolioSecurities.ToString()));
+
                 swRetrieveExternalResearchData.Start();
                 //Trace.WriteLine(string.Format("{0}: Passed to RetrieveExternalResearchData", DateTime.Now));
                 //XMLStringValue(result);
@@ -1337,11 +1346,6 @@ namespace GreenField.Web.Services
                 timeRetrieveExternalResearchData = DateTime.Now;
                 // StopWatch
                 swRetrievePortfolioDetailsData.Stop();
-                Trace.WriteLine(string.Format("\n1. _____________________________________________________________________________________"));
-                Trace.WriteLine(string.Format("{1}: RetrievePortfolioDetailsData for {0}\n", objPortfolioIdentifier.PortfolioId, timeRetrievePortfolioDetailsData.ToString()));
-                Trace.WriteLine(string.Format("{1}: 1. Dimension: GF_PORTFOLIO_LTHOLDINGS = {0} seconds.", (swGF_PORTFOLIO_LTHOLDINGS.ElapsedMilliseconds / 1000.00).ToString(), timeGF_PORTFOLIO_LTHOLDINGS.ToString()));
-                Trace.WriteLine(string.Format("{1}: 2. Dimension: GF_BENCHMARK_HOLDINGS = {0} seconds.", (swGF_BENCHMARK_HOLDINGS.ElapsedMilliseconds / 1000.00).ToString(), timeGF_BENCHMARK_HOLDINGS.ToString()));
-                Trace.WriteLine(string.Format("{1}: 3. AddPortfolioSecurities = {0} seconds.", (swAddPortfolioSecurities.ElapsedMilliseconds / 1000.00).ToString(), timeAddPortfolioSecurities.ToString()));
                 Trace.WriteLine(string.Format("{1}: 4. RetrieveExternalResearchData = {0} seconds.", (swRetrieveExternalResearchData.ElapsedMilliseconds / 1000.00).ToString(), timeRetrieveExternalResearchData.ToString()));
                 Trace.WriteLine(string.Format("\n{1}: Total time = {0} seconds.", (swRetrievePortfolioDetailsData.ElapsedMilliseconds / 1000.00).ToString(), DateTime.Now.ToString()));
 #endif
@@ -1659,14 +1663,13 @@ namespace GreenField.Web.Services
 #if DEBUG
                 // StopWatch
                 swRetrieveExt.Stop();
-                Trace.WriteLine(string.Format("2. _____________________________________________________________________________________"));
-                Trace.WriteLine(string.Format("{0}: RetrieveExternalResearchData start\n", timeRetrieveExt.ToString()));
-                Trace.WriteLine(string.Format("{1}: 1. AIMS_Main: Portfolio_Security_Targets_Union = {0} seconds.", (swPortfolio_Security_Targets_Union.ElapsedMilliseconds / 1000.00).ToString(), timePortfolio_Security_Targets_Union.ToString()));
-                Trace.WriteLine(string.Format("{1}: 2. AIMS_Main: GF_SECURITY_BASEVIEW_Local = {0} seconds.", (swGF_SECURITY_BASEVIEW_Local.ElapsedMilliseconds / 1000.00).ToString(), timeGF_SECURITY_BASEVIEW_Local.ToString()));
-                Trace.WriteLine(string.Format("{1}: 3. RetrieveSecurityReferenceData = {0} seconds.", (swRetrieveSecurityReferenceData.ElapsedMilliseconds / 1000.00).ToString(), timeRetrieveSecurityReferenceData.ToString()));
-                Trace.WriteLine(string.Format("{1}: 4. AIMS_Main: GetPortfolioDetailsExternalData = {0} seconds.", (swGetPortfolioDetailsExternalData.ElapsedMilliseconds / 1000.00).ToString(), timeGetPortfolioDetailsExternalData.ToString()));
-                Trace.WriteLine(string.Format("{1}: 5. AIMS_Main: GetPortfolioDetailsFairValue = {0} seconds.", (swGetPortfolioDetailsFairValue.ElapsedMilliseconds / 1000.00).ToString(), timeGetPortfolioDetailsFairValue.ToString()));
-                Trace.WriteLine(string.Format("\n{1}: Total time = {0} seconds.", (swRetrieveExt.ElapsedMilliseconds / 1000.00).ToString(), DateTime.Now.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{0}: RetrieveExternalResearchData start\n", timeRetrieveExt.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 1. AIMS_Main: Portfolio_Security_Targets_Union = {0} seconds.", (swPortfolio_Security_Targets_Union.ElapsedMilliseconds / 1000.00).ToString(), timePortfolio_Security_Targets_Union.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 2. AIMS_Main: GF_SECURITY_BASEVIEW_Local = {0} seconds.", (swGF_SECURITY_BASEVIEW_Local.ElapsedMilliseconds / 1000.00).ToString(), timeGF_SECURITY_BASEVIEW_Local.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 3. RetrieveSecurityReferenceData = {0} seconds.", (swRetrieveSecurityReferenceData.ElapsedMilliseconds / 1000.00).ToString(), timeRetrieveSecurityReferenceData.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 4. AIMS_Main: GetPortfolioDetailsExternalData = {0} seconds.", (swGetPortfolioDetailsExternalData.ElapsedMilliseconds / 1000.00).ToString(), timeGetPortfolioDetailsExternalData.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 5. AIMS_Main: GetPortfolioDetailsFairValue = {0} seconds.", (swGetPortfolioDetailsFairValue.ElapsedMilliseconds / 1000.00).ToString(), timeGetPortfolioDetailsFairValue.ToString()));
+                Trace.WriteLine(string.Format("\n\t\t\t{1}: Total time = {0} seconds.", (swRetrieveExt.ElapsedMilliseconds / 1000.00).ToString(), DateTime.Now.ToString()));
 #endif
 
                 return portfolioDetailsData;

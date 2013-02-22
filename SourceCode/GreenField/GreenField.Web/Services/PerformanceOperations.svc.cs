@@ -580,10 +580,12 @@ namespace GreenField.Web.Services
         {
             try
             {
+                /*TODO
                 // use cache if available
                 var fromCache = (List<MarketSnapshotSelectionData>)new DefaultCacheProvider().Get(CacheKeyNames.MarketSnapshotSelectionDataCache);
                 if (fromCache != null)
                     return fromCache;
+                 */
 
                 // otherwise fetch the data and cache it
                 if (String.IsNullOrEmpty(userName))
@@ -594,7 +596,7 @@ namespace GreenField.Web.Services
                     .OrderBy(record => record.SnapshotName)
                     .ToList<MarketSnapshotSelectionData>();
 
-                new DefaultCacheProvider().Set(CacheKeyNames.MarketSnapshotSelectionDataCache, userPreference, Int32.Parse(ConfigurationManager.AppSettings["PerformanceCacheTime"]));
+                //new DefaultCacheProvider().Set(CacheKeyNames.MarketSnapshotSelectionDataCache, userPreference, Int32.Parse(ConfigurationManager.AppSettings["PerformanceCacheTime"]));
                 return userPreference;
             }
             catch (Exception ex)

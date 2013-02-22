@@ -17,24 +17,28 @@ namespace GreenField.Web
                 Chart1.ChartAreas[0].AxisY.Title = "Expires in Hours";
                 var dataSeries = Chart1.Series["Series1"];
 
+                // 1. Security
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.EntitySelectionDataCache),
                                         GetExpirationInHours(CacheKeyNames.EntitySelectionDataCache));
-                dataSeries.Points.AddXY(GetShortName(CacheKeyNames.FilterSelectionDataCache),
-                                        GetExpirationInHours(CacheKeyNames.FilterSelectionDataCache));
+                // 2. Benchmark
+                //dataSeries.Points.AddXY(GetShortName(CacheKeyNames.FilterSelectionDataCache),
+                //                        GetExpirationInHours(CacheKeyNames.FilterSelectionDataCache));
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.PortfolioSelectionDataCache),
                                         GetExpirationInHours(CacheKeyNames.PortfolioSelectionDataCache));
-
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.AvailableDatesInPortfoliosCache),
                                         GetExpirationInHours(CacheKeyNames.AvailableDatesInPortfoliosCache));
+
+                // 3. ModelFX
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.CountrySelectionDataCache),
                                         GetExpirationInHours(CacheKeyNames.CountrySelectionDataCache));
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.RegionSelectionDataCache),
                                         GetExpirationInHours(CacheKeyNames.RegionSelectionDataCache));
-
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.FXCommodityDataCache),
                                         GetExpirationInHours(CacheKeyNames.FXCommodityDataCache));
-                dataSeries.Points.AddXY(GetShortName(CacheKeyNames.MarketSnapshotSelectionDataCache),
-                                        GetExpirationInHours(CacheKeyNames.MarketSnapshotSelectionDataCache));
+
+                // 4. Performance
+                //dataSeries.Points.AddXY(GetShortName(CacheKeyNames.MarketSnapshotSelectionDataCache),
+                //                        GetExpirationInHours(CacheKeyNames.MarketSnapshotSelectionDataCache));
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.LastDayOfMonthsCache),
                                         GetExpirationInHours(CacheKeyNames.LastDayOfMonthsCache));
             }
@@ -84,7 +88,7 @@ namespace GreenField.Web
             return cacheExpiration != null ? cacheExpiration.ShortName : "";
         }
 
-        protected void RefreshEntities_Click(object sender, EventArgs e)
+        protected void RefreshEntitiesCache_Click(object sender, EventArgs e)
         {
             new DefaultCacheProvider().Invalidate(CacheKeyNames.EntitySelectionDataCache);
             new SecurityReferenceOperations().RetrieveEntitySelectionData();
@@ -95,15 +99,21 @@ namespace GreenField.Web
         {
             new DefaultCacheProvider().InvalidateAllExceptEntity();
             
+            // 1. Security
+            //new SecurityReferenceOperations().RetrieveEntitySelectionData();
+
+            // 2. Benchmark
             //new BenchmarkHoldingsOperations().RetrieveFilterSelectionData();
             new BenchmarkHoldingsOperations().RetrievePortfolioSelectionData();
-
             new BenchmarkHoldingsOperations().RetrieveAvailableDatesInPortfolios();
+
+            // 3. ModelFX
             new ModelFXOperations().RetrieveCountrySelectionData();
             new ModelFXOperations().RetrieveRegionSelectionData();
-
             new ModelFXOperations().RetrieveCommoditySelectionData();
-            new PerformanceOperations().RetrieveMarketSnapshotSelectionData("JADHAVK");
+
+            // 4. Performance
+            //new PerformanceOperations().RetrieveMarketSnapshotSelectionData("JADHAVK");
             new PerformanceOperations().GetLastDayOfMonths();
 
             Response.Redirect("Bridge.aspx");

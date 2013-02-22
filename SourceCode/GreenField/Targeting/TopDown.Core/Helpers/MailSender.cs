@@ -26,7 +26,7 @@ namespace TopDown.Core.Helpers
         internal static void SendTargetingAlert(MailMessage message, string cc = null)
         {
             message.To.Add(ConfigurationManager.AppSettings["TargetingAlertGroup"]);
-            message.From = new MailAddress(ConfigurationManager.AppSettings["TargetingAlertSender"]);
+            message.From = cc != null ? new MailAddress(cc) : new MailAddress(ConfigurationManager.AppSettings["TargetingAlertSender"]);
             if (!String.IsNullOrEmpty(cc))
             {
                 message.CC.Add(cc);
