@@ -26,7 +26,7 @@ GO
 -----------------------------------------------------------------------------------
 
 
-CREATE procedure [dbo].[Get_Data_Process_Thread](
+ALTER procedure [dbo].[Get_Data_Process_Thread](
 	@COMMAND	varchar(20)='START'				-- What to do
 ,	@RUN_MODE	char(1)='F'
 ,	@RUN_ID_OUT		integer	OUTPUT	
