@@ -90,7 +90,16 @@ namespace GreenField.Web
 
         protected void RefreshAll_Click(object sender, EventArgs e)
         {
-            new DefaultCacheProvider().InvalidateAllExceptEntity();
+            //new DefaultCacheProvider().InvalidateAllExceptEntity();
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.PortfolioSelectionDataCache);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.AvailableDatesInPortfoliosCache);
+
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.CountrySelectionDataCache);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.RegionSelectionDataCache);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.FXCommodityDataCache);
+
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.LastDayOfMonthsCache);
+
             
             // 1. Security
             //new SecurityReferenceOperations().RetrieveEntitySelectionData();

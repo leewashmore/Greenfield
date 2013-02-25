@@ -63,7 +63,7 @@
                 <tr>
                     <td>
                         <asp:Button ID="btnResetAll" runat="server" onclick="RefreshAll_Click" 
-                                    Text="Reset All" Width="200px" /></td><td>*except Entities</td>
+                                    Text="Reset All" Width="200px" /></td><td>* except Entities</td>
                 </tr>
             </table>
         </form>
