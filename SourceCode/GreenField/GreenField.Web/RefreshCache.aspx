@@ -34,14 +34,14 @@
                 <tr>
                     <td>
                         <asp:Button ID="btnEntitiesCache" runat="server" onclick="RefreshEntitiesCache_Click" 
-                                    Text="Reset Entities Cache" />
+                                    Text="Reset Entities Cache" Width="200px" />
                     </td>
                     <td>* includes SECURITY, BENCHMARK, INDEX, COMMODITY, and CURRENCY</td>
                 </tr>
                 <tr>
                     <td>
                         <asp:Button ID="btnBenchmarkCache" runat="server" onclick="RefreshBenchmarkCache_Click" 
-                                    Text="Reset Benchmark Cache" />
+                                    Text="Reset Benchmark Cache" Width="200px" />
                     </td>
                     <td>* includes Portfolio Selection Data, and Available Dates In Portfolios</td>
                 </tr>
@@ -49,21 +49,21 @@
                 <tr>
                     <td>
                         <asp:Button ID="btnModelFXCache" runat="server" onclick="RefreshModelFXCache_Click" 
-                                    Text="Reset ModelFX Cache" /></td>
+                                    Text="Reset ModelFX Cache" Width="200px" /></td>
                     <td>* includes Country Selection Data, Region Selection Data, and FX Commodity Data</td>
                 </tr>
                 
                 <tr>
                     <td>
                         <asp:Button ID="btnPerformanceCache" runat="server" onclick="RefreshPerformanceCache_Click" 
-                                    Text="Reset Performance Cache" /></td>
+                                    Text="Reset Performance Cache" Width="200px" /></td>
                     <td>* includes Last Day Of Months</td>
                 </tr>
                 
                 <tr>
                     <td>
                         <asp:Button ID="btnResetAll" runat="server" onclick="RefreshAll_Click" 
-                                    Text="Reset All" /></td><td>*except Entities</td>
+                                    Text="Reset All" Width="200px" /></td><td>*except Entities</td>
                 </tr>
             </table>
         </form>
