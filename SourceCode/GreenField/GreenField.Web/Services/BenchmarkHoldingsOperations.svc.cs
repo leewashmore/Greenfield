@@ -1336,7 +1336,7 @@ namespace GreenField.Web.Services
                 //Trace.WriteLine(string.Format("{0}: Passed to RetrieveExternalResearchData", DateTime.Now));
                 //XMLStringValue(result);
 #endif
-                result = RetrieveExternalResearchDataOld(result);
+                result = RetrieveExternalResearchData(result);
 #if DEBUG
                 //Trace.WriteLine(string.Format("{0}: returned from RetrieveExternalResearchData", DateTime.Now));
                 //Trace.WriteLine("");

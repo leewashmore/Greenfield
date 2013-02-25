@@ -88,13 +88,6 @@ namespace GreenField.Web
             return cacheExpiration != null ? cacheExpiration.ShortName : "";
         }
 
-        protected void RefreshEntitiesCache_Click(object sender, EventArgs e)
-        {
-            new DefaultCacheProvider().Invalidate(CacheKeyNames.EntitySelectionDataCache);
-            new SecurityReferenceOperations().RetrieveEntitySelectionData();
-            Server.Transfer("Bridge.aspx");
-        }
-
         protected void RefreshAll_Click(object sender, EventArgs e)
         {
             new DefaultCacheProvider().InvalidateAllExceptEntity();
@@ -117,6 +110,45 @@ namespace GreenField.Web
             new PerformanceOperations().GetLastDayOfMonths();
 
             Response.Redirect("Bridge.aspx");
+        }
+
+        protected void RefreshEntitiesCache_Click(object sender, EventArgs e)
+        {
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.EntitySelectionDataCache);
+            new SecurityReferenceOperations().RetrieveEntitySelectionData();
+            Server.Transfer("Bridge.aspx");
+        }
+
+        protected void RefreshBenchmarkCache_Click(object sender, EventArgs e)
+        {
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.PortfolioSelectionDataCache);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.AvailableDatesInPortfoliosCache);
+
+            new BenchmarkHoldingsOperations().RetrievePortfolioSelectionData();
+            new BenchmarkHoldingsOperations().RetrieveAvailableDatesInPortfolios();
+
+            Server.Transfer("Bridge.aspx");
+        }
+
+        protected void RefreshModelFXCache_Click(object sender, EventArgs e)
+        {
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.CountrySelectionDataCache);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.RegionSelectionDataCache);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.FXCommodityDataCache);
+
+            new ModelFXOperations().RetrieveCountrySelectionData();
+            new ModelFXOperations().RetrieveRegionSelectionData();
+            new ModelFXOperations().RetrieveCommoditySelectionData();
+
+            Server.Transfer("Bridge.aspx");
+        }
+
+        protected void RefreshPerformanceCache_Click(object sender, EventArgs e)
+        {
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.LastDayOfMonthsCache);
+            new PerformanceOperations().GetLastDayOfMonths();
+
+            Server.Transfer("Bridge.aspx");
         }
     }
 }
