@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.UI;
+using System.Web.UI.DataVisualization.Charting;
 using GreenField.Web.Helpers;
 using GreenField.Web.Services;
 
 namespace GreenField.Web
 {
-    public partial class RefreshCache : System.Web.UI.Page
+    public partial class RefreshCache : Page
     {
         public List<CacheExpiration> CacheExpirations;
         public double x10 = 10.0;
-        
+
         protected void Page_Load(object sender, EventArgs e)
-        { 
+        {
             //if (!IsPostBack)
             {
                 Chart1.ChartAreas[0].AxisY.Title = "Expires in Hours";
-                var dataSeries = Chart1.Series["Series1"];
+                Series dataSeries = Chart1.Series["Series1"];
 
                 // 1. Security
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.EntitySelectionDataCache),
@@ -64,7 +66,7 @@ namespace GreenField.Web
         private double GetExpirationInHours(string key)
         {
             CacheExpiration cacheExpiration = new DefaultCacheProvider().GetExpiration(key);
-            
+
             if (cacheExpiration != null && cacheExpiration.AbsoluteExpiration != null)
                 return Math.Round(cacheExpiration.AbsoluteExpiration.Value.Subtract(DateTime.Now).TotalHours, 2);
 
@@ -100,7 +102,7 @@ namespace GreenField.Web
 
             new DefaultCacheProvider().Invalidate(CacheKeyNames.LastDayOfMonthsCache);
 
-            
+
             // 1. Security
             //new SecurityReferenceOperations().RetrieveEntitySelectionData();
 
@@ -157,6 +159,12 @@ namespace GreenField.Web
             new DefaultCacheProvider().Invalidate(CacheKeyNames.LastDayOfMonthsCache);
             new PerformanceOperations().GetLastDayOfMonths();
 
+            Server.Transfer("Bridge.aspx");
+        }
+
+        protected void InvalidateAll_Click(object sender, EventArgs e)
+        {
+            new DefaultCacheProvider().InvalidateAll();
             Server.Transfer("Bridge.aspx");
         }
     }

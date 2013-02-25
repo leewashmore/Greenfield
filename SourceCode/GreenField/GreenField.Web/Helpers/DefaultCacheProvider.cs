@@ -149,6 +149,15 @@ namespace GreenField.Web.Helpers
             return dates;
         }
 
+        public void InvalidateAll()
+        {
+            //MemoryCache.Default.Dispose(); possible threading issues
+            //TODO needs to test
+            foreach (var element in MemoryCache.Default)
+                Invalidate(element.Key);
+        }
+
+
         public void InvalidateAllExceptEntity()
         {
             //MemoryCache.Default.Dispose(); possible threading issues

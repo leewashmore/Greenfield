@@ -65,6 +65,13 @@
                         <asp:Button ID="btnResetAll" runat="server" onclick="RefreshAll_Click" 
                                     Text="Reset All" Width="200px" /></td><td>* except Entities</td>
                 </tr>
+                
+                <tr>
+                    <td><br/><br/>
+                        <asp:Button ID="Button1" runat="server" onclick="InvalidateAll_Click" 
+                                    Text="Invalidate All" Width="200px" /></td><td></td>
+                </tr>
+
             </table>
         </form>
     </body>
