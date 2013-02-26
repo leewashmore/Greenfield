@@ -33,6 +33,11 @@
                         <TextBlock Text="{Binding Path=Data,  Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD',StringFormat='P'}"/>
                         <TextBlock Text=")"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Benchmark: ("/>
+                        <TextBlock Text="{Binding Path=Data,  Converter={StaticResource ExtendedDataConverter}, ConverterParameter='BenchmarkYTD',StringFormat='P'}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
                 </StackPanel>
             </DataTemplate>
         </Grid.Resources>

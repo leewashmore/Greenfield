@@ -37,6 +37,10 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private const string COUNTRY_YTD_FIELD = "CountryYTD";
         /// <summary>
+        ///  Constant String for Benchmark YTD
+        /// </summary>
+        private const string BENCHMARK_YTD_FIELD = "BenchmarkYTD";
+        /// <summary>
         /// Private Collection of type Heat Map Data
         /// </summary>
         private List<HeatMapData> heatMapInfo;
@@ -205,6 +209,10 @@ namespace GreenField.Gadgets.Views
                 {
                     data.PropertySet.RegisterProperty(COUNTRY_YTD_FIELD, "CountryYTD", typeof(Decimal), Convert.ToDecimal(0));
                 }
+                if (!data.PropertySet.ContainsKey(BENCHMARK_YTD_FIELD))
+                {
+                    data.PropertySet.RegisterProperty(BENCHMARK_YTD_FIELD, "BenchmarkYTD", typeof(Decimal), Convert.ToDecimal(0));
+                }
 
                 if (heatMapInfo != null)
                 {
@@ -215,12 +223,14 @@ namespace GreenField.Gadgets.Views
                     {
                         shape.ExtendedData.SetValue(COUNTRY_PERFORMANCE_FIELD, (int)(countryRecord.CountryPerformance));
                         shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD, countryRecord.CountryYTD);
+                        shape.ExtendedData.SetValue(BENCHMARK_YTD_FIELD, countryRecord.BenchmarkYTD);
                         AddColorizerToInformationLayer(shape, countryRecord);
                     }
                     else
                     {
                         shape.ExtendedData.SetValue(COUNTRY_PERFORMANCE_FIELD, null);
                         shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD, null);
+                        shape.ExtendedData.SetValue(BENCHMARK_YTD_FIELD, null);
                         AddTransparentColorizerToInformationLayer(shape);
                     }
                 }
