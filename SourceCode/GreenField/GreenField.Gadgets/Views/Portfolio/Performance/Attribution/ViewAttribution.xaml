@@ -156,7 +156,19 @@
                         <telerik:GridViewDataColumn.AggregateFunctions>
                             <telerik:SumFunction SourceField="StockSelectionTotal" ResultFormatString="{}{0:p2}" />
                         </telerik:GridViewDataColumn.AggregateFunctions>
+                      </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Header="Total Value Add" UniqueName="Total Value Add" 
+                                                DataMemberBinding="{Binding TotalValueAdd}"                                               
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                Width="Auto"  CellStyle="{StaticResource GridViewCellStyle}"
+                                                DataFormatString="{}{0:p2}"
+                                                HeaderTextAlignment="Right"
+                                                TextAlignment="Right" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="TotalValueAdd" ResultFormatString="{}{0:p2}" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
                     </telerik:GridViewDataColumn>
+
                 </telerik:RadGridView.Columns>
                 <telerik:RadGridView.SortDescriptors>
                     <telerik:SortDescriptor Member="CountryName"

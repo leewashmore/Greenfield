@@ -1336,7 +1336,7 @@ namespace GreenField.Web.Services
                 //Trace.WriteLine(string.Format("{0}: Passed to RetrieveExternalResearchData", DateTime.Now));
                 //XMLStringValue(result);
 #endif
-                result = RetrieveExternalResearchData(result);
+                result = RetrieveExternalResearchDataOld(result);
 #if DEBUG
                 //Trace.WriteLine(string.Format("{0}: returned from RetrieveExternalResearchData", DateTime.Now));
                 //Trace.WriteLine("");
@@ -3261,6 +3261,7 @@ namespace GreenField.Web.Services
                     case "YTD":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_YTD;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_YTD; 
                         Decimal? diff = data[i].ADJ_RTN_POR_RC_TWR_YTD - data[i].BM1_RC_TWR_YTD;
                         CalculateHeatMapDiff(diff, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_YTD == null && data[i].BM1_RC_TWR_YTD == null)
@@ -3273,60 +3274,70 @@ namespace GreenField.Web.Services
                     case "MTD":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_MTD;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_MTD;
                         Decimal? diff1 = data[i].ADJ_RTN_POR_RC_TWR_MTD - data[i].BM1_RC_TWR_MTD;
                         CalculateHeatMapDiff(diff1, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_MTD == null && data[i].BM1_RC_TWR_MTD == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
+                            entry.BenchmarkYTD = Convert.ToDecimal(0);
                         }
                         result.Add(entry);
                         break;
                     case "1D":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_1D;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_1D;
                         Decimal? diff2 = data[i].ADJ_RTN_POR_RC_TWR_1D - data[i].BM1_RC_TWR_1D;
                         CalculateHeatMapDiff(diff2, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_1D == null && data[i].BM1_RC_TWR_1D == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
+                            entry.BenchmarkYTD = Convert.ToDecimal(0);
                         }
                         result.Add(entry);
                         break;
                     case "1W":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_1W;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_1W;
                         Decimal? diff3 = data[i].ADJ_RTN_POR_RC_TWR_1W - data[i].BM1_RC_TWR_1W;
                         CalculateHeatMapDiff(diff3, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_1W == null && data[i].BM1_RC_TWR_1W == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
+                            entry.BenchmarkYTD = Convert.ToDecimal(0);
                         }
                         result.Add(entry);
                         break;
                     case "QTD":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_QTD;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_QTD;
                         Decimal? diff4 = data[i].ADJ_RTN_POR_RC_TWR_QTD - data[i].BM1_RC_TWR_QTD;
                         CalculateHeatMapDiff(diff4, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_QTD == null && data[i].BM1_RC_TWR_QTD == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
+                            entry.BenchmarkYTD = Convert.ToDecimal(0);
                         }
                         result.Add(entry);
                         break;
                     case "1Y":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_1Y;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_1Y;
                         Decimal? diff5 = data[i].ADJ_RTN_POR_RC_TWR_1Y - data[i].BM1_RC_TWR_1Y;
                         CalculateHeatMapDiff(diff5, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_1Y == null && data[i].BM1_RC_TWR_1Y == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
+                            entry.BenchmarkYTD = Convert.ToDecimal(0);
                         }
                         result.Add(entry);
                         break;
@@ -3426,38 +3437,38 @@ namespace GreenField.Web.Services
                     entry.Bm1RcAvgWgt1w = attributionData[i].BM1_RC_AVG_WGT_1W;
                     entry.FPorAshRcCtn1w = attributionData[i].ADJ_RTN_POR_RC_TWR_1W;
                     entry.BM1_RC_TWR_1W = attributionData[i].BM1_RC_TWR_1W;
-                    entry.FBm1AshAssetAlloc1w = attributionData[i].BM1_RC_ASSET_ALLOC_1W;
-                    entry.FBm1AshSecSelec1w = attributionData[i].BM1_RC_SEC_SELEC_1W;
+                    entry.FBm1AshAssetAlloc1w = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1W;
+                    entry.FBm1AshSecSelec1w = attributionData[i].F_BM1_ASH_SEC_SELEC_1W;
                     entry.PorRcAvgWgt1d = attributionData[i].POR_RC_AVG_WGT_1D;
                     entry.Bm1RcAvgWgt1d = attributionData[i].BM1_RC_AVG_WGT_1D;
                     entry.FPorAshRcCtn1d = attributionData[i].ADJ_RTN_POR_RC_TWR_1D;
                     entry.BM1_RC_TWR_1D = attributionData[i].BM1_RC_TWR_1D;
-                    entry.FBm1AshAssetAlloc1d = attributionData[i].BM1_RC_ASSET_ALLOC_1D;
-                    entry.FBm1AshSecSelec1d = attributionData[i].BM1_RC_SEC_SELEC_1D;
+                    entry.FBm1AshAssetAlloc1d = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1D;
+                    entry.FBm1AshSecSelec1d = attributionData[i].F_BM1_ASH_SEC_SELEC_1D;
                     entry.PorRcAvgWgtMtd = attributionData[i].POR_RC_AVG_WGT_MTD;
                     entry.Bm1RcAvgWgtMtd = attributionData[i].BM1_RC_AVG_WGT_MTD;
                     entry.FPorAshRcCtnMtd = attributionData[i].ADJ_RTN_POR_RC_TWR_MTD;
                     entry.BM1_RC_TWR_MTD = attributionData[i].BM1_RC_TWR_MTD;
-                    entry.FBm1AshAssetAllocMtd = attributionData[i].BM1_RC_ASSET_ALLOC_MTD;
-                    entry.FBm1AshSecSelecMtd = attributionData[i].BM1_RC_SEC_SELEC_MTD;
+                    entry.FBm1AshAssetAllocMtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_MTD;
+                    entry.FBm1AshSecSelecMtd = attributionData[i].F_BM1_ASH_SEC_SELEC_MTD;
                     entry.PorRcAvgWgtQtd = attributionData[i].POR_RC_AVG_WGT_QTD;
                     entry.Bm1RcAvgWgtQtd = attributionData[i].BM1_RC_AVG_WGT_QTD;
                     entry.FPorAshRcCtnQtd = attributionData[i].ADJ_RTN_POR_RC_TWR_QTD;
                     entry.BM1_RC_TWR_QTD = attributionData[i].BM1_RC_TWR_QTD;
-                    entry.FBm1AshAssetAllocQtd = attributionData[i].BM1_RC_ASSET_ALLOC_QTD;
-                    entry.FBm1AshSecSelecQtd = attributionData[i].BM1_RC_SEC_SELEC_QTD;
+                    entry.FBm1AshAssetAllocQtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_QTD;
+                    entry.FBm1AshSecSelecQtd = attributionData[i].F_BM1_ASH_SEC_SELEC_QTD;
                     entry.PorRcAvgWgtYtd = attributionData[i].POR_RC_AVG_WGT_YTD;
                     entry.Bm1RcAvgWgtYtd = attributionData[i].BM1_RC_AVG_WGT_YTD;
                     entry.FPorAshRcCtnYtd = attributionData[i].ADJ_RTN_POR_RC_TWR_YTD;
                     entry.BM1_RC_TWR_YTD = attributionData[i].BM1_RC_TWR_YTD;
-                    entry.FBm1AshAssetAllocYtd = attributionData[i].BM1_RC_ASSET_ALLOC_YTD;
-                    entry.FBm1AshSecSelecYtd = attributionData[i].BM1_RC_SEC_SELEC_YTD;
+                    entry.FBm1AshAssetAllocYtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_YTD;
+                    entry.FBm1AshSecSelecYtd = attributionData[i].F_BM1_ASH_SEC_SELEC_YTD;
                     entry.PorRcAvgWgt1y = attributionData[i].POR_RC_AVG_WGT_1Y;
                     entry.Bm1RcAvgWgt1y = attributionData[i].BM1_RC_AVG_WGT_1Y;
                     entry.FPorAshRcCtn1y = attributionData[i].ADJ_RTN_POR_RC_TWR_1Y;
                     entry.BM1_RC_TWR_1Y = attributionData[i].BM1_RC_TWR_1Y;
-                    entry.FBm1AshAssetAlloc1y = attributionData[i].BM1_RC_ASSET_ALLOC_1Y;
-                    entry.FBm1AshSecSelec1y = attributionData[i].BM1_RC_SEC_SELEC_1Y;
+                    entry.FBm1AshAssetAlloc1y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1Y;
+                    entry.FBm1AshSecSelec1y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;
                     entry.PorInceptionDate = attributionData[i].POR_INCEPTION_DATE;
                     entry.EffectiveDate = attributionData[i].TO_DATE;
                     result.Add(entry);

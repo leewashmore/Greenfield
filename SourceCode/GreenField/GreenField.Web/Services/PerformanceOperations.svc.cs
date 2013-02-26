@@ -1321,7 +1321,8 @@ namespace GreenField.Web.Services
                             SectorName = t.GICS_LVL1,
                             FundWeight = t.POR_RC_AVG_WGT_1D * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_1D * 100,
-                            Alpha = t.BM1_RC_ASSET_ALLOC_1D + t.BM1_RC_SEC_SELEC_1D
+                            //Alpha = t.BM1_RC_ASSET_ALLOC_1D + t.BM1_RC_SEC_SELEC_1D
+                            Alpha = t.F_BM1_ASH_ASSET_ALLOC_1D + t.F_BM1_ASH_SEC_SELEC_1D
                         }).ToList();
                         break;
                     case "1W":
@@ -1333,7 +1334,8 @@ namespace GreenField.Web.Services
                             SectorName = t.GICS_LVL1,
                             FundWeight = t.POR_RC_AVG_WGT_1W * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_1W * 100,
-                            Alpha = t.BM1_RC_ASSET_ALLOC_1W + t.BM1_RC_SEC_SELEC_1W
+                            //Alpha = t.BM1_RC_ASSET_ALLOC_1W + t.BM1_RC_SEC_SELEC_1W
+                            Alpha = t.F_BM1_ASH_ASSET_ALLOC_1W + t.F_BM1_ASH_SEC_SELEC_1W
                         }).ToList();
                         break;
                     case "MTD":
@@ -1345,7 +1347,8 @@ namespace GreenField.Web.Services
                             SectorName = t.GICS_LVL1,
                             FundWeight = t.POR_RC_AVG_WGT_MTD * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_MTD * 100,
-                            Alpha = t.BM1_RC_ASSET_ALLOC_MTD + t.BM1_RC_SEC_SELEC_MTD
+                            //Alpha = t.BM1_RC_ASSET_ALLOC_MTD + t.BM1_RC_SEC_SELEC_MTD
+                            Alpha = t.F_BM1_ASH_ASSET_ALLOC_MTD + t.F_BM1_ASH_SEC_SELEC_MTD
                         }).ToList();
                         break;
                     case "QTD":
@@ -1357,7 +1360,8 @@ namespace GreenField.Web.Services
                             SectorName = t.GICS_LVL1,
                             FundWeight = t.POR_RC_AVG_WGT_QTD * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_QTD * 100,
-                            Alpha = t.BM1_RC_ASSET_ALLOC_QTD + t.BM1_RC_SEC_SELEC_QTD
+                           // Alpha = t.BM1_RC_ASSET_ALLOC_QTD + t.BM1_RC_SEC_SELEC_QTD
+                            Alpha = t.F_BM1_ASH_ASSET_ALLOC_QTD + t.F_BM1_ASH_SEC_SELEC_QTD
                         }).ToList();
                         break;
                     case "1Y":
@@ -1369,7 +1373,8 @@ namespace GreenField.Web.Services
                             SectorName = t.GICS_LVL1,
                             FundWeight = t.POR_RC_AVG_WGT_1Y * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_1Y * 100,
-                            Alpha = t.BM1_RC_ASSET_ALLOC_1Y + t.BM1_RC_SEC_SELEC_1Y
+                            //Alpha = t.BM1_RC_ASSET_ALLOC_1Y + t.BM1_RC_SEC_SELEC_1Y
+                            Alpha = t.F_BM1_ASH_ASSET_ALLOC_1Y + t.F_BM1_ASH_SEC_SELEC_1Y
                         }).ToList();
                         break;
                     default:
@@ -1381,7 +1386,8 @@ namespace GreenField.Web.Services
                             SectorName = t.GICS_LVL1,
                             FundWeight = t.POR_RC_AVG_WGT_YTD * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_YTD * 100,
-                            Alpha = t.BM1_RC_ASSET_ALLOC_YTD + t.BM1_RC_SEC_SELEC_YTD
+                            //Alpha = t.BM1_RC_ASSET_ALLOC_YTD + t.BM1_RC_SEC_SELEC_YTD
+                            Alpha = t.F_BM1_ASH_ASSET_ALLOC_YTD + t.F_BM1_ASH_SEC_SELEC_YTD
                         }).ToList();
                         break;
                 }
@@ -1837,7 +1843,8 @@ namespace GreenField.Web.Services
                             MarketValue = t.POR_RC_MARKET_VALUE,
                             FundWeight = t.POR_RC_AVG_WGT_1D * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_1D * 100,
-                            ActivePosition = t.BM1_RC_ASSET_ALLOC_1D + t.BM1_RC_SEC_SELEC_1D
+                           // ActivePosition = t.BM1_RC_ASSET_ALLOC_1D + t.BM1_RC_SEC_SELEC_1D
+                            ActivePosition = t.POR_RC_AVG_WGT_1D * 100 - t.BM1_RC_AVG_WGT_1D * 100
                         }).ToList();
                         break;
                     case "1W":
@@ -1848,7 +1855,9 @@ namespace GreenField.Web.Services
                             MarketValue = t.POR_RC_MARKET_VALUE,
                             FundWeight = t.POR_RC_AVG_WGT_1W * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_1W * 100,
-                            ActivePosition = t.BM1_RC_ASSET_ALLOC_1W + t.BM1_RC_SEC_SELEC_1W
+                           // ActivePosition = t.BM1_RC_ASSET_ALLOC_1W + t.BM1_RC_SEC_SELEC_1W
+                            ActivePosition = t.POR_RC_AVG_WGT_1W * 100 - t.BM1_RC_AVG_WGT_1W * 100
+
                         }).ToList();
                         break;
                     case "MTD":
@@ -1859,7 +1868,8 @@ namespace GreenField.Web.Services
                             MarketValue = t.POR_RC_MARKET_VALUE,
                             FundWeight = t.POR_RC_AVG_WGT_MTD * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_MTD * 100,
-                            ActivePosition = t.BM1_RC_ASSET_ALLOC_MTD + t.BM1_RC_SEC_SELEC_MTD
+                            //ActivePosition = t.BM1_RC_ASSET_ALLOC_MTD + t.BM1_RC_SEC_SELEC_MTD
+                            ActivePosition = t.POR_RC_AVG_WGT_MTD * 100 - t.BM1_RC_AVG_WGT_MTD * 100
                         }).ToList();
                         break;
                     case "QTD":
@@ -1870,7 +1880,8 @@ namespace GreenField.Web.Services
                             MarketValue = t.POR_RC_MARKET_VALUE,
                             FundWeight = t.POR_RC_AVG_WGT_QTD * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_QTD * 100,
-                            ActivePosition = t.BM1_RC_ASSET_ALLOC_QTD + t.BM1_RC_SEC_SELEC_QTD
+                            //ActivePosition = t.BM1_RC_ASSET_ALLOC_QTD + t.BM1_RC_SEC_SELEC_QTD
+                            ActivePosition = t.POR_RC_AVG_WGT_QTD * 100 - t.BM1_RC_AVG_WGT_QTD * 100
                         }).ToList();
                         break;
                     case "1Y":
@@ -1881,7 +1892,8 @@ namespace GreenField.Web.Services
                             MarketValue = t.POR_RC_MARKET_VALUE,
                             FundWeight = t.POR_RC_AVG_WGT_1Y * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_1Y * 100,
-                            ActivePosition = t.BM1_RC_ASSET_ALLOC_1Y + t.BM1_RC_SEC_SELEC_1Y
+                            //ActivePosition = t.BM1_RC_ASSET_ALLOC_1Y + t.BM1_RC_SEC_SELEC_1Y
+                            ActivePosition = t.POR_RC_AVG_WGT_1Y * 100 - t.BM1_RC_AVG_WGT_1Y * 100
                         }).ToList();
                         break;
                     default:
@@ -1892,7 +1904,8 @@ namespace GreenField.Web.Services
                             MarketValue = t.POR_RC_MARKET_VALUE,
                             FundWeight = t.POR_RC_AVG_WGT_YTD * 100,
                             BenchmarkWeight = t.BM1_RC_AVG_WGT_YTD * 100,
-                            ActivePosition = t.BM1_RC_ASSET_ALLOC_YTD + t.BM1_RC_SEC_SELEC_YTD
+                            //ActivePosition = t.BM1_RC_ASSET_ALLOC_YTD + t.BM1_RC_SEC_SELEC_YTD
+                            ActivePosition = t.POR_RC_AVG_WGT_YTD * 100 - t.BM1_RC_AVG_WGT_YTD * 100
                         }).ToList();
                         break;
                 }
@@ -1960,7 +1973,8 @@ namespace GreenField.Web.Services
                             SecurityCountryId = t.COUNTRY,
                             SecuritySectorName = t.GICS_LVL1,
                             SecurityMarketValue = t.POR_RC_MARKET_VALUE,
-                            SecurityAlpha = t.BM1_RC_ASSET_ALLOC_1D + t.BM1_RC_SEC_SELEC_1D
+                            //SecurityAlpha = t.BM1_RC_ASSET_ALLOC_1D + t.BM1_RC_SEC_SELEC_1D
+                            SecurityAlpha = t.F_BM1_ASH_ASSET_ALLOC_1D + t.F_BM1_ASH_SEC_SELEC_1D
                         }).ToList();
                         break;
                     case "1W":
@@ -1970,7 +1984,8 @@ namespace GreenField.Web.Services
                             SecurityCountryId = t.COUNTRY,
                             SecuritySectorName = t.GICS_LVL1,
                             SecurityMarketValue = t.POR_RC_MARKET_VALUE,
-                            SecurityAlpha = t.BM1_RC_ASSET_ALLOC_1W + t.BM1_RC_SEC_SELEC_1W
+                            //SecurityAlpha = t.BM1_RC_ASSET_ALLOC_1W + t.BM1_RC_SEC_SELEC_1W
+                            SecurityAlpha = t.F_BM1_ASH_ASSET_ALLOC_1W + t.F_BM1_ASH_SEC_SELEC_1W
                         }).ToList();
                         break;
                     case "MTD":
@@ -1980,7 +1995,8 @@ namespace GreenField.Web.Services
                             SecurityCountryId = t.COUNTRY,
                             SecuritySectorName = t.GICS_LVL1,
                             SecurityMarketValue = t.POR_RC_MARKET_VALUE,
-                            SecurityAlpha = t.BM1_RC_ASSET_ALLOC_MTD + t.BM1_RC_SEC_SELEC_MTD
+                            //SecurityAlpha = t.BM1_RC_ASSET_ALLOC_MTD + t.BM1_RC_SEC_SELEC_MTD
+                            SecurityAlpha = t.F_BM1_ASH_ASSET_ALLOC_MTD + t.F_BM1_ASH_SEC_SELEC_MTD
                         }).ToList();
                         break;
                     case "QTD":
@@ -1990,7 +2006,8 @@ namespace GreenField.Web.Services
                             SecurityCountryId = t.COUNTRY,
                             SecuritySectorName = t.GICS_LVL1,
                             SecurityMarketValue = t.POR_RC_MARKET_VALUE,
-                            SecurityAlpha = t.BM1_RC_ASSET_ALLOC_QTD + t.BM1_RC_SEC_SELEC_QTD
+                            //SecurityAlpha = t.BM1_RC_ASSET_ALLOC_QTD + t.BM1_RC_SEC_SELEC_QTD
+                            SecurityAlpha = t.F_BM1_ASH_ASSET_ALLOC_QTD + t.F_BM1_ASH_SEC_SELEC_QTD
                         }).ToList();
                         break;
                     case "1Y":
@@ -2000,7 +2017,8 @@ namespace GreenField.Web.Services
                             SecurityCountryId = t.COUNTRY,
                             SecuritySectorName = t.GICS_LVL1,
                             SecurityMarketValue = t.POR_RC_MARKET_VALUE,
-                            SecurityAlpha = t.BM1_RC_ASSET_ALLOC_1Y + t.BM1_RC_SEC_SELEC_1Y
+                            //SecurityAlpha = t.BM1_RC_ASSET_ALLOC_1Y + t.BM1_RC_SEC_SELEC_1Y
+                            SecurityAlpha = t.F_BM1_ASH_ASSET_ALLOC_1Y + t.F_BM1_ASH_SEC_SELEC_1Y
                         }).ToList();
                         break;
                     default:
@@ -2010,7 +2028,8 @@ namespace GreenField.Web.Services
                             SecurityCountryId = t.COUNTRY,
                             SecuritySectorName = t.GICS_LVL1,
                             SecurityMarketValue = t.POR_RC_MARKET_VALUE,
-                            SecurityAlpha = t.BM1_RC_ASSET_ALLOC_YTD + t.BM1_RC_SEC_SELEC_YTD
+                            //SecurityAlpha = t.BM1_RC_ASSET_ALLOC_YTD + t.BM1_RC_SEC_SELEC_YTD
+                            SecurityAlpha = t.F_BM1_ASH_ASSET_ALLOC_YTD + t.F_BM1_ASH_SEC_SELEC_YTD
                         }).ToList();
                         break;
                 } 

@@ -143,7 +143,7 @@ namespace GreenField.Gadgets.Views
 
                 ToolTip toolTip = new ToolTip()
                 {
-                    Content = activePosition
+                    Content = String.Format("{0:0.00}",activePosition)
                 };
 
                 ToolTipService.SetToolTip(cell, toolTip);
