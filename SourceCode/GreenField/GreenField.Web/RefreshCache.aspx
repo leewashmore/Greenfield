@@ -30,6 +30,11 @@
                 </Annotations>
             </asp:chart>
     
+            <div align="center">
+                <asp:Button ID="btnRefreshGraph" runat="server" onclick="RefreshGraph_Click" 
+                Text="Refresh Graph" Width="120px" />
+            </div>
+            <br/>
             <table>
                 <tr>
                     <td>

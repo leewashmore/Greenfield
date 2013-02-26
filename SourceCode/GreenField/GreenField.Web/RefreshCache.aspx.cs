@@ -68,7 +68,7 @@ namespace GreenField.Web
             CacheExpiration cacheExpiration = new DefaultCacheProvider().GetExpiration(key);
 
             if (cacheExpiration != null && cacheExpiration.AbsoluteExpiration != null)
-                return Math.Round(cacheExpiration.AbsoluteExpiration.Value.Subtract(DateTime.Now).TotalHours, 2);
+                return Math.Round(cacheExpiration.AbsoluteExpiration.Value.Subtract(DateTime.Now).TotalHours, 4);
 
             return 0.0;
         }
@@ -167,5 +167,10 @@ namespace GreenField.Web
             new DefaultCacheProvider().InvalidateAll();
             Server.Transfer("Bridge.aspx");
         }
+
+        protected void RefreshGraph_Click(object sender, EventArgs e)
+        {
+            Server.Transfer("Bridge.aspx");
+         }
     }
 }
