@@ -74,7 +74,10 @@
     <div id="silverlightControlHost">
         <object data="data:application/x-silverlight-2," type="application/x-silverlight-2"
             width="100%" height="100%">
-            <param name="source" value="ClientBin/GreenField.App.xap" />
+            <!-- <param name="source" value="ClientBin/GreenField.App.xap" /> -->
+            <%
+                Response.Write("<param name=\"source\" value=\"ClientBin/GreenField.App.xap\"?ignore=" + ConfigurationManager.AppSettings["DeploymentVersion"] + "\" />");
+             %>
             <param name="onError" value="onSilverlightError" />
             <param name="background" value="white" />
             <param name="minRuntimeVersion" value="4.0.50826.0" />

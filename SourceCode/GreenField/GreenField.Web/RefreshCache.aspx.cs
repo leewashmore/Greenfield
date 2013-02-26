@@ -61,23 +61,6 @@ namespace GreenField.Web
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.TargetingTypeRepository),
                                         GetExpirationInHours(CacheKeyNames.TargetingTypeRepository));
             }
-            /*
-            CacheExpirations = new DefaultCacheProvider().GetAllExpirations();
-
-            foreach(CacheExpiration cacheExpiration in CacheExpirations)
-            {
-                String x, x2, x3;
-                if (cacheExpiration != null)
-                {
-                    x = cacheExpiration.CacheKeyName;
-                    x2 = cacheExpiration.ShortName;
-                    x3 = cacheExpiration.AbsoluteExpiration.ToString();
-                    if (cacheExpiration.AbsoluteExpiration != null)
-                    {
-                        TimeSpan minutesToExpire = cacheExpiration.AbsoluteExpiration.Value.Subtract(DateTime.Now);
-                    }
-                }
-            }*/
         }
 
         private double GetExpirationInHours(string key)
