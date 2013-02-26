@@ -35,6 +35,31 @@
                 Text="Refresh Graph" Width="120px" />
             </div>
             <br/>
+
+            <asp:Panel ID="Panel1" runat="server" BorderColor="#999999" BorderStyle="Groove" 
+                BorderWidth="1px" GroupingText="Invalidate" Width="820px">
+                
+                <table>
+                    <tr>
+                        <td>
+                            <asp:Button ID="btnInvalidateTargeting" runat="server" onclick="InvalidateTargeting_Click" 
+                                        Text="Invalidate Targeting Cache" Width="200px" /></td>
+                        <td>* includes Portfolio, Security, Country, Taxonomy, Basket, and TargetingType</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Button ID="btnInvalidateAll" runat="server" onclick="InvalidateAll_Click" 
+                                        Text="Invalidate All" Width="200px" /></td><td></td>
+                    </tr>
+
+                </table>
+            </asp:Panel>
+            
+            <div><br /><br /></div>
+
+            <asp:Panel ID="Panel2" runat="server" BorderColor="#999999" BorderStyle="Groove"
+                BorderWidth="1px" GroupingText="Reset" Width="820px">
+            
             <table>
                 <tr>
                     <td>
@@ -68,16 +93,10 @@
                 <tr>
                     <td>
                         <asp:Button ID="btnResetAll" runat="server" onclick="RefreshAll_Click" 
-                                    Text="Reset All" Width="200px" /></td><td>* except Entities</td>
+                                    Text="Reset All (except Targeting)" Width="200px" /></td><td></td>
                 </tr>
-                
-                <tr>
-                    <td><br/><br/>
-                        <asp:Button ID="Button1" runat="server" onclick="InvalidateAll_Click" 
-                                    Text="Invalidate All" Width="200px" /></td><td></td>
-                </tr>
-
             </table>
+            </asp:Panel>
         </form>
     </body>
 </html>

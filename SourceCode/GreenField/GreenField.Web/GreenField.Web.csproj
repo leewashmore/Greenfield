@@ -90,6 +90,8 @@
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
     <Content Include="crossdomain.xml" />
+    <Content Include="GreenField.Login.AppTestPage.aspx" />
+    <Content Include="GreenField.Login.AppTestPage.html" />
     <Content Include="RefreshCache.aspx" />
     <Content Include="Services\MacroeconomicOperations.svc" />
     <Content Include="Services\CustomScreeningToolOperations.svc" />

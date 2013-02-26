@@ -61,13 +61,11 @@ namespace GreenField.Web.IssuerShares
 
             public TValue this[String key]
             {
-                [DebuggerStepThrough]
                 get
                 {
                     var result = this.cache.Get(key) as TValue;
                     return result;
                 }
-                [DebuggerStepThrough]
                 set
                 {
                     if (value == null)
@@ -79,6 +77,7 @@ namespace GreenField.Web.IssuerShares
                         CacheItemPolicy policy = new CacheItemPolicy();
                         policy.AbsoluteExpiration = DateTime.Now.AddMinutes(Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
                         this.cache.Set(key, value, policy);
+                        this.cache.Set(key + "Policy", policy, null);
                     }
                 }
             }

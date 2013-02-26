@@ -17,11 +17,14 @@ namespace GreenField.Web
             //if (!IsPostBack)
             {
                 Chart1.ChartAreas[0].AxisY.Title = "Expires in Hours";
+                Chart1.ChartAreas[0].AxisX.Interval = 1;
                 Series dataSeries = Chart1.Series["Series1"];
 
                 // 1. Security
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.EntitySelectionDataCache),
                                         GetExpirationInHours(CacheKeyNames.EntitySelectionDataCache));
+                //dataSeries.Points[0].Color = System.Drawing.Color.Black;
+
                 // 2. Benchmark
                 //dataSeries.Points.AddXY(GetShortName(CacheKeyNames.FilterSelectionDataCache),
                 //                        GetExpirationInHours(CacheKeyNames.FilterSelectionDataCache));
@@ -43,6 +46,20 @@ namespace GreenField.Web
                 //                        GetExpirationInHours(CacheKeyNames.MarketSnapshotSelectionDataCache));
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.LastDayOfMonthsCache),
                                         GetExpirationInHours(CacheKeyNames.LastDayOfMonthsCache));
+
+                // 5. Targeting
+                dataSeries.Points.AddXY(GetShortName(CacheKeyNames.PortfolioRepository),
+                                        GetExpirationInHours(CacheKeyNames.PortfolioRepository));
+                dataSeries.Points.AddXY(GetShortName(CacheKeyNames.SecurityManager),
+                                        GetExpirationInHours(CacheKeyNames.SecurityManager));
+                dataSeries.Points.AddXY(GetShortName(CacheKeyNames.CountryRepository),
+                                        GetExpirationInHours(CacheKeyNames.CountryRepository));
+                dataSeries.Points.AddXY(GetShortName(CacheKeyNames.TaxonomyRepository),
+                                        GetExpirationInHours(CacheKeyNames.TaxonomyRepository));
+                dataSeries.Points.AddXY(GetShortName(CacheKeyNames.BasketRepository),
+                                        GetExpirationInHours(CacheKeyNames.BasketRepository));
+                dataSeries.Points.AddXY(GetShortName(CacheKeyNames.TargetingTypeRepository),
+                                        GetExpirationInHours(CacheKeyNames.TargetingTypeRepository));
             }
             /*
             CacheExpirations = new DefaultCacheProvider().GetAllExpirations();
@@ -93,6 +110,7 @@ namespace GreenField.Web
         protected void RefreshAll_Click(object sender, EventArgs e)
         {
             //new DefaultCacheProvider().InvalidateAllExceptEntity();
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.EntitySelectionDataCache);
             new DefaultCacheProvider().Invalidate(CacheKeyNames.PortfolioSelectionDataCache);
             new DefaultCacheProvider().Invalidate(CacheKeyNames.AvailableDatesInPortfoliosCache);
 
@@ -104,7 +122,7 @@ namespace GreenField.Web
 
 
             // 1. Security
-            //new SecurityReferenceOperations().RetrieveEntitySelectionData();
+            new SecurityReferenceOperations().RetrieveEntitySelectionData();
 
             // 2. Benchmark
             //new BenchmarkHoldingsOperations().RetrieveFilterSelectionData();
@@ -120,6 +138,10 @@ namespace GreenField.Web
             //new PerformanceOperations().RetrieveMarketSnapshotSelectionData("JADHAVK");
             new PerformanceOperations().GetLastDayOfMonths();
 
+            // 5. Targeting
+
+
+            
             Response.Redirect("Bridge.aspx");
         }
 
@@ -158,6 +180,18 @@ namespace GreenField.Web
         {
             new DefaultCacheProvider().Invalidate(CacheKeyNames.LastDayOfMonthsCache);
             new PerformanceOperations().GetLastDayOfMonths();
+
+            Server.Transfer("Bridge.aspx");
+        }
+
+        protected void InvalidateTargeting_Click(object sender, EventArgs e)
+        {
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.PortfolioRepository);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.SecurityManager);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.CountryRepository);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.TaxonomyRepository);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.BasketRepository);
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.TargetingTypeRepository);
 
             Server.Transfer("Bridge.aspx");
         }

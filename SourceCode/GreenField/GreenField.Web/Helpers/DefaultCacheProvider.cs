@@ -29,6 +29,13 @@ namespace GreenField.Web.Helpers
         public const string FXCommodityDataCache = "FXCommodityDataCache";
         public const string MarketSnapshotSelectionDataCache = "MarketSnapshotSelectionDataCache";
         public const string LastDayOfMonthsCache = "LastDayOfMonthsCache";
+
+        public const string PortfolioRepository = "PortfolioRepository";
+        public const string SecurityManager = "SecurityManager";
+        public const string CountryRepository = "CountryRepository";
+        public const string TaxonomyRepository = "TaxonomyRepository";
+        public const string BasketRepository = "BasketRepository";
+        public const string TargetingTypeRepository = "TargetingTypeRepository";
     }
 
     public class CacheExpiration
@@ -70,7 +77,6 @@ namespace GreenField.Web.Helpers
             cache.Add(new CacheItem(key + "Policy", policy), null);
         }
 
-        // Not used
         public bool IsSet(string key)
         {
             return (cache[key] != null);
@@ -122,6 +128,26 @@ namespace GreenField.Web.Helpers
                         break;
                     case CacheKeyNames.LastDayOfMonthsCache:
                         cacheExpiration.ShortName = "DayOfMonths";
+                        break;
+
+
+                    case CacheKeyNames.PortfolioRepository:
+                        cacheExpiration.ShortName = "T Portfolio";
+                        break;
+                    case CacheKeyNames.SecurityManager:
+                        cacheExpiration.ShortName = "T Security";
+                        break;
+                    case CacheKeyNames.CountryRepository:
+                        cacheExpiration.ShortName = "T Country";
+                        break;
+                    case CacheKeyNames.TaxonomyRepository:
+                        cacheExpiration.ShortName = "T Taxonomy";
+                        break;
+                    case CacheKeyNames.BasketRepository:
+                        cacheExpiration.ShortName = "T Basket";
+                        break;
+                    case CacheKeyNames.TargetingTypeRepository:
+                        cacheExpiration.ShortName = "T Type";
                         break;
                 }
 
