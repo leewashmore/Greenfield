@@ -24,6 +24,7 @@ namespace GreenField.DataContracts
         [DataMember]
         public String LongName { get; set; }
 
+        //TODO duplicate instead use ShortName
         [DataMember]
         public String InstrumentID { get; set; }
 

@@ -547,6 +547,108 @@ namespace GreenField.Web.Services
         /// <returns>list of entity selection data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
+        public List<EntitySelectionData> RetrieveSecuritiesData()
+        {
+            try
+            {
+                // use cache if available
+                var fromCache = (List<EntitySelectionData>)new DefaultCacheProvider().Get(CacheKeyNames.SecurityDataCache);
+                if (fromCache != null)
+                    return fromCache;
+
+                // otherwise fetch the data and cache it
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+#if DEBUG
+                Stopwatch swLocalSec = new Stopwatch();
+                DateTime timelocalSec = new DateTime();
+                swLocalSec.Start();
+#endif
+
+                var securities = new GreenField.DAL.ExternalResearchEntities().GF_SECURITY_BASEVIEW_Local.ToList();
+
+                List<EntitySelectionData> result = new List<EntitySelectionData>();
+                foreach (var security in securities)
+                {
+                    result.Add(new EntitySelectionData()
+                        {
+                            ShortName = security.ASEC_SEC_SHORT_NAME,
+                            SecurityType = security.SECURITY_TYPE,
+                            SecurityId = security.SECURITY_ID,
+                            IssuerId = security.ISSUER_ID,
+                            LOOK_THRU_FUND = security.LOOK_THRU_FUND
+                        });
+                }
+#if DEBUG
+                swLocalSec.Stop();
+                timelocalSec = DateTime.Now;
+                Trace.WriteLine(string.Format("{1}: 2. GF_SECURITY_BASEVIEW_Local = {0} seconds.", (swLocalSec.ElapsedMilliseconds / 1000.00).ToString(), timelocalSec.ToString()));
+#endif
+
+                new DefaultCacheProvider().Set(CacheKeyNames.SecurityDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
+                return result;
+                
+                /*
+
+                                if (data != null)
+                                {
+                                    foreach (DimensionEntitiesService.GF_SECURITY_BASEVIEW record in data)
+                                    {
+                                        var security = securities.Where(sec => sec.ASEC_SEC_SHORT_NAME == record.INSTRUMENT_ID).FirstOrDefault();
+
+                                        result.Add(new EntitySelectionData()
+                                        {
+                                            SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
+                                            ShortName = record.SHORT_NAME == null ? String.Empty : record.SHORT_NAME,
+                                            LongName = record.LONG_NAME == null ? String.Empty : record.LONG_NAME,
+                                            InstrumentID = record.INSTRUMENT_ID == null ? String.Empty : record.INSTRUMENT_ID,
+                                            Type = record.TYPE == null ? String.Empty : record.TYPE,
+                                            SecurityType = record.SECURITY_TYPE == null ? String.Empty : record.SECURITY_TYPE,
+                                            SecurityId = security != null ? security.SECURITY_ID : null,
+                                            IssuerId = security != null ? security.ISSUER_ID : null,
+                                            LOOK_THRU_FUND = security != null ? security.LOOK_THRU_FUND : null
+                                        });
+                                    }
+                                }
+
+                                List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM> benchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIB_DIST_BM.ToList();
+                                if (benchmarkData != null)
+                                {
+                                    foreach (DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM benchmark in benchmarkData)
+                                    {
+                                        result.Add(new EntitySelectionData()
+                                        {
+
+                                            SortOrder = EntityTypeSortOrder.GetSortOrder("BENCHMARK"),
+                                            ShortName = benchmark.BM == null ? String.Empty : benchmark.BM,
+                                            LongName = benchmark.BMNAME == null ? String.Empty : benchmark.BMNAME,
+                                            InstrumentID = benchmark.BM == null ? String.Empty : benchmark.BM,
+                                            Type = "BENCHMARK",
+                                            SecurityType = null
+                                        });
+                                    }
+                                }
+                                 */
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+        
+        /// <summary>
+        /// retrieve list of securities for security selector
+        /// </summary>
+        /// <returns>list of entity selection data</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public List<EntitySelectionData> RetrieveEntitySelectionWithBenchmarkData()
         {
             try
