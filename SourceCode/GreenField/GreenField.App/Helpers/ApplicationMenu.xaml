@@ -63,7 +63,7 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem x:Name="rmItemAttribution" Header="Attribution"  
                                              Command="{Binding DashboardPortfolioPerformanceAttributionCommand}"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}" IsEnabled="{Binding EnableGadget}"/>
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}" />
                         <telerik:RadMenuItem x:Name="rmItemRelativePerformance" Header="Relative Performance" 
                                              Command="{Binding DashboardPortfolioPerformanceRelativePerformanceCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
