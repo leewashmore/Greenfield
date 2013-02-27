@@ -18,6 +18,7 @@ namespace GreenField.Web.Helpers
         // RetrieveFilterSelectionData
         // RetrieveMarketSnapshotSelectionData
 
+        public const string SecurityDataCache = "SecurityDataCache";
         public const string EntitySelectionDataCache = "EntitySelectionDataCache";
         public const string FilterSelectionDataCache = "FilterSelectionDataCache";
         public const string PortfolioSelectionDataCache = "PortfolioSelectionDataCache";

@@ -1336,7 +1336,7 @@ namespace GreenField.Web.Services
                 //Trace.WriteLine(string.Format("{0}: Passed to RetrieveExternalResearchData", DateTime.Now));
                 //XMLStringValue(result);
 #endif
-                result = RetrieveExternalResearchDataOld(result);
+                result = RetrieveExternalResearchData(result);
 #if DEBUG
                 //Trace.WriteLine(string.Format("{0}: returned from RetrieveExternalResearchData", DateTime.Now));
                 //Trace.WriteLine("");
@@ -1541,12 +1541,12 @@ namespace GreenField.Web.Services
                 StringBuilder issuerIDPortfolio = new StringBuilder();
 
                 SecurityReferenceOperations securityReferenceOperations = new SecurityReferenceOperations();
-                List<EntitySelectionData> newSecurities = securityReferenceOperations.RetrieveEntitySelectionData();
+                List<EntitySelectionData> newSecurities = securityReferenceOperations.RetrieveSecuritiesData();
 
                 foreach (String asecSecShortName in securityAsecSecShortName)
                 {
                     //SecurityBaseviewData securityDetails = securityData.Where(record => record.IssueName == issueName).FirstOrDefault();
-                    var securityDetails = newSecurities.Where(record => record.InstrumentID == asecSecShortName).FirstOrDefault();
+                    var securityDetails = newSecurities.Where(record => record.ShortName == asecSecShortName).FirstOrDefault();
 
                     if (securityDetails != null)
                     {
@@ -1627,7 +1627,7 @@ namespace GreenField.Web.Services
                     item.Upside = fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault() == null ?
                         null : (fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault().UPSIDE as decimal?) * 100M;
 
-                    var security = newSecurities.Where(x => x.InstrumentID == item.AsecSecShortName).FirstOrDefault();
+                    var security = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault();
                     item.AshEmmModelWeight = 0;
                     if (security != null)
                     {
