@@ -126,6 +126,9 @@
                                                 DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="PortfolioReturn" ResultFormatString="{}{0:p2}" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
                     </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="Benchmark Return" UniqueName="Benchmark Return" 
                                                 DataMemberBinding="{Binding BenchmarkReturn}"                                               
@@ -134,6 +137,9 @@
                                                 DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right" FooterTextAlignment="Right">
+                        <telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:SumFunction SourceField="BenchmarkReturn" ResultFormatString="{}{0:p2}" />
+                        </telerik:GridViewDataColumn.AggregateFunctions>
                     </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="Asset Allocation" UniqueName="Asset Allocation"
                                                 DataMemberBinding="{Binding AssetAllocation}"                                               

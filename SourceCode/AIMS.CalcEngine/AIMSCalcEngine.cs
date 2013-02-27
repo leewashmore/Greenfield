@@ -65,7 +65,7 @@ namespace AIMS.CalcEngine
                     print("Total issuers processed = " + startIndex);
                 }
                 DoFinalUpdateStatus();
-                print("Get_Data Completed Successfully ");
+                Console.WriteLine("Get_Data Completed Successfully "); //Do not remove this print line. This is a return expression for JAMS
             }
             catch (Exception e)
             {
