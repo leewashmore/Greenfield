@@ -32,5 +32,9 @@ namespace GreenField.Gadgets.Models
        
        public Decimal? TotalValueAdd  { get; set; }
 
+       public Decimal? PortTwr { get; set; }
+
+       public Decimal? BM1TopTwr { get; set; }
+
     }
 }

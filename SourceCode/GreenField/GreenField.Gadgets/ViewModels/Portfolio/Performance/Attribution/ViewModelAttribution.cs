@@ -155,6 +155,8 @@ namespace GreenField.Gadgets.ViewModels
                                 entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1d;
                                 entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1d;
                                 entry.TotalValueAdd = entry.AssetAllocation + entry.StockSelectionTotal;
+                                entry.PortTwr = AttributionDataInfo[i].PorTopTwr1d;
+                                entry.BM1TopTwr = AttributionDataInfo[i].BM1TopTwr1d;
                                 resultd.Add(entry);
                             }
                             PeriodAttributionInfo = resultd;
@@ -189,6 +191,8 @@ namespace GreenField.Gadgets.ViewModels
                                 entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1w;
                                 entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1w;
                                 entry.TotalValueAdd = entry.AssetAllocation + entry.StockSelectionTotal;
+                                entry.PortTwr = AttributionDataInfo[i].PorTopTwr1w;
+                                entry.BM1TopTwr = AttributionDataInfo[i].BM1TopTwr1w;
                                 result.Add(entry);
                             }
                             PeriodAttributionInfo = result;
@@ -230,6 +234,8 @@ namespace GreenField.Gadgets.ViewModels
                                     entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocMtd;
                                     entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecMtd;
                                     entry.TotalValueAdd = entry.AssetAllocation + entry.StockSelectionTotal;
+                                    entry.PortTwr = AttributionDataInfo[i].PorTopTwrMtd;
+                                    entry.BM1TopTwr = AttributionDataInfo[i].BM1TopTwrMtd;
                                     resultMtd.Add(entry);
                                 }
                                 PeriodAttributionInfo = resultMtd;
@@ -272,6 +278,8 @@ namespace GreenField.Gadgets.ViewModels
                                     entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocQtd;
                                     entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecQtd;
                                     entry.TotalValueAdd = entry.AssetAllocation + entry.StockSelectionTotal;
+                                    entry.PortTwr = AttributionDataInfo[i].PorTopTwrQtd;
+                                    entry.BM1TopTwr = AttributionDataInfo[i].BM1TopTwrQtd;
                                     resultQtd.Add(entry);
                                 }
                                 PeriodAttributionInfo = resultQtd;
@@ -314,6 +322,8 @@ namespace GreenField.Gadgets.ViewModels
                                     entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocYtd;
                                     entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecYtd;
                                     entry.TotalValueAdd = entry.AssetAllocation + entry.StockSelectionTotal;
+                                    entry.PortTwr = AttributionDataInfo[i].PorTopTwrYTD;
+                                    entry.BM1TopTwr = AttributionDataInfo[i].BM1TopTwrYtd;
                                     resultYTD.Add(entry);
                                 }
                                 PeriodAttributionInfo = resultYTD;
@@ -356,6 +366,8 @@ namespace GreenField.Gadgets.ViewModels
                                     entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1y;
                                     entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1y;
                                     entry.TotalValueAdd = entry.AssetAllocation + entry.StockSelectionTotal;
+                                    entry.PortTwr = AttributionDataInfo[i].PorTopTwr1y;
+                                    entry.BM1TopTwr = AttributionDataInfo[i].BM1TopTwr1y;
                                     result1Y.Add(entry);
                                 }
                                 PeriodAttributionInfo = result1Y;

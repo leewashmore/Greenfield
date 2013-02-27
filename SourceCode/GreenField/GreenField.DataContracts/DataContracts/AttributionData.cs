@@ -33,6 +33,14 @@ namespace GreenField.DataContracts
        public Decimal? FBm1AshSecSelec1d { get; set; }
 
        [DataMember]
+       public Decimal? PorTopTwr1d { get; set; }
+
+       [DataMember]
+       public Decimal? BM1TopTwr1d { get; set; }
+
+
+
+       [DataMember]
        public Decimal? PorRcAvgWgt1w { get; set; }
 
        [DataMember]
@@ -49,6 +57,12 @@ namespace GreenField.DataContracts
 
        [DataMember]
        public Decimal? FBm1AshSecSelec1w { get; set; }
+
+       [DataMember]
+       public Decimal? PorTopTwr1w { get; set; }
+
+       [DataMember]
+       public Decimal? BM1TopTwr1w { get; set; }
 
        [DataMember]
        public Decimal? PorRcAvgWgtMtd { get; set; }
@@ -69,6 +83,12 @@ namespace GreenField.DataContracts
        public Decimal? FBm1AshSecSelecMtd { get; set; }
 
        [DataMember]
+       public Decimal? PorTopTwrMtd { get; set; }
+
+       [DataMember]
+       public Decimal? BM1TopTwrMtd { get; set; }
+
+       [DataMember]
        public Decimal? PorRcAvgWgtQtd { get; set; }
 
        [DataMember]
@@ -80,11 +100,18 @@ namespace GreenField.DataContracts
        [DataMember]
        public Decimal? BM1_RC_TWR_QTD { get; set; }
 
+       
        [DataMember]
        public Decimal? FBm1AshAssetAllocQtd { get; set; }
 
        [DataMember]
        public Decimal? FBm1AshSecSelecQtd { get; set; }
+
+       [DataMember]
+       public Decimal? PorTopTwrQtd { get; set; }
+
+       [DataMember]
+       public Decimal? BM1TopTwrQtd { get; set; }
 
        [DataMember]
        public Decimal? PorRcAvgWgtYtd { get; set; }
@@ -105,6 +132,12 @@ namespace GreenField.DataContracts
        public Decimal? FBm1AshSecSelecYtd { get; set; }
 
        [DataMember]
+       public Decimal? PorTopTwrYTD { get; set; }
+
+       [DataMember]
+       public Decimal? BM1TopTwrYtd { get; set; }
+
+       [DataMember]
        public Decimal? PorRcAvgWgt1y { get; set; }
 
        [DataMember]
@@ -121,6 +154,12 @@ namespace GreenField.DataContracts
 
        [DataMember]
        public Decimal? FBm1AshSecSelec1y { get; set; }
+
+       [DataMember]
+       public Decimal? PorTopTwr1y { get; set; }
+
+       [DataMember]
+       public Decimal? BM1TopTwr1y { get; set; }
 
        [DataMember]
        public String PorInceptionDate { get; set; }
