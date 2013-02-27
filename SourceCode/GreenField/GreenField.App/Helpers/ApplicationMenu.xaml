@@ -22,7 +22,7 @@
 
             <!--Markets SubMenu-->
             <telerik:RadPanelBarItem Header="Markets" x:Name="pbItemMarkets" HorizontalAlignment="Stretch"
-                                     Style="{StaticResource PanelBarItemStyle}" >
+                                     Style="{StaticResource PanelBarItemStyle}"  IsEnabled="{Binding EnableGadget}">
                 <telerik:RadMenu x:Name="radMenuMarkets" ClickToOpen="False" Orientation="Vertical"  
                                  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Style="{StaticResource RadMenuStyle}" >
 
