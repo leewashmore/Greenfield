@@ -30,7 +30,7 @@ namespace GreenField.Gadgets.Models
 
        public Decimal? StockSelectionTotal { get; set; }
        
-       public Decimal? TotalValueAdd { get; set; }
+       public Decimal? TotalValueAdd  { get; set; }
 
     }
 }
