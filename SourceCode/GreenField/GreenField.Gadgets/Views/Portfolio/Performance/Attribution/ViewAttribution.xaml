@@ -139,7 +139,7 @@
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right" FooterTextAlignment="Right">
                         <telerik:GridViewDataColumn.AggregateFunctions>
-                            <telerik:MaxFunction SourceField="BM1TopTwr" ResultFormatString="{}{0:p2}" />
+                            <telerik:MaxFunction SourceField="BM1TopTwr"  ResultFormatString="{}{0:p2}" />
                         </telerik:GridViewDataColumn.AggregateFunctions>
                     </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="Asset Allocation" UniqueName="Asset Allocation"
