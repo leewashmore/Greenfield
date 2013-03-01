@@ -191,6 +191,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <!--Gadget Selector-->
                 <Grid Visibility="{Binding GadgetSelectorVisibility}" Margin="5,0,0,0" Grid.Column="0">
