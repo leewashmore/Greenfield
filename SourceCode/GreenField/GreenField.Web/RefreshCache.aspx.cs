@@ -21,6 +21,8 @@ namespace GreenField.Web
                 Series dataSeries = Chart1.Series["Series1"];
 
                 // 1. Security
+                dataSeries.Points.AddXY(GetShortName(CacheKeyNames.SecurityDataCache),
+                                        GetExpirationInHours(CacheKeyNames.SecurityDataCache));
                 dataSeries.Points.AddXY(GetShortName(CacheKeyNames.EntitySelectionDataCache),
                                         GetExpirationInHours(CacheKeyNames.EntitySelectionDataCache));
                 //dataSeries.Points[0].Color = System.Drawing.Color.Black;
@@ -93,6 +95,7 @@ namespace GreenField.Web
         protected void RefreshAll_Click(object sender, EventArgs e)
         {
             //new DefaultCacheProvider().InvalidateAllExceptEntity();
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.SecurityDataCache);
             new DefaultCacheProvider().Invalidate(CacheKeyNames.EntitySelectionDataCache);
             new DefaultCacheProvider().Invalidate(CacheKeyNames.PortfolioSelectionDataCache);
             new DefaultCacheProvider().Invalidate(CacheKeyNames.AvailableDatesInPortfoliosCache);
@@ -128,13 +131,20 @@ namespace GreenField.Web
             Response.Redirect("Bridge.aspx");
         }
 
+        protected void RefreshSecuritiesCache_Click(object sender, EventArgs e)
+        {
+            new DefaultCacheProvider().Invalidate(CacheKeyNames.SecurityDataCache);
+            new SecurityReferenceOperations().RetrieveSecuritiesData();
+            Server.Transfer("Bridge.aspx");
+        }
+
         protected void RefreshEntitiesCache_Click(object sender, EventArgs e)
         {
             new DefaultCacheProvider().Invalidate(CacheKeyNames.EntitySelectionDataCache);
             new SecurityReferenceOperations().RetrieveEntitySelectionData();
             Server.Transfer("Bridge.aspx");
         }
-
+        
         protected void RefreshBenchmarkCache_Click(object sender, EventArgs e)
         {
             new DefaultCacheProvider().Invalidate(CacheKeyNames.PortfolioSelectionDataCache);
