@@ -42,7 +42,7 @@ namespace TopDown.Core.ManagingPst
                 if (item.Target.InitialValue.HasValue)
                 {
                     // update or delete
-                    if (item.Target.EditedValue.HasValue)
+                    if (item.Target.EditedValue.HasValue && item.Target.EditedValue.Value != 0)
                     {
                         if (CalculationHelper.NoDifference(item.Target.InitialValue.Value, item.Target.EditedValue.Value))
                         {

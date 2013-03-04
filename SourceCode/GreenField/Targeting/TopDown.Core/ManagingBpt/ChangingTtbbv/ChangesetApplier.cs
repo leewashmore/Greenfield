@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Aims.Expressions;
 using TopDown.Core.ManagingBaskets;
 using Aims.Core;
+using TopDown.Core.Helpers;
 
 namespace TopDown.Core.ManagingBpt.ChangingTtbbv
 {
@@ -230,7 +231,7 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbbv
             {
                 basketName = basket.AsRegionBasket().Name;
             }
-            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from " + change.BaseValueBefore + " to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from " + MailSender.TransformTargetToString(change.BaseValueBefore) + " to " + MailSender.TransformTargetToString(change.BaseValueAfter));
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -249,7 +250,7 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbbv
             {
                 basketName = basket.AsRegionBasket().Name;
             }
-            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from [empty] to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from [empty] to " + MailSender.TransformTargetToString(change.BaseValueAfter));
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -268,7 +269,7 @@ namespace TopDown.Core.ManagingBpt.ChangingTtbbv
             {
                 basketName = basket.AsRegionBasket().Name;
             }
-            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from " + change.BaseValueBefore + " to [empty]");
+            bodyAppendix.AppendLine("BASE Adjustment in " + basketName + " for " + ttName + " from " + MailSender.TransformTargetToString(change.BaseValueBefore) + " to [empty]");
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }

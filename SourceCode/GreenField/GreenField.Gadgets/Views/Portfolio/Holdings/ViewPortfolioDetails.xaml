@@ -156,7 +156,7 @@
                                     >
                                     <telerik:RadGridView.Columns >
 
-                                        <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
+                                        <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding AsecSecShortName}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
@@ -227,7 +227,11 @@
                                         <telerik:GridViewDataColumn Header="Active Position %" UniqueName="Active Position %" DataMemberBinding="{Binding ActivePosition}" 
                                                         DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        TextAlignment="Right" HeaderTextAlignment="Right"/>
+                                                        TextAlignment="Right" HeaderTextAlignment="Right">
+                                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                                <telerik:SumFunction SourceField="ActivePosition" ResultFormatString="{}{0:n2}%" />
+                                            </telerik:GridViewDataColumn.AggregateFunctions>
+                                        </telerik:GridViewDataColumn>
                                         <!--<telerik:GridViewDataColumn Header="Market Cap" UniqueName="Market Cap" DataMemberBinding="{Binding MarketCapUSD, StringFormat=c}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -293,8 +297,8 @@
                         </telerik:RadGridView.HierarchyChildTemplate>
                         
                         <telerik:RadGridView.Columns >
-                            
-                            <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
+
+                            <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding AsecSecShortName}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
@@ -339,7 +343,7 @@
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Model %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
-                                                        DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
+                                                        DataFormatString="{}{0:n2}" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
@@ -347,7 +351,7 @@
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Portfolio %" UniqueName="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
-                                                        DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
+                                                        DataFormatString="{}{0:n2}" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
@@ -355,7 +359,7 @@
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Benchmark %" UniqueName="Benchmark %" DataMemberBinding="{Binding ReBenchmarkWeight}"       
-                                                        DataFormatString="{}{0:n2}%" x:Name="BenchmarkWeight" IsGroupable="False" FooterTextAlignment="Right"
+                                                        DataFormatString="{}{0:n2}" x:Name="BenchmarkWeight" IsGroupable="False" FooterTextAlignment="Right"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Right" HeaderTextAlignment="Right">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
@@ -363,9 +367,13 @@
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Active Position %" UniqueName="Active Position %" DataMemberBinding="{Binding ActivePosition}" 
-                                                        DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False"
+                                                        DataFormatString="{}{0:n2}" IsGroupable="False" IsFilterable="False"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        TextAlignment="Right" HeaderTextAlignment="Right"/>
+                                                        TextAlignment="Right" HeaderTextAlignment="Right">
+                                <telerik:GridViewDataColumn.AggregateFunctions>
+                                    <telerik:SumFunction SourceField="ActivePosition" ResultFormatString="{}{0:n2}%" />
+                                </telerik:GridViewDataColumn.AggregateFunctions>
+                            </telerik:GridViewDataColumn>
                             <!--<telerik:GridViewDataColumn Header="Market Cap" UniqueName="Market Cap" DataMemberBinding="{Binding MarketCapUSD, StringFormat=c}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"

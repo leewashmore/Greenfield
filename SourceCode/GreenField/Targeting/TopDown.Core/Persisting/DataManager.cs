@@ -391,7 +391,7 @@ namespace TopDown.Core.Persisting
             }
         }
 
-        private class BGAUserPermissions
+        private class UserPermissions
         {
             public String Username { get; set; }
             public Int32 IsPermitted { get; set; }
@@ -400,12 +400,30 @@ namespace TopDown.Core.Persisting
         public Boolean IsSavePermittedForBGAUser(string username)
         {
 
-            using (var builder = this.CreateQueryCommandBuilder<BGAUserPermissions>())
+            using (var builder = this.CreateQueryCommandBuilder<UserPermissions>())
             {
                 var result = builder.Text("select ")
                     .Field("  [USERNAME]", (info, value) => info.Username = value, true)
                     .Field(", 1", (info, value) => info.IsPermitted = value)
                     .Text(" from [" + TableNames.USERNAME_BGA_ACCESS + "]")
+                    .Text(" where [USERNAME] = ").Parameter(username)
+                    .PullFirstOrDefault();
+                if (result != null)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        public Boolean IsUserCanCreateOutputFile(string username)
+        {
+
+            using (var builder = this.CreateQueryCommandBuilder<UserPermissions>())
+            {
+                var result = builder.Text("select ")
+                    .Field("  [USERNAME]", (info, value) => info.Username = value, true)
+                    .Field(", 1", (info, value) => info.IsPermitted = value)
+                    .Text(" from [" + TableNames.USERNAME_CAN_CREATE_TARGETING_FILE + "]")
                     .Text(" where [USERNAME] = ").Parameter(username)
                     .PullFirstOrDefault();
                 if (result != null)

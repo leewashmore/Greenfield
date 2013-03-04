@@ -60,12 +60,15 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
+            /* TODO Hide for now
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARKS_MULTILINE_BENCHMARK, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 RestoredHeight=300,
                 Content = new ViewMultiLineBenchmark(new ViewModelMultiLineBenchmark(param))
             });
+            
+            */
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {

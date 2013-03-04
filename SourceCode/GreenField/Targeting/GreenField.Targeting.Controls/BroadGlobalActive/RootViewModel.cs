@@ -23,15 +23,21 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
     [Export]
     public class RootViewModel : RootViewModelBase
     {
+        private IClientFactory clientFactory;
         
         [ImportingConstructor]
         public RootViewModel(Settings settings)
         {
+
+            this.clientFactory = settings.ClientFactory;
+
             var editorViewModel = new EditorViewModel(
                 settings.ClientFactory,
                 settings.ModelTraverser,
                 settings.DefaultExpandCollapseStateSetter
             );
+
+            
 
             var pickerViewModel = new PickerViewModel(settings.ClientFactory);
 
@@ -50,9 +56,20 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
                 e.IsCancelled = !this.ConsiderReseting();
             };
 
+
             this.SaveCommand = new DelegateCommand(this.Save, this.CanSave);
             editorViewModel.GotData += (sender, e) => this.SaveCommand.RaiseCanExecuteChanged();
+
+            this.RequestFileCreationCommand = new DelegateCommand(this.EditorViewModel.CreateFile);
+            this.RequestRecalculationCommand = new DelegateCommand(this.EditorViewModel.Recalculate);
+            
         }
+
+             
+
+        
+
+        
 
         protected override void TakeDispatcher(Dispatcher dispatcher)
         {
@@ -98,10 +115,13 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
         public override void Activate()
         {
             this.PickerViewModel.RequestData();
+            this.EditorViewModel.RequestPermissionsToSaveFile();
         }
 
         public override void Deactivate()
         {
+            
+            this.RequestFileCreationCommand.RaiseCanExecuteChanged();
             this.PickerViewModel.Deactivate(true);
             this.EditorViewModel.Discard();
         }
@@ -135,6 +155,9 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
                 return result;
             }
         }
+
+        public DelegateCommand RequestFileCreationCommand { get; private set; }
+        public DelegateCommand RequestRecalculationCommand { get; private set; }
        
     }
 }

@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>GreenField.App</title>
+    <title>AIMS</title>
     <style type="text/css">
         html, body
         {
@@ -74,7 +74,9 @@
     <div id="silverlightControlHost">
         <object data="data:application/x-silverlight-2," type="application/x-silverlight-2"
             width="100%" height="100%">
-            <param name="source" value="ClientBin/GreenField.App.xap" />
+            <%
+                Response.Write("<param name=\"source\" value=\"ClientBin/GreenField.App.xap\"?ignore=" + ConfigurationManager.AppSettings["DeploymentVersion"] + "\" />");
+             %>
             <param name="onError" value="onSilverlightError" />
             <param name="background" value="white" />
             <param name="minRuntimeVersion" value="4.0.50826.0" />

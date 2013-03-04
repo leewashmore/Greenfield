@@ -132,6 +132,24 @@
   <wsdl:message name="IFacade_RequestCommentsForBuPortfolioSecurityTarget_OutputMessage">
     <wsdl:part name="parameters" element="tns:RequestCommentsForBuPortfolioSecurityTargetResponse" />
   </wsdl:message>
+  <wsdl:message name="IFacade_CreateTargetingFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateTargetingFile" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_CreateTargetingFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateTargetingFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_IsUserPermittedToCreateOutputFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserPermittedToCreateOutputFile" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_IsUserPermittedToCreateOutputFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserPermittedToCreateOutputFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestRecalculation_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestRecalculation" />
+  </wsdl:message>
+  <wsdl:message name="IFacade_RequestRecalculation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestRecalculationResponse" />
+  </wsdl:message>
   <wsdl:portType name="IFacade">
     <wsdl:operation name="GetBroadGlobalActive">
       <wsdl:input wsaw:Action="http://tempuri.org/IFacade/GetBroadGlobalActive" message="tns:IFacade_GetBroadGlobalActive_InputMessage" />
@@ -212,6 +230,18 @@
     <wsdl:operation name="RequestCommentsForBuPortfolioSecurityTarget">
       <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForBuPortfolioSecurityTarget" message="tns:IFacade_RequestCommentsForBuPortfolioSecurityTarget_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestCommentsForBuPortfolioSecurityTargetResponse" message="tns:IFacade_RequestCommentsForBuPortfolioSecurityTarget_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateTargetingFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/CreateTargetingFile" message="tns:IFacade_CreateTargetingFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/CreateTargetingFileResponse" message="tns:IFacade_CreateTargetingFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsUserPermittedToCreateOutputFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/IsUserPermittedToCreateOutputFile" message="tns:IFacade_IsUserPermittedToCreateOutputFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/IsUserPermittedToCreateOutputFileResponse" message="tns:IFacade_IsUserPermittedToCreateOutputFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestRecalculation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacade/RequestRecalculation" message="tns:IFacade_RequestRecalculation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacade/RequestRecalculationResponse" message="tns:IFacade_RequestRecalculation_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="TargetingOperations" type="tns:IFacade">
@@ -389,6 +419,33 @@
     </wsdl:operation>
     <wsdl:operation name="RequestCommentsForBuPortfolioSecurityTarget">
       <soap:operation soapAction="http://tempuri.org/IFacade/RequestCommentsForBuPortfolioSecurityTarget" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTargetingFile">
+      <soap:operation soapAction="http://tempuri.org/IFacade/CreateTargetingFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserPermittedToCreateOutputFile">
+      <soap:operation soapAction="http://tempuri.org/IFacade/IsUserPermittedToCreateOutputFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestRecalculation">
+      <soap:operation soapAction="http://tempuri.org/IFacade/RequestRecalculation" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

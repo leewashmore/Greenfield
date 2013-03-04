@@ -29,6 +29,12 @@ namespace GreenField.Gadgets.Models
        public Decimal? AssetAllocation { get; set; }
 
        public Decimal? StockSelectionTotal { get; set; }
+       
+       public Decimal? TotalValueAdd  { get; set; }
+
+       public Decimal? PortTwr { get; set; }
+
+       public Decimal? BM1TopTwr { get; set; }
 
     }
 }

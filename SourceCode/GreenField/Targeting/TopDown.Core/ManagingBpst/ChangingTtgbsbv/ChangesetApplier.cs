@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Data.SqlClient;
 using Aims.Expressions;
 using Aims.Core;
+using TopDown.Core.Helpers;
 
 namespace TopDown.Core.ManagingBpst.ChangingTtgbsbv
 {
@@ -215,7 +216,7 @@ namespace TopDown.Core.ManagingBpst.ChangingTtgbsbv
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine("Adjustment for BASE of " + security.Name + "(" + security.ShortName + ") from " + change.BaseValueBefore + " to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("Adjustment for BASE of " + security.Name + "(" + security.ShortName + ") from " + MailSender.TransformTargetToString(change.BaseValueBefore) + " to " + MailSender.TransformTargetToString(change.BaseValueAfter));
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -225,7 +226,7 @@ namespace TopDown.Core.ManagingBpst.ChangingTtgbsbv
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine("Adjustment for BASE: " + security.Name + "(" + security.ShortName + ") was added to " + change.BaseValueAfter);
+            bodyAppendix.AppendLine("Adjustment for BASE: " + security.Name + "(" + security.ShortName + ") was added to " + MailSender.TransformTargetToString(change.BaseValueAfter));
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }
@@ -235,7 +236,7 @@ namespace TopDown.Core.ManagingBpst.ChangingTtgbsbv
             StringBuilder bodyAppendix = new StringBuilder("\n");
             bodyAppendix.AppendLine("---" + date + ", Approved by: " + username + "---");
             var security = securityRepository.FindSecurity(change.SecurityId);
-            bodyAppendix.AppendLine("Adjustment for BASE: " + security.Name + "(" + security.ShortName + ") was removed [last target was " + change.BaseValueBefore + "]");
+            bodyAppendix.AppendLine("Adjustment for BASE: " + security.Name + "(" + security.ShortName + ") was removed [last target was " + MailSender.TransformTargetToString(change.BaseValueBefore) + "]");
             bodyAppendix.AppendLine("COMMENT: " + change.Comment);
             mailMessage.Add(bodyAppendix.ToString());
         }

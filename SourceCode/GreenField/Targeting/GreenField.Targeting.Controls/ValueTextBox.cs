@@ -15,7 +15,7 @@ namespace GreenField.Targeting.Controls
 {
     public class ValueTextBox : TextBox
     {
-        public const String ValueFormat = "#0.000";
+        public const String ValueFormat = "#0.00";
 
         private DispatcherTimer finalCountdown;
         public ValueTextBox()

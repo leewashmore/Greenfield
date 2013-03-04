@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AIMS.CalcEngine.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">integrated security=SSPI;data source=lonweb1t.ashmore.local;persist security info=False;initial catalog=AIMS_MAIN</Value>
+    </Setting>
+    <Setting Name="NumberOfThreads" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

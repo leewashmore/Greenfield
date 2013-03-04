@@ -1,6 +1,10 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targeting", "Targeting", "{78994EE7-638E-4217-8C28-E12F8E98BE31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IssuerShares", "IssuerShares", "{5CFEF42B-4012-4460-BB16-8D0916785E8B}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.App", "GreenField.App\GreenField.App.csproj", "{F914419C-A86A-487F-9757-8DF5151FAA77}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Web", "GreenField.Web\GreenField.Web.csproj", "{64C3D391-3815-4125-9AEE-2C253B7A80A3}"
@@ -36,8 +40,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.UserSession", "G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Labs", "GreenField.Labs\GreenField.Labs.csproj", "{794CB7BD-0D8B-4294-8B01-9D5EEB3C3018}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targeting", "Targeting", "{78994EE7-638E-4217-8C28-E12F8E98BE31}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aims.Expressions", "Targeting\TopDown.Expressions\Aims.Expressions.csproj", "{9FC437D2-362D-4898-8C9B-408B16406A0F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Targeting.Server", "Targeting\GreenField.Targeting.Server\GreenField.Targeting.Server.csproj", "{6E829E28-5519-4627-960D-12DD9162D156}"
@@ -58,8 +60,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aims.Data.Server", "IssuerShares\Aims.Data.Server\Aims.Data.Server.csproj", "{243C3D53-8C51-469E-88E1-9623A3D8292B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aims.Core", "Aims.Core\Aims.Core.csproj", "{426D597E-4276-41D2-BE84-D1229501A51A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IssuerShares", "IssuerShares", "{5CFEF42B-4012-4460-BB16-8D0916785E8B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenfield.IssuerShares.Client", "IssuerShares\Greenfield.IssuerShares.Client\Greenfield.IssuerShares.Client.csproj", "{66988C68-E8CC-46A6-AD78-3A47AB1D4C0F}"
 EndProject

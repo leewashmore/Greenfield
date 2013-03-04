@@ -94,27 +94,33 @@ namespace TopDown.Core.ManagingBpst
 
         public void SendNotification(ChangingTtgbsbv.Changeset ttgbsbvChangeset, ChangingBpst.Changeset bpstChangeset, IDataManager manager, SecurityRepository securityRepository, BasketRepository basketRepository, String userEmail)
         {
-            MailMessage mail = new MailMessage();
-            mail.IsBodyHtml = false;
-            int basketId;
-            if (ttgbsbvChangeset != null)
+            try
             {
-                basketId = ttgbsbvChangeset.BasketId;
+                MailMessage mail = new MailMessage();
+                mail.IsBodyHtml = false;
+                int basketId;
+                if (ttgbsbvChangeset != null)
+                {
+                    basketId = ttgbsbvChangeset.BasketId;
+                }
+                else
+                {
+                    basketId = bpstChangeset.BasketId;
+                }
+                var basket = basketRepository.GetBasket(basketId);
+                string basketName = basket.TryAsCountryBasket() != null ? basket.AsCountryBasket().Country.Name : basket.AsRegionBasket().Name;
+
+                var bpstChanges = this.bpstChangesetApplier.PrepareToSend(bpstChangeset, manager, securityRepository);
+                var ttgbsbvChanges = this.ttgbsbvChangesetApplier.PrepareToSend(ttgbsbvChangeset, manager, securityRepository);
+
+                mail.Body = "The following changes were made to " + basketName + "\n" + (ttgbsbvChangeset != null ? String.Join("\n", ttgbsbvChanges) : "\n") + (bpstChangeset != null ? String.Join("\n", bpstChanges) : "");
+                mail.Subject = "Targeting: Stock Selection changes in " + basketName;
+                MailSender.SendTargetingAlert(mail, userEmail);
             }
-            else
+            catch (Exception e)
             {
-                basketId = bpstChangeset.BasketId;
+                throw new EmailNotificationException("See inner exception for details.", e);
             }
-            var basket = basketRepository.GetBasket(basketId);
-            string basketName = basket.TryAsCountryBasket() != null ? basket.AsCountryBasket().Country.Name : basket.AsRegionBasket().Name;
-            
-            var bpstChanges = this.bpstChangesetApplier.PrepareToSend(bpstChangeset, manager, securityRepository);
-            var ttgbsbvChanges = this.ttgbsbvChangesetApplier.PrepareToSend(ttgbsbvChangeset, manager, securityRepository);
-
-
-            mail.Body = "The following changes were made to " + basketName + "\n" + (ttgbsbvChangeset != null ? String.Join("\n", ttgbsbvChanges) : "\n") + ( bpstChangeset != null ? String.Join("\n", bpstChanges) : "");
-            mail.Subject = "Targeting: Stock Selection changes in " + basketName;
-            MailSender.SendTargetingAlert(mail, userEmail);
         }
 
     }

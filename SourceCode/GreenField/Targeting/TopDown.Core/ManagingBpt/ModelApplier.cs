@@ -145,17 +145,24 @@ namespace TopDown.Core.ManagingBpt
 
         private void SendNotification(String ttName, String portfolioName, ChangingPsto.Changeset pstoChangeset, ChangingTtbbv.Changeset ttbbvChangeset, ChangingTtbpt.Changeset ttbptChangeset, IDataManager manager, SecurityRepository securityRepository, BasketRepository basketRepository, PortfolioRepository portfolioRepository, string userEmail)
         {
-            MailMessage mail = new MailMessage();
-            mail.IsBodyHtml = false;
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.IsBodyHtml = false;
 
-            var pstoChanges = this.pstoChangesetApplier.PrepareToSend(pstoChangeset, manager, securityRepository, portfolioRepository, portfolioName);
-            var ttbbvChanges = this.ttbbvChangesetApplier.PrepareToSend(ttbbvChangeset, manager, securityRepository, basketRepository, ttName);
-            var ttbptChanges = this.ttbptChangesetApplier.PrepareToSend(ttbptChangeset, manager, securityRepository, basketRepository, ttName, portfolioName);
+                var pstoChanges = this.pstoChangesetApplier.PrepareToSend(pstoChangeset, manager, securityRepository, portfolioRepository, portfolioName);
+                var ttbbvChanges = this.ttbbvChangesetApplier.PrepareToSend(ttbbvChangeset, manager, securityRepository, basketRepository, ttName);
+                var ttbptChanges = this.ttbptChangesetApplier.PrepareToSend(ttbptChangeset, manager, securityRepository, basketRepository, ttName, portfolioName);
 
 
-            mail.Body = "The following Asset Allocation changes were made to the Global Active Accounts:\n" + (ttbbvChangeset != null ? String.Join("\n", ttbbvChanges) : "\n") + (ttbptChangeset != null ? String.Join("\n", ttbptChanges) : "\n") + (pstoChangeset != null ? String.Join("\n", pstoChanges) : "");
-            mail.Subject = "Targeting: Asset Allocation Changes";
-            MailSender.SendTargetingAlert(mail, userEmail);
+                mail.Body = "The following Asset Allocation changes were made to the Global Active Accounts:\n" + (ttbbvChangeset != null ? String.Join("\n", ttbbvChanges) : "\n") + (ttbptChangeset != null ? String.Join("\n", ttbptChanges) : "\n") + (pstoChangeset != null ? String.Join("\n", pstoChanges) : "");
+                mail.Subject = "Targeting: Asset Allocation Changes";
+                MailSender.SendTargetingAlert(mail, userEmail);
+            }
+            catch (Exception e)
+            {
+                throw new EmailNotificationException("See inner exception for details.", e);
+            }
         }
 
         public IEnumerable<IValidationIssue> ValidateModelAndPermissions(RootModel model, String username, CalculationTicket ticket)

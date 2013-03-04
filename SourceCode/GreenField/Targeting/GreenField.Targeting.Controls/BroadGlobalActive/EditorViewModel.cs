@@ -53,6 +53,7 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
             this.traverser = traverser;
             this.defaultExpandCollapseStateSetter = defaultExpandCollapseStateSetter;
             this.clientFactory = clientFactory;
+            this.IsFileButtonVisible = Visibility.Collapsed;
         }
 
         // talking to the server
@@ -319,6 +320,87 @@ namespace GreenField.Targeting.Controls.BroadGlobalActive
 
         public void Dispose()
         {
+        }
+
+        public void Recalculate()
+        {
+            this.StartLoading();
+            var client = this.clientFactory.CreateClient();
+            client.RequestRecalculationCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(client_RequestRecalculationCompleted);
+            client.RequestRecalculationAsync(this.clientFactory.GetUsername());
+        }
+
+        void client_RequestRecalculationCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                this.FinishLoading(e.Error);
+            }
+            else
+            {
+                // Recalculation is done but message box is only setup to show messages through exceptions. Needs to be changed in the future.
+                this.FinishLoading(new Exception("Everything has been recalculated"));
+            }
+        }
+
+        
+        public void CreateFile()
+        {
+            this.StartLoading();
+            var client = this.clientFactory.CreateClient();
+            client.CreateTargetingFileCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(client_CreateTargetingFileCompleted);
+            client.CreateTargetingFileAsync(this.clientFactory.GetUsername());
+        }
+
+        void client_CreateTargetingFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                this.FinishLoading(e.Error);
+            }
+            else
+            {
+                // File is created but message box is only setup to show messages through exceptions. Needs to be changed in the future.
+                this.FinishLoading(new Exception("File has been created"));
+            }
+
+        }
+
+        public void RequestPermissionsToSaveFile()
+        {
+            var client = this.clientFactory.CreateClient();
+            client.IsUserPermittedToCreateOutputFileCompleted += new EventHandler<TopDown.FacingServer.Backend.Targeting.IsUserPermittedToCreateOutputFileCompletedEventArgs>(client_IsUserPermittedToCreateOutputFileCompleted);
+            client.IsUserPermittedToCreateOutputFileAsync(this.clientFactory.GetUsername());
+
+        }
+
+        void client_IsUserPermittedToCreateOutputFileCompleted(object sender, TopDown.FacingServer.Backend.Targeting.IsUserPermittedToCreateOutputFileCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                this.FinishLoading(e.Error);
+
+            }
+            else
+            {
+                
+                this.IsFileButtonVisible = e.Result ? Visibility.Visible : Visibility.Collapsed;
+
+            }
+        }
+
+        private Visibility isFileButtonVisible;
+        public Visibility IsFileButtonVisible
+        {
+            get
+            {
+                return isFileButtonVisible;
+            }
+            set
+            {
+                isFileButtonVisible = value;
+                this.RaisePropertyChanged(() => this.IsFileButtonVisible);
+            }
         }
 
     }

@@ -76,5 +76,14 @@ namespace GreenField.Targeting.Server
 
         [OperationContract]
         IEnumerable<CommentModel> RequestCommentsForBuPortfolioSecurityTarget(string portfolioId, string securityId);
+
+        [OperationContract]
+        void CreateTargetingFile(string username);
+
+        [OperationContract]
+        Boolean IsUserPermittedToCreateOutputFile(string username);
+
+        [OperationContract]
+        void RequestRecalculation(string username);
     }
 }

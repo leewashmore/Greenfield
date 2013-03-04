@@ -97,6 +97,8 @@ namespace GreenField.DashboardModule.Views
                 Content = new ViewHeatMap(new ViewModelHeatMap(param))                
             });
 
+            /* TODO Hide for now
+
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl 
@@ -109,6 +111,8 @@ namespace GreenField.DashboardModule.Views
                 RestoredHeight = 300,
                 Content = new ViewPerformanceGadget(new ViewModelPerformanceGadget(param))
             });
+             
+             */
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {

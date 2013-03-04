@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Resources;
+using System.Runtime.Caching;
 using System.Text;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
+using System.Xml;
+using System.Xml.Serialization;
 using GreenField.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
 using GreenField.DAL;
+using System.Xml.Serialization;
 
 namespace GreenField.Web.Services
 {
@@ -102,6 +108,12 @@ namespace GreenField.Web.Services
         {
             try
             {
+                // use cache if available
+                var fromCache = (List<PortfolioSelectionData>)new DefaultCacheProvider().Get(CacheKeyNames.PortfolioSelectionDataCache);
+                if (fromCache != null)
+                    return fromCache;
+
+                // otherwise fetch the data and cache it
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
@@ -122,6 +134,8 @@ namespace GreenField.Web.Services
                     data.PortfolioThemeSubGroupName = item.PORTFOLIO_THEME_SUBGROUP_NAME;
                     result.Add(data);
                 }
+
+                new DefaultCacheProvider().Set(CacheKeyNames.PortfolioSelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
 
                 return result;
             }
@@ -1052,6 +1066,15 @@ namespace GreenField.Web.Services
         {
             try
             {
+                /* TODO
+                
+                // use cache if available
+                var fromCache = (List<FilterSelectionData>)new DefaultCacheProvider().Get(CacheKeyNames.FilterSelectionDataCache);
+                if (fromCache != null)
+                    return fromCache;
+                 */
+
+                // otherwise fetch the data and cache it
                 if (selectedPortfolio == null)
                     return new List<FilterSelectionData>();
                 if (effectiveDate == null)
@@ -1091,6 +1114,8 @@ namespace GreenField.Web.Services
                     .ToList();
                 result.AddRange(distinctIndustries);
 
+                //new DefaultCacheProvider().Set(CacheKeyNames.FilterSelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
+
                 return result;
             }
             catch (Exception ex)
@@ -1114,8 +1139,24 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime effectiveDate, bool lookThruEnabled, bool excludeCash = false, bool objGetBenchmark = false)
         {
-            
-            
+#if DEBUG
+            // Stopwatch
+            Stopwatch swRetrievePortfolioDetailsData = new Stopwatch();
+            DateTime timeRetrievePortfolioDetailsData = new DateTime();
+            Stopwatch swGF_PORTFOLIO_LTHOLDINGS = new Stopwatch();
+            DateTime timeGF_PORTFOLIO_LTHOLDINGS = new DateTime();
+            Stopwatch swGF_BENCHMARK_HOLDINGS = new Stopwatch();
+            DateTime timeGF_BENCHMARK_HOLDINGS = new DateTime();
+            Stopwatch swAddPortfolioSecurities = new Stopwatch();
+            DateTime timeAddPortfolioSecurities = new DateTime();
+            Stopwatch swRetrieveExternalResearchData = new Stopwatch();
+            DateTime timeRetrieveExternalResearchData = new DateTime();
+
+            swRetrievePortfolioDetailsData.Start();
+            timeRetrievePortfolioDetailsData = DateTime.Now;
+#endif
+
+            // do operations 
             try
             {
                 List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
@@ -1144,8 +1185,15 @@ namespace GreenField.Web.Services
                     }
                     else
                     {
+#if DEBUG
+                        swGF_PORTFOLIO_LTHOLDINGS.Start();
+#endif
                         dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
                             && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+#if DEBUG
+                        swGF_PORTFOLIO_LTHOLDINGS.Stop();
+                        timeGF_PORTFOLIO_LTHOLDINGS = DateTime.Now;
+#endif
                     }
 
                     //if service returned empty set
@@ -1167,8 +1215,15 @@ namespace GreenField.Web.Services
                     }
                     else
                     {
+#if DEBUG
+                        swGF_BENCHMARK_HOLDINGS.Start();
+#endif
                         dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
                                        Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+#if DEBUG
+                        swGF_BENCHMARK_HOLDINGS.Stop();
+                        timeGF_BENCHMARK_HOLDINGS = DateTime.Now;
+#endif
                     }
                     result = PortfolioDetailsCalculations.AddPortfolioLTSecurities(dimensionPortfolioLTHoldingsData, dimensionBenchmarkHoldingsData);
 
@@ -1195,8 +1250,15 @@ namespace GreenField.Web.Services
                     }
                     else
                     {
+#if DEBUG
+                        swGF_PORTFOLIO_LTHOLDINGS.Start();
+#endif
                         dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
                                 && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+#if DEBUG
+                        swGF_PORTFOLIO_LTHOLDINGS.Stop();
+                        timeGF_PORTFOLIO_LTHOLDINGS = DateTime.Now;
+#endif
                     }
 
                     if (dimensionPortfolioHoldingsData == null)
@@ -1222,10 +1284,24 @@ namespace GreenField.Web.Services
                     }
                     else
                     {
+#if DEBUG
+                        swGF_BENCHMARK_HOLDINGS.Start();
+#endif
                         dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
                                         Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+#if DEBUG
+                        swGF_BENCHMARK_HOLDINGS.Stop();
+                        timeGF_BENCHMARK_HOLDINGS = DateTime.Now;
+#endif
                     }
+#if DEBUG
+                    swAddPortfolioSecurities.Start();
+#endif
                     result = PortfolioDetailsCalculations.AddPortfolioSecurities(dimensionPortfolioHoldingsData, dimensionBenchmarkHoldingsData);
+#if DEBUG
+                    swAddPortfolioSecurities.Stop();
+                    timeAddPortfolioSecurities = DateTime.Now;
+#endif
                     // set portfolio for each record to current portfolio
                     result.ForEach(r =>
                     {
@@ -1249,8 +1325,30 @@ namespace GreenField.Web.Services
                     #endregion
                 }
 
-                result = RetrieveExternalResearchData(result);
+#if DEBUG
+                Trace.WriteLine(string.Format("\n1. _____________________________________________________________________________________"));
+                Trace.WriteLine(string.Format("{1}: RetrievePortfolioDetailsData for {0}\n", objPortfolioIdentifier.PortfolioId, timeRetrievePortfolioDetailsData.ToString()));
+                Trace.WriteLine(string.Format("{1}: 1. Dimension: GF_PORTFOLIO_LTHOLDINGS = {0} seconds.", (swGF_PORTFOLIO_LTHOLDINGS.ElapsedMilliseconds / 1000.00).ToString(), timeGF_PORTFOLIO_LTHOLDINGS.ToString()));
+                Trace.WriteLine(string.Format("{1}: 2. Dimension: GF_BENCHMARK_HOLDINGS = {0} seconds.", (swGF_BENCHMARK_HOLDINGS.ElapsedMilliseconds / 1000.00).ToString(), timeGF_BENCHMARK_HOLDINGS.ToString()));
+                Trace.WriteLine(string.Format("{1}: 3. AddPortfolioSecurities = {0} seconds.", (swAddPortfolioSecurities.ElapsedMilliseconds / 1000.00).ToString(), timeAddPortfolioSecurities.ToString()));
 
+                swRetrieveExternalResearchData.Start();
+                //Trace.WriteLine(string.Format("{0}: Passed to RetrieveExternalResearchData", DateTime.Now));
+                //XMLStringValue(result);
+#endif
+                result = RetrieveExternalResearchData(result);
+#if DEBUG
+                //Trace.WriteLine(string.Format("{0}: returned from RetrieveExternalResearchData", DateTime.Now));
+                //Trace.WriteLine("");
+                //XMLStringValue(result);
+
+                swRetrieveExternalResearchData.Stop();
+                timeRetrieveExternalResearchData = DateTime.Now;
+                // StopWatch
+                swRetrievePortfolioDetailsData.Stop();
+                Trace.WriteLine(string.Format("{1}: 4. RetrieveExternalResearchData = {0} seconds.", (swRetrieveExternalResearchData.ElapsedMilliseconds / 1000.00).ToString(), timeRetrieveExternalResearchData.ToString()));
+                Trace.WriteLine(string.Format("\n{1}: Total time = {0} seconds.", (swRetrievePortfolioDetailsData.ElapsedMilliseconds / 1000.00).ToString(), DateTime.Now.ToString()));
+#endif
                 return result;
             }
             catch (Exception ex)
@@ -1259,6 +1357,15 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
+        }
+
+        private static void XMLStringValue(List<PortfolioDetailsData> result)
+        {
+            XmlSerializer XmlS = new XmlSerializer(result.GetType());
+            StringWriter sw = new StringWriter();
+            XmlTextWriter tw = new XmlTextWriter(sw);
+            XmlS.Serialize(tw, result);
+            Trace.Write(sw.ToString());
         }
 
         /// <summary>
@@ -1379,13 +1486,262 @@ namespace GreenField.Web.Services
         {
             try
             {
+#if DEBUG
+                // Stopwatch
+                Stopwatch swRetrieveExt = new Stopwatch();
+                DateTime timeRetrieveExt = new DateTime();
+                Stopwatch swPortfolio_Security_Targets_Union = new Stopwatch();
+                DateTime timePortfolio_Security_Targets_Union = new DateTime();
+                Stopwatch swGF_SECURITY_BASEVIEW_Local = new Stopwatch();
+                DateTime timeGF_SECURITY_BASEVIEW_Local = new DateTime();
+                Stopwatch swGetPortfolioDetailsExternalData = new Stopwatch();
+                DateTime timeGetPortfolioDetailsExternalData = new DateTime();
+                Stopwatch swRetrieveSecurityReferenceData = new Stopwatch();
+                DateTime timeRetrieveSecurityReferenceData = new DateTime();
+                Stopwatch swGetPortfolioDetailsFairValue = new Stopwatch();
+                DateTime timeGetPortfolioDetailsFairValue = new DateTime();
+                
+                swRetrieveExt.Start();
+                timeRetrieveExt = DateTime.Now;
+#endif
+
                 var portfolios = portfolioDetailsData.Select(x => x.PfcHoldingPortfolio).Distinct().ToList();
                 var externalResearchEntities = new GreenField.DAL.ExternalResearchEntities();
+#if DEBUG
+                swPortfolio_Security_Targets_Union.Start();
+#endif
                 var targets = externalResearchEntities.Portfolio_Security_Targets_Union.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
-                var securities = externalResearchEntities.GF_SECURITY_BASEVIEW_Local.ToList();
+#if DEBUG
+                swPortfolio_Security_Targets_Union.Stop();
+                timePortfolio_Security_Targets_Union = DateTime.Now;
+                swGF_SECURITY_BASEVIEW_Local.Start();
+#endif
+                //var securities = externalResearchEntities.GF_SECURITY_BASEVIEW_Local.ToList();
+
+#if DEBUG
+                swGF_SECURITY_BASEVIEW_Local.Stop();
+                timeGF_SECURITY_BASEVIEW_Local = DateTime.Now;
+#endif
                 
+                //List<SecurityBaseviewData> securityData = new List<SecurityBaseviewData>();
+#if DEBUG
+                swRetrieveSecurityReferenceData.Start();
+#endif
+                //securityData = RetrieveSecurityReferenceData(securities);
+#if DEBUG
+                swRetrieveSecurityReferenceData.Stop();
+                timeRetrieveSecurityReferenceData = DateTime.Now;
+#endif
+                ExternalResearchEntities entity = new ExternalResearchEntities() { CommandTimeout = 5000 };
+                List<string> securityAsecSecShortName = portfolioDetailsData.Select(a => a.AsecSecShortName).ToList();
+                List<PortfolioDetailsExternalData> externalData = new List<PortfolioDetailsExternalData>();
+                List<FAIR_VALUE> fairValueData = new List<FAIR_VALUE>();
+                int check = 1;
+                StringBuilder securityIDPortfolio = new StringBuilder();
+                StringBuilder issuerIDPortfolio = new StringBuilder();
+
+                SecurityReferenceOperations securityReferenceOperations = new SecurityReferenceOperations();
+                List<EntitySelectionData> newSecurities = securityReferenceOperations.RetrieveSecuritiesData();
+
+                foreach (String asecSecShortName in securityAsecSecShortName)
+                {
+                    //SecurityBaseviewData securityDetails = securityData.Where(record => record.IssueName == issueName).FirstOrDefault();
+                    var securityDetails = newSecurities.Where(record => record.ShortName == asecSecShortName).FirstOrDefault();
+
+                    if (securityDetails != null)
+                    {
+                        check = 0;
+                        securityIDPortfolio.Append(",'" + securityDetails.SecurityId + "'");
+                        issuerIDPortfolio.Append(",'" + securityDetails.IssuerId + "'");
+                        if (portfolioDetailsData.Where(a => a.AsecSecShortName == asecSecShortName).FirstOrDefault() != null)
+                        {
+                            portfolioDetailsData.Where(a => a.AsecSecShortName == asecSecShortName).FirstOrDefault().SecurityId = Convert.ToString(securityDetails.SecurityId);
+                        }
+                    }
+                }
+                issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
+                securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
+                string _issuerIDPortfolio = issuerIDPortfolio == null ? null : issuerIDPortfolio.ToString();
+                string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();
+
+#if DEBUG
+                swGetPortfolioDetailsExternalData.Start();
+#endif
+                externalData = entity.GetPortfolioDetailsExternalData(_issuerIDPortfolio, _securityIDPortfolio).ToList();
+#if DEBUG
+                swGetPortfolioDetailsExternalData.Stop();
+                timeGetPortfolioDetailsExternalData = DateTime.Now;
+
+                swGetPortfolioDetailsFairValue.Start();
+#endif
+                fairValueData = GetPortfolioDetailsFairValue(_securityIDPortfolio);
+#if DEBUG
+                swGetPortfolioDetailsFairValue.Stop();
+                timeGetPortfolioDetailsFairValue = DateTime.Now;
+#endif
+
+                if (fairValueData == null)
+                {
+                    fairValueData = new List<FAIR_VALUE>();
+                }
+                foreach (PortfolioDetailsData item in portfolioDetailsData)
+                {
+                    item.MarketCap = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 185).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 185).FirstOrDefault().Amount;
+
+                    item.ForwardPE = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 187).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 187).FirstOrDefault().Amount;
+
+                    item.ForwardPBV = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 188).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 188).FirstOrDefault().Amount;
+
+                    item.ForwardEB_EBITDA = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 198).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 198).FirstOrDefault().Amount;
+
+                    item.RevenueGrowthCurrentYear =
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == DateTime.Today.Year).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == DateTime.Today.Year).FirstOrDefault().Amount * 100M;
+
+                    item.RevenueGrowthNextYear =
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault() ==
+                        null ? null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault().Amount * 100M;
+
+                    item.NetIncomeGrowthCurrentYear =
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ? null :
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount * 100M;
+
+                    item.NetIncomeGrowthNextYear =
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault().Amount * 100M;
+
+                    item.ROE = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 133 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 133 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount * 100M;
+
+                    item.NetDebtEquity = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount;
+
+                    item.FreecashFlowMargin =
+                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 146 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 146 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount * 100M;
+
+                    item.Upside = fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault() == null ?
+                        null : (fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault().UPSIDE as decimal?) * 100M;
+
+                    var security = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault();
+                    item.AshEmmModelWeight = 0;
+                    if (security != null)
+                    {
+
+                        var target = targets.Where(x => x.SECURITY_ID == security.SecurityId && x.PORTFOLIO_ID == item.PfcHoldingPortfolio);
+                        if (target != null)
+                            item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT);
+
+                        if (item.PfcHoldingPortfolio != item.PortfolioPath)
+                        {
+                            var securityPortfolios = item.PortfolioPath.Split(',');
+                            for (int i = securityPortfolios.Count() - 2; i >= 0; i--)
+                            {
+                                security = newSecurities.Where(x => x.LOOK_THRU_FUND == securityPortfolios[i + 1]).FirstOrDefault();
+                                if (security != null)
+                                {
+                                    target = targets.Where(x => x.SECURITY_ID == security.SecurityId && x.PORTFOLIO_ID == securityPortfolios[i]);
+                                    if (target != null)
+                                        item.AshEmmModelWeight = item.AshEmmModelWeight * target.Sum(x => x.TARGET_PCT);
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Unknown look through fund security (LOOK_THRU_FUND: " + securityPortfolios[i] + ")");
+                                }
+                            }
+                        }
+                    }
+                    //else
+                    //{
+                    //    throw new ApplicationException("Unknown security (short name: " + item.AsecSecShortName + ")");
+                    //}
+                }
+#if DEBUG
+                // StopWatch
+                swRetrieveExt.Stop();
+                Trace.WriteLine(string.Format("\t\t\t{0}: RetrieveExternalResearchData start\n", timeRetrieveExt.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 1. AIMS_Main: Portfolio_Security_Targets_Union = {0} seconds.", (swPortfolio_Security_Targets_Union.ElapsedMilliseconds / 1000.00).ToString(), timePortfolio_Security_Targets_Union.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 2. AIMS_Main: GF_SECURITY_BASEVIEW_Local = {0} seconds.", (swGF_SECURITY_BASEVIEW_Local.ElapsedMilliseconds / 1000.00).ToString(), timeGF_SECURITY_BASEVIEW_Local.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 3. RetrieveSecurityReferenceData = {0} seconds.", (swRetrieveSecurityReferenceData.ElapsedMilliseconds / 1000.00).ToString(), timeRetrieveSecurityReferenceData.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 4. AIMS_Main: GetPortfolioDetailsExternalData = {0} seconds.", (swGetPortfolioDetailsExternalData.ElapsedMilliseconds / 1000.00).ToString(), timeGetPortfolioDetailsExternalData.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 5. AIMS_Main: GetPortfolioDetailsFairValue = {0} seconds.", (swGetPortfolioDetailsFairValue.ElapsedMilliseconds / 1000.00).ToString(), timeGetPortfolioDetailsFairValue.ToString()));
+                Trace.WriteLine(string.Format("\n\t\t\t{1}: Total time = {0} seconds.", (swRetrieveExt.ElapsedMilliseconds / 1000.00).ToString(), DateTime.Now.ToString()));
+#endif
+
+                return portfolioDetailsData;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+
+        /// <summary>
+        /// Method to retrieve External Research Data for Portfolio Details
+        /// </summary>
+        /// <param name="portfolioDetailsData">Collection of PortfolioDetailsData</param>
+        /// <returns>Collection of PortfolioDetailsData</returns>
+        private List<PortfolioDetailsData> RetrieveExternalResearchDataOld(List<PortfolioDetailsData> portfolioDetailsData)
+        {
+            try
+            {
+#if DEBUG
+                // Stopwatch
+                Stopwatch swRetrieveExt = new Stopwatch();
+                DateTime timeRetrieveExt = new DateTime();
+                Stopwatch swPortfolio_Security_Targets_Union = new Stopwatch();
+                DateTime timePortfolio_Security_Targets_Union = new DateTime();
+                Stopwatch swGF_SECURITY_BASEVIEW_Local = new Stopwatch();
+                DateTime timeGF_SECURITY_BASEVIEW_Local = new DateTime();
+                Stopwatch swGetPortfolioDetailsExternalData = new Stopwatch();
+                DateTime timeGetPortfolioDetailsExternalData = new DateTime();
+                Stopwatch swRetrieveSecurityReferenceData = new Stopwatch();
+                DateTime timeRetrieveSecurityReferenceData = new DateTime();
+                Stopwatch swGetPortfolioDetailsFairValue = new Stopwatch();
+                DateTime timeGetPortfolioDetailsFairValue = new DateTime();
+
+                swRetrieveExt.Start();
+                timeRetrieveExt = DateTime.Now;
+#endif
+
+                var portfolios = portfolioDetailsData.Select(x => x.PfcHoldingPortfolio).Distinct().ToList();
+                var externalResearchEntities = new GreenField.DAL.ExternalResearchEntities();
+#if DEBUG
+                swPortfolio_Security_Targets_Union.Start();
+#endif
+                var targets = externalResearchEntities.Portfolio_Security_Targets_Union.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
+#if DEBUG
+                swPortfolio_Security_Targets_Union.Stop();
+                timePortfolio_Security_Targets_Union = DateTime.Now;
+                swGF_SECURITY_BASEVIEW_Local.Start();
+#endif
+                var securities = externalResearchEntities.GF_SECURITY_BASEVIEW_Local.ToList();
+
+                //Trace.WriteLine(string.Format("{0}: returned from GF_SECURITY_BASEVIEW_Local", DateTime.Now));
+                //Trace.WriteLine("");
+                //XMLStringValue(securities);
+
+#if DEBUG
+                swGF_SECURITY_BASEVIEW_Local.Stop();
+                timeGF_SECURITY_BASEVIEW_Local = DateTime.Now;
+#endif
+
                 List<SecurityBaseviewData> securityData = new List<SecurityBaseviewData>();
+#if DEBUG
+                swRetrieveSecurityReferenceData.Start();
+#endif
                 securityData = RetrieveSecurityReferenceData(securities);
+#if DEBUG
+                swRetrieveSecurityReferenceData.Stop();
+                timeRetrieveSecurityReferenceData = DateTime.Now;
+#endif
                 ExternalResearchEntities entity = new ExternalResearchEntities() { CommandTimeout = 5000 };
                 List<string> securityNames = portfolioDetailsData.Select(a => a.IssueName).ToList();
                 List<PortfolioDetailsExternalData> externalData = new List<PortfolioDetailsExternalData>();
@@ -1413,8 +1769,22 @@ namespace GreenField.Web.Services
                 string _issuerIDPortfolio = issuerIDPortfolio == null ? null : issuerIDPortfolio.ToString();
                 string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();
 
+#if DEBUG
+                swGetPortfolioDetailsExternalData.Start();
+#endif
                 externalData = entity.GetPortfolioDetailsExternalData(_issuerIDPortfolio, _securityIDPortfolio).ToList();
+#if DEBUG
+                swGetPortfolioDetailsExternalData.Stop();
+                timeGetPortfolioDetailsExternalData = DateTime.Now;
+
+                swGetPortfolioDetailsFairValue.Start();
+#endif
                 fairValueData = GetPortfolioDetailsFairValue(_securityIDPortfolio);
+#if DEBUG
+                swGetPortfolioDetailsFairValue.Stop();
+                timeGetPortfolioDetailsFairValue = DateTime.Now;
+#endif
+
                 if (fairValueData == null)
                 {
                     fairValueData = new List<FAIR_VALUE>();
@@ -1476,7 +1846,7 @@ namespace GreenField.Web.Services
                             var securityPortfolios = item.PortfolioPath.Split(',');
                             for (int i = securityPortfolios.Count() - 2; i >= 0; i--)
                             {
-                                security = securities.Where(x => x.LOOK_THRU_FUND == securityPortfolios[i+1]).FirstOrDefault();
+                                security = securities.Where(x => x.LOOK_THRU_FUND == securityPortfolios[i + 1]).FirstOrDefault();
                                 if (security != null)
                                 {
                                     target = targets.Where(x => x.SECURITY_ID == security.SECURITY_ID && x.PORTFOLIO_ID == securityPortfolios[i]);
@@ -1495,6 +1865,19 @@ namespace GreenField.Web.Services
                     //    throw new ApplicationException("Unknown security (short name: " + item.AsecSecShortName + ")");
                     //}
                 }
+#if DEBUG
+                // StopWatch
+                swRetrieveExt.Stop();
+                Trace.WriteLine(string.Format("OLD. _____________________________________________________________________________________"));
+                Trace.WriteLine(string.Format("\t\t\t{0}: RetrieveExternalResearchData start\n", timeRetrieveExt.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 1. AIMS_Main: Portfolio_Security_Targets_Union = {0} seconds.", (swPortfolio_Security_Targets_Union.ElapsedMilliseconds / 1000.00).ToString(), timePortfolio_Security_Targets_Union.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 2. AIMS_Main: GF_SECURITY_BASEVIEW_Local = {0} seconds.", (swGF_SECURITY_BASEVIEW_Local.ElapsedMilliseconds / 1000.00).ToString(), timeGF_SECURITY_BASEVIEW_Local.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 3. RetrieveSecurityReferenceData = {0} seconds.", (swRetrieveSecurityReferenceData.ElapsedMilliseconds / 1000.00).ToString(), timeRetrieveSecurityReferenceData.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 4. AIMS_Main: GetPortfolioDetailsExternalData = {0} seconds.", (swGetPortfolioDetailsExternalData.ElapsedMilliseconds / 1000.00).ToString(), timeGetPortfolioDetailsExternalData.ToString()));
+                Trace.WriteLine(string.Format("\t\t\t{1}: 5. AIMS_Main: GetPortfolioDetailsFairValue = {0} seconds.", (swGetPortfolioDetailsFairValue.ElapsedMilliseconds / 1000.00).ToString(), timeGetPortfolioDetailsFairValue.ToString()));
+                Trace.WriteLine(string.Format("\n\t\t\t{1}: Total time = {0} seconds.", (swRetrieveExt.ElapsedMilliseconds / 1000.00).ToString(), DateTime.Now.ToString()));
+#endif
+
                 return portfolioDetailsData;
             }
             catch (Exception ex)
@@ -2795,6 +3178,12 @@ namespace GreenField.Web.Services
         {
             try
             {
+                // use cache if available
+                var fromCache = (List<DateTime>)new DefaultCacheProvider().Get(CacheKeyNames.AvailableDatesInPortfoliosCache);
+                if (fromCache != null)
+                    return fromCache;
+
+                // otherwise fetch the data and cache it
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
@@ -2815,6 +3204,8 @@ namespace GreenField.Web.Services
 
                 availableDateList = GetDateListFromString(availableDates);
                 availableDateList.Sort();
+
+                new DefaultCacheProvider().Set(CacheKeyNames.AvailableDatesInPortfoliosCache, availableDateList, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
 
                 return availableDateList;
             }
@@ -2870,6 +3261,7 @@ namespace GreenField.Web.Services
                     case "YTD":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_YTD;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_YTD; 
                         Decimal? diff = data[i].ADJ_RTN_POR_RC_TWR_YTD - data[i].BM1_RC_TWR_YTD;
                         CalculateHeatMapDiff(diff, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_YTD == null && data[i].BM1_RC_TWR_YTD == null)
@@ -2882,60 +3274,70 @@ namespace GreenField.Web.Services
                     case "MTD":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_MTD;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_MTD;
                         Decimal? diff1 = data[i].ADJ_RTN_POR_RC_TWR_MTD - data[i].BM1_RC_TWR_MTD;
                         CalculateHeatMapDiff(diff1, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_MTD == null && data[i].BM1_RC_TWR_MTD == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
+                            entry.BenchmarkYTD = Convert.ToDecimal(0);
                         }
                         result.Add(entry);
                         break;
                     case "1D":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_1D;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_1D;
                         Decimal? diff2 = data[i].ADJ_RTN_POR_RC_TWR_1D - data[i].BM1_RC_TWR_1D;
                         CalculateHeatMapDiff(diff2, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_1D == null && data[i].BM1_RC_TWR_1D == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
+                            entry.BenchmarkYTD = Convert.ToDecimal(0);
                         }
                         result.Add(entry);
                         break;
                     case "1W":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_1W;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_1W;
                         Decimal? diff3 = data[i].ADJ_RTN_POR_RC_TWR_1W - data[i].BM1_RC_TWR_1W;
                         CalculateHeatMapDiff(diff3, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_1W == null && data[i].BM1_RC_TWR_1W == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
+                            entry.BenchmarkYTD = Convert.ToDecimal(0);
                         }
                         result.Add(entry);
                         break;
                     case "QTD":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_QTD;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_QTD;
                         Decimal? diff4 = data[i].ADJ_RTN_POR_RC_TWR_QTD - data[i].BM1_RC_TWR_QTD;
                         CalculateHeatMapDiff(diff4, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_QTD == null && data[i].BM1_RC_TWR_QTD == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
+                            entry.BenchmarkYTD = Convert.ToDecimal(0);
                         }
                         result.Add(entry);
                         break;
                     case "1Y":
                         entry.CountryID = data[i].AGG_LVL_1;
                         entry.CountryYTD = data[i].ADJ_RTN_POR_RC_TWR_1Y;
+                        entry.BenchmarkYTD = data[i].BM1_RC_TWR_1Y;
                         Decimal? diff5 = data[i].ADJ_RTN_POR_RC_TWR_1Y - data[i].BM1_RC_TWR_1Y;
                         CalculateHeatMapDiff(diff5, ref entry);
                         if (data[i].ADJ_RTN_POR_RC_TWR_1Y == null && data[i].BM1_RC_TWR_1Y == null)
                         {
                             entry.CountryPerformance = PerformanceGrade.NO_RELATION;
                             entry.CountryYTD = Convert.ToDecimal(0);
+                            entry.BenchmarkYTD = Convert.ToDecimal(0);
                         }
                         result.Add(entry);
                         break;
@@ -3035,40 +3437,52 @@ namespace GreenField.Web.Services
                     entry.Bm1RcAvgWgt1w = attributionData[i].BM1_RC_AVG_WGT_1W;
                     entry.FPorAshRcCtn1w = attributionData[i].ADJ_RTN_POR_RC_TWR_1W;
                     entry.BM1_RC_TWR_1W = attributionData[i].BM1_RC_TWR_1W;
-                    entry.FBm1AshAssetAlloc1w = attributionData[i].BM1_RC_ASSET_ALLOC_1W;
-                    entry.FBm1AshSecSelec1w = attributionData[i].BM1_RC_SEC_SELEC_1W;
+                    entry.PorTopTwr1w = attributionData[i].POR_TOP_RC_TWR_1W;
+                    entry.BM1TopTwr1w =attributionData[i].BM1_TOP_RC_TWR_1W;
+                    entry.FBm1AshAssetAlloc1w = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1W;
+                    entry.FBm1AshSecSelec1w = attributionData[i].F_BM1_ASH_SEC_SELEC_1W;
                     entry.PorRcAvgWgt1d = attributionData[i].POR_RC_AVG_WGT_1D;
                     entry.Bm1RcAvgWgt1d = attributionData[i].BM1_RC_AVG_WGT_1D;
                     entry.FPorAshRcCtn1d = attributionData[i].ADJ_RTN_POR_RC_TWR_1D;
                     entry.BM1_RC_TWR_1D = attributionData[i].BM1_RC_TWR_1D;
-                    entry.FBm1AshAssetAlloc1d = attributionData[i].BM1_RC_ASSET_ALLOC_1D;
-                    entry.FBm1AshSecSelec1d = attributionData[i].BM1_RC_SEC_SELEC_1D;
+                    entry.PorTopTwr1d = attributionData[i].POR_TOP_RC_TWR_1D;
+                    entry.BM1TopTwr1d = attributionData[i].BM1_TOP_RC_TWR_1D;
+                    entry.FBm1AshAssetAlloc1d = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1D;
+                    entry.FBm1AshSecSelec1d = attributionData[i].F_BM1_ASH_SEC_SELEC_1D;
                     entry.PorRcAvgWgtMtd = attributionData[i].POR_RC_AVG_WGT_MTD;
                     entry.Bm1RcAvgWgtMtd = attributionData[i].BM1_RC_AVG_WGT_MTD;
                     entry.FPorAshRcCtnMtd = attributionData[i].ADJ_RTN_POR_RC_TWR_MTD;
                     entry.BM1_RC_TWR_MTD = attributionData[i].BM1_RC_TWR_MTD;
-                    entry.FBm1AshAssetAllocMtd = attributionData[i].BM1_RC_ASSET_ALLOC_MTD;
-                    entry.FBm1AshSecSelecMtd = attributionData[i].BM1_RC_SEC_SELEC_MTD;
+                    entry.PorTopTwrMtd = attributionData[i].POR_TOP_RC_TWR_MTD;
+                    entry.BM1TopTwrMtd = attributionData[i].BM1_TOP_RC_TWR_MTD;
+                    entry.FBm1AshAssetAllocMtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_MTD;
+                    entry.FBm1AshSecSelecMtd = attributionData[i].F_BM1_ASH_SEC_SELEC_MTD;
                     entry.PorRcAvgWgtQtd = attributionData[i].POR_RC_AVG_WGT_QTD;
                     entry.Bm1RcAvgWgtQtd = attributionData[i].BM1_RC_AVG_WGT_QTD;
                     entry.FPorAshRcCtnQtd = attributionData[i].ADJ_RTN_POR_RC_TWR_QTD;
                     entry.BM1_RC_TWR_QTD = attributionData[i].BM1_RC_TWR_QTD;
-                    entry.FBm1AshAssetAllocQtd = attributionData[i].BM1_RC_ASSET_ALLOC_QTD;
-                    entry.FBm1AshSecSelecQtd = attributionData[i].BM1_RC_SEC_SELEC_QTD;
+                    entry.PorTopTwrQtd = attributionData[i].POR_TOP_RC_TWR_QTD;
+                    entry.BM1TopTwrQtd = attributionData[i].BM1_TOP_RC_TWR_QTD;
+                    entry.FBm1AshAssetAllocQtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_QTD;
+                    entry.FBm1AshSecSelecQtd = attributionData[i].F_BM1_ASH_SEC_SELEC_QTD;
                     entry.PorRcAvgWgtYtd = attributionData[i].POR_RC_AVG_WGT_YTD;
                     entry.Bm1RcAvgWgtYtd = attributionData[i].BM1_RC_AVG_WGT_YTD;
                     entry.FPorAshRcCtnYtd = attributionData[i].ADJ_RTN_POR_RC_TWR_YTD;
                     entry.BM1_RC_TWR_YTD = attributionData[i].BM1_RC_TWR_YTD;
-                    entry.FBm1AshAssetAllocYtd = attributionData[i].BM1_RC_ASSET_ALLOC_YTD;
-                    entry.FBm1AshSecSelecYtd = attributionData[i].BM1_RC_SEC_SELEC_YTD;
+                    entry.FBm1AshAssetAllocYtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_YTD;
+                    entry.FBm1AshSecSelecYtd = attributionData[i].F_BM1_ASH_SEC_SELEC_YTD;
+                    entry.PorTopTwrYTD = attributionData[i].POR_TOP_RC_TWR_YTD;
+                    entry.BM1TopTwrYtd = attributionData[i].BM1_TOP_RC_TWR_YTD;
                     entry.PorRcAvgWgt1y = attributionData[i].POR_RC_AVG_WGT_1Y;
                     entry.Bm1RcAvgWgt1y = attributionData[i].BM1_RC_AVG_WGT_1Y;
                     entry.FPorAshRcCtn1y = attributionData[i].ADJ_RTN_POR_RC_TWR_1Y;
                     entry.BM1_RC_TWR_1Y = attributionData[i].BM1_RC_TWR_1Y;
-                    entry.FBm1AshAssetAlloc1y = attributionData[i].BM1_RC_ASSET_ALLOC_1Y;
-                    entry.FBm1AshSecSelec1y = attributionData[i].BM1_RC_SEC_SELEC_1Y;
+                    entry.FBm1AshAssetAlloc1y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1Y;
+                    entry.FBm1AshSecSelec1y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;
+                    entry.PorTopTwr1y = attributionData[i].POR_TOP_RC_TWR_1Y;
+                    entry.BM1TopTwr1y = attributionData[i].BM1_TOP_RC_TWR_1Y;
                     entry.PorInceptionDate = attributionData[i].POR_INCEPTION_DATE;
-                    entry.EffectiveDate = attributionData[i].TO_DATE;
+                    entry.EffectiveDate = attributionData[i].TO_DATE; 
                     result.Add(entry);
                 }
                 return result;

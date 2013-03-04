@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Windows.Input;
-using System.Windows;
 using Aims.Data.Client;
 
 namespace Aims.Controls
@@ -45,14 +42,14 @@ namespace Aims.Controls
 
         private void ConsiderPickingSecurity()
         {
-            var selectedSecurity = this.SelectedSecurity;
-            if (selectedSecurity == null)
+            var security = this.SelectedSecurity;
+            if (security == null)
             {
                 this.OnReset();
             }
             else
             {
-                var args = new SecurityPickedEventArgs(selectedSecurity);
+                var args = new SecurityPickedEventArgs(security);
                 this.OnPicked(args);
             }
             this.SelectedSecurity = null;

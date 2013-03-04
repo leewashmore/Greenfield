@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Aims.Core.Persisting;
 using System.Diagnostics;
 
@@ -22,10 +20,8 @@ namespace Aims.Core
 
         public IssuerRepository ClaimIssuerRepository(IDataManager manager)
         {
-            return this.issuerRepositoryStorage.Claim(IssuerRepositoryStorageKey, delegate
-            {
-                return this.CreateIssuerRepository(manager);
-            });
+            return this.issuerRepositoryStorage.Claim(IssuerRepositoryStorageKey,
+                                                      () => this.CreateIssuerRepository(manager));
         }
 
         public IssuerRepository ClaimIssuerRepository(IOnDemand<IDataManager> ondemandManager)

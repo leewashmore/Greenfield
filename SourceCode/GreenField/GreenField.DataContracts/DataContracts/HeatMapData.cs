@@ -17,6 +17,9 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public Decimal? CountryYTD { get; set; }
+       
+        [DataMember]
+        public Decimal? BenchmarkYTD { get; set; }
         
     }
 }
