@@ -23,14 +23,19 @@
     </style>
     <script type="text/javascript" src="Silverlight.js"></script>
     <script type="text/C#" runat="server">
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            //GreenField.DataContracts.Session session =
-            //    (GreenField.DataContracts.Session)HttpContext.Current.Session["Session"];
-            //if (null == session)
-            //    Response.Redirect("Login.aspx");
-        }
 
+    public string WebDotConfig { get; set; }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        WebDotConfig = "Environment=" + ConfigurationManager.AppSettings["Environment"];
+
+        //GreenField.DataContracts.Session session =
+        //    (GreenField.DataContracts.Session)HttpContext.Current.Session["Session"];
+        //if (null == session)
+        //    Response.Redirect("Login.aspx");
+    }
+    
     </script>
     <script type="text/javascript">
         function onSilverlightError(sender, args) {
@@ -77,6 +82,7 @@
             <%
                 Response.Write("<param name=\"source\" value=\"ClientBin/GreenField.App.xap\"?ignore=" + ConfigurationManager.AppSettings["DeploymentVersion"] + "\" />");
              %>
+            <param name="initParams" value="<% =WebDotConfig%>" />
             <param name="onError" value="onSilverlightError" />
             <param name="background" value="white" />
             <param name="minRuntimeVersion" value="4.0.50826.0" />

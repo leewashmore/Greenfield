@@ -73,7 +73,7 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <Border BorderBrush="{StaticResource ToolbarBorderBrush}" BorderThickness="0,0,0,5" HorizontalAlignment="Stretch">
-                    <Grid Background="#dbddda">
+                    <Grid Background="{Binding DemoBackground}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
@@ -87,10 +87,10 @@
                                 Command="{Binding EnableMenusCommand}" Content="     " IsBackgroundVisible="False">
                         </telerik:RadButton>
                         <TextBlock Grid.Column="2" Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"
-                                 x:Name="tbUserName" Foreground="Black" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                                 x:Name="tbUserName" Foreground="{Binding DemoForeground}" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                         <!--ToolTipService.ToolTip="{Binding Version}"/>-->
                         <HyperlinkButton Grid.Column="3" Content="LogOut" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"
-                                 x:Name="hypbtnLogout" Foreground="Black" Command="{Binding LogOutCommand}" FontFamily="Arial" FontSize="9" FontWeight="Bold"/>
+                                 x:Name="hypbtnLogout" Foreground="{Binding DemoForeground}" Command="{Binding LogOutCommand}" FontFamily="Arial" FontSize="9" FontWeight="Bold"/>
                     </Grid>
                 </Border>
             </Grid>

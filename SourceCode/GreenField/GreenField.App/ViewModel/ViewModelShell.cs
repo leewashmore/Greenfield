@@ -23,6 +23,7 @@ using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.UserSession;
 using System.Reflection;
 using GreenField.IssuerShares.Controls;
+using Application = System.Windows.Application;
 
 namespace GreenField.App.ViewModel
 {
@@ -228,7 +229,34 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.EnableGadget);
             }
         }
-        
+
+        private Boolean IsDemo
+        {
+            get 
+            {
+                if (Application.Current.Host.InitParams.ContainsKey("Environment"))
+                    return Application.Current.Host.InitParams["Environment"].ToUpper() != "PROD";
+
+                return true;
+            }
+        }
+
+        public string DemoBackground
+        {
+            get
+            {
+                return IsDemo ? "Maroon" : "#dbddda";
+            }
+        }
+
+        public string DemoForeground
+        {
+            get
+            {
+                return IsDemo ? "White" : "Black";
+            }
+        }
+
         #endregion
 
         #region Application Menu
