@@ -230,7 +230,7 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        private Boolean IsDemo
+        private Boolean _isDemo
         {
             get 
             {
@@ -241,11 +241,22 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        private string _environmentName
+        {
+            get
+            {
+                if (Application.Current.Host.InitParams.ContainsKey("Environment"))
+                    return Application.Current.Host.InitParams["Environment"];
+
+                return "";
+            }
+        }
+
         public string DemoBackground
         {
             get
             {
-                return IsDemo ? "Maroon" : "#dbddda";
+                return _isDemo ? "Maroon" : "#dbddda";
             }
         }
 
@@ -253,7 +264,15 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return IsDemo ? "White" : "Black";
+                return _isDemo ? "White" : "Black";
+            }
+        }
+
+        public string EnvironmentName
+        {
+            get
+            {
+                return _isDemo ? string.Format("{0}     ", _environmentName) : "";
             }
         }
 
