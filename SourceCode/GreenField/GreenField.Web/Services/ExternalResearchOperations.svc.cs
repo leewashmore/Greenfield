@@ -1082,7 +1082,7 @@ namespace GreenField.Web.Services
                     securityId = Convert.ToString(securityData.SECURITY_ID);
                 }
                 //data = entity.GetConsensusEstimatesValuation(issuerId, "REUTERS", _periodType, "FISCAL", currency, null, null, securityId).ToList();
-                data = entity.GetConsensusEstimatesValuation(issuerId, "REUTERS", _periodType, "FISCAL", currency, null, null, securityId).ToList();
+                data = entity.GetConsensusEstimatesValuation(issuerId, "REUTERS", "CONSENSUS", _periodType, "FISCAL", currency, null, null, securityId).ToList();
                 List<int> dataDesc = new List<int>() { 166, 170, 171, 164, 192, 172 };
 
                 if (data == null)

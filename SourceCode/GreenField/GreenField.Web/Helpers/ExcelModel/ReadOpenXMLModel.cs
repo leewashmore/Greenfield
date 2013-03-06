@@ -2735,7 +2735,7 @@ namespace GreenField.Web.Helpers
             try
             {
                 InvalidValue = "Issuer Id= " + issuerId;
-                ExternalResearchEntity.Get_Data(issuerId, calcLog, "Y");
+                ExternalResearchEntity.Get_Data(issuerId, calcLog, "Y", "F");
             }
             catch (Exception ex)
             {
