@@ -580,7 +580,9 @@ namespace GreenField.Web.Services
                             SecurityType = security.SECURITY_TYPE,
                             SecurityId = security.SECURITY_ID,
                             IssuerId = security.ISSUER_ID,
-                            LOOK_THRU_FUND = security.LOOK_THRU_FUND
+                            LOOK_THRU_FUND = security.LOOK_THRU_FUND,
+                            Region_Code = security.ASHEMM_PROPRIETARY_REGION_CODE,
+                            Country_Code = security.ISO_COUNTRY_CODE
                         });
                 }
 #if DEBUG

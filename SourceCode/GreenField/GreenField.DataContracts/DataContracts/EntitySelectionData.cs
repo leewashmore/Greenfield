@@ -36,6 +36,13 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public String LOOK_THRU_FUND { get; set; }
+
+        [DataMember]
+        public String Region_Code { get; set; }
+
+        [DataMember]
+        public String Country_Code { get; set; }
+
     }
 
 

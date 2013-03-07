@@ -46,7 +46,7 @@ namespace GreenField.Gadgets.ViewModels
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
             IsExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
             LookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
-
+                        
             if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
             {
                 dbInteractivity.RetrieveRegionBreakdownData(portfolioSelectionDataInfo, Convert.ToDateTime(effectiveDateInfo),isExCashSecurity,lookThruEnabled,
