@@ -190,6 +190,24 @@
       [PRICES].[ADR_CONV] AS [ADR_CONV]
       FROM [dbo].[PRICES] AS [PRICES]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Portfolio_Security_Target_Baseview" EntityType="ExternalResearchModel.Store.Portfolio_Security_Target_Baseview" store:Type="Views" store:Schema="dbo" store:Name="Portfolio_Security_Target_Baseview">
+            <DefiningQuery>SELECT 
+      [Portfolio_Security_Target_Baseview].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
+      [Portfolio_Security_Target_Baseview].[TARGET_PCT] AS [TARGET_PCT], 
+      [Portfolio_Security_Target_Baseview].[SECURITY_ID] AS [SECURITY_ID], 
+      [Portfolio_Security_Target_Baseview].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME], 
+      [Portfolio_Security_Target_Baseview].[SECURITY_TYPE] AS [SECURITY_TYPE], 
+      [Portfolio_Security_Target_Baseview].[ASHEMM_PROPRIETARY_REGION_CODE] AS [ASHEMM_PROPRIETARY_REGION_CODE], 
+      [Portfolio_Security_Target_Baseview].[ISO_COUNTRY_CODE] AS [ISO_COUNTRY_CODE], 
+      [Portfolio_Security_Target_Baseview].[GICS_SECTOR] AS [GICS_SECTOR], 
+      [Portfolio_Security_Target_Baseview].[GICS_SECTOR_NAME] AS [GICS_SECTOR_NAME], 
+      [Portfolio_Security_Target_Baseview].[GICS_INDUSTRY] AS [GICS_INDUSTRY], 
+      [Portfolio_Security_Target_Baseview].[GICS_INDUSTRY_NAME] AS [GICS_INDUSTRY_NAME], 
+      [Portfolio_Security_Target_Baseview].[GICS_SUB_INDUSTRY] AS [GICS_SUB_INDUSTRY], 
+      [Portfolio_Security_Target_Baseview].[GICS_SUB_INDUSTRY_NAME] AS [GICS_SUB_INDUSTRY_NAME], 
+      [Portfolio_Security_Target_Baseview].[LOOK_THRU_FUND] AS [LOOK_THRU_FUND]
+      FROM [dbo].[Portfolio_Security_Target_Baseview] AS [Portfolio_Security_Target_Baseview]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Portfolio_Security_Targets_Union" EntityType="ExternalResearchModel.Store.Portfolio_Security_Targets_Union" store:Type="Views" store:Schema="dbo" store:Name="Portfolio_Security_Targets_Union">
             <DefiningQuery>SELECT 
       [Portfolio_Security_Targets_Union].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
@@ -612,6 +630,30 @@
           <Property Name="PRICE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
           <Property Name="FX_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
           <Property Name="ADR_CONV" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Main_Dev.dbo.Portfolio_Security_Target_Baseview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="Portfolio_Security_Target_Baseview">
+          <Key>
+            <PropertyRef Name="PORTFOLIO_ID" />
+            <PropertyRef Name="TARGET_PCT" />
+            <PropertyRef Name="SECURITY_ID" />
+          </Key>
+          <Property Name="PORTFOLIO_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="TARGET_PCT" Type="decimal" Nullable="false" Precision="35" Scale="9" />
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="ASEC_SEC_SHORT_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECURITY_TYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISO_COUNTRY_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SECTOR" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SECTOR_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_INDUSTRY" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SUB_INDUSTRY" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SUB_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="LOOK_THRU_FUND" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Main_Dev.dbo.Portfolio_Security_Targets_Union' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -1354,6 +1396,7 @@
           <EntitySet Name="Portfolio_Security_Targets_Union" EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" />
           <EntitySet Name="GF_SECURITY_BASEVIEW_Local" EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local" />
           <EntitySet Name="MODEL_UPLOAD_USER_GROUP" EntityType="ExternalResearchModel.MODEL_UPLOAD_USER_GROUP" />
+          <EntitySet Name="Portfolio_Security_Target_Baseview" EntityType="ExternalResearchModel.Portfolio_Security_Target_Baseview" />
 
 
 				</EntityContainer>
@@ -2097,6 +2140,27 @@
           </Key>
           <Property Type="String" Name="MANAGER_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ANALYST_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Portfolio_Security_Target_Baseview">
+          <Key>
+            <PropertyRef Name="PORTFOLIO_ID" />
+            <PropertyRef Name="TARGET_PCT" />
+            <PropertyRef Name="SECURITY_ID" />
+          </Key>
+          <Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="35" Scale="9" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SECURITY_TYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISO_COUNTRY_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SECTOR" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SECTOR_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_INDUSTRY" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LOOK_THRU_FUND" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -2966,6 +3030,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Portfolio_Security_Target_Baseview">
+            <EntityTypeMapping TypeName="ExternalResearchModel.Portfolio_Security_Target_Baseview">
+              <MappingFragment StoreEntitySet="Portfolio_Security_Target_Baseview">
+                <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
+                <ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
+                <ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
+                <ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
+                <ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
+                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
+                <ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
+                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="TARGET_PCT" ColumnName="TARGET_PCT" />
+                <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -3020,6 +3104,7 @@
         <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" Width="1.875" PointX="13" PointY="2.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local" Width="1.5" PointX="11.375" PointY="8.75" Height="13.326070963541667" />
         <EntityTypeShape EntityType="ExternalResearchModel.MODEL_UPLOAD_USER_GROUP" Width="1.5" PointX="13.375" PointY="8.75" Height="1.4033821614583388" />
+        <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Target_Baseview" Width="1.5" PointX="13.375" PointY="11.75" Height="3.7109993489583388" />
 			</Diagram>
 		</Diagrams>
 	</Designer>

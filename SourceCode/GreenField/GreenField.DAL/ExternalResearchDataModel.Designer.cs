@@ -8622,7 +8622,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Decimal TARGET_PCT
         {
@@ -8632,11 +8632,14 @@ namespace GreenField.DAL
             }
             set
             {
-                OnTARGET_PCTChanging(value);
-                ReportPropertyChanging("TARGET_PCT");
-                _TARGET_PCT = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("TARGET_PCT");
-                OnTARGET_PCTChanged();
+                if (_TARGET_PCT != value)
+                {
+                    OnTARGET_PCTChanging(value);
+                    ReportPropertyChanging("TARGET_PCT");
+                    _TARGET_PCT = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TARGET_PCT");
+                    OnTARGET_PCTChanged();
+                }
             }
         }
         private global::System.Decimal _TARGET_PCT;
