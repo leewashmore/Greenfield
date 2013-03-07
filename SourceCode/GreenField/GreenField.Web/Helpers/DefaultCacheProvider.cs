@@ -101,6 +101,9 @@ namespace GreenField.Web.Helpers
 
                 switch (key)
                 {
+                    case CacheKeyNames.SecurityDataCache:
+                        cacheExpiration.ShortName = "Security";
+                        break;
                     case CacheKeyNames.EntitySelectionDataCache:
                         cacheExpiration.ShortName = "Entity";
                         break;
@@ -162,6 +165,7 @@ namespace GreenField.Web.Helpers
         {
             var dates = new List<CacheExpiration>
                 {
+                    GetExpiration(CacheKeyNames.SecurityDataCache),
                     GetExpiration(CacheKeyNames.EntitySelectionDataCache),
                     GetExpiration(CacheKeyNames.FilterSelectionDataCache),
                     GetExpiration(CacheKeyNames.PortfolioSelectionDataCache),

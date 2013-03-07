@@ -37,7 +37,7 @@
             <br/>
 
             <asp:Panel ID="Panel1" runat="server" BorderColor="#999999" BorderStyle="Groove" 
-                BorderWidth="1px" GroupingText="Invalidate" Width="820px">
+                BorderWidth="1px" GroupingText="Invalidate" Width="900px">
                 
                 <table>
                     <tr>
@@ -58,15 +58,22 @@
             <div><br /><br /></div>
 
             <asp:Panel ID="Panel2" runat="server" BorderColor="#999999" BorderStyle="Groove"
-                BorderWidth="1px" GroupingText="Reset" Width="820px">
+                BorderWidth="1px" GroupingText="Reset" Width="900px">
             
             <table>
+                <tr>
+                    <td>
+                        <asp:Button ID="Button1" runat="server" onclick="RefreshSecuritiesCache_Click" 
+                                    Text="Reset Securities Cache" Width="200px" />
+                    </td>
+                    <td></td>
+                </tr>
                 <tr>
                     <td>
                         <asp:Button ID="btnEntitiesCache" runat="server" onclick="RefreshEntitiesCache_Click" 
                                     Text="Reset Entities Cache" Width="200px" />
                     </td>
-                    <td>* includes SECURITY, BENCHMARK, INDEX, COMMODITY, and CURRENCY</td>
+                    <td>* includes SECURITY-SELECTION, BENCHMARK, INDEX, COMMODITY, and CURRENCY</td>
                 </tr>
                 <tr>
                     <td>
