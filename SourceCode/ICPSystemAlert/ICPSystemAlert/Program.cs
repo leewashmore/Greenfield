@@ -770,7 +770,6 @@ namespace ICPSystemAlert
                         smtpClient.Host = networkConnectionHost;
                         smtpClient.Port = networkConnectionPort;
                         smtpClient.UseDefaultCredentials = true;
-                        smtpClient.EnableSsl = true;
 
                         NetworkCredential NetworkCred = new NetworkCredential();
                         if (networkCredentialUsername != null)
