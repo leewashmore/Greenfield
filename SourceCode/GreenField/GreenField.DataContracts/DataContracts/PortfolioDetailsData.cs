@@ -28,6 +28,9 @@ namespace GreenField.DataContracts
         public string PfcHoldingPortfolio { get; set; }
 
         [DataMember]
+        public string PortfolioId { get; set; }
+
+        [DataMember]
         public Boolean IsExpanded { get; set; }
 
         [DataMember]

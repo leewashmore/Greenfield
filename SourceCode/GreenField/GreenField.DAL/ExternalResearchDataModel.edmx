@@ -95,74 +95,7 @@
       [FX_RATES].[AVG12MonthRATE] AS [AVG12MonthRATE]
       FROM [dbo].[FX_RATES] AS [FX_RATES]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="ExternalResearchModel.Store.GF_SECURITY_BASEVIEW" store:Type="Tables" store:Schema="dbo" store:Name="GF_SECURITY_BASEVIEW">
-            <DefiningQuery>SELECT 
-      [GF_SECURITY_BASEVIEW].[ID] AS [ID], 
-      [GF_SECURITY_BASEVIEW].[GF_ID] AS [GF_ID], 
-      [GF_SECURITY_BASEVIEW].[SECURITY_ID] AS [SECURITY_ID], 
-      [GF_SECURITY_BASEVIEW].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME], 
-      [GF_SECURITY_BASEVIEW].[ISSUE_NAME] AS [ISSUE_NAME], 
-      [GF_SECURITY_BASEVIEW].[ISIN] AS [ISIN], 
-      [GF_SECURITY_BASEVIEW].[SEDOL] AS [SEDOL], 
-      [GF_SECURITY_BASEVIEW].[SECS_INSTYPE] AS [SECS_INSTYPE], 
-      [GF_SECURITY_BASEVIEW].[ASEC_INSTR_TYPE] AS [ASEC_INSTR_TYPE], 
-      [GF_SECURITY_BASEVIEW].[SECURITY_TYPE] AS [SECURITY_TYPE], 
-      [GF_SECURITY_BASEVIEW].[ASEC_FC_SEC_REF] AS [ASEC_FC_SEC_REF], 
-      [GF_SECURITY_BASEVIEW].[LOOK_THRU_FUND] AS [LOOK_THRU_FUND], 
-      [GF_SECURITY_BASEVIEW].[FIFTYTWO_WEEK_LOW] AS [FIFTYTWO_WEEK_LOW], 
-      [GF_SECURITY_BASEVIEW].[FIFTYTWO_WEEK_HIGH] AS [FIFTYTWO_WEEK_HIGH], 
-      [GF_SECURITY_BASEVIEW].[SECURITY_VOLUME_AVG_90D] AS [SECURITY_VOLUME_AVG_90D], 
-      [GF_SECURITY_BASEVIEW].[SECURITY_VOLUME_AVG_6M] AS [SECURITY_VOLUME_AVG_6M], 
-      [GF_SECURITY_BASEVIEW].[SECURITY_VOLUME_AVG_30D] AS [SECURITY_VOLUME_AVG_30D], 
-      [GF_SECURITY_BASEVIEW].[GREENFIELD_FLAG] AS [GREENFIELD_FLAG], 
-      [GF_SECURITY_BASEVIEW].[WACC_COST_EQUITY] AS [WACC_COST_EQUITY], 
-      [GF_SECURITY_BASEVIEW].[WACC_COST_PFD] AS [WACC_COST_PFD], 
-      [GF_SECURITY_BASEVIEW].[WACC_COST_DEBT] AS [WACC_COST_DEBT], 
-      [GF_SECURITY_BASEVIEW].[FLOAT_AMOUNT] AS [FLOAT_AMOUNT], 
-      [GF_SECURITY_BASEVIEW].[CUSIP] AS [CUSIP], 
-      [GF_SECURITY_BASEVIEW].[STOCK_EXCHANGE_ID] AS [STOCK_EXCHANGE_ID], 
-      [GF_SECURITY_BASEVIEW].[ASEC_ISSUED_VOLUME] AS [ASEC_ISSUED_VOLUME], 
-      [GF_SECURITY_BASEVIEW].[ISSUER_ID] AS [ISSUER_ID], 
-      [GF_SECURITY_BASEVIEW].[TRADING_CURRENCY] AS [TRADING_CURRENCY], 
-      [GF_SECURITY_BASEVIEW].[SHARES_OUTSTANDING] AS [SHARES_OUTSTANDING], 
-      [GF_SECURITY_BASEVIEW].[BETA] AS [BETA], 
-      [GF_SECURITY_BASEVIEW].[BARRA_BETA] AS [BARRA_BETA], 
-      [GF_SECURITY_BASEVIEW].[TICKER] AS [TICKER], 
-      [GF_SECURITY_BASEVIEW].[MSCI] AS [MSCI], 
-      [GF_SECURITY_BASEVIEW].[BARRA] AS [BARRA], 
-      [GF_SECURITY_BASEVIEW].[ISO_COUNTRY_CODE] AS [ISO_COUNTRY_CODE], 
-      [GF_SECURITY_BASEVIEW].[ASEC_SEC_COUNTRY_NAME] AS [ASEC_SEC_COUNTRY_NAME], 
-      [GF_SECURITY_BASEVIEW].[ASHEMM_PROPRIETARY_REGION_CODE] AS [ASHEMM_PROPRIETARY_REGION_CODE], 
-      [GF_SECURITY_BASEVIEW].[ASEC_SEC_COUNTRY_ZONE_NAME] AS [ASEC_SEC_COUNTRY_ZONE_NAME], 
-      [GF_SECURITY_BASEVIEW].[ISSUER_NAME] AS [ISSUER_NAME], 
-      [GF_SECURITY_BASEVIEW].[ASHEMM_ONE_LINER_DESCRIPTION] AS [ASHEMM_ONE_LINER_DESCRIPTION], 
-      [GF_SECURITY_BASEVIEW].[BLOOMBERG_DESCRIPTION] AS [BLOOMBERG_DESCRIPTION], 
-      [GF_SECURITY_BASEVIEW].[ASHMOREEMM_INDUSTRY_ANALYST] AS [ASHMOREEMM_INDUSTRY_ANALYST], 
-      [GF_SECURITY_BASEVIEW].[ASHMOREEMM_PRIMARY_ANALYST] AS [ASHMOREEMM_PRIMARY_ANALYST], 
-      [GF_SECURITY_BASEVIEW].[ASHMOREEMM_PORTFOLIO_MANAGER] AS [ASHMOREEMM_PORTFOLIO_MANAGER], 
-      [GF_SECURITY_BASEVIEW].[WEBSITE] AS [WEBSITE], 
-      [GF_SECURITY_BASEVIEW].[FISCAL_YEAR_END] AS [FISCAL_YEAR_END], 
-      [GF_SECURITY_BASEVIEW].[XREF] AS [XREF], 
-      [GF_SECURITY_BASEVIEW].[REPORTNUMBER] AS [REPORTNUMBER], 
-      [GF_SECURITY_BASEVIEW].[GICS_SECTOR] AS [GICS_SECTOR], 
-      [GF_SECURITY_BASEVIEW].[GICS_SECTOR_NAME] AS [GICS_SECTOR_NAME], 
-      [GF_SECURITY_BASEVIEW].[GICS_INDUSTRY] AS [GICS_INDUSTRY], 
-      [GF_SECURITY_BASEVIEW].[GICS_INDUSTRY_NAME] AS [GICS_INDUSTRY_NAME], 
-      [GF_SECURITY_BASEVIEW].[GICS_SUB_INDUSTRY] AS [GICS_SUB_INDUSTRY], 
-      [GF_SECURITY_BASEVIEW].[GICS_SUB_INDUSTRY_NAME] AS [GICS_SUB_INDUSTRY_NAME], 
-      [GF_SECURITY_BASEVIEW].[SHARES_PER_ADR] AS [SHARES_PER_ADR], 
-      [GF_SECURITY_BASEVIEW].[ADR_UNDERLYING_TICKER] AS [ADR_UNDERLYING_TICKER], 
-      [GF_SECURITY_BASEVIEW].[MARKET_CAP_IN_TRADING_CURRENCY] AS [MARKET_CAP_IN_TRADING_CURRENCY], 
-      [GF_SECURITY_BASEVIEW].[CLOSING_PRICE] AS [CLOSING_PRICE], 
-      [GF_SECURITY_BASEVIEW].[LAST_CLOSE_FX_QUO_CURR_TO_USD] AS [LAST_CLOSE_FX_QUO_CURR_TO_USD], 
-      [GF_SECURITY_BASEVIEW].[LAST_CLOSE_DATE] AS [LAST_CLOSE_DATE], 
-      [GF_SECURITY_BASEVIEW].[TOT_CURR_SHRS_OUTST_ALL_CLASS] AS [TOT_CURR_SHRS_OUTST_ALL_CLASS], 
-      [GF_SECURITY_BASEVIEW].[CHG_PCT_MTD] AS [CHG_PCT_MTD], 
-      [GF_SECURITY_BASEVIEW].[CHG_PCT_QTD] AS [CHG_PCT_QTD], 
-      [GF_SECURITY_BASEVIEW].[CHG_PCT_YTD] AS [CHG_PCT_YTD], 
-      [GF_SECURITY_BASEVIEW].[CHG_PCT_1YR] AS [CHG_PCT_1YR]
-      FROM [dbo].[GF_SECURITY_BASEVIEW] AS [GF_SECURITY_BASEVIEW]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="ExternalResearchModel.Store.GF_SECURITY_BASEVIEW" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="INTERNAL_ISSUER" EntityType="ExternalResearchModel.Store.INTERNAL_ISSUER" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_ISSUER">
             <DefiningQuery>SELECT 
       [INTERNAL_ISSUER].[ISSUER_ID] AS [ISSUER_ID], 
@@ -185,16 +118,7 @@
       [ISSUER_SHARES_COMPOSITION].[PREFERRED] AS [PREFERRED]
       FROM [dbo].[ISSUER_SHARES_COMPOSITION] AS [ISSUER_SHARES_COMPOSITION]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Macroeconomic_Data" EntityType="ExternalResearchModel.Store.Macroeconomic_Data" store:Type="Tables" store:Schema="dbo" store:Name="Macroeconomic_Data">
-            <DefiningQuery>SELECT 
-      [Macroeconomic_Data].[COUNTRY_CODE] AS [COUNTRY_CODE], 
-      [Macroeconomic_Data].[FIELD] AS [FIELD], 
-      [Macroeconomic_Data].[YEAR1] AS [YEAR1], 
-      [Macroeconomic_Data].[VALUE] AS [VALUE], 
-      [Macroeconomic_Data].[UPDATE_DATE] AS [UPDATE_DATE], 
-      [Macroeconomic_Data].[UPDATE_SOURCE] AS [UPDATE_SOURCE]
-      FROM [dbo].[Macroeconomic_Data] AS [Macroeconomic_Data]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Macroeconomic_Data" EntityType="ExternalResearchModel.Store.Macroeconomic_Data" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Macroeconomic_Display" EntityType="ExternalResearchModel.Store.Macroeconomic_Display" store:Type="Tables" store:Schema="dbo" store:Name="Macroeconomic_Display">
             <DefiningQuery>SELECT 
       [Macroeconomic_Display].[DISPLAY_TYPE] AS [DISPLAY_TYPE], 
@@ -266,6 +190,24 @@
       [PRICES].[ADR_CONV] AS [ADR_CONV]
       FROM [dbo].[PRICES] AS [PRICES]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Portfolio_Security_Target_Baseview" EntityType="ExternalResearchModel.Store.Portfolio_Security_Target_Baseview" store:Type="Views" store:Schema="dbo" store:Name="Portfolio_Security_Target_Baseview">
+            <DefiningQuery>SELECT 
+      [Portfolio_Security_Target_Baseview].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
+      [Portfolio_Security_Target_Baseview].[TARGET_PCT] AS [TARGET_PCT], 
+      [Portfolio_Security_Target_Baseview].[SECURITY_ID] AS [SECURITY_ID], 
+      [Portfolio_Security_Target_Baseview].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME], 
+      [Portfolio_Security_Target_Baseview].[SECURITY_TYPE] AS [SECURITY_TYPE], 
+      [Portfolio_Security_Target_Baseview].[ASHEMM_PROPRIETARY_REGION_CODE] AS [ASHEMM_PROPRIETARY_REGION_CODE], 
+      [Portfolio_Security_Target_Baseview].[ISO_COUNTRY_CODE] AS [ISO_COUNTRY_CODE], 
+      [Portfolio_Security_Target_Baseview].[GICS_SECTOR] AS [GICS_SECTOR], 
+      [Portfolio_Security_Target_Baseview].[GICS_SECTOR_NAME] AS [GICS_SECTOR_NAME], 
+      [Portfolio_Security_Target_Baseview].[GICS_INDUSTRY] AS [GICS_INDUSTRY], 
+      [Portfolio_Security_Target_Baseview].[GICS_INDUSTRY_NAME] AS [GICS_INDUSTRY_NAME], 
+      [Portfolio_Security_Target_Baseview].[GICS_SUB_INDUSTRY] AS [GICS_SUB_INDUSTRY], 
+      [Portfolio_Security_Target_Baseview].[GICS_SUB_INDUSTRY_NAME] AS [GICS_SUB_INDUSTRY_NAME], 
+      [Portfolio_Security_Target_Baseview].[LOOK_THRU_FUND] AS [LOOK_THRU_FUND]
+      FROM [dbo].[Portfolio_Security_Target_Baseview] AS [Portfolio_Security_Target_Baseview]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Portfolio_Security_Targets_Union" EntityType="ExternalResearchModel.Store.Portfolio_Security_Targets_Union" store:Type="Views" store:Schema="dbo" store:Name="Portfolio_Security_Targets_Union">
             <DefiningQuery>SELECT 
       [Portfolio_Security_Targets_Union].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
@@ -276,7 +218,7 @@
           </EntitySet>
         </EntityContainer>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CONSENSUS_MASTER">
           <Key>
@@ -303,7 +245,7 @@
           <Property Name="CURRENT" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Country_Master">
           <Key>
@@ -322,7 +264,7 @@
           <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
           <Key>
@@ -363,7 +305,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="DATA_MASTER">
           <Key>
@@ -395,7 +337,7 @@
           <Property Name="CONVERT_FLAG" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FAIR_VALUE">
           <Key>
@@ -417,7 +359,7 @@
           <Property Name="UPDATED" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FX_RATES">
           <Key>
@@ -431,9 +373,6 @@
           <Property Name="AVG90DAYRATE" Type="decimal" Precision="32" Scale="6" />
           <Property Name="AVG12MonthRATE" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.GF_SECURITY_BASEVIEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="GF_SECURITY_BASEVIEW">
           <Key>
             <PropertyRef Name="ID" />
@@ -504,7 +443,7 @@
           <Property Name="CHG_PCT_1YR" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_ISSUER">
           <Key>
@@ -517,7 +456,7 @@
           <Property Name="LastIndustryModelLoad" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES">
           <Key>
@@ -530,7 +469,7 @@
           <Property Name="SHARES_OUTSTANDING" Type="decimal" Nullable="false" Precision="32" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES_COMPOSITION">
           <Key>
@@ -555,7 +494,7 @@
           <Property Name="UPDATE_SOURCE" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Display">
           <Key>
@@ -576,7 +515,7 @@
           <Property Name="HELP_TEXT" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.MODEL_INPUTS_CTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.MODEL_INPUTS_CTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="MODEL_INPUTS_CTY">
           <Key>
@@ -599,7 +538,7 @@
           <Property Name="ANALYST_NAME" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS">
           <Key>
@@ -637,7 +576,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS_DISPLAY">
           <Key>
@@ -661,7 +600,7 @@
           <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.PORTFOLIO_SECURITY_TARGETS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.PORTFOLIO_SECURITY_TARGETS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PORTFOLIO_SECURITY_TARGETS">
           <Key>
@@ -676,7 +615,7 @@
           <Property Name="UPDATED" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PRICES">
           <Key>
@@ -693,7 +632,31 @@
           <Property Name="ADR_CONV" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data_QA.dbo.Portfolio_Security_Targets_Union' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.Portfolio_Security_Target_Baseview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="Portfolio_Security_Target_Baseview">
+          <Key>
+            <PropertyRef Name="PORTFOLIO_ID" />
+            
+            <PropertyRef Name="SECURITY_ID" />
+          </Key>
+          <Property Name="PORTFOLIO_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="TARGET_PCT" Type="decimal" Nullable="false" Precision="35" Scale="9" />
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="ASEC_SEC_SHORT_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECURITY_TYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISO_COUNTRY_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SECTOR" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SECTOR_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_INDUSTRY" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SUB_INDUSTRY" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SUB_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="LOOK_THRU_FUND" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Main.dbo.Portfolio_Security_Targets_Union' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Portfolio_Security_Targets_Union">
           <Key>
@@ -726,6 +689,7 @@
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="CALC_LOG" Type="char" Mode="In" />
           <Parameter Name="VERBOSE" Type="char" Mode="In" />
+          <Parameter Name="RUN_MODE" Type="char" Mode="In" />
         </Function>
         <Function Name="Get_EV_EBITDA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityId" Type="varchar" Mode="In" />
@@ -1334,6 +1298,7 @@
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="CALC_LOG" Mode="In" Type="String" />
             <Parameter Name="VERBOSE" Mode="In" Type="String" />
+            <Parameter Name="RUN_MODE" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="ModelInsertInternalModelLoadData">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
@@ -1429,6 +1394,7 @@
           <EntitySet Name="Portfolio_Security_Targets_Union" EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" />
           <EntitySet Name="GF_SECURITY_BASEVIEW_Local" EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local" />
           <EntitySet Name="MODEL_UPLOAD_USER_GROUP" EntityType="ExternalResearchModel.MODEL_UPLOAD_USER_GROUP" />
+          <EntitySet Name="Portfolio_Security_Target_Baseview" EntityType="ExternalResearchModel.Portfolio_Security_Target_Baseview" />
 
 
 				</EntityContainer>
@@ -2172,6 +2138,26 @@
           </Key>
           <Property Type="String" Name="MANAGER_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ANALYST_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Portfolio_Security_Target_Baseview">
+          <Key>
+            <PropertyRef Name="PORTFOLIO_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+          </Key>
+          <Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="35" Scale="9" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SECURITY_TYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISO_COUNTRY_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SECTOR" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SECTOR_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_INDUSTRY" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LOOK_THRU_FUND" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -3041,6 +3027,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Portfolio_Security_Target_Baseview">
+            <EntityTypeMapping TypeName="ExternalResearchModel.Portfolio_Security_Target_Baseview">
+              <MappingFragment StoreEntitySet="Portfolio_Security_Target_Baseview">
+                <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
+                <ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
+                <ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
+                <ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
+                <ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
+                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
+                <ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
+                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="TARGET_PCT" ColumnName="TARGET_PCT" />
+                <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -3069,7 +3075,7 @@
 			<DesignerInfoPropertySet>
 				<DesignerProperty Name="ValidateOnBuild" Value="true" />
 				<DesignerProperty Name="EnablePluralization" Value="True" />
-				<DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+				<DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
 			</DesignerInfoPropertySet>
 		</Options>
 		<!-- Diagram content (shape and connector positions) -->
@@ -3083,7 +3089,7 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES_COMPOSITION" Width="1.5" PointX="6.5" PointY="8.25" Height="1.4033821614583317" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Data" Width="1.5" PointX="0.75" PointY="9.75" Height="2.1725878906250031" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Display" Width="1.5" PointX="2.75" PointY="9.75" Height="2.5571907552083388" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS" Width="1.5" PointX="10.75" PointY="0.75" Height="4.0956022135416674" IsExpanded="true" />
+				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS" Width="2.125" PointX="10.75" PointY="0.75" Height="4.0956022135416674" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" Width="1.5" PointX="4.75" PointY="10.75" Height="2.7494921875000031" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="6.5" PointY="9.75" Height="3.7109993489583317" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PRICE" Width="1.5" PointX="0.75" PointY="13.75" Height="1.9802864583333388" />
@@ -3091,10 +3097,11 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
 				<EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.25" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" Width="1.875" PointX="13" PointY="2.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local" Width="1.5" PointX="11.375" PointY="8.75" Height="13.326070963541667" />
-        <EntityTypeShape EntityType="ExternalResearchModel.MODEL_UPLOAD_USER_GROUP" Width="1.5" PointX="13.375" PointY="8.75" Height="1.4033821614583388" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="4.5" PointX="11.25" PointY="5.25" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" Width="1.875" PointX="13" PointY="1" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local" Width="4.375" PointX="11.375" PointY="8.75" Height="13.326070963541667" />
+        <EntityTypeShape EntityType="ExternalResearchModel.MODEL_UPLOAD_USER_GROUP" Width="1.5" PointX="16.375" PointY="6.25" Height="1.4033821614583388" />
+        <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Target_Baseview" Width="2.5" PointX="3.375" PointY="14.75" Height="3.5186979166666674" />
 			</Diagram>
 		</Diagrams>
 	</Designer>

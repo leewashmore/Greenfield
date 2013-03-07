@@ -835,7 +835,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             bool excludeCash = false;
             bool lookThru = false;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, lookThru, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            String filterType = "Region";
+            String filterValue = "AFRICA";
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, filterType, filterValue,lookThru, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Portfolio Details Data should be Empty");
                 EnqueueTestComplete();
@@ -859,7 +861,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             bool getBenchmark = false;
             bool excludeCash = false;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, lookThru, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            String filterType = "Region";
+            String filterValue = "AFRICA";
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, filterType, filterValue, lookThru, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Portfolio Details Data should be Empty");
                 EnqueueTestComplete();
@@ -883,8 +887,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             var array = (List<PortfolioDetailsData>)serializer.Deserialize(reader);
             var data = GetGroupedPortfolios(portfolio.PortfolioId, array);
             var i = 2;
-
-            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, lookThru, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            String filterType = "Region";
+            String filterValue = "AFRICA";
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, filterType, filterValue, lookThru, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
             {
                 //XmlSerializer serializer = new XmlSerializer(typeof(List<PortfolioDetailsData>));
                 MemoryStream ms = new MemoryStream();
@@ -986,7 +991,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             bool lookThru = false;
             bool getBenchamrk = false;
             bool excludeCash = false;
-            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, lookThru, excludeCash, getBenchamrk, (List<PortfolioDetailsData> resultSet) =>
+            String filterType = "Region";
+            String filterValue = "AFRICA";
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, filterType,filterValue,lookThru, excludeCash, getBenchamrk, (List<PortfolioDetailsData> resultSet) =>
             {
                 Assert.AreEqual(0, resultSet.Count, "Portfolio Details Data Should Be Empty");
                 EnqueueTestComplete();

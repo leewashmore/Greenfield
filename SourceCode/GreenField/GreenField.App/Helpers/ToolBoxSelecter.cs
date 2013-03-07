@@ -132,8 +132,8 @@ namespace GreenField.App.Helpers
                 case DashboardCategoryType.PORTFOLIO_HOLDINGS:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible,
                                                 effectiveDateSelectorVisibility: Visibility.Visible,
-                                                filterTypeSelectorVisibility: Visibility.Collapsed,
-                                                filterValueSelectorVisibility: Visibility.Collapsed,
+                                                filterTypeSelectorVisibility: Visibility.Visible,
+                                                filterValueSelectorVisibility: Visibility.Visible,
                                                 mktCapSelectorVisibility: Visibility.Visible,
                                                 lookThruVisibility: Visibility.Visible);
                     break;

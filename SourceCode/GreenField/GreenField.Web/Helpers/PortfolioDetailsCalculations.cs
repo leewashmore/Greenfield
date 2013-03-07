@@ -31,6 +31,7 @@ namespace GreenField.Web.Helpers
             {
                 return new List<PortfolioDetailsData>();
             }
+
             foreach (GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
             {
                 PortfolioDetailsData benchmarkResult = new PortfolioDetailsData();
@@ -45,7 +46,7 @@ namespace GreenField.Web.Helpers
                 benchmarkResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
                 benchmarkResult.SecurityType = item.SECURITY_TYPE;
                 benchmarkResult.BalanceNominal = item.BALANCE_NOMINAL;
-                benchmarkResult.DirtyValuePC = 0;
+                benchmarkResult.DirtyValuePC = item.DIRTY_VALUE_PC;
                 benchmarkResult.BenchmarkWeight = item.BENCHMARK_WEIGHT;
                 benchmarkResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
                 benchmarkResult.Type = "BENCHMARK";
@@ -115,6 +116,9 @@ namespace GreenField.Web.Helpers
             {
                 return result;
             }
+
+            decimal? sumBenchmarkWeight = 0;
+            sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
             foreach (GF_PORTFOLIO_HOLDINGS item in dimensionPortfolioHoldingsData)
             {
                 PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
@@ -130,9 +134,17 @@ namespace GreenField.Web.Helpers
                 portfolioResult.SecurityType = item.SECURITY_TYPE;
                 portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
                 portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
-                portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
-                            Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
-                            Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
+                portfolioResult.PortfolioId = item.PORTFOLIO_ID;
+                if (sumBenchmarkWeight != 0)
+                {
+                    portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                                Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                                Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT) / sumBenchmarkWeight;
+                }
+                else
+                {
+                    portfolioResult.BenchmarkWeight = 0;
+                }
                 //portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
                
 
@@ -171,6 +183,8 @@ namespace GreenField.Web.Helpers
                 portfolioResult.IssueName = item.ISSUE_NAME;
                 portfolioResult.Ticker = item.TICKER;
                 portfolioResult.PfcHoldingPortfolio = item.A_PFCHOLDINGS_PORLT;
+                portfolioResult.PortfolioId = item.PORTFOLIO_ID;
+
                 portfolioResult.PortfolioPath = item.PORPATH;
                 portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
                 portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;

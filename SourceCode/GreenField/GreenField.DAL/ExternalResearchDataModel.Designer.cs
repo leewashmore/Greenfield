@@ -8,15 +8,15 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
-
 namespace GreenField.DAL
 {
     #region Contexts
@@ -352,8 +352,25 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<MODEL_UPLOAD_USER_GROUP> _MODEL_UPLOAD_USER_GROUP;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Portfolio_Security_Target_Baseview> Portfolio_Security_Target_Baseview
+        {
+            get
+            {
+                if ((_Portfolio_Security_Target_Baseview == null))
+                {
+                    _Portfolio_Security_Target_Baseview = base.CreateObjectSet<Portfolio_Security_Target_Baseview>("Portfolio_Security_Target_Baseview");
+                }
+                return _Portfolio_Security_Target_Baseview;
+            }
+        }
+        private ObjectSet<Portfolio_Security_Target_Baseview> _Portfolio_Security_Target_Baseview;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -499,8 +516,17 @@ namespace GreenField.DAL
         {
             base.AddObject("MODEL_UPLOAD_USER_GROUP", mODEL_UPLOAD_USER_GROUP);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Portfolio_Security_Target_Baseview EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPortfolio_Security_Target_Baseview(Portfolio_Security_Target_Baseview portfolio_Security_Target_Baseview)
+        {
+            base.AddObject("Portfolio_Security_Target_Baseview", portfolio_Security_Target_Baseview);
+        }
 
         #endregion
+
         #region Function Imports
     
         /// <summary>
@@ -2673,7 +2699,8 @@ namespace GreenField.DAL
         /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
         /// <param name="cALC_LOG">No Metadata Documentation available.</param>
         /// <param name="vERBOSE">No Metadata Documentation available.</param>
-        public int Get_Data(global::System.String iSSUER_ID, global::System.String cALC_LOG, global::System.String vERBOSE)
+        /// <param name="rUN_MODE">No Metadata Documentation available.</param>
+        public int Get_Data(global::System.String iSSUER_ID, global::System.String cALC_LOG, global::System.String vERBOSE, global::System.String rUN_MODE)
         {
             ObjectParameter iSSUER_IDParameter;
             if (iSSUER_ID != null)
@@ -2705,7 +2732,17 @@ namespace GreenField.DAL
                 vERBOSEParameter = new ObjectParameter("VERBOSE", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction("Get_Data", iSSUER_IDParameter, cALC_LOGParameter, vERBOSEParameter);
+            ObjectParameter rUN_MODEParameter;
+            if (rUN_MODE != null)
+            {
+                rUN_MODEParameter = new ObjectParameter("RUN_MODE", rUN_MODE);
+            }
+            else
+            {
+                rUN_MODEParameter = new ObjectParameter("RUN_MODE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("Get_Data", iSSUER_IDParameter, cALC_LOGParameter, vERBOSEParameter, rUN_MODEParameter);
         }
     
         /// <summary>
@@ -3521,11 +3558,11 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -3582,6 +3619,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4044,6 +4082,7 @@ namespace GreenField.DAL
         partial void OnAMOUNT_TYPEChanged();
 
         #endregion
+
     
     }
     
@@ -4085,6 +4124,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4499,6 +4539,7 @@ namespace GreenField.DAL
         partial void OnLONG_DESCChanged();
 
         #endregion
+
     
     }
     
@@ -4532,6 +4573,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4718,6 +4760,7 @@ namespace GreenField.DAL
         partial void OnASHEMM_PROPRIETARY_REGION_CODEChanged();
 
         #endregion
+
     
     }
     
@@ -4755,6 +4798,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4971,6 +5015,7 @@ namespace GreenField.DAL
         partial void OnUPDATEDChanged();
 
         #endregion
+
     
     }
     
@@ -5000,6 +5045,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5132,6 +5178,7 @@ namespace GreenField.DAL
         partial void OnAVG12MonthRATEChanged();
 
         #endregion
+
     
     }
     
@@ -5157,6 +5204,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6699,6 +6747,7 @@ namespace GreenField.DAL
         partial void OnCHG_PCT_1YRChanged();
 
         #endregion
+
     
     }
     
@@ -6726,6 +6775,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6831,6 +6881,7 @@ namespace GreenField.DAL
         partial void OnLastIndustryModelLoadChanged();
 
         #endregion
+
     
     }
     
@@ -6860,6 +6911,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6944,6 +6996,7 @@ namespace GreenField.DAL
         partial void OnSHARES_OUTSTANDINGChanged();
 
         #endregion
+
     
     }
     
@@ -6971,6 +7024,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7052,6 +7106,7 @@ namespace GreenField.DAL
         partial void OnPREFERREDChanged();
 
         #endregion
+
     
     }
     
@@ -7085,6 +7140,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7241,6 +7297,7 @@ namespace GreenField.DAL
         partial void OnUPDATE_SOURCEChanged();
 
         #endregion
+
     
     }
     
@@ -7276,6 +7333,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7489,6 +7547,7 @@ namespace GreenField.DAL
         partial void OnHELP_TEXTChanged();
 
         #endregion
+
     
     }
     
@@ -7520,6 +7579,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7631,6 +7691,7 @@ namespace GreenField.DAL
         partial void OnLONG_TERM_GDP_GRChanged();
 
         #endregion
+
     
     }
     
@@ -7658,6 +7719,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7715,6 +7777,7 @@ namespace GreenField.DAL
         partial void OnANALYST_NAMEChanged();
 
         #endregion
+
     
     }
     
@@ -7768,6 +7831,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8200,6 +8264,7 @@ namespace GreenField.DAL
         partial void OnAMOUNT_TYPEChanged();
 
         #endregion
+
     
     }
     
@@ -8239,6 +8304,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8482,6 +8548,383 @@ namespace GreenField.DAL
         partial void OnMULTIPLIERChanged();
 
         #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="Portfolio_Security_Target_Baseview")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Portfolio_Security_Target_Baseview : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Portfolio_Security_Target_Baseview object.
+        /// </summary>
+        /// <param name="pORTFOLIO_ID">Initial value of the PORTFOLIO_ID property.</param>
+        /// <param name="tARGET_PCT">Initial value of the TARGET_PCT property.</param>
+        /// <param name="sECURITY_ID">Initial value of the SECURITY_ID property.</param>
+        public static Portfolio_Security_Target_Baseview CreatePortfolio_Security_Target_Baseview(global::System.String pORTFOLIO_ID, global::System.Decimal tARGET_PCT, global::System.String sECURITY_ID)
+        {
+            Portfolio_Security_Target_Baseview portfolio_Security_Target_Baseview = new Portfolio_Security_Target_Baseview();
+            portfolio_Security_Target_Baseview.PORTFOLIO_ID = pORTFOLIO_ID;
+            portfolio_Security_Target_Baseview.TARGET_PCT = tARGET_PCT;
+            portfolio_Security_Target_Baseview.SECURITY_ID = sECURITY_ID;
+            return portfolio_Security_Target_Baseview;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PORTFOLIO_ID
+        {
+            get
+            {
+                return _PORTFOLIO_ID;
+            }
+            set
+            {
+                if (_PORTFOLIO_ID != value)
+                {
+                    OnPORTFOLIO_IDChanging(value);
+                    ReportPropertyChanging("PORTFOLIO_ID");
+                    _PORTFOLIO_ID = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("PORTFOLIO_ID");
+                    OnPORTFOLIO_IDChanged();
+                }
+            }
+        }
+        private global::System.String _PORTFOLIO_ID;
+        partial void OnPORTFOLIO_IDChanging(global::System.String value);
+        partial void OnPORTFOLIO_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal TARGET_PCT
+        {
+            get
+            {
+                return _TARGET_PCT;
+            }
+            set
+            {
+                OnTARGET_PCTChanging(value);
+                ReportPropertyChanging("TARGET_PCT");
+                _TARGET_PCT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TARGET_PCT");
+                OnTARGET_PCTChanged();
+            }
+        }
+        private global::System.Decimal _TARGET_PCT;
+        partial void OnTARGET_PCTChanging(global::System.Decimal value);
+        partial void OnTARGET_PCTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SECURITY_ID
+        {
+            get
+            {
+                return _SECURITY_ID;
+            }
+            set
+            {
+                if (_SECURITY_ID != value)
+                {
+                    OnSECURITY_IDChanging(value);
+                    ReportPropertyChanging("SECURITY_ID");
+                    _SECURITY_ID = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("SECURITY_ID");
+                    OnSECURITY_IDChanged();
+                }
+            }
+        }
+        private global::System.String _SECURITY_ID;
+        partial void OnSECURITY_IDChanging(global::System.String value);
+        partial void OnSECURITY_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ASEC_SEC_SHORT_NAME
+        {
+            get
+            {
+                return _ASEC_SEC_SHORT_NAME;
+            }
+            set
+            {
+                OnASEC_SEC_SHORT_NAMEChanging(value);
+                ReportPropertyChanging("ASEC_SEC_SHORT_NAME");
+                _ASEC_SEC_SHORT_NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ASEC_SEC_SHORT_NAME");
+                OnASEC_SEC_SHORT_NAMEChanged();
+            }
+        }
+        private global::System.String _ASEC_SEC_SHORT_NAME;
+        partial void OnASEC_SEC_SHORT_NAMEChanging(global::System.String value);
+        partial void OnASEC_SEC_SHORT_NAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SECURITY_TYPE
+        {
+            get
+            {
+                return _SECURITY_TYPE;
+            }
+            set
+            {
+                OnSECURITY_TYPEChanging(value);
+                ReportPropertyChanging("SECURITY_TYPE");
+                _SECURITY_TYPE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SECURITY_TYPE");
+                OnSECURITY_TYPEChanged();
+            }
+        }
+        private global::System.String _SECURITY_TYPE;
+        partial void OnSECURITY_TYPEChanging(global::System.String value);
+        partial void OnSECURITY_TYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ASHEMM_PROPRIETARY_REGION_CODE
+        {
+            get
+            {
+                return _ASHEMM_PROPRIETARY_REGION_CODE;
+            }
+            set
+            {
+                OnASHEMM_PROPRIETARY_REGION_CODEChanging(value);
+                ReportPropertyChanging("ASHEMM_PROPRIETARY_REGION_CODE");
+                _ASHEMM_PROPRIETARY_REGION_CODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ASHEMM_PROPRIETARY_REGION_CODE");
+                OnASHEMM_PROPRIETARY_REGION_CODEChanged();
+            }
+        }
+        private global::System.String _ASHEMM_PROPRIETARY_REGION_CODE;
+        partial void OnASHEMM_PROPRIETARY_REGION_CODEChanging(global::System.String value);
+        partial void OnASHEMM_PROPRIETARY_REGION_CODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ISO_COUNTRY_CODE
+        {
+            get
+            {
+                return _ISO_COUNTRY_CODE;
+            }
+            set
+            {
+                OnISO_COUNTRY_CODEChanging(value);
+                ReportPropertyChanging("ISO_COUNTRY_CODE");
+                _ISO_COUNTRY_CODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ISO_COUNTRY_CODE");
+                OnISO_COUNTRY_CODEChanged();
+            }
+        }
+        private global::System.String _ISO_COUNTRY_CODE;
+        partial void OnISO_COUNTRY_CODEChanging(global::System.String value);
+        partial void OnISO_COUNTRY_CODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String GICS_SECTOR
+        {
+            get
+            {
+                return _GICS_SECTOR;
+            }
+            set
+            {
+                OnGICS_SECTORChanging(value);
+                ReportPropertyChanging("GICS_SECTOR");
+                _GICS_SECTOR = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("GICS_SECTOR");
+                OnGICS_SECTORChanged();
+            }
+        }
+        private global::System.String _GICS_SECTOR;
+        partial void OnGICS_SECTORChanging(global::System.String value);
+        partial void OnGICS_SECTORChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String GICS_SECTOR_NAME
+        {
+            get
+            {
+                return _GICS_SECTOR_NAME;
+            }
+            set
+            {
+                OnGICS_SECTOR_NAMEChanging(value);
+                ReportPropertyChanging("GICS_SECTOR_NAME");
+                _GICS_SECTOR_NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("GICS_SECTOR_NAME");
+                OnGICS_SECTOR_NAMEChanged();
+            }
+        }
+        private global::System.String _GICS_SECTOR_NAME;
+        partial void OnGICS_SECTOR_NAMEChanging(global::System.String value);
+        partial void OnGICS_SECTOR_NAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String GICS_INDUSTRY
+        {
+            get
+            {
+                return _GICS_INDUSTRY;
+            }
+            set
+            {
+                OnGICS_INDUSTRYChanging(value);
+                ReportPropertyChanging("GICS_INDUSTRY");
+                _GICS_INDUSTRY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("GICS_INDUSTRY");
+                OnGICS_INDUSTRYChanged();
+            }
+        }
+        private global::System.String _GICS_INDUSTRY;
+        partial void OnGICS_INDUSTRYChanging(global::System.String value);
+        partial void OnGICS_INDUSTRYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String GICS_INDUSTRY_NAME
+        {
+            get
+            {
+                return _GICS_INDUSTRY_NAME;
+            }
+            set
+            {
+                OnGICS_INDUSTRY_NAMEChanging(value);
+                ReportPropertyChanging("GICS_INDUSTRY_NAME");
+                _GICS_INDUSTRY_NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("GICS_INDUSTRY_NAME");
+                OnGICS_INDUSTRY_NAMEChanged();
+            }
+        }
+        private global::System.String _GICS_INDUSTRY_NAME;
+        partial void OnGICS_INDUSTRY_NAMEChanging(global::System.String value);
+        partial void OnGICS_INDUSTRY_NAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String GICS_SUB_INDUSTRY
+        {
+            get
+            {
+                return _GICS_SUB_INDUSTRY;
+            }
+            set
+            {
+                OnGICS_SUB_INDUSTRYChanging(value);
+                ReportPropertyChanging("GICS_SUB_INDUSTRY");
+                _GICS_SUB_INDUSTRY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("GICS_SUB_INDUSTRY");
+                OnGICS_SUB_INDUSTRYChanged();
+            }
+        }
+        private global::System.String _GICS_SUB_INDUSTRY;
+        partial void OnGICS_SUB_INDUSTRYChanging(global::System.String value);
+        partial void OnGICS_SUB_INDUSTRYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String GICS_SUB_INDUSTRY_NAME
+        {
+            get
+            {
+                return _GICS_SUB_INDUSTRY_NAME;
+            }
+            set
+            {
+                OnGICS_SUB_INDUSTRY_NAMEChanging(value);
+                ReportPropertyChanging("GICS_SUB_INDUSTRY_NAME");
+                _GICS_SUB_INDUSTRY_NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("GICS_SUB_INDUSTRY_NAME");
+                OnGICS_SUB_INDUSTRY_NAMEChanged();
+            }
+        }
+        private global::System.String _GICS_SUB_INDUSTRY_NAME;
+        partial void OnGICS_SUB_INDUSTRY_NAMEChanging(global::System.String value);
+        partial void OnGICS_SUB_INDUSTRY_NAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LOOK_THRU_FUND
+        {
+            get
+            {
+                return _LOOK_THRU_FUND;
+            }
+            set
+            {
+                OnLOOK_THRU_FUNDChanging(value);
+                ReportPropertyChanging("LOOK_THRU_FUND");
+                _LOOK_THRU_FUND = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LOOK_THRU_FUND");
+                OnLOOK_THRU_FUNDChanged();
+            }
+        }
+        private global::System.String _LOOK_THRU_FUND;
+        partial void OnLOOK_THRU_FUNDChanging(global::System.String value);
+        partial void OnLOOK_THRU_FUNDChanged();
+
+        #endregion
+
     
     }
     
@@ -8513,6 +8956,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8624,6 +9068,7 @@ namespace GreenField.DAL
         partial void OnUPDATEDChanged();
 
         #endregion
+
     
     }
     
@@ -8653,6 +9098,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8761,6 +9207,7 @@ namespace GreenField.DAL
         partial void OnUPDATEDChanged();
 
         #endregion
+
     
     }
     
@@ -8794,6 +9241,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8932,10 +9380,12 @@ namespace GreenField.DAL
         partial void OnADR_CONVChanged();
 
         #endregion
+
     
     }
 
     #endregion
+
     #region ComplexTypes
     
     /// <summary>
@@ -8964,6 +9414,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -9135,6 +9586,7 @@ namespace GreenField.DAL
         partial void OnReported_CurrencyChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -9165,6 +9617,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -9480,6 +9933,7 @@ namespace GreenField.DAL
         partial void OnPeriodYearChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -9532,6 +9986,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -9943,6 +10398,7 @@ namespace GreenField.DAL
         partial void OnACTUALChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -9995,6 +10451,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -10406,6 +10863,7 @@ namespace GreenField.DAL
         partial void OnACTUALChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -10430,6 +10888,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -10601,6 +11060,7 @@ namespace GreenField.DAL
         partial void OncurrencyChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -10637,6 +11097,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -11048,6 +11509,7 @@ namespace GreenField.DAL
         partial void OnACTUALChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -11072,6 +11534,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -11099,6 +11562,7 @@ namespace GreenField.DAL
         partial void OnCurrencyChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -11125,6 +11589,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -11224,6 +11689,7 @@ namespace GreenField.DAL
         partial void OnCONVERT_FLAGChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -11252,6 +11718,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -11327,6 +11794,7 @@ namespace GreenField.DAL
         partial void OnFISCALChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -11379,6 +11847,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -11766,6 +12235,7 @@ namespace GreenField.DAL
         partial void OnAMOUNT_TYPEChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -11796,6 +12266,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -11895,6 +12366,7 @@ namespace GreenField.DAL
         partial void OnFREE_CASH_FLOWChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -11921,6 +12393,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -11972,6 +12445,7 @@ namespace GreenField.DAL
         partial void OnDATA_IDChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -12008,6 +12482,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -12179,6 +12654,7 @@ namespace GreenField.DAL
         partial void OnDataTypeChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -12209,6 +12685,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -12308,6 +12785,7 @@ namespace GreenField.DAL
         partial void OnTypeChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -12340,6 +12818,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -12679,6 +13158,7 @@ namespace GreenField.DAL
         partial void OnCalculationDiagramChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -12709,6 +13189,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -13048,6 +13529,7 @@ namespace GreenField.DAL
         partial void OnCalculationDiagramChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -13088,6 +13570,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -13451,6 +13934,7 @@ namespace GreenField.DAL
         partial void OnDATA_DESCChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -13479,6 +13963,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -13626,6 +14111,7 @@ namespace GreenField.DAL
         partial void OnVALUEChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -13662,6 +14148,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -13833,6 +14320,7 @@ namespace GreenField.DAL
         partial void OnVALUEChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -13863,6 +14351,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -13962,6 +14451,7 @@ namespace GreenField.DAL
         partial void OnFX_RATEChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -14023,6 +14513,7 @@ namespace GreenField.DAL
         partial void OnENTERPRISE_VALUEChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -14049,6 +14540,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -14196,6 +14688,7 @@ namespace GreenField.DAL
         partial void OnShares_OutstandingChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -14377,6 +14870,7 @@ namespace GreenField.DAL
         partial void OnDATA_IDChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -14403,6 +14897,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -14502,6 +14997,7 @@ namespace GreenField.DAL
         partial void OnPERIOD_YEARChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -14683,6 +15179,7 @@ namespace GreenField.DAL
         partial void OnShares_OutstandingChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -14707,6 +15204,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -15022,6 +15520,7 @@ namespace GreenField.DAL
         partial void OnMeanLabelChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -15064,6 +15563,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -15331,6 +15831,7 @@ namespace GreenField.DAL
         partial void OnUNITSChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -15365,6 +15866,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -15512,6 +16014,7 @@ namespace GreenField.DAL
         partial void OnDOCUMENT_IDChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -15542,6 +16045,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -15641,6 +16145,7 @@ namespace GreenField.DAL
         partial void OnValueChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -15693,6 +16198,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -16080,6 +16586,7 @@ namespace GreenField.DAL
         partial void OnSortOrderChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -16104,6 +16611,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -16131,6 +16639,7 @@ namespace GreenField.DAL
         partial void OnAMOUNTChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -16336,6 +16845,7 @@ namespace GreenField.DAL
         partial void OnPeriodYearChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -16901,6 +17411,7 @@ namespace GreenField.DAL
         partial void OnXREFChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -17034,6 +17545,7 @@ namespace GreenField.DAL
         partial void OnVALUATIONChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -17060,6 +17572,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -17111,6 +17624,7 @@ namespace GreenField.DAL
         partial void OnCOAChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -17149,6 +17663,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -17344,8 +17859,10 @@ namespace GreenField.DAL
         partial void OnAmountTypeChanged();
 
         #endregion
+
     }
 
     #endregion
+
     
 }

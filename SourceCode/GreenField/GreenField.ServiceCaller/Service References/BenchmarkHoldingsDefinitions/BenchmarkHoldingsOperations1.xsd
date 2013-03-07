@@ -256,6 +256,7 @@
   <xs:element name="ArrayOfHeatMapData" nillable="true" type="tns:ArrayOfHeatMapData" />
   <xs:complexType name="HeatMapData">
     <xs:sequence>
+      <xs:element minOccurs="0" name="BenchmarkYTD" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="CountryID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CountryPerformance" type="tns:PerformanceType" />
       <xs:element minOccurs="0" name="CountryYTD" nillable="true" type="xs:decimal" />
@@ -279,6 +280,18 @@
   <xs:element name="ArrayOfAttributionData" nillable="true" type="tns:ArrayOfAttributionData" />
   <xs:complexType name="AttributionData">
     <xs:sequence>
+      <xs:element minOccurs="0" name="BM1TopTwr1d" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1TopTwr1w" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1TopTwr1y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1TopTwrMtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1TopTwrQtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1TopTwrYtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_1D" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_1W" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_1Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_MTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_QTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_TWR_YTD" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Bm1RcAvgWgt1d" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Bm1RcAvgWgt1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Bm1RcAvgWgt1y" nillable="true" type="xs:decimal" />
@@ -294,12 +307,6 @@
       <xs:element minOccurs="0" name="FBm1AshAssetAllocMtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshAssetAllocQtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshAssetAllocYtd" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BM1_RC_TWR_1D" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BM1_RC_TWR_1W" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BM1_RC_TWR_1Y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BM1_RC_TWR_MTD" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BM1_RC_TWR_QTD" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BM1_RC_TWR_YTD" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshSecSelec1d" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshSecSelec1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshSecSelec1y" nillable="true" type="xs:decimal" />
@@ -319,6 +326,12 @@
       <xs:element minOccurs="0" name="PorRcAvgWgtMtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PorRcAvgWgtQtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PorRcAvgWgtYtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorTopTwr1d" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorTopTwr1w" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorTopTwr1y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorTopTwrMtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorTopTwrQtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorTopTwrYTD" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AttributionData" nillable="true" type="tns:AttributionData" />
