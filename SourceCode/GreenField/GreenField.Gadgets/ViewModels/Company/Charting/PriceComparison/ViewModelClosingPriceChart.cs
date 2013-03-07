@@ -293,6 +293,79 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        /*
+        /// <summary>
+        /// Stores the list of EntitySelectionData for entity type - SECURITY
+        /// </summary>
+        private List<EntitySelectionData> securitySelectorInfo;
+        public List<EntitySelectionData> SecuritySelectorInfo
+        {
+            get { return securitySelectorInfo; }
+            set
+            {
+                securitySelectorInfo = value;
+                RaisePropertyChanged(() => this.SecuritySelectorInfo);
+            }
+        }
+
+        /// <summary>
+        /// Stores selected security - Publishes SecurityReferenceSetEvent on set event
+        /// </summary>
+        private EntitySelectionData selectedSecurityInfo;
+        public EntitySelectionData SelectedSecurityInfo
+        {
+            get { return selectedSecurityInfo; }
+            set
+            {
+                if (selectedSecurityInfo != value)
+                {
+                    selectedSecurityInfo = value;
+                    SelectedSeriesReference = selectedSecurityInfo;
+                    RaisePropertyChanged(() => this.SelectedSecurityInfo);
+                }
+
+                if (value != null)
+                {
+                    //SelectorPayload.EntitySelectionData = selectedSecurityInfo;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores search text entered by user - Refines SecuritySelectionInfo based on the text entered
+        /// </summary>
+        private string securitySearchText;
+        public string SecuritySearchText
+        {
+            get { return securitySearchText; }
+            set
+            {
+                securitySearchText = value;
+                RaisePropertyChanged(() => this.SecuritySearchText);
+                if (value != null)
+                {
+                    if (value != String.Empty && SelectionData.EntitySelectionData != null)
+                    {
+                        SecuritySelectorInfo = SelectionData.EntitySelectionData
+                                                            .Where(
+                                                                record => record.Type == EntityType.SECURITY &&
+                                                                (record.LongName.ToLower().Contains(value.ToLower())
+                                                                || record.ShortName.ToLower().Contains(value.ToLower())
+                                                                ||
+                                                                record.InstrumentID.ToLower().Contains(value.ToLower())))
+                                                            .ToList();
+                    }
+                    else if (SelectionData.EntitySelectionData != null)
+                        SecuritySelectorInfo =
+                            SelectionData.EntitySelectionData.Where(record => record.Type == EntityType.SECURITY)
+                                         .ToList();
+                }
+            }
+        }
+         * */
+
+
+
         #region Plotting Additional Series
         /// <summary>
         /// Grouped Collection View for Auto-Complete Box
@@ -310,7 +383,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SeriesReference);
             }
         }
-
+        
         /// <summary>
         /// DataSource for the Grouped Collection View
         /// </summary>
@@ -336,7 +409,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Search Mode Filter - Checked (StartsWith); Unchecked (Contains)
         /// </summary>
-        private bool searchFilterEnabled;
+        private bool searchFilterEnabled = true;
         public bool SearchFilterEnabled
         {
             get { return searchFilterEnabled; }
@@ -363,13 +436,14 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SeriesEnteredText);
                 if (value != null)
                 {
-                    SeriesReference.Source = SearchFilterEnabled == false
-                          ? SeriesReferenceSource.Where(o => o.ShortName.ToLower().Contains(value.ToLower()))
-                          : SeriesReferenceSource.Where(o => o.ShortName.ToLower().StartsWith(value.ToLower()));
-                }
-                else
-                {
-                    SeriesReference.Source = SeriesReferenceSource;
+                    if (value != String.Empty)
+                        SeriesReference.Source = SearchFilterEnabled == false
+                              ? SeriesReferenceSource.Where(o => o.ShortName.ToLower().Contains(value.ToLower()) || o.LongName.ToLower().Contains(value.ToLower()) || o.InstrumentID.ToLower().Contains(value.ToLower()))
+                              : SeriesReferenceSource.Where(o => o.ShortName.ToLower().StartsWith(value.ToLower()) || o.LongName.ToLower().StartsWith(value.ToLower()) || o.InstrumentID.ToLower().StartsWith(value.ToLower()));
+                    else
+                    {
+                        SeriesReference.Source = SeriesReferenceSource;
+                    }
                 }
             }
         }
@@ -908,6 +982,11 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
+                if (SelectionData.EntitySelectionData != null && SeriesReferenceSource == null)
+                {
+                    RetrieveEntitySelectionDataCallBackMethod(SelectionData.EntitySelectionData);
+                }
+
                 //ArgumentNullException
                 if (entitySelectionData != null)
                 {

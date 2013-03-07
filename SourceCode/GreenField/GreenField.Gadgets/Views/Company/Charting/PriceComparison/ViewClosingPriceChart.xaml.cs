@@ -94,7 +94,7 @@ namespace GreenField.Gadgets.Views
                 this.chVolume.DefaultView.ChartLegend.Header = string.Empty;
                 this.chPricing.DefaultView.ChartArea.AxisX.TicksDistance = 50;
                 this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
-                this.cmbAddSeries.CanAutocompleteSelectItems = false;
+                //this.cmbAddSeries.CanAutocompleteSelectItems = false;
                 this.cmbTime.SelectedValue = "1-Year";
             }
             catch (Exception ex)

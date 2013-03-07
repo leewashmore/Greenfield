@@ -226,7 +226,7 @@
                                              Name="cmbAddSeries"
                                              ItemsSource="{Binding SeriesReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                              IsEditable="True" 
-                                             telerik:TextSearch.TextPath="ShortName"
+                                             telerik:TextSearch.TextPath="LongName"
                                              Width="150"
                                              CanAutocompleteSelectItems="True"
                                              CanKeyboardNavigationSelectItems="False"
@@ -234,13 +234,14 @@
                                              StaysOpenOnEdit="True"
                                              TextOptions.TextHintingMode="Fixed"
                                              Text="{Binding SeriesEnteredText, Mode=TwoWay}" 
+                                             EmptyText="Search security, benchmark, index, commodity, and currency" 
                                              SelectedItem="{Binding SelectedSeriesReference, Mode=TwoWay}"
                                              ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
                                              HorizontalAlignment="Right" 
                                              TextSearchMode="Contains"
                                              IsTextSearchEnabled="False"
-                                             Style="{StaticResource RadComboBoxStyle}"
-                                             DropDownOpened="cmbAddSeries_DropDownOpened">
+                                             Style="{StaticResource RadComboBoxStyle}">
+                                             <!-- DropDownOpened="cmbAddSeries_DropDownOpened"> -->
                             <!--<telerik:RadComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
