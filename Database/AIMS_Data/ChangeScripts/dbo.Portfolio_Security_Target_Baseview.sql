@@ -1,20 +1,18 @@
-USE [AIMS_Main]
-GO
 
-/****** Object:  View [dbo].[Portfolio_Security_Target_Baseview]    Script Date: 03/07/2013 10:02:09 ******/
+/****** Object:  View [dbo].[Portfolio_Security_Target_Baseview]    Script Date: 03/08/2013 13:32:58 ******/
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[Portfolio_Security_Target_Baseview]'))
 DROP VIEW [dbo].[Portfolio_Security_Target_Baseview]
 GO
 
-USE [AIMS_Main]
-GO
 
-/****** Object:  View [dbo].[Portfolio_Security_Target_Baseview]    Script Date: 03/07/2013 10:02:11 ******/
+/****** Object:  View [dbo].[Portfolio_Security_Target_Baseview]    Script Date: 03/08/2013 13:33:00 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
+
 
 
 
@@ -25,9 +23,11 @@ SELECT     dbo.Portfolio_Security_Targets_Union.PORTFOLIO_ID, dbo.Portfolio_Secu
                       dbo.GF_SECURITY_BASEVIEW.ASEC_SEC_SHORT_NAME, dbo.GF_SECURITY_BASEVIEW.SECURITY_TYPE, 
                       dbo.GF_SECURITY_BASEVIEW.ASHEMM_PROPRIETARY_REGION_CODE,dbo.GF_SECURITY_BASEVIEW.ISO_COUNTRY_CODE, dbo.GF_SECURITY_BASEVIEW.GICS_SECTOR, 
                       dbo.GF_SECURITY_BASEVIEW.GICS_SECTOR_NAME, dbo.GF_SECURITY_BASEVIEW.GICS_INDUSTRY, dbo.GF_SECURITY_BASEVIEW.GICS_INDUSTRY_NAME, 
-                      dbo.GF_SECURITY_BASEVIEW.GICS_SUB_INDUSTRY, dbo.GF_SECURITY_BASEVIEW.GICS_SUB_INDUSTRY_NAME,dbo.GF_SECURITY_BASEVIEW.LOOK_THRU_FUND
+                      dbo.GF_SECURITY_BASEVIEW.GICS_SUB_INDUSTRY, dbo.GF_SECURITY_BASEVIEW.GICS_SUB_INDUSTRY_NAME,dbo.GF_SECURITY_BASEVIEW.LOOK_THRU_FUND,dbo.GF_SECURITY_BASEVIEW.ISSUER_NAME
 FROM         dbo.Portfolio_Security_Targets_Union LEFT OUTER JOIN
                       dbo.GF_SECURITY_BASEVIEW ON dbo.Portfolio_Security_Targets_Union.SECURITY_ID = dbo.GF_SECURITY_BASEVIEW.SECURITY_ID 
+
+
 
 
 
