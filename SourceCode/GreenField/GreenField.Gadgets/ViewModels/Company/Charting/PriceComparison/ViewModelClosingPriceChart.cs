@@ -409,7 +409,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Search Mode Filter - Checked (StartsWith); Unchecked (Contains)
         /// </summary>
-        private bool searchFilterEnabled = true;
+        private bool searchFilterEnabled;
         public bool SearchFilterEnabled
         {
             get { return searchFilterEnabled; }
