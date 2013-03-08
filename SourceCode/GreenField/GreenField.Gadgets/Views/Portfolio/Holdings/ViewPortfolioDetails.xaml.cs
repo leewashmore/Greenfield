@@ -447,7 +447,7 @@ namespace GreenField.Gadgets.Views
             //this.dgPortfolioDetails.Columns["Revenue Growth Next Year"].Header = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
             //this.dgPortfolioDetails.Columns["Net Income Growth Current Year"].Header = "Net Income Growth " + DateTime.Today.Year.ToString();
             //this.dgPortfolioDetails.Columns["Net Income Growth Next Year"].Header = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
-
+           
             this.dgPortfolioDetails.Columns["Revenue Growth Current Year"].UniqueName = "Revenue Growth " + DateTime.Today.Year.ToString();
             this.dgPortfolioDetails.Columns["Revenue Growth Next Year"].UniqueName = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
             this.dgPortfolioDetails.Columns["Net Income Growth Current Year"].UniqueName = "Net Income Growth " + DateTime.Today.Year.ToString();

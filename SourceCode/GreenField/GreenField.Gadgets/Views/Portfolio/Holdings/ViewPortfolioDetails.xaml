@@ -32,42 +32,51 @@
             <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
-            <TextBlock Text="Portfolio Holdings" Grid.Column="0" HorizontalAlignment="Center"
-                       VerticalAlignment="Center" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Text="Portfolio Holdings" HorizontalAlignment="Left"
+                       VerticalAlignment="Center" FontWeight="Bold" Style="{StaticResource TextBlockStyle}" Margin="-152,0,0,0" />
         </Grid>
 
         <!--Export Controls-->
-        <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
+        <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>                
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <CheckBox Content="Group Securities" Grid.Column="0" ToolTipService.ToolTip="Group same securities into one record"
+            <telerik:RadRadioButton GroupName="{Binding Id}" Grid.Column="0" Content="Group Issuers" Style="{StaticResource RadRadioButtonStyle}" IsChecked="{Binding IsHoldingsGroupedByIssuer,Mode=TwoWay}" MinHeight="15" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTipService.ToolTip="Group securities issued by same issuer" IsEnabled="{Binding EnableLookThru}"/>
+            <telerik:RadRadioButton GroupName="{Binding Id}" Grid.Column="1" Content="Group Securities" Style="{StaticResource RadRadioButtonStyle}" IsChecked="{Binding IsHoldingsGrouped,Mode=TwoWay}" MinHeight="15" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTipService.ToolTip="Group same securities into one record" IsEnabled="{Binding EnableLookThru}"/>
+
+    <!--
+            <CheckBox Content="Group Issuers" Grid.Column="0" ToolTipService.ToolTip="Group same securities into one record"
+                      Style="{StaticResource CheckBoxStyle}" MinHeight="15" VerticalAlignment="Center"
+                      VerticalContentAlignment="Center" IsChecked="{Binding IsHoldingsGroupedByIssuer,Mode=TwoWay}" IsEnabled="{Binding EnableLookThru}" 
+                      />
+            <CheckBox Content="Group Securities" Grid.Column="0" ToolTipService.ToolTip="Group securities issued by same issuer"
                       Style="{StaticResource CheckBoxStyle}" MinHeight="15" VerticalAlignment="Center"
                       VerticalContentAlignment="Center" IsChecked="{Binding IsHoldingsGrouped,Mode=TwoWay}" IsEnabled="{Binding EnableLookThru}" 
-                      />
-            <CheckBox Content="Include Benchmark" Grid.Column="1" ToolTipService.ToolTip="Include Benchmark Securities"
+                      />-->
+            <CheckBox Content="Include Benchmark" Grid.Column="2" ToolTipService.ToolTip="Include Benchmark Securities"
                       Style="{StaticResource CheckBoxStyle}" MinHeight="15" VerticalAlignment="Center"
                       VerticalContentAlignment="Center" IsChecked="{Binding GetBenchmarkData,Mode=TwoWay}" 
                       Checked="CheckBox_Checked"  />
-            <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+            <telerik:RadButton Grid.Column="3" Margin="2,0,0,0" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15"
                                        Name="btnExportExcel" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
                 <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
                 <ToolTipService.ToolTip>
                     <TextBlock Text="Export to Excel" Style="{StaticResource TextBlockStyle}"/>
                 </ToolTipService.ToolTip>
             </telerik:RadButton>
-            <telerik:RadButton Grid.Column="3" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+            <telerik:RadButton Grid.Column="4" Margin="2,0,0,0" Click="btnExportPdf_Click"  HorizontalAlignment="Right" Height="15" Width="15"
                                                Name="btnExportPdf" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
                 <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
                 <ToolTipService.ToolTip>
                     <TextBlock Text="Export to Pdf" Style="{StaticResource TextBlockStyle}"/>
                 </ToolTipService.ToolTip>
             </telerik:RadButton>
-            <telerik:RadButton Grid.Column="4" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
+            <telerik:RadButton Grid.Column="5" Margin="2,0,0,0" Click="btnPrint_Click"  HorizontalAlignment="Right" Height="15" Width="15"
                                                Name="btnPrint" VerticalAlignment="Center" Style="{StaticResource RadButtonStyle}">
                 <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
                 <ToolTipService.ToolTip>
@@ -141,7 +150,8 @@
                                     
                                     RowIndicatorVisibility="Collapsed" 
                                     UseLayoutRounding="True" 
-                                    ColumnWidth="Auto" ShowColumnFooters="True"
+                                    ColumnWidth="{Binding ElementName=dgPortfolioDetails, Path=ActualWidth}"
+                                    ShowColumnFooters="True"
                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                     ShowGroupFooters="False"
@@ -159,7 +169,7 @@
                                         <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding AsecSecShortName}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
+                                                        TextAlignment="Left" />
                                         <telerik:GridViewDataColumn Header="Name" UniqueName="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
@@ -200,37 +210,37 @@
                                                         HeaderTextAlignment="Right" DataFormatString="{}{0:n0}"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
-                                        <telerik:GridViewDataColumn Header="Model %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
+                                        <telerik:GridViewDataColumn Header="Target %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
                                                         DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right">
-                                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                            <!--<telerik:GridViewDataColumn.AggregateFunctions>
                                                 <telerik:SumFunction SourceField="ReAshEmmModelWeight" ResultFormatString="{}{0:n2}%" />
-                                            </telerik:GridViewDataColumn.AggregateFunctions>
+                                            </telerik:GridViewDataColumn.AggregateFunctions> -->
                                         </telerik:GridViewDataColumn>
                                         <telerik:GridViewDataColumn Header="Portfolio %" UniqueName="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
                                                         DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right">
-                                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                           <!-- <telerik:GridViewDataColumn.AggregateFunctions>
                                                 <telerik:SumFunction SourceField="RePortfolioWeight" ResultFormatString="{}{0:n2}%" />
-                                            </telerik:GridViewDataColumn.AggregateFunctions>
+                                            </telerik:GridViewDataColumn.AggregateFunctions>-->
                                         </telerik:GridViewDataColumn>
                                         <telerik:GridViewDataColumn Header="Benchmark %" UniqueName="Benchmark %" DataMemberBinding="{Binding ReBenchmarkWeight}"       
                                                         DataFormatString="{}{0:n2}%" x:Name="BenchmarkWeight" IsGroupable="False" FooterTextAlignment="Right"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Right" HeaderTextAlignment="Right">
-                                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                            <!--<telerik:GridViewDataColumn.AggregateFunctions>
                                                 <telerik:SumFunction SourceField="ReBenchmarkWeight" ResultFormatString="{}{0:n2}%" />
-                                            </telerik:GridViewDataColumn.AggregateFunctions>
+                                            </telerik:GridViewDataColumn.AggregateFunctions> -->
                                         </telerik:GridViewDataColumn>
                                         <telerik:GridViewDataColumn Header="Active Position %" UniqueName="Active Position %" DataMemberBinding="{Binding ActivePosition}" 
                                                         DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right">
-                                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                            <!--<telerik:GridViewDataColumn.AggregateFunctions>
                                                 <telerik:SumFunction SourceField="ActivePosition" ResultFormatString="{}{0:n2}%" />
-                                            </telerik:GridViewDataColumn.AggregateFunctions>
+                                            </telerik:GridViewDataColumn.AggregateFunctions> -->
                                         </telerik:GridViewDataColumn>
                                         <!--<telerik:GridViewDataColumn Header="Market Cap" UniqueName="Market Cap" DataMemberBinding="{Binding MarketCapUSD, StringFormat=c}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
@@ -342,7 +352,7 @@
                                                         HeaderTextAlignment="Right" DataFormatString="{}{0:n0}"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
-                            <telerik:GridViewDataColumn Header="Model %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
+                            <telerik:GridViewDataColumn Header="Target %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
                                                         DataFormatString="{}{0:n2}" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right">

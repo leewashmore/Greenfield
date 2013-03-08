@@ -123,7 +123,7 @@ namespace GreenField.Web.Helpers
             {
                 PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
                 portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
-                portfolioResult.IssueName = item.ISSUE_NAME;
+                portfolioResult.IssueName = item.ISSUE_NAME; 
                 portfolioResult.Ticker = item.TICKER;
                 portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
                 portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
