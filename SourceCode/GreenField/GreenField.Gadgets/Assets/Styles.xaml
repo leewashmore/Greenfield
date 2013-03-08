@@ -1092,6 +1092,15 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
 
+    <!--Radiobutton Style-->
+    <Style TargetType="RadioButton" x:Name="RadioButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
     <!--ComboBoxStyle-->
     <Style TargetType="ComboBox" x:Name="ComboBoxStyle">
         <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>

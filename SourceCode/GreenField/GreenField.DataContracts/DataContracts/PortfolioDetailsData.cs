@@ -142,6 +142,9 @@ namespace GreenField.DataContracts
         public string IssuerId { get; set; }
 
         [DataMember]
+        public string IssuerName { get; set; }
+
+        [DataMember]
         public decimal? FairValue { get; set; }
 
         public List<PortfolioDetailsData> Children { get; set; }

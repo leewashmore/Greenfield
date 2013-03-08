@@ -205,7 +205,8 @@
       [Portfolio_Security_Target_Baseview].[GICS_INDUSTRY_NAME] AS [GICS_INDUSTRY_NAME], 
       [Portfolio_Security_Target_Baseview].[GICS_SUB_INDUSTRY] AS [GICS_SUB_INDUSTRY], 
       [Portfolio_Security_Target_Baseview].[GICS_SUB_INDUSTRY_NAME] AS [GICS_SUB_INDUSTRY_NAME], 
-      [Portfolio_Security_Target_Baseview].[LOOK_THRU_FUND] AS [LOOK_THRU_FUND]
+      [Portfolio_Security_Target_Baseview].[LOOK_THRU_FUND] AS [LOOK_THRU_FUND], 
+      [Portfolio_Security_Target_Baseview].[ISSUER_NAME] AS [ISSUER_NAME]
       FROM [dbo].[Portfolio_Security_Target_Baseview] AS [Portfolio_Security_Target_Baseview]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Portfolio_Security_Targets_Union" EntityType="ExternalResearchModel.Store.Portfolio_Security_Targets_Union" store:Type="Views" store:Schema="dbo" store:Name="Portfolio_Security_Targets_Union">
@@ -654,6 +655,7 @@
           <Property Name="GICS_SUB_INDUSTRY" Type="nvarchar" MaxLength="255" />
           <Property Name="GICS_SUB_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
           <Property Name="LOOK_THRU_FUND" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISSUER_NAME" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Main_Dev.dbo.Portfolio_Security_Targets_Union' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -2161,6 +2163,7 @@
           <Property Type="String" Name="GICS_SUB_INDUSTRY" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="LOOK_THRU_FUND" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISSUER_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -3033,6 +3036,7 @@
           <EntitySetMapping Name="Portfolio_Security_Target_Baseview">
             <EntityTypeMapping TypeName="ExternalResearchModel.Portfolio_Security_Target_Baseview">
               <MappingFragment StoreEntitySet="Portfolio_Security_Target_Baseview">
+                <ScalarProperty Name="ISSUER_NAME" ColumnName="ISSUER_NAME" />
                 <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
                 <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
                 <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />

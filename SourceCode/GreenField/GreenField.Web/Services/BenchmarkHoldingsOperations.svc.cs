@@ -2031,7 +2031,7 @@ namespace GreenField.Web.Services
                     Trace.WriteLine(sumTargetPct);
 #endif         
 
-                ExternalResearchEntities entity = new ExternalResearchEntities() { CommandTimeout = 5000 };
+                ExternalResearchEntities entity = new ExternalResearchEntities() { CommandTimeout = 0 };
                 List<string> securityAsecSecShortName = portfolioDetailsData.Select(a => a.AsecSecShortName).ToList();
                 List<PortfolioDetailsExternalData> externalData = new List<PortfolioDetailsExternalData>();
                 List<FAIR_VALUE> fairValueData = new List<FAIR_VALUE>();
@@ -2112,18 +2112,17 @@ namespace GreenField.Web.Services
 
                     item.Upside = fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault() == null ?
                         null : (fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault().UPSIDE as decimal?) * 100M;
-
+                    
                    // var security = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault();
-
+                    item.IssuerName = externalResearchEntities.GF_SECURITY_BASEVIEW_Local.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName).FirstOrDefault() == null ? 
+                        null : externalResearchEntities.GF_SECURITY_BASEVIEW_Local.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName).FirstOrDefault().ISSUER_NAME;
                     if (!lookThruEnabled)
                     {
                         if (sumTargetPct != 0)
                         {
                             var target = targets.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName);
                             item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT) / sumTargetPct;
-#if DEBUG
-                            Trace.WriteLine("No Look thru ---->"+item.AsecSecShortName + "=>" + target.Sum(x => x.TARGET_PCT) + "/" + sumTargetPct + "=" + item.AshEmmModelWeight);
-#endif
+
                         }
                         else
                         {
@@ -2155,9 +2154,7 @@ namespace GreenField.Web.Services
                                 if (targetSecurity != null)
                                 {
                                     item.AshEmmModelWeight = targetSecurity.Sum(x => x.TARGET_PCT) * lookthrutargetProduct / (lookthrutargetSum + sumTargetPct);
-#if DEBUG
-                                    Trace.WriteLine("yes Look thru ---->" + item.AsecSecShortName + "=>" + targetSecurity.Sum(x => x.TARGET_PCT) + "*" + lookthrutargetProduct + "/" + "(" + lookthrutargetSum + "+" + sumTargetPct + ")" + "=" + item.AshEmmModelWeight);
-#endif
+
                                 }
                                 else
                                 {
