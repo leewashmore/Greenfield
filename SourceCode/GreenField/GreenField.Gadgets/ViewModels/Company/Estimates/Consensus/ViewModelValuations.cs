@@ -133,10 +133,11 @@ namespace GreenField.Gadgets.ViewModels
                         GroupPropertyName = "AshmoreEmmAmount", 
                         GroupDataType = PeriodColumnGroupingType.DECIMAL });
                     
-                    /* No data
                     dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Variance%", 
                         GroupPropertyName = "Variance", 
                         GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
+
+                    /* No data
                     dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Actual", 
                         GroupPropertyName = "Actual", 
                         GroupDataType = PeriodColumnGroupingType.DECIMAL });
