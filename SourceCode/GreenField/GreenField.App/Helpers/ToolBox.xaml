@@ -295,7 +295,7 @@
                                          telerik:TextSearch.TextPath="PortfolioId"
                                          Width="auto" 
                                          Margin="5,0,0,0"
-                                         IsEditable="True"
+                                         IsEditable="true"
                                          Style="{StaticResource RadComboBoxStyle}"
                                          CanAutocompleteSelectItems="True" 
                                          CanKeyboardNavigationSelectItems="False"
@@ -303,7 +303,7 @@
                                          OpenDropDownOnFocus="True"
                                          StaysOpenOnEdit="True"
                                          TextOptions.TextHintingMode="Fixed"
-                                         IsTextSearchEnabled="False"
+                                         IsTextSearchEnabled="True"
                                          >
                             <telerik:RadComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
