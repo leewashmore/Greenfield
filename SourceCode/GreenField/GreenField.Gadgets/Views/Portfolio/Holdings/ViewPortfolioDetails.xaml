@@ -166,10 +166,10 @@
                                     >
                                     <telerik:RadGridView.Columns >
                                         
-                                        <telerik:GridViewDataColumn Header="   Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding AsecSecShortName}" IsGroupable="False"
+                                        <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding AsecSecShortName}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left" Width="155" />
+                                                        TextAlignment="Left" />
                                         <telerik:GridViewDataColumn Header="Name" UniqueName="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"

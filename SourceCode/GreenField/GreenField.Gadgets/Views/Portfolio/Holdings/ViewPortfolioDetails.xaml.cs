@@ -15,6 +15,7 @@ using GreenField.ServiceCaller;
 using GreenField.Common;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
+using System.Windows.Data;
 
 namespace GreenField.Gadgets.Views
 {
@@ -159,7 +160,7 @@ namespace GreenField.Gadgets.Views
                 var value = e.Value as PortfolioDetailsData;
                 if (value.Children != null)
                 {
-                    
+
                     foreach (var child in value.Children)
                     {
                         e.Value = child;
@@ -228,10 +229,10 @@ namespace GreenField.Gadgets.Views
 
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
                 RadExportOptionsInfo.Add(new RadExportOptions()
-                { 
-                    ElementName = "Portfolio Risk Return", 
-                    Element = this.dgPortfolioDetails, 
-                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER 
+                {
+                    ElementName = "Portfolio Risk Return",
+                    Element = this.dgPortfolioDetails,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER
                 });
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.PORTFOLIO_DETAILS_UI);
                 childExportOptions.Show();
@@ -448,12 +449,12 @@ namespace GreenField.Gadgets.Views
             //this.dgPortfolioDetails.Columns["Revenue Growth Next Year"].Header = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
             //this.dgPortfolioDetails.Columns["Net Income Growth Current Year"].Header = "Net Income Growth " + DateTime.Today.Year.ToString();
             //this.dgPortfolioDetails.Columns["Net Income Growth Next Year"].Header = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
-           
+
             this.dgPortfolioDetails.Columns["Revenue Growth Current Year"].UniqueName = "Revenue Growth " + DateTime.Today.Year.ToString();
             this.dgPortfolioDetails.Columns["Revenue Growth Next Year"].UniqueName = "Revenue Growth " + (DateTime.Today.Year + 1).ToString();
             this.dgPortfolioDetails.Columns["Net Income Growth Current Year"].UniqueName = "Net Income Growth " + DateTime.Today.Year.ToString();
             this.dgPortfolioDetails.Columns["Net Income Growth Next Year"].UniqueName = "Net Income Growth " + (DateTime.Today.Year + 1).ToString();
-            
+
         }
 
         #endregion
@@ -474,10 +475,28 @@ namespace GreenField.Gadgets.Views
             {
                 //dataControl is the child gridview
                 dataControl.ShowGroupPanel = false;
-                
+
             }
         }
 
-      
+        //private void BindDetailsColumnsWidth(RadGridView oDetailsGrid, RadGridView oMasterGrid)
+        //{
+        //    Telerik.Windows.Controls.GridViewColumn oCol;
+
+        //    for (int i = 0; i < oDetailsGrid.Columns.Count - 1; i++)
+        //    {
+        //        oCol = oDetailsGrid.Columns[i];
+
+        //        if (oCol.IsVisible == true)
+        //        {
+        //            oCol.SetValue(Telerik.Windows.Controls.GridViewColumn.WidthProperty,
+        //                        new Binding("ActualWidth")
+        //                        {
+        //                            Source = oMasterGrid.Columns[i]
+        //                        });
+        //        }
+        //    }
+        //}
+
     }
 }

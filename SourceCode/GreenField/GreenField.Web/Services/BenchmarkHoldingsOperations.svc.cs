@@ -2154,7 +2154,14 @@ namespace GreenField.Web.Services
                                 var targetSecurity = portfolioSecuritiesBaseviewList.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName && x.PORTFOLIO_ID == item.PfcHoldingPortfolio).ToList();
                                 if (targetSecurity != null)
                                 {
-                                    item.AshEmmModelWeight = targetSecurity.Sum(x => x.TARGET_PCT) * lookthrutargetProduct / (lookthrutargetSum + sumTargetPct);
+                                    if ((lookthrutargetSum + sumTargetPct) != 0)
+                                    {
+                                        item.AshEmmModelWeight = targetSecurity.Sum(x => x.TARGET_PCT) * lookthrutargetProduct / (lookthrutargetSum + sumTargetPct);
+                                    }
+                                    else
+                                    {
+                                        item.AshEmmModelWeight = 0;
+                                    }
 
                                 }
                                 else
