@@ -1970,6 +1970,7 @@ namespace GreenField.Web.Services
                 //var targets = externalResearchEntities.Portfolio_Security_Targets_Union.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
                 //var targets = externalResearchEntities.Portfolio_Target_Security_Baseview.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
                 var targets = new List<Portfolio_Security_Target_Baseview>();
+                var portfolioSecuritiesBaseviewList = externalResearchEntities.Portfolio_Security_Target_Baseview.ToList();
                 decimal sumTargetPct = 0;
                 #region    CalculatelookthruNumbers 
                 //this region is used to get the look through numbers which will be used to calculate model%
@@ -1994,7 +1995,7 @@ namespace GreenField.Web.Services
                         }
 
                     }
-                    lookthruHash = CalculateLookThruNumbers(ht, filterType, filterValue);
+                    lookthruHash = CalculateLookThruNumbers(ht, filterType, filterValue, portfolioSecuritiesBaseviewList);
                 }
                 #endregion
 
@@ -2005,25 +2006,25 @@ namespace GreenField.Web.Services
                     switch (filterType)
                     {
                         case "Region":
-                            targets = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.ASHEMM_PROPRIETARY_REGION_CODE == filterValue).ToList();
+                            targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.ASHEMM_PROPRIETARY_REGION_CODE == filterValue).ToList();
                             break;
                         case "Country":
-                            targets = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.ISO_COUNTRY_CODE == filterValue).ToList();
+                            targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.ISO_COUNTRY_CODE == filterValue).ToList();
                             break;
                         case "Industry":
-                            targets = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.GICS_INDUSTRY_NAME == filterValue).ToList();
+                            targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.GICS_INDUSTRY_NAME == filterValue).ToList();
                             break;
                         case "Sector":
-                            targets = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.GICS_SECTOR_NAME == filterValue).ToList();
+                            targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.GICS_SECTOR_NAME == filterValue).ToList();
                             break;
                         case "Show Everything":
-                            targets = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
+                            targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
                             break;
                     }
                 }
                 else
                 {
-                    targets = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
+                    targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
                 }
                     sumTargetPct = targets.Sum(x => x.TARGET_PCT);
 
@@ -2139,7 +2140,7 @@ namespace GreenField.Web.Services
                              for (int i = 0; i < securityPortfolioPath.Count() - 1; i++)
                              {      var portfolioId = securityPortfolioPath[i];
                                     var lookthruportfolioId = securityPortfolioPath[i + 1];
-                                    var target = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == portfolioId && x.LOOK_THRU_FUND == lookthruportfolioId).ToList();
+                                    var target = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == portfolioId && x.LOOK_THRU_FUND == lookthruportfolioId).ToList();
                                     if (target != null)
                                         lookthrutargetProduct = lookthrutargetProduct * target.Sum(x => x.TARGET_PCT);
                              }
@@ -2150,7 +2151,7 @@ namespace GreenField.Web.Services
                             {
                                 ///lookthrutargetProduct
                                 decimal lookthrutargetSum = lookthruNumbers[1];                                                    ///
-                                var targetSecurity = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName && x.PORTFOLIO_ID == item.PfcHoldingPortfolio).ToList();
+                                var targetSecurity = portfolioSecuritiesBaseviewList.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName && x.PORTFOLIO_ID == item.PfcHoldingPortfolio).ToList();
                                 if (targetSecurity != null)
                                 {
                                     item.AshEmmModelWeight = targetSecurity.Sum(x => x.TARGET_PCT) * lookthrutargetProduct / (lookthrutargetSum + sumTargetPct);
@@ -2182,14 +2183,14 @@ namespace GreenField.Web.Services
             }
         }
 
-        private Hashtable CalculateLookThruNumbers(Hashtable ht, String filterType, String filterValue)
+        private Hashtable CalculateLookThruNumbers(Hashtable ht, String filterType, String filterValue, List<Portfolio_Security_Target_Baseview> portfolioSecuritiesBaseviewList)
         {
             Hashtable lookthruHash = new Hashtable();
             var externalResearchEntities = new GreenField.DAL.ExternalResearchEntities();
-
+            //var portfolioSecuritiesBaseviewList = externalResearchEntities.Portfolio_Security_Target_Baseview.ToList();
             foreach (DictionaryEntry entry in ht)
             {
-                Trace.WriteLine(String.Format("{0}, {1}", entry.Key, entry.Value));
+                
 
                 if (entry.Value != null)
                 {
@@ -2204,27 +2205,27 @@ namespace GreenField.Web.Services
 
                             var portfolioId = securityPortfolioPath[i];
                             var lookthruportfolioId = securityPortfolioPath[i + 1];
-                            var target = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == portfolioId && x.LOOK_THRU_FUND == lookthruportfolioId).ToList();
-                            //var targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == securityPortfolios[i + 1] && x.ISO_COUNTRY_CODE == filterValue);
+                            //var target = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == portfolioId && x.LOOK_THRU_FUND == lookthruportfolioId).ToList();
+                            var target = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == portfolioId && x.LOOK_THRU_FUND == lookthruportfolioId).ToList();
 
                             if (filterType != null && filterValue != null)
                             {
                                 switch (filterType)
                                 {
                                     case "Region":
-                                        targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == lookthruportfolioId && x.ASHEMM_PROPRIETARY_REGION_CODE == filterValue && x.LOOK_THRU_FUND == null).ToList();
+                                        targetLookThruFundSecurityList = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == lookthruportfolioId && x.ASHEMM_PROPRIETARY_REGION_CODE == filterValue && x.LOOK_THRU_FUND == null).ToList();
                                         break;
                                     case "Country":
-                                        targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == lookthruportfolioId && x.ISO_COUNTRY_CODE == filterValue && x.LOOK_THRU_FUND == null).ToList();
+                                        targetLookThruFundSecurityList = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == lookthruportfolioId && x.ISO_COUNTRY_CODE == filterValue && x.LOOK_THRU_FUND == null).ToList();
                                         break;
                                     case "Industry":
-                                        targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == lookthruportfolioId && x.GICS_INDUSTRY_NAME == filterValue && x.LOOK_THRU_FUND == null).ToList();
+                                        targetLookThruFundSecurityList = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == lookthruportfolioId && x.GICS_INDUSTRY_NAME == filterValue && x.LOOK_THRU_FUND == null).ToList();
                                         break;
                                     case "Sector":
-                                        targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == lookthruportfolioId && x.GICS_SECTOR_NAME == filterValue && x.LOOK_THRU_FUND == null).ToList();
+                                        targetLookThruFundSecurityList = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == lookthruportfolioId && x.GICS_SECTOR_NAME == filterValue && x.LOOK_THRU_FUND == null).ToList();
                                         break;
                                     case "Show Everything":
-                                        targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == lookthruportfolioId).ToList();
+                                        targetLookThruFundSecurityList = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == lookthruportfolioId).ToList();
                                         break;
                                 }
                             }
@@ -2251,19 +2252,19 @@ namespace GreenField.Web.Services
                             switch (filterType)
                             {
                                 case "Region":
-                                    targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == portfolioId && x.ASHEMM_PROPRIETARY_REGION_CODE == filterValue && x.LOOK_THRU_FUND == null).ToList();
+                                    targetLookThruFundSecurityList = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == portfolioId && x.ASHEMM_PROPRIETARY_REGION_CODE == filterValue && x.LOOK_THRU_FUND == null).ToList();
                                     break;
                                 case "Country":
-                                    targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == portfolioId && x.ISO_COUNTRY_CODE == filterValue && x.LOOK_THRU_FUND == null).ToList();
+                                    targetLookThruFundSecurityList = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == portfolioId && x.ISO_COUNTRY_CODE == filterValue && x.LOOK_THRU_FUND == null).ToList();
                                     break;
                                 case "Industry":
-                                    targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == portfolioId && x.GICS_INDUSTRY_NAME == filterValue && x.LOOK_THRU_FUND == null).ToList();
+                                    targetLookThruFundSecurityList = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == portfolioId && x.GICS_INDUSTRY_NAME == filterValue && x.LOOK_THRU_FUND == null).ToList();
                                     break;
                                 case "Sector":
-                                    targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == portfolioId && x.GICS_SECTOR_NAME == filterValue && x.LOOK_THRU_FUND == null).ToList();
+                                    targetLookThruFundSecurityList = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == portfolioId && x.GICS_SECTOR_NAME == filterValue && x.LOOK_THRU_FUND == null).ToList();
                                     break;
                                 case "Show Everything":
-                                    targetLookThruFundSecurityList = externalResearchEntities.Portfolio_Security_Target_Baseview.Where(x => x.PORTFOLIO_ID == portfolioId).ToList();
+                                    targetLookThruFundSecurityList = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == portfolioId).ToList();
                                     break;
                             }
 

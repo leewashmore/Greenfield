@@ -135,9 +135,9 @@
                         </telerik:RadGridView.ChildTableDefinitions>
                         <telerik:RadGridView.HierarchyChildTemplate>
                             <DataTemplate>
-                                <telerik:RadGridView 
+                                <telerik:RadGridView Margin="0,2,0,0"
                                     ItemsSource="{Binding Children}" 
-                                    Name="childGrid" 
+                                    x:Name="childGrid" 
                                     ShowGroupPanel="False" 
                                     AutoGenerateColumns="False" 
                                     CanUserFreezeColumns="False" 
@@ -151,7 +151,7 @@
                                     RowIndicatorVisibility="Collapsed" 
                                     UseLayoutRounding="True" 
                                     ColumnWidth="{Binding ElementName=dgPortfolioDetails, Path=ActualWidth}"
-                                    ShowColumnFooters="True"
+                                    ShowColumnFooters="false"
                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                     ShowGroupFooters="False"
@@ -165,11 +165,11 @@
                                     GridLinesVisibility="None"
                                     >
                                     <telerik:RadGridView.Columns >
-
-                                        <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding AsecSecShortName}" IsGroupable="False"
+                                        
+                                        <telerik:GridViewDataColumn Header="   Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding AsecSecShortName}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left" />
+                                                        TextAlignment="Left" Width="155" />
                                         <telerik:GridViewDataColumn Header="Name" UniqueName="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
