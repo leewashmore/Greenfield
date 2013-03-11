@@ -132,6 +132,8 @@ namespace GreenField.Gadgets.ViewModels
                     dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "AshmoreEMM",
                         GroupPropertyName = "AshmoreEmmAmount", 
                         GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    
+                    /* No data
                     dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Variance%", 
                         GroupPropertyName = "Variance", 
                         GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
@@ -147,9 +149,11 @@ namespace GreenField.Gadgets.ViewModels
                     dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Low", 
                         GroupPropertyName = "Low", 
                         GroupDataType = PeriodColumnGroupingType.DECIMAL });
-                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Standard Deviation", 
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Standard Deviation TODO3", 
                         GroupPropertyName = "StandardDeviation", 
-                        GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                        GroupDataType = PeriodColumnGroupingType.DECIMAL })
+                    */
+                    
                     dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Last Update", 
                         GroupPropertyName = "DataSourceDate", 
                         GroupDataType = PeriodColumnGroupingType.SHORT_DATETIME });
