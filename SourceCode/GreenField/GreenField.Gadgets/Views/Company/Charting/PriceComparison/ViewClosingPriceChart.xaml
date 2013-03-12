@@ -166,6 +166,8 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Margin="0,0,2,0">
                         <CheckBox Content="Total Return" HorizontalAlignment="Left" x:Name="returnTypeSelectionCheckBox" 
@@ -213,7 +215,7 @@
                         </telerik:RadComboBox>
                     </Grid>
 
-                    <Grid Grid.Row="4" Margin="0,2,0,0">
+                    <Grid Grid.Row="4" Margin="0,2,10,0">
                         <TextBlock Grid.Column="0" Text="Add to Chart" HorizontalAlignment="Left"  VerticalAlignment="Top" 
                                    Visibility="{Binding AddToChartVisibility, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
@@ -245,7 +247,7 @@
                                              ItemsSource="{Binding SecuritySelectorInfo}"
                                              SelectedItem="{Binding SelectedSecurityInfo, Mode=TwoWay}"
                                              Text="{Binding SecuritySearchText, Mode=TwoWay}"
-                                             EmptyText="Search Security..." 
+                                             EmptyText="Search Security ..." 
                                              telerik:TextSearch.TextPath="LongName"
                                              Width="150"
                                              Margin="5,0,0,0"
@@ -291,7 +293,7 @@
                                              ItemsSource="{Binding CurrencySelectorInfo}"
                                              SelectedItem="{Binding SelectedCurrencyInfo, Mode=TwoWay}"
                                              Text="{Binding CurrencySearchText, Mode=TwoWay}"
-                                             EmptyText="Search Currency..." 
+                                             EmptyText="Search Currency ..." 
                                              telerik:TextSearch.TextPath="LongName"
                                              Width="150"
                                              Margin="5,0,0,0"
@@ -324,7 +326,7 @@
                             
                             
                         <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChartCurrency" VerticalAlignment="Top" Margin="5,0,0,0"
-                Command="{Binding AddCommand}" Width="20" Height="20" Background="White">
+                Command="{Binding AddCommandCurrency}" Width="20" Height="20" Background="White">
                             <Image Source="/GreenField.Gadgets;component/Images/AddToChart.png"/>
                         </Button>
                     </Grid>
@@ -339,7 +341,7 @@
                                              ItemsSource="{Binding BenchmarkSelectorInfo}"
                                              SelectedItem="{Binding SelectedBenchmarkInfo, Mode=TwoWay}"
                                              Text="{Binding BenchmarkSearchText, Mode=TwoWay}"
-                                             EmptyText="Search Benchmark..." 
+                                             EmptyText="Search Benchmark ..." 
                                              telerik:TextSearch.TextPath="LongName"
                                              Width="150"
                                              Margin="5,0,0,0"
@@ -372,13 +374,109 @@
 
 
                         <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChartBenchmark" VerticalAlignment="Top" Margin="5,0,0,0"
-                Command="{Binding AddCommand}" Width="20" Height="20" Background="White">
+                Command="{Binding AddCommandBenchmark}" Width="20" Height="20" Background="White">
                             <Image Source="/GreenField.Gadgets;component/Images/AddToChart.png"/>
                         </Button>
                     </Grid>
-                    
+
+                    <Grid Grid.Row="9" Margin="0,2,2,0" Visibility="{Binding AddToChartVisibility, Mode=TwoWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <telerik:RadComboBox x:Name="cmbAddSeriesIndex"
+                                             ItemsSource="{Binding IndexSelectorInfo}"
+                                             SelectedItem="{Binding SelectedIndexInfo, Mode=TwoWay}"
+                                             Text="{Binding IndexSearchText, Mode=TwoWay}"
+                                             EmptyText="Search Index ..." 
+                                             telerik:TextSearch.TextPath="LongName"
+                                             Width="150"
+                                             Margin="5,0,0,0"
+                                             IsEditable="True"
+                                             CanAutocompleteSelectItems="True" 
+                                             CanKeyboardNavigationSelectItems="False" 
+                                             HorizontalAlignment="Left"
+                                             OpenDropDownOnFocus="True"
+                                             StaysOpenOnEdit="True"
+                                             Style="{StaticResource RadComboBoxStyle}"
+                                             TextOptions.TextHintingMode="Fixed"
+                                             IsTextSearchEnabled="False" >
+
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                            <telerik:RadComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" MinWidth="460" >
+                                        <TextBlock Text="{Binding LongName}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, '}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:'}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\})'}" Style="{StaticResource TextBlockStyle}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:RadComboBox.ItemTemplate>
+                        </telerik:RadComboBox>
+
+
+                        <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChartIndex" VerticalAlignment="Top" Margin="5,0,0,0"
+                Command="{Binding AddCommandIndex}" Width="20" Height="20" Background="White">
+                            <Image Source="/GreenField.Gadgets;component/Images/AddToChart.png"/>
+                        </Button>
+                    </Grid>
+
+                    <Grid Grid.Row="10" Margin="0,2,2,0" Visibility="{Binding AddToChartVisibility, Mode=TwoWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <telerik:RadComboBox x:Name="cmbAddSeriesCommodity"
+                                             ItemsSource="{Binding CommoditySelectorInfo}"
+                                             SelectedItem="{Binding SelectedCommodityInfo, Mode=TwoWay}"
+                                             Text="{Binding CommoditySearchText, Mode=TwoWay}"
+                                             EmptyText="Search Commodity ..." 
+                                             telerik:TextSearch.TextPath="LongName"
+                                             Width="150"
+                                             Margin="5,0,0,0"
+                                             IsEditable="True"
+                                             CanAutocompleteSelectItems="True" 
+                                             CanKeyboardNavigationSelectItems="False" 
+                                             HorizontalAlignment="Left"
+                                             OpenDropDownOnFocus="True"
+                                             StaysOpenOnEdit="True"
+                                             Style="{StaticResource RadComboBoxStyle}"
+                                             TextOptions.TextHintingMode="Fixed"
+                                             IsTextSearchEnabled="False" >
+
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                            <telerik:RadComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" MinWidth="460" >
+                                        <TextBlock Text="{Binding LongName}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, '}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:'}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\})'}" Style="{StaticResource TextBlockStyle}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:RadComboBox.ItemTemplate>
+                        </telerik:RadComboBox>
+
+
+                        <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChartCommodity" VerticalAlignment="Top" Margin="5,0,0,0"
+                Command="{Binding AddCommandCommodity}" Width="20" Height="20" Background="White">
+                            <Image Source="/GreenField.Gadgets;component/Images/AddToChart.png"/>
+                        </Button>
+                    </Grid>
+
                     <!--List of Comparison entities-->
-                    <Grid Grid.Row="9">
+                    <Grid Grid.Row="11" Margin="0,2,10,0">
 
                         <ItemsControl  HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
                             <ItemsControl.ItemTemplate>
