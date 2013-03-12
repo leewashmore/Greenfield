@@ -3,8 +3,8 @@
     <system.serviceModel>
         <bindings>
             <basicHttpBinding>
-                <binding name="IssuerSharesOperations" enableHttpCookieContainer="true" maxBufferSize="2147483647" closeTimeout="00:50:00" openTimeout="00:50:00"
-         receiveTimeout="00:50:00" sendTimeout="00:50:00"
+                <binding name="IssuerSharesOperations" enableHttpCookieContainer="true" maxBufferSize="2147483647" closeTimeout="10:50:00" openTimeout="10:50:00"
+         receiveTimeout="10:50:00" sendTimeout="10:50:00"
                     maxReceivedMessageSize="2147483647" >
                     <security mode="None" />
                 </binding>
