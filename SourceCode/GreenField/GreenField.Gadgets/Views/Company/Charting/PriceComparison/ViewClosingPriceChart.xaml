@@ -221,18 +221,9 @@
                     </Grid>
 
                     <Grid Grid.Row="5" Margin="0,2,0,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <CheckBox Content="Search Begins With" HorizontalAlignment="Left" VerticalAlignment="Top"  Style="{StaticResource CheckBoxStyle}"
-                                  IsChecked="{Binding SearchFilterEnabled, Mode=TwoWay}" Grid.Row="0" Name="chkSearchFilter" 
-                                  Visibility="{Binding AddToChartVisibility, Mode=TwoWay}" />
                         <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" CornerRadius="2" Height="15">
-                            <Grid>
                                 <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}"  Style="{StaticResource TextBlockStyle}"
                                            HorizontalAlignment="Left" FontWeight="Bold" Margin="2,0,0,0" VerticalAlignment="Center" />
-                            </Grid>
                         </Border>
                     </Grid>
 

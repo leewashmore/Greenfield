@@ -745,23 +745,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
-        /// <summary>
-        /// Search Mode Filter - Checked (StartsWith); Unchecked (Contains)
-        /// </summary>
-        private bool searchFilterEnabled;
-        public bool SearchFilterEnabled
-        {
-            get { return searchFilterEnabled; }
-            set
-            {
-                if (searchFilterEnabled != value)
-                {
-                    searchFilterEnabled = value;
-                    RaisePropertyChanged(() => SearchFilterEnabled);
-                }
-            }
-        }
+        /*
 
         /// <summary>
         /// Entered Text in the Auto-Complete Box - filters SeriesReferenceSource
@@ -787,6 +771,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+        */
 
         /// <summary>
         /// Type of entites added to chart
