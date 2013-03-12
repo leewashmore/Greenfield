@@ -944,18 +944,6 @@ namespace GreenField.Gadgets.ViewModels
                         
                     }*/
 
-                    if (dbInteractivity != null && SelectedPortfolioId != null && effectiveDate != null && IsActive)
-                    {
-                        BusyIndicatorStatus = true;
-                        if (holdingDataFilter != null && holdingDataFilter.Filtertype != null && holdingDataFilter.FilterValues != null)
-                        {
-                            RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
-                        }
-                        else
-                        {
-                            RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), null, null, GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
-                        }
-                    }
                 }
             }
             catch (Exception ex)
