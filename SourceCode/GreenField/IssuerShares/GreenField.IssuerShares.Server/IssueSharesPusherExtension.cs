@@ -27,6 +27,21 @@ namespace GreenField.IssuerShares.Server
                     param.ParameterName = "ISSUER_ID";
                     command.Parameters.Add(param);
 
+                    var param2 = command.CreateParameter();
+                    param2.Value = "N";
+                    param2.ParameterName = "CALC_LOG";
+                    command.Parameters.Add(param2);
+
+                    var param3 = command.CreateParameter();
+                    param3.Value = "N";
+                    param3.ParameterName = "VERBOSE";
+                    command.Parameters.Add(param3);
+
+                    var param4 = command.CreateParameter();
+                    param4.Value = "I";
+                    param4.ParameterName = "RUN_MODE";
+                    command.Parameters.Add(param4);
+
                     
                     connection.Open();
                     var result = command.ExecuteNonQuery();
