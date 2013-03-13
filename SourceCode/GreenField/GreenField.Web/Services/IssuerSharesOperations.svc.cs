@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -21,12 +22,25 @@ namespace GreenField.Web.Services
         protected TResult Watch<TResult>(String failureMessage, Func<TResult> action)
         {
             TResult result;
+            // Stopwatch
+            Stopwatch stopwatch = new Stopwatch();
+            DateTime dateTime = new DateTime();
+            stopwatch.Start();
+            dateTime = DateTime.Now;
+            Trace.WriteLine(string.Format("{0} started at {1}", action.ToString(), dateTime.ToString()));
+
             try
             {
+
                 result = action();
+
+                stopwatch.Stop();
+                Trace.WriteLine(string.Format("{1}: {2} = {0} seconds.", (stopwatch.ElapsedMilliseconds / 1000.00).ToString(), dateTime.ToString(), action.ToString()));
             }
             catch (Exception exception)
             {
+                stopwatch.Stop();
+                Trace.WriteLine(string.Format("{1}: {2} = {0} seconds (timed out).", (stopwatch.ElapsedMilliseconds / 1000.00).ToString(), dateTime.ToString(), action.ToString()));
                 throw new ApplicationException(failureMessage + " Reason: " + exception.Message, exception);
             }
             return result;

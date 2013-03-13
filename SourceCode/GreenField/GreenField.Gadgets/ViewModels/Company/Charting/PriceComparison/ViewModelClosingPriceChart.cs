@@ -293,7 +293,15 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        /*
+
+        private List<EntitySelectionData> SecuritySelectorInfoRef;
+        private List<EntitySelectionData> CurrencySelectorInfoRef;
+        private List<EntitySelectionData> BenchmarkSelectorInfoRef;
+        private List<EntitySelectionData> IndexSelectorInfoRef;
+        private List<EntitySelectionData> CommoditySelectorInfoRef;
+
+        // 1. SecuritySelectorInfo
+
         /// <summary>
         /// Stores the list of EntitySelectionData for entity type - SECURITY
         /// </summary>
@@ -320,7 +328,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (selectedSecurityInfo != value)
                 {
                     selectedSecurityInfo = value;
-                    SelectedSeriesReference = selectedSecurityInfo;
+                    SelectedSecurityReference = selectedSecurityInfo;
                     RaisePropertyChanged(() => this.SelectedSecurityInfo);
                 }
 
@@ -344,27 +352,290 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SecuritySearchText);
                 if (value != null)
                 {
-                    if (value != String.Empty && SelectionData.EntitySelectionData != null)
+                    if (value != String.Empty && SecuritySelectorInfoRef != null)
                     {
-                        SecuritySelectorInfo = SelectionData.EntitySelectionData
+                        SecuritySelectorInfo = SecuritySelectorInfoRef
                                                             .Where(
-                                                                record => record.Type == EntityType.SECURITY &&
-                                                                (record.LongName.ToLower().Contains(value.ToLower())
+                                                                record => record.LongName.ToLower().Contains(value.ToLower())
                                                                 || record.ShortName.ToLower().Contains(value.ToLower())
-                                                                ||
-                                                                record.InstrumentID.ToLower().Contains(value.ToLower())))
+                                                                || record.InstrumentID.ToLower().Contains(value.ToLower()))
                                                             .ToList();
                     }
-                    else if (SelectionData.EntitySelectionData != null)
-                        SecuritySelectorInfo =
-                            SelectionData.EntitySelectionData.Where(record => record.Type == EntityType.SECURITY)
-                                         .ToList();
+                    else if (SecuritySelectorInfoRef != null)
+                        SecuritySelectorInfo = SecuritySelectorInfoRef;
                 }
             }
         }
-         * */
+
+        // 2. CurrencySelectorInfo
+
+        /// <summary>
+        /// Stores the list of EntitySelectionData for entity type - SECURITY
+        /// </summary>
+        private List<EntitySelectionData> currencySelectorInfo;
+        public List<EntitySelectionData> CurrencySelectorInfo
+        {
+            get { return currencySelectorInfo; }
+            set
+            {
+                currencySelectorInfo = value;
+                RaisePropertyChanged(() => this.CurrencySelectorInfo);
+            }
+        }
+
+        /// <summary>
+        /// Stores selected currency - Publishes CurrencyReferenceSetEvent on set event
+        /// </summary>
+        private EntitySelectionData selectedCurrencyInfo;
+        public EntitySelectionData SelectedCurrencyInfo
+        {
+            get { return selectedCurrencyInfo; }
+            set
+            {
+                if (selectedCurrencyInfo != value)
+                {
+                    selectedCurrencyInfo = value;
+                    SelectedCurrencyReference = selectedCurrencyInfo;
+                    RaisePropertyChanged(() => this.SelectedCurrencyInfo);
+                }
+
+                if (value != null)
+                {
+                    //SelectorPayload.EntitySelectionData = selectedCurrencyInfo;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores search text entered by user - Refines CurrencySelectionInfo based on the text entered
+        /// </summary>
+        private string currencySearchText;
+        public string CurrencySearchText
+        {
+            get { return currencySearchText; }
+            set
+            {
+                currencySearchText = value;
+                RaisePropertyChanged(() => this.CurrencySearchText);
+                if (value != null)
+                {
+                    if (value != String.Empty && CurrencySelectorInfoRef != null)
+                    {
+                        CurrencySelectorInfo = CurrencySelectorInfoRef
+                                                            .Where(
+                                                                record => record.LongName.ToLower().Contains(value.ToLower())
+                                                                || record.ShortName.ToLower().Contains(value.ToLower())
+                                                                || record.InstrumentID.ToLower().Contains(value.ToLower()))
+                                                            .ToList();
+                    }
+                    else if (CurrencySelectorInfoRef != null)
+                        CurrencySelectorInfo = CurrencySelectorInfoRef;
+                }
+            }
+        }
+
+        // 3. BenchmarkSelectorInfo
+
+        /// <summary>
+        /// Stores the list of EntitySelectionData for entity type - SECURITY
+        /// </summary>
+        private List<EntitySelectionData> benchmarkSelectorInfo;
+        public List<EntitySelectionData> BenchmarkSelectorInfo
+        {
+            get { return benchmarkSelectorInfo; }
+            set
+            {
+                benchmarkSelectorInfo = value;
+                RaisePropertyChanged(() => this.BenchmarkSelectorInfo);
+            }
+        }
+
+        /// <summary>
+        /// Stores selected benchmark - Publishes BenchmarkReferenceSetEvent on set event
+        /// </summary>
+        private EntitySelectionData selectedBenchmarkInfo;
+        public EntitySelectionData SelectedBenchmarkInfo
+        {
+            get { return selectedBenchmarkInfo; }
+            set
+            {
+                if (selectedBenchmarkInfo != value)
+                {
+                    selectedBenchmarkInfo = value;
+                    SelectedBenchmarkReference = selectedBenchmarkInfo;
+                    RaisePropertyChanged(() => this.SelectedBenchmarkInfo);
+                }
+
+                if (value != null)
+                {
+                    //SelectorPayload.EntitySelectionData = selectedBenchmarkInfo;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores search text entered by user - Refines BenchmarkSelectionInfo based on the text entered
+        /// </summary>
+        private string benchmarkSearchText;
+        public string BenchmarkSearchText
+        {
+            get { return benchmarkSearchText; }
+            set
+            {
+                benchmarkSearchText = value;
+                RaisePropertyChanged(() => this.BenchmarkSearchText);
+                if (value != null)
+                {
+                    if (value != String.Empty && BenchmarkSelectorInfoRef != null)
+                    {
+                        BenchmarkSelectorInfo = BenchmarkSelectorInfoRef
+                                                            .Where(
+                                                                record => record.LongName.ToLower().Contains(value.ToLower())
+                                                                || record.ShortName.ToLower().Contains(value.ToLower())
+                                                                || record.InstrumentID.ToLower().Contains(value.ToLower()))
+                                                            .ToList();
+                    }
+                    else if (BenchmarkSelectorInfoRef != null)
+                        BenchmarkSelectorInfo = BenchmarkSelectorInfoRef;
+                }
+            }
+        }
 
 
+        // 4. IndexSelectorInfo
+
+        /// <summary>
+        /// Stores the list of EntitySelectionData for entity type - SECURITY
+        /// </summary>
+        private List<EntitySelectionData> indexSelectorInfo;
+        public List<EntitySelectionData> IndexSelectorInfo
+        {
+            get { return indexSelectorInfo; }
+            set
+            {
+                indexSelectorInfo = value;
+                RaisePropertyChanged(() => this.IndexSelectorInfo);
+            }
+        }
+
+        /// <summary>
+        /// Stores selected index - Publishes IndexReferenceSetEvent on set event
+        /// </summary>
+        private EntitySelectionData selectedIndexInfo;
+        public EntitySelectionData SelectedIndexInfo
+        {
+            get { return selectedIndexInfo; }
+            set
+            {
+                if (selectedIndexInfo != value)
+                {
+                    selectedIndexInfo = value;
+                    SelectedIndexReference = selectedIndexInfo;
+                    RaisePropertyChanged(() => this.SelectedIndexInfo);
+                }
+
+                if (value != null)
+                {
+                    //SelectorPayload.EntitySelectionData = selectedIndexInfo;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores search text entered by user - Refines IndexSelectionInfo based on the text entered
+        /// </summary>
+        private string indexSearchText;
+        public string IndexSearchText
+        {
+            get { return indexSearchText; }
+            set
+            {
+                indexSearchText = value;
+                RaisePropertyChanged(() => this.IndexSearchText);
+                if (value != null)
+                {
+                    if (value != String.Empty && IndexSelectorInfoRef != null)
+                    {
+                        IndexSelectorInfo = IndexSelectorInfoRef
+                                                            .Where(
+                                                                record => record.LongName.ToLower().Contains(value.ToLower())
+                                                                || record.ShortName.ToLower().Contains(value.ToLower())
+                                                                || record.InstrumentID.ToLower().Contains(value.ToLower()))
+                                                            .ToList();
+                    }
+                    else if (IndexSelectorInfoRef != null)
+                        IndexSelectorInfo = IndexSelectorInfoRef;
+                }
+            }
+        }
+
+
+        // 5. CommoditySelectorInfo
+
+        /// <summary>
+        /// Stores the list of EntitySelectionData for entity type - SECURITY
+        /// </summary>
+        private List<EntitySelectionData> commoditySelectorInfo;
+        public List<EntitySelectionData> CommoditySelectorInfo
+        {
+            get { return commoditySelectorInfo; }
+            set
+            {
+                commoditySelectorInfo = value;
+                RaisePropertyChanged(() => this.CommoditySelectorInfo);
+            }
+        }
+
+        /// <summary>
+        /// Stores selected commodity - Publishes CommodityReferenceSetEvent on set event
+        /// </summary>
+        private EntitySelectionData selectedCommodityInfo;
+        public EntitySelectionData SelectedCommodityInfo
+        {
+            get { return selectedCommodityInfo; }
+            set
+            {
+                if (selectedCommodityInfo != value)
+                {
+                    selectedCommodityInfo = value;
+                    SelectedCommodityReference = selectedCommodityInfo;
+                    RaisePropertyChanged(() => this.SelectedCommodityInfo);
+                }
+
+                if (value != null)
+                {
+                    //SelectorPayload.EntitySelectionData = selectedCommodityInfo;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores search text entered by user - Refines CommoditySelectionInfo based on the text entered
+        /// </summary>
+        private string commoditySearchText;
+        public string CommoditySearchText
+        {
+            get { return commoditySearchText; }
+            set
+            {
+                commoditySearchText = value;
+                RaisePropertyChanged(() => this.CommoditySearchText);
+                if (value != null)
+                {
+                    if (value != String.Empty && CommoditySelectorInfoRef != null)
+                    {
+                        CommoditySelectorInfo = CommoditySelectorInfoRef
+                                                            .Where(
+                                                                record => record.LongName.ToLower().Contains(value.ToLower())
+                                                                || record.ShortName.ToLower().Contains(value.ToLower())
+                                                                || record.InstrumentID.ToLower().Contains(value.ToLower()))
+                                                            .ToList();
+                    }
+                    else if (CommoditySelectorInfoRef != null)
+                        CommoditySelectorInfo = CommoditySelectorInfoRef;
+                }
+            }
+        }
 
         #region Plotting Additional Series
         /// <summary>
@@ -392,36 +663,89 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Entity
         /// </summary>
-        private EntitySelectionData selectedSeriesReference = new EntitySelectionData();
-        public EntitySelectionData SelectedSeriesReference
+        private EntitySelectionData selectedSecurityReference;
+        public EntitySelectionData SelectedSecurityReference
         {
             get
             {
-                return selectedSeriesReference;
+                return selectedSecurityReference;
             }
             set
             {
-                selectedSeriesReference = value;
-                this.RaisePropertyChanged(() => this.SelectedSeriesReference);
+                selectedSecurityReference = value;
+                this.RaisePropertyChanged(() => this.SelectedSecurityReference);
             }
         }
 
         /// <summary>
-        /// Search Mode Filter - Checked (StartsWith); Unchecked (Contains)
+        /// Selected Entity
         /// </summary>
-        private bool searchFilterEnabled;
-        public bool SearchFilterEnabled
+        private EntitySelectionData selectedCurrencyReference;
+        public EntitySelectionData SelectedCurrencyReference
         {
-            get { return searchFilterEnabled; }
+            get
+            {
+                return selectedCurrencyReference;
+            }
             set
             {
-                if (searchFilterEnabled != value)
-                {
-                    searchFilterEnabled = value;
-                    RaisePropertyChanged(() => SearchFilterEnabled);
-                }
+                selectedCurrencyReference = value;
+                this.RaisePropertyChanged(() => this.SelectedCurrencyReference);
             }
         }
+
+        /// <summary>
+        /// Selected Entity
+        /// </summary>
+        private EntitySelectionData selectedBenchmarkReference;
+        public EntitySelectionData SelectedBenchmarkReference
+        {
+            get
+            {
+                return selectedBenchmarkReference;
+            }
+            set
+            {
+                selectedBenchmarkReference = value;
+                this.RaisePropertyChanged(() => this.SelectedBenchmarkReference);
+            }
+        }
+
+        /// <summary>
+        /// Selected Entity
+        /// </summary>
+        private EntitySelectionData selectedIndexReference;
+        public EntitySelectionData SelectedIndexReference
+        {
+            get
+            {
+                return selectedIndexReference;
+            }
+            set
+            {
+                selectedIndexReference = value;
+                this.RaisePropertyChanged(() => this.SelectedIndexReference);
+            }
+        }
+
+        /// <summary>
+        /// Selected Entity
+        /// </summary>
+        private EntitySelectionData selectedCommodityReference;
+        public EntitySelectionData SelectedCommodityReference
+        {
+            get
+            {
+                return selectedCommodityReference;
+            }
+            set
+            {
+                selectedCommodityReference = value;
+                this.RaisePropertyChanged(() => this.SelectedCommodityReference);
+            }
+        }
+
+        /*
 
         /// <summary>
         /// Entered Text in the Auto-Complete Box - filters SeriesReferenceSource
@@ -447,6 +771,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+        */
 
         /// <summary>
         /// Type of entites added to chart
@@ -668,9 +993,41 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Add to chart method
         /// </summary>
-        public ICommand AddCommand
+        public ICommand AddCommandSecurity
         {
-            get { return new DelegateCommand<object>(AddCommandMethod); }
+            get { return new DelegateCommand<object>(AddCommandSecurityMethod); }
+        }
+
+        /// <summary>
+        /// Add to chart method
+        /// </summary>
+        public ICommand AddCommandCurrency
+        {
+            get { return new DelegateCommand<object>(AddCommandCurrencyMethod); }
+        }
+
+        /// <summary>
+        /// Add to chart method
+        /// </summary>
+        public ICommand AddCommandBenchmark
+        {
+            get { return new DelegateCommand<object>(AddCommandBenchmarkMethod); }
+        }
+
+        /// <summary>
+        /// Add to chart method
+        /// </summary>
+        public ICommand AddCommandIndex
+        {
+            get { return new DelegateCommand<object>(AddCommandIndexMethod); }
+        }
+
+        /// <summary>
+        /// Add to chart method
+        /// </summary>
+        public ICommand AddCommandCommodity
+        {
+            get { return new DelegateCommand<object>(AddCommandCommodityMethod); }
         }
 
         /// <summary>
@@ -722,11 +1079,57 @@ namespace GreenField.Gadgets.ViewModels
         /// Add to Chart Command Method
         /// </summary>
         /// <param name="param"></param>
-        private void AddCommandMethod(object param)
+        private void AddCommandSecurityMethod(object param)
         {
-            if (SelectedSeriesReference != null)
+            if (SelectedSecurityReference != null)
             {
-                if (!PlottedSeries.Any(t => t.InstrumentID == SelectedSeriesReference.InstrumentID))
+                AddEntity(SelectedSecurityReference);
+                SelectedSecurityReference = null;
+            }
+        }
+
+        private void AddCommandCurrencyMethod(object param)
+        {
+            if (SelectedCurrencyReference != null)
+            {
+                AddEntity(SelectedCurrencyReference);
+                SelectedCurrencyReference = null;
+            }
+        }
+
+        private void AddCommandBenchmarkMethod(object param)
+        {
+            if (SelectedBenchmarkReference != null)
+            {
+                AddEntity(SelectedBenchmarkReference);
+                SelectedBenchmarkReference = null;
+            }
+        }
+
+        private void AddCommandIndexMethod(object param)
+        {
+            if (SelectedIndexReference != null)
+            {
+                AddEntity(SelectedIndexReference);
+                SelectedIndexReference = null;
+            }
+        }
+
+        private void AddCommandCommodityMethod(object param)
+        {
+            if (SelectedCommodityReference != null)
+            {
+                AddEntity(SelectedCommodityReference);
+                SelectedCommodityReference = null;
+            }
+        }
+
+
+        private void AddEntity(EntitySelectionData selectedEntiryReference)
+        {
+            if (selectedEntiryReference != null)
+            {
+                if (!PlottedSeries.Any(t => t.InstrumentID == selectedEntiryReference.InstrumentID))
                 {
                     if (ChartEntityList.Count >= 5)
                     {
@@ -734,8 +1137,7 @@ namespace GreenField.Gadgets.ViewModels
                         return;
                     }
 
-                    //string type = SelectedSeriesReference.Type.ToString();
-                    ChartEntityList.Add(SelectedSeriesReference);
+                    ChartEntityList.Add(selectedEntiryReference);
 
                     //Making initially ChartEntityTypes False
                     ChartEntityTypes = true;
@@ -746,18 +1148,18 @@ namespace GreenField.Gadgets.ViewModels
                         PlottedSeries.Clear();
                         PlottedSeries.AddRange(result.OrderBy(a => a.SortingID).ToList());
                         BusyIndicatorStatus = false;
-                        ComparisonSeries.Add(SelectedSeriesReference);
+                        ComparisonSeries.Add(selectedEntiryReference);
                         if (ReturnTypeSelection)
                         {
                             foreach (EntitySelectionData item in (ComparisonSeries))
                             {
-                                if (item.InstrumentID == SelectedSeriesReference.InstrumentID)
+                                if (item.InstrumentID == selectedEntiryReference.InstrumentID)
                                 {
                                     item.ShortName = item.ShortName + " (total)";
                                 }
                             }
                         }
-                        SelectedSeriesReference = null;
+                        selectedEntiryReference = null;
                     });
                 }
             }
@@ -860,6 +1262,22 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
+                    SecuritySelectorInfoRef = SelectionData.EntitySelectionData.Where(record => record.Type == EntityType.SECURITY).ToList();
+                    SecuritySelectorInfo = SecuritySelectorInfoRef;
+
+                    CurrencySelectorInfoRef = SelectionData.EntitySelectionData.Where(record => record.Type == EntityType.CURRENCY).ToList();
+                    CurrencySelectorInfo = CurrencySelectorInfoRef;
+
+                    BenchmarkSelectorInfoRef = SelectionData.EntitySelectionData.Where(record => record.Type == EntityType.BENCHMARK).ToList();
+                    BenchmarkSelectorInfo = BenchmarkSelectorInfoRef;
+
+                    IndexSelectorInfoRef = SelectionData.EntitySelectionData.Where(record => record.Type == EntityType.INDEX).ToList();
+                    IndexSelectorInfo = IndexSelectorInfoRef;
+
+                    CommoditySelectorInfoRef = SelectionData.EntitySelectionData.Where(record => record.Type == EntityType.COMMODITY).ToList();
+                    CommoditySelectorInfo = CommoditySelectorInfoRef;
+
+                    /*
                     SeriesReference = new CollectionViewSource();
                     SeriesReferenceSource = new ObservableCollection<EntitySelectionData>(result);
                     SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("Type"));
@@ -874,6 +1292,7 @@ namespace GreenField.Gadgets.ViewModels
                         Direction = System.ComponentModel.ListSortDirection.Ascending
                     });
                     SeriesReference.Source = SeriesReferenceSource;
+                    */
                 }
                 else
                 {
@@ -1002,7 +1421,9 @@ namespace GreenField.Gadgets.ViewModels
                         }
                         this.entitySelectionData = entitySelectionData;
                         ChartEntityList.Clear();
+                        ComparisonSeries.Clear();
                         ChartEntityList.Add(entitySelectionData);
+                        ComparisonSeries.Add(entitySelectionData);
 
                         //Retrieve Pricing Data for Primary Security Reference
                         if (IsActive)
