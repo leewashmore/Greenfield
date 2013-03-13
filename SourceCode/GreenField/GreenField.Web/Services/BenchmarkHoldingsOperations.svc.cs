@@ -1184,6 +1184,7 @@ namespace GreenField.Web.Services
                     {
                         if (filterType != null && filterValue != null)
                         {
+                            
                             isFiltered = true;
                             dimensionPortfolioHoldingsData = null;
                             switch (filterType)
@@ -1210,7 +1211,7 @@ namespace GreenField.Web.Services
                                 case "Show Everything":
                                         dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
                                         && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                        
+                                        isFiltered = false; //filter type should be set to false
                                         break;
 
 
@@ -1253,6 +1254,7 @@ namespace GreenField.Web.Services
                                 case "Show Everything":
                                     dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
                                     && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                    isFiltered = false; //filter type should be set to false
                                     break;
 
 
@@ -1309,6 +1311,7 @@ namespace GreenField.Web.Services
                                 case "Show Everything":
                                     dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
                                     (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                    isFiltered = false; //filter type should be set to false
                                     break;
 
                             }
@@ -1350,6 +1353,7 @@ namespace GreenField.Web.Services
                                 case "Show Everything":
                                     dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
                                     (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                    isFiltered = false; //filter type should be set to false
                                     break;
 
                             }
@@ -1413,6 +1417,7 @@ namespace GreenField.Web.Services
                                 case "Show Everything":
                                     dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() )
                                       && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                    isFiltered = false; //filter type should be set to false
                                     break;
                                 default: dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
                                       && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
@@ -1457,6 +1462,7 @@ namespace GreenField.Web.Services
                                 case "Show Everything":
                                     dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
                                       && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                    isFiltered = false; //filter type should be set to false
                                     break;
                                 default: dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
                                       && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
@@ -1519,6 +1525,7 @@ namespace GreenField.Web.Services
                                 case "Show Everything":
                                     dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) 
                                     && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                    isFiltered = false; //filter type should be set to false
                                     break;
                         
                             }
@@ -1554,6 +1561,7 @@ namespace GreenField.Web.Services
                                     break;
                                 case "Show Everything":
                                     dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                    isFiltered = false; //filter type should be set to false
                                     break;
 
                             }
@@ -2131,16 +2139,28 @@ namespace GreenField.Web.Services
 
                         if (filterType != null && filterValue != null)
                         {
-                            if (sumTargetPct != 0)
+                            if (!filterType.Equals("Show Everything")) //for everything reweight target%
+                            {
+                                if (sumTargetPct != 0)
+                                {
+                                    var target = targets.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName);
+                                    item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT) / sumTargetPct;
+
+                                }
+                                else
+                                {
+                                    item.AshEmmModelWeight = 0;
+                                }
+                            }
+                            else //for show everything display as it is
                             {
                                 var target = targets.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName);
-                                item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT) / sumTargetPct;
+                                item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT);
+                            }
 
-                            }
-                            else
-                            {
-                                item.AshEmmModelWeight = 0;
-                            }
+
+
+
                         }
                         else
                         {
