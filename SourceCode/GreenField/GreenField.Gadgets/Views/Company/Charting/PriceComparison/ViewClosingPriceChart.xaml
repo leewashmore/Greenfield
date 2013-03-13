@@ -274,6 +274,8 @@
                         </Button>
                     </Grid>
 
+                    <!-- TODO (investigate use of DAILY_SPOT_FX and put this dropdown back) for benchmarks there is no logic to retrieve the data for the chart at all, means Benchmarks never chart
+                    it uses DimensionEntitiesService.GF_PRICING_BASEVIEW and the currencies chart is not plotted as in the repose value of DAILY_SPOT_FX is always zero
                     <Grid Grid.Row="7" Margin="0,2,2,0" Visibility="{Binding AddToChartVisibility, Mode=TwoWay}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -369,6 +371,7 @@
                             <Image Source="/GreenField.Gadgets;component/Images/AddToChart.png"/>
                         </Button>
                     </Grid>
+                    -->
 
                     <Grid Grid.Row="9" Margin="0,2,2,0" Visibility="{Binding AddToChartVisibility, Mode=TwoWay}">
                         <Grid.ColumnDefinitions>
