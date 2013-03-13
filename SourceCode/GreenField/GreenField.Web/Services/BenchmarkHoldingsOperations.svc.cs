@@ -1173,6 +1173,7 @@ namespace GreenField.Web.Services
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData;
                 List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData;
                 List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData;
+                Boolean isFiltered = false;
 
 
                 dimensionPortfolioLTHoldingsData = null;
@@ -1183,6 +1184,7 @@ namespace GreenField.Web.Services
                     {
                         if (filterType != null && filterValue != null)
                         {
+                            isFiltered = true;
                             dimensionPortfolioHoldingsData = null;
                             switch (filterType)
                             {
@@ -1228,6 +1230,7 @@ namespace GreenField.Web.Services
 
                         if (filterType != null && filterValue != null)
                         {
+                            isFiltered = true;
                             dimensionPortfolioHoldingsData = null;
                             switch (filterType)
                             {
@@ -1283,6 +1286,7 @@ namespace GreenField.Web.Services
                     {
                         if (filterType != null && filterValue != null)
                         {
+                            isFiltered = true;
 
                             switch (filterType)
                             {
@@ -1323,6 +1327,7 @@ namespace GreenField.Web.Services
 #endif
                         if (filterType != null && filterValue != null)
                         {
+                            isFiltered = true;
 
                             switch (filterType)
                             {
@@ -1362,7 +1367,7 @@ namespace GreenField.Web.Services
                         timeGF_BENCHMARK_HOLDINGS = DateTime.Now;
 #endif
                     }
-                    result = PortfolioDetailsCalculations.AddPortfolioLTSecurities(dimensionPortfolioLTHoldingsData, dimensionBenchmarkHoldingsData);
+                    result = PortfolioDetailsCalculations.AddPortfolioLTSecurities(dimensionPortfolioLTHoldingsData, dimensionBenchmarkHoldingsData,isFiltered);
 
                     #region BenchmarkSecurities
 
@@ -1384,6 +1389,7 @@ namespace GreenField.Web.Services
                     {
                         if (filterType != null && filterValue != null)
                         {
+                            isFiltered = true;
                             dimensionPortfolioHoldingsData = null;
                             switch (filterType)
                             {
@@ -1427,6 +1433,7 @@ namespace GreenField.Web.Services
 #endif
                         if (filterType != null && filterValue != null)
                         {
+                            isFiltered = true;
                             dimensionPortfolioHoldingsData = null;
                             switch (filterType)
                             {
@@ -1490,6 +1497,7 @@ namespace GreenField.Web.Services
                         
                         if (filterType != null && filterValue != null)
                         {
+                            isFiltered = true;
                             switch (filterType)
                             {
                                 case "Region":
@@ -1529,6 +1537,7 @@ namespace GreenField.Web.Services
 #endif
                         if (filterType != null && filterValue != null)
                         {
+                            isFiltered = true;
                             switch (filterType)
                             {
                                 case "Region":
@@ -1563,7 +1572,7 @@ namespace GreenField.Web.Services
 #if DEBUG
                     swAddPortfolioSecurities.Start();
 #endif
-                    result = PortfolioDetailsCalculations.AddPortfolioSecurities(dimensionPortfolioHoldingsData, dimensionBenchmarkHoldingsData);
+                    result = PortfolioDetailsCalculations.AddPortfolioSecurities(dimensionPortfolioHoldingsData, dimensionBenchmarkHoldingsData, isFiltered);
 #if DEBUG
                     swAddPortfolioSecurities.Stop();
                     timeAddPortfolioSecurities = DateTime.Now;
@@ -2119,15 +2128,24 @@ namespace GreenField.Web.Services
                         null : externalResearchEntities.GF_SECURITY_BASEVIEW_Local.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName).FirstOrDefault().ISSUER_NAME;
                     if (!lookThruEnabled)
                     {
-                        if (sumTargetPct != 0)
-                        {
-                            var target = targets.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName);
-                            item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT) / sumTargetPct;
 
+                        if (filterType != null && filterValue != null)
+                        {
+                            if (sumTargetPct != 0)
+                            {
+                                var target = targets.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName);
+                                item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT) / sumTargetPct;
+
+                            }
+                            else
+                            {
+                                item.AshEmmModelWeight = 0;
+                            }
                         }
                         else
                         {
-                            item.AshEmmModelWeight = 0;
+                            var target = targets.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName);
+                            item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT);
                         }
                     }
                     else
