@@ -2132,8 +2132,8 @@ namespace GreenField.Web.Services
                         null : (fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault().UPSIDE as decimal?) * 100M;
                     
                    // var security = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault();
-                    item.IssuerName = externalResearchEntities.GF_SECURITY_BASEVIEW_Local.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName).FirstOrDefault() == null ? 
-                        null : externalResearchEntities.GF_SECURITY_BASEVIEW_Local.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName).FirstOrDefault().ISSUER_NAME;
+                    item.IssuerName = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault() == null ?
+                        null : newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault().ISSUER_NAME;
                     if (!lookThruEnabled)
                     {
 
