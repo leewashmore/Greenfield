@@ -46,8 +46,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <telerik:RadRadioButton GroupName="{Binding Id}" Grid.Column="0" Content="Group Issuers" Style="{StaticResource RadRadioButtonStyle}" IsChecked="{Binding IsHoldingsGroupedByIssuer,Mode=TwoWay}" MinHeight="15" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTipService.ToolTip="Group securities issued by same issuer" IsEnabled="{Binding EnableLookThru}"/>
-            <telerik:RadRadioButton GroupName="{Binding Id}" Grid.Column="1" Content="Group Securities" Style="{StaticResource RadRadioButtonStyle}" IsChecked="{Binding IsHoldingsGrouped,Mode=TwoWay}" MinHeight="15" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTipService.ToolTip="Group same securities into one record" IsEnabled="{Binding EnableLookThru}"/>
+            <telerik:RadRadioButton GroupName="{Binding Id}" Grid.Column="0" Content="Group Issuers" Style="{StaticResource RadRadioButtonStyle}" IsChecked="{Binding IsHoldingsGroupedByIssuer,Mode=TwoWay}" MinHeight="15" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTipService.ToolTip="Group securities issued by same issuer" />
+            <telerik:RadRadioButton GroupName="{Binding Id}" Grid.Column="1" Content="Group Securities" Style="{StaticResource RadRadioButtonStyle}" IsChecked="{Binding IsHoldingsGrouped,Mode=TwoWay}" MinHeight="15" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTipService.ToolTip="Group same securities into one record" />
 
     <!--
             <CheckBox Content="Group Issuers" Grid.Column="0" ToolTipService.ToolTip="Group same securities into one record"

@@ -271,8 +271,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 isHoldingsGrouped = value;
-                if (EnableLookThru)
-                {
+              
                     if (isHoldingsGrouped)
                     {
                         groupedData = GetGroupedPortfolios(SelectedPortfolioId.PortfolioId, initialData);
@@ -286,7 +285,7 @@ namespace GreenField.Gadgets.ViewModels
                         if (initialData != null)
                             SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(initialData);
                     }
-                }
+                
                 this.RaisePropertyChanged(() => this.IsHoldingsGrouped);
             }
         }
@@ -301,8 +300,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 isHoldingsGroupedByIssuer = value;
-                if (EnableLookThru)
-                {
+             
                     if (isHoldingsGroupedByIssuer)
                     {
                         groupedData = GetGroupedPortfoliosByIssuer(SelectedPortfolioId.PortfolioId, initialData);
@@ -316,7 +314,7 @@ namespace GreenField.Gadgets.ViewModels
                         if (initialData != null)
                             SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(initialData);
                     }
-                }
+                
                 this.RaisePropertyChanged(() => this.IsHoldingsGroupedByIssuer);
             }
         }
@@ -667,7 +665,7 @@ namespace GreenField.Gadgets.ViewModels
                             ProprietaryRegionCode = main.ProprietaryRegionCode,
                             ReAshEmmModelWeight = group.Sum(x => x.ReAshEmmModelWeight ?? 0.0m),
                             RePortfolioWeight = group.Sum(x => x.RePortfolioWeight ?? 0.0m),
-                            ReBenchmarkWeight = main.ReBenchmarkWeight,
+                            ReBenchmarkWeight = sumBenchmarkWeightWhenGrouped(group), //main.ReBenchmarkWeight,sum benchmark weight
                             RevenueGrowthCurrentYear = main.RevenueGrowthCurrentYear,
                             RevenueGrowthNextYear = main.RevenueGrowthNextYear,
                             ROE = null,// main.ROE, do not show value in the grouped line
@@ -739,7 +737,7 @@ namespace GreenField.Gadgets.ViewModels
                         ProprietaryRegionCode = main.ProprietaryRegionCode,
                         ReAshEmmModelWeight = group.Sum(x => x.ReAshEmmModelWeight ?? 0.0m),
                         RePortfolioWeight = group.Sum(x => x.RePortfolioWeight ?? 0.0m),
-                        ReBenchmarkWeight = main.ReBenchmarkWeight,
+                        ReBenchmarkWeight = sumBenchmarkWeightWhenGrouped(group), //main.ReBenchmarkWeight,sum benchmark weight,
                         RevenueGrowthCurrentYear = main.RevenueGrowthCurrentYear,
                         RevenueGrowthNextYear = main.RevenueGrowthNextYear,
                         ROE = main.ROE,
@@ -766,7 +764,21 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region HelperMethods
+        /// <summary>
+        /// Method is to calculated the total benchmark weight if it is either grouped by issuer or grouped securities
+        /// </summary>
+        /// <param name="groupData">contains all the securities for the group </param>
+        private decimal? sumBenchmarkWeightWhenGrouped(IGrouping<string,PortfolioDetailsData> groupData)
+        {
+            var d = from t in groupData group t by new { a = t.AsecSecShortName } into g select g;
+            decimal? sum = 0;
+            foreach (var a in d)
+            {
+                sum=sum+a.Max(y=>y.BenchmarkWeight);
+            }
 
+            return sum;
+        }
         /// <summary>
         /// Service call to Retrieve the Details for propertyName Portfolio
         /// </summary>
