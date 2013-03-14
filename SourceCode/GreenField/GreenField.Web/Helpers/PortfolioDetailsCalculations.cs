@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GreenField.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
+using System.Diagnostics;
 
 namespace GreenField.Web.Helpers
 {
@@ -99,7 +100,7 @@ namespace GreenField.Web.Helpers
         /// <param name="dimensionPortfolioHoldingsData">List of type GF_PORTFOLIO_HOLDINGS returned from GF_PORTFOLIO_LTHOLDINGS</param>
         /// <param name="dimensionBenchmarkHoldingsData">List of type GF_BENCHMARK_HOLDINGS returned from GF_BENCHMARK_HOLDINGS</param>
         /// <returns>List of PortfolioDetailsData</returns>
-        public static List<PortfolioDetailsData> AddPortfolioSecurities(List<GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData)
+        public static List<PortfolioDetailsData> AddPortfolioSecurities(List<GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData,Boolean isFiltered)
         {
 
             List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
@@ -135,15 +136,25 @@ namespace GreenField.Web.Helpers
                 portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
                 portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
                 portfolioResult.PortfolioId = item.PORTFOLIO_ID;
-                if (sumBenchmarkWeight != 0)
+                if (isFiltered)
                 {
-                    portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
-                                Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
-                                Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT) / sumBenchmarkWeight;
+                    if (sumBenchmarkWeight != 0)
+                    {
+                        portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                                    Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                                    Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault().BENCHMARK_WEIGHT) / sumBenchmarkWeight;
+
+                    }
+                    else
+                    {
+                        portfolioResult.BenchmarkWeight = 0;
+                    }
                 }
                 else
                 {
-                    portfolioResult.BenchmarkWeight = 0;
+                    portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                                    Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                                    Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault().BENCHMARK_WEIGHT);
                 }
                 //portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
                
@@ -160,7 +171,7 @@ namespace GreenField.Web.Helpers
         /// <param name="dimensionPortfolioLTHoldingsData">List of type GF_PORTFOLIO_LTHOLDINGS returned from GF_PORTFOLIO_LTHOLDINGS</param>
         /// <param name="dimensionBenchmarkHoldingsData">List of type GF_BENCHMARK_HOLDINGS returned from GF_BENCHMARK_HOLDINGS</param>
         /// <returns>List of PortfolioDetailsData</returns>
-        public static List<PortfolioDetailsData> AddPortfolioLTSecurities(List<GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData)
+        public static List<PortfolioDetailsData> AddPortfolioLTSecurities(List<GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData,Boolean isFiltered)
         {
             List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
 
@@ -176,6 +187,8 @@ namespace GreenField.Web.Helpers
             {
                 return result;
             }
+            decimal? sumBenchmarkWeight = 0;
+            sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
             foreach (GF_PORTFOLIO_LTHOLDINGS item in dimensionPortfolioLTHoldingsData)
             {
                 PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
@@ -195,9 +208,29 @@ namespace GreenField.Web.Helpers
                 portfolioResult.SecurityType = item.SECURITY_TYPE;
                 portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
                 portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
-                portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+
+                if (isFiltered)
+                {
+                    if (sumBenchmarkWeight != 0)
+                    {
+                        portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                            Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                            Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT) / sumBenchmarkWeight;
+
+                    }
+                    else
+                    {
+                        portfolioResult.BenchmarkWeight = 0;
+                    }
+                }
+                else
+                {
+                    portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
                             Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
                             Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
+                }
+
+                
                 portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
                 portfolioResult.IssuerId = item.ISSUER_ID;
                 result.Add(portfolioResult);

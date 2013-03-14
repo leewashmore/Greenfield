@@ -10,6 +10,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Common;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller;
+using System.Diagnostics;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -821,8 +822,10 @@ namespace GreenField.Gadgets.ViewModels
                         if (sumDirtyValuePC != 0)
                             data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
 
-                        if (sumBenchmarkWeight != 0)
-                            data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                       /// if (sumBenchmarkWeight != 0)
+                           // data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                        data.ReBenchmarkWeight = data.BenchmarkWeight ;
+
 
                         //if (sumAshEmmModelWeight != 0)
                             data.ReAshEmmModelWeight = data.AshEmmModelWeight * 100; // sumAshEmmModelWeight * 100;
@@ -891,6 +894,9 @@ namespace GreenField.Gadgets.ViewModels
                     }
 
                     item.ReBenchmarkWeight = item.BenchmarkWeight;
+#if DEBUG
+                    Debug.WriteLine(item.AsecSecShortName + "<==> " + item.BenchmarkWeight);
+#endif
                 }
                 if (portfolioDetailsData != null)
                 {

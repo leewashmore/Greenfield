@@ -43,6 +43,9 @@ namespace GreenField.DataContracts
         [DataMember]
         public String Country_Code { get; set; }
 
+        [DataMember]
+        public String ISSUER_NAME { get; set; }
+
     }
 
 

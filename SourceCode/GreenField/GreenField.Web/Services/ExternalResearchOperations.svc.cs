@@ -13,6 +13,7 @@ using GreenField.Web.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
+using System.Diagnostics;
 
 namespace GreenField.Web.Services
 {
@@ -383,6 +384,7 @@ namespace GreenField.Web.Services
                 string _dataSource = EnumUtils.ToString(dataSource);
                 string _fiscalType = EnumUtils.ToString(fiscalType);
                 ExternalResearchEntities entity = new ExternalResearchEntities();
+                entity.CommandTimeout = 300;
                 List<FinstatDetail> data = new List<FinstatDetail>();
                 List<FinstatDetailData> result = new List<FinstatDetailData>();
 
@@ -598,6 +600,7 @@ namespace GreenField.Web.Services
                         tempData.SortOrder = item.DATA_ID == 166 ? 5006 :
                                                    item.DATA_ID == 164 ? 5012 : item.DATA_ID == 133 ? 5018 : 6000;
                     }
+
                     relativeResultSet.Add(tempData);
                 }
                 #endregion
