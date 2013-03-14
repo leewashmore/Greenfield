@@ -767,7 +767,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Method is to calculated the total benchmark weight if it is either grouped by issuer or grouped securities
         /// </summary>
-        /// <param name="groupData">contains all the securities for the group </param>
+        /// <param name="groupData">contains all the securities for the group    </param>
         private decimal? sumBenchmarkWeightWhenGrouped(IGrouping<string,PortfolioDetailsData> groupData)
         {
             var d = from t in groupData group t by new { a = t.AsecSecShortName } into g select g;
