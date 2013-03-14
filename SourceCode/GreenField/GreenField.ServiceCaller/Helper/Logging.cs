@@ -44,7 +44,7 @@ namespace GreenField.ServiceCaller
                                   userName.Replace(Environment.NewLine, " "), new TimeSpan(endTime - startTime).ToString(),
                                   methodNamespace.Replace(Environment.NewLine, " "), e == null ? "Sucessful" : "Failed",
                                   time.ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")),
-                    Category.Warn, Priority.None);
+                    Category.Info, Priority.None);
             }
         }
 
