@@ -635,10 +635,11 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     else
                     {
+                        decimal? sumBenchmarkWeight = sumBenchmarkWeightWhenGrouped(group);
                         var holding = new PortfolioDetailsData
                         {
                             A_Sec_Instr_Type = group.First().A_Sec_Instr_Type,
-                            ActivePosition = group.Sum(x => x.ActivePosition ?? 0.0m),
+                            ActivePosition = group.Sum(x => x.RePortfolioWeight ?? 0.0m) - sumBenchmarkWeight,
                             AsecSecShortName = null,//group.Key  -do not display anything in the grouped line
                             AshEmmModelWeight = group.Sum(x => x.AshEmmModelWeight ?? 0.0m),
                             BalanceNominal = null,   //group.Sum(x => x.BalanceNominal ?? 0.0m), do not show qty in total line
@@ -665,7 +666,7 @@ namespace GreenField.Gadgets.ViewModels
                             ProprietaryRegionCode = main.ProprietaryRegionCode,
                             ReAshEmmModelWeight = group.Sum(x => x.ReAshEmmModelWeight ?? 0.0m),
                             RePortfolioWeight = group.Sum(x => x.RePortfolioWeight ?? 0.0m),
-                            ReBenchmarkWeight = sumBenchmarkWeightWhenGrouped(group), //main.ReBenchmarkWeight,sum benchmark weight
+                            ReBenchmarkWeight = sumBenchmarkWeight, //main.ReBenchmarkWeight,sum benchmark weight
                             RevenueGrowthCurrentYear = main.RevenueGrowthCurrentYear,
                             RevenueGrowthNextYear = main.RevenueGrowthNextYear,
                             ROE = null,// main.ROE, do not show value in the grouped line
@@ -707,10 +708,11 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
+                    decimal? sumBenchmarkWeight = sumBenchmarkWeightWhenGrouped(group);
                     var holding = new PortfolioDetailsData
                     {
                         A_Sec_Instr_Type = group.First().A_Sec_Instr_Type,
-                        ActivePosition = group.Sum(x => x.ActivePosition ?? 0.0m),
+                        ActivePosition = group.Sum(x => x.RePortfolioWeight ?? 0.0m) - sumBenchmarkWeight,
                         AsecSecShortName = group.Key,
                         AshEmmModelWeight = group.Sum(x => x.AshEmmModelWeight ?? 0.0m),
                         BalanceNominal = group.Sum(x => x.BalanceNominal ?? 0.0m),
@@ -737,7 +739,7 @@ namespace GreenField.Gadgets.ViewModels
                         ProprietaryRegionCode = main.ProprietaryRegionCode,
                         ReAshEmmModelWeight = group.Sum(x => x.ReAshEmmModelWeight ?? 0.0m),
                         RePortfolioWeight = group.Sum(x => x.RePortfolioWeight ?? 0.0m),
-                        ReBenchmarkWeight = sumBenchmarkWeightWhenGrouped(group), //main.ReBenchmarkWeight,sum benchmark weight,
+                        ReBenchmarkWeight = sumBenchmarkWeight, //main.ReBenchmarkWeight,sum benchmark weight,
                         RevenueGrowthCurrentYear = main.RevenueGrowthCurrentYear,
                         RevenueGrowthNextYear = main.RevenueGrowthNextYear,
                         ROE = main.ROE,
