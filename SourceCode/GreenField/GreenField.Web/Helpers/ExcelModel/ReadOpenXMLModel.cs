@@ -544,7 +544,7 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
                 if (ExceptionMessage == null || ExceptionMessage == "")
                 {
-                    ExceptionMessage = ex.Message;
+                    ExceptionMessage += "\n" + ex.Message;
                 }
                 return ExceptionMessage;
             }
@@ -584,7 +584,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Reading Model Reference Sheet";
+                ExceptionMessage += "\nError while Reading Model Reference Sheet";
             }
         }
 
@@ -606,7 +606,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Reading Model Upload Sheet";
+                ExceptionMessage += "\nError while Reading Model Upload Sheet";
             }
         }
 
@@ -634,7 +634,7 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
                 if (ExceptionMessage == null || ExceptionMessage == "")
                 {
-                    ExceptionMessage = "Data in Model Reference Sheet is not Valid";
+                    ExceptionMessage += "\nData in Model Reference Sheet is not Valid";
                 }
                 throw;
             }
@@ -989,7 +989,7 @@ namespace GreenField.Web.Helpers
             }
             catch (Exception ex)
             {
-                ExceptionMessage = ex.Message;
+                ExceptionMessage += "\n" + ex.Message;
                 ExceptionTrace.LogException(ex);
                 throw;
             }
@@ -1078,14 +1078,14 @@ namespace GreenField.Web.Helpers
                 SheetModelUpload = sheetModelUpload;
                 if (sheetModelUpload.Count() == 0)
                 {
-                    ExceptionMessage = "Model Upload sheet is not present";
+                    ExceptionMessage += "\nModel Upload sheet is not present";
                     return false;
                 }
                 IEnumerable<Sheet> sheetModelReference = workbookPart.Workbook.GetFirstChild<Sheets>().Elements<Sheet>().Where(s => s.Name == "Model Reference");
                 SheetModelReference = sheetModelReference;
                 if (sheetModelReference.Count() == 0)
                 {
-                    ExceptionMessage = "Model Reference sheet is not present";
+                    ExceptionMessage += "\nModel Reference sheet is not present";
                     return false;
                 }
                 return true;
@@ -1254,7 +1254,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = ex.Message;
+                ExceptionMessage += "\n" + ex.Message;
                 throw;
             }
         }
@@ -1412,7 +1412,7 @@ namespace GreenField.Web.Helpers
             }
             catch (Exception ex)
             {
-                ExceptionMessage = "The Entered currency is not Valid";
+                ExceptionMessage += "\nThe Entered currency is not Valid";
                 ExceptionTrace.LogException(ex);
                 throw;
             }
@@ -1442,7 +1442,7 @@ namespace GreenField.Web.Helpers
             }
             catch (Exception ex)
             {
-                ExceptionMessage = "The specified Units is not Valid";
+                ExceptionMessage += "\nThe specified Units is not Valid";
                 ExceptionTrace.LogException(ex);
                 throw;
             }
@@ -1532,7 +1532,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Invalid cell value in Model Upload sheet.";
+                ExceptionMessage += "\nInvalid cell value in Model Upload sheet.";
             }
         }
 
@@ -1567,7 +1567,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "The values in ModelUpload header row are not valid";
+                ExceptionMessage += "\nThe values in ModelUpload header row are not valid";
                 return 0;
             }
         }
@@ -1618,7 +1618,7 @@ namespace GreenField.Web.Helpers
                 YearList = SetPeriodYears(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
+                    ExceptionMessage += "\nMissing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1627,7 +1627,7 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
                 if (ExceptionMessage == null || ExceptionMessage == "")
                 {
-                    ExceptionMessage = "The values in ModelUpload Period year are not valid";
+                    ExceptionMessage += "\nThe values in ModelUpload Period year are not valid";
                 }
             }
         }
@@ -1678,7 +1678,7 @@ namespace GreenField.Web.Helpers
                 PeriodEndDate = SetPeriodEndDate(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
+                    ExceptionMessage += "\nMissing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1687,7 +1687,7 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
                 if (ExceptionMessage == null || ExceptionMessage == "")
                 {
-                    ExceptionMessage = "The values in ModelUpload Period End Dates are not valid";
+                    ExceptionMessage += "\nThe values in ModelUpload Period End Dates are not valid";
                 }
             }
         }
@@ -1740,7 +1740,7 @@ namespace GreenField.Web.Helpers
                 PeriodLength = SetPeriodLength(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
+                    ExceptionMessage += "\nMissing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1749,7 +1749,7 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
                 if (ExceptionMessage == null || ExceptionMessage == "")
                 {
-                    ExceptionMessage = "The values in ModelUpload Period Length are not valid";
+                    ExceptionMessage += "\nThe values in ModelUpload Period Length are not valid";
                 }
             }
         }
@@ -1802,7 +1802,7 @@ namespace GreenField.Web.Helpers
                 ActualOverride = SetOverride(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
+                    ExceptionMessage += "\nMissing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1811,7 +1811,7 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
                 if (ExceptionMessage == null || ExceptionMessage == "")
                 {
-                    ExceptionMessage = "The values in ModelUpload Period Length are not valid";
+                    ExceptionMessage += "\nThe values in ModelUpload Period Length are not valid";
                 }
             }
         }
@@ -1864,7 +1864,7 @@ namespace GreenField.Web.Helpers
                 CommodityMeasure = SetMeasure(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
+                    ExceptionMessage += "\nMissing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1873,7 +1873,7 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
                 if (ExceptionMessage == null || ExceptionMessage == "")
                 {
-                    ExceptionMessage = "The values in ModelUpload Period Length are not valid";
+                    ExceptionMessage += "\nThe values in ModelUpload Period Length are not valid";
                 }
             }
         }
@@ -1926,7 +1926,7 @@ namespace GreenField.Web.Helpers
                 CommodityForecastUsed = SetCommodityForecast(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
+                    ExceptionMessage += "\nMissing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1935,7 +1935,7 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
                 if (ExceptionMessage == null || ExceptionMessage == "")
                 {
-                    ExceptionMessage = "The values in ModelUpload Period Length are not valid";
+                    ExceptionMessage += "\nThe values in ModelUpload Period Length are not valid";
                 }
             }
         }
@@ -2183,7 +2183,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "The List of COA don't match: " + InvalidValue;
+                ExceptionMessage += "\nThe List of COA don't match: " + InvalidValue;
                 return false;
             }
         }
@@ -2206,7 +2206,7 @@ namespace GreenField.Web.Helpers
 
                     if (YearsToLoad.Count == 0)
                     {
-                        ExceptionMessage = "Missing Data in Model Upload Worksheet";
+                        ExceptionMessage += "\nMissing Data in Model Upload Worksheet";
                         throw new Exception();
                     }
                     return true;
@@ -2250,7 +2250,7 @@ namespace GreenField.Web.Helpers
                     }
                     if (YearsToLoad.Count == 0)
                     {
-                        ExceptionMessage = "Missing Data in Model Upload Worksheet";
+                        ExceptionMessage += "\nMissing Data in Model Upload Worksheet";
                         throw new Exception();
                     }
                     return true;
@@ -2287,7 +2287,7 @@ namespace GreenField.Web.Helpers
                     }
                     if (YearsToLoad.Count == 0)
                     {
-                        ExceptionMessage = "Missing Data in Model Upload Worksheet";
+                        ExceptionMessage += "\nMissing Data in Model Upload Worksheet";
                         throw new Exception();
                     }
                     return true;
@@ -2324,7 +2324,7 @@ namespace GreenField.Web.Helpers
                     }
                     if (YearsToLoad.Count == 0)
                     {
-                        ExceptionMessage = "Missing Data in Model Upload Worksheet";
+                        ExceptionMessage += "\nMissing Data in Model Upload Worksheet";
                         throw new Exception();
                     }
                     return true;
@@ -2372,7 +2372,7 @@ namespace GreenField.Web.Helpers
                 ModelUploadData = ModelUploadData.Where(a => Convert.ToString(a.Amount).Trim() != "").ToList();
                 if (ModelUploadData.Any(a => !Decimal.TryParse(a.Amount as string, out value)))
                 {
-                    ExceptionMessage = "The Data for Amount values is not valid";
+                    ExceptionMessage += "\nThe Data for Amount values is not valid";
                     throw new Exception();
                 }
                 ModelUploadData = ModelUploadData.Where(a => Decimal.TryParse(a.Amount as string, out value)).ToList();
@@ -2467,7 +2467,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Deleting Data from Internal_Statement for: " + InvalidValue;
+                ExceptionMessage += "\nError while Deleting Data from Internal_Statement for: " + InvalidValue;
                 throw;
             }
         }
@@ -2493,7 +2493,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Deleting Data from Internal_Data for Ref= " + InvalidValue;
+                ExceptionMessage += "\nError while Deleting Data from Internal_Data for Ref= " + InvalidValue;
                 throw;
             }
         }
@@ -2519,7 +2519,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Deleting Data from Internal_Data for Ref= " + InvalidValue;
+                ExceptionMessage += "\nError while Deleting Data from Internal_Data for Ref= " + InvalidValue;
                 throw;
             }
         }
@@ -2544,7 +2544,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Deleting Data from Internal_Issuer for Issuer= " + InvalidValue;
+                ExceptionMessage += "\nError while Deleting Data from Internal_Issuer for Issuer= " + InvalidValue;
                 throw;
             }
         }
@@ -2567,7 +2567,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Deleting Data from Internal_Issuer_Quarterely Distribution for Issuer= " + InvalidValue;
+                ExceptionMessage += "\nError while Deleting Data from Internal_Issuer_Quarterely Distribution for Issuer= " + InvalidValue;
                 throw;
             }
         }
@@ -2604,7 +2604,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Inserting Data in Internal_Statement  for Issuer= " + InvalidValue;
+                ExceptionMessage += "\nError while Inserting Data in Internal_Statement  for Issuer= " + InvalidValue;
                 throw;
             }
         }
@@ -2630,7 +2630,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Inserting Data in Internal_Data for " + InvalidValue;
+                ExceptionMessage += "\nError while Inserting Data in Internal_Data for " + InvalidValue;
                 throw;
             }
         }
@@ -2651,7 +2651,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Inserting Data in Internal_Commodity_Assumptions for " + InvalidValue;
+                ExceptionMessage += "\nError while Inserting Data in Internal_Commodity_Assumptions for " + InvalidValue;
                 throw;
             }
         }
@@ -2676,7 +2676,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Inserting Data in Internal_Issuer for " + InvalidValue;
+                ExceptionMessage += "\nError while Inserting Data in Internal_Issuer for " + InvalidValue;
                 throw;
             }
         }
@@ -2702,7 +2702,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Inserting Data in Internal_Issuer_Quarterely_Distribution for " + InvalidValue;
+                ExceptionMessage += "\nError while Inserting Data in Internal_Issuer_Quarterely_Distribution for " + InvalidValue;
                 throw;
             }
         }
@@ -2725,7 +2725,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Inserting Data in Internal_Model_Load for " + InvalidValue;
+                ExceptionMessage += "\nError while Inserting Data in Internal_Model_Load for " + InvalidValue;
                 throw;
             }
         }
@@ -2745,7 +2745,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while calling Get_Data for " + InvalidValue;
+                ExceptionMessage += "\nError while calling Get_Data for " + InvalidValue;
                 throw;
             }
         }
@@ -2764,7 +2764,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while calling Set_Interim_Amount for " + InvalidValue;
+                ExceptionMessage += "\nError while calling Set_Interim_Amount for " + InvalidValue;
                 throw;
             }
         }
@@ -2793,7 +2793,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while inserting values in Internal_COA_Changes for " + InvalidValue;
+                ExceptionMessage += "\nError while inserting values in Internal_COA_Changes for " + InvalidValue;
                 throw;
             }
         }
@@ -2821,7 +2821,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Updating values in Internal_Issuer for " + InvalidValue;
+                ExceptionMessage += "\nError while Updating values in Internal_Issuer for " + InvalidValue;
                 throw;
             }
         }
@@ -2844,7 +2844,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Updating values in Internal_Model_Load for " + InvalidValue;
+                ExceptionMessage += "\nError while Updating values in Internal_Model_Load for " + InvalidValue;
                 throw;
             }
         }
@@ -2868,7 +2868,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "Error while Updating values in Internal_COA_Changes for " + InvalidValue;
+                ExceptionMessage += "\nError while Updating values in Internal_COA_Changes for " + InvalidValue;
                 throw;
             }
         }
@@ -2938,7 +2938,7 @@ namespace GreenField.Web.Helpers
             }
             catch (Exception ex)
             {
-                ExceptionMessage = ex.Message;
+                ExceptionMessage += "\n" + ex.Message;
                 ExceptionTrace.LogException(ex);
                 throw;
             }
