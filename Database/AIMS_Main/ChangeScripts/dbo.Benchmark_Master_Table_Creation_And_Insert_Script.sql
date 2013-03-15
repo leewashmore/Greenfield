@@ -3,9 +3,6 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BENCH
 DROP TABLE [dbo].[BENCHMARK_MASTER]
 GO
 
-USE [AIMS_Main_Dev]
-GO
-
 /****** Object:  Table [dbo].[BENCHMARK_MASTER]    Script Date: 03/15/2013 11:47:18 ******/
 SET ANSI_NULLS ON
 GO
