@@ -5,10 +5,8 @@ GO
 /****** Object:  Table [dbo].[BENCHMARK_MASTER]    Script Date: 03/15/2013 11:47:18 ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
 SET ANSI_PADDING ON
 GO
 
