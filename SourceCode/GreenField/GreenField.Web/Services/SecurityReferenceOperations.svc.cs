@@ -511,23 +511,50 @@ namespace GreenField.Web.Services
                     }
                 }
 
-                List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM> benchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIB_DIST_BM.ToList();
-                if (benchmarkData != null)
+                var benchmarkMaster = new GreenField.DAL.ExternalResearchEntities().BENCHMARK_MASTER.ToList();
+
+                foreach (var benchmark in benchmarkMaster)
                 {
-                    foreach (DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM benchmark in benchmarkData)
-                    {
-                        result.Add(new EntitySelectionData()
+                    result.Add(new EntitySelectionData()
                         {
 
                             SortOrder = EntityTypeSortOrder.GetSortOrder("BENCHMARK"),
-                            ShortName = benchmark.BM == null ? String.Empty : benchmark.BM,
-                            LongName = benchmark.BMNAME == null ? String.Empty : benchmark.BMNAME,
-                            InstrumentID = benchmark.BM == null ? String.Empty : benchmark.BM,
+                            ShortName = benchmark.BENCHMARK_ID== null ? String.Empty : benchmark.BENCHMARK_ID,
+                            LongName = benchmark.BENCHMARK_NAME == null ? String.Empty : benchmark.BENCHMARK_NAME,
+                            InstrumentID = benchmark.BENCHMARK_NAME == null ? String.Empty : benchmark.BENCHMARK_NAME,
                             Type = "BENCHMARK",
                             SecurityType = null
                         });
-                    }
                 }
+
+
+                //List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM> benchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIB_DIST_BM.ToList();
+                //if (benchmarkData != null)
+                //{
+                //    foreach (DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM benchmark in benchmarkData)
+                //    {
+                //        result.Add(new EntitySelectionData()
+                //        {
+
+                //            SortOrder = EntityTypeSortOrder.GetSortOrder("BENCHMARK"),
+                //            ShortName = benchmark.BM == null ? String.Empty : benchmark.BM,
+                //            LongName = benchmark.BMNAME == null ? String.Empty : benchmark.BMNAME,
+                //            InstrumentID = benchmark.BM == null ? String.Empty : benchmark.BM,
+                //            Type = "BENCHMARK",
+                //            SecurityType = null
+                //        });
+                //    }
+                //}
+                
+                
+                //DimensionEntity.Timeout = 300;
+
+
+               
+
+           
+
+
 
                 new DefaultCacheProvider().Set(CacheKeyNames.EntitySelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
 
@@ -536,6 +563,7 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                Trace.WriteLine(ex.InnerException);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }

@@ -921,7 +921,8 @@ namespace GreenField.Gadgets.ViewModels
 
                     benchmarkSelectionData = result;
                     //fetch benchmarks
-                    BenchmarkSelectionInfo = result.Where(a => a.Type.Equals("BENCHMARK")).Select(a => a.LongName).ToList();
+                    BenchmarkSelectionInfo = result.Where(a => a.Type.Equals("BENCHMARK")).OrderBy(x=>x.LongName).Select(a => a.LongName).ToList();
+                    
                 }
                 else
                 {

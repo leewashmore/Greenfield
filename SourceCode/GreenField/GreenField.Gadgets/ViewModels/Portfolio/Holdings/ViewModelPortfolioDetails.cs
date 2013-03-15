@@ -908,9 +908,6 @@ namespace GreenField.Gadgets.ViewModels
                     }
 
                     item.ReBenchmarkWeight = item.BenchmarkWeight;
-#if DEBUG
-                    Debug.WriteLine(item.AsecSecShortName + "<==> " + item.BenchmarkWeight);
-#endif
                 }
                 if (portfolioDetailsData != null)
                 {
