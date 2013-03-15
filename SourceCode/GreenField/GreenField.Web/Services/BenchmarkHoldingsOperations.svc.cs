@@ -1377,9 +1377,11 @@ namespace GreenField.Web.Services
 
                     if (objGetBenchmark)
                     {
+                       
+                        decimal? sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
                         List<string> portfolioSecurityID = dimensionPortfolioLTHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
                         List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
-                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities, isFiltered);
+                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities, isFiltered, sumBenchmarkWeight);
                     }
 
                     #endregion
@@ -1598,9 +1600,10 @@ namespace GreenField.Web.Services
 
                     if (objGetBenchmark)
                     {
+                        decimal? sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
                         List<string> portfolioSecurityID = dimensionPortfolioHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
                         List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
-                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities,isFiltered);
+                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities, isFiltered, sumBenchmarkWeight);
                     }
 
                     #endregion
