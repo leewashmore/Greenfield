@@ -11,6 +11,7 @@ using GreenField.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
+using System.Diagnostics;
 
 namespace GreenField.Web.Services
 {
@@ -684,6 +685,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                Trace.WriteLine(ex.InnerException);
+                Trace.WriteLine(ex.StackTrace);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
@@ -907,14 +910,15 @@ namespace GreenField.Web.Services
             try
             {
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-
-                List<GF_SECURITY_BASEVIEW> securitiesFromCustomControls = new List<GF_SECURITY_BASEVIEW>();
+                ExternalResearchEntities externalEntity = new ExternalResearchEntities();
+                List<GF_SECURITY_BASEVIEW_Local> securitiesFromCustomControls = new List<GF_SECURITY_BASEVIEW_Local>();
                 List<CustomScreeningSecurityData> securityList = new List<CustomScreeningSecurityData>();
-
+               
                 if (portfolio != null)
                 {
                     List<GF_PORTFOLIO_HOLDINGS> securitiesFromPortfolio = new List<GF_PORTFOLIO_HOLDINGS>();
                     DateTime lastBusinessDate = GetLastBusinessDate("PORTFOLIO_HOLDINGS");
+                    List<GF_SECURITY_BASEVIEW_Local> fullSecurityList = externalEntity.GF_SECURITY_BASEVIEW_Local.ToList();
 
                     securitiesFromPortfolio = entity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolio.PortfolioId
                                                                                      && record.PORTFOLIO_DATE == lastBusinessDate
@@ -926,11 +930,11 @@ namespace GreenField.Web.Services
                     securitiesFromPortfolio = securitiesFromPortfolio.Distinct().ToList();
                     foreach (GF_PORTFOLIO_HOLDINGS item in securitiesFromPortfolio)
                     {
-                        GF_SECURITY_BASEVIEW securityIdRow = item.ASEC_SEC_SHORT_NAME != null 
-                            ? entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
+                        GF_SECURITY_BASEVIEW_Local securityIdRow = item.ASEC_SEC_SHORT_NAME != null
+                            ? fullSecurityList.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
                         securityList.Add(new CustomScreeningSecurityData()
                         {
-                            SecurityId = securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null,
+                            SecurityId = securityIdRow != null ? (securityIdRow.ASEC_SEC_SHORT_NAME).ToString() : null,
                             IssuerId = item.ISSUER_ID,
                             IssueName = item.ISSUE_NAME
                         });
@@ -939,23 +943,23 @@ namespace GreenField.Web.Services
                 }
                 else if (benchmark != null)
                 {
-                    List<GF_BENCHMARK_HOLDINGS> securitiesFromBenchmark = new List<GF_BENCHMARK_HOLDINGS>();
-                    DateTime lastBusinessDate = GetLastBusinessDate("BENCHMARK_HOLDINGS");
 
-                    securitiesFromBenchmark = entity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benchmark.InstrumentID
-                                                                                            && record.PORTFOLIO_DATE == lastBusinessDate).ToList();
+                    List<GF_BENCHMARK_HOLDINGS_Local> securitiesFromBenchmark = new List<GF_BENCHMARK_HOLDINGS_Local>();
+                    DateTime lastBusinessDate = GetLastBusinessDate("BENCHMARK_HOLDINGS");
+                    List<GF_SECURITY_BASEVIEW_Local> fullSecurityList = externalEntity.GF_SECURITY_BASEVIEW_Local.ToList();
+                    securitiesFromBenchmark = externalEntity.GF_BENCHMARK_HOLDINGS_Local.Where(record => record.BENCHMARK_ID == benchmark.InstrumentID).ToList();
 
                     if (securitiesFromBenchmark == null)
                         return securityList;
 
                     securitiesFromBenchmark = securitiesFromBenchmark.Distinct().ToList();
-                    foreach (GF_BENCHMARK_HOLDINGS item in securitiesFromBenchmark)
+                    foreach (GF_BENCHMARK_HOLDINGS_Local item in securitiesFromBenchmark)
                     {
-                        GF_SECURITY_BASEVIEW securityIdRow = item.ASEC_SEC_SHORT_NAME != null 
-                            ? entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
+                        GF_SECURITY_BASEVIEW_Local securityIdRow = item.ASEC_SEC_SHORT_NAME != null
+                            ? fullSecurityList.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
                         securityList.Add(new CustomScreeningSecurityData()
                         {
-                            SecurityId = securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null,
+                            SecurityId = securityIdRow != null ? (securityIdRow.ASEC_SEC_SHORT_NAME).ToString() : null,
                             IssuerId = item.ISSUER_ID,
                             IssueName = item.ISSUE_NAME
                         });
@@ -969,14 +973,13 @@ namespace GreenField.Web.Services
                     string sectorValue = String.IsNullOrEmpty(sector) ? String.Empty : sector;
                     string industryValue = String.IsNullOrEmpty(industry) ? String.Empty : industry;
 
-                    List<GF_SECURITY_BASEVIEW> securitiesList = new List<GF_SECURITY_BASEVIEW>();
-                    securitiesList = (from p in entity.GF_SECURITY_BASEVIEW
+                    List<GF_SECURITY_BASEVIEW_Local> securitiesList = new List<GF_SECURITY_BASEVIEW_Local>();
+                    securitiesList = (from p in externalEntity.GF_SECURITY_BASEVIEW_Local
                                       where p.ASEC_SEC_COUNTRY_ZONE_NAME.Contains(regionValue)
                                       && p.ASEC_SEC_COUNTRY_NAME.Contains(countryValue)
                                       && p.GICS_SECTOR_NAME.Contains(sectorValue)
                                       && p.GICS_INDUSTRY_NAME.Contains(industryValue)
                                       select p).ToList();
-                    
                     if (securitiesList != null)
                     {
                         securitiesList = securitiesList.Distinct().ToList();
@@ -988,11 +991,11 @@ namespace GreenField.Web.Services
                     return securityList;
                 }
 
-                foreach (GF_SECURITY_BASEVIEW item in securitiesFromCustomControls)
+                foreach (GF_SECURITY_BASEVIEW_Local item in securitiesFromCustomControls)
                 {
                     securityList.Add(new CustomScreeningSecurityData()
                     {
-                        SecurityId = item.SECURITY_ID.ToString(),
+                        SecurityId = item.ASEC_SEC_SHORT_NAME,
                         IssuerId = item.ISSUER_ID,
                         IssueName = item.ISSUE_NAME
                     });
