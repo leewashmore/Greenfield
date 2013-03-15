@@ -18,7 +18,7 @@ namespace GreenField.Web.Helpers
         /// <param name="result">Collection of PortfolioDetailsData containing data of Securities held by Portfolio</param>
         /// <param name="onlyBenchmarkSecurities">Collection of GF_BENCHMARK_HOLDINGS, contains securities only held by Benchmark & not by Portfolio</param>
         /// <returns>Collection of PortfolioDetailsData</returns>
-        public static List<PortfolioDetailsData> AddBenchmarkSecurities(List<PortfolioDetailsData> result, List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities,Boolean isFiltered)
+        public static List<PortfolioDetailsData> AddBenchmarkSecurities(List<PortfolioDetailsData> result, List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities, Boolean isFiltered, decimal? sumBenchmarkWeight)
         {
             if (onlyBenchmarkSecurities == null)
             {
@@ -32,8 +32,8 @@ namespace GreenField.Web.Helpers
             {
                 return new List<PortfolioDetailsData>();
             }
-            decimal? sumBenchmarkWeight = 0;
-            sumBenchmarkWeight = onlyBenchmarkSecurities.Sum(a => a.BENCHMARK_WEIGHT);
+                        
+            Debug.WriteLine(onlyBenchmarkSecurities.Count());
             foreach (GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
             {
                 PortfolioDetailsData benchmarkResult = new PortfolioDetailsData();
@@ -62,6 +62,7 @@ namespace GreenField.Web.Helpers
                         //            Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault().BENCHMARK_WEIGHT) / sumBenchmarkWeight;
                         benchmarkResult.BenchmarkWeight = (item.BENCHMARK_WEIGHT== null?0:item.BENCHMARK_WEIGHT) *100 / sumBenchmarkWeight;
 
+                       
                     }
                     else
                     {
