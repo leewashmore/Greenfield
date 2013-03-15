@@ -159,7 +159,7 @@
                     <telerik:RadMenuItem Header="Documents" x:Name="rmItemDocument">
                         <telerik:RadMenuItem x:Name="rmItemDocuments" Header="Storage" Command="{Binding DashboardCompanyDocumentsCommand}"
                                              Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemLoadModel" Header="Model Upload" Command="{Binding DashboardCompanyDocumentsLoadModelCommand}"
+                        <telerik:RadMenuItem x:Name="rmItemLoadModel" Header="Model" Command="{Binding DashboardCompanyDocumentsLoadModelCommand}"
                                              Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <!-- TODO
                         <telerik:RadMenuItem x:Name="rmItemMacroeconomicUpload" Header="Macroeconomic Data Upload" Command="{Binding DashboardCompanyDocumentsMacroeconomicUploadCommand}"
@@ -229,13 +229,19 @@
             <telerik:RadPanelBarItem Header="Admin" x:Name="pbItemAdmin" Style="{StaticResource PanelBarItemStyle}" IsEnabled="{Binding EnableGadget}">
                 <telerik:RadMenu x:Name="radMenuAdmin" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
+                   
                     <telerik:RadMenuItem x:Name="rmItemInvestmentCommittee" Header="Investment Committee">
                         <!--<telerik:RadMenuItem x:Name="rmItemViewAgenda" Header="View Agenda" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                         <telerik:RadMenuItem x:Name="rmItemEditDate" IsEnabled="{Binding RoleIsICAdmin}" Header="Edit Date" Style="{StaticResource RadSecondLevelMenuItemStyle}"
                                              Command="{Binding DashboardAdminInvestmentCommitteeChangeDateCommand}"/>
                         <!--<telerik:RadMenuItem x:Name="rmItemMeetingDetails" Header="Meeting Details" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem x:Name="rmItemBrokerResearch" Header="Broker Research"/>
+                    </telerik:RadMenuItem> 
+                    
+                    
+                    <!-- Open the Help Document -->
+                    <telerik:RadMenuItem x:Name="rmItemHelp" Header="Help" Style="{StaticResource RadSecondLevelMenuItemStyle}"
+                                             Command="{Binding DashboardAdminHelpCommand}"/>
+                   
                 </telerik:RadMenu>
             </telerik:RadPanelBarItem>
 

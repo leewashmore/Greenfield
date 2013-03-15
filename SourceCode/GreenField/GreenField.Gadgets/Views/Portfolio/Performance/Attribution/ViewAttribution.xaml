@@ -23,8 +23,8 @@
             <RowDefinition Height= "Auto" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row="0" Text="Performance Attribution" HorizontalAlignment="Center" VerticalAlignment="Center"
+
+        <TextBlock Grid.Row="0" Text="Please note that this report, and its contents, are for internal purposes only." HorizontalAlignment="Center" VerticalAlignment="Center"
                    Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
 
         <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">

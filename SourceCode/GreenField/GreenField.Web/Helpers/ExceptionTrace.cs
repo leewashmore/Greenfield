@@ -51,6 +51,9 @@ namespace GreenField.Web.Helpers
 
         public static void LogInfo(string input, string type, string message)
         {
+            //TODO please revert
+            input = "";
+            //TODO end
             string userName = null;
 
             if (System.Web.HttpContext.Current.Session["Session"] != null)

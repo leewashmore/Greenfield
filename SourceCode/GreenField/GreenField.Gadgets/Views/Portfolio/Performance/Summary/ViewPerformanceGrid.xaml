@@ -25,7 +25,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Performance Grid" HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <TextBlock Grid.Row="0" Text="Please note that this report, and its contents, are for internal purposes only." HorizontalAlignment="Center" VerticalAlignment="Center" 
                    Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
             <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
                 <Grid.ColumnDefinitions>

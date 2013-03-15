@@ -150,6 +150,12 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
+                    <TextBlock x:Name="tblkDataListSavedList" Text="Select Saved Data List" 
+                               HorizontalAlignment="Right" VerticalAlignment="Center" 
+                               Margin="2,2,0,2"
+                               Grid.Column="0" Grid.Row="1" 
+                               Style="{StaticResource TextBlockStyle}"/>
+
                     <telerik:RadButton x:Name="btnCreateNewDataList"
                                        Command="{Binding CreateDataListCommand}"
                                        VerticalAlignment="Center"
@@ -158,12 +164,6 @@
                                        HorizontalAlignment="Stretch"
                                        Content="Create New DataList" 
                                        Style="{StaticResource RadButtonStyle}"/>
-
-                    <TextBlock x:Name="tblkDataListSavedList" Text="Select Saved Data List" 
-                               HorizontalAlignment="Right" VerticalAlignment="Center" 
-                               Margin="2,2,0,2"
-                               Grid.Column="0" Grid.Row="1" 
-                               Style="{StaticResource TextBlockStyle}"/>
 
                     <telerik:RadComboBox x:Name="cmbSavedDataListSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
                                          HorizontalAlignment="Left" 

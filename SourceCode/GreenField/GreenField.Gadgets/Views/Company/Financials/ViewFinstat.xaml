@@ -187,23 +187,28 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Ticker :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" 
                                        FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                             <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtTicker" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" 
                                        Text="{Binding Ticker}" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Currency :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Data Currency :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
                                        FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtCurrency" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" 
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtDataCurrency" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" 
+                                       Text="{Binding SelectedCurrency}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Trading Currency :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                       FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtCurrency" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" 
                                        Text="{Binding Currency}" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Primary Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Primary Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
                                        FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtPrimaryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0"
+                            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtPrimaryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0"
                                        Text="{Binding PrimaryAnalyst}" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Industry Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Industry Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
                                        FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtIndustryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0"
+                            <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtIndustryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0"
                                        Text="{Binding IndustryAnalyst}" Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
 

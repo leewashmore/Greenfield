@@ -2301,7 +2301,9 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             upside = 0;
                         }
+                       
                         dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PBV", 188, 0, FV_Sell, nCurrentPBV, upside, DateTime.Now, StoreEPSFairValueCallbackMethod);
+                       
                     }
                 }
             }
@@ -2349,7 +2351,9 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             upside = 0;
                         }
+                        
                         dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PE", 187, 0, FV_Sell, nCurrentPE, upside, DateTime.Now, StoreBVPSFairValueCallbackMethod);
+                        
                     }
                 }
             }

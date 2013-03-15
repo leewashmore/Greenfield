@@ -184,7 +184,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Currency Property
+        /// Targeting Currency Property
         /// </summary>
         private string currency;
         public string Currency
