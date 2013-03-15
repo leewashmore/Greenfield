@@ -20,7 +20,7 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-
+-- Insert statements to populate the data in the benchmark master table. The list can be added later.
 
 insert into dbo.BENCHMARK_MASTER values('SP AFRICA N CST',	'S&P PAN AFRICA EX SOUTH AFRICA NET');
 insert into dbo.BENCHMARK_MASTER values ('MSCI LA SC NET CST',	'MSCI EM LATAM SC NET');
