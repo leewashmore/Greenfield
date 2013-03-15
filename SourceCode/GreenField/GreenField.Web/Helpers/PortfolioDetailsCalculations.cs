@@ -60,7 +60,7 @@ namespace GreenField.Web.Helpers
                         //benchmarkResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
                         //            Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
                         //            Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault().BENCHMARK_WEIGHT) / sumBenchmarkWeight;
-                        benchmarkResult.BenchmarkWeight = (item.BENCHMARK_WEIGHT== null?0:item.BENCHMARK_WEIGHT) / sumBenchmarkWeight;
+                        benchmarkResult.BenchmarkWeight = (item.BENCHMARK_WEIGHT== null?0:item.BENCHMARK_WEIGHT) *100 / sumBenchmarkWeight;
 
                     }
                     else
@@ -166,7 +166,7 @@ namespace GreenField.Web.Helpers
                     {
                         portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
                                     Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
-                                    Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault().BENCHMARK_WEIGHT) / sumBenchmarkWeight;
+                                    Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault().BENCHMARK_WEIGHT) *100 / sumBenchmarkWeight;
 
                     }
                     else
@@ -239,7 +239,7 @@ namespace GreenField.Web.Helpers
                     {
                         portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
                             Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
-                            Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT) / sumBenchmarkWeight;
+                            Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT) * 100/ sumBenchmarkWeight;
 
                     }
                     else
