@@ -24,6 +24,7 @@ using GreenField.UserSession;
 using System.Reflection;
 using GreenField.IssuerShares.Controls;
 using Application = System.Windows.Application;
+using System.Runtime.InteropServices.Automation;
 
 namespace GreenField.App.ViewModel
 {
@@ -1812,7 +1813,7 @@ namespace GreenField.App.ViewModel
         /// </summary>
         public ICommand DashboardCompanyValuationDiscountedCashFlowCommand
         {
-            get { return new DelegateCommand<object>(DashboardCompanyValuationDiscountedCashFlowCommandMethod); }
+           get { return new DelegateCommand<object>(DashboardCompanyValuationDiscountedCashFlowCommandMethod); }
         }
         #endregion
 
@@ -2104,8 +2105,18 @@ namespace GreenField.App.ViewModel
             get { return new DelegateCommand<object>(DashboardAdminInvestmentCommitteeChangeDateCommandMethod); }
         }
         #endregion
-        #endregion
 
+        #region Help
+        /// <summary>
+        /// DashboardAdminHelpCommand
+        /// </summary>
+        public ICommand DashboardAdminHelpCommand
+        {
+            get { return new DelegateCommand<object>(DashboardAdminHelpCommandMethod); }
+        }
+        #endregion
+        #endregion
+        
         #region Others
         /// <summary>
         /// UserManagementCommand
@@ -2624,6 +2635,7 @@ namespace GreenField.App.ViewModel
 
         private void DashboardCompanyValuationDiscountedCashFlowCommandMethod(object param)
         {
+
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
             try
@@ -3236,6 +3248,37 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(logger, methodNamespace);
         }
+        #endregion
+        
+        #region Help
+
+        private void DashboardAdminHelpCommandMethod(object param)
+        {
+
+            MessageBoxResult result = MessageBox.Show("Under Construction.",
+            "Coming Soon", MessageBoxButton.OK);
+
+                    
+            //this failed - Lane 3-15
+            //dynamic ex = AutomationFactory.CreateObject("Excel.Application");
+            //ex.Visible = true;
+            //ex.workbooks.Add();
+            //dynamic sheet = ex.ActiveSheet;
+            //sheet.Cells[1, 1].Value = "hello!";
+            
+            //this failed
+            //dynamic cmd = System.Runtime.InteropServices.Automation.AutomationFactory.CreateObject("Excel.Application");
+            //cmd.Run(@"I:\DCF\workpad\DCF.xls", 1, true);
+
+            //this failed
+            //System.Diagnostics.Process.Start(@"I:\DCF\workpad\DCF.xls"); 
+
+            //this failed
+            //Response.Redirect("~/Login.aspx?ReturnPath=");
+            
+        }
+
+
         #endregion
 
         #endregion

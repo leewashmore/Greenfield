@@ -193,7 +193,7 @@
                                        FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                             <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtTicker" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" 
                                        Text="{Binding Ticker}" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Currency :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Trading Currency :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right"
                                        FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                             <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtCurrency" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" 
                                        Text="{Binding Currency}" Style="{StaticResource TextBlockStyle}"/>

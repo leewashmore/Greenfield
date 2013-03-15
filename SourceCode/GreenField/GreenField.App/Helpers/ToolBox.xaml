@@ -592,9 +592,10 @@
                                                Style="{StaticResource RadButtonStyle}"/>
                     </StackPanel>
                 </Grid>
-                
+
+                <!--Cash/No Cash-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding MktCapExCashSelectorVisibility}" Grid.Column="12" VerticalAlignment="Center">
-                    <CheckBox Content="Cash/No Cash" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center"
+                    <CheckBox Content="Exclude Cash" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center"
                               Style="{StaticResource CheckBoxStyle}" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
                               IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" 
                               Name="chkExCashSecurity" ToolTipService.ToolTip="Check to Exclude Cash" Foreground="{Binding DemoForeground}" />
