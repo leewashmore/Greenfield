@@ -1379,7 +1379,7 @@ namespace GreenField.Web.Services
                     {
                         List<string> portfolioSecurityID = dimensionPortfolioLTHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
                         List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
-                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities);
+                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities, isFiltered);
                     }
 
                     #endregion
@@ -1600,7 +1600,7 @@ namespace GreenField.Web.Services
                     {
                         List<string> portfolioSecurityID = dimensionPortfolioHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
                         List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
-                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities);
+                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities,isFiltered);
                     }
 
                     #endregion

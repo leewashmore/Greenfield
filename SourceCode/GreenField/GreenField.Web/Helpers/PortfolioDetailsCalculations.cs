@@ -18,7 +18,7 @@ namespace GreenField.Web.Helpers
         /// <param name="result">Collection of PortfolioDetailsData containing data of Securities held by Portfolio</param>
         /// <param name="onlyBenchmarkSecurities">Collection of GF_BENCHMARK_HOLDINGS, contains securities only held by Benchmark & not by Portfolio</param>
         /// <returns>Collection of PortfolioDetailsData</returns>
-        public static List<PortfolioDetailsData> AddBenchmarkSecurities(List<PortfolioDetailsData> result, List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities)
+        public static List<PortfolioDetailsData> AddBenchmarkSecurities(List<PortfolioDetailsData> result, List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities,Boolean isFiltered)
         {
             if (onlyBenchmarkSecurities == null)
             {
@@ -32,7 +32,8 @@ namespace GreenField.Web.Helpers
             {
                 return new List<PortfolioDetailsData>();
             }
-
+            decimal? sumBenchmarkWeight = 0;
+            sumBenchmarkWeight = onlyBenchmarkSecurities.Sum(a => a.BENCHMARK_WEIGHT);
             foreach (GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
             {
                 PortfolioDetailsData benchmarkResult = new PortfolioDetailsData();
@@ -48,10 +49,33 @@ namespace GreenField.Web.Helpers
                 benchmarkResult.SecurityType = item.SECURITY_TYPE;
                 benchmarkResult.BalanceNominal = item.BALANCE_NOMINAL;
                 benchmarkResult.DirtyValuePC = item.DIRTY_VALUE_PC;
-                benchmarkResult.BenchmarkWeight = item.BENCHMARK_WEIGHT;
+              //  benchmarkResult.BenchmarkWeight = item.BENCHMARK_WEIGHT;
                 benchmarkResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
                 benchmarkResult.Type = "BENCHMARK";
                 benchmarkResult.IssuerId = item.ISSUER_ID;
+                if (isFiltered)
+                {
+                    if (sumBenchmarkWeight != 0)
+                    {
+                        //benchmarkResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                        //            Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                        //            Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault().BENCHMARK_WEIGHT) / sumBenchmarkWeight;
+                        benchmarkResult.BenchmarkWeight = (item.BENCHMARK_WEIGHT== null?0:item.BENCHMARK_WEIGHT) / sumBenchmarkWeight;
+
+                    }
+                    else
+                    {
+                        benchmarkResult.BenchmarkWeight = 0;
+                    }
+                }
+                else
+                {
+                    //benchmarkResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                    //                Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                    //                Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault().BENCHMARK_WEIGHT);
+                    benchmarkResult.BenchmarkWeight = (item.BENCHMARK_WEIGHT == null ? 0 : item.BENCHMARK_WEIGHT);
+
+                }
                 result.Add(benchmarkResult);
             }
             return result;

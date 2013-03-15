@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.ServiceModel.Description;
 using System.Configuration;
+using System.Xml;
+using System.Xml.Serialization;
+using GreenField.DataContracts;
 
 namespace GreenField.Web.Helpers
 {
@@ -33,6 +38,15 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
                 return isServiceUp;
             }
+        }
+
+        public static void XMLStringValue(List<PortfolioDetailsData> result)
+        {
+            XmlSerializer XmlS = new XmlSerializer(result.GetType());
+            StringWriter sw = new StringWriter();
+            XmlTextWriter tw = new XmlTextWriter(sw);
+            XmlS.Serialize(tw, result);
+            Trace.Write(sw.ToString());
         }
 
         #endregion
