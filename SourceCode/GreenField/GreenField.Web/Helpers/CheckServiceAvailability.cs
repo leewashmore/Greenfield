@@ -40,7 +40,7 @@ namespace GreenField.Web.Helpers
             }
         }
 
-        public static void XMLStringValue(List<PortfolioDetailsData> result)
+        public static void SerializeAndTrace(object result)
         {
             XmlSerializer XmlS = new XmlSerializer(result.GetType());
             StringWriter sw = new StringWriter();

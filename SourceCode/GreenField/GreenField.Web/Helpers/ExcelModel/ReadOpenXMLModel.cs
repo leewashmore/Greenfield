@@ -1481,7 +1481,10 @@ namespace GreenField.Web.Helpers
                         {
                             if (c != null)
                             {
-                                rowData[i] = c.InnerText;
+                                //rowData[i] = c.InnerText;
+                                if (!string.IsNullOrEmpty(c.CellValue.Text))
+                                    rowData[i] = Double.Parse(c.CellValue.Text).ToString();
+            
                                 if (c.DataType != null)
                                 {
                                     if (c.DataType == CellValues.SharedString)
@@ -1514,6 +1517,8 @@ namespace GreenField.Web.Helpers
                                 modelData.COA = coaType;
                                 modelData.Description = description;
                                 modelData.Year = "Y" + (k - 2).ToString();
+                                if (!string.IsNullOrEmpty(item))
+                                    Double.Parse(item);
                                 modelData.Amount = item;
                                 excelModelData.Add(modelData);
                             }
@@ -1527,7 +1532,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                ExceptionMessage = "The values in ModelUpload Sheet for COA types is not valid";
+                ExceptionMessage = "Invalid cell value in Model Upload sheet.";
             }
         }
 
