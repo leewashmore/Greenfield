@@ -31,7 +31,7 @@ namespace GreenField.Gadgets.Helpers
         /// <summary>
         /// FontSize of Document
         /// </summary>
-        private static int fontSizePDF = 6;
+        private static int fontSizePDF = 10;
         #endregion
 
         #region PDF Export
@@ -40,7 +40,7 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void btnExportPDF_Click(RadGridView dataGrid, int fontSize = 6, DocumentLayoutMode layoutMode = DocumentLayoutMode.Paged,
+        public static void btnExportPDF_Click(RadGridView dataGrid, int fontSize = 10, DocumentLayoutMode layoutMode = DocumentLayoutMode.Paged,
             PageOrientation orientation = PageOrientation.Portrait, List<int> skipColumnDisplayIndex = null, Stream stream = null
             , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null
             , Func<Block> initialHeaderBlock = null)
@@ -63,6 +63,11 @@ namespace GreenField.Gadgets.Helpers
                         document.SectionDefaultPageOrientation = orientation;
                         document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
                         document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+
+                        document.ParagraphDefaultSpacingAfter = 0;
+                        document.PageViewMargin = new SizeF(0, 0);
+                        document.SectionDefaultPageMargin = new Padding(6);
+
                         PdfFormatProvider provider = new PdfFormatProvider();
                         using (Stream output = dialog.OpenFile())
                         {
@@ -78,6 +83,11 @@ namespace GreenField.Gadgets.Helpers
                     document.SectionDefaultPageOrientation = orientation;
                     document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
                     document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+
+                    document.ParagraphDefaultSpacingAfter = 0;
+                    document.PageViewMargin = new SizeF(0, 0);
+                    document.SectionDefaultPageMargin = new Padding(6);
+
                     PdfFormatProvider provider = new PdfFormatProvider();
                     provider.Export(document, stream);
                 }
