@@ -352,9 +352,27 @@ namespace GreenField.Gadgets.Views
             #endregion
 
             #region Currency
+            
+            Span nameTODO1 = new Span()
+                {
+                    Text = FormattingSymbolLayoutBox.LINE_BREAK + "Data Currency :",
+                    FontFamily = new System.Windows.Media.FontFamily("Arial"),
+                    FontSize = 10,
+                    FontWeight = FontWeights.Bold
+                };
+            inputSection2Part1Paragraph.Inlines.Add(nameTODO1);
+            Span nameTODO2 = new Span()
+            {
+                Text = String.IsNullOrWhiteSpace(this.txtDataCurrency.Text) ? "-" : this.txtDataCurrency.Text,
+                FontFamily = new System.Windows.Media.FontFamily("Arial"),
+                FontSize = 10
+            };
+            inputSection2Part1Paragraph.Inlines.Add(nameTODO2); 
+
+            /*
             Span inputSection2Part1Item2Span = new Span()
                 {
-                    Text = FormattingSymbolLayoutBox.LINE_BREAK + "Currency :",
+                    Text = FormattingSymbolLayoutBox.LINE_BREAK + "Trading Currency :",
                     FontFamily = new System.Windows.Media.FontFamily("Arial"),
                     FontSize = 10,
                     FontWeight = FontWeights.Bold
@@ -367,6 +385,7 @@ namespace GreenField.Gadgets.Views
                 FontSize = 10
             };
             inputSection2Part1Paragraph.Inlines.Add(inputSection2Part2Item2Span); 
+             * */
             #endregion
 
             #region Primary Analyst

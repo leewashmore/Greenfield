@@ -243,6 +243,7 @@ namespace GreenField.Gadgets.Helpers
             for (int i = 0; i < columns.Count(); i++)
             {
                 TableCell cell = new TableCell() { VerticalAlignment = RadVerticalAlignment.Center };
+                cell.TextAlignment = RadTextAlignment.Right;
                 cell.Background = Color.FromArgb(255, 228, 229, 229);
                 AddCellValue(cell, columns[i].UniqueName);
                 cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
