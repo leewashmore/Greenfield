@@ -243,6 +243,7 @@ namespace GreenField.Gadgets.Helpers
             for (int i = 0; i < columns.Count(); i++)
             {
                 TableCell cell = new TableCell() { VerticalAlignment = RadVerticalAlignment.Center };
+                cell.TextAlignment = RadTextAlignment.Right;
                 cell.Background = Color.FromArgb(255, 228, 229, 229);
                 AddCellValue(cell, columns[i].UniqueName);
                 cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
@@ -425,6 +426,7 @@ namespace GreenField.Gadgets.Helpers
                 for (int j = 0; j < columns.Count(); j++)
                 {
                     TableCell cell = new TableCell();
+                    cell.TextAlignment = RadTextAlignment.Right;
                     object value = cellValueOverwrite != null ? cellValueOverwrite(i, j, columns, items) : columns[j].GetValueForItem(items[i]);
                     AddCellValue(cell, value == null || value.ToString().Trim() == String.Empty ? "-" : value.ToString());
                     cell.PreferredWidth = new TableWidthUnit((float)columns[j].ActualWidth);
@@ -451,6 +453,7 @@ namespace GreenField.Gadgets.Helpers
             int level = GetGroupLevel(group);
 
             TableCell groupHeaderCell = new TableCell();
+
             groupHeaderCell.TextAlignment = RadTextAlignment.Center;
             groupHeaderCell.VerticalAlignment = RadVerticalAlignment.Center;
             groupHeaderCell.Padding = new Padding(0, 5, 5, 0);
@@ -473,6 +476,21 @@ namespace GreenField.Gadgets.Helpers
                 AddDataRows(table, group.Items, columns, grid, cellValueOverwrite);
             }
 
+            //TODO 2
+            TableRow headerRow = new TableRow();
+            for (int i = 0; i < columns.Count(); i++)
+            {
+                TableCell cell = new TableCell() { VerticalAlignment = RadVerticalAlignment.Center };
+                cell.TextAlignment = RadTextAlignment.Right;
+                cell.Background = Color.FromArgb(255, 228, 229, 229);
+                AddCellValue(cell, columns[i].UniqueName);
+                cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
+                headerRow.Cells.Add(cell);
+            }
+
+            table.Rows.Add(headerRow);
+
+            /*
             TableRow aggregateRow = new TableRow();
             //TableCell groupIndicatorCell = new TableCell() { Background = Color.FromArgb(255, 228, 229, 229) };
             //aggregateRow.Cells.Add(groupIndicatorCell);
@@ -496,6 +514,7 @@ namespace GreenField.Gadgets.Helpers
                 }
             }
             table.Rows.Add(aggregateRow);
+             * */
         }
 
         /// <summary>
