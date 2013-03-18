@@ -3844,16 +3844,18 @@ namespace GreenField.Web.Services
                     throw new Exception("Services are not available");
 
                 List<DateTime> availableDateList = new List<DateTime>();
-                FileCacheManager cacheManager = new FileCacheManager(CacheFolder);
+                //FileCacheManager cacheManager = new FileCacheManager(CacheFolder);
 
-                string availableDates = cacheManager["Dates"];
+                //string availableDates = cacheManager["Dates"];
 
-                if (String.IsNullOrEmpty(availableDates))
-                {
-                    List<DateTime?> dateList = GetAvailablePortolioDates();
-                    availableDates = GenerateDateString(dateList);
-                    StoreDateInCache(cacheManager, "Dates", availableDates);
-                }
+                //if (String.IsNullOrEmpty(availableDates))
+                //{
+                
+                List<DateTime?> dateList = GetAvailablePortolioDates();
+                string availableDates = GenerateDateString(dateList);
+
+                //StoreDateInCache(cacheManager, "Dates", availableDates);
+                //}
 
                 availableDateList = GetDateListFromString(availableDates);
                 availableDateList.Sort();
