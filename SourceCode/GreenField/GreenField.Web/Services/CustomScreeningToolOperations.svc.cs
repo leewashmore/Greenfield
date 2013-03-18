@@ -931,10 +931,10 @@ namespace GreenField.Web.Services
                     foreach (GF_PORTFOLIO_HOLDINGS item in securitiesFromPortfolio)
                     {
                         GF_SECURITY_BASEVIEW_Local securityIdRow = item.ASEC_SEC_SHORT_NAME != null
-                            ? fullSecurityList.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
+                            ? externalEntity.GF_SECURITY_BASEVIEW_Local.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
                         securityList.Add(new CustomScreeningSecurityData()
                         {
-                            SecurityId = securityIdRow != null ? (securityIdRow.ASEC_SEC_SHORT_NAME).ToString() : null,
+                            SecurityId = securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null,
                             IssuerId = item.ISSUER_ID,
                             IssueName = item.ISSUE_NAME
                         });
@@ -956,10 +956,10 @@ namespace GreenField.Web.Services
                     foreach (GF_BENCHMARK_HOLDINGS_Local item in securitiesFromBenchmark)
                     {
                         GF_SECURITY_BASEVIEW_Local securityIdRow = item.ASEC_SEC_SHORT_NAME != null
-                            ? fullSecurityList.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
+                            ? externalEntity.GF_SECURITY_BASEVIEW_Local.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
                         securityList.Add(new CustomScreeningSecurityData()
                         {
-                            SecurityId = securityIdRow != null ? (securityIdRow.ASEC_SEC_SHORT_NAME).ToString() : null,
+                            SecurityId = securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null,
                             IssuerId = item.ISSUER_ID,
                             IssueName = item.ISSUE_NAME
                         });
@@ -995,7 +995,7 @@ namespace GreenField.Web.Services
                 {
                     securityList.Add(new CustomScreeningSecurityData()
                     {
-                        SecurityId = item.ASEC_SEC_SHORT_NAME,
+                        SecurityId = item.SECURITY_ID,
                         IssuerId = item.ISSUER_ID,
                         IssueName = item.ISSUE_NAME
                     });
