@@ -34,7 +34,7 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  225 as DATA_ID										-- DATA_ID:225 Financial Leverage
-		, CASE WHEN a.AMOUNT >= 0 AND b.AMOUNT > 0 THEN a.AMOUNT /  b.AMOUNT 
+		, CASE WHEN  b.AMOUNT > 0 THEN a.AMOUNT /  b.AMOUNT 
 			ELSE NULL
 			END as AMOUNT					-- 75/104
 		,  '75(' + CAST(a.AMOUNT as varchar(32)) + ') / 104(' + CAST(b.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
@@ -47,7 +47,7 @@ as
 					and b.CURRENCY = a.CURRENCY
 	 where 1=1 
 	   and a.PERIOD_TYPE = 'A'
-	  and isnull(a.AMOUNT,0.0)>=0.0 and isnull(b.AMOUNT, 0.0) > 0.0	-- Data validation
+	  and a.amount is not null and isnull(b.AMOUNT, 0.0) > 0.0	-- Data validation
 --	 order by a.ISSUER_ID, a.COA_TYPE, a.DATA_SOURCE, a.PERIOD_TYPE, a.PERIOD_YEAR,  a.FISCAL_TYPE, a.CURRENCY
 
 	COMMIT TRAN T1

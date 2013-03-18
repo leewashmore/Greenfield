@@ -43,7 +43,7 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  134 as DATA_ID										-- DATA_ID:134 Yield on Interest Earning Assets
-		,  CASE WHEN a.AMOUNT >= 0 and (b.AMOUNT+c.AMOUNT)> 0  THEN a.AMOUNT / ((b.AMOUNT+c.AMOUNT)/2)
+		,  CASE WHEN  (b.AMOUNT+c.AMOUNT)> 0  THEN isnull(a.AMOUNT,0.0) / ((b.AMOUNT+c.AMOUNT)/2)
 				ELSE NULL 
 				END as AMOUNT		-- Interest Income, Bank / Avg(292+292)/2
 		,  'Interest Income(' + CAST(a.AMOUNT as varchar(32)) + ') / ( #292(' + CAST(b.AMOUNT as varchar(32)) + ')+ #292 prior year(' + CAST(c.AMOUNT as varchar(32)) + '))/2' as CALCULATION_DIAGRAM
@@ -59,7 +59,7 @@ as
 					and c.PERIOD_YEAR = a.PERIOD_YEAR-1 and c.FISCAL_TYPE = a.FISCAL_TYPE
 					and c.CURRENCY = a.CURRENCY
 	 where 1=1 
-	  and isnull(a.AMOUNT,0.0) >=0.0 and (isnull(b.AMOUNT, 0.0)+isnull(c.AMOUNT,0.0)) > 0.0	-- Data validation
+	  and (isnull(b.AMOUNT, 0.0)+isnull(c.AMOUNT,0.0)) > 0.0	-- Data validation
 --	 order by a.ISSUER_ID, a.COA_TYPE, a.DATA_SOURCE, a.PERIOD_TYPE, a.PERIOD_YEAR,  a.FISCAL_TYPE, a.CURRENCY
 	COMMIT TRAN T1
 

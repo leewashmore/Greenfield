@@ -42,7 +42,7 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  150 as DATA_ID										-- 
-		, CASE WHEN a.AMOUNT >= 0 and b.AMOUNT > 0  THEN a.AMOUNT / b.AMOUNT
+		, CASE WHEN b.AMOUNT > 0  THEN a.AMOUNT / b.AMOUNT
 				ELSE NULL 
 				END as AMOUNT							-- ANTL /LDBT
 		,  'ANTL(' + CAST(a.AMOUNT as varchar(32)) + ') / LDBT(' + CAST(b.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
@@ -57,7 +57,7 @@ as
 	   and b.AMOUNT is not NULL
 	   and b.AMOUNT > 0.0
 	   and a.AMOUNT is not null
-	   and a.AMOUNT >=0.0
+	   
 --	 order by a.ISSUER_ID, a.COA_TYPE, a.DATA_SOURCE, a.PERIOD_TYPE, a.PERIOD_YEAR,  a.FISCAL_TYPE, a.CURRENCY
 
 	COMMIT TRAN T1
