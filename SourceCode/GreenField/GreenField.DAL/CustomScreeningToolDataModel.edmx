@@ -60,7 +60,7 @@
           </AssociationSet>
         </EntityContainer>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_CURRENT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main_Dev.dbo.SCREENING_DISPLAY_CURRENT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="SCREENING_DISPLAY_CURRENT">
           <Key>
@@ -75,7 +75,7 @@
           <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_FAIRVALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main_Dev.dbo.SCREENING_DISPLAY_FAIRVALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="SCREENING_DISPLAY_FAIRVALUE">
           <Key>
@@ -97,7 +97,7 @@
           <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_PERIOD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main_Dev.dbo.SCREENING_DISPLAY_PERIOD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="SCREENING_DISPLAY_PERIOD">
           <Key>
@@ -112,7 +112,7 @@
           <Property Name="PERCENTAGE" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_REFERENCE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main_Dev.dbo.SCREENING_DISPLAY_REFERENCE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="SCREENING_DISPLAY_REFERENCE">
           <Key>
@@ -385,7 +385,7 @@
 					<Property Type="String" Name="ASHMOREEMM_PORTFOLIO_MANAGER" Nullable="true" MaxLength="255" />
 					<Property Type="String" Name="WEBSITE" Nullable="true" MaxLength="255" />
 					<Property Type="String" Name="FISCAL_YEAR_END" Nullable="true" MaxLength="255" />
-					<Property Type="Double" Name="XREF" Nullable="true" />
+					<Property Type="String" Name="XREF" Nullable="true" />
 					<Property Type="String" Name="REPORTNUMBER" Nullable="true" MaxLength="255" />
 					<Property Type="Double" Name="GICS_SECTOR" Nullable="true" />
 					<Property Type="String" Name="GICS_SECTOR_NAME" Nullable="true" MaxLength="255" />

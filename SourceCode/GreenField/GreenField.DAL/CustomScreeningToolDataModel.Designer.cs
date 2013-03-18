@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -167,6 +168,7 @@ namespace GreenField.DAL
         private ObjectSet<SCREENING_DISPLAY_CURRENT> _SCREENING_DISPLAY_CURRENT;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -218,6 +220,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Function Imports
     
         /// <summary>
@@ -557,11 +560,11 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -588,6 +591,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -741,6 +745,7 @@ namespace GreenField.DAL
         partial void OnPERCENTAGEChanged();
 
         #endregion
+
     
     }
     
@@ -776,6 +781,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1013,6 +1019,7 @@ namespace GreenField.DAL
         partial void OnPERCENTAGEChanged();
 
         #endregion
+
     
     }
     
@@ -1040,6 +1047,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1193,6 +1201,7 @@ namespace GreenField.DAL
         partial void OnPERCENTAGEChanged();
 
         #endregion
+
     
     }
     
@@ -1228,6 +1237,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1465,6 +1475,7 @@ namespace GreenField.DAL
         partial void OnPERCENTAGEChanged();
 
         #endregion
+
     
     }
     
@@ -1502,6 +1513,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1676,6 +1688,7 @@ namespace GreenField.DAL
         partial void OnModifiedOnChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1702,6 +1715,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1742,6 +1756,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2084,6 +2099,7 @@ namespace GreenField.DAL
         partial void OnModifiedOnChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2126,9 +2142,11 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
 
     #endregion
+
     #region ComplexTypes
     
     /// <summary>
@@ -2155,6 +2173,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2278,6 +2297,7 @@ namespace GreenField.DAL
         partial void OnPeriodYearChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -2304,6 +2324,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2427,6 +2448,7 @@ namespace GreenField.DAL
         partial void OnPeriodYearChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -2461,6 +2483,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2608,6 +2631,7 @@ namespace GreenField.DAL
         partial void OnUPSIDEChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -2632,6 +2656,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2683,6 +2708,7 @@ namespace GreenField.DAL
         partial void OnAmountChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -3660,7 +3686,7 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Double> XREF
+        public global::System.String XREF
         {
             get
             {
@@ -3670,13 +3696,13 @@ namespace GreenField.DAL
             {
                 OnXREFChanging(value);
                 ReportPropertyChanging("XREF");
-                _XREF = StructuralObject.SetValidValue(value);
+                _XREF = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("XREF");
                 OnXREFChanged();
             }
         }
-        private Nullable<global::System.Double> _XREF;
-        partial void OnXREFChanging(Nullable<global::System.Double> value);
+        private global::System.String _XREF;
+        partial void OnXREFChanging(global::System.String value);
         partial void OnXREFChanged();
     
         /// <summary>
@@ -4016,6 +4042,7 @@ namespace GreenField.DAL
         partial void OnTOT_CURR_SHRS_OUTST_ALL_CLASSChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -4046,6 +4073,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4361,6 +4389,7 @@ namespace GreenField.DAL
         partial void OnDataPointsOrderChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -4389,6 +4418,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4560,8 +4590,10 @@ namespace GreenField.DAL
         partial void OnESTIMATE_IDChanged();
 
         #endregion
+
     }
 
     #endregion
+
     
 }
