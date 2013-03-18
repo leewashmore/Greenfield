@@ -1482,9 +1482,9 @@ namespace GreenField.Web.Helpers
                             if (c != null)
                             {
                                 //rowData[i] = c.InnerText;
-                                if (!string.IsNullOrEmpty(c.CellValue.Text))
+                                if (c.CellValue != null && !string.IsNullOrEmpty(c.CellValue.Text))
                                     rowData[i] = Double.Parse(c.CellValue.Text).ToString();
-            
+
                                 if (c.DataType != null)
                                 {
                                     if (c.DataType == CellValues.SharedString)
