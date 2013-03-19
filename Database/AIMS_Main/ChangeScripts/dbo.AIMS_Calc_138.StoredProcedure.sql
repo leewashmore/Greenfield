@@ -44,7 +44,7 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  138 as DATA_ID										-- DATA_ID:138 Non-Interest Income as % Revenue
-		,  CASE WHEN a.AMOUNT >= 0 and (a.AMOUNT+ b.AMOUNT)> 0  THEN a.AMOUNT /(a.AMOUNT+ b.AMOUNT)
+		,  CASE WHEN  (a.AMOUNT+ b.AMOUNT)> 0  THEN a.AMOUNT /(a.AMOUNT+ b.AMOUNT)
 				ELSE NULL 
 				END as AMOUNT
 						-- SNII/(SNII+ENII)
@@ -57,7 +57,7 @@ as
 					and b.PERIOD_YEAR = a.PERIOD_YEAR and b.FISCAL_TYPE = a.FISCAL_TYPE
 					and b.CURRENCY = a.CURRENCY
 	 where 1=1 
-	   and isnull(a.AMOUNT,0.0)>=0.0 and (isnull(b.AMOUNT,0.0)+isnull(a.AMOUNT, 0.0)) > 0.0	-- Data validation
+	   and a.amount is not null and (isnull(b.AMOUNT,0.0)+isnull(a.AMOUNT, 0.0)) > 0.0	-- Data validation
 --	 order by a.ISSUER_ID, a.COA_TYPE, a.DATA_SOURCE, a.PERIOD_TYPE, a.PERIOD_YEAR,  a.FISCAL_TYPE, a.CURRENCY
 	 
 
