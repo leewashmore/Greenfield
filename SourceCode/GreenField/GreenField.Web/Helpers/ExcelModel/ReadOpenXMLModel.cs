@@ -1593,7 +1593,10 @@ namespace GreenField.Web.Helpers
                             {
                                 if (c != null)
                                 {
-                                    rowData[i] = c.InnerText;
+                                    //rowData[i] = c.InnerText;
+                                    if (c.CellValue != null && !string.IsNullOrEmpty(c.CellValue.Text))
+                                        rowData[i] = Int32.Parse(c.CellValue.Text).ToString();
+
                                     if (c.DataType != null)
                                     {
                                         if (c.DataType == CellValues.SharedString)
@@ -1655,7 +1658,12 @@ namespace GreenField.Web.Helpers
                             {
                                 if (c != null && j > 1)
                                 {
-                                    rowData[i] = c.InnerText;
+                                    //rowData[i] = c.InnerText;
+                                    rowData[i] = new DateTime(1900, 1, 31);
+                                    if (c.CellValue != null && !string.IsNullOrEmpty(c.CellValue.Text))
+                                        rowData[i] = DateTime.FromOADate(Double.Parse(c.CellValue.Text));
+
+                                    /*
                                     if (Double.TryParse((string)rowData[i], out data))
                                     {
                                         rowData[i] = DateTime.FromOADate(data);
@@ -1664,6 +1672,7 @@ namespace GreenField.Web.Helpers
                                     {
                                         rowData[i] = new DateTime(1900, 1, 31);
                                     }
+                                     */
                                 }
                                 else
                                 {
@@ -1714,7 +1723,10 @@ namespace GreenField.Web.Helpers
                             {
                                 if (c != null && j > 1)
                                 {
-                                    rowData[i] = c.InnerText;
+                                    //rowData[i] = c.InnerText;
+                                    if (c.CellValue != null && !string.IsNullOrEmpty(c.CellValue.Text))
+                                        rowData[i] = Int32.Parse(c.CellValue.Text).ToString();
+
                                     if (c.DataType != null)
                                     {
                                         if (c.DataType == CellValues.SharedString)
