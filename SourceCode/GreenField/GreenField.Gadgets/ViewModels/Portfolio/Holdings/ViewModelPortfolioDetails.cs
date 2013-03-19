@@ -229,7 +229,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Bool to check whether to get Data of Benchmark
         /// </summary>
-        private bool getBenchmarkData;
+        private bool getBenchmarkData = true;
         public bool GetBenchmarkData
         {
             get
