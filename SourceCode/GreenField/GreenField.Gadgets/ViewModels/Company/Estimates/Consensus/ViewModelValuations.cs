@@ -577,7 +577,7 @@ namespace GreenField.Gadgets.ViewModels
                             throw new Exception("Unable to retrieve issuer reference data for the selected security");
                         }
                         dbInteractivity.RetrieveConsensusEstimatesValuationsData
-                            (IssuerReferenceInfo.IssuerId, Convert.ToString(EntitySelectionInfo.LongName), SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
+                            (IssuerReferenceInfo.IssuerId, Convert.ToString(EntitySelectionInfo.LongName), SelectedPeriodType, string.IsNullOrEmpty(SelectedCurrency) ? "USD" : SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
                         BusyIndicatorNotification(true, "Updating information based on selected Security");
                     }
                     else

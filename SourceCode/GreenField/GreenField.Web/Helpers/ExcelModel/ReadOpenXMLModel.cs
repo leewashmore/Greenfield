@@ -2932,7 +2932,7 @@ namespace GreenField.Web.Helpers
                 }
                 else
                 {
-                    throw new Exception("The user is not a Valid User");
+                    throw new Exception("The user is not assigned data coverage for this company.");
                 }
                 
             }

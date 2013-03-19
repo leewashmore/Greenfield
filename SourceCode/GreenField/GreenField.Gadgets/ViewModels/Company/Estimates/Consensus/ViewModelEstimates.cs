@@ -453,7 +453,7 @@ namespace GreenField.Gadgets.ViewModels
                         }
 
                         dbInteractivity.RetrieveConsensusEstimatesMedianData
-                                (IssuerReferenceInfo.IssuerId, SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
+                            (IssuerReferenceInfo.IssuerId, SelectedPeriodType, string.IsNullOrEmpty(SelectedCurrency) ? "USD" : SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
                         BusyIndicatorNotification(true, "Updating information based on selected Security");
                     }
                     else
