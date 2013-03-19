@@ -445,21 +445,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (IssuerReferenceInfo != null)
                 {
-                    if (SelectedCurrency != null)
+                    if (IssuerReferenceInfo.IssuerId == null)
                     {
-                        if (IssuerReferenceInfo.IssuerId == null)
-                        {
-                            throw new Exception("Unable to retrieve issuer reference data for the selected security");
-                        }
+                        throw new Exception("Unable to retrieve issuer reference data for the selected security");
+                    }
 
-                        dbInteractivity.RetrieveConsensusEstimatesMedianData
-                            (IssuerReferenceInfo.IssuerId, SelectedPeriodType, string.IsNullOrEmpty(SelectedCurrency) ? "USD" : SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
-                        BusyIndicatorNotification(true, "Updating information based on selected Security");
-                    }
-                    else
-                    {
-                        throw new Exception("Currency not specified");
-                    }
+                    dbInteractivity.RetrieveConsensusEstimatesMedianData
+                        (IssuerReferenceInfo.IssuerId, SelectedPeriodType, string.IsNullOrEmpty(SelectedCurrency) ? "USD" : SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
+                    BusyIndicatorNotification(true, "Updating information based on selected Security");
                 }
                 else
                 {
