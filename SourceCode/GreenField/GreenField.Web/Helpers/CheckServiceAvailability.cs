@@ -40,14 +40,26 @@ namespace GreenField.Web.Helpers
             }
         }
 
-        public static void SerializeAndTrace(object result)
+        public static void SerializeAndTrace(object objectToSerialize)
         {
-            XmlSerializer XmlS = new XmlSerializer(result.GetType());
+            XmlSerializer XmlS = new XmlSerializer(objectToSerialize.GetType());
             StringWriter sw = new StringWriter();
             XmlTextWriter tw = new XmlTextWriter(sw);
-            XmlS.Serialize(tw, result);
+            XmlS.Serialize(tw, objectToSerialize);
             Trace.Write(sw.ToString());
         }
+
+        public static void SerializeToFile(object objectToSerialize)
+        {
+            XmlSerializer serializer = new XmlSerializer(objectToSerialize.GetType());
+
+            // Create a FileStream to write with.
+            Stream writer = new FileStream("C:\\dgCustomSecurity.xml", FileMode.Create);
+            // Serialize the object, and close the TextWriter
+            serializer.Serialize(writer, objectToSerialize);
+            writer.Close();
+        }
+
 
         #endregion
     }
