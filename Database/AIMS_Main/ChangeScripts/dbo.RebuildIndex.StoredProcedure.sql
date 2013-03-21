@@ -1,5 +1,4 @@
-USE [AIMS_Main_Dev]
-GO
+
 
 /****** Object:  StoredProcedure [dbo].[Get_Data_Process_Thread]    Script Date: 03/21/2013 12:20:55 ******/
 SET ANSI_NULLS ON
@@ -42,3 +41,5 @@ as
 					UPDATE STATISTICS CALC_LIST (CALC_LIST_idx2) WITH FULLSCAN
 					UPDATE STATISTICS ISSUER_SHARES (ISSUER_SHARES_inx) WITH FULLSCAN
 					UPDATE STATISTICS ISSUER_SHARES (ISSUER_SHARES_indx2) WITH FULLSCAN
+					
+					--exec dbo.[RebuildIndex]
