@@ -247,7 +247,8 @@
                                      EnableColumnVirtualization="False"       
                                      ElementExporting="ExcelElementExporting"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     ColumnWidth="100" 
+                                     DataLoadMode="Asynchronous"                                     
                                      GridLinesVisibility="None">
                 </telerik:RadGridView>
 
