@@ -23,8 +23,8 @@
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="120"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="640"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -191,9 +191,9 @@
 
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="600"/>
+                    <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
                 <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
                     <Grid.ColumnDefinitions>
@@ -247,10 +247,12 @@
                                      EnableColumnVirtualization="False"       
                                      ElementExporting="ExcelElementExporting"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     RowHeight="10"
                                      ColumnWidth="100" 
                                      DataLoadMode="Asynchronous"                                     
                                      GridLinesVisibility="None">
                 </telerik:RadGridView>
+                <!-- increase the font size -->
 
                 <Grid Grid.Row="2">
                     <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Height="0">
