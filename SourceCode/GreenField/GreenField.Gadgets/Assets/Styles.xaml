@@ -62,7 +62,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
-    </Style>
+     </Style>
 
     <!--GridViewCellStyle-->
     <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
@@ -913,10 +913,11 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
         <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="Padding" Value="5,0,3,0"/>
         <Setter Property="Foreground" Value="{StaticResource GridView_HeaderForeground}"/>
@@ -994,6 +995,19 @@
         <Setter Property="IndentLevel" Value="0"/>
         <Setter Property="Padding" Value="0"/>
     </Style>
+
+    <!--Custom Screen GridViewHeaderRowStyle-->
+    <Style TargetType="telerik:GridViewHeaderRow" x:Name="CustomScreenGridViewHeaderRowStyle">
+        <Setter Property="Template" Value="{StaticResource GridViewHeaderRowTemplate}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderRowOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1,0,0,1"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderRowBackground}"/>
+        <Setter Property="MaxHeight" Value="100"/>
+        <Setter Property="IndentLevel" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
 
     <!--#####################################################################################################################-->
     <!--#####################################################################################################################-->

@@ -18,6 +18,7 @@ using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller;
 using GreenField.Gadgets.ViewModels;
+using System.Diagnostics;
 
 namespace GreenField.Gadgets.Views
 {
@@ -96,25 +97,45 @@ namespace GreenField.Gadgets.Views
 
             foreach (string colName in columnNames)
             {
+              
                 string displayName = xmlDoc.Descendants("column")
                                              .Attributes("displayname")
                                              .Where(a => a.PreviousAttribute.Value == colName)
                                              .FirstOrDefault().Value;
 
+              
+                var subheaderrows = xmlDoc.Descendants("subcolumns");
+                if (subheaderrows != null)
+                {
+                    foreach (var row in subheaderrows)
+                    {
+                                
+                            string subcoldisplayname = row.Descendants("subcolumn").Where(a => a.Attribute("name").Value == colName).FirstOrDefault().Value;
+                            displayName = displayName + "\n" + subcoldisplayname;
+                        
+                    }
+                }
+               
                 columnMapping.Add(colName, displayName);
+               
             }
+           
+        
+
 
             foreach (KeyValuePair<string, string> kvp in columnMapping)
             {
                 GridViewDataColumn column = new GridViewDataColumn();
                 column.Header = kvp.Value;
-                column.UniqueName = kvp.Value;
+                column.UniqueName = kvp.Key;
                 column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key);
                 column.IsFilterable = true;
                 column.IsGroupable = true;
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
-                column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);               
+                column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);
+                column.TextWrapping = TextWrapping.Wrap;
+                        
                 this.dgCustomSecurity.Columns.Add(column);
             }
 
@@ -130,7 +151,17 @@ namespace GreenField.Gadgets.Views
                                              .Attributes("displayname")
                                              .Where(a => a.PreviousAttribute.Value == colName)
                                              .FirstOrDefault().Value;
+                var subheaderrows = xmlDoc.Descendants("subcolumns");
+                if (subheaderrows != null)
+                {
+                    foreach (var row in subheaderrows)
+                    {
 
+                        string subcoldisplayname = row.Descendants("subcolumn").Where(a => a.Attribute("name").Value == colName).FirstOrDefault().Value;
+                        displayName = displayName + "\n" + subcoldisplayname;
+
+                    }
+                }
                 columnMappingForAggregates.Add(colName, displayName);
             }
 
@@ -138,7 +169,7 @@ namespace GreenField.Gadgets.Views
             {
                 GridViewDataColumn column = new GridViewDataColumn();
                 column.Header = kvp.Value;
-                column.UniqueName = kvp.Value;
+                column.UniqueName = kvp.Key;
                 column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key);
                 column.IsFilterable = true;
                 column.IsGroupable = true;
@@ -146,6 +177,7 @@ namespace GreenField.Gadgets.Views
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
                 column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);
+                column.IsResizable = true;
                 column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
                 this.dgCustomSecurity.Columns.Add(column);             
             }
@@ -159,6 +191,7 @@ namespace GreenField.Gadgets.Views
 
             // add the rows
             var rows = xmlDoc.Descendants("row");
+            
             foreach (var row in rows)
             {
                 MyDataRow rowData = new MyDataRow();
@@ -173,11 +206,12 @@ namespace GreenField.Gadgets.Views
                 }
                 _data.Add(rowData);
             }
-
+            Debug.WriteLine(_data.ToString());
             this.dgCustomSecurity.ItemsSource = _data;
             this.dgCustomSecurity.IsFilteringAllowed = true;
             this.dgCustomSecurity.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
             this.dgCustomSecurity.ShowGroupFooters = true;
+            this.dgCustomSecurity.HeaderRowStyle = this.Resources["CustomScreenGridViewHeaderRowStyle"] as Style;
             this.dgCustomSecurity.Columns["Market Capitalization"].IsVisible = false;           
             this.DataContextViewModelCustomScreeningTool.IsBusyIndicatorBusy = false;
             this.DataContextViewModelCustomScreeningTool.FlagBusyIndicator = 1;
