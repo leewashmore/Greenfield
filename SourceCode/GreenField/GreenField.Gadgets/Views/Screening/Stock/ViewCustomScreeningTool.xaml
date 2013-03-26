@@ -23,7 +23,7 @@
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="120"/>
-                <RowDefinition Height="2"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="640"/>
             </Grid.RowDefinitions>
 
@@ -247,7 +247,7 @@
                                      EnableColumnVirtualization="False"       
                                      ElementExporting="ExcelElementExporting"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                     RowHeight="10"
+                                     RowHeight="12"
                                      ColumnWidth="100" 
                                      DataLoadMode="Asynchronous"                                     
                                      GridLinesVisibility="None">
