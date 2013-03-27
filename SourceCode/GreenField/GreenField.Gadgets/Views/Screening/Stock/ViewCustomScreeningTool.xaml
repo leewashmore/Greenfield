@@ -224,7 +224,11 @@
                         </ToolTipService.ToolTip>
                     </telerik:RadButton>
                 </Grid>
-
+                <Grid Grid.Row="2">
+                    <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Height="0">
+                        <!--For Printing the grid-->
+                    </telerik:RadRichTextBox>
+                </Grid>
                 <telerik:RadGridView x:Name="dgCustomSecurity" Margin="0,2,0,0"
                                      Visibility="{Binding ResultsListVisibility}"
                                      FrozenColumnsSplitterVisibility="Collapsed"
@@ -253,12 +257,6 @@
                                      GridLinesVisibility="None">
                 </telerik:RadGridView>
                 <!-- increase the font size -->
-
-                <Grid Grid.Row="2">
-                    <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Height="0">
-                        <!--For Printing the grid-->
-                    </telerik:RadRichTextBox>
-                </Grid>
             </Grid>
         </Grid>
     </telerik:RadBusyIndicator>

@@ -51,5 +51,8 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public String TableColumn { get; set; }
+
+        [DataMember]
+        public String ShortColumnDesc { get; set; }
     }
 }

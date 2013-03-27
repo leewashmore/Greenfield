@@ -29,6 +29,7 @@ using GreenField.Gadgets.Models;
 using GreenField.Gadgets.Views;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.MeetingDefinitions;
+using System.Diagnostics;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -1358,7 +1359,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         xw.WriteStartElement("column");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("displayname", info.DataDescription);
                         xw.WriteAttributeString("isaggregate", "false");
                         xw.WriteAttributeString("isdisplay", "true");
                         xw.WriteEndElement();
@@ -1369,7 +1370,7 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             xw.WriteStartElement("column");
                             xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
-                            xw.WriteAttributeString("displayname", info.TableColumn);
+                            xw.WriteAttributeString("displayname", info.DataDescription);
                             xw.WriteAttributeString("isaggregate", "true");
                             xw.WriteAttributeString("isdisplay", "true");
                             xw.WriteEndElement();
@@ -1378,7 +1379,7 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             xw.WriteStartElement("column");
                             xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
-                            xw.WriteAttributeString("displayname", info.TableColumn);
+                            xw.WriteAttributeString("displayname", info.DataDescription);
                             xw.WriteAttributeString("isaggregate", "false");
                             xw.WriteAttributeString("isdisplay", "true");
                             xw.WriteEndElement();
@@ -1397,28 +1398,29 @@ namespace GreenField.Gadgets.ViewModels
                 }
 
                 xw.WriteEndElement();
-                xw.WriteStartElement("row");
+                xw.WriteStartElement("subcolumns");
+
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                 {
                     if (info.ScreeningId.StartsWith("REF"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("displayname", info.DataDescription);
                         xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
                     else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("displayname", info.DataDescription);
                         xw.WriteString(Convert.ToString(String.Empty));
                         xw.WriteEndElement();
                     }
                     else if (info.ScreeningId.StartsWith("FIN"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
                             + info.PeriodType + info.YearType.Substring(0, 1));
                         xw.WriteAttributeString("displayname", info.TableColumn);
@@ -1426,47 +1428,47 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteEndElement();
                     }
                 }
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Security Ticker");
                 xw.WriteAttributeString("displayname", String.Empty);
                 xw.WriteString(String.Empty);
                 xw.WriteEndElement();
 
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Security Name");
                 xw.WriteAttributeString("displayname", String.Empty);
                 xw.WriteString("Year");
                 xw.WriteEndElement();
 
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Market Capitalization");
                 xw.WriteAttributeString("displayname", "Market Capitalization");
                 xw.WriteString(String.Empty);
                 xw.WriteEndElement();
 
                 xw.WriteEndElement();
-                xw.WriteStartElement("row");
+                xw.WriteStartElement("subcolumns");
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                 {
                     if (info.ScreeningId.StartsWith("REF"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("displayname", info.DataDescription);
                         xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
                     else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("displayname", info.DataDescription);
                         xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
                     else if (info.ScreeningId.StartsWith("FIN"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
                             + info.PeriodType + info.YearType.Substring(0, 1));
                         xw.WriteAttributeString("displayname", info.TableColumn);
@@ -1474,47 +1476,47 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteEndElement();
                     }
                 }
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Security Ticker");
                 xw.WriteAttributeString("displayname", String.Empty);
                 xw.WriteString(String.Empty);
                 xw.WriteEndElement();
 
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Security Name");
                 xw.WriteAttributeString("displayname", String.Empty);
                 xw.WriteString("Period Type");
                 xw.WriteEndElement();
 
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Market Capitalization");
                 xw.WriteAttributeString("displayname", "Market Capitalization");
                 xw.WriteString(String.Empty);
                 xw.WriteEndElement();
 
                 xw.WriteEndElement();
-                xw.WriteStartElement("row");
+                xw.WriteStartElement("subcolumns");
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                 {
                     if (info.ScreeningId.StartsWith("REF"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("displayname", info.DataDescription);
                         xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
                     else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("displayname", info.DataDescription);
                         xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
                     else if (info.ScreeningId.StartsWith("FIN"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
                             + info.PeriodType + info.YearType.Substring(0, 1));
                         xw.WriteAttributeString("displayname", info.TableColumn);
@@ -1522,47 +1524,47 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteEndElement();
                     }
                 }
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Security Ticker");
                 xw.WriteAttributeString("displayname", String.Empty);
                 xw.WriteString(String.Empty);
                 xw.WriteEndElement();
 
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Security Name");
                 xw.WriteAttributeString("displayname", String.Empty);
                 xw.WriteString("Year Type");
                 xw.WriteEndElement();
 
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Market Capitalization");
                 xw.WriteAttributeString("displayname", "Market Capitalization");
                 xw.WriteString(String.Empty);
                 xw.WriteEndElement();
 
                 xw.WriteEndElement();
-                xw.WriteStartElement("row");
+                xw.WriteStartElement("subcolumns");
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                 {
                     if (info.ScreeningId.StartsWith("REF"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("displayname", info.DataDescription);
                         xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
                     else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("displayname", info.DataDescription);
                         xw.WriteString(info.DataSource);
                         xw.WriteEndElement();
                     }
                     else if (info.ScreeningId.StartsWith("FIN"))
                     {
-                        xw.WriteStartElement("Element");
+                        xw.WriteStartElement("subcolumn");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
                             + info.PeriodType + info.YearType.Substring(0, 1));
                         xw.WriteAttributeString("displayname", info.TableColumn);
@@ -1570,19 +1572,19 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteEndElement();
                     }
                 }
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Security Ticker");
                 xw.WriteAttributeString("displayname", String.Empty);
                 xw.WriteString(String.Empty);
                 xw.WriteEndElement();
 
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Security Name");
                 xw.WriteAttributeString("displayname", String.Empty);
                 xw.WriteString("Source");
                 xw.WriteEndElement();
 
-                xw.WriteStartElement("Element");
+                xw.WriteStartElement("subcolumn");
                 xw.WriteAttributeString("name", "Market Capitalization");
                 xw.WriteAttributeString("displayname", "Market Capitalization");
                 xw.WriteString(String.Empty);
@@ -1602,8 +1604,8 @@ namespace GreenField.Gadgets.ViewModels
                             {
                                 xw.WriteStartElement("Element");
                                 xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
-                                xw.WriteAttributeString("displayname", info.TableColumn);
-
+                                xw.WriteAttributeString("displayname", info.DataDescription);
+                                
                                 CustomScreeningSecurityData selectedSec = (from p in securityData
                                                                            where p.Type == info.TableColumn
                                                                            && p.IssueName == issueName
@@ -1612,13 +1614,14 @@ namespace GreenField.Gadgets.ViewModels
                                 string attributeValue = (selectedSec == null || selectedSec.Value == null) ?
                                     String.Empty : selectedSec.Value.ToString();
                                 xw.WriteString(attributeValue);
+                               
                                 xw.WriteEndElement();
                             }
                             else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                             {
                                 xw.WriteStartElement("Element");
                                 xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
-                                xw.WriteAttributeString("displayname", info.TableColumn);
+                                xw.WriteAttributeString("displayname", info.DataDescription);
 
                                 CustomScreeningSecurityData selectedSec = (from p in securityData
                                                                            where p.Type == info.TableColumn
@@ -1629,6 +1632,7 @@ namespace GreenField.Gadgets.ViewModels
                                 string attributeValue = (selectedSec == null || selectedSec.Value == null) ?
                                     String.Empty : selectedSec.Value.ToString();
                                 xw.WriteString(attributeValue);
+                              
                                 xw.WriteEndElement();
                             }
                             else if (info.ScreeningId.StartsWith("FIN"))
@@ -1650,6 +1654,7 @@ namespace GreenField.Gadgets.ViewModels
                                 string attributeValue = (selectedSec == null || selectedSec.Value == null) ?
                                     String.Empty : selectedSec.Value.ToString();
                                 xw.WriteString(attributeValue);
+                                
                                 xw.WriteEndElement();
                             }
                         }
@@ -1657,7 +1662,7 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", "Security Ticker");
                         xw.WriteAttributeString("displayname", String.Empty);
-                        String securityId = securityData.Where(a => a.IssueName == issueName).Select(a => a.SecurityId).FirstOrDefault();
+                        String securityId = securityData.Where(a => a.IssueName == issueName).Select(a => a.AsecShortName).FirstOrDefault();
                         xw.WriteString(securityId);
                         xw.WriteEndElement();
 
@@ -1674,11 +1679,13 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteString(Convert.ToString(marketCapitalization));
                         xw.WriteEndElement();
                         xw.WriteEndElement();
+                    
                     }
                 }
                 xw.WriteEndElement();
                 xw.WriteEndDocument();
             }
+           
             output.Append(sb.ToString() + Environment.NewLine);
             RetrieveCustomXmlDataCompletedEvent(new RetrieveCustomXmlDataCompleteEventArgs() { XmlInfo = output.ToString() });
         }

@@ -262,12 +262,19 @@ namespace GreenField.Gadgets.Views
                 {
                     if (this.dgPortfolioDetails.GroupDescriptors.Count > 0)
                     {
-                        e.Cancel = true;
-                        this.dgPortfolioDetails.GroupDescriptors.Clear();
-                        dgPortfolioDetails.GroupDescriptors.Add(e.GroupDescriptor);
+                        if (!this.dgPortfolioDetails.GroupDescriptors.Contains(e.GroupDescriptor))
+                        {
+                            e.Cancel = true;
+                            // this.dgPortfolioDetails.GroupDescriptors.Clear();
+                            dgPortfolioDetails.GroupDescriptors.Add(e.GroupDescriptor);
+
+                        }
+                        Telerik.Windows.Controls.GridView.ColumnGroupDescriptor groupDescriptor = e.GroupDescriptor as Telerik.Windows.Controls.GridView.ColumnGroupDescriptor;
+                        DataContextPortfolioDetails.GroupingColumn = Convert.ToString(groupDescriptor.Column.UniqueName);
                     }
-                    Telerik.Windows.Controls.GridView.ColumnGroupDescriptor groupDescriptor = e.GroupDescriptor as Telerik.Windows.Controls.GridView.ColumnGroupDescriptor;
-                    DataContextPortfolioDetails.GroupingColumn = Convert.ToString(groupDescriptor.Column.UniqueName);
+                   
+
+                    
                 }
                 else
                 {

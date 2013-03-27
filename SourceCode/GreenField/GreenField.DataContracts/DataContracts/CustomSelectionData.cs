@@ -17,6 +17,9 @@ namespace GreenField.DataContracts
         public string LongDescription { get; set; }
 
         [DataMember]
+        public string ShortDescription { get; set; }
+
+        [DataMember]
         public string Quaterly { get; set; }
 
         [DataMember]
