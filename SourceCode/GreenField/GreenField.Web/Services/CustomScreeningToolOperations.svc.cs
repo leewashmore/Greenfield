@@ -558,25 +558,28 @@ namespace GreenField.Web.Services
 
                                     foreach (CustomScreeningFINData record in temp)
                                     {
-                                        CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
-                                        fillData.SecurityId = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                            .Select(a => a.SecurityId).FirstOrDefault(); ;
-                                        fillData.IssuerId = record.IssuerId;
-                                        fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                            .Select(a => a.IssueName).FirstOrDefault();
-                                        fillData.Type = item.DataDescription;
-                                        fillData.Multiplier = referenceData.MULTIPLIER;
-                                        decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
-                                        fillData.DataSource = item.DataSource;
-                                        fillData.PeriodYear = record.PeriodYear;
-                                        fillData.PeriodType = item.PeriodType;
-                                        fillData.YearType = item.YearType;
-                                        fillData.Decimals = referenceData.DECIMAL;
-                                        fillData.IsPercentage = referenceData.PERCENTAGE;
-                                        _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
-                                        fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
-                                                                                        : Convert.ToString(_amount);
-                                        result.Add(fillData);
+                                        IEnumerable<CustomScreeningSecurityData> matchedSecurities = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId);
+
+                                        foreach (CustomScreeningSecurityData customScreeningSecurityData in matchedSecurities)
+                                        {
+                                            CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                                            fillData.SecurityId = customScreeningSecurityData.SecurityId;
+                                            fillData.IssuerId = record.IssuerId;
+                                            fillData.IssueName = customScreeningSecurityData.IssueName;
+                                            fillData.Type = item.DataDescription;
+                                            fillData.Multiplier = referenceData.MULTIPLIER;
+                                            decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
+                                            fillData.DataSource = item.DataSource;
+                                            fillData.PeriodYear = record.PeriodYear;
+                                            fillData.PeriodType = item.PeriodType;
+                                            fillData.YearType = item.YearType;
+                                            fillData.Decimals = referenceData.DECIMAL;
+                                            fillData.IsPercentage = referenceData.PERCENTAGE;
+                                            _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
+                                            fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
+                                                                                            : Convert.ToString(_amount);
+                                            result.Add(fillData);
+                                        }
                                     }
                                 }
                             }
@@ -601,22 +604,25 @@ namespace GreenField.Web.Services
                                     , "End", "GetCustomScreeningCURData");
                                 foreach (CustomScreeningCURData record in temp)
                                 {
-                                    CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
-                                    fillData.SecurityId = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                        .Select(a => a.SecurityId).FirstOrDefault();
-                                    fillData.IssuerId = record.IssuerId;
-                                    fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                        .Select(a => a.IssueName).FirstOrDefault();
-                                    fillData.Type = item.DataDescription;
-                                    fillData.Multiplier = referenceData.MULTIPLIER;
-                                    decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
-                                    fillData.DataSource = item.DataSource;
-                                    fillData.Decimals = referenceData.DECIMAL;
-                                    fillData.IsPercentage = referenceData.PERCENTAGE;
-                                    _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
-                                    fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
-                                                                                   : Convert.ToString(_amount);
-                                    result.Add(fillData);
+                                    IEnumerable<CustomScreeningSecurityData> matchedSecurities = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId);
+
+                                    foreach (CustomScreeningSecurityData customScreeningSecurityData in matchedSecurities)
+                                    {
+                                        CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                                        fillData.SecurityId = customScreeningSecurityData.SecurityId;
+                                        fillData.IssuerId = record.IssuerId;
+                                        fillData.IssueName = customScreeningSecurityData.IssueName;
+                                        fillData.Type = item.DataDescription;
+                                        fillData.Multiplier = referenceData.MULTIPLIER;
+                                        decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
+                                        fillData.DataSource = item.DataSource;
+                                        fillData.Decimals = referenceData.DECIMAL;
+                                        fillData.IsPercentage = referenceData.PERCENTAGE;
+                                        _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
+                                        fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
+                                                                                       : Convert.ToString(_amount);
+                                        result.Add(fillData);
+                                    }
                                 }
                             }
                             //retrieving FVA Data Items
