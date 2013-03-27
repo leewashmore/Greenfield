@@ -1427,7 +1427,9 @@ namespace GreenField.Gadgets.ViewModels
                         userPref.Add(item);
                     }
                     SelectedFieldsDataList = userPref;
-                }               
+                }
+                if (Flag == "Create")
+                    SelectedFieldsDataList = new ObservableCollection<CSTUserPreferenceInfo>();
             }          
         }
 
