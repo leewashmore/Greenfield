@@ -322,7 +322,7 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
             try
             {
-                SetGroupedData();
+               // SetGroupedData();
                 gridFilterDescriptors = dgPortfolioDetails.FilterDescriptors;
             }
             catch (Exception ex)

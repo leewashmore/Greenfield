@@ -584,7 +584,7 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.EffectiveDateSelectorVisibility);
                 if (value == Visibility.Collapsed)
                 {
-                    SelectedEffectiveDateInfo = null;
+                  //  SelectedEffectiveDateInfo = null;
                 }
                 ButtonSelectorVisibility = value;
             }
@@ -1162,6 +1162,13 @@ namespace GreenField.App.ViewModel
                         BusyIndicatorNotification(true, "Retrieving reference data...", false);
                         dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                     }
+                }
+                else
+                {
+                    FilterSelectionInfo = null;
+                    SelectedFilterType = null;
+                    SelectedFilterValueInfo = null;
+
                 }
                 ButtonSelectorVisibility = value;
             }

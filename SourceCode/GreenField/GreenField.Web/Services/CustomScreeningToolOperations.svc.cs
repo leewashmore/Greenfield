@@ -943,7 +943,7 @@ namespace GreenField.Web.Services
                         
                         GF_SECURITY_BASEVIEW_Local securityIdRow = item.ASEC_SEC_SHORT_NAME != null
                             ? externalEntity.GF_SECURITY_BASEVIEW_Local.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
-                   
+                        Debug.WriteLine((securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null) + "==>" + item.ASEC_SEC_SHORT_NAME);
                         securityList.Add(new CustomScreeningSecurityData()
                         {
                             SecurityId = securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null,
