@@ -567,6 +567,7 @@ namespace GreenField.Web.Services
                                         {
                                             CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
                                             fillData.SecurityId = customScreeningSecurityData.SecurityId;
+                                            fillData.AsecShortName = customScreeningSecurityData.AsecShortName;
                                             fillData.IssuerId = record.IssuerId;
                                             fillData.IssueName = customScreeningSecurityData.IssueName;
                                             fillData.Type = item.DataDescription;
@@ -614,6 +615,7 @@ namespace GreenField.Web.Services
                                         CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
                                         fillData.SecurityId = customScreeningSecurityData.SecurityId;
                                         fillData.IssuerId = record.IssuerId;
+                                        fillData.AsecShortName = customScreeningSecurityData.AsecShortName;
                                         fillData.IssueName = customScreeningSecurityData.IssueName;
                                         fillData.Type = item.DataDescription;
                                         fillData.Multiplier = referenceData.MULTIPLIER;
