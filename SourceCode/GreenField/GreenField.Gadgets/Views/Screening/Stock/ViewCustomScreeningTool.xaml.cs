@@ -133,9 +133,7 @@ namespace GreenField.Gadgets.Views
                 column.IsGroupable = true;
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
-                column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);
-                column.TextWrapping = TextWrapping.Wrap;
-                        
+                //column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);               
                 this.dgCustomSecurity.Columns.Add(column);
             }
 
@@ -176,8 +174,7 @@ namespace GreenField.Gadgets.Views
                 column.TextAlignment = TextAlignment.Right;
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
-                column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);
-                column.IsResizable = true;
+                //column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);
                 column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
                 this.dgCustomSecurity.Columns.Add(column);             
             }
@@ -206,8 +203,9 @@ namespace GreenField.Gadgets.Views
                 }
                 _data.Add(rowData);
             }
-            Debug.WriteLine(_data.ToString());
+
             this.dgCustomSecurity.ItemsSource = _data;
+            //this.radDataPager.Source = _data;
             this.dgCustomSecurity.IsFilteringAllowed = true;
             this.dgCustomSecurity.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
             this.dgCustomSecurity.ShowGroupFooters = true;

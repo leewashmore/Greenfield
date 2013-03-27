@@ -54,7 +54,7 @@ namespace GreenField.Gadgets.Helpers
                 {
                     data.Add(columnName, value);
 
-                    OnPropertyChanged(columnName);
+                    //OnPropertyChanged(columnName);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace GreenField.Gadgets.Helpers
                     {
                         data[columnName] = value;
 
-                        OnPropertyChanged(columnName);
+                        //OnPropertyChanged(columnName);
                     }
                 }
             }

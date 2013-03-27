@@ -114,7 +114,7 @@ namespace GreenField.Gadgets.Views
                 column.IsGroupable = true;
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
-                column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);               
+                //column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);               
                 this.dgCustomSecurity.Columns.Add(column);
             }
 
@@ -145,7 +145,7 @@ namespace GreenField.Gadgets.Views
                 column.TextAlignment = TextAlignment.Right;
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
-                column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);
+                //column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);
                 column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
                 this.dgCustomSecurity.Columns.Add(column);             
             }
@@ -158,11 +158,10 @@ namespace GreenField.Gadgets.Views
             }
 
             // add the rows
-            List<xMyDataRow> x = new List<xMyDataRow>();
             var rows = xmlDoc.Descendants("row");
             foreach (var row in rows)
             {
-                xMyDataRow rowData = new xMyDataRow();
+                MyDataRow rowData = new MyDataRow();
 
                 foreach (KeyValuePair<string, string> kvp in columnMapping)
                 {
@@ -172,12 +171,11 @@ namespace GreenField.Gadgets.Views
                         rowData[kvp.Key] = cell.Value;
                     }                 
                 }
-                //_data.Add(rowData);
-                x.Add(rowData);
+                _data.Add(rowData);
             }
 
-
-            this.dgCustomSecurity.ItemsSource = x; // _data;
+            this.dgCustomSecurity.ItemsSource = _data;
+            //this.radDataPager.Source = _data;
             this.dgCustomSecurity.IsFilteringAllowed = true;
             this.dgCustomSecurity.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
             this.dgCustomSecurity.ShowGroupFooters = true;
