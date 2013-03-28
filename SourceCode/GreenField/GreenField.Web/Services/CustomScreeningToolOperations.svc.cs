@@ -147,7 +147,8 @@ namespace GreenField.Web.Services
                             ScreeningId = item.SCREENING_ID,
                             DataDescription = item.DATA_DESC,
                             LongDescription = item.LONG_DESC,
-                            DataColumn = item.TABLE_COLUMN
+                            DataColumn = item.TABLE_COLUMN,
+                            ShortDescription = item.SHORT_COLUMN_DESC
                         });
                     }
                 }
@@ -488,6 +489,7 @@ namespace GreenField.Web.Services
                                     CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();                                    
 
                                     fillData.SecurityId = record.SECURITY_ID;
+                                    fillData.AsecShortName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.AsecShortName).FirstOrDefault(); //record.ASEC_SEC_SHORT_NAME;
                                     fillData.IssueName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.IssueName).FirstOrDefault();
                                     fillData.Type = referenceData.TABLE_COLUMN;                                    
                                     fillData.Multiplier = referenceData.MULTIPLIER;
@@ -499,6 +501,7 @@ namespace GreenField.Web.Services
                                     amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(amount), Convert.ToInt16(fillData.Decimals)) : amount;
                                     fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(amount) + "%" : Convert.ToString(amount)
                                                                                    : Convert.ToString(amount);
+                                    
                                     result.Add(fillData);
                                 }
                             }
@@ -558,25 +561,29 @@ namespace GreenField.Web.Services
 
                                     foreach (CustomScreeningFINData record in temp)
                                     {
-                                        CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
-                                        fillData.SecurityId = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                            .Select(a => a.SecurityId).FirstOrDefault(); ;
-                                        fillData.IssuerId = record.IssuerId;
-                                        fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                            .Select(a => a.IssueName).FirstOrDefault();
-                                        fillData.Type = item.DataDescription;
-                                        fillData.Multiplier = referenceData.MULTIPLIER;
-                                        decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
-                                        fillData.DataSource = item.DataSource;
-                                        fillData.PeriodYear = record.PeriodYear;
-                                        fillData.PeriodType = item.PeriodType;
-                                        fillData.YearType = item.YearType;
-                                        fillData.Decimals = referenceData.DECIMAL;
-                                        fillData.IsPercentage = referenceData.PERCENTAGE;
-                                        _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
-                                        fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
-                                                                                        : Convert.ToString(_amount);
-                                        result.Add(fillData);
+                                        IEnumerable<CustomScreeningSecurityData> matchedSecurities = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId);
+
+                                        foreach (CustomScreeningSecurityData customScreeningSecurityData in matchedSecurities)
+                                        {
+                                            CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                                            fillData.SecurityId = customScreeningSecurityData.SecurityId;
+                                            fillData.AsecShortName = customScreeningSecurityData.AsecShortName;
+                                            fillData.IssuerId = record.IssuerId;
+                                            fillData.IssueName = customScreeningSecurityData.IssueName;
+                                            fillData.Type = item.DataDescription;
+                                            fillData.Multiplier = referenceData.MULTIPLIER;
+                                            decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
+                                            fillData.DataSource = item.DataSource;
+                                            fillData.PeriodYear = record.PeriodYear;
+                                            fillData.PeriodType = item.PeriodType;
+                                            fillData.YearType = item.YearType;
+                                            fillData.Decimals = referenceData.DECIMAL;
+                                            fillData.IsPercentage = referenceData.PERCENTAGE;
+                                            _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
+                                            fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
+                                                                                            : Convert.ToString(_amount);
+                                            result.Add(fillData);
+                                        }
                                     }
                                 }
                             }
@@ -601,22 +608,26 @@ namespace GreenField.Web.Services
                                     , "End", "GetCustomScreeningCURData");
                                 foreach (CustomScreeningCURData record in temp)
                                 {
-                                    CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
-                                    fillData.SecurityId = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                        .Select(a => a.SecurityId).FirstOrDefault();
-                                    fillData.IssuerId = record.IssuerId;
-                                    fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId)
-                                        .Select(a => a.IssueName).FirstOrDefault();
-                                    fillData.Type = item.DataDescription;
-                                    fillData.Multiplier = referenceData.MULTIPLIER;
-                                    decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
-                                    fillData.DataSource = item.DataSource;
-                                    fillData.Decimals = referenceData.DECIMAL;
-                                    fillData.IsPercentage = referenceData.PERCENTAGE;
-                                    _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
-                                    fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
-                                                                                   : Convert.ToString(_amount);
-                                    result.Add(fillData);
+                                    IEnumerable<CustomScreeningSecurityData> matchedSecurities = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId);
+
+                                    foreach (CustomScreeningSecurityData customScreeningSecurityData in matchedSecurities)
+                                    {
+                                        CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                                        fillData.SecurityId = customScreeningSecurityData.SecurityId;
+                                        fillData.IssuerId = record.IssuerId;
+                                        fillData.AsecShortName = customScreeningSecurityData.AsecShortName;
+                                        fillData.IssueName = customScreeningSecurityData.IssueName;
+                                        fillData.Type = item.DataDescription;
+                                        fillData.Multiplier = referenceData.MULTIPLIER;
+                                        decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
+                                        fillData.DataSource = item.DataSource;
+                                        fillData.Decimals = referenceData.DECIMAL;
+                                        fillData.IsPercentage = referenceData.PERCENTAGE;
+                                        _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
+                                        fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount)
+                                                                                       : Convert.ToString(_amount);
+                                        result.Add(fillData);
+                                    }
                                 }
                             }
                             //retrieving FVA Data Items
@@ -639,6 +650,7 @@ namespace GreenField.Web.Services
                                     CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
                                     fillData.SecurityId = record.SECURITY_ID;
                                     fillData.IssueName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.IssueName).FirstOrDefault();
+                                    fillData.AsecShortName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.AsecShortName).FirstOrDefault();
                                     fillData.Type = referenceData.TABLE_COLUMN;
                                     fillData.DataSource = item.DataSource;
                                     fillData.Multiplier = referenceData.MULTIPLIER;
@@ -651,6 +663,7 @@ namespace GreenField.Web.Services
                                     fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(amount) + "%" : Convert.ToString(amount)
                                                                                    : Convert.ToString(amount);
                                     fillData.DataSource = item.DataSource;
+                             
                                     result.Add(fillData);
                                 }
                             }
@@ -930,13 +943,16 @@ namespace GreenField.Web.Services
                     securitiesFromPortfolio = securitiesFromPortfolio.Distinct().ToList();
                     foreach (GF_PORTFOLIO_HOLDINGS item in securitiesFromPortfolio)
                     {
+                        
                         GF_SECURITY_BASEVIEW_Local securityIdRow = item.ASEC_SEC_SHORT_NAME != null
                             ? externalEntity.GF_SECURITY_BASEVIEW_Local.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
+                   
                         securityList.Add(new CustomScreeningSecurityData()
                         {
                             SecurityId = securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null,
                             IssuerId = item.ISSUER_ID,
-                            IssueName = item.ISSUE_NAME
+                            IssueName = item.ISSUE_NAME,
+                            AsecShortName=securityIdRow != null ? securityIdRow.ASEC_SEC_SHORT_NAME.ToString():null
                         });
                     }
                     return securityList;
@@ -961,7 +977,8 @@ namespace GreenField.Web.Services
                         {
                             SecurityId = securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null,
                             IssuerId = item.ISSUER_ID,
-                            IssueName = item.ISSUE_NAME
+                            IssueName = item.ISSUE_NAME,
+                            AsecShortName = securityIdRow != null ? securityIdRow.ASEC_SEC_SHORT_NAME.ToString() : null
                         });
                     }
                     return securityList;
@@ -997,7 +1014,8 @@ namespace GreenField.Web.Services
                     {
                         SecurityId = item.SECURITY_ID,
                         IssuerId = item.ISSUER_ID,
-                        IssueName = item.ISSUE_NAME
+                        IssueName = item.ISSUE_NAME,
+                        AsecShortName = item.ASEC_SEC_SHORT_NAME
                     });
                 }
                 return securityList;

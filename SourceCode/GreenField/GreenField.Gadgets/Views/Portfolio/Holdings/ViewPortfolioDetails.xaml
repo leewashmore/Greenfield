@@ -221,7 +221,7 @@
                                         <telerik:GridViewDataColumn Header="Portfolio %" UniqueName="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
                                                         DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        TextAlignment="Right" HeaderTextAlignment="Right">
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" x:Name="Portfolio_Perc" SortingState="Descending">
                                            <!-- <telerik:GridViewDataColumn.AggregateFunctions>
                                                 <telerik:SumFunction SourceField="RePortfolioWeight" ResultFormatString="{}{0:n2}%" />
                                             </telerik:GridViewDataColumn.AggregateFunctions>-->
@@ -305,7 +305,11 @@
                                 </telerik:RadGridView>
                             </DataTemplate>
                         </telerik:RadGridView.HierarchyChildTemplate>
-                        
+                        <telerik:RadGridView.SortDescriptors>
+
+                            <telerik:SortDescriptor Member="Portfolio %" SortDirection="Descending"/>
+
+                        </telerik:RadGridView.SortDescriptors>
                         <telerik:RadGridView.Columns >
 
                             <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding AsecSecShortName}" IsGroupable="False"
@@ -334,7 +338,7 @@
                             <telerik:GridViewDataColumn Header="Country" UniqueName="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
                                                         IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
+                                                        TextAlignment="Left" />
                             <telerik:GridViewDataColumn Header="Sector Name" UniqueName="Sector Name" DataMemberBinding="{Binding SectorName}" 
                                                         IsGroupable="True" IsFilterable="True" TextAlignment="Left" HeaderTextAlignment="Left"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -363,7 +367,7 @@
                             <telerik:GridViewDataColumn Header="Portfolio %" UniqueName="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
                                                         DataFormatString="{}{0:n2}" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        TextAlignment="Right" HeaderTextAlignment="Right">
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" x:Name="Portfolio_Perc">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <telerik:SumFunction SourceField="RePortfolioWeight" ResultFormatString="{}{0:n2}%" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>

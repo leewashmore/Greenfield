@@ -24,7 +24,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="120"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="640"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -191,9 +191,9 @@
 
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="600"/>
+                    <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
                 <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
                     <Grid.ColumnDefinitions>
@@ -224,7 +224,11 @@
                         </ToolTipService.ToolTip>
                     </telerik:RadButton>
                 </Grid>
-
+                <Grid Grid.Row="2">
+                    <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Height="0">
+                        <!--For Printing the grid-->
+                    </telerik:RadRichTextBox>
+                </Grid>
                 <telerik:RadGridView x:Name="dgCustomSecurity" Margin="0,2,0,0"
                                      Visibility="{Binding ResultsListVisibility}"
                                      FrozenColumnsSplitterVisibility="Collapsed"
@@ -247,15 +251,12 @@
                                      EnableColumnVirtualization="False"       
                                      ElementExporting="ExcelElementExporting"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     RowHeight="12"
+                                     ColumnWidth="100" 
+                                     DataLoadMode="Asynchronous"                                     
                                      GridLinesVisibility="None">
                 </telerik:RadGridView>
-
-                <Grid Grid.Row="2">
-                    <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Height="0">
-                        <!--For Printing the grid-->
-                    </telerik:RadRichTextBox>
-                </Grid>
+                <!-- increase the font size -->
             </Grid>
         </Grid>
     </telerik:RadBusyIndicator>

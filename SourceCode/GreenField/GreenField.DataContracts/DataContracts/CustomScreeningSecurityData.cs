@@ -11,6 +11,9 @@ namespace GreenField.DataContracts
         public string SecurityId { get; set; }
 
         [DataMember]
+        public string AsecShortName { get; set; }
+         
+        [DataMember]
         public string IssuerId { get; set; }
 
         [DataMember]

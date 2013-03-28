@@ -1,0 +1,9 @@
+What:
+
+	AddNewPortfolio.sql
+
+Where:
+	LONSQL2P
+
+Why:
+	(ADD) Add 'PASERSESC' portfolio in the db and give Felicia access to it.

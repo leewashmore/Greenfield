@@ -2385,7 +2385,7 @@ namespace GreenField.Web.Services
                     }
                     if (attributionData != null)
                     {
-                        obj.YTDReturns = attributionData.Where(t => t.COUNTRY.Trim().ToLower() == row.CountryCode.Trim().ToLower()).
+                        obj.YTDReturns = attributionData.Where(t => t.AGG_LVL_1.Trim().ToLower() == row.CountryCode.Trim().ToLower()).
                             Sum(t => t.BM1_RC_TWR_YTD);
                             
                     }
@@ -2632,6 +2632,7 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                Trace.WriteLine(ex.StackTrace);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }

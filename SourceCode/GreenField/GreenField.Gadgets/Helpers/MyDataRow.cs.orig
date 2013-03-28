@@ -54,7 +54,7 @@ namespace GreenField.Gadgets.Helpers
                 {
                     data.Add(columnName, value);
 
-                    //OnPropertyChanged(columnName);
+                    OnPropertyChanged(columnName);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace GreenField.Gadgets.Helpers
                     {
                         data[columnName] = value;
 
-                        //OnPropertyChanged(columnName);
+                        OnPropertyChanged(columnName);
                     }
                 }
             }
@@ -81,5 +81,51 @@ namespace GreenField.Gadgets.Helpers
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
+    }
+
+    public class xMyDataRow
+    {
+        IDictionary<string, object> data;
+
+        public xMyDataRow()
+        {
+            data = new Dictionary<string, object>();
+        }
+
+        public xMyDataRow(IDictionary<string, object> source)
+        {
+            data = source;
+        }
+
+        public object this[string columnName]
+        {
+            get
+            {
+                if (data.ContainsKey(columnName))
+                {
+                    return data[columnName];
+                }
+
+                return null;
+            }
+            set
+            {
+                if (!data.ContainsKey(columnName))
+                {
+                    data.Add(columnName, value);
+
+                    //OnPropertyChanged(columnName);
+                }
+                else
+                {
+                    if (data[columnName] != value)
+                    {
+                        data[columnName] = value;
+
+                       // OnPropertyChanged(columnName);
+                    }
+                }
+            }
+        }
     }
 }

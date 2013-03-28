@@ -90,32 +90,7 @@ namespace GreenField.Gadgets.ViewModels
             holdingDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
 
             this.ModelDataAreIncorrect = Visibility.Collapsed;
-            if (eventAggregator != null && effectiveDate != null && SelectedPortfolioId != null && IsActive)
-            {
-                BusyIndicatorStatus = true;
-                //if (holdingDataFilter!=null && holdingDataFilter.Filtertype != null && holdingDataFilter.FilterValues != null)
-                //{
-                //    dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, EnableLookThru, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
-                //}
-                //else
-                //{
-                //    dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), null, null, EnableLookThru, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
-                //}
-            }
-            if (eventAggregator != null && effectiveDate != null && SelectedPortfolioId != null && IsActive)
-            {
-                BusyIndicatorStatus = true;
-                // dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, EnableLookThru, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
-                //if (holdingDataFilter!=null && holdingDataFilter.Filtertype != null && holdingDataFilter.FilterValues != null)
-                //{
-                //    dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, EnableLookThru, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
-                //}
-                //else
-                //{
-                //    dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), null, null, EnableLookThru, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
-                //}
-            }
-
+          
             if (eventAggregator != null)
             {
                 eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
@@ -143,7 +118,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 selectedPortfolioId = value;
-                CheckFilterApplied = 1;
+                CheckFilterApplied = 0;
                 this.RaisePropertyChanged(() => this.SelectedPortfolioDetailsData);
             }
         }
@@ -229,7 +204,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Bool to check whether to get Data of Benchmark
         /// </summary>
-        private bool getBenchmarkData;
+        private bool getBenchmarkData = true;
         public bool GetBenchmarkData
         {
             get
@@ -242,7 +217,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (SelectedPortfolioId != null && effectiveDate != null && IsActive)
                 {
                     BusyIndicatorStatus = true;
-                    CheckFilterApplied = 1;
+                    CheckFilterApplied = 0;
 
                     if (holdingDataFilter != null && holdingDataFilter.Filtertype != null && holdingDataFilter.FilterValues != null)
                     {
@@ -417,7 +392,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 excludeCashSecurities = value;
-                CheckFilterApplied = 1;
+                CheckFilterApplied = 0;
                 this.RaisePropertyChanged(() => this.ExcludeCashSecurities);
             }
         }
@@ -432,7 +407,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 enableLookThru = value;
-                CheckFilterApplied = 1;
+                CheckFilterApplied = 0;
                 this.RaisePropertyChanged(() => this.EnableLookThru);
             }
         }
@@ -467,15 +442,22 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 isActive = value;
+               
                 if (SelectedPortfolioId != null && effectiveDate != null && isActive)
                 {
+                    holdingDataFilter = null;
+                  
                     if (holdingDataFilter != null && holdingDataFilter.Filtertype != null && holdingDataFilter.FilterValues != null)
                     {
-                        dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, EnableLookThru, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                        dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, EnableLookThru, ExcludeCashSecurities, GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
+                        
                     }
                     else
                     {
-                        dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), null, null, EnableLookThru, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                        dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), null, null, EnableLookThru, ExcludeCashSecurities, GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
+                        
                     }
 
                  //   RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(effectiveDate), holdingDataFilter.Filtertype, holdingDataFilter.FilterValues, GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
@@ -590,7 +572,24 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     else
                     {
-                        SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(initialData);
+
+                        if (isHoldingsGrouped)
+                        {
+                            groupedData = GetGroupedPortfolios(SelectedPortfolioId.PortfolioId, initialData);
+                            SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(groupedData);
+                        }
+                        else if (isHoldingsGroupedByIssuer)
+                        {
+                            groupedData = GetGroupedPortfoliosByIssuer(SelectedPortfolioId.PortfolioId, initialData);
+                            SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(groupedData);
+                        }
+                        else
+                        {
+                            SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(initialData);
+                        }
+
+
+                        //SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(initialData);
                     }
                     
                 }

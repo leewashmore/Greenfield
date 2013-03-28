@@ -622,7 +622,8 @@ namespace GreenField.Gadgets.ViewModels
                     ListName = listName,
                     Accessibility = accessibility,
                     DataPointsOrder = tempOrder++,
-                    TableColumn = SelectedSecurityReferenceData.DataColumn
+                    TableColumn = SelectedSecurityReferenceData.DataColumn,
+                    ShortColumnDesc = SelectedSecurityReferenceData.ShortDescription
                 });
                 SelectedFieldsDataList = temp;
                 flagRefAdd = 0;
@@ -1426,7 +1427,9 @@ namespace GreenField.Gadgets.ViewModels
                         userPref.Add(item);
                     }
                     SelectedFieldsDataList = userPref;
-                }               
+                }
+                if (Flag == "Create")
+                    SelectedFieldsDataList = new ObservableCollection<CSTUserPreferenceInfo>();
             }          
         }
 
