@@ -170,9 +170,11 @@
                         <telerik:RadMenuItem Header="Price Comparison" x:Name="rmItemPriceComparison"
                                              Command="{Binding DashboardCompanyChartingClosingPriceCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        
                         <telerik:RadMenuItem Header="Unrealised Gain/Loss" x:Name="rmItemUnrealisedGainLoss"
                                              Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}" IsEnabled="{Binding EnableGadget}"/>
+                        
                         <telerik:RadMenuItem Header="Context" x:Name="rmItemContext"
                                              Command="{Binding DashboardCompanyChartingContextCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}" IsEnabled="{Binding EnableGadget}"/>
