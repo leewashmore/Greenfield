@@ -197,7 +197,7 @@ namespace GreenField.Common
         #endregion
 
         #region Performance Relative Performance
-        public const string PERFORMANCE_RELATIVE_PERFORMANCE = "Excess Contribution";
+        public const string PERFORMANCE_RELATIVE_PERFORMANCE = "Relative Performance Matrix";
         public const string PERFORMANCE_COUNTRY_ACTIVE_POSITION = "Country Active Position";
         public const string PERFORMANCE_SECTOR_ACTIVE_POSITION = "Sector Active Position";
         public const string PERFORMANCE_SECURITY_ACTIVE_POSITION = "Security Active Position";
