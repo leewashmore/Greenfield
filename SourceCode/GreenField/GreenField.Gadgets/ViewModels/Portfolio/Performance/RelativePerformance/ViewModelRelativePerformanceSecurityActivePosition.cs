@@ -26,7 +26,7 @@ namespace GreenField.Gadgets.ViewModels
         //Selection Data
        PortfolioSelectionData portfolioSelectionDataInfo;
 
-        //to check that grid is not re populated for same values when Excess Contribution is clicked
+       //to check that grid is not re populated for same values when Relative Performance Matrix is clicked
         RelativePerformanceGridCellData checkValue = new RelativePerformanceGridCellData();
         #endregion
 

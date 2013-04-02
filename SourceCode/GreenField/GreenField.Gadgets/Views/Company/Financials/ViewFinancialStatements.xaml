@@ -285,7 +285,7 @@
                             </Border>
                         </Grid>
                         <Grid Grid.Row="1" Visibility="{Binding ExternalResearchVisibility}">
-                            <TextBlock Text="External Estimate Data" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"
+                            <TextBlock Text="Consensus Estimates (Median)"  FontWeight="Bold" Style="{StaticResource TextBlockStyle}"
                                    HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2,0,2"/>
                         </Grid>
                         <Grid Grid.Row="2" Visibility="{Binding ExternalResearchVisibility}">
