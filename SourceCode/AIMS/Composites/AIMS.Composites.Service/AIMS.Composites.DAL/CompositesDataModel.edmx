@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CompositesDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="CompositesDataModelStoreContainer" />
+        <Function Name="GetComposites" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CompositesDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="CompositesDataModelContainer" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="GetComposites" ReturnType="Collection(CompositesDataModel.GetComposites_Result)" />
+        </EntityContainer>
+        <ComplexType Name="GetComposites_Result">
+          <Property Type="String" Name="COMPOSITE_ID" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="NAME" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="BENCHMARK_ID" Nullable="true" MaxLength="255" />
+          <Property Type="Boolean" Name="LOOK_THRU" Nullable="true" />
+          <Property Type="Boolean" Name="ACTIVE" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="CompositesDataModel" />
+        <Alias Key="Target" Value="CompositesDataModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="CompositesDataModelContainer" StorageEntityContainer="CompositesDataModelStoreContainer">
+          <FunctionImportMapping FunctionImportName="GetComposites" FunctionName="CompositesDataModel.Store.GetComposites">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CompositesDataModel.GetComposites_Result">
+                <ScalarProperty Name="COMPOSITE_ID" ColumnName="COMPOSITE_ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+                <ScalarProperty Name="LOOK_THRU" ColumnName="LOOK_THRU" />
+                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Default" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
