@@ -476,7 +476,6 @@ namespace GreenField.Gadgets.Helpers
                 AddDataRows(table, group.Items, columns, grid, cellValueOverwrite);
             }
 
-            //TODO 2
             TableRow headerRow = new TableRow();
             for (int i = 0; i < columns.Count(); i++)
             {

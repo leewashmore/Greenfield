@@ -577,14 +577,14 @@ namespace GreenField.Gadgets.Views
             List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
             RadExportOptionsInfo.Add(new RadExportOptions()
             {
-                ElementName = "Excess Contribution",
+                ElementName = "Relative Performance Matrix",
                 Element = this.dgRelativePerformance,
                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PDF_EXPORT_FILTER,
                 RichTextBox = this.RichTextBox,
                 CellValueOverwrite = dgRelativePerformance_PdfElementExporting
             });
 
-            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Excess Contribution");
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Relative Performance Matrix");
             childExportOptions.Show();
         }        
 
@@ -658,14 +658,14 @@ namespace GreenField.Gadgets.Views
             List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
             RadExportOptionsInfo.Add(new RadExportOptions()
             {
-                ElementName = "Excess Contribution",
+                ElementName = "Relative Performance Matrix",
                 Element = this.dgRelativePerformance,
                 ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_PRINT_FILTER,
                 RichTextBox = this.RichTextBox,
                 CellValueOverwrite = dgRelativePerformance_PdfElementExporting
             });
 
-            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Excess Contribution");
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Relative Performance Matrix");
             childExportOptions.Show();
         }
 

@@ -1253,7 +1253,7 @@ namespace Greenfield.ServiceCaller.UnitTest
 
         #endregion
 
-        #region Excess Contribution Gadgets
+        #region Relative Performance Matrix Gadgets
 
         #region Relative Performance Gadget
 

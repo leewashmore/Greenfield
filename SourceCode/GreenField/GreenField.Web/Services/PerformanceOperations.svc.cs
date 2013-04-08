@@ -1511,7 +1511,7 @@ namespace GreenField.Web.Services
                 switch (period)
                 {
                     case "1D":
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_1D != 0 || g.POR_RC_TWR_1D != 0 || g.BM1_RC_AVG_WGT_1D != 0 || g.BM1_RC_TWR_1D != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1,
@@ -1521,7 +1521,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "1W":
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_1W != 0 || g.POR_RC_TWR_1W != 0 || g.BM1_RC_AVG_WGT_1W != 0 || g.BM1_RC_TWR_1W != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1,
@@ -1531,7 +1531,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "MTD":
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_MTD != 0 || g.POR_RC_TWR_MTD != 0 || g.BM1_RC_AVG_WGT_MTD != 0 || g.BM1_RC_TWR_MTD != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1,
@@ -1541,7 +1541,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "QTD":
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_QTD != 0 || g.POR_RC_TWR_QTD != 0 || g.BM1_RC_AVG_WGT_QTD != 0 || g.BM1_RC_TWR_QTD != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1,
@@ -1551,7 +1551,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "1Y":
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_1Y != 0 || g.POR_RC_TWR_1Y != 0 || g.BM1_RC_AVG_WGT_1Y != 0 || g.BM1_RC_TWR_1Y != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1,
@@ -1561,7 +1561,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     default:
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_YTD != 0 || g.POR_RC_TWR_YTD != 0 || g.BM1_RC_AVG_WGT_YTD != 0 || g.BM1_RC_TWR_YTD != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1,
@@ -1673,7 +1673,7 @@ namespace GreenField.Web.Services
                 switch (period)
                 {
                     case "1D":
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_1D != 0 || g.POR_RC_TWR_1D != 0 || g.BM1_RC_AVG_WGT_1D != 0 || g.BM1_RC_TWR_1D != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1_LONG_NAME,
@@ -1683,7 +1683,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "1W":
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_1W != 0 || g.POR_RC_TWR_1W != 0 || g.BM1_RC_AVG_WGT_1W != 0 || g.BM1_RC_TWR_1W != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1_LONG_NAME,
@@ -1693,7 +1693,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "MTD":
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_MTD != 0 || g.POR_RC_TWR_MTD != 0 || g.BM1_RC_AVG_WGT_MTD != 0 || g.BM1_RC_TWR_MTD != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1_LONG_NAME,
@@ -1703,7 +1703,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "QTD":
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_QTD != 0 || g.POR_RC_TWR_QTD != 0 || g.BM1_RC_AVG_WGT_QTD != 0 || g.BM1_RC_TWR_QTD != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1_LONG_NAME,
@@ -1713,7 +1713,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "1Y":
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_1Y != 0 || g.POR_RC_TWR_1Y != 0 || g.BM1_RC_AVG_WGT_1Y != 0 || g.BM1_RC_TWR_1Y != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1_LONG_NAME,
@@ -1723,7 +1723,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     default:
-                        data = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        data = resultQuery.Where(g => g.POR_RC_AVG_WGT_YTD != 0 || g.POR_RC_TWR_YTD != 0 || g.BM1_RC_AVG_WGT_YTD != 0 || g.BM1_RC_TWR_YTD != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.SEC_NAME,
                             EntityGroup = t.AGG_LVL_1_LONG_NAME,
@@ -1836,7 +1836,7 @@ namespace GreenField.Web.Services
                 switch (period)
                 {
                     case "1D":
-                        result = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        result = resultQuery.Where(g => g.POR_RC_AVG_WGT_1D != 0 || g.POR_RC_TWR_1D != 0 || g.BM1_RC_AVG_WGT_1D != 0 || g.BM1_RC_TWR_1D != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.AGG_LVL_1_LONG_NAME,
                             EntityGroup = t.ISSUER_NAME,
@@ -1848,7 +1848,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "1W":
-                        result = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        result = resultQuery.Where(g => g.POR_RC_AVG_WGT_1W != 0 || g.POR_RC_TWR_1W != 0 || g.BM1_RC_AVG_WGT_1W != 0 || g.BM1_RC_TWR_1W != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.AGG_LVL_1_LONG_NAME,
                             EntityGroup = t.ISSUER_NAME,
@@ -1861,7 +1861,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "MTD":
-                        result = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        result = resultQuery.Where(g => g.POR_RC_AVG_WGT_MTD != 0 || g.POR_RC_TWR_MTD != 0 || g.BM1_RC_AVG_WGT_MTD != 0 || g.BM1_RC_TWR_MTD != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.AGG_LVL_1_LONG_NAME,
                             EntityGroup = t.ISSUER_NAME,
@@ -1873,7 +1873,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "QTD":
-                        result = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        result = resultQuery.Where(g => g.POR_RC_AVG_WGT_QTD != 0 || g.POR_RC_TWR_QTD != 0 || g.BM1_RC_AVG_WGT_QTD != 0 || g.BM1_RC_TWR_QTD != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.AGG_LVL_1_LONG_NAME,
                             EntityGroup = t.ISSUER_NAME,
@@ -1885,7 +1885,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     case "1Y":
-                        result = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        result = resultQuery.Where(g => g.POR_RC_AVG_WGT_1Y != 0 || g.POR_RC_TWR_1Y != 0 || g.BM1_RC_AVG_WGT_1Y != 0 || g.BM1_RC_TWR_1Y != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.AGG_LVL_1_LONG_NAME,
                             EntityGroup = t.ISSUER_NAME,
@@ -1897,7 +1897,7 @@ namespace GreenField.Web.Services
                         }).ToList();
                         break;
                     default:
-                        result = resultQuery.Select(t => new RelativePerformanceActivePositionData
+                        result = resultQuery.Where(g => g.POR_RC_AVG_WGT_YTD != 0 || g.POR_RC_TWR_YTD != 0 || g.BM1_RC_AVG_WGT_YTD != 0 || g.BM1_RC_TWR_YTD != 0).Select(t => new RelativePerformanceActivePositionData
                         {
                             Entity = t.AGG_LVL_1_LONG_NAME,
                             EntityGroup = t.ISSUER_NAME,
