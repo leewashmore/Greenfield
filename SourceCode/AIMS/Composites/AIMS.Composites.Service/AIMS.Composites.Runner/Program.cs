@@ -10,6 +10,11 @@ namespace AIMS.Composites.Runner
     {
         static void Main(string[] args)
         {
+            //AIMS.Composites.DAL.Class1 class1 = new DAL.Class1();
+            //class1.Somefunction();
+
+            AIMS.Composites.Service.CompositesOperations compositesOperations = new AIMS.Composites.Service.CompositesOperations();
+            compositesOperations.DoWork();
         }
     }
 }

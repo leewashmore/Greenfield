@@ -47,6 +47,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AIMS.Composites.DAL\AIMS.Composites.DAL.csproj">
+      <Project>{b8b3bfdb-efe0-4a9b-a68f-9aa64be29404}</Project>
+      <Name>AIMS.Composites.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AIMS.Composites.Service\AIMS.Composites.Service.csproj">
+      <Project>{15b3e0d2-6217-493a-a690-158c497f5318}</Project>
+      <Name>AIMS.Composites.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

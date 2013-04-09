@@ -4,15 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CompositesDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="CompositesDataModelStoreContainer" />
+      <Schema Namespace="AIMS_MainModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="AIMS_MainModelStoreContainer" />
         <Function Name="GetComposites" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CompositesDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
-        <EntityContainer Name="CompositesDataModelContainer" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="GetComposites" ReturnType="Collection(CompositesDataModel.GetComposites_Result)" />
+      <Schema Namespace="AIMS_MainModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AIMS_MainEntities" p1:LazyLoadingEnabled="true" >
+          <FunctionImport Name="GetComposites" ReturnType="Collection(AIMS_MainModel.GetComposites_Result)" />
         </EntityContainer>
         <ComplexType Name="GetComposites_Result">
           <Property Type="String" Name="COMPOSITE_ID" Nullable="false" MaxLength="255" />
@@ -25,13 +26,11 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="CompositesDataModel" />
-        <Alias Key="Target" Value="CompositesDataModel.Store" />
-        <EntityContainerMapping CdmEntityContainer="CompositesDataModelContainer" StorageEntityContainer="CompositesDataModelStoreContainer">
-          <FunctionImportMapping FunctionImportName="GetComposites" FunctionName="CompositesDataModel.Store.GetComposites">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AIMS_MainModelStoreContainer" CdmEntityContainer="AIMS_MainEntities" >
+          <FunctionImportMapping FunctionImportName="GetComposites" FunctionName="AIMS_MainModel.Store.GetComposites">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CompositesDataModel.GetComposites_Result">
+              <ComplexTypeMapping TypeName="AIMS_MainModel.GetComposites_Result">
                 <ScalarProperty Name="COMPOSITE_ID" ColumnName="COMPOSITE_ID" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
@@ -45,22 +44,21 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
-    <edmx:Connection>
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
       </DesignerInfoPropertySet>
-    </edmx:Connection>
-    <edmx:Options>
+    </Connection>
+    <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Default" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
-    </edmx:Options>
+    </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <edmx:Diagrams>
-    </edmx:Diagrams>
-  </edmx:Designer>
+    <Diagrams></Diagrams>
+  </Designer>
 </edmx:Edmx>

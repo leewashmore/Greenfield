@@ -47,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="CompositesDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompositesDataModel.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="CompositesDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -68,6 +73,11 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CompositesDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="CompositesDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CompositesDataModel.edmx</DependentUpon>
+      <LastGenOutput>CompositesDataModel.Context.cs</LastGenOutput>
+    </None>
     <None Include="CompositesDataModel.edmx.diagram">
       <DependentUpon>CompositesDataModel.edmx</DependentUpon>
     </None>

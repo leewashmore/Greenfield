@@ -12,7 +12,16 @@ namespace AIMS.Composites.Service
     {
         public void DoWork()
         {
-            //compo
+            AIMS.Composites.DAL.AIMS_MainEntities aAIMS_MainEntities = new AIMS.Composites.DAL.AIMS_MainEntities();
+            List<AIMS.Composites.DAL.GetComposites_Result> x = new List<DAL.GetComposites_Result>();
+            x = aAIMS_MainEntities.GetComposites().ToList();
+
+            //aAIMS_MainEntities.GetComposites();
+
+            //AIMS.Composites.DAL. .CompositesDataModel compositesDataModel = new DAL.CompositesDataModel();
+
+            //AIMS.Composites.DAL.GetComposites_Result result = new DAL.GetComposites_Result();
+            //compositesDataModel.GetComposites();
         }
     }
 }
