@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using AIMS.Composites.DAL;
 
 namespace AIMS.Composites.Service
 {
@@ -12,6 +13,7 @@ namespace AIMS.Composites.Service
     public interface ICompositesOperations
     {
         [OperationContract]
-        void DoWork();
+        List<GetComposites_Result> GetComposites();
+        List<GetComposites_Result> GetCompositePortfolios();
     }
 }
