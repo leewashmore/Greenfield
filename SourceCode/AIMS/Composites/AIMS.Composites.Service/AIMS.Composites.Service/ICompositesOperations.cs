@@ -14,6 +14,7 @@ namespace AIMS.Composites.Service
     {
         [OperationContract]
         List<GetComposites_Result> GetComposites();
-        List<GetComposites_Result> GetCompositePortfolios();
+        List<GetCompositePortfolios_Result> GetCompositePortfolios(string compositeId);
+        void PopulateCompositeLTHoldings();
     }
 }

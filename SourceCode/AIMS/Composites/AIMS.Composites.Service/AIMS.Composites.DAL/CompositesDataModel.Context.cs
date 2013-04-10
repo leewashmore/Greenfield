@@ -33,5 +33,14 @@ namespace AIMS.Composites.DAL
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetComposites_Result>("GetComposites");
         }
+    
+        public virtual ObjectResult<GetCompositePortfolios_Result> GetCompositePortfolios(string compositeID)
+        {
+            var compositeIDParameter = compositeID != null ?
+                new ObjectParameter("compositeID", compositeID) :
+                new ObjectParameter("compositeID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCompositePortfolios_Result>("GetCompositePortfolios", compositeIDParameter);
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace AIMS.Composites.Runner
             //class1.Somefunction();
 
             AIMS.Composites.Service.CompositesOperations compositesOperations = new AIMS.Composites.Service.CompositesOperations();
-            compositesOperations.GetComposites();
+            compositesOperations.PopulateCompositeLTHoldings();
         }
     }
 }

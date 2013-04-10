@@ -4,16 +4,21 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AIMS_MainModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AIMS_MainModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="AIMS_MainModelStoreContainer" />
+        <Function Name="GetCompositePortfolios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="compositeID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetComposites" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AIMS_MainModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="AIMS_MainEntities" p1:LazyLoadingEnabled="true" >
           <FunctionImport Name="GetComposites" ReturnType="Collection(AIMS_MainModel.GetComposites_Result)" />
+          <FunctionImport Name="GetCompositePortfolios" ReturnType="Collection(AIMS_MainModel.GetCompositePortfolios_Result)">
+            <Parameter Name="compositeID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetComposites_Result">
           <Property Type="String" Name="COMPOSITE_ID" Nullable="false" MaxLength="255" />
@@ -21,6 +26,10 @@
           <Property Type="String" Name="BENCHMARK_ID" Nullable="true" MaxLength="255" />
           <Property Type="Boolean" Name="LOOK_THRU" Nullable="true" />
           <Property Type="Boolean" Name="ACTIVE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetCompositePortfolios_Result">
+          <Property Type="String" Name="COMPOSITE" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="PORTFOLIO" Nullable="false" MaxLength="255" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -36,6 +45,14 @@
                 <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
                 <ScalarProperty Name="LOOK_THRU" ColumnName="LOOK_THRU" />
                 <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCompositePortfolios" FunctionName="AIMS_MainModel.Store.GetCompositePortfolios">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AIMS_MainModel.GetCompositePortfolios_Result">
+                <ScalarProperty Name="COMPOSITE" ColumnName="COMPOSITE" />
+                <ScalarProperty Name="PORTFOLIO" ColumnName="PORTFOLIO" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

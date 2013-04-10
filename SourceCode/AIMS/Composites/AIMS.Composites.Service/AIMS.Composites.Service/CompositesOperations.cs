@@ -50,30 +50,46 @@ namespace AIMS.Composites.Service
         {
             try
             {
-                AIMS_MainEntities aAIMS_MainEntities = new AIMS_MainEntities();
-                List<GetComposites_Result> composites = new List<GetComposites_Result>();
-                return aAIMS_MainEntities.GetComposites().ToList();
+                return new AIMS_MainEntities().GetComposites().ToList();
             }
             catch (Exception ex)
             {
                 //ExceptionTrace.LogException(ex);
                 //string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 //throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+             
                 return null;
             }
         }
 
-        public List<GetComposites_Result> GetCompositePortfolios()
+        public List<GetCompositePortfolios_Result> GetCompositePortfolios(string compositeId)
         {
             try
             {
-                AIMS_MainEntities aAIMS_MainEntities = new AIMS_MainEntities();
-                List<GetComposites_Result> composites = new List<GetComposites_Result>();
-                return aAIMS_MainEntities.GetComposites().ToList();
+               return new AIMS_MainEntities().GetCompositePortfolios(compositeId).ToList(); 
             }
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public void PopulateCompositeLTHoldings()
+        {
+            try
+            {
+                List<GetComposites_Result> composites = GetComposites();
+                foreach(GetComposites_Result composite in composites)
+                {
+                    //Step 1   Retrieve the list of portfolios in the composite that are active (using the new COMPOSITE_MATRIX table).
+                    List<GetCompositePortfolios_Result> portfolios = GetCompositePortfolios(composite.COMPOSITE_ID);
+                    
+                    // question loop and insert of do in one shot
+                    portfolios
+                }
+            }
+            catch (Exception ex)
+            {
             }
         }
 
