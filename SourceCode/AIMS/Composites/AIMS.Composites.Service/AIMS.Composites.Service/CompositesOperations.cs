@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity.Infrastructure;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using AIMS.Composites.DAL;
@@ -12,14 +14,21 @@ namespace AIMS.Composites.Service
     {
         #region PropertyDeclaration
 
-        private Entities dimensionEntity;
+        private const int InsertRecordsBatchSize = 100;
+        private readonly IDumper _dumper;
+        private Entities _dimensionEntity;
+
+        public CompositesOperations(IDumper dumper)
+        {
+            _dumper = dumper;
+        }
 
         public Entities DimensionEntity
         {
             get
             {
-                return dimensionEntity ??
-                       (dimensionEntity =
+                return _dimensionEntity ??
+                       (_dimensionEntity =
                         new Entities(new Uri(ConfigurationSettings.AppSettings["DimensionWebService"])));
             }
         }
@@ -48,8 +57,9 @@ namespace AIMS.Composites.Service
             {
                 return new AIMS_MainEntities().GetComposites().ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LogException(ex);
                 //ExceptionTrace.LogException(ex);
                 //string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 //throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
@@ -64,8 +74,9 @@ namespace AIMS.Composites.Service
             {
                 return new AIMS_MainEntities().GetCompositePortfolios(compositeId).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LogException(ex);
                 return null;
             }
         }
@@ -74,16 +85,31 @@ namespace AIMS.Composites.Service
         {
             try
             {
+                _dumper.WriteLine("Started PopulateCompositeLTHoldings operation.");
+                _dumper.Write("GetComposites ... ");
                 List<GetComposites_Result> composites = GetComposites();
+                _dumper.WriteLine(composites.Count() + " Composites returned.", true);
+
+                int indedx = 1;
                 foreach (GetComposites_Result composite in composites)
                 {
                     // Step 1   Retrieve the list of portfolios in the composite that are active (using the new COMPOSITE_MATRIX table).
+                    _dumper.WriteLine("");
+                    _dumper.WriteLine((indedx++) + ". WORKING ON " + composite.COMPOSITE_ID);
+                    _dumper.Write("GetCompositePortfolios ... ");
                     List<GetCompositePortfolios_Result> portfolios = GetCompositePortfolios(composite.COMPOSITE_ID);
+                    _dumper.WriteLine(portfolios.Count() + " CompositePortfolios returned.", true);
 
                     // Step 2   For portfolios returned in Step 1, retrieve all records from GF_PORTFOLIO_LTHOLDINGS.
+                    // Step 3   Delete records when appropriate based on Look_Thru setting in COMPOSITE_MATRIX view.  When Look_Thru <> 'Y', delete records returned from view where PORTFOLIO_ID <> A_PFCHOLDINGS_PORLT
+
+                    int portfolioIndex = 1;
+                    _dumper.Indent();
                     foreach (GetCompositePortfolios_Result portfolio in portfolios)
                     {
                         // Step 4   Aggregate remaining records together by the ASEC_SEC_SHORT_NAME, and PORTFOLIO_DATE.
+
+                        _dumper.WriteLine((portfolioIndex++) + ". " + portfolio.PORTFOLIO);
                         var aggregateSecurities =
                             DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(
                                 record => record.PORTFOLIO_ID == portfolio.PORTFOLIO)
@@ -92,39 +118,40 @@ namespace AIMS.Composites.Service
                                                     (key, group) =>
                                                     new
                                                         {
-                                                            group.First().GF_ID,
+                                                            @group.First().GF_ID,
                                                             key.PORTFOLIO_DATE,
-                                                            group.First().PORPATH,
-                                                            group.First().PORTFOLIO_THEME_SUBGROUP_CODE,
-                                                            group.First().PORTFOLIO_CURRENCY,
-                                                            group.First().ISSUER_ID,
+                                                            @group.First().PORPATH,
+                                                            @group.First().PORTFOLIO_THEME_SUBGROUP_CODE,
+                                                            @group.First().PORTFOLIO_CURRENCY,
+                                                            @group.First().ISSUER_ID,
                                                             key.ASEC_SEC_SHORT_NAME,
-                                                            group.First().ISSUE_NAME,
-                                                            group.First().TICKER,
-                                                            group.First().SECURITYTHEMECODE,
-                                                            group.First().A_SEC_INSTR_TYPE,
-                                                            group.First().SECURITY_TYPE,
-                                                            BALANCE_NOMINAL = group.Sum(x => x.BALANCE_NOMINAL),
-                                                            group.First().DIRTY_PRICE,
-                                                            group.First().TRADING_CURRENCY,
-                                                            DIRTY_VALUE_PC = group.Sum(x => x.DIRTY_VALUE_PC),
-                                                            BENCHMARK_WEIGHT = group.Sum(x => x.BENCHMARK_WEIGHT),
+                                                            @group.First().ISSUE_NAME,
+                                                            @group.First().TICKER,
+                                                            @group.First().SECURITYTHEMECODE,
+                                                            @group.First().A_SEC_INSTR_TYPE,
+                                                            @group.First().SECURITY_TYPE,
+                                                            BALANCE_NOMINAL = @group.Sum(x => x.BALANCE_NOMINAL),
+                                                            @group.First().DIRTY_PRICE,
+                                                            @group.First().TRADING_CURRENCY,
+                                                            DIRTY_VALUE_PC = @group.Sum(x => x.DIRTY_VALUE_PC),
+                                                            BENCHMARK_WEIGHT = @group.Sum(x => x.BENCHMARK_WEIGHT),
                                                             ASH_EMM_MODEL_WEIGHT =
-                                                        group.Sum(x => x.ASH_EMM_MODEL_WEIGHT),
-                                                            group.First().MARKET_CAP_IN_USD,
-                                                            group.First().ASHEMM_PROP_REGION_CODE,
-                                                            group.First().ASHEMM_PROP_REGION_NAME,
-                                                            group.First().ISO_COUNTRY_CODE,
-                                                            group.First().COUNTRYNAME,
-                                                            group.First().GICS_SECTOR,
-                                                            group.First().GICS_SECTOR_NAME,
-                                                            group.First().GICS_INDUSTRY,
-                                                            group.First().GICS_INDUSTRY_NAME,
-                                                            group.First().GICS_SUB_INDUSTRY,
-                                                            group.First().GICS_SUB_INDUSTRY_NAME,
-                                                            group.First().LOOK_THRU_FUND
+                                                        @group.Sum(x => x.ASH_EMM_MODEL_WEIGHT),
+                                                            @group.First().MARKET_CAP_IN_USD,
+                                                            @group.First().ASHEMM_PROP_REGION_CODE,
+                                                            @group.First().ASHEMM_PROP_REGION_NAME,
+                                                            @group.First().ISO_COUNTRY_CODE,
+                                                            @group.First().COUNTRYNAME,
+                                                            @group.First().GICS_SECTOR,
+                                                            @group.First().GICS_SECTOR_NAME,
+                                                            @group.First().GICS_INDUSTRY,
+                                                            @group.First().GICS_INDUSTRY_NAME,
+                                                            @group.First().GICS_SUB_INDUSTRY,
+                                                            @group.First().GICS_SUB_INDUSTRY_NAME,
+                                                            @group.First().LOOK_THRU_FUND
                                                         }).ToList();
 
+                        _dumper.WriteLine("GF_PORTFOLIO_LTHOLDINGS: aggregated records = " + aggregateSecurities.Count());
                         var compositeLtholdings = new List<GF_COMPOSITE_LTHOLDINGS>();
 
                         foreach (var aggregateSecurity in aggregateSecurities)
@@ -168,6 +195,7 @@ namespace AIMS.Composites.Service
                             compositeLtholdings.Add(compositeLth);
                         }
 
+                        _dumper.WriteLine("saving");
                         // question loop and insert of do in one shot
                         //using (TransactionScope scope = new TransactionScope())
                         {
@@ -181,13 +209,17 @@ namespace AIMS.Composites.Service
                                 foreach (GF_COMPOSITE_LTHOLDINGS entityToInsert in compositeLtholdings)
                                 {
                                     ++count;
-                                    context = AddToContext(context, entityToInsert, count, 1000, true);
+                                    context = AddToContext(context, entityToInsert, count, InsertRecordsBatchSize,
+                                                           true);
                                 }
 
                                 context.SaveChanges();
+                                _dumper.Write(compositeLtholdings.Count + " DONE.");
+                                _dumper.WriteLine("");
                             }
                             catch (Exception ex)
                             {
+                                LogException(ex);
                             }
                             finally
                             {
@@ -198,11 +230,23 @@ namespace AIMS.Composites.Service
                             //scope.Complete();
                         }
                     }
+                    _dumper.Unindent();
                 }
             }
             catch (Exception ex)
             {
+                LogException(ex);
             }
+        }
+
+        private void LogException(Exception ex)
+        {
+            _dumper.WriteLine(
+                string.Format("Error:{0}  InnerException 1.{1}  InnerException 2.{2}", ex.Message,
+                              ex.InnerException == null ? "" : ex.InnerException.Message,
+                              ex.InnerException == null || ex.InnerException.InnerException == null
+                                  ? ""
+                                  : ex.InnerException.InnerException.Message), true);
         }
 
         private AIMS_MainEntities AddToContext(AIMS_MainEntities context, GF_COMPOSITE_LTHOLDINGS entity, int count,
@@ -212,6 +256,7 @@ namespace AIMS.Composites.Service
 
             if (count%commitCount == 0)
             {
+                _dumper.Write(count.ToString() + ",");
                 context.SaveChanges();
                 if (recreateContext)
                 {
@@ -225,6 +270,24 @@ namespace AIMS.Composites.Service
         }
 
         #endregion
+
+        public void TruncateCompositeLTHoldings()
+        {
+            try
+            {
+                _dumper.Write("TRUNCATE TABLE [GF_COMPOSITE_LTHOLDINGS] ... ");
+
+                var db = new AIMS_MainEntities();
+                ObjectContext objCtx = ((IObjectContextAdapter) db).ObjectContext;
+                objCtx.ExecuteStoreCommand("TRUNCATE TABLE [GF_COMPOSITE_LTHOLDINGS]");
+
+                _dumper.WriteLine(" truncated.", true);
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
+        }
 
         /* *
 

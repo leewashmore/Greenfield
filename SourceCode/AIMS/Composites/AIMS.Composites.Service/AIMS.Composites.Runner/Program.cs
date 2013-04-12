@@ -6,7 +6,10 @@ namespace AIMS.Composites.Runner
     {
         private static void Main(string[] args)
         {
-            var compositesOperations = new CompositesOperations();
+            var dumper = new ConsoleDumper();
+
+            var compositesOperations = new CompositesOperations(dumper);
+            compositesOperations.TruncateCompositeLTHoldings();
             compositesOperations.PopulateCompositeLTHoldings();
         }
     }

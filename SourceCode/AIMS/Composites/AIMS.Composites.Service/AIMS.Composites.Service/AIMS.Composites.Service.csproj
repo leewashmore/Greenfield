@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="CompositesOperations.cs" />
     <Compile Include="ICompositesOperations.cs" />
+    <Compile Include="IDumper.cs" />
     <Compile Include="IService1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\DimensionWebService\Reference.cs">
