@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text;
 using AIMS.Composites.DAL;
 
 namespace AIMS.Composites.Service
@@ -14,6 +10,7 @@ namespace AIMS.Composites.Service
     {
         [OperationContract]
         List<GetComposites_Result> GetComposites();
+
         List<GetCompositePortfolios_Result> GetCompositePortfolios(string compositeId);
         void PopulateCompositeLTHoldings();
     }

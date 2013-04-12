@@ -68,6 +68,9 @@
     <Compile Include="GetComposites_Result.cs">
       <DependentUpon>CompositesDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GF_COMPOSITE_LTHOLDINGS.cs">
+      <DependentUpon>CompositesDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

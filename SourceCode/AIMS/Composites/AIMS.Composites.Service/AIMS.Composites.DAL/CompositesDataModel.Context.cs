@@ -28,6 +28,7 @@ namespace AIMS.Composites.DAL
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<GF_COMPOSITE_LTHOLDINGS> GF_COMPOSITE_LTHOLDINGS { get; set; }
     
         public virtual ObjectResult<GetComposites_Result> GetComposites()
         {
