@@ -124,32 +124,32 @@ namespace AIMS.Composites.Service
                     stopwatch.Start();
                     _dumper.Write(
                         "For portfolios returned, retrieve all records from GF_PORTFOLIO_LTHOLDINGS: count= ");
-                    List<GF_PORTFOLIO_LTHOLDINGS> _GF_PORTFOLIO_LTHOLDINGSs =
+                    List<GF_PORTFOLIO_LTHOLDINGS> gfPortfolioLtholdings =
                         DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.ToList().Where(
                             record => CompositePortfoliosIds.Contains(record.PORTFOLIO_ID)).ToList();
-                    _dumper.WriteLine(_GF_PORTFOLIO_LTHOLDINGSs.Count().ToString(CultureInfo.InvariantCulture),
+                    _dumper.WriteLine(gfPortfolioLtholdings.Count().ToString(CultureInfo.InvariantCulture),
                                       stopwatch);
 
                     // Step 3   Delete records when appropriate based on Look_Thru setting in COMPOSITE_MATRIX view.  When Look_Thru <> 'Y', delete records returned from view where PORTFOLIO_ID <> A_PFCHOLDINGS_PORLT
-                    var _GF_PORTFOLIO_LTHOLDINGSs_New = new List<GF_PORTFOLIO_LTHOLDINGS>();
+                    var gfPortfolioLthondings_New = new List<GF_PORTFOLIO_LTHOLDINGS>();
                     if (composite.LOOK_THRU != true)
-                        _GF_PORTFOLIO_LTHOLDINGSs_New.AddRange(
-                            _GF_PORTFOLIO_LTHOLDINGSs.Where(
-                                gfPortfolioLtholdings =>
-                                gfPortfolioLtholdings.PORTFOLIO_ID == gfPortfolioLtholdings.A_PFCHOLDINGS_PORLT));
+                        gfPortfolioLthondings_New.AddRange(
+                            gfPortfolioLtholdings.Where(
+                                Ltholdings =>
+                                Ltholdings.PORTFOLIO_ID == Ltholdings.A_PFCHOLDINGS_PORLT));
                     else
-                        _GF_PORTFOLIO_LTHOLDINGSs_New = _GF_PORTFOLIO_LTHOLDINGSs;
+                        gfPortfolioLthondings_New = gfPortfolioLtholdings;
 
                     _dumper.WriteLine(
                         string.Format(
                             "Removed where COMPOSITE_MATRIX.Look_Thru <> 'Y', and PORTFOLIO_ID <> A_PFCHOLDINGS_PORLT: new count= {0}",
-                            _GF_PORTFOLIO_LTHOLDINGSs_New.Count().ToString(CultureInfo.InvariantCulture)));
+                            gfPortfolioLthondings_New.Count().ToString(CultureInfo.InvariantCulture)));
 
                     // Step 4   Aggregate remaining records together by the ASEC_SEC_SHORT_NAME, and PORTFOLIO_DATE.
                     stopwatch = new Stopwatch();
                     stopwatch.Start();
                     var aggregateSecurities =
-                        _GF_PORTFOLIO_LTHOLDINGSs_New.GroupBy(x => new {x.PORTFOLIO_DATE, x.ASEC_SEC_SHORT_NAME},
+                        gfPortfolioLthondings_New.GroupBy(x => new {x.PORTFOLIO_DATE, x.ASEC_SEC_SHORT_NAME},
                                                               (key, group) =>
                                                               new
                                                                   {
