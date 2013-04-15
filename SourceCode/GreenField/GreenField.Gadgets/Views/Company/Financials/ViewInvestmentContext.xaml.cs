@@ -1043,7 +1043,7 @@ namespace GreenField.Gadgets.Views
                 row.Cells.Add(cell);
                 table.AddRow(row);
                 i = i + 1;
-                if (i > 15) break;
+              //  if (i > 15) break;
 
             }
             generateBlankRow(table);
@@ -1109,7 +1109,7 @@ namespace GreenField.Gadgets.Views
                 {
                     headercell.TextAlignment = RadTextAlignment.Left;
                     headercell.VerticalAlignment = RadVerticalAlignment.Center;
-                    headercell.PreferredWidth = new TableWidthUnit(160);
+                    headercell.PreferredWidth = new TableWidthUnit(175);
                     headercell.ColumnSpan = 2;
                 }
                 else

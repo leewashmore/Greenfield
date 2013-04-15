@@ -2779,8 +2779,16 @@ namespace GreenField.Web.Services
                 ds.DoScrubbing(securityDataIdScrub, DistinctDataId[i], "Range");
             }
             List<InvestmentContextDetailsData> icdList = RearrangeData(securityDataIdScrub, context);
+            List<string> issuerList = getListOfIssuersToDisplay(icdList, issuerId);
             InvestmentContextDetailsData finalICD = getTotalLine(icdList, context);
             InvestmentContextDetailsData icdGroupedResult = GroupBySector(finalICD);
+            List<InvestmentContextDetailsData> icdSectorChildren = icdGroupedResult.children;
+            foreach (var icd in icdSectorChildren)
+            {
+                List<InvestmentContextDetailsData> icdDetailsData = icd.children;
+                icdDetailsData.RemoveAll(x => !issuerList.Contains(x.IssuerId));
+            }
+            
             return icdGroupedResult;
 
         }
@@ -2817,21 +2825,29 @@ namespace GreenField.Web.Services
                 ds.DoScrubbing(securityDataIdScrub, DistinctDataId[i], "Range");
             }
             List<InvestmentContextDetailsData> icdList = RearrangeData(securityDataIdScrub, context);
+            List<string> issuerList = getListOfIssuersToDisplay(icdList,issuerId);
             InvestmentContextDetailsData finalICD = getTotalLine(icdList,context);
-
+            List<InvestmentContextDetailsData> icdChildren = finalICD.children;
+            icdChildren.RemoveAll(x => !issuerList.Contains(x.IssuerId));
             return finalICD;
 
         }
 
         
-
+       
 
         private List<InvestmentContextDetailsData> RearrangeData(List<SecurityDataIdScrub> securityDataIdScrub, string context)
         {
             var securityIdList = securityDataIdScrub.Select(a => a.SecurityId).Distinct().ToList();
             List<InvestmentContextDetailsData> investmentcontextDetailList = new List<InvestmentContextDetailsData>();
+            ExternalResearchEntities entity = new ExternalResearchEntities();
+            DateTime? lastBusinessDate = entity.GF_COMPOSITE_LTHOLDINGS.Where(x => x.PORTFOLIO_ID == "EQYALL").OrderByDescending(x => x.PORTFOLIO_DATE).Select(x=>x.PORTFOLIO_DATE).FirstOrDefault();
+            List<GF_COMPOSITE_LTHOLDINGS> gfCompositeHoldingList = entity.GF_COMPOSITE_LTHOLDINGS.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.PORTFOLIO_ID == "EQYALL").ToList();
+            string issuerid = null;
+            //Debug.Print("========hhhkhjkhkkhhkhkhkkhhhk" + gfCompositeHoldingList.Count());
             foreach (var security in securityIdList)
             {
+                issuerid = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.IssuerId).FirstOrDefault();
                 investmentcontextDetailList.Add(new InvestmentContextDetailsData()
                 {
                     IssuerId                = securityDataIdScrub.Where(a=>a.SecurityId==security).Select(a=>a.IssuerId).FirstOrDefault(),
@@ -2841,8 +2857,8 @@ namespace GreenField.Web.Services
                     GicsSectorName          = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.GICS_Sector_Name).FirstOrDefault(),
                     GicsIndustryCode        = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.GICS_Industry).FirstOrDefault(),
                     GicsIndustryName        = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.GICS_Industry_Name).FirstOrDefault(),
-                    MarketValue             = 1000000,
-                    MarketValueScrubbed = 1000000,
+                    MarketValue             = gfCompositeHoldingList.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.ISSUER_ID == issuerid).Sum(x => x.DIRTY_VALUE_PC) == 0 ? null : gfCompositeHoldingList.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.ISSUER_ID == issuerid).Sum(x => x.DIRTY_VALUE_PC),
+                    MarketValueScrubbed     = gfCompositeHoldingList.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.ISSUER_ID == issuerid).Sum(x => x.DIRTY_VALUE_PC) == 0? null : gfCompositeHoldingList.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.ISSUER_ID == issuerid).Sum(x => x.DIRTY_VALUE_PC),
                     MarketCap               = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 185).Select(a => a.OriginalValue).FirstOrDefault(),
                     MarketCapScrubbed       = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 185).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
                                               securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 185).Select(a => a.OriginalValue).FirstOrDefault() :
@@ -2931,7 +2947,7 @@ namespace GreenField.Web.Services
             {
                 GicsSectorCode = null,
                 GicsSectorName =context+" Average",
-                MarketValue = 1000000,
+                MarketValue = icdList.Sum(x => x.MarketValueScrubbed),
                 MarketCap = icdList.Sum(x => x.MarketCapScrubbed),
                 ForwardPE = GroupCalculations.SimpleAverage(icdList.Select(x => x.ForwardPEScrubbed).ToList()),
                 ForwardPBV = GroupCalculations.SimpleAverage(icdList.Select(x => x.ForwardPBVScrubbed).ToList()),
@@ -2965,7 +2981,7 @@ namespace GreenField.Web.Services
                     {
                         GicsSectorCode= main.GicsSectorCode,
                         GicsSectorName= main.GicsSectorName,
-                        MarketValue = 1000000,
+                        MarketValue = group.Sum(x => x.MarketValueScrubbed),
                         MarketCap = group.Sum(x => x.MarketCapScrubbed) ,
                         ForwardPE = GroupCalculations.SimpleAverage(group.Select(x => x.ForwardPEScrubbed).ToList()),
                         ForwardPBV = GroupCalculations.SimpleAverage(group.Select(x => x.ForwardPBVScrubbed).ToList()),
@@ -2985,6 +3001,58 @@ namespace GreenField.Web.Services
             finalICD.children = result;
             return finalICD;
 
+        }
+
+        private List<string> getListOfIssuersToDisplay(List<InvestmentContextDetailsData> icdList,string issuerId)
+        {
+            List<string> issuerList = new List<string>();
+            // Get all the issuer that has the market value from the composite
+            issuerList = icdList.Where(x => x.MarketValue.HasValue).Select(x => x.IssuerId).ToList();
+            Debug.Print("Total number of issuers"+ icdList.Count());
+            //since we will be displaying only 100 issuers . Subtract the remaining issuers that you want to display. if there are 40 issuers that has the market value then remaining issuers that you want to display is 60
+            int remainingIssuerCount = 100 - issuerList.Count();
+            //handle for odd numbers. its ok to display 101 issuers
+            if (remainingIssuerCount / 2 != 0)
+            {
+                remainingIssuerCount = remainingIssuerCount + 1;
+            }
+
+            //get the market cap of the selected issuer
+            decimal? mktcap = icdList.Where(x => x.IssuerId == issuerId).Select(x => x.MarketCapScrubbed).FirstOrDefault();
+            Debug.Print(mktcap+"marekt caooo ");
+            int upperRange =0;
+            int lowerRange =0;
+            upperRange = remainingIssuerCount/2; // get the upper range . 
+            lowerRange = remainingIssuerCount/2; //get the lower range
+            //get the top n(upper range) of issuers whose market cap is greater than the selected issuer's market cap
+            List<string> issHigherMktCap = icdList.Where(x => x.MarketCapScrubbed >= mktcap && !issuerList.Contains(x.IssuerId)).OrderByDescending(x=>x.MarketCapScrubbed).Take(upperRange).Select(x=>x.IssuerId).ToList();
+            issuerList.AddRange(issHigherMktCap);
+
+            //if the number of issuers returned are less than the upperrange then the retrieve the remaining issuers whose market cap is less than the selected issuers mkt cap.
+            if (issHigherMktCap.Count() < upperRange)
+            {
+                lowerRange = lowerRange + (upperRange - issHigherMktCap.Count());
+            }
+
+
+            List<string> issLowerMktCap = icdList.Where(x => x.MarketCapScrubbed < mktcap && !issuerList.Contains(x.IssuerId)).OrderByDescending(x => x.MarketCapScrubbed).Take(lowerRange).Select(x => x.IssuerId).ToList();
+            issuerList.AddRange(issLowerMktCap);
+
+            //if the number of issuers returned are less than the lowerrange then try to the retrieve the remaining issuers whose market cap is greater than the selected issuers mkt cap.
+            if (issLowerMktCap.Count() < lowerRange)
+            {
+                upperRange = lowerRange - issHigherMktCap.Count();
+                issHigherMktCap = icdList.Where(x => x.MarketCapScrubbed >= mktcap && !issuerList.Contains(x.IssuerId)).OrderByDescending(x => x.MarketCapScrubbed).Take(upperRange).Select(x => x.IssuerId).ToList();
+                issuerList.AddRange(issHigherMktCap);
+            }
+
+           // issuerList.AddRange(issLowerMktCap);
+
+            Debug.Print("&&&&&&&&&&**" + issHigherMktCap.Count());
+            Debug.Print("&&&&&&&&&&**" + issLowerMktCap.Count());
+            Debug.Print("=====>"+issuerList.Count());
+            return issuerList;
+           
         }
 
 
