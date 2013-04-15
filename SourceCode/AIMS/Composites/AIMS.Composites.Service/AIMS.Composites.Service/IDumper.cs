@@ -9,6 +9,7 @@ namespace AIMS.Composites.Service
         void WriteLine(String message, Boolean addTimestamp = false);
         void WriteLine(String message, Stopwatch stopwatch);
         void Write(String message);
+        void Write(String message, Stopwatch stopwatch);
         void Unindent();
     }
 }
