@@ -89,7 +89,7 @@ namespace AIMS.Composites.Service
             {
                 _dumper.WriteLine("Started PopulateCompositeLTHoldings operation.");
                 _dumper.Write("GetComposites ... ");
-                Stopwatch stopwatch = new Stopwatch();
+                var stopwatch = new Stopwatch();
                 stopwatch.Start();
                 List<GetComposites_Result> composites = GetComposites();
                 _dumper.WriteLine(string.Format("{0} Composites returned.", composites.Count()), stopwatch);
@@ -127,16 +127,16 @@ namespace AIMS.Composites.Service
                     List<GF_PORTFOLIO_LTHOLDINGS> _GF_PORTFOLIO_LTHOLDINGSs =
                         DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.ToList().Where(
                             record => CompositePortfoliosIds.Contains(record.PORTFOLIO_ID)).ToList();
-                    _dumper.WriteLine(_GF_PORTFOLIO_LTHOLDINGSs.Count().ToString(CultureInfo.InvariantCulture), stopwatch);
+                    _dumper.WriteLine(_GF_PORTFOLIO_LTHOLDINGSs.Count().ToString(CultureInfo.InvariantCulture),
+                                      stopwatch);
 
                     // Step 3   Delete records when appropriate based on Look_Thru setting in COMPOSITE_MATRIX view.  When Look_Thru <> 'Y', delete records returned from view where PORTFOLIO_ID <> A_PFCHOLDINGS_PORLT
-                    List<GF_PORTFOLIO_LTHOLDINGS> _GF_PORTFOLIO_LTHOLDINGSs_New = new List<GF_PORTFOLIO_LTHOLDINGS>();
+                    var _GF_PORTFOLIO_LTHOLDINGSs_New = new List<GF_PORTFOLIO_LTHOLDINGS>();
                     if (composite.LOOK_THRU == true)
-                    {
-                        foreach (GF_PORTFOLIO_LTHOLDINGS gfPortfolioLtholdings in _GF_PORTFOLIO_LTHOLDINGSs)
-                            if (gfPortfolioLtholdings.PORTFOLIO_ID == gfPortfolioLtholdings.A_PFCHOLDINGS_PORLT)
-                                _GF_PORTFOLIO_LTHOLDINGSs_New.Add(gfPortfolioLtholdings);
-                    }
+                        _GF_PORTFOLIO_LTHOLDINGSs_New.AddRange(
+                            _GF_PORTFOLIO_LTHOLDINGSs.Where(
+                                gfPortfolioLtholdings =>
+                                gfPortfolioLtholdings.PORTFOLIO_ID == gfPortfolioLtholdings.A_PFCHOLDINGS_PORLT));
                     else
                         _GF_PORTFOLIO_LTHOLDINGSs_New = _GF_PORTFOLIO_LTHOLDINGSs;
 
@@ -149,52 +149,51 @@ namespace AIMS.Composites.Service
                     stopwatch = new Stopwatch();
                     stopwatch.Start();
                     var aggregateSecurities =
-                        _GF_PORTFOLIO_LTHOLDINGSs_New.GroupBy(x => new { x.PORTFOLIO_DATE, x.ASEC_SEC_SHORT_NAME },
-                                                          (key, group) =>
-                                                          new
-                                                              {
-                                                                  @group.First().GF_ID,
-                                                                  key.PORTFOLIO_DATE,
-                                                                  @group.First().PORPATH,
-                                                                  @group.First().PORTFOLIO_THEME_SUBGROUP_CODE,
-                                                                  @group.First().PORTFOLIO_CURRENCY,
-                                                                  @group.First().ISSUER_ID,
-                                                                  key.ASEC_SEC_SHORT_NAME,
-                                                                  @group.First().ISSUE_NAME,
-                                                                  @group.First().TICKER,
-                                                                  @group.First().SECURITYTHEMECODE,
-                                                                  @group.First().A_SEC_INSTR_TYPE,
-                                                                  @group.First().SECURITY_TYPE,
-                                                                  BALANCE_NOMINAL = @group.Sum(x => x.BALANCE_NOMINAL),
-                                                                  @group.First().DIRTY_PRICE,
-                                                                  @group.First().TRADING_CURRENCY,
-                                                                  DIRTY_VALUE_PC = @group.Sum(x => x.DIRTY_VALUE_PC),
-                                                                  BENCHMARK_WEIGHT = @group.Sum(x => x.BENCHMARK_WEIGHT),
-                                                                  ASH_EMM_MODEL_WEIGHT =
-                                                              @group.Sum(x => x.ASH_EMM_MODEL_WEIGHT),
-                                                                  @group.First().MARKET_CAP_IN_USD,
-                                                                  @group.First().ASHEMM_PROP_REGION_CODE,
-                                                                  @group.First().ASHEMM_PROP_REGION_NAME,
-                                                                  @group.First().ISO_COUNTRY_CODE,
-                                                                  @group.First().COUNTRYNAME,
-                                                                  @group.First().GICS_SECTOR,
-                                                                  @group.First().GICS_SECTOR_NAME,
-                                                                  @group.First().GICS_INDUSTRY,
-                                                                  @group.First().GICS_INDUSTRY_NAME,
-                                                                  @group.First().GICS_SUB_INDUSTRY,
-                                                                  @group.First().GICS_SUB_INDUSTRY_NAME,
-                                                                  @group.First().LOOK_THRU_FUND
-                                                              }).ToList();
+                        _GF_PORTFOLIO_LTHOLDINGSs_New.GroupBy(x => new {x.PORTFOLIO_DATE, x.ASEC_SEC_SHORT_NAME},
+                                                              (key, group) =>
+                                                              new
+                                                                  {
+                                                                      @group.First().GF_ID,
+                                                                      key.PORTFOLIO_DATE,
+                                                                      @group.First().PORPATH,
+                                                                      @group.First().PORTFOLIO_THEME_SUBGROUP_CODE,
+                                                                      @group.First().PORTFOLIO_CURRENCY,
+                                                                      @group.First().ISSUER_ID,
+                                                                      key.ASEC_SEC_SHORT_NAME,
+                                                                      @group.First().ISSUE_NAME,
+                                                                      @group.First().TICKER,
+                                                                      @group.First().SECURITYTHEMECODE,
+                                                                      @group.First().A_SEC_INSTR_TYPE,
+                                                                      @group.First().SECURITY_TYPE,
+                                                                      BALANCE_NOMINAL =
+                                                                  @group.Sum(x => x.BALANCE_NOMINAL),
+                                                                      @group.First().DIRTY_PRICE,
+                                                                      @group.First().TRADING_CURRENCY,
+                                                                      DIRTY_VALUE_PC = @group.Sum(x => x.DIRTY_VALUE_PC),
+                                                                      BENCHMARK_WEIGHT =
+                                                                  @group.Sum(x => x.BENCHMARK_WEIGHT),
+                                                                      ASH_EMM_MODEL_WEIGHT =
+                                                                  @group.Sum(x => x.ASH_EMM_MODEL_WEIGHT),
+                                                                      @group.First().MARKET_CAP_IN_USD,
+                                                                      @group.First().ASHEMM_PROP_REGION_CODE,
+                                                                      @group.First().ASHEMM_PROP_REGION_NAME,
+                                                                      @group.First().ISO_COUNTRY_CODE,
+                                                                      @group.First().COUNTRYNAME,
+                                                                      @group.First().GICS_SECTOR,
+                                                                      @group.First().GICS_SECTOR_NAME,
+                                                                      @group.First().GICS_INDUSTRY,
+                                                                      @group.First().GICS_INDUSTRY_NAME,
+                                                                      @group.First().GICS_SUB_INDUSTRY,
+                                                                      @group.First().GICS_SUB_INDUSTRY_NAME,
+                                                                      @group.First().LOOK_THRU_FUND
+                                                                  }).ToList();
 
                     _dumper.WriteLine(
                         string.Format("GF_PORTFOLIO_LTHOLDINGS: aggregated records = {0}", aggregateSecurities.Count()),
                         stopwatch);
 
-                    var compositeLtholdings = new List<GF_COMPOSITE_LTHOLDINGS>();
-
-                    foreach (var aggregateSecurity in aggregateSecurities)
-                    {
-                        var compositeLth = new GF_COMPOSITE_LTHOLDINGS
+                    List<GF_COMPOSITE_LTHOLDINGS> compositeLtholdings =
+                        aggregateSecurities.Select(aggregateSecurity => new GF_COMPOSITE_LTHOLDINGS
                             {
                                 GF_ID = COMPOSITE_LTHOLDINGS_ID++,
                                 PORTFOLIO_DATE = aggregateSecurity.PORTFOLIO_DATE,
@@ -229,10 +228,7 @@ namespace AIMS.Composites.Service
                                 GICS_SUB_INDUSTRY = aggregateSecurity.GICS_SUB_INDUSTRY,
                                 GICS_SUB_INDUSTRY_NAME = aggregateSecurity.GICS_SUB_INDUSTRY_NAME,
                                 LOOK_THRU_FUND = aggregateSecurity.LOOK_THRU_FUND
-                            };
-
-                        compositeLtholdings.Add(compositeLth);
-                    }
+                            }).ToList();
 
                     SaveCompositeLtHondings(compositeLtholdings);
 
