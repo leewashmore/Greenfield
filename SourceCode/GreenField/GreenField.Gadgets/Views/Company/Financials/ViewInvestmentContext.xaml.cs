@@ -1109,7 +1109,7 @@ namespace GreenField.Gadgets.Views
                 {
                     headercell.TextAlignment = RadTextAlignment.Left;
                     headercell.VerticalAlignment = RadVerticalAlignment.Center;
-                    headercell.PreferredWidth = new TableWidthUnit(175);
+                    headercell.PreferredWidth = new TableWidthUnit(180);
                     headercell.ColumnSpan = 2;
                 }
                 else
