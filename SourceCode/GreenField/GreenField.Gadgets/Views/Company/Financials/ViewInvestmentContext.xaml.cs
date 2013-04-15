@@ -85,7 +85,7 @@ namespace GreenField.Gadgets.Views
 
 
             string context = "Country";
-            //  InvestmentContextDetailsData icd = null;
+          
             for (int i = 0; i < dataContextSource.InvestmentContextDataInfo.Count; i++)
             {
 
@@ -102,7 +102,7 @@ namespace GreenField.Gadgets.Views
                     context = "Industry";
                     headerText = "Investment Context Summary By " + context;
                 }
-                //table.Borders = new TableBorders(leftBorder, topBorder, rightBorder, bottomBorder);
+          
                 #region SetHeaders
                 section.Headers.Default = generateHeader(headerText);
                 #endregion
@@ -123,7 +123,6 @@ namespace GreenField.Gadgets.Views
 
                 section.Blocks.Add(table);
                 document.Sections.Add(section);
-               // document.InsertSectionBreak(SectionBreakType);
             }
                 
 
@@ -1109,7 +1108,7 @@ namespace GreenField.Gadgets.Views
                 {
                     headercell.TextAlignment = RadTextAlignment.Left;
                     headercell.VerticalAlignment = RadVerticalAlignment.Center;
-                    headercell.PreferredWidth = new TableWidthUnit(180);
+                    headercell.PreferredWidth = new TableWidthUnit(177);
                     headercell.ColumnSpan = 2;
                 }
                 else

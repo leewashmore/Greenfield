@@ -2739,7 +2739,7 @@ namespace GreenField.Web.Services
             {
                 icdData.Add(getInvestmentContextByIndustry(issuerId, context));
             }
-            else if (context == "Both")
+            else if (context == "Both") //default this is what called from the gadget
             {
                 icdData.Add(getInvestmentContextByCountry(issuerId, "Country"));
                 icdData.Add(getInvestmentContextByIndustry(issuerId, "Industry"));
@@ -2751,10 +2751,12 @@ namespace GreenField.Web.Services
         private InvestmentContextDetailsData getInvestmentContextByCountry(String issuerId,String context)
         {
             ExternalResearchEntities entity = new ExternalResearchEntities();
+            //call the stored procedure and get the investment context data for the given issuer and the context "country"
             List<InvestmentContextData> getInvestmentContextResult = entity.getInvestmentContext(issuerId, context).ToList();
 
             var DistinctDataId = getInvestmentContextResult.Select(a => a.DataId).Distinct().ToList();
             List<SecurityDataIdScrub> securityDataIdScrub = new List<SecurityDataIdScrub>();
+            //store the data in the scrub class to be scrubbed
             foreach (InvestmentContextData icd in getInvestmentContextResult)
             {
                 securityDataIdScrub.Add(new SecurityDataIdScrub()
@@ -2773,15 +2775,24 @@ namespace GreenField.Web.Services
                     ScrubbedValue = null
                 });
             }
+
+            //scrub the data for each data id
             DataScrubber ds = new DataScrubber();
             for (int i = 0; i < DistinctDataId.Count; i++)
             {
                 ds.DoScrubbing(securityDataIdScrub, DistinctDataId[i], "Range");
             }
+
+            // Rearrange the data in the format to be displayed
             List<InvestmentContextDetailsData> icdList = RearrangeData(securityDataIdScrub, context);
+
+            // get the list of issuer ids that you want to display
             List<string> issuerList = getListOfIssuersToDisplay(icdList, issuerId);
+            // get the report sum/average line
             InvestmentContextDetailsData finalICD = getTotalLine(icdList, context);
+            // get the sum/average for each sector
             InvestmentContextDetailsData icdGroupedResult = GroupBySector(finalICD);
+            // remove the issuers which are not part of the top 100 issuer list based on the market cap.
             List<InvestmentContextDetailsData> icdSectorChildren = icdGroupedResult.children;
             foreach (var icd in icdSectorChildren)
             {
@@ -2797,10 +2808,12 @@ namespace GreenField.Web.Services
         private InvestmentContextDetailsData getInvestmentContextByIndustry(String issuerId,String context)
         {
             ExternalResearchEntities entity = new ExternalResearchEntities();
+            //call the stored procedure and get the investment context data for the given issuer and the context "country"
             List<InvestmentContextData> getInvestmentContextResult = entity.getInvestmentContext(issuerId, context).ToList();
 
             var DistinctDataId = getInvestmentContextResult.Select(a => a.DataId).Distinct().ToList();
             List<SecurityDataIdScrub> securityDataIdScrub = new List<SecurityDataIdScrub>();
+            //store the data in the scrub class to be scrubbed
             foreach (InvestmentContextData icd in getInvestmentContextResult)
             {
                 securityDataIdScrub.Add(new SecurityDataIdScrub()
@@ -2819,14 +2832,19 @@ namespace GreenField.Web.Services
                     ScrubbedValue = null
                 });
             }
+            //scrub the data for each data id
             DataScrubber ds = new DataScrubber();
             for (int i = 0; i < DistinctDataId.Count; i++)
             {
                 ds.DoScrubbing(securityDataIdScrub, DistinctDataId[i], "Range");
             }
+            // Rearrange the data in the format to be displayed
             List<InvestmentContextDetailsData> icdList = RearrangeData(securityDataIdScrub, context);
+            // get the list of issuer ids that you want to display
             List<string> issuerList = getListOfIssuersToDisplay(icdList,issuerId);
+            // get the report sum/average line
             InvestmentContextDetailsData finalICD = getTotalLine(icdList,context);
+            // remove the issuers which are not part of the top 100 issuer list based on the market cap.
             List<InvestmentContextDetailsData> icdChildren = finalICD.children;
             icdChildren.RemoveAll(x => !issuerList.Contains(x.IssuerId));
             return finalICD;
@@ -2838,13 +2856,13 @@ namespace GreenField.Web.Services
 
         private List<InvestmentContextDetailsData> RearrangeData(List<SecurityDataIdScrub> securityDataIdScrub, string context)
         {
+            //rearrange data 
             var securityIdList = securityDataIdScrub.Select(a => a.SecurityId).Distinct().ToList();
             List<InvestmentContextDetailsData> investmentcontextDetailList = new List<InvestmentContextDetailsData>();
             ExternalResearchEntities entity = new ExternalResearchEntities();
             DateTime? lastBusinessDate = entity.GF_COMPOSITE_LTHOLDINGS.Where(x => x.PORTFOLIO_ID == "EQYALL").OrderByDescending(x => x.PORTFOLIO_DATE).Select(x=>x.PORTFOLIO_DATE).FirstOrDefault();
             List<GF_COMPOSITE_LTHOLDINGS> gfCompositeHoldingList = entity.GF_COMPOSITE_LTHOLDINGS.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.PORTFOLIO_ID == "EQYALL").ToList();
             string issuerid = null;
-            //Debug.Print("========hhhkhjkhkkhhkhkhkkhhhk" + gfCompositeHoldingList.Count());
             foreach (var security in securityIdList)
             {
                 issuerid = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.IssuerId).FirstOrDefault();
@@ -2942,6 +2960,7 @@ namespace GreenField.Web.Services
 
         private InvestmentContextDetailsData getTotalLine(List<InvestmentContextDetailsData> icdList,String context)
         {
+            //take sum/average for the total line
             
             InvestmentContextDetailsData icd = new InvestmentContextDetailsData()
             {
@@ -2966,7 +2985,7 @@ namespace GreenField.Web.Services
 
 
         private InvestmentContextDetailsData GroupBySector(InvestmentContextDetailsData finalICD)
-        {
+        { //take the sum/average for the group headers
             var result = new List<InvestmentContextDetailsData>();
             var query = from d in finalICD.children
                         group d by d.GicsSectorCode into grp
@@ -3008,7 +3027,7 @@ namespace GreenField.Web.Services
             List<string> issuerList = new List<string>();
             // Get all the issuer that has the market value from the composite
             issuerList = icdList.Where(x => x.MarketValue.HasValue).Select(x => x.IssuerId).ToList();
-            Debug.Print("Total number of issuers"+ icdList.Count());
+            
             //since we will be displaying only 100 issuers . Subtract the remaining issuers that you want to display. if there are 40 issuers that has the market value then remaining issuers that you want to display is 60
             int remainingIssuerCount = 100 - issuerList.Count();
             //handle for odd numbers. its ok to display 101 issuers
@@ -3019,7 +3038,7 @@ namespace GreenField.Web.Services
 
             //get the market cap of the selected issuer
             decimal? mktcap = icdList.Where(x => x.IssuerId == issuerId).Select(x => x.MarketCapScrubbed).FirstOrDefault();
-            Debug.Print(mktcap+"marekt caooo ");
+            
             int upperRange =0;
             int lowerRange =0;
             upperRange = remainingIssuerCount/2; // get the upper range . 
@@ -3048,9 +3067,6 @@ namespace GreenField.Web.Services
 
            // issuerList.AddRange(issLowerMktCap);
 
-            Debug.Print("&&&&&&&&&&**" + issHigherMktCap.Count());
-            Debug.Print("&&&&&&&&&&**" + issLowerMktCap.Count());
-            Debug.Print("=====>"+issuerList.Count());
             return issuerList;
            
         }
