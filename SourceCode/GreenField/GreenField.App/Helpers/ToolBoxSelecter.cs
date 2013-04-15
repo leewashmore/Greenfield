@@ -204,6 +204,9 @@ namespace GreenField.App.Helpers
                 case DashboardCategoryType.COMPANY_FINANCIALS_PEER_COMPARISON:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
+                case DashboardCategoryType.COMPANY_FINANCIALS_INVESTMENT_CONTEXT:
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Collapsed);
+                    break;
                 case DashboardCategoryType.COMPANY_ESTIMATES_CONSENSUS:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;

@@ -128,6 +128,7 @@ namespace GreenField.App.Helpers
                     info.Add(new GadgetInfo(GadgetNames.INTERNAL_RESEARCH_CONSESUS_ESTIMATE_SUMMARY, typeof(ViewConsensusEstimateSummary), typeof(ViewModelConsensusEstimateSummary)));
                     info.Add(new GadgetInfo(GadgetNames.INTERNAL_RESEARCH_FINSTAT_REPORT, typeof(ViewFinstat), typeof(ViewModelFinstat)));
                     info.Add(new GadgetInfo(GadgetNames.INTERNAL_RESEARCH_PRICING_DETAILED, typeof(ViewCompositeFund), typeof(ViewModelCompositeFund)));
+                    info.Add(new GadgetInfo(GadgetNames.INVESTMENT_CONTEXT, typeof(ViewInvestmentContext), typeof(ViewModelInvestmentContext)));
                     //info.Add(new GadgetInfo(GadgetNames.INTERNAL_RESEARCH_VALUATIONS_DETAILED, typeof(string), typeof(string)));
                     info.Add(new GadgetInfo(GadgetNames.MODELS_FX_MACRO_ECONOMICS_COMMODITY_INDEX_RETURN, typeof(ViewCommodityIndex), typeof(ViewModelCommodityIndex)));
                     info.Add(new GadgetInfo(GadgetNames.MODELS_FX_MACRO_ECONOMICS_EM_DATA_REPORT, typeof(ViewEMSummaryMarketData), typeof(ViewModelEMSummaryMarketData))); // Pending

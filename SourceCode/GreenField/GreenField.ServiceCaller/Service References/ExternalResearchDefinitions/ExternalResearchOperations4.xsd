@@ -300,4 +300,31 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveInvestmentContextData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="issuerId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="context" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveInvestmentContextDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveInvestmentContextDataResult" nillable="true" type="q40:ArrayOfInvestmentContextDetailsData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveDataMaster">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveDataMasterResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveDataMasterResult" nillable="true" type="q41:ArrayOfDATA_MASTER" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

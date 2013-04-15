@@ -133,6 +133,8 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem Header="FinStat" x:Name="rmItemFinStat"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}" Command="{Binding DashboardCompanyFinstatCommand}"/>
+                        <telerik:RadMenuItem Header="Investment Context" x:Name="rmItemInvestmentContext"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}" Command="{Binding DashboardCompanyFinancialsInvestmentContextCommand}"/>                        
                         <!--<telerik:RadMenuItem Header="Peer Comparison" x:Name="rmItemPeerComparison"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                     </telerik:RadMenuItem>

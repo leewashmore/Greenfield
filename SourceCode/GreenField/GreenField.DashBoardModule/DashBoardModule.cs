@@ -54,6 +54,7 @@ namespace GreenField.DashboardModule
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanyFinancialsIncomeStatement));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanyFinancialsPeerComparison));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanyFinancialsSummary));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanyInvestmentContext));
             #endregion
 
             #region Snapshot
