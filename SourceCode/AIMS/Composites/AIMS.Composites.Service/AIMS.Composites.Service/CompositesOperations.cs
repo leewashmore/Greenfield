@@ -132,7 +132,7 @@ namespace AIMS.Composites.Service
 
                     // Step 3   Delete records when appropriate based on Look_Thru setting in COMPOSITE_MATRIX view.  When Look_Thru <> 'Y', delete records returned from view where PORTFOLIO_ID <> A_PFCHOLDINGS_PORLT
                     var _GF_PORTFOLIO_LTHOLDINGSs_New = new List<GF_PORTFOLIO_LTHOLDINGS>();
-                    if (composite.LOOK_THRU == true)
+                    if (composite.LOOK_THRU != true)
                         _GF_PORTFOLIO_LTHOLDINGSs_New.AddRange(
                             _GF_PORTFOLIO_LTHOLDINGSs.Where(
                                 gfPortfolioLtholdings =>
