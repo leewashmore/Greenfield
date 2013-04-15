@@ -3026,7 +3026,8 @@ namespace GreenField.Web.Services
         {
             List<string> issuerList = new List<string>();
             // Get all the issuer that has the market value from the composite
-            issuerList = icdList.Where(x => x.MarketValue.HasValue).Select(x => x.IssuerId).ToList();
+            issuerList = icdList.Where(x => x.MarketValue.HasValue && x.IssuerId != issuerId).Select(x => x.IssuerId).ToList();
+            issuerList.Add(issuerId);
             
             //since we will be displaying only 100 issuers . Subtract the remaining issuers that you want to display. if there are 40 issuers that has the market value then remaining issuers that you want to display is 60
             int remainingIssuerCount = 100 - issuerList.Count();
