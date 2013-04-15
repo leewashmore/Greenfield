@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using AIMS.Composites.Service;
 
 namespace AIMS.Composites.Runner
@@ -15,6 +16,13 @@ namespace AIMS.Composites.Runner
         public void Indent()
         {
             depth++;
+        }
+
+        public void WriteLine(String message, Stopwatch stopwatch)
+        {
+            stopwatch.Stop();
+            var indent = new String(' ', depth * 4);
+            Console.WriteLine(indent + message + " ..." + (stopwatch.ElapsedMilliseconds / 1000.00).ToString() + " seconds.");
         }
 
         public void WriteLine(String message, Boolean addTimestamp = false)

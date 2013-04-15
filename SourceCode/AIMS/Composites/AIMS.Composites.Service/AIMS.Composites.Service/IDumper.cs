@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace AIMS.Composites.Service
 {
@@ -6,6 +7,7 @@ namespace AIMS.Composites.Service
     {
         void Indent();
         void WriteLine(String message, Boolean addTimestamp = false);
+        void WriteLine(String message, Stopwatch stopwatch);
         void Write(String message);
         void Unindent();
     }
