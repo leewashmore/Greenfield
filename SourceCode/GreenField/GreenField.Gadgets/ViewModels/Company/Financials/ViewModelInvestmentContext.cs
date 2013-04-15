@@ -377,8 +377,9 @@ namespace GreenField.Gadgets.ViewModels
         public void DownloadInvestmentContext()
         {
             EnableDownload = false;
+            BusyIndicatorNotification(true);
             context = "Both";
-            dbInteractivity.RetrieveInvestmentContextData(SelectedSecurity.IssuerId, "Both", DownloadInvestmentContextCallbackMethod);
+            dbInteractivity.RetrieveInvestmentContextData(SelectedSecurity.IssuerId, context, DownloadInvestmentContextCallbackMethod);
             //RadDocument doc = GenerateRadDocument();
             
         }
@@ -395,7 +396,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     InvestmentContextDataInfo = result;
                     EnableDownload = true;
-                
+                    BusyIndicatorNotification();
 
                 }
                 else
