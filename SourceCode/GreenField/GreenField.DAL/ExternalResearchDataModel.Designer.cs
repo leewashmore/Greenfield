@@ -6551,11 +6551,11 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Byte[] PORPATH
+        public global::System.String PORPATH
         {
             get
             {
-                return StructuralObject.GetValidValue(_PORPATH);
+                return _PORPATH;
             }
             set
             {
@@ -6566,8 +6566,8 @@ namespace GreenField.DAL
                 OnPORPATHChanged();
             }
         }
-        private global::System.Byte[] _PORPATH;
-        partial void OnPORPATHChanging(global::System.Byte[] value);
+        private global::System.String _PORPATH;
+        partial void OnPORPATHChanging(global::System.String value);
         partial void OnPORPATHChanged();
     
         /// <summary>
@@ -6599,11 +6599,11 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Byte[] PORTFOLIO_CURRENCY
+        public global::System.String PORTFOLIO_CURRENCY
         {
             get
             {
-                return StructuralObject.GetValidValue(_PORTFOLIO_CURRENCY);
+                return _PORTFOLIO_CURRENCY;
             }
             set
             {
@@ -6614,8 +6614,8 @@ namespace GreenField.DAL
                 OnPORTFOLIO_CURRENCYChanged();
             }
         }
-        private global::System.Byte[] _PORTFOLIO_CURRENCY;
-        partial void OnPORTFOLIO_CURRENCYChanging(global::System.Byte[] value);
+        private global::System.String _PORTFOLIO_CURRENCY;
+        partial void OnPORTFOLIO_CURRENCYChanging(global::System.String value);
         partial void OnPORTFOLIO_CURRENCYChanged();
     
         /// <summary>
@@ -6767,11 +6767,11 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Byte[] A_SEC_INSTR_TYPE
+        public global::System.String A_SEC_INSTR_TYPE
         {
             get
             {
-                return StructuralObject.GetValidValue(_A_SEC_INSTR_TYPE);
+                return _A_SEC_INSTR_TYPE;
             }
             set
             {
@@ -6782,8 +6782,8 @@ namespace GreenField.DAL
                 OnA_SEC_INSTR_TYPEChanged();
             }
         }
-        private global::System.Byte[] _A_SEC_INSTR_TYPE;
-        partial void OnA_SEC_INSTR_TYPEChanging(global::System.Byte[] value);
+        private global::System.String _A_SEC_INSTR_TYPE;
+        partial void OnA_SEC_INSTR_TYPEChanging(global::System.String value);
         partial void OnA_SEC_INSTR_TYPEChanged();
     
         /// <summary>

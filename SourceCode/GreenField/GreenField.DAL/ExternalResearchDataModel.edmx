@@ -496,16 +496,16 @@
           <Property Name="PORTFOLIO_DATE" Type="datetime" />
           <Property Name="PORTFOLIO_ID" Type="varchar" MaxLength="10" />
           <Property Name="A_PFCHOLDINGS_PORLT" Type="varchar" MaxLength="10" />
-          <Property Name="PORPATH" Type="varbinary" MaxLength="500" />
+          <Property Name="PORPATH" Type="varchar" MaxLength="500" />
           <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="varchar" MaxLength="50" />
-          <Property Name="PORTFOLIO_CURRENCY" Type="varbinary" MaxLength="3" />
+          <Property Name="PORTFOLIO_CURRENCY" Type="varchar" MaxLength="50" />
           <Property Name="BENCHMARK_ID" Type="varchar" MaxLength="50" />
           <Property Name="ISSUER_ID" Type="varchar" MaxLength="16" />
           <Property Name="ASEC_SEC_SHORT_NAME" Type="varchar" MaxLength="16" />
           <Property Name="ISSUE_NAME" Type="varchar" MaxLength="50" />
           <Property Name="TICKER" Type="varchar" MaxLength="30" />
           <Property Name="SECURITYTHEMECODE" Type="varchar" MaxLength="10" />
-          <Property Name="A_SEC_INSTR_TYPE" Type="varbinary" MaxLength="2000" />
+          <Property Name="A_SEC_INSTR_TYPE" Type="varchar" MaxLength="2000" />
           <Property Name="SECURITY_TYPE" Type="varchar" MaxLength="10" />
           <Property Name="BALANCE_NOMINAL" Type="decimal" Precision="22" Scale="8" />
           <Property Name="DIRTY_PRICE" Type="decimal" Precision="22" Scale="8" />
@@ -2426,16 +2426,16 @@
           <Property Type="DateTime" Name="PORTFOLIO_DATE" />
           <Property Type="String" Name="PORTFOLIO_ID" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="A_PFCHOLDINGS_PORLT" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="Binary" Name="PORPATH" MaxLength="500" FixedLength="false" />
+          <Property Type="String" Name="PORPATH" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="PORTFOLIO_THEME_SUBGROUP_CODE" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Binary" Name="PORTFOLIO_CURRENCY" MaxLength="3" FixedLength="false" />
+          <Property Type="String" Name="PORTFOLIO_CURRENCY" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="BENCHMARK_ID" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ISSUER_ID" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ISSUE_NAME" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="TICKER" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="SECURITYTHEMECODE" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="Binary" Name="A_SEC_INSTR_TYPE" MaxLength="2000" FixedLength="false" />
+          <Property Type="String" Name="A_SEC_INSTR_TYPE" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="SECURITY_TYPE" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="BALANCE_NOMINAL" Precision="22" Scale="8" />
           <Property Type="Decimal" Name="DIRTY_PRICE" Precision="22" Scale="8" />
@@ -3491,7 +3491,7 @@
 		</Options>
 		<!-- Diagram content (shape and connector positions) -->
 		<Diagrams>
-			<Diagram Name="ExternalResearchDataModel" ZoomLevel="62">
+			<Diagram Name="ExternalResearchDataModel" ZoomLevel="47">
 				<EntityTypeShape EntityType="ExternalResearchModel.CONSENSUS_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921874999996" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" Width="1.5" PointX="4.75" PointY="0.75" Height="4.2879036458333335" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.FX_RATES" Width="1.5" PointX="6.75" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />
@@ -3515,7 +3515,7 @@
         <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Target_Baseview" Width="1.5" PointX="13.375" PointY="11.75" Height="3.7109993489583388" />
         <EntityTypeShape EntityType="ExternalResearchModel.BENCHMARK_MASTER" Width="1.5" PointX="3.375" PointY="14.75" Height="1.4033821614583388" />
         <EntityTypeShape EntityType="ExternalResearchModel.GF_BENCHMARK_HOLDINGS_Local" Width="1.5" PointX="5.375" PointY="14.75" Height="8.7108365885416674" />
-        <EntityTypeShape EntityType="ExternalResearchModel.GF_COMPOSITE_LTHOLDINGS" Width="2.625" PointX="15.375" PointY="0.75" Height="7.3647265625000067" />
+        <EntityTypeShape EntityType="ExternalResearchModel.GF_COMPOSITE_LTHOLDINGS" Width="1.5" PointX="15.375" PointY="0.75" Height="7.36472656250001" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
