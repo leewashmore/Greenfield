@@ -17,7 +17,7 @@
   <xs:complexType name="ItemModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="Preferred" type="xs:boolean" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="Security" nillable="true" type="q2:SecurityModel" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Aims.Data.Server" minOccurs="0" name="Security" nillable="true" type="q2:SecurityModel" /> 
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ItemModel" nillable="true" type="tns:ItemModel" />
