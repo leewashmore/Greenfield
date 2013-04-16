@@ -84,7 +84,7 @@ namespace AIMS.Composites.Service
                 {
                     // Step 1   Retrieve the list of portfolios in the composite that are active (using the new COMPOSITE_MATRIX table).
                     _dumper.WriteLine("");
-                    _dumper.WriteLine(string.Format("{0}. WORKING ON {1}", (indedx++), composite.COMPOSITE_ID));
+                    _dumper.WriteLine(string.Format("{0}. WORKING ON ON CompositeId:'{1}'", (indedx++), composite.COMPOSITE_ID));
                     _dumper.Indent();
                     _dumper.Write("GetCompositePortfolios ... ");
                     stopwatch = new Stopwatch();
@@ -126,7 +126,7 @@ namespace AIMS.Composites.Service
 
                     _dumper.WriteLine(
                         string.Format(
-                            "Removed where COMPOSITE_MATRIX.Look_Thru <> 'Y', and PORTFOLIO_ID <> A_PFCHOLDINGS_PORLT: new count= {0}",
+                            "Removed where COMPOSITE_MATRIX.Look_Thru <> 'Y' and PORTFOLIO_ID <> A_PFCHOLDINGS_PORLT: new count= {0}",
                             gfPortfolioLthondings_New.Count().ToString(CultureInfo.InvariantCulture)));
 
                     // Step 4   Aggregate remaining records together by the ASEC_SEC_SHORT_NAME, and PORTFOLIO_DATE.
