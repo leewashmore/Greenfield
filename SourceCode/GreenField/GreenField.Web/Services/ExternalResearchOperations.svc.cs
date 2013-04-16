@@ -2719,5 +2719,372 @@ namespace GreenField.Web.Services
             return dataDailyAttribution;
         }
         #endregion
+
+        #region Investment Context Data
+        /// <summary>
+        /// Retrieve Investment Context Data
+        /// </summary>
+        /// <param name="issuerId">issuer id from the view </param>
+        /// <param name="context"> Retrieve the data group by country, industry or both</param>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<InvestmentContextDetailsData> RetrieveInvestmentContextData(String issuerId, String context)
+        {
+            List<InvestmentContextDetailsData> icdData = new List<InvestmentContextDetailsData>(); ;
+            if (context == "Country")
+            {
+                icdData.Add(getInvestmentContextByCountry(issuerId, context));
+            }
+            else if(context == "Industry")
+            {
+                icdData.Add(getInvestmentContextByIndustry(issuerId, context));
+            }
+            else if (context == "Both") //default this is what called from the gadget
+            {
+                icdData.Add(getInvestmentContextByCountry(issuerId, "Country"));
+                icdData.Add(getInvestmentContextByIndustry(issuerId, "Industry"));
+            }
+            return icdData;
+        }
+
+
+        private InvestmentContextDetailsData getInvestmentContextByCountry(String issuerId,String context)
+        {
+            ExternalResearchEntities entity = new ExternalResearchEntities();
+            //call the stored procedure and get the investment context data for the given issuer and the context "country"
+            List<InvestmentContextData> getInvestmentContextResult = entity.getInvestmentContext(issuerId, context).ToList();
+
+            var DistinctDataId = getInvestmentContextResult.Select(a => a.DataId).Distinct().ToList();
+            List<SecurityDataIdScrub> securityDataIdScrub = new List<SecurityDataIdScrub>();
+            //store the data in the scrub class to be scrubbed
+            foreach (InvestmentContextData icd in getInvestmentContextResult)
+            {
+                securityDataIdScrub.Add(new SecurityDataIdScrub()
+                {
+                    DataId = icd.DataId,
+                    IssuerId = icd.issuer_id,
+                    IssuerName = icd.issuer_name,
+                    IsoCountryCode = icd.iso_country_code,
+                    SecurityId = icd.SecurityId,
+                    GICS_Industry = icd.gics_industry,
+                    GICS_Industry_Name = icd.gics_industry_name,
+                    GICS_Sector = icd.gics_sector,
+                    GICS_Sector_Name = icd.gics_sector_name,
+                    PeriodYear = icd.period_year,
+                    OriginalValue = icd.value,
+                    ScrubbedValue = null
+                });
+            }
+
+            //scrub the data for each data id
+            DataScrubber ds = new DataScrubber();
+            for (int i = 0; i < DistinctDataId.Count; i++)
+            {
+                ds.DoScrubbing(securityDataIdScrub, DistinctDataId[i], "Range");
+            }
+
+            // Rearrange the data in the format to be displayed
+            List<InvestmentContextDetailsData> icdList = RearrangeData(securityDataIdScrub, context);
+
+            // get the list of issuer ids that you want to display
+            List<string> issuerList = getListOfIssuersToDisplay(icdList, issuerId);
+            // get the report sum/average line
+            InvestmentContextDetailsData finalICD = getTotalLine(icdList, context);
+            // get the sum/average for each sector
+            InvestmentContextDetailsData icdGroupedResult = GroupBySector(finalICD);
+            // remove the issuers which are not part of the top 100 issuer list based on the market cap.
+            List<InvestmentContextDetailsData> icdSectorChildren = icdGroupedResult.children;
+            foreach (var icd in icdSectorChildren)
+            {
+                List<InvestmentContextDetailsData> icdDetailsData = icd.children;
+                icdDetailsData.RemoveAll(x => !issuerList.Contains(x.IssuerId));
+            }
+            
+            return icdGroupedResult;
+
+        }
+
+
+        private InvestmentContextDetailsData getInvestmentContextByIndustry(String issuerId,String context)
+        {
+            ExternalResearchEntities entity = new ExternalResearchEntities();
+            //call the stored procedure and get the investment context data for the given issuer and the context "country"
+            List<InvestmentContextData> getInvestmentContextResult = entity.getInvestmentContext(issuerId, context).ToList();
+
+            var DistinctDataId = getInvestmentContextResult.Select(a => a.DataId).Distinct().ToList();
+            List<SecurityDataIdScrub> securityDataIdScrub = new List<SecurityDataIdScrub>();
+            //store the data in the scrub class to be scrubbed
+            foreach (InvestmentContextData icd in getInvestmentContextResult)
+            {
+                securityDataIdScrub.Add(new SecurityDataIdScrub()
+                {
+                    DataId = icd.DataId,
+                    IssuerId = icd.issuer_id,
+                    IssuerName = icd.issuer_name,
+                    IsoCountryCode = icd.iso_country_code,
+                    SecurityId = icd.SecurityId,
+                    GICS_Industry = icd.gics_industry,
+                    GICS_Industry_Name = icd.gics_industry_name,
+                    GICS_Sector = icd.gics_sector,
+                    GICS_Sector_Name = icd.gics_sector_name,
+                    PeriodYear = icd.period_year,
+                    OriginalValue = icd.value,
+                    ScrubbedValue = null
+                });
+            }
+            //scrub the data for each data id
+            DataScrubber ds = new DataScrubber();
+            for (int i = 0; i < DistinctDataId.Count; i++)
+            {
+                ds.DoScrubbing(securityDataIdScrub, DistinctDataId[i], "Range");
+            }
+            // Rearrange the data in the format to be displayed
+            List<InvestmentContextDetailsData> icdList = RearrangeData(securityDataIdScrub, context);
+            // get the list of issuer ids that you want to display
+            List<string> issuerList = getListOfIssuersToDisplay(icdList,issuerId);
+            // get the report sum/average line
+            InvestmentContextDetailsData finalICD = getTotalLine(icdList,context);
+            // remove the issuers which are not part of the top 100 issuer list based on the market cap.
+            List<InvestmentContextDetailsData> icdChildren = finalICD.children;
+            icdChildren.RemoveAll(x => !issuerList.Contains(x.IssuerId));
+            return finalICD;
+
+        }
+
+        
+       
+
+        private List<InvestmentContextDetailsData> RearrangeData(List<SecurityDataIdScrub> securityDataIdScrub, string context)
+        {
+            //rearrange data 
+            var securityIdList = securityDataIdScrub.Select(a => a.SecurityId).Distinct().ToList();
+            List<InvestmentContextDetailsData> investmentcontextDetailList = new List<InvestmentContextDetailsData>();
+            ExternalResearchEntities entity = new ExternalResearchEntities();
+            DateTime? lastBusinessDate = entity.GF_COMPOSITE_LTHOLDINGS.Where(x => x.PORTFOLIO_ID == "EQYALL").OrderByDescending(x => x.PORTFOLIO_DATE).Select(x=>x.PORTFOLIO_DATE).FirstOrDefault();
+            List<GF_COMPOSITE_LTHOLDINGS> gfCompositeHoldingList = entity.GF_COMPOSITE_LTHOLDINGS.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.PORTFOLIO_ID == "EQYALL").ToList();
+            string issuerid = null;
+            foreach (var security in securityIdList)
+            {
+                issuerid = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.IssuerId).FirstOrDefault();
+                investmentcontextDetailList.Add(new InvestmentContextDetailsData()
+                {
+                    IssuerId                = securityDataIdScrub.Where(a=>a.SecurityId==security).Select(a=>a.IssuerId).FirstOrDefault(),
+                    IssuerName              = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.IssuerName).FirstOrDefault(),
+                    IsoCountryCode          = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.IsoCountryCode).FirstOrDefault(),
+                    GicsSectorCode          = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.GICS_Sector).FirstOrDefault(),
+                    GicsSectorName          = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.GICS_Sector_Name).FirstOrDefault(),
+                    GicsIndustryCode        = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.GICS_Industry).FirstOrDefault(),
+                    GicsIndustryName        = securityDataIdScrub.Where(a => a.SecurityId == security).Select(a => a.GICS_Industry_Name).FirstOrDefault(),
+                    MarketValue             = gfCompositeHoldingList.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.ISSUER_ID == issuerid).Sum(x => x.DIRTY_VALUE_PC) == 0 ? null : gfCompositeHoldingList.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.ISSUER_ID == issuerid).Sum(x => x.DIRTY_VALUE_PC),
+                    MarketValueScrubbed     = gfCompositeHoldingList.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.ISSUER_ID == issuerid).Sum(x => x.DIRTY_VALUE_PC) == 0? null : gfCompositeHoldingList.Where(x => x.PORTFOLIO_DATE == lastBusinessDate && x.ISSUER_ID == issuerid).Sum(x => x.DIRTY_VALUE_PC),
+                    MarketCap               = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 185).Select(a => a.OriginalValue).FirstOrDefault(),
+                    MarketCapScrubbed       = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 185).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 185).Select(a => a.OriginalValue).FirstOrDefault() :
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 185).Select(a => a.ScrubbedValue).FirstOrDefault(), //Market Cap Scrubbed
+                    ForwardPE               = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 187).Select(a => a.OriginalValue).FirstOrDefault(), //Forward PE
+                                              
+                    ForwardPEScrubbed       = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 187).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 187).Select(a => a.OriginalValue).FirstOrDefault() :
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 187).Select(a => a.ScrubbedValue).FirstOrDefault(), //Forward PE Scrubbed
+
+                    ForwardPBV              = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 188).Select(a => a.OriginalValue).FirstOrDefault(), //Forward PBV
+                                              
+                    ForwardPBVScrubbed      = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 188).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 188).Select(a => a.OriginalValue).FirstOrDefault() :
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 188).Select(a => a.ScrubbedValue).FirstOrDefault(), //Forward PBV Scrubbed
+
+                    PECurrentYear           = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 166 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.OriginalValue).FirstOrDefault(), 
+
+                    PECurrentYearScrubbed   = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 166 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 166 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.OriginalValue).FirstOrDefault() :
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 166 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.ScrubbedValue).FirstOrDefault(), //PE Current Year Scrubbed
+
+
+                    PENextYear              = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 166 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.OriginalValue).FirstOrDefault(), //PE Next year
+                                              
+
+                    PENextYearScrubbed      = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 166 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 166 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.OriginalValue).FirstOrDefault() :
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 166 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.ScrubbedValue).FirstOrDefault(), //PE Next year Scrubbed
+
+                    PBVCurrentYear          = 
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 164 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.OriginalValue).FirstOrDefault(), //PBV Current Year
+
+                    PBVCurrentYearScrubbed  = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 164 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 164 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.OriginalValue).FirstOrDefault() :
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 164 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.ScrubbedValue).FirstOrDefault(), //PBV Current Year Scrubbed
+
+                    PBVNextYear = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 164 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.OriginalValue).FirstOrDefault(), //PBV Next Year
+
+                    PBVNextYearScrubbed    = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 164 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                             securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 164 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.OriginalValue).FirstOrDefault() :
+                                             securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 164 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.ScrubbedValue).FirstOrDefault(), //PBV Next Year Scrubbed
+
+                    EB_EBITDA_CurrentYear   =
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 193 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.OriginalValue).FirstOrDefault(),//EV/ EBITDA Current Year
+                                              
+
+                    EB_EBITDA_CurrentYearScrubbed = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 193 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 193 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.OriginalValue).FirstOrDefault() :
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 193 && a.PeriodYear == (DateTime.Today.Year)).Select(a => a.ScrubbedValue).FirstOrDefault(), //EV/ EBITDA Current Year scrubbed
+
+                    EB_EBITDA_NextYear      =
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 193 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.OriginalValue).FirstOrDefault(), //EV/EBITDA Next Year
+                                              
+
+                    EB_EBITDA_NextYearScrubbed = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 193 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                                                  securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 193 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.OriginalValue).FirstOrDefault() :
+                                                                  securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 193 && a.PeriodYear == (DateTime.Today.Year + 1)).Select(a => a.ScrubbedValue).FirstOrDefault(), //EV/EBITDA Next Year Scrubbed
+
+                    DividendYield           = 
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 192).Select(a => a.OriginalValue).FirstOrDefault() , //Div Yield
+
+                    DividendYieldScrubbed   = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 192).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 192).Select(a => a.OriginalValue).FirstOrDefault() :
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 192).Select(a => a.ScrubbedValue).FirstOrDefault(), //Div Yield Scrubbed
+
+
+                    ROE                     = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 133).Select(a => a.OriginalValue).FirstOrDefault() ,
+                                              //ROE
+                    ROEScrubbed            = securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 133).Select(a => a.ScrubbedValue).FirstOrDefault() == null ?
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 133).Select(a => a.OriginalValue).FirstOrDefault() :
+                                              securityDataIdScrub.Where(a => a.SecurityId == security && a.DataId == 133).Select(a => a.ScrubbedValue).FirstOrDefault() //ROE Scrubbed
+
+                    
+                });
+            }
+
+            return investmentcontextDetailList;
+        }
+
+
+        private InvestmentContextDetailsData getTotalLine(List<InvestmentContextDetailsData> icdList,String context)
+        {
+            //take sum/average for the total line
+            
+            InvestmentContextDetailsData icd = new InvestmentContextDetailsData()
+            {
+                GicsSectorCode = null,
+                GicsSectorName =context+" Average",
+                MarketValue = icdList.Sum(x => x.MarketValueScrubbed),
+                MarketCap = icdList.Sum(x => x.MarketCapScrubbed),
+                ForwardPE = GroupCalculations.SimpleAverage(icdList.Select(x => x.ForwardPEScrubbed).ToList()),
+                ForwardPBV = GroupCalculations.SimpleAverage(icdList.Select(x => x.ForwardPBVScrubbed).ToList()),
+                PECurrentYear = GroupCalculations.SimpleAverage(icdList.Select(x => x.PECurrentYearScrubbed).ToList()),
+                PENextYear = GroupCalculations.SimpleAverage(icdList.Select(x => x.PENextYearScrubbed).ToList()),
+                PBVCurrentYear = GroupCalculations.SimpleAverage(icdList.Select(x => x.PBVCurrentYearScrubbed).ToList()),
+                PBVNextYear = GroupCalculations.SimpleAverage(icdList.Select(x => x.PBVNextYearScrubbed).ToList()),
+                EB_EBITDA_CurrentYear = GroupCalculations.SimpleAverage(icdList.Select(x => x.EB_EBITDA_CurrentYearScrubbed).ToList()),
+                EB_EBITDA_NextYear = GroupCalculations.SimpleAverage(icdList.Select(x => x.EB_EBITDA_NextYearScrubbed).ToList()),
+                DividendYield = GroupCalculations.SimpleAverage(icdList.Select(x => x.DividendYieldScrubbed).ToList()),
+                ROE = GroupCalculations.SimpleAverage(icdList.Select(x => x.ROEScrubbed).ToList()),
+                children = icdList
+            };
+            return icd;
+        }
+
+
+        private InvestmentContextDetailsData GroupBySector(InvestmentContextDetailsData finalICD)
+        { //take the sum/average for the group headers
+            var result = new List<InvestmentContextDetailsData>();
+            var query = from d in finalICD.children
+                        group d by d.GicsSectorCode into grp
+                        select grp;
+            var groups = query.ToList();
+            foreach (var group in groups)
+            {
+                var main = group.Where(x => x.GicsSectorCode == group.Key).FirstOrDefault();
+                if (group.Count() > 1)
+                {
+                    var icd = new InvestmentContextDetailsData
+                    {
+                        GicsSectorCode= main.GicsSectorCode,
+                        GicsSectorName= main.GicsSectorName,
+                        MarketValue = group.Sum(x => x.MarketValueScrubbed),
+                        MarketCap = group.Sum(x => x.MarketCapScrubbed) ,
+                        ForwardPE = GroupCalculations.SimpleAverage(group.Select(x => x.ForwardPEScrubbed).ToList()),
+                        ForwardPBV = GroupCalculations.SimpleAverage(group.Select(x => x.ForwardPBVScrubbed).ToList()),
+                        PECurrentYear = GroupCalculations.SimpleAverage(group.Select(x => x.PECurrentYearScrubbed).ToList()),
+                        PENextYear = GroupCalculations.SimpleAverage(group.Select(x => x.PENextYearScrubbed).ToList()),
+                        PBVCurrentYear = GroupCalculations.SimpleAverage(group.Select(x => x.PBVCurrentYearScrubbed).ToList()),
+                        PBVNextYear = GroupCalculations.SimpleAverage(group.Select(x => x.PBVNextYearScrubbed).ToList()),
+                        EB_EBITDA_CurrentYear = GroupCalculations.SimpleAverage(group.Select(x => x.EB_EBITDA_CurrentYearScrubbed).ToList()),
+                        EB_EBITDA_NextYear = GroupCalculations.SimpleAverage(group.Select(x => x.EB_EBITDA_NextYearScrubbed).ToList()),
+                        DividendYield = GroupCalculations.SimpleAverage(group.Select(x => x.DividendYieldScrubbed).ToList()),
+                        ROE = GroupCalculations.SimpleAverage(group.Select(x => x.ROEScrubbed).ToList()),
+                        children=group.ToList()
+                    };
+                    result.Add(icd);
+                }
+            }
+            finalICD.children = result;
+            return finalICD;
+
+        }
+
+        private List<string> getListOfIssuersToDisplay(List<InvestmentContextDetailsData> icdList,string issuerId)
+        {
+            List<string> issuerList = new List<string>();
+            // Get all the issuer that has the market value from the composite
+            issuerList = icdList.Where(x => x.MarketValue.HasValue && x.IssuerId != issuerId).Select(x => x.IssuerId).ToList();
+            issuerList.Add(issuerId);
+            
+            //since we will be displaying only 100 issuers . Subtract the remaining issuers that you want to display. if there are 40 issuers that has the market value then remaining issuers that you want to display is 60
+            int remainingIssuerCount = 100 - issuerList.Count();
+            //handle for odd numbers. its ok to display 101 issuers
+            if (remainingIssuerCount / 2 != 0)
+            {
+                remainingIssuerCount = remainingIssuerCount + 1;
+            }
+
+            //get the market cap of the selected issuer
+            decimal? mktcap = icdList.Where(x => x.IssuerId == issuerId).Select(x => x.MarketCapScrubbed).FirstOrDefault();
+            
+            int upperRange =0;
+            int lowerRange =0;
+            upperRange = remainingIssuerCount/2; // get the upper range . 
+            lowerRange = remainingIssuerCount/2; //get the lower range
+            //get the top n(upper range) of issuers whose market cap is greater than the selected issuer's market cap
+            List<string> issHigherMktCap = icdList.Where(x => x.MarketCapScrubbed >= mktcap && !issuerList.Contains(x.IssuerId)).OrderByDescending(x=>x.MarketCapScrubbed).Take(upperRange).Select(x=>x.IssuerId).ToList();
+            issuerList.AddRange(issHigherMktCap);
+
+            //if the number of issuers returned are less than the upperrange then the retrieve the remaining issuers whose market cap is less than the selected issuers mkt cap.
+            if (issHigherMktCap.Count() < upperRange)
+            {
+                lowerRange = lowerRange + (upperRange - issHigherMktCap.Count());
+            }
+
+
+            List<string> issLowerMktCap = icdList.Where(x => x.MarketCapScrubbed < mktcap && !issuerList.Contains(x.IssuerId)).OrderByDescending(x => x.MarketCapScrubbed).Take(lowerRange).Select(x => x.IssuerId).ToList();
+            issuerList.AddRange(issLowerMktCap);
+
+            //if the number of issuers returned are less than the lowerrange then try to the retrieve the remaining issuers whose market cap is greater than the selected issuers mkt cap.
+            if (issLowerMktCap.Count() < lowerRange)
+            {
+                upperRange = lowerRange - issHigherMktCap.Count();
+                issHigherMktCap = icdList.Where(x => x.MarketCapScrubbed >= mktcap && !issuerList.Contains(x.IssuerId)).OrderByDescending(x => x.MarketCapScrubbed).Take(upperRange).Select(x => x.IssuerId).ToList();
+                issuerList.AddRange(issHigherMktCap);
+            }
+
+           // issuerList.AddRange(issLowerMktCap);
+
+            return issuerList;
+           
+        }
+
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<DATA_MASTER> RetrieveDataMaster()
+        {
+            ExternalResearchEntities entity = new ExternalResearchEntities();
+            List<DATA_MASTER> DataMasterList = entity.DATA_MASTER.ToList();
+            return DataMasterList;
+        }
+
+        #endregion
+
+
+
     }
 }

@@ -563,5 +563,8 @@ namespace GreenField.ServiceCaller
 
         void RetrieveCompanyData(Action<List<String>> callback);
 
+        void RetrieveInvestmentContextData(string issuerId, string context, Action<List<InvestmentContextDetailsData>> callback);
+        void RetrieveDataMaster(Action<List<DATA_MASTER>> callback);
+
     }
 }

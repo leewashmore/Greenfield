@@ -77,7 +77,9 @@
       [DATA_MASTER].[CURRENT] AS [CURRENT], 
       [DATA_MASTER].[STATEMENT_TYPE] AS [STATEMENT_TYPE], 
       [DATA_MASTER].[LONG_DESC] AS [LONG_DESC], 
-      [DATA_MASTER].[CONVERT_FLAG] AS [CONVERT_FLAG]
+      [DATA_MASTER].[CONVERT_FLAG] AS [CONVERT_FLAG], 
+      [DATA_MASTER].[MinValue] AS [MinValue], 
+      [DATA_MASTER].[MaxValue] AS [MaxValue]
       FROM [dbo].[DATA_MASTER] AS [DATA_MASTER]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.Store.FAIR_VALUE" store:Type="Tables" store:Schema="dbo" store:Name="FAIR_VALUE">
@@ -145,6 +147,7 @@
       [GF_BENCHMARK_HOLDINGS].[BARRA_RISK_FACTOR_PBETEWLD] AS [BARRA_RISK_FACTOR_PBETEWLD]
       FROM [dbo].[GF_BENCHMARK_HOLDINGS] AS [GF_BENCHMARK_HOLDINGS]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="GF_COMPOSITE_LTHOLDINGS" EntityType="ExternalResearchModel.Store.GF_COMPOSITE_LTHOLDINGS" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="ExternalResearchModel.Store.GF_SECURITY_BASEVIEW" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="INTERNAL_ISSUER" EntityType="ExternalResearchModel.Store.INTERNAL_ISSUER" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_ISSUER">
             <DefiningQuery>SELECT 
@@ -397,6 +400,8 @@
           <Property Name="STATEMENT_TYPE" Type="varchar" MaxLength="3" />
           <Property Name="LONG_DESC" Type="varchar" MaxLength="1024" />
           <Property Name="CONVERT_FLAG" Type="char" MaxLength="1" />
+          <Property Name="MinValue" Type="decimal" Scale="2" />
+          <Property Name="MaxValue" Type="decimal" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Main_Dev.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -483,6 +488,44 @@
           <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="decimal" Precision="32" Scale="6" />
           <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
+        <EntityType Name="GF_COMPOSITE_LTHOLDINGS">
+          <Key>
+            <PropertyRef Name="GF_ID" />
+          </Key>
+          <Property Name="GF_ID" Type="decimal" Nullable="false" Precision="38" />
+          <Property Name="PORTFOLIO_DATE" Type="datetime" />
+          <Property Name="PORTFOLIO_ID" Type="varchar" MaxLength="10" />
+          <Property Name="A_PFCHOLDINGS_PORLT" Type="varchar" MaxLength="10" />
+          <Property Name="PORPATH" Type="varchar" MaxLength="500" />
+          <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="varchar" MaxLength="50" />
+          <Property Name="PORTFOLIO_CURRENCY" Type="varchar" MaxLength="50" />
+          <Property Name="BENCHMARK_ID" Type="varchar" MaxLength="50" />
+          <Property Name="ISSUER_ID" Type="varchar" MaxLength="16" />
+          <Property Name="ASEC_SEC_SHORT_NAME" Type="varchar" MaxLength="16" />
+          <Property Name="ISSUE_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="TICKER" Type="varchar" MaxLength="30" />
+          <Property Name="SECURITYTHEMECODE" Type="varchar" MaxLength="10" />
+          <Property Name="A_SEC_INSTR_TYPE" Type="varchar" MaxLength="2000" />
+          <Property Name="SECURITY_TYPE" Type="varchar" MaxLength="10" />
+          <Property Name="BALANCE_NOMINAL" Type="decimal" Precision="22" Scale="8" />
+          <Property Name="DIRTY_PRICE" Type="decimal" Precision="22" Scale="8" />
+          <Property Name="TRADING_CURRENCY" Type="varchar" MaxLength="3" />
+          <Property Name="DIRTY_VALUE_PC" Type="decimal" Precision="22" Scale="8" />
+          <Property Name="BENCHMARK_WEIGHT" Type="decimal" Precision="22" Scale="8" />
+          <Property Name="ASH_EMM_MODEL_WEIGHT" Type="decimal" Precision="22" Scale="8" />
+          <Property Name="MARKET_CAP_IN_USD" Type="decimal" Precision="22" Scale="8" />
+          <Property Name="ASHEMM_PROP_REGION_CODE" Type="varchar" MaxLength="10" />
+          <Property Name="ASHEMM_PROP_REGION_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="ISO_COUNTRY_CODE" Type="varchar" MaxLength="3" />
+          <Property Name="COUNTRYNAME" Type="varchar" MaxLength="50" />
+          <Property Name="GICS_SECTOR" Type="varchar" MaxLength="50" />
+          <Property Name="GICS_SECTOR_NAME" Type="varchar" MaxLength="60" />
+          <Property Name="GICS_INDUSTRY" Type="varchar" MaxLength="50" />
+          <Property Name="GICS_INDUSTRY_NAME" Type="varchar" MaxLength="60" />
+          <Property Name="GICS_SUB_INDUSTRY" Type="varchar" MaxLength="50" />
+          <Property Name="GICS_SUB_INDUSTRY_NAME" Type="varchar" MaxLength="60" />
+          <Property Name="LOOK_THRU_FUND" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="GF_SECURITY_BASEVIEW">
           <Key>
             <PropertyRef Name="ID" />
@@ -551,6 +594,7 @@
           <Property Name="CHG_PCT_QTD" Type="nvarchar" MaxLength="100" />
           <Property Name="CHG_PCT_YTD" Type="nvarchar" MaxLength="100" />
           <Property Name="CHG_PCT_1YR" Type="nvarchar" MaxLength="100" />
+          <Property Name="issuer_proxy" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Main_Dev.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -911,6 +955,10 @@
         </Function>
         <Function Name="GetFreeCashFlows" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IssuerId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getInvestmentContext" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="issuer_id" Type="varchar" Mode="In" />
+          <Parameter Name="ViewReportBy" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetModelConsensusEstimates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
@@ -1510,6 +1558,11 @@
           <EntitySet Name="Portfolio_Security_Target_Baseview" EntityType="ExternalResearchModel.Portfolio_Security_Target_Baseview" />
           <EntitySet Name="BENCHMARK_MASTER" EntityType="ExternalResearchModel.BENCHMARK_MASTER" />
           <EntitySet Name="GF_BENCHMARK_HOLDINGS_Local" EntityType="ExternalResearchModel.GF_BENCHMARK_HOLDINGS_Local" />
+          <FunctionImport Name="getInvestmentContext" ReturnType="Collection(ExternalResearchModel.InvestmentContextData)">
+            <Parameter Name="issuer_id" Mode="In" Type="String" />
+            <Parameter Name="ViewReportBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="GF_COMPOSITE_LTHOLDINGS" EntityType="ExternalResearchModel.GF_COMPOSITE_LTHOLDINGS" />
 
 
 				</EntityContainer>
@@ -1841,6 +1894,8 @@
 					<Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
 					<Property Type="String" Name="CONVERT_FLAG" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Type="String" Name="LONG_DESC" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="MinValue" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="MaxValue" Precision="18" Scale="0" />
 				</EntityType>
 				<ComplexType Name="ConsensusEstimateDetailData" >
 					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20"/>
@@ -2245,6 +2300,7 @@
           <Property Type="String" Name="CHG_PCT_QTD" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="CHG_PCT_YTD" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="CHG_PCT_1YR" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="issuer_proxy" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MODEL_UPLOAD_USER_GROUP">
           <Key>
@@ -2328,6 +2384,77 @@
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LIQUIDITY" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LEVERAGE" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_PBETEWLD" Precision="32" Scale="6" />
+        </EntityType>
+        <ComplexType Name="getInvestmentContext_Result">
+          <Property Type="String" Name="issuer_id" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="iso_country_code" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="gics_sector" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="gics_sector_name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="gics_industry" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="gics_industry_name" Nullable="true" MaxLength="255" />
+          <Property Type="Decimal" Name="mktVal" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="mktcap" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="fwd_pe" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="fwd_pb" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="pe_curryear" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="pe_nextyear" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="pb_curryear" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="pb_nextyear" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="ev_ebitda_curryear" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="ev_ebitda_nextyear" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="dy" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="roe" Nullable="true" Precision="32" Scale="6" />
+        </ComplexType>
+        <ComplexType Name="InvestmentContextData">
+          <Property Type="String" Name="issuer_id" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="iso_country_code" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="gics_sector" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="gics_sector_name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="gics_industry" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="gics_industry_name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="issuer_name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="DataId" Nullable="true" />
+          <Property Type="Decimal" Name="value" Nullable="true" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="period_year" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="GF_COMPOSITE_LTHOLDINGS">
+          <Key>
+            <PropertyRef Name="GF_ID" />
+          </Key>
+          <Property Type="Decimal" Name="GF_ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="DateTime" Name="PORTFOLIO_DATE" />
+          <Property Type="String" Name="PORTFOLIO_ID" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="A_PFCHOLDINGS_PORLT" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PORPATH" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PORTFOLIO_THEME_SUBGROUP_CODE" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PORTFOLIO_CURRENCY" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BENCHMARK_ID" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ISSUER_ID" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ISSUE_NAME" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TICKER" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITYTHEMECODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="A_SEC_INSTR_TYPE" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_TYPE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="BALANCE_NOMINAL" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="DIRTY_PRICE" Precision="22" Scale="8" />
+          <Property Type="String" Name="TRADING_CURRENCY" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="DIRTY_VALUE_PC" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="BENCHMARK_WEIGHT" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="ASH_EMM_MODEL_WEIGHT" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="MARKET_CAP_IN_USD" Precision="22" Scale="8" />
+          <Property Type="String" Name="ASHEMM_PROP_REGION_CODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ASHEMM_PROP_REGION_NAME" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ISO_COUNTRY_CODE" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COUNTRYNAME" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="GICS_SECTOR" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="GICS_SECTOR_NAME" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="GICS_INDUSTRY" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="GICS_INDUSTRY_NAME" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LOOK_THRU_FUND" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -2464,7 +2591,9 @@
           <EntitySetMapping Name="DATA_MASTER">
 						<EntityTypeMapping TypeName="ExternalResearchModel.DATA_MASTER">
 							<MappingFragment StoreEntitySet="DATA_MASTER">
-								<ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
+								<ScalarProperty Name="MaxValue" ColumnName="MaxValue" />
+                <ScalarProperty Name="MinValue" ColumnName="MinValue" />
+                <ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
                 <ScalarProperty Name="CONVERT_FLAG" ColumnName="CONVERT_FLAG" />
 								<ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
 								<ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
@@ -3122,6 +3251,7 @@
           <EntitySetMapping Name="GF_SECURITY_BASEVIEW_Local">
             <EntityTypeMapping TypeName="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local">
               <MappingFragment StoreEntitySet="GF_SECURITY_BASEVIEW">
+                <ScalarProperty Name="issuer_proxy" ColumnName="issuer_proxy" />
                 <ScalarProperty Name="CHG_PCT_1YR" ColumnName="CHG_PCT_1YR" />
                 <ScalarProperty Name="CHG_PCT_YTD" ColumnName="CHG_PCT_YTD" />
                 <ScalarProperty Name="CHG_PCT_QTD" ColumnName="CHG_PCT_QTD" />
@@ -3272,6 +3402,62 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getInvestmentContext" FunctionName="ExternalResearchModel.Store.getInvestmentContext">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.InvestmentContextData">
+                <ScalarProperty Name="issuer_id" ColumnName="issuer_id" />
+                <ScalarProperty Name="iso_country_code" ColumnName="iso_country_code" />
+                <ScalarProperty Name="gics_sector" ColumnName="gics_sector" />
+                <ScalarProperty Name="gics_sector_name" ColumnName="gics_sector_name" />
+                <ScalarProperty Name="gics_industry" ColumnName="gics_industry" />
+                <ScalarProperty Name="gics_industry_name" ColumnName="gics_industry_name" />
+                <ScalarProperty Name="issuer_name" ColumnName="issuer_name" />
+                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="period_year" ColumnName="period_year" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="GF_COMPOSITE_LTHOLDINGS">
+            <EntityTypeMapping TypeName="ExternalResearchModel.GF_COMPOSITE_LTHOLDINGS">
+              <MappingFragment StoreEntitySet="GF_COMPOSITE_LTHOLDINGS">
+                <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
+                <ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
+                <ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
+                <ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
+                <ScalarProperty Name="COUNTRYNAME" ColumnName="COUNTRYNAME" />
+                <ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
+                <ScalarProperty Name="ASHEMM_PROP_REGION_NAME" ColumnName="ASHEMM_PROP_REGION_NAME" />
+                <ScalarProperty Name="ASHEMM_PROP_REGION_CODE" ColumnName="ASHEMM_PROP_REGION_CODE" />
+                <ScalarProperty Name="MARKET_CAP_IN_USD" ColumnName="MARKET_CAP_IN_USD" />
+                <ScalarProperty Name="ASH_EMM_MODEL_WEIGHT" ColumnName="ASH_EMM_MODEL_WEIGHT" />
+                <ScalarProperty Name="BENCHMARK_WEIGHT" ColumnName="BENCHMARK_WEIGHT" />
+                <ScalarProperty Name="DIRTY_VALUE_PC" ColumnName="DIRTY_VALUE_PC" />
+                <ScalarProperty Name="TRADING_CURRENCY" ColumnName="TRADING_CURRENCY" />
+                <ScalarProperty Name="DIRTY_PRICE" ColumnName="DIRTY_PRICE" />
+                <ScalarProperty Name="BALANCE_NOMINAL" ColumnName="BALANCE_NOMINAL" />
+                <ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
+                <ScalarProperty Name="A_SEC_INSTR_TYPE" ColumnName="A_SEC_INSTR_TYPE" />
+                <ScalarProperty Name="SECURITYTHEMECODE" ColumnName="SECURITYTHEMECODE" />
+                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+                <ScalarProperty Name="PORTFOLIO_CURRENCY" ColumnName="PORTFOLIO_CURRENCY" />
+                <ScalarProperty Name="PORTFOLIO_THEME_SUBGROUP_CODE" ColumnName="PORTFOLIO_THEME_SUBGROUP_CODE" />
+                <ScalarProperty Name="PORPATH" ColumnName="PORPATH" />
+                <ScalarProperty Name="A_PFCHOLDINGS_PORLT" ColumnName="A_PFCHOLDINGS_PORLT" />
+                <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
+                <ScalarProperty Name="PORTFOLIO_DATE" ColumnName="PORTFOLIO_DATE" />
+                <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -3305,13 +3491,13 @@
 		</Options>
 		<!-- Diagram content (shape and connector positions) -->
 		<Diagrams>
-			<Diagram Name="ExternalResearchDataModel" ZoomLevel="62">
+			<Diagram Name="ExternalResearchDataModel" ZoomLevel="47">
 				<EntityTypeShape EntityType="ExternalResearchModel.CONSENSUS_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921874999996" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" Width="1.5" PointX="4.75" PointY="0.75" Height="4.2879036458333335" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.FX_RATES" Width="1.5" PointX="6.75" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.INTERNAL_ISSUER" Width="1.5" PointX="4.75" PointY="6.75" Height="1.7879850260416674" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES" Width="1.5" PointX="8.75" PointY="4.75" Height="1.5956835937500031" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES_COMPOSITION" Width="1.5" PointX="6.5" PointY="8.25" Height="1.4033821614583317" IsExpanded="true" />
+				<EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES_COMPOSITION" Width="1.5" PointX="6.75" PointY="4.75" Height="1.5956835937499996" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Data" Width="1.5" PointX="0.75" PointY="9.75" Height="2.1725878906250031" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Display" Width="1.5" PointX="2.75" PointY="9.75" Height="2.5571907552083388" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS" Width="1.5" PointX="10.75" PointY="0.75" Height="4.0956022135416674" IsExpanded="true" />
@@ -3321,7 +3507,7 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.COUNTRY_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
 				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
 				<EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
-				<EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
+				<EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9" PointY="8.25" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.25" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Targets_Union" Width="1.875" PointX="13" PointY="2.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local" Width="1.5" PointX="11.375" PointY="8.75" Height="13.326070963541667" />
@@ -3329,6 +3515,7 @@
         <EntityTypeShape EntityType="ExternalResearchModel.Portfolio_Security_Target_Baseview" Width="1.5" PointX="13.375" PointY="11.75" Height="3.7109993489583388" />
         <EntityTypeShape EntityType="ExternalResearchModel.BENCHMARK_MASTER" Width="1.5" PointX="3.375" PointY="14.75" Height="1.4033821614583388" />
         <EntityTypeShape EntityType="ExternalResearchModel.GF_BENCHMARK_HOLDINGS_Local" Width="1.5" PointX="5.375" PointY="14.75" Height="8.7108365885416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.GF_COMPOSITE_LTHOLDINGS" Width="1.5" PointX="15.375" PointY="0.75" Height="7.36472656250001" />
 			</Diagram>
 		</Diagrams>
 	</Designer>

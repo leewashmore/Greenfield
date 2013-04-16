@@ -213,6 +213,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.HeatMapData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.HoldingsPercentageData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.IndexConstituentsData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.InvestmentContextDetailsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.IssuerReferenceData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.MacroDatabaseKeyAnnualReportData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.MarketCapitalizationData.datasource" />
@@ -355,6 +356,9 @@
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations10.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations2.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -378,6 +382,9 @@
     </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations9.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.DATA_MASTER.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

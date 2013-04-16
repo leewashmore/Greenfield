@@ -181,7 +181,9 @@
     <Compile Include="DataContracts\IssuerReferenceData.cs" />
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="DataContracts\PopulatedMarketPerformanceSnapshotData.cs" />
+    <Compile Include="Helpers\DataScrubber.cs" />
     <Compile Include="Helpers\DefaultCacheProvider.cs" />
+    <Compile Include="Helpers\GroupCalculations.cs" />
     <Compile Include="Helpers\PredicateBuilder.cs" />
     <Compile Include="Helpers\EMSummaryMarketBenchmarkData.cs" />
     <Compile Include="Helpers\EMSummFinalData.cs" />
@@ -201,6 +203,7 @@
     <Compile Include="Helpers\PowerPoint\SWOTAnalysis.cs" />
     <Compile Include="Helpers\PowerPoint\VQG.cs" />
     <Compile Include="Helpers\SecurityData.cs" />
+    <Compile Include="Helpers\SecurityDataIdScrub.cs" />
     <Compile Include="IssuerShares\ConfigurationSettings.cs" />
     <Compile Include="IssuerShares\IssuerSharesInstanceProvider.cs" />
     <Compile Include="IssuerShares\IssuerSharesServiceHostFactory.cs" />

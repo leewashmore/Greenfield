@@ -50,4 +50,37 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="RatioComparisonData" nillable="true" type="tns:RatioComparisonData" />
+  <xs:complexType name="ArrayOfDATA_MASTER">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DATA_MASTER" nillable="true" type="tns:DATA_MASTER" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDATA_MASTER" nillable="true" type="tns:ArrayOfDATA_MASTER" />
+  <xs:complexType name="DATA_MASTER">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:EntityObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ANNUAL" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BANK" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CALENDARIZE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="COA" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="COA_TYPE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CONVERT_FLAG" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CURRENT" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DATA_DESC" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DATA_ID" type="xs:int" />
+          <xs:element minOccurs="0" name="FX_CONV_TYPE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="INDUSTRIAL" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="INSURANCE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LONG_DESC" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MaxValue" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="MinValue" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="QUARTERLY" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="STATEMENT_TYPE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UTILITY" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DATA_MASTER" nillable="true" type="tns:DATA_MASTER" />
 </xs:schema>

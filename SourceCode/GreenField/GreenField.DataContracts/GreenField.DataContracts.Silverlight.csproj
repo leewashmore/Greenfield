@@ -78,6 +78,7 @@
     <Compile Include="DataContracts\EMSummaryMarketData.cs" />
     <Compile Include="DataContracts\FairValueCompositionSummaryData.cs" />
     <Compile Include="DataContracts\FreeCashFlowsData.cs" />
+    <Compile Include="DataContracts\InvestmentContextDetailsData.cs" />
     <Compile Include="DataContracts\SecurityBaseviewData.cs" />
     <Compile Include="DataContracts\SecurityInformation.cs" />
     <Compile Include="DataContracts\DocumentData.cs" />
