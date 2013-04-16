@@ -72,7 +72,6 @@
     <Compile Include="GF_COMPOSITE_LTHOLDINGS.cs" />
     <Compile Include="ICompositesOperations.cs" />
     <Compile Include="IDumper.cs" />
-    <Compile Include="IService1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PusherBase.cs" />
     <Compile Include="Service References\DimensionWebService\Reference.cs">

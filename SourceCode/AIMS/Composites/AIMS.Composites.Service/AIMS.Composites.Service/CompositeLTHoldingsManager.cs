@@ -156,6 +156,8 @@ namespace AIMS.Composites.Service
                 row[GF_ID] = ltHOLDINGS.GF_ID;
                 row[PORTFOLIO_DATE] = ltHOLDINGS.PORTFOLIO_DATE;
                 row[PORTFOLIO_ID] = ltHOLDINGS.PORTFOLIO_ID;
+                row[A_PFCHOLDINGS_PORLT] = ltHOLDINGS.A_PFCHOLDINGS_PORLT;
+                row[PORPATH] = ltHOLDINGS.PORPATH;
                 row[PORTFOLIO_THEME_SUBGROUP_CODE] = ltHOLDINGS.PORTFOLIO_THEME_SUBGROUP_CODE;
                 row[PORTFOLIO_CURRENCY] = ltHOLDINGS.PORTFOLIO_CURRENCY;
                 row[BENCHMARK_ID] = ltHOLDINGS.BENCHMARK_ID;
