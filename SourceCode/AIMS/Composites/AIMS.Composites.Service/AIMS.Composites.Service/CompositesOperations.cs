@@ -15,7 +15,7 @@ namespace AIMS.Composites.Service
     {
         #region PropertyDeclaration
 
-        private const int InsertRecordsBatchSize = 1000;
+        //private const int InsertRecordsBatchSize = 1000;
         private readonly IDumper _dumper;
         private Entities _dimensionEntity;
 
@@ -36,20 +36,6 @@ namespace AIMS.Composites.Service
 
         #endregion
 
-        #region FaultResourceManager
-
-        /*
-        public ResourceManager ServiceFaultResourceManager
-        {
-            get
-            {
-                return new ResourceManager(typeof(FaultDescriptions));
-            }
-        }
-         */
-
-        #endregion
-
         #region CompositesServices
 
         public List<GetComposites_Result> GetComposites()
@@ -61,10 +47,6 @@ namespace AIMS.Composites.Service
             catch (Exception ex)
             {
                 LogException(ex);
-                //ExceptionTrace.LogException(ex);
-                //string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                //throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-
                 return null;
             }
         }
