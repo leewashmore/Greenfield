@@ -155,7 +155,7 @@ namespace GreenField.Gadgets.ViewModels
                         GroupDataType = PeriodColumnGroupingType.DECIMAL })
                     */
                     
-                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Last Update", 
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Consensus Last Update", 
                         GroupPropertyName = "DataSourceDate", 
                         GroupDataType = PeriodColumnGroupingType.SHORT_DATETIME });
                     dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Reported Currency", 

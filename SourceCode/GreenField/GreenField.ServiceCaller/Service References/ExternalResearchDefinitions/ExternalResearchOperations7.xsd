@@ -2,8 +2,14 @@
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="EntitySelectionData">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Country_Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ISSUER_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LOOK_THRU_FUND" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LongName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Region_Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
@@ -252,4 +258,47 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PortfolioSelectionData" nillable="true" type="tns:PortfolioSelectionData" />
+  <xs:complexType name="ArrayOfInvestmentContextDetailsData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="InvestmentContextDetailsData" nillable="true" type="tns:InvestmentContextDetailsData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInvestmentContextDetailsData" nillable="true" type="tns:ArrayOfInvestmentContextDetailsData" />
+  <xs:complexType name="InvestmentContextDetailsData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DividendYield" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DividendYieldScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EB_EBITDA_CurrentYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EB_EBITDA_CurrentYearScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EB_EBITDA_NextYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EB_EBITDA_NextYearScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ForwardPBV" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ForwardPBVScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ForwardPE" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ForwardPEScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="GicsIndustryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GicsIndustryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GicsSectorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GicsSectorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsoCountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssuerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MarketCap" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MarketCapScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MarketValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MarketValueScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PBVCurrentYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PBVCurrentYearScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PBVNextYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PBVNextYearScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PECurrentYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PECurrentYearScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PENextYear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PENextYearScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ROE" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ROEScrubbed" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="children" nillable="true" type="tns:ArrayOfInvestmentContextDetailsData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvestmentContextDetailsData" nillable="true" type="tns:InvestmentContextDetailsData" />
 </xs:schema>

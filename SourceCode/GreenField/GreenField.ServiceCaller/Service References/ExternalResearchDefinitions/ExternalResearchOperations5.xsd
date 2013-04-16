@@ -104,7 +104,6 @@
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrAccountY0" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="CurrAccountY1" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="CurrAccountY2" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="DYCurYear" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FxY1Q1" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FxY1Q2" nillable="true" type="xs:decimal" />
@@ -130,7 +129,6 @@
       <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StInterestY0" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="StInterestY1" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="StInterestY2" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="USDEarCurYear" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="USDEarCurYearCon" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="USDEarNextYear" nillable="true" type="xs:decimal" />

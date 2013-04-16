@@ -55,6 +55,10 @@ namespace GreenField.Common
         #region Financials Statistics
         public const string INTERNAL_RESEARCH_FINSTAT_REPORT = "Finstat Report";
         #endregion
+
+        #region Investment Context
+        public const string INVESTMENT_CONTEXT= "Investment Context";
+        #endregion
         #endregion
 
         #region Estimates

@@ -157,7 +157,7 @@ namespace GreenField.Gadgets.ViewModels
                     dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Standard Deviation",
                         GroupPropertyName = "StandardDeviation", 
                         GroupDataType = PeriodColumnGroupingType.DECIMAL });
-                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Last Update", 
+                    dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Consensus Last Update", 
                         GroupPropertyName = "DataSourceDate", 
                         GroupDataType = PeriodColumnGroupingType.SHORT_DATETIME });
                     dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Reported Currency",
@@ -167,7 +167,7 @@ namespace GreenField.Gadgets.ViewModels
                 return dataGrouping;
             }
         }
-
+         
         /// <summary>
         /// Unpivoted ConsensusEstimatesDetail Information received from stored procedure
         /// </summary>

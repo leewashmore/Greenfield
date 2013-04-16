@@ -1772,6 +1772,15 @@ namespace GreenField.App.ViewModel
         }
 
         /// <summary>
+        /// DashboardCompanyFinancialsInvestmentContextCommand
+        /// </summary>
+        public ICommand DashboardCompanyFinancialsInvestmentContextCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyFinancialsInvestmentContextCommandMethod); }
+        }
+
+
+        /// <summary>
         /// DashboardCompanyFinancialsPeerComparisonCommand
         /// </summary>
         public ICommand DashboardCompanyFinancialsPeerComparisonCommand
@@ -2532,6 +2541,25 @@ namespace GreenField.App.ViewModel
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_FINSTAT);
                 UpdateToolBoxSelectorVisibility();
                 regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsFinStat", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            Logging.LogEndMethod(logger, methodNamespace);
+        }
+
+        private void DashboardCompanyFinancialsInvestmentContextCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_INVESTMENT_CONTEXT);
+                UpdateToolBoxSelectorVisibility();
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyInvestmentContext", UriKind.Relative));
             }
             catch (Exception ex)
             {

@@ -148,6 +148,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\IndexConstituentsData.cs">
       <Link>DataContracts\IndexConstituentsData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\InvestmentContextDetailsData.cs">
+      <Link>DataContracts\InvestmentContextDetailsData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\MacroDatabaseKeyAnnualReportData.cs">
       <Link>DataContracts\MacroDatabaseKeyAnnualReportData.cs</Link>
     </Compile>
@@ -247,7 +250,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
