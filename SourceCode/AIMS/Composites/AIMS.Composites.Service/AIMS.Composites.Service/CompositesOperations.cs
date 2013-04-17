@@ -84,7 +84,8 @@ namespace AIMS.Composites.Service
                 {
                     // Step 1   Retrieve the list of portfolios in the composite that are active (using the new COMPOSITE_MATRIX table).
                     _dumper.WriteLine("");
-                    _dumper.WriteLine(string.Format("{0}. WORKING ON ON CompositeId:'{1}'", (indedx++), composite.COMPOSITE_ID));
+                    _dumper.WriteLine(string.Format("{0}. WORKING ON ON CompositeId:'{1}'", (indedx++),
+                                                    composite.COMPOSITE_ID));
                     _dumper.Indent();
                     _dumper.Write("GetCompositePortfolios ... ");
                     stopwatch = new Stopwatch();
@@ -220,7 +221,8 @@ namespace AIMS.Composites.Service
                     _dumper.Unindent();
                 }
 
-                _dumper.WriteLine(string.Format("PopulateCompositeLTHoldings sucessfully completed."), stopwatchPopulateCompositeLTHoldings);
+                _dumper.WriteLine(string.Format("PopulateCompositeLTHoldings sucessfully completed."),
+                                  stopwatchPopulateCompositeLTHoldings);
                 Console.ReadLine();
             }
             catch (Exception ex)
