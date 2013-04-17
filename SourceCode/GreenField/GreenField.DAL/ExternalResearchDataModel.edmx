@@ -12,6 +12,8 @@
       [BENCHMARK_MASTER].[BENCHMARK_NAME] AS [BENCHMARK_NAME]
       FROM [dbo].[BENCHMARK_MASTER] AS [BENCHMARK_MASTER]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="COMPOSITE_MASTER" EntityType="ExternalResearchModel.Store.COMPOSITE_MASTER" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="COMPOSITE_MATRIX" EntityType="ExternalResearchModel.Store.COMPOSITE_MATRIX" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CONSENSUS_MASTER" EntityType="ExternalResearchModel.Store.CONSENSUS_MASTER" store:Type="Tables" store:Schema="dbo" store:Name="CONSENSUS_MASTER">
             <DefiningQuery>SELECT 
       [CONSENSUS_MASTER].[ESTIMATE_ID] AS [ESTIMATE_ID], 
@@ -281,6 +283,25 @@
           </Key>
           <Property Name="BENCHMARK_ID" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="BENCHMARK_NAME" Type="varchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="COMPOSITE_MASTER">
+          <Key>
+            <PropertyRef Name="COMPOSITE_ID" />
+          </Key>
+          <Property Name="COMPOSITE_ID" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="BENCHMARK_ID" Type="nvarchar" MaxLength="255" />
+          <Property Name="LOOK_THRU" Type="bit" />
+          <Property Name="ACTIVE" Type="bit" />
+        </EntityType>
+        <EntityType Name="COMPOSITE_MATRIX">
+          <Key>
+            <PropertyRef Name="COMPOSITE" />
+            <PropertyRef Name="PORTFOLIO" />
+          </Key>
+          <Property Name="COMPOSITE" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="PORTFOLIO" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="ACTIVE" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Main_Dev.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -595,6 +616,7 @@
           <Property Name="CHG_PCT_YTD" Type="nvarchar" MaxLength="100" />
           <Property Name="CHG_PCT_1YR" Type="nvarchar" MaxLength="100" />
           <Property Name="issuer_proxy" Type="varchar" MaxLength="20" />
+          <Property Name="UPDATE_BB_STATUS" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Main_Dev.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -1563,6 +1585,8 @@
             <Parameter Name="ViewReportBy" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="GF_COMPOSITE_LTHOLDINGS" EntityType="ExternalResearchModel.GF_COMPOSITE_LTHOLDINGS" />
+          <EntitySet Name="COMPOSITE_MASTER" EntityType="ExternalResearchModel.COMPOSITE_MASTER" />
+          <EntitySet Name="COMPOSITE_MATRIX" EntityType="ExternalResearchModel.COMPOSITE_MATRIX" />
 
 
 				</EntityContainer>
@@ -2301,6 +2325,7 @@
           <Property Type="String" Name="CHG_PCT_YTD" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="CHG_PCT_1YR" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="issuer_proxy" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="UPDATE_BB_STATUS" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MODEL_UPLOAD_USER_GROUP">
           <Key>
@@ -2455,6 +2480,25 @@
           <Property Type="String" Name="GICS_SUB_INDUSTRY" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="LOOK_THRU_FUND" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="COMPOSITE_MASTER">
+          <Key>
+            <PropertyRef Name="COMPOSITE_ID" />
+          </Key>
+          <Property Type="String" Name="COMPOSITE_ID" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BENCHMARK_ID" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="LOOK_THRU" />
+          <Property Type="Boolean" Name="ACTIVE" />
+        </EntityType>
+        <EntityType Name="COMPOSITE_MATRIX">
+          <Key>
+            <PropertyRef Name="COMPOSITE" />
+            <PropertyRef Name="PORTFOLIO" />
+          </Key>
+          <Property Type="String" Name="COMPOSITE" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PORTFOLIO" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="ACTIVE" />
         </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -3251,6 +3295,7 @@
           <EntitySetMapping Name="GF_SECURITY_BASEVIEW_Local">
             <EntityTypeMapping TypeName="ExternalResearchModel.GF_SECURITY_BASEVIEW_Local">
               <MappingFragment StoreEntitySet="GF_SECURITY_BASEVIEW">
+                <ScalarProperty Name="UPDATE_BB_STATUS" ColumnName="UPDATE_BB_STATUS" />
                 <ScalarProperty Name="issuer_proxy" ColumnName="issuer_proxy" />
                 <ScalarProperty Name="CHG_PCT_1YR" ColumnName="CHG_PCT_1YR" />
                 <ScalarProperty Name="CHG_PCT_YTD" ColumnName="CHG_PCT_YTD" />
@@ -3458,6 +3503,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="COMPOSITE_MASTER">
+            <EntityTypeMapping TypeName="ExternalResearchModel.COMPOSITE_MASTER">
+              <MappingFragment StoreEntitySet="COMPOSITE_MASTER">
+                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+                <ScalarProperty Name="LOOK_THRU" ColumnName="LOOK_THRU" />
+                <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="COMPOSITE_ID" ColumnName="COMPOSITE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COMPOSITE_MATRIX">
+            <EntityTypeMapping TypeName="ExternalResearchModel.COMPOSITE_MATRIX">
+              <MappingFragment StoreEntitySet="COMPOSITE_MATRIX">
+                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+                <ScalarProperty Name="PORTFOLIO" ColumnName="PORTFOLIO" />
+                <ScalarProperty Name="COMPOSITE" ColumnName="COMPOSITE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -3516,6 +3581,8 @@
         <EntityTypeShape EntityType="ExternalResearchModel.BENCHMARK_MASTER" Width="1.5" PointX="3.375" PointY="14.75" Height="1.4033821614583388" />
         <EntityTypeShape EntityType="ExternalResearchModel.GF_BENCHMARK_HOLDINGS_Local" Width="1.5" PointX="5.375" PointY="14.75" Height="8.7108365885416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.GF_COMPOSITE_LTHOLDINGS" Width="1.5" PointX="15.375" PointY="0.75" Height="7.36472656250001" />
+        <EntityTypeShape EntityType="ExternalResearchModel.COMPOSITE_MASTER" Width="1.5" PointX="7.375" PointY="15.75" Height="1.9802864583333246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.COMPOSITE_MATRIX" Width="1.5" PointX="15.375" PointY="9.75" Height="1.5956835937500102" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
