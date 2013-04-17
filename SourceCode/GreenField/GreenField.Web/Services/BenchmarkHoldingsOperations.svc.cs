@@ -1173,442 +1173,681 @@ namespace GreenField.Web.Services
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData;
                 List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData;
                 List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData;
+                List<GF_COMPOSITE_LTHOLDINGS> compositeHoldingsData = null;
+                ExternalResearchEntities externalEntity = new GreenField.DAL.ExternalResearchEntities();
+                
                 Boolean isFiltered = false;
-
+                Boolean isComposite = externalEntity.COMPOSITE_MASTER.Where(x => x.COMPOSITE_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper()).Count() == 0 ? false : true;
 
                 dimensionPortfolioLTHoldingsData = null;
                 if (lookThruEnabled)
                 {
-                    #region LookThru
-                    if (excludeCash)
+                    if (!isComposite)
                     {
-                        if (filterType != null && filterValue != null)
+                        #region LookThru
+                        if (excludeCash)
                         {
-                            
-                            isFiltered = true;
-                            dimensionPortfolioHoldingsData = null;
-                            switch (filterType)
+                            if (filterType != null && filterValue != null)
                             {
-                                case "Region":
+
+                                isFiltered = true;
+                                dimensionPortfolioHoldingsData = null;
+                                switch (filterType)
+                                {
+                                    case "Region":
                                         dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") &&(a.ASHEMM_PROP_REGION_CODE==filterValue)).ToList();
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")  && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
                                         break;
-                                case "Country":
+                                    case "Country":
                                         dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
-                                        
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY") && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
+
                                         break;
-                                case "Industry":
-                                     dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
-                                        
-                                        break;
-                                case "Sector":
-                                     dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.GICS_SECTOR_NAME == filterValue) ).ToList();
-                                        
-                                        break;
-                                case "Show Everything":
+                                    case "Industry":
                                         dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                           && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY") && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
+
+                                        break;
+                                    case "Sector":
+                                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                           && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY") && (a.GICS_SECTOR_NAME == filterValue)).ToList();
+
+                                        break;
+                                    case "Show Everything":
+                                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH" && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY"))).ToList();
                                         isFiltered = false; //filter type should be set to false
                                         break;
 
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                           && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                        }
-                    }
-                    else
-                    {
-#if DEBUG
-                        swGF_PORTFOLIO_LTHOLDINGS.Start();
-#endif
-
-                        if (filterType != null && filterValue != null)
-                        {
-                            isFiltered = true;
-                            dimensionPortfolioHoldingsData = null;
-                            switch (filterType)
+                            else
                             {
-                                case "Region":
-                                    dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                    && (a.PORTFOLIO_DATE == effectiveDate.Date)  && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
-                                    break;
-                                case "Country":
-                                    dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                    && (a.PORTFOLIO_DATE == effectiveDate.Date)  && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
-                                    break;
-                                case "Industry":
-                                    dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                       && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
-                                    break;
-                                case "Sector":
-                                    dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                       && (a.PORTFOLIO_DATE == effectiveDate.Date)  && (a.GICS_SECTOR_NAME == filterValue)).ToList();
-                                    break;
-                                case "Show Everything":
-                                    dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                    && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    isFiltered = false; //filter type should be set to false
-                                    break;
-
-
+                                dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                               && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
                             }
                         }
                         else
                         {
-                            dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                        }
 #if DEBUG
-                        swGF_PORTFOLIO_LTHOLDINGS.Stop();
-                        timeGF_PORTFOLIO_LTHOLDINGS = DateTime.Now;
+                            swGF_PORTFOLIO_LTHOLDINGS.Start();
 #endif
-                    }
 
-                    //if service returned empty set
-                    if (dimensionPortfolioLTHoldingsData.Count == 0)
-                    {
-                        return result;
-                    }
-                    //retrieve the id of benchmark associated with the portfolio
-                    List<string> benchmarkIdLT = dimensionPortfolioLTHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
-                    //If the DataBase doesn't return a single Benchmark for a Portfolio
-                    if (benchmarkIdLT.Count != 1)
-                    {
-                        throw new InvalidOperationException("More than 1 Benchmark is assigned to the Selected Portfolio" + objPortfolioIdentifier.PortfolioId.ToUpper().ToString());
-                    }
-                      dimensionBenchmarkHoldingsData = null;
-                    if (excludeCash)
-                    {
-                        if (filterType != null && filterValue != null)
-                        {
-                            isFiltered = true;
-
-                            switch (filterType)
+                            if (filterType != null && filterValue != null)
                             {
-                                case "Region":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                                    (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
-                                    break;
-                                case "Country":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                                    (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
-                                    break;
-                                case "Industry":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                                    (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
-                                    break;
-                                case "Sector":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                                    (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.GICS_SECTOR_NAME == filterValue)).ToList();
-                                    break;
-                                case "Show Everything":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                                    (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    isFiltered = false; //filter type should be set to false
-                                    break;
+                                isFiltered = true;
+                                dimensionPortfolioHoldingsData = null;
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Country":
+                                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Industry":
+                                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                           && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
+                                        break;
+                                    case "Sector":
+                                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                           && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_SECTOR_NAME == filterValue)).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
 
+
+                                }
                             }
-                        }
-                        else
-                        {
-                            dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                            (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                        }
-                        
-                    }
-                    else
-                    {
-#if DEBUG
-                        swGF_BENCHMARK_HOLDINGS.Start();
-#endif
-                        if (filterType != null && filterValue != null)
-                        {
-                            isFiltered = true;
-
-                            switch (filterType)
+                            else
                             {
-                                case "Region":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                                    (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
-                                    break;
-                                case "Country":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                                    (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
-                                    break;
-                                case "Industry":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                                    (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
-                                    break;
-                                case "Sector":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                                    (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_SECTOR_NAME == filterValue)).ToList();
-                                    break;
-                                case "Show Everything":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                                    (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                                    isFiltered = false; //filter type should be set to false
-                                    break;
-
+                                dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                    && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
                             }
+#if DEBUG
+                            swGF_PORTFOLIO_LTHOLDINGS.Stop();
+                            timeGF_PORTFOLIO_LTHOLDINGS = DateTime.Now;
+#endif
+                        }
+
+                        //if service returned empty set
+                        if (dimensionPortfolioLTHoldingsData.Count == 0)
+                        {
+                            return result;
+                        }
+                        //retrieve the id of benchmark associated with the portfolio
+                        List<string> benchmarkIdLT = dimensionPortfolioLTHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
+                        //If the DataBase doesn't return a single Benchmark for a Portfolio
+                        if (benchmarkIdLT.Count != 1)
+                        {
+                            throw new InvalidOperationException("More than 1 Benchmark is assigned to the Selected Portfolio" + objPortfolioIdentifier.PortfolioId.ToUpper().ToString());
+                        }
+                        dimensionBenchmarkHoldingsData = null;
+                        if (excludeCash)
+                        {
+                            if (filterType != null && filterValue != null)
+                            {
+                                isFiltered = true;
+
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                        (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY") && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Country":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                        (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY") && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Industry":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                        (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY") && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
+                                        break;
+                                    case "Sector":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                        (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY") && (a.GICS_SECTOR_NAME == filterValue)).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                        (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
+
+                                }
+                            }
+                            else
+                            {
+                                dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                            }
+
                         }
                         else
                         {
-                            dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
-                            (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+#if DEBUG
+                            swGF_BENCHMARK_HOLDINGS.Start();
+#endif
+                            if (filterType != null && filterValue != null)
+                            {
+                                isFiltered = true;
+
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                        (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Country":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                        (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Industry":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                        (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
+                                        break;
+                                    case "Sector":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                        (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_SECTOR_NAME == filterValue)).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                        (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
+
+                                }
+                            }
+                            else
+                            {
+                                dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                                (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                            }
+
+                            // dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
+                            //              Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+#if DEBUG
+                            swGF_BENCHMARK_HOLDINGS.Stop();
+                            timeGF_BENCHMARK_HOLDINGS = DateTime.Now;
+#endif
+                        }
+                        result = PortfolioDetailsCalculations.AddPortfolioLTSecurities(dimensionPortfolioLTHoldingsData, dimensionBenchmarkHoldingsData, isFiltered);
+
+                        #region BenchmarkSecurities
+
+                        if (objGetBenchmark)
+                        {
+
+                            decimal? sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
+                            List<string> portfolioSecurityID = dimensionPortfolioLTHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
+                            List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
+                            result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities, isFiltered, sumBenchmarkWeight);
                         }
 
-                       // dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
-                         //              Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-#if DEBUG
-                        swGF_BENCHMARK_HOLDINGS.Stop();
-                        timeGF_BENCHMARK_HOLDINGS = DateTime.Now;
-#endif
+                        #endregion
+
+                        #endregion
                     }
-                    result = PortfolioDetailsCalculations.AddPortfolioLTSecurities(dimensionPortfolioLTHoldingsData, dimensionBenchmarkHoldingsData,isFiltered);
-
-                    #region BenchmarkSecurities
-
-                    if (objGetBenchmark)
-                    {
-                       
-                        decimal? sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
-                        List<string> portfolioSecurityID = dimensionPortfolioLTHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
-                        List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
-                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities, isFiltered, sumBenchmarkWeight);
-                    }
-
-                    #endregion
-
-                    #endregion
+                   
                 }
                 else
                 {
-                    #region NonLookThru
-                    if (excludeCash)
+                    if (!isComposite)
                     {
-                        if (filterType != null && filterValue != null)
+                        #region NonLookThru
+                        if (excludeCash)
                         {
-                            isFiltered = true;
-                            dimensionPortfolioHoldingsData = null;
-                            switch (filterType)
+                            if (filterType != null && filterValue != null)
                             {
-                                case "Region":
-                                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.ASHEMM_PROP_REGION_CODE== filterValue)
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    break;
-                                case "Country":
-                                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.ISO_COUNTRY_CODE== filterValue)
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    break;
-                                case "Industry":
-                                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_INDUSTRY_NAME == filterValue)
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    break;
+                                isFiltered = true;
+                                dimensionPortfolioHoldingsData = null;
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.ASHEMM_PROP_REGION_CODE == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        break;
+                                    case "Country":
+                                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.ISO_COUNTRY_CODE == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        break;
+                                    case "Industry":
+                                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_INDUSTRY_NAME == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        break;
 
-                                case "Sector":
-                                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_SECTOR_NAME == filterValue)
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    break;
-                                case "Show Everything":
-                                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() )
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    isFiltered = false; //filter type should be set to false
-                                    break;
-                                default: dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    break;
+                                    case "Sector":
+                                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_SECTOR_NAME == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
+                                    default: dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        break;
+                                }
+                            }
+                            else
+                            {
+
+                                dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
                             }
                         }
                         else
                         {
+#if DEBUG
+                            swGF_PORTFOLIO_LTHOLDINGS.Start();
+#endif
+                            if (filterType != null && filterValue != null)
+                            {
+                                isFiltered = true;
+                                dimensionPortfolioHoldingsData = null;
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Country":
+                                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.ISO_COUNTRY_CODE == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        break;
+                                    case "Industry":
+                                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_INDUSTRY_NAME == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        break;
 
-                            dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                    && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                    case "Sector":
+                                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_SECTOR_NAME == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
+                                    default: dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+
+                            }
+#if DEBUG
+                            swGF_PORTFOLIO_LTHOLDINGS.Stop();
+                            timeGF_PORTFOLIO_LTHOLDINGS = DateTime.Now;
+#endif
                         }
+
+                        if (dimensionPortfolioHoldingsData == null)
+                        {
+                            return new List<PortfolioDetailsData>();
+                        }
+                        //if service returned empty set
+                        if (dimensionPortfolioHoldingsData.Count == 0)
+                        {
+                            return result;
+                        }
+                        //retrieve the id of benchmark associated with the portfolio
+                        List<string> benchmarkId = dimensionPortfolioHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
+                        //if the database doesn't return a single benchmark for a portfolio
+                        if (benchmarkId.Count != 1)
+                        {
+                            throw new InvalidOperationException("More than 1 Benchmark is found for the Selected Portfolio: " + objPortfolioIdentifier.PortfolioId);
+                        }
+                        dimensionBenchmarkHoldingsData = null;
+                        if (excludeCash)
+                        {
+
+                            if (filterType != null && filterValue != null)
+                            {
+                                isFiltered = true;
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)
+                                        && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        break;
+                                    case "Country":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ISO_COUNTRY_CODE == filterValue)
+                                        && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        break;
+                                    case "Industry":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_INDUSTRY_NAME == filterValue)
+                                       && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        break;
+                                    case "Sector":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_SECTOR_NAME == filterValue)
+                                        && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)
+                                        && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
+
+                                }
+                            }
+
+                            else
+                            {
+                                dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)
+                               && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                            }
+                        }
+                        else
+                        {
+#if DEBUG
+                            swGF_BENCHMARK_HOLDINGS.Start();
+#endif
+                            if (filterType != null && filterValue != null)
+                            {
+                                isFiltered = true;
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Country":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Industry":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
+                                        break;
+                                    case "Sector":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_SECTOR_NAME == filterValue)).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
+
+                                }
+                            }
+                            else
+                            {
+
+                                dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
+                                        Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                            }
+#if DEBUG
+                            swGF_BENCHMARK_HOLDINGS.Stop();
+                            timeGF_BENCHMARK_HOLDINGS = DateTime.Now;
+#endif
+                        }
+#if DEBUG
+                        swAddPortfolioSecurities.Start();
+#endif
+                        result = PortfolioDetailsCalculations.AddPortfolioSecurities(dimensionPortfolioHoldingsData, dimensionBenchmarkHoldingsData, isFiltered);
+#if DEBUG
+                        swAddPortfolioSecurities.Stop();
+                        timeAddPortfolioSecurities = DateTime.Now;
+#endif
+                        // set portfolio for each record to current portfolio
+                        result.ForEach(r =>
+                        {
+                            r.PortfolioPath = objPortfolioIdentifier.PortfolioId;
+                            r.PfcHoldingPortfolio = objPortfolioIdentifier.PortfolioId;
+                        });
+
+
+
+                        #region BenchmarkSecurities
+
+                        if (objGetBenchmark)
+                        {
+                            decimal? sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
+                            List<string> portfolioSecurityID = dimensionPortfolioHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
+                            List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
+                            result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities, isFiltered, sumBenchmarkWeight);
+                        }
+
+                        #endregion
+
+                        #endregion
                     }
                     else
                     {
-#if DEBUG
-                        swGF_PORTFOLIO_LTHOLDINGS.Start();
-#endif
-                        if (filterType != null && filterValue != null)
-                        {
-                            isFiltered = true;
-                            dimensionPortfolioHoldingsData = null;
-                            switch (filterType)
-                            {
-                                case "Region":
-                                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                    && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE== filterValue)).ToList();
-                                    break;
-                                case "Country":
-                                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.ISO_COUNTRY_CODE == filterValue)
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                                    break;
-                                case "Industry":
-                                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_INDUSTRY_NAME == filterValue)
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                                    break;
+                        #region RetrieveComposite
 
-                                case "Sector":
-                                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_SECTOR_NAME == filterValue)
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                                    break;
-                                case "Show Everything":
-                                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                                    isFiltered = false; //filter type should be set to false
-                                    break;
-                                default: dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                      && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                                    break;
+                        //compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                        //       && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+
+                        if (excludeCash)
+                        {
+                            if (filterType != null && filterValue != null)
+                            {
+                                isFiltered = true;
+                                dimensionPortfolioHoldingsData = null;
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.ASHEMM_PROP_REGION_CODE == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        break;
+                                    case "Country":
+                                        compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.ISO_COUNTRY_CODE == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        break;
+                                    case "Industry":
+                                        compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_INDUSTRY_NAME == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        break;
+
+                                    case "Sector":
+                                        compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_SECTOR_NAME == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
+                                    default: compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        break;
+                                }
+                            }
+                            else
+                            {
+
+                                compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
                             }
                         }
                         else
                         {
-                            dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                                    && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                            
+#if DEBUG
+                            swGF_PORTFOLIO_LTHOLDINGS.Start();
+#endif
+                            if (filterType != null && filterValue != null)
+                            {
+                                isFiltered = true;
+                                dimensionPortfolioHoldingsData = null;
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Country":
+                                        compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.ISO_COUNTRY_CODE == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        break;
+                                    case "Industry":
+                                        compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_INDUSTRY_NAME == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        break;
+
+                                    case "Sector":
+                                        compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper() && a.GICS_SECTOR_NAME == filterValue)
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
+                                    default: compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                          && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                        && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+
+                            }
+#if DEBUG
+                            swGF_PORTFOLIO_LTHOLDINGS.Stop();
+                            timeGF_PORTFOLIO_LTHOLDINGS = DateTime.Now;
+#endif
+                        }
+
+                        if (compositeHoldingsData == null)
+                        {
+                            return new List<PortfolioDetailsData>();
+                        }
+                        //if service returned empty set
+                        if (compositeHoldingsData.Count == 0)
+                        {
+                            return result;
+                        }
+                        //retrieve the id of benchmark associated with the portfolio
+                        List<string> benchmarkId = compositeHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
+                        //if the database doesn't return a single benchmark for a portfolio
+                        if (benchmarkId.Count != 1)
+                        {
+                            throw new InvalidOperationException("More than 1 Benchmark is found for the Selected Portfolio: " + objPortfolioIdentifier.PortfolioId);
+                        }
+                        dimensionBenchmarkHoldingsData = null;
+                        if (excludeCash)
+                        {
+
+                            if (filterType != null && filterValue != null)
+                            {
+                                isFiltered = true;
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)
+                                        && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        break;
+                                    case "Country":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ISO_COUNTRY_CODE == filterValue)
+                                        && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        break;
+                                    case "Industry":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_INDUSTRY_NAME == filterValue)
+                                       && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        break;
+                                    case "Sector":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_SECTOR_NAME == filterValue)
+                                        && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)
+                                        && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
+
+                                }
+                            }
+
+                            else
+                            {
+                                dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)
+                               && (a.SECURITYTHEMECODE.ToUpper() != "CASH") && (a.SECURITYTHEMECODE.ToUpper() != "LOC_CCY")).ToList();
+                            }
+                        }
+                        else
+                        {
+#if DEBUG
+                            swGF_BENCHMARK_HOLDINGS.Start();
+#endif
+                            if (filterType != null && filterValue != null)
+                            {
+                                isFiltered = true;
+                                switch (filterType)
+                                {
+                                    case "Region":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Country":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
+                                        break;
+                                    case "Industry":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
+                                        break;
+                                    case "Sector":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_SECTOR_NAME == filterValue)).ToList();
+                                        break;
+                                    case "Show Everything":
+                                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                                        isFiltered = false; //filter type should be set to false
+                                        break;
+
+                                }
+                            }
+                            else
+                            {
+
+                                dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
+                                        Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                            }
+#if DEBUG
+                            swGF_BENCHMARK_HOLDINGS.Stop();
+                            timeGF_BENCHMARK_HOLDINGS = DateTime.Now;
+#endif
                         }
 #if DEBUG
-                        swGF_PORTFOLIO_LTHOLDINGS.Stop();
-                        timeGF_PORTFOLIO_LTHOLDINGS = DateTime.Now;
+                        swAddPortfolioSecurities.Start();
 #endif
-                    }
+                        result = PortfolioDetailsCalculations.AddCompositePortfolioSecurities(compositeHoldingsData, dimensionBenchmarkHoldingsData, isFiltered);
+#if DEBUG
+                        swAddPortfolioSecurities.Stop();
+                        timeAddPortfolioSecurities = DateTime.Now;
+#endif
+                        // set portfolio for each record to current portfolio
+                        result.ForEach(r =>
+                        {
+                            r.PortfolioPath = objPortfolioIdentifier.PortfolioId;
+                            r.PfcHoldingPortfolio = objPortfolioIdentifier.PortfolioId;
+                        });
 
-                    if (dimensionPortfolioHoldingsData == null)
-                    {
-                        return new List<PortfolioDetailsData>();
-                    }
-                    //if service returned empty set
-                    if (dimensionPortfolioHoldingsData.Count == 0)
-                    {
-                        return result;
-                    }
-                    //retrieve the id of benchmark associated with the portfolio
-                    List<string> benchmarkId = dimensionPortfolioHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
-                    //if the database doesn't return a single benchmark for a portfolio
-                    if (benchmarkId.Count != 1)
-                    {
-                        throw new InvalidOperationException("More than 1 Benchmark is found for the Selected Portfolio: " + objPortfolioIdentifier.PortfolioId);
-                    }
-                    dimensionBenchmarkHoldingsData = null;
-                    if (excludeCash)
-                    {
+
+
+                        #region BenchmarkSecurities
+
+                        if (objGetBenchmark)
+                        {
+                            decimal? sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
+                            List<string> portfolioSecurityID = compositeHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
+                            List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
+                            result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities, isFiltered, sumBenchmarkWeight);
+                        }
+
+                        #endregion
+
+
+
                         
-                        if (filterType != null && filterValue != null)
-                        {
-                            isFiltered = true;
-                            switch (filterType)
-                            {
-                                case "Region":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)
-                                    && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    break;
-                                case "Country":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ISO_COUNTRY_CODE == filterValue)
-                                    && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    break;
-                                case "Industry":
-                                     dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_INDUSTRY_NAME == filterValue)
-                                    && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    break;
-                                case "Sector":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_SECTOR_NAME == filterValue)
-                                    && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    break;
-                                case "Show Everything":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) 
-                                    && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                                    isFiltered = false; //filter type should be set to false
-                                    break;
-                        
-                            }
-                        }
-
-                        else
-                        {
-                            dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)
-                           && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                        }
+                        #endregion
                     }
-                    else
-                    {
-#if DEBUG
-                        swGF_BENCHMARK_HOLDINGS.Start();
-#endif
-                        if (filterType != null && filterValue != null)
-                        {
-                            isFiltered = true;
-                            switch (filterType)
-                            {
-                                case "Region":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
-                                    break;
-                                case "Country":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.ISO_COUNTRY_CODE == filterValue)).ToList();
-                                    break;
-                                case "Industry":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_INDUSTRY_NAME == filterValue)).ToList();
-                                    break;
-                                case "Sector":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.GICS_SECTOR_NAME == filterValue)).ToList();
-                                    break;
-                                case "Show Everything":
-                                    dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                                    isFiltered = false; //filter type should be set to false
-                                    break;
-
-                            }
-                        }
-                        else
-                        {
-
-                            dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
-                                    Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                        }
-#if DEBUG
-                        swGF_BENCHMARK_HOLDINGS.Stop();
-                        timeGF_BENCHMARK_HOLDINGS = DateTime.Now;
-#endif
-                    }
-#if DEBUG
-                    swAddPortfolioSecurities.Start();
-#endif
-                    result = PortfolioDetailsCalculations.AddPortfolioSecurities(dimensionPortfolioHoldingsData, dimensionBenchmarkHoldingsData, isFiltered);
-#if DEBUG
-                    swAddPortfolioSecurities.Stop();
-                    timeAddPortfolioSecurities = DateTime.Now;
-#endif
-                    // set portfolio for each record to current portfolio
-                    result.ForEach(r =>
-                    {
-                        r.PortfolioPath = objPortfolioIdentifier.PortfolioId;
-                        r.PfcHoldingPortfolio = objPortfolioIdentifier.PortfolioId;
-                    });
-                    
-                    
-
-                    #region BenchmarkSecurities
-
-                    if (objGetBenchmark)
-                    {
-                        decimal? sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
-                        List<string> portfolioSecurityID = dimensionPortfolioHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
-                        List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
-                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities, isFiltered, sumBenchmarkWeight);
-                    }
-
-                    #endregion
-
-                    #endregion
                 }
 
 #if DEBUG
@@ -2121,8 +2360,9 @@ namespace GreenField.Web.Services
                         externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault() == null ?
                         null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault().Amount * 100M;
 
-                    item.ROE = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 133 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 133 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount * 100M;
+                    //This is forward ROE.
+                    item.ROE = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 200 ).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 200 ).FirstOrDefault().Amount * 100M;
 
                     item.NetDebtEquity = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ?
                         null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount;
@@ -2137,6 +2377,7 @@ namespace GreenField.Web.Services
                    // var security = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault();
                     item.IssuerName = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault() == null ?
                         null : newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault().ISSUER_NAME;
+                 
                     if (!lookThruEnabled)
                     {
 
