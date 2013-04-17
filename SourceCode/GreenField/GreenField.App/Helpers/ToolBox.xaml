@@ -605,7 +605,7 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="20">
                         <CheckBox Content="LookThru" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20"
                                   Style="{StaticResource CheckBoxStyle}" Foreground="{Binding DemoForeground}" 
-                          IsChecked="{Binding IsLookThruEnabled , Mode=TwoWay}" Grid.Row="0" Name="chkLookThruEnabled" ToolTipService.ToolTip="Check to Enable LookThru" />
+                          IsChecked="{Binding IsLookThruEnabled , Mode=TwoWay}" Grid.Row="0" Name="chkLookThruEnabled" ToolTipService.ToolTip="Check to Enable LookThru" IsEnabled="{Binding EnableLookThru}" />
                     </StackPanel>
                 </Grid>
 
