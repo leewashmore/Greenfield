@@ -43,5 +43,21 @@ namespace GreenField.Gadgets.Helpers.PortfolioDetails
                 return "Net Income " + (DateTime.Now.Year+1);
             }
         }
+        public string NetDebtEquityHeader
+        {
+            get
+            {
+                return "Net Debt Equity " + (DateTime.Now.Year)+" %";
+            }
+        }
+
+        public string FreeCashFlowMarginHeader
+        {
+            get
+            {
+                return "Free Cash Flow Margin " + (DateTime.Now.Year) + " %";
+            }
+        }
+
     }
 }

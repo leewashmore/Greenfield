@@ -1393,13 +1393,7 @@ namespace GreenField.Web.Services
 
                         #endregion
                     }
-                    //else
-                    //{
-                    //    #region RetrieveComposite
-                    //    compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
-                    //           && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-                    //    #endregion
-                    //}
+                   
                 }
                 else
                 {
@@ -2366,8 +2360,9 @@ namespace GreenField.Web.Services
                         externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault() == null ?
                         null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault().Amount * 100M;
 
-                    item.ROE = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 133 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 133 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount * 100M;
+                    //This is forward ROE.
+                    item.ROE = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 200 ).FirstOrDefault() == null ?
+                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 200 ).FirstOrDefault().Amount * 100M;
 
                     item.NetDebtEquity = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ?
                         null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount;
