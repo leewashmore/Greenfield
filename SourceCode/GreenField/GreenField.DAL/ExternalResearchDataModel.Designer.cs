@@ -416,6 +416,38 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<GF_COMPOSITE_LTHOLDINGS> _GF_COMPOSITE_LTHOLDINGS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<COMPOSITE_MASTER> COMPOSITE_MASTER
+        {
+            get
+            {
+                if ((_COMPOSITE_MASTER == null))
+                {
+                    _COMPOSITE_MASTER = base.CreateObjectSet<COMPOSITE_MASTER>("COMPOSITE_MASTER");
+                }
+                return _COMPOSITE_MASTER;
+            }
+        }
+        private ObjectSet<COMPOSITE_MASTER> _COMPOSITE_MASTER;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<COMPOSITE_MATRIX> COMPOSITE_MATRIX
+        {
+            get
+            {
+                if ((_COMPOSITE_MATRIX == null))
+                {
+                    _COMPOSITE_MATRIX = base.CreateObjectSet<COMPOSITE_MATRIX>("COMPOSITE_MATRIX");
+                }
+                return _COMPOSITE_MATRIX;
+            }
+        }
+        private ObjectSet<COMPOSITE_MATRIX> _COMPOSITE_MATRIX;
 
         #endregion
 
@@ -595,6 +627,22 @@ namespace GreenField.DAL
         public void AddToGF_COMPOSITE_LTHOLDINGS(GF_COMPOSITE_LTHOLDINGS gF_COMPOSITE_LTHOLDINGS)
         {
             base.AddObject("GF_COMPOSITE_LTHOLDINGS", gF_COMPOSITE_LTHOLDINGS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the COMPOSITE_MASTER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCOMPOSITE_MASTER(COMPOSITE_MASTER cOMPOSITE_MASTER)
+        {
+            base.AddObject("COMPOSITE_MASTER", cOMPOSITE_MASTER);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the COMPOSITE_MATRIX EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCOMPOSITE_MATRIX(COMPOSITE_MATRIX cOMPOSITE_MATRIX)
+        {
+            base.AddObject("COMPOSITE_MATRIX", cOMPOSITE_MATRIX);
         }
 
         #endregion
@@ -3758,6 +3806,269 @@ namespace GreenField.DAL
         private global::System.String _BENCHMARK_NAME;
         partial void OnBENCHMARK_NAMEChanging(global::System.String value);
         partial void OnBENCHMARK_NAMEChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="COMPOSITE_MASTER")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class COMPOSITE_MASTER : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new COMPOSITE_MASTER object.
+        /// </summary>
+        /// <param name="cOMPOSITE_ID">Initial value of the COMPOSITE_ID property.</param>
+        public static COMPOSITE_MASTER CreateCOMPOSITE_MASTER(global::System.String cOMPOSITE_ID)
+        {
+            COMPOSITE_MASTER cOMPOSITE_MASTER = new COMPOSITE_MASTER();
+            cOMPOSITE_MASTER.COMPOSITE_ID = cOMPOSITE_ID;
+            return cOMPOSITE_MASTER;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String COMPOSITE_ID
+        {
+            get
+            {
+                return _COMPOSITE_ID;
+            }
+            set
+            {
+                if (_COMPOSITE_ID != value)
+                {
+                    OnCOMPOSITE_IDChanging(value);
+                    ReportPropertyChanging("COMPOSITE_ID");
+                    _COMPOSITE_ID = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("COMPOSITE_ID");
+                    OnCOMPOSITE_IDChanged();
+                }
+            }
+        }
+        private global::System.String _COMPOSITE_ID;
+        partial void OnCOMPOSITE_IDChanging(global::System.String value);
+        partial void OnCOMPOSITE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NAME
+        {
+            get
+            {
+                return _NAME;
+            }
+            set
+            {
+                OnNAMEChanging(value);
+                ReportPropertyChanging("NAME");
+                _NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NAME");
+                OnNAMEChanged();
+            }
+        }
+        private global::System.String _NAME;
+        partial void OnNAMEChanging(global::System.String value);
+        partial void OnNAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String BENCHMARK_ID
+        {
+            get
+            {
+                return _BENCHMARK_ID;
+            }
+            set
+            {
+                OnBENCHMARK_IDChanging(value);
+                ReportPropertyChanging("BENCHMARK_ID");
+                _BENCHMARK_ID = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("BENCHMARK_ID");
+                OnBENCHMARK_IDChanged();
+            }
+        }
+        private global::System.String _BENCHMARK_ID;
+        partial void OnBENCHMARK_IDChanging(global::System.String value);
+        partial void OnBENCHMARK_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> LOOK_THRU
+        {
+            get
+            {
+                return _LOOK_THRU;
+            }
+            set
+            {
+                OnLOOK_THRUChanging(value);
+                ReportPropertyChanging("LOOK_THRU");
+                _LOOK_THRU = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LOOK_THRU");
+                OnLOOK_THRUChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _LOOK_THRU;
+        partial void OnLOOK_THRUChanging(Nullable<global::System.Boolean> value);
+        partial void OnLOOK_THRUChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> ACTIVE
+        {
+            get
+            {
+                return _ACTIVE;
+            }
+            set
+            {
+                OnACTIVEChanging(value);
+                ReportPropertyChanging("ACTIVE");
+                _ACTIVE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ACTIVE");
+                OnACTIVEChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _ACTIVE;
+        partial void OnACTIVEChanging(Nullable<global::System.Boolean> value);
+        partial void OnACTIVEChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="COMPOSITE_MATRIX")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class COMPOSITE_MATRIX : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new COMPOSITE_MATRIX object.
+        /// </summary>
+        /// <param name="cOMPOSITE">Initial value of the COMPOSITE property.</param>
+        /// <param name="pORTFOLIO">Initial value of the PORTFOLIO property.</param>
+        public static COMPOSITE_MATRIX CreateCOMPOSITE_MATRIX(global::System.String cOMPOSITE, global::System.String pORTFOLIO)
+        {
+            COMPOSITE_MATRIX cOMPOSITE_MATRIX = new COMPOSITE_MATRIX();
+            cOMPOSITE_MATRIX.COMPOSITE = cOMPOSITE;
+            cOMPOSITE_MATRIX.PORTFOLIO = pORTFOLIO;
+            return cOMPOSITE_MATRIX;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String COMPOSITE
+        {
+            get
+            {
+                return _COMPOSITE;
+            }
+            set
+            {
+                if (_COMPOSITE != value)
+                {
+                    OnCOMPOSITEChanging(value);
+                    ReportPropertyChanging("COMPOSITE");
+                    _COMPOSITE = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("COMPOSITE");
+                    OnCOMPOSITEChanged();
+                }
+            }
+        }
+        private global::System.String _COMPOSITE;
+        partial void OnCOMPOSITEChanging(global::System.String value);
+        partial void OnCOMPOSITEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PORTFOLIO
+        {
+            get
+            {
+                return _PORTFOLIO;
+            }
+            set
+            {
+                if (_PORTFOLIO != value)
+                {
+                    OnPORTFOLIOChanging(value);
+                    ReportPropertyChanging("PORTFOLIO");
+                    _PORTFOLIO = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("PORTFOLIO");
+                    OnPORTFOLIOChanged();
+                }
+            }
+        }
+        private global::System.String _PORTFOLIO;
+        partial void OnPORTFOLIOChanging(global::System.String value);
+        partial void OnPORTFOLIOChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> ACTIVE
+        {
+            get
+            {
+                return _ACTIVE;
+            }
+            set
+            {
+                OnACTIVEChanging(value);
+                ReportPropertyChanging("ACTIVE");
+                _ACTIVE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ACTIVE");
+                OnACTIVEChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _ACTIVE;
+        partial void OnACTIVEChanging(Nullable<global::System.Boolean> value);
+        partial void OnACTIVEChanged();
 
         #endregion
 
@@ -8834,6 +9145,30 @@ namespace GreenField.DAL
         private global::System.String _issuer_proxy;
         partial void Onissuer_proxyChanging(global::System.String value);
         partial void Onissuer_proxyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String UPDATE_BB_STATUS
+        {
+            get
+            {
+                return _UPDATE_BB_STATUS;
+            }
+            set
+            {
+                OnUPDATE_BB_STATUSChanging(value);
+                ReportPropertyChanging("UPDATE_BB_STATUS");
+                _UPDATE_BB_STATUS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("UPDATE_BB_STATUS");
+                OnUPDATE_BB_STATUSChanged();
+            }
+        }
+        private global::System.String _UPDATE_BB_STATUS;
+        partial void OnUPDATE_BB_STATUSChanging(global::System.String value);
+        partial void OnUPDATE_BB_STATUSChanged();
 
         #endregion
 
