@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 2/20/2013 11:48:18 AM
+// Generation date: 4/17/2013 5:18:41 PM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -331,6 +331,23 @@ namespace GreenField.Web.DimensionEntitiesService
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<GF_PRICING_BASEVIEW> _GF_PRICING_BASEVIEW;
         /// <summary>
+        /// There are no comments for GF_PROGRESS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_PROGRESS> GF_PROGRESS
+        {
+            get
+            {
+                if ((this._GF_PROGRESS == null))
+                {
+                    this._GF_PROGRESS = base.CreateQuery<GF_PROGRESS>("GF_PROGRESS");
+                }
+                return this._GF_PROGRESS;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_PROGRESS> _GF_PROGRESS;
+        /// <summary>
         /// There are no comments for GF_SECURITY_BASEVIEW in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -508,6 +525,14 @@ namespace GreenField.Web.DimensionEntitiesService
         public void AddToGF_PRICING_BASEVIEW(GF_PRICING_BASEVIEW gF_PRICING_BASEVIEW)
         {
             base.AddObject("GF_PRICING_BASEVIEW", gF_PRICING_BASEVIEW);
+        }
+        /// <summary>
+        /// There are no comments for GF_PROGRESS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_PROGRESS(GF_PROGRESS gF_PROGRESS)
+        {
+            base.AddObject("GF_PROGRESS", gF_PROGRESS);
         }
         /// <summary>
         /// There are no comments for GF_SECURITY_BASEVIEW in the schema.
@@ -14923,6 +14948,174 @@ namespace GreenField.Web.DimensionEntitiesService
         partial void OnDAILY_SPOT_FXChanged();
     }
     /// <summary>
+    /// There are no comments for Model.GF_PROGRESS in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// ID
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("ID")]
+    public partial class GF_PROGRESS
+    {
+        /// <summary>
+        /// Create a new GF_PROGRESS object.
+        /// </summary>
+        /// <param name="ID">Initial value of ID.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_PROGRESS CreateGF_PROGRESS(int ID)
+        {
+            GF_PROGRESS gF_PROGRESS = new GF_PROGRESS();
+            gF_PROGRESS.ID = ID;
+            return gF_PROGRESS;
+        }
+        /// <summary>
+        /// There are no comments for Property EVENTDATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> EVENTDATE
+        {
+            get
+            {
+                return this._EVENTDATE;
+            }
+            set
+            {
+                this.OnEVENTDATEChanging(value);
+                this._EVENTDATE = value;
+                this.OnEVENTDATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _EVENTDATE;
+        partial void OnEVENTDATEChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnEVENTDATEChanged();
+        /// <summary>
+        /// There are no comments for Property CONTEXT in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CONTEXT
+        {
+            get
+            {
+                return this._CONTEXT;
+            }
+            set
+            {
+                this.OnCONTEXTChanging(value);
+                this._CONTEXT = value;
+                this.OnCONTEXTChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CONTEXT;
+        partial void OnCONTEXTChanging(string value);
+        partial void OnCONTEXTChanged();
+        /// <summary>
+        /// There are no comments for Property OBJECT in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string OBJECT
+        {
+            get
+            {
+                return this._OBJECT;
+            }
+            set
+            {
+                this.OnOBJECTChanging(value);
+                this._OBJECT = value;
+                this.OnOBJECTChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _OBJECT;
+        partial void OnOBJECTChanging(string value);
+        partial void OnOBJECTChanged();
+        /// <summary>
+        /// There are no comments for Property ACTION in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ACTION
+        {
+            get
+            {
+                return this._ACTION;
+            }
+            set
+            {
+                this.OnACTIONChanging(value);
+                this._ACTION = value;
+                this.OnACTIONChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ACTION;
+        partial void OnACTIONChanging(string value);
+        partial void OnACTIONChanged();
+        /// <summary>
+        /// There are no comments for Property NOTES in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string NOTES
+        {
+            get
+            {
+                return this._NOTES;
+            }
+            set
+            {
+                this.OnNOTESChanging(value);
+                this._NOTES = value;
+                this.OnNOTESChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _NOTES;
+        partial void OnNOTESChanging(string value);
+        partial void OnNOTESChanged();
+        /// <summary>
+        /// There are no comments for Property SID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SID
+        {
+            get
+            {
+                return this._SID;
+            }
+            set
+            {
+                this.OnSIDChanging(value);
+                this._SID = value;
+                this.OnSIDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SID;
+        partial void OnSIDChanging(string value);
+        partial void OnSIDChanged();
+        /// <summary>
+        /// There are no comments for Property ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public int ID
+        {
+            get
+            {
+                return this._ID;
+            }
+            set
+            {
+                this.OnIDChanging(value);
+                this._ID = value;
+                this.OnIDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private int _ID;
+        partial void OnIDChanging(int value);
+        partial void OnIDChanged();
+    }
+    /// <summary>
     /// There are no comments for Model.GF_SECURITY_BASEVIEW in the schema.
     /// </summary>
     /// <KeyProperties>
@@ -15152,6 +15345,27 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<int> _ASEC_FC_SEC_REF;
         partial void OnASEC_FC_SEC_REFChanging(global::System.Nullable<int> value);
         partial void OnASEC_FC_SEC_REFChanged();
+        /// <summary>
+        /// There are no comments for Property UPDATE_BB_STATUS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string UPDATE_BB_STATUS
+        {
+            get
+            {
+                return this._UPDATE_BB_STATUS;
+            }
+            set
+            {
+                this.OnUPDATE_BB_STATUSChanging(value);
+                this._UPDATE_BB_STATUS = value;
+                this.OnUPDATE_BB_STATUSChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _UPDATE_BB_STATUS;
+        partial void OnUPDATE_BB_STATUSChanging(string value);
+        partial void OnUPDATE_BB_STATUSChanged();
         /// <summary>
         /// There are no comments for Property LOOK_THRU_FUND in the schema.
         /// </summary>
@@ -15908,6 +16122,27 @@ namespace GreenField.Web.DimensionEntitiesService
         private string _ASHMOREEMM_PORTFOLIO_MANAGER;
         partial void OnASHMOREEMM_PORTFOLIO_MANAGERChanging(string value);
         partial void OnASHMOREEMM_PORTFOLIO_MANAGERChanged();
+        /// <summary>
+        /// There are no comments for Property ISSUER_PROXY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ISSUER_PROXY
+        {
+            get
+            {
+                return this._ISSUER_PROXY;
+            }
+            set
+            {
+                this.OnISSUER_PROXYChanging(value);
+                this._ISSUER_PROXY = value;
+                this.OnISSUER_PROXYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ISSUER_PROXY;
+        partial void OnISSUER_PROXYChanging(string value);
+        partial void OnISSUER_PROXYChanged();
         /// <summary>
         /// There are no comments for Property WEBSITE in the schema.
         /// </summary>
