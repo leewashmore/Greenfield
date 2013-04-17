@@ -506,6 +506,14 @@ namespace GreenField.App.ViewModel
                 if (selectedPortfolioInfo != value)
                 {
                     selectedPortfolioInfo = value;
+                    EnableLookThru = true;
+                    if (selectedPortfolioInfo != null &&
+                        GetCompositePortfolioIds().Contains(selectedPortfolioInfo.PortfolioId))
+                    {
+                        IsLookThruEnabled = false;
+                        EnableLookThru = false;
+                    }
+
                     RaisePropertyChanged(() => this.SelectedPortfolioInfo);
                 }
 
@@ -1422,6 +1430,24 @@ namespace GreenField.App.ViewModel
                 lookThruSelectorVisibility = value;
                 this.RaisePropertyChanged(() => this.LookThruSelectorVisibility);
                 ButtonSelectorVisibility = value;
+            }
+        }
+
+        /// <summary>
+        /// LookThru Selector
+        /// </summary>
+        private bool enableLookThru = true;
+        public bool EnableLookThru
+        {
+            get
+            {
+                return enableLookThru;
+            }
+            set
+            {
+                enableLookThru = value;
+                this.RaisePropertyChanged(() => this.EnableLookThru);
+                //selectorPayload.IsLookThruEnabled = value;
             }
         }
 
@@ -4430,7 +4456,8 @@ namespace GreenField.App.ViewModel
                 PortfolioId = "EQYALL",
                 PortfolioThemeSubGroupId = "All Equity",
                 PortfolioThemeSubGroupName = "All Equity",
-                BenchmarkId = null
+                BenchmarkId = null,
+                IsComposite = true
             };
             composites.Add(composite);
 
@@ -4440,7 +4467,8 @@ namespace GreenField.App.ViewModel
                 PortfolioId = "EQYBGA",
                 PortfolioThemeSubGroupId = "All BGA",
                 PortfolioThemeSubGroupName = "All BGA",
-                BenchmarkId = null
+                BenchmarkId = null,
+                IsComposite = true
             };
             composites.Add(composite);
 
@@ -4450,13 +4478,19 @@ namespace GreenField.App.ViewModel
                 PortfolioId = "EQYSMALL",
                 PortfolioThemeSubGroupId = "All Small Cap",
                 PortfolioThemeSubGroupName = "All Small Cap",
-                BenchmarkId = null
+                BenchmarkId = null,
+                IsComposite = true
             };
             composites.Add(composite);
 
             return composites;
         }
-        
+
+        private List<string> GetCompositePortfolioIds()
+        {
+            return new List<string> {"EQYALL", "EQYBGA", "EQYSMALL"};
+        }
+
         /// <summary>
         /// RetrieveMarketSnapshotSelectionData Callback Method
         /// </summary>

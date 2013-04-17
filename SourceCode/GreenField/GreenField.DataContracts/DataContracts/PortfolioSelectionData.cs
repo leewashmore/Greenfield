@@ -21,5 +21,7 @@ namespace GreenField.DataContracts
         [DataMember]
         public string BenchmarkId { get; set; }
 
+        [DataMember]
+        public bool IsComposite { get; set; }
     }
 }
