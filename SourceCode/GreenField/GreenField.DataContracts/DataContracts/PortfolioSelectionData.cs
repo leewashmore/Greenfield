@@ -12,7 +12,7 @@ namespace GreenField.DataContracts
         [DataMember]
         public string PortfolioId { get; set; }
 
-        [DataMember]
+        [DataMember]    
         public string PortfolioThemeSubGroupName { get; set; }
 
         [DataMember]

@@ -52,6 +52,7 @@ namespace GreenField.App.Helpers
         public static Visibility LOOK_THRU_VISIBILITY = Visibility.Collapsed;
         public static Visibility NODENAME_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility GADGET_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static bool SupportsCompositesSelection = false;
     }
 
     public static class ToolBoxSelecter
@@ -76,7 +77,8 @@ namespace GreenField.App.Helpers
                 Visibility lookThruVisibility = Visibility.Collapsed,
                 Visibility nodeNameSelectorVisibility = Visibility.Collapsed,
                 Visibility gadgetSelectorVisibility = Visibility.Collapsed,
-                bool allVisible = false)
+                bool allVisible = false,
+                bool supportsCompositesSelection = false)
         {
             ToolBoxItemVisibility.SECURITY_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : securitySelectorVisibility;
             ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : snapshotSelectorVisibility;
@@ -96,6 +98,7 @@ namespace GreenField.App.Helpers
             ToolBoxItemVisibility.LOOK_THRU_VISIBILITY = allVisible ? Visibility.Visible : lookThruVisibility;
             ToolBoxItemVisibility.NODENAME_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : nodeNameSelectorVisibility;
             ToolBoxItemVisibility.GADGET_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : gadgetSelectorVisibility;
+            ToolBoxItemVisibility.SupportsCompositesSelection = supportsCompositesSelection;
         }
 
         public static void SetToolBoxItemVisibility(DashboardCategoryType dashboardType)
@@ -135,7 +138,8 @@ namespace GreenField.App.Helpers
                                                 filterTypeSelectorVisibility: Visibility.Visible,
                                                 filterValueSelectorVisibility: Visibility.Visible,
                                                 mktCapSelectorVisibility: Visibility.Visible,
-                                                lookThruVisibility: Visibility.Visible);
+                                                lookThruVisibility: Visibility.Visible,
+                                                supportsCompositesSelection: true);
                     break;
                 case DashboardCategoryType.PORTFOLIO_PERFORMANCE_SUMMARY:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, monthEndDateSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
