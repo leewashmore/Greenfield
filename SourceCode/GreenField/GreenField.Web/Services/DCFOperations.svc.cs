@@ -528,6 +528,9 @@ namespace GreenField.Web.Services
                 {
                     return false;
                 }
+                if (valueType != null)
+                    valueType = valueType.ToUpper();
+
                 entity.InsertDCFFairValue(Convert.ToString(securityId), valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated);
                 return true;
             }
