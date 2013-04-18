@@ -1,4 +1,5 @@
-USE [AIMS_Main_Dev]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[getInvestmentContext]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[getInvestmentContext]
 GO
 
 
@@ -17,7 +18,7 @@ GO
 -- Author:	Syedeen Nazirali
 -- Date:	April 2, 2013
 ------------------------------------------------------------------------
-alter procedure [dbo].[getInvestmentContext](
+create procedure [dbo].[getInvestmentContext](
 	@issuer_id			varchar(20) = NULL,			-- The company identifier		
 	@ViewReportBy    varchar(20) = 'Country'	-- ViewReportBy can take value Country or Industry
 
