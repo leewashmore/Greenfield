@@ -1175,7 +1175,6 @@ namespace GreenField.Web.Services
                 List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData;
                 List<GF_COMPOSITE_LTHOLDINGS> compositeHoldingsData = null;
                 ExternalResearchEntities externalEntity = new GreenField.DAL.ExternalResearchEntities();
-                
                 Boolean isFiltered = false;
                 Boolean isComposite = externalEntity.COMPOSITE_MASTER.Where(x => x.COMPOSITE_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper()).Count() == 0 ? false : true;
 
