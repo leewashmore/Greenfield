@@ -3,8 +3,8 @@
 alter table dbo.data_master add MinValue decimal(18, 2)
 alter table dbo.data_master add MaxValue decimal(18, 2)	
 
-alter table dbo.gf_security_baseview add(issuer_proxy varchar(20))
-alter table dbo.gf_security_baseview add(UPDATE_BB_STATUS varchar(20))
+alter table dbo.gf_security_baseview add issuer_proxy varchar(20)
+alter table dbo.gf_security_baseview add UPDATE_BB_STATUS varchar(20)
 
 update dbo.data_master set minvalue =0,maxvalue =0.9 where data_id =133
 update dbo.data_master set minvalue =0,maxvalue =10 where data_id =164
