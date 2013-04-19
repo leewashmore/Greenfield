@@ -1083,37 +1083,76 @@ namespace GreenField.Web.Services
 
                 List<FilterSelectionData> result = new List<FilterSelectionData>();
 
-                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS
-                    .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
-                    .ToList();
+                if (selectedPortfolio.IsComposite)
+                {
+                    ExternalResearchEntities externalEntity = new GreenField.DAL.ExternalResearchEntities();
 
-                List<FilterSelectionData> distinctRegions = data
-                            .Select(record => new FilterSelectionData() { Filtertype = "Region", FilterValues = record.ASHEMM_PROP_REGION_CODE == null ? String.Empty : record.ASHEMM_PROP_REGION_CODE })
-                            .Distinct()
-                            .OrderBy(record => record.FilterValues)
-                            .ToList();
-                result.AddRange(distinctRegions);
+                    List<GF_COMPOSITE_LTHOLDINGS> data = externalEntity.GF_COMPOSITE_LTHOLDINGS
+                        .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate)
+                        .ToList();
 
-                List<FilterSelectionData> distinctCountries = data
-                    .Select(record => new FilterSelectionData() { Filtertype = "Country", FilterValues = record.ISO_COUNTRY_CODE == null ? String.Empty : record.ISO_COUNTRY_CODE })
-                    .Distinct()
-                    .OrderBy(record => record.FilterValues)
-                    .ToList();
-                result.AddRange(distinctCountries);
+                    List<FilterSelectionData> distinctRegions = data
+                        .Select(record => new FilterSelectionData() { Filtertype = "Region", FilterValues = record.ASHEMM_PROP_REGION_CODE == null ? String.Empty : record.ASHEMM_PROP_REGION_CODE })
+                        .Distinct()
+                        .OrderBy(record => record.FilterValues)
+                        .ToList();
+                    result.AddRange(distinctRegions);
 
-                List<FilterSelectionData> distinctSectors = data
-                    .Select(record => new FilterSelectionData() { Filtertype = "Sector", FilterValues = record.GICS_SECTOR_NAME == null ? String.Empty : record.GICS_SECTOR_NAME })
-                    .Distinct()
-                    .OrderBy(record => record.FilterValues)
-                    .ToList();
-                result.AddRange(distinctSectors);
+                    List<FilterSelectionData> distinctCountries = data
+                        .Select(record => new FilterSelectionData() { Filtertype = "Country", FilterValues = record.ISO_COUNTRY_CODE == null ? String.Empty : record.ISO_COUNTRY_CODE })
+                        .Distinct()
+                        .OrderBy(record => record.FilterValues)
+                        .ToList();
+                    result.AddRange(distinctCountries);
 
-                List<FilterSelectionData> distinctIndustries = data
-                    .Select(record => new FilterSelectionData() { Filtertype = "Industry", FilterValues = record.GICS_INDUSTRY_NAME == null ? String.Empty : record.GICS_INDUSTRY_NAME })
-                    .Distinct()
-                    .OrderBy(record => record.FilterValues)
-                    .ToList();
-                result.AddRange(distinctIndustries);
+                    List<FilterSelectionData> distinctSectors = data
+                        .Select(record => new FilterSelectionData() { Filtertype = "Sector", FilterValues = record.GICS_SECTOR_NAME == null ? String.Empty : record.GICS_SECTOR_NAME })
+                        .Distinct()
+                        .OrderBy(record => record.FilterValues)
+                        .ToList();
+                    result.AddRange(distinctSectors);
+
+                    List<FilterSelectionData> distinctIndustries = data
+                        .Select(record => new FilterSelectionData() { Filtertype = "Industry", FilterValues = record.GICS_INDUSTRY_NAME == null ? String.Empty : record.GICS_INDUSTRY_NAME })
+                        .Distinct()
+                        .OrderBy(record => record.FilterValues)
+                        .ToList();
+                    result.AddRange(distinctIndustries);
+                }
+                else
+                {
+                    List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS
+                        .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                        .ToList();
+
+                    List<FilterSelectionData> distinctRegions = data
+                                .Select(record => new FilterSelectionData() { Filtertype = "Region", FilterValues = record.ASHEMM_PROP_REGION_CODE == null ? String.Empty : record.ASHEMM_PROP_REGION_CODE })
+                                .Distinct()
+                                .OrderBy(record => record.FilterValues)
+                                .ToList();
+                    result.AddRange(distinctRegions);
+
+                    List<FilterSelectionData> distinctCountries = data
+                        .Select(record => new FilterSelectionData() { Filtertype = "Country", FilterValues = record.ISO_COUNTRY_CODE == null ? String.Empty : record.ISO_COUNTRY_CODE })
+                        .Distinct()
+                        .OrderBy(record => record.FilterValues)
+                        .ToList();
+                    result.AddRange(distinctCountries);
+
+                    List<FilterSelectionData> distinctSectors = data
+                        .Select(record => new FilterSelectionData() { Filtertype = "Sector", FilterValues = record.GICS_SECTOR_NAME == null ? String.Empty : record.GICS_SECTOR_NAME })
+                        .Distinct()
+                        .OrderBy(record => record.FilterValues)
+                        .ToList();
+                    result.AddRange(distinctSectors);
+
+                    List<FilterSelectionData> distinctIndustries = data
+                        .Select(record => new FilterSelectionData() { Filtertype = "Industry", FilterValues = record.GICS_INDUSTRY_NAME == null ? String.Empty : record.GICS_INDUSTRY_NAME })
+                        .Distinct()
+                        .OrderBy(record => record.FilterValues)
+                        .ToList();
+                    result.AddRange(distinctIndustries);
+                }
 
                 //new DefaultCacheProvider().Set(CacheKeyNames.FilterSelectionDataCache, result, Int32.Parse(ConfigurationManager.AppSettings["SecuritiesCacheTime"]));
 
@@ -1175,9 +1214,8 @@ namespace GreenField.Web.Services
                 List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData;
                 List<GF_COMPOSITE_LTHOLDINGS> compositeHoldingsData = null;
                 ExternalResearchEntities externalEntity = new GreenField.DAL.ExternalResearchEntities();
-                
                 Boolean isFiltered = false;
-                Boolean isComposite = externalEntity.COMPOSITE_MASTER.Where(x => x.COMPOSITE_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper()).Count() == 0 ? false : true;
+                Boolean isComposite = objPortfolioIdentifier.IsComposite;
 
                 dimensionPortfolioLTHoldingsData = null;
                 if (lookThruEnabled)

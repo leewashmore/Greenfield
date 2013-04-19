@@ -223,7 +223,7 @@ namespace AIMS.Composites.Service
 
                 _dumper.WriteLine(string.Format("PopulateCompositeLTHoldings sucessfully completed."),
                                   stopwatchPopulateCompositeLTHoldings);
-                Console.ReadLine();
+                //Console.ReadLine();
             }
             catch (Exception ex)
             {
