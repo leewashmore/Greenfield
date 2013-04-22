@@ -1,29 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Globalization;
 using System.Xml;
 
 namespace XmlReplacer
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.Load(args[0]);
 
-            var node = doc.SelectSingleNode(args[1]);
+            XmlNode node = doc.SelectSingleNode(args[1]);
             if (node.Attributes[args[2]] != null)
             {
                 if (args[3] == "GenerateRandom")
                 {
-                    Random random = new Random();
+                    var random = new Random();
                     node.Attributes[args[2]].Value = string.Format("{0}.{1}.{2}.{3}",
-                                                                   random.Next(1, 20).ToString(),
-                                                                   random.Next(0, 20).ToString(),
-                                                                   random.Next(0, 100).ToString(),
-                                                                   random.Next(0, 100).ToString());
+                                                                   random.Next(1, 20).ToString(CultureInfo.InvariantCulture),
+                                                                   random.Next(0, 20).ToString(CultureInfo.InvariantCulture),
+                                                                   random.Next(0, 100).ToString(CultureInfo.InvariantCulture),
+                                                                   random.Next(0, 100).ToString(CultureInfo.InvariantCulture));
                 }
                 else
                     node.Attributes[args[2]].Value = args[3];
