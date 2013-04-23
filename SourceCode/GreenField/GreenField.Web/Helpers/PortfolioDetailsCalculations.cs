@@ -256,7 +256,7 @@ namespace GreenField.Web.Helpers
 
 
                 portfolioResult.IssuerId = item.ISSUER_ID;
-                Debug.Print(item.ISSUER_ID);
+                
                 result.Add(portfolioResult);
             }
             return result;
