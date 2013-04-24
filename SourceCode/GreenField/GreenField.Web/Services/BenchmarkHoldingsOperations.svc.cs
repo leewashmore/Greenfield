@@ -1191,6 +1191,7 @@ namespace GreenField.Web.Services
             DateTime timeAddPortfolioSecurities = new DateTime();
             Stopwatch swRetrieveExternalResearchData = new Stopwatch();
             DateTime timeRetrieveExternalResearchData = new DateTime();
+            
 
             swRetrievePortfolioDetailsData.Start();
             timeRetrievePortfolioDetailsData = DateTime.Now;
@@ -1663,7 +1664,7 @@ namespace GreenField.Web.Services
 
                         //compositeHoldingsData = externalEntity.GF_COMPOSITE_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
                         //       && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-
+                     
                         if (excludeCash)
                         {
                             if (filterType != null && filterValue != null)
@@ -1750,10 +1751,6 @@ namespace GreenField.Web.Services
                                         && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
 
                             }
-#if DEBUG
-                            swGF_PORTFOLIO_LTHOLDINGS.Stop();
-                            timeGF_PORTFOLIO_LTHOLDINGS = DateTime.Now;
-#endif
                         }
 
                         if (compositeHoldingsData == null)
@@ -2324,11 +2321,6 @@ namespace GreenField.Web.Services
                     targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
                 }
                     sumTargetPct = targets.Sum(x => x.TARGET_PCT);
-
-#if DEBUG
-                    Trace.WriteLine(sumTargetPct);
-#endif         
-
                 ExternalResearchEntities entity = new ExternalResearchEntities() { CommandTimeout = 0 };
                 List<string> securityAsecSecShortName = portfolioDetailsData.Select(a => a.AsecSecShortName).ToList();
                 List<PortfolioDetailsExternalData> externalData = new List<PortfolioDetailsExternalData>();
@@ -2359,62 +2351,57 @@ namespace GreenField.Web.Services
                 securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
                 string _issuerIDPortfolio = issuerIDPortfolio == null ? null : issuerIDPortfolio.ToString();
                 string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();
-
                 externalData = entity.GetPortfolioDetailsExternalData(_issuerIDPortfolio, _securityIDPortfolio).ToList();
+
                 fairValueData = GetPortfolioDetailsFairValue(_securityIDPortfolio);
 
                 if (fairValueData == null)
                 {
                     fairValueData = new List<FAIR_VALUE>();
                 }
-               
+
+
                 foreach (PortfolioDetailsData item in portfolioDetailsData)
                 {
-                    item.MarketCap = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 185).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 185).FirstOrDefault().Amount;
+                    var mktCap = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 185).FirstOrDefault();
+                    item.MarketCap = mktCap == null ? null : mktCap.Amount;
 
-                    item.ForwardPE = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 187).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 187).FirstOrDefault().Amount;
+                    var fwdPE = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 187).FirstOrDefault();
+                    item.ForwardPE = fwdPE == null ? null : fwdPE.Amount;
 
-                    item.ForwardPBV = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 188).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 188).FirstOrDefault().Amount;
+                    var fwdPBV = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 188).FirstOrDefault();
+                    item.ForwardPBV = fwdPBV == null ? null : fwdPBV.Amount;
 
-                    item.ForwardEB_EBITDA = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 198).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 198).FirstOrDefault().Amount;
+                    var fwdEB_EBITDA = externalData.Where(a => a.SecurityId == item.SecurityId && a.DataId == 198).FirstOrDefault();
+                    item.ForwardEB_EBITDA = fwdEB_EBITDA == null ?null : fwdEB_EBITDA.Amount;
 
-                    item.RevenueGrowthCurrentYear =
-                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == DateTime.Today.Year).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == DateTime.Today.Year).FirstOrDefault().Amount * 100M;
+                    var revGrwthCurrYear = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == DateTime.Today.Year).FirstOrDefault();
+                    item.RevenueGrowthCurrentYear = revGrwthCurrYear == null ? null : revGrwthCurrYear.Amount * 100M;
 
-                    item.RevenueGrowthNextYear =
-                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault() ==
-                        null ? null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault().Amount * 100M;
+                    var revGrwthNxtYear =  externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 178 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault();
+                    item.RevenueGrowthNextYear = revGrwthNxtYear == null ? null : revGrwthNxtYear.Amount * 100M;
 
-                    item.NetIncomeGrowthCurrentYear =
-                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ? null :
-                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount * 100M;
+                    var NIGrwthCurrYear =  externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault();
+                    item.NetIncomeGrowthCurrentYear = NIGrwthCurrYear == null ? null : NIGrwthCurrYear.Amount * 100M;
 
-                    item.NetIncomeGrowthNextYear =
-                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault().Amount * 100M;
+                    var NIGrwthNextYear = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 177 && a.PeriodYear == (DateTime.Today.Year + 1)).FirstOrDefault();
+                    item.NetIncomeGrowthNextYear = NIGrwthNextYear == null ? null : NIGrwthNextYear.Amount * 100M;
 
                     //This is forward ROE.
-                    item.ROE = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 200 ).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 200 ).FirstOrDefault().Amount * 100M;
+                    var fwdroe = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 200 ).FirstOrDefault();
+                    item.ROE = fwdroe == null ? null : fwdroe.Amount * 100M;
 
-                    item.NetDebtEquity = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount;
+                    var netDebtEquity = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 149 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault();
+                    item.NetDebtEquity = netDebtEquity == null ? null : netDebtEquity.Amount;
 
-                    item.FreecashFlowMargin =
-                        externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 146 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault() == null ?
-                        null : externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 146 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault().Amount * 100M;
+                    var freeCFMargin = externalData.Where(a => a.IssuerId == item.IssuerId && a.DataId == 146 && a.PeriodYear == (DateTime.Today.Year)).FirstOrDefault();
+                    item.FreecashFlowMargin = freeCFMargin == null ? null : freeCFMargin.Amount * 100M;
 
-                    item.Upside = fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault() == null ?
-                        null : (fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault().UPSIDE as decimal?) * 100M;
+                    var upside = fairValueData.Where(a => a.SECURITY_ID == item.SecurityId).FirstOrDefault();
+                    item.Upside = upside == null ?null : (upside.UPSIDE as decimal?) * 100M;
                     
-                   // var security = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault();
-                    item.IssuerName = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault() == null ?
-                        null : newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault().ISSUER_NAME;
+                    var security = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault();
+                    item.IssuerName = security == null ? null : security.ISSUER_NAME;
                  
                     if (!lookThruEnabled)
                     {
@@ -2489,16 +2476,14 @@ namespace GreenField.Web.Services
                                     item.AshEmmModelWeight = 0;
                                 }
                             }
-                        
-                        
-
-                           
-                     }
 
 
-                   
-            
+
+
+                    }
+
                 }
+
 
                 return portfolioDetailsData;
             }
