@@ -221,7 +221,7 @@ namespace AIMS.Composites.Service
                     _dumper.Unindent();
                 }
 
-                _dumper.WriteLine(string.Format("PopulateCompositeLTHoldings sucessfully completed."),
+                _dumper.WriteLine(string.Format("PopulateCompositeLTHoldings successfully completed."),
                                   stopwatchPopulateCompositeLTHoldings);
                 //Console.ReadLine();
             }
