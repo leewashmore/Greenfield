@@ -1,4 +1,5 @@
-USE [AIMS_Main_Dev]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[getInvestmentContext]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[getInvestmentContext]
 GO
 
 
@@ -17,7 +18,7 @@ GO
 -- Author:	Syedeen Nazirali
 -- Date:	April 2, 2013
 ------------------------------------------------------------------------
-alter procedure [dbo].[getInvestmentContext](
+create procedure [dbo].[getInvestmentContext](
 	@issuer_id			varchar(20) = NULL,			-- The company identifier		
 	@ViewReportBy    varchar(20) = 'Country'	-- ViewReportBy can take value Country or Industry
 
@@ -161,7 +162,7 @@ begin
 	--insert  ROE
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf on  pf.issuer_id = gsb.issuer_id
 	where pf.data_id = 133 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @curryear and fiscal_type = 'CALENDAR'
 	and gsb.iso_country_code = @iso_country_code 
@@ -265,7 +266,7 @@ begin
 	--insert  ROE
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf on pf.issuer_id = gsb.issuer_id
 	where pf.data_id = 133 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @curryear and fiscal_type = 'CALENDAR'
 	and gsb.gics_industry = @gics_industry   

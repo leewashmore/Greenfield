@@ -445,8 +445,29 @@ namespace GreenField.App.ViewModel
 
         #region Portfolio Selector
         /// <summary>
+        /// Stores visibility property of the portfolio selector
+        /// </summary>
+        private bool supportsCompositesSelection = false;
+        public bool SupportsCompositesSelection
+        {
+            get { return supportsCompositesSelection; }
+            set
+            {
+                supportsCompositesSelection = value;
+
+                if (SupportsCompositesSelection)
+                    AddComposites();
+                else
+                    RemoveComposites();
+
+                RaisePropertyChanged(() => this.PortfolioSelectionInfo);
+            }
+        }
+
+        /// <summary>
         /// Stores the list of PortfolioSelectionData for all portfolios
         /// </summary>
+        private List<PortfolioSelectionData> originalPortfolioSelectionInfo;
         private List<PortfolioSelectionData> portfolioSelectionInfo;
         public List<PortfolioSelectionData> PortfolioSelectionInfo
         {
@@ -455,7 +476,7 @@ namespace GreenField.App.ViewModel
             {
                 portfolioSelectionInfo = value;
                 RaisePropertyChanged(() => this.PortfolioSelectionInfo);
-                PortfolioSelectorInfo = value;
+                PortfolioSelectorInfo = portfolioSelectionInfo;
             }
         }
 
@@ -485,6 +506,14 @@ namespace GreenField.App.ViewModel
                 if (selectedPortfolioInfo != value)
                 {
                     selectedPortfolioInfo = value;
+                    EnableLookThru = true;
+                    if (selectedPortfolioInfo != null &&
+                        GetCompositePortfolioIds().Contains(selectedPortfolioInfo.PortfolioId))
+                    {
+                        IsLookThruEnabled = false;
+                        EnableLookThru = false;
+                    }
+
                     RaisePropertyChanged(() => this.SelectedPortfolioInfo);
                 }
 
@@ -523,9 +552,6 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        /// <summary>
-        /// Stores visibility property of the portfolio selector
-        /// </summary>
         private Visibility portfolioSelectorVisibility = Visibility.Collapsed;
         public Visibility PortfolioSelectorVisibility
         {
@@ -1404,6 +1430,24 @@ namespace GreenField.App.ViewModel
                 lookThruSelectorVisibility = value;
                 this.RaisePropertyChanged(() => this.LookThruSelectorVisibility);
                 ButtonSelectorVisibility = value;
+            }
+        }
+
+        /// <summary>
+        /// LookThru Selector
+        /// </summary>
+        private bool enableLookThru = true;
+        public bool EnableLookThru
+        {
+            get
+            {
+                return enableLookThru;
+            }
+            set
+            {
+                enableLookThru = value;
+                this.RaisePropertyChanged(() => this.EnableLookThru);
+                //selectorPayload.IsLookThruEnabled = value;
             }
         }
 
@@ -4364,6 +4408,9 @@ namespace GreenField.App.ViewModel
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     PortfolioSelectionInfo = result.OrderBy(o => o.PortfolioId).ToList();
+                    originalPortfolioSelectionInfo = result.OrderBy(o => o.PortfolioId).ToList();
+                    if (SupportsCompositesSelection)
+                        AddComposites();
                 }
                 else
                 {
@@ -4380,6 +4427,68 @@ namespace GreenField.App.ViewModel
                 Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
+        }
+
+        private void AddComposites()
+        {
+            RemoveComposites();
+
+            var newPortfolioSelectionInfo = new List<PortfolioSelectionData>();
+            newPortfolioSelectionInfo.AddRange(GetComposites());
+            if (PortfolioSelectionInfo != null) 
+                newPortfolioSelectionInfo.AddRange(PortfolioSelectionInfo);
+
+            PortfolioSelectionInfo = newPortfolioSelectionInfo;
+        }
+
+        private void RemoveComposites()
+        {
+            PortfolioSelectionInfo = originalPortfolioSelectionInfo;
+        }
+
+        private List<PortfolioSelectionData> GetComposites()
+        {
+            var composites = new List<PortfolioSelectionData>();
+
+            // 1. EQYALL
+            var composite = new PortfolioSelectionData
+            {
+                PortfolioId = "EQYALL",
+                PortfolioThemeSubGroupId = "All Equity",
+                PortfolioThemeSubGroupName = "All Equity",
+                BenchmarkId = null,
+                IsComposite = true
+            };
+            composites.Add(composite);
+
+            // 2. EQYBGA
+            composite = new PortfolioSelectionData
+            {
+                PortfolioId = "EQYBGA",
+                PortfolioThemeSubGroupId = "All BGA",
+                PortfolioThemeSubGroupName = "All BGA",
+                BenchmarkId = null,
+                IsComposite = true
+            };
+            composites.Add(composite);
+
+            // 3. EQYSMALL
+            composite = new PortfolioSelectionData
+            {
+                PortfolioId = "EQYSMALL",
+                PortfolioThemeSubGroupId = "All Small Cap",
+                PortfolioThemeSubGroupName = "All Small Cap",
+                BenchmarkId = null,
+                IsComposite = true
+            };
+            composites.Add(composite);
+
+            return composites;
+        }
+
+        private List<string> GetCompositePortfolioIds()
+        {
+            return new List<string> {"EQYALL", "EQYBGA", "EQYSMALL"};
         }
 
         /// <summary>
@@ -4611,6 +4720,7 @@ namespace GreenField.App.ViewModel
         {
             SecuritySelectorVisibility = ToolBoxItemVisibility.SECURITY_SELECTOR_VISIBILITY;
             PortfolioSelectorVisibility = ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY;
+            SupportsCompositesSelection = ToolBoxItemVisibility.SupportsCompositesSelection;
             EffectiveDateSelectorVisibility = ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY;
             MonthEndDateSelectorVisibility = ToolBoxItemVisibility.MONTHEND_DATE_SELECTOR_VISIBILITY;
             PeriodSelectorVisibility = ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY;

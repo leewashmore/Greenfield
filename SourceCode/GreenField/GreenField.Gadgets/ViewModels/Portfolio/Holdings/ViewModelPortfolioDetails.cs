@@ -609,6 +609,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private List<PortfolioDetailsData> GetGroupedPortfoliosByIssuer(string portfolioId, List<PortfolioDetailsData> list)
         {
+            
             var result = new List<PortfolioDetailsData>();
             var query = from d in list
                         group d by d.IssuerName into grp
@@ -651,7 +652,7 @@ namespace GreenField.Gadgets.ViewModels
                             FromDate = main.FromDate,
                             IndustryName = main.IndustryName,
                             IsoCountryCode = main.IsoCountryCode,
-                            IssueName = group.Key.ToUpper(), //main.IssueName  - display issuer name in the grouped line
+                            IssueName = group.Key.ToUpper(),  //main.IssueName  - display issuer name in the grouped line
                             IssuerId = main.IssuerId,
                             MarketCap = main.MarketCap,
                             MarketCapUSD = main.MarketCapUSD,

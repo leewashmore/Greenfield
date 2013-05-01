@@ -12,7 +12,7 @@ namespace GreenField.DataContracts
         [DataMember]
         public string PortfolioId { get; set; }
 
-        [DataMember]
+        [DataMember]    
         public string PortfolioThemeSubGroupName { get; set; }
 
         [DataMember]
@@ -21,5 +21,7 @@ namespace GreenField.DataContracts
         [DataMember]
         public string BenchmarkId { get; set; }
 
+        [DataMember]
+        public bool IsComposite { get; set; }
     }
 }

@@ -174,42 +174,16 @@
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
-                                        <telerik:GridViewDataColumn Header="Portfolio Name" UniqueName="Portfolio Name" DataMemberBinding="{Binding PfcHoldingPortfolio}" IsGroupable="False" 
-                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
-                                        <telerik:GridViewDataColumn Header="Portfolio Path" UniqueName="Portfolio Path" DataMemberBinding="{Binding PortfolioPath}" IsGroupable="False" 
-                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
-                                        <telerik:GridViewDataColumn Header="Security Type" UniqueName="Security Type" DataMemberBinding="{Binding SecurityType}" HeaderTextAlignment="Left"
-                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Left"/>
-                                        <telerik:GridViewDataColumn Header="Region Code" UniqueName="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"
-                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        HeaderTextAlignment="Left"/>
                                         <telerik:GridViewDataColumn Header="Country" UniqueName="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
                                                         IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
+
                                         <telerik:GridViewDataColumn Header="Sector Name" UniqueName="Sector Name" DataMemberBinding="{Binding SectorName}" 
                                                         IsGroupable="True" IsFilterable="True" TextAlignment="Left" HeaderTextAlignment="Left"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                                        <telerik:GridViewDataColumn Header="Industry Name" UniqueName="Industry Name" DataMemberBinding="{Binding IndustryName}" 
-                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left" HeaderTextAlignment="Left"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
-                                        <telerik:GridViewDataColumn Header="Sub-Industry Name" UniqueName="Sub-Industry Name" HeaderTextAlignment="Left"
-                                                        DataMemberBinding="{Binding SubIndustryName}" IsGroupable="True" TextAlignment="Left"
-                                                        IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
-                                        <telerik:GridViewDataColumn Header="Quantity" UniqueName="Quantity" DataMemberBinding="{Binding BalanceNominal}" 
-                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n0}"
-                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
-                                        <telerik:GridViewDataColumn Header="Market Value, $" UniqueName="Market Value" DataMemberBinding="{Binding DirtyValuePC}" TextAlignment="Right" 
-                                                        HeaderTextAlignment="Right" DataFormatString="{}{0:n0}"
-                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
+
+                                      
                                         <telerik:GridViewDataColumn Header="Target %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
                                                         DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
@@ -266,6 +240,11 @@
                                                         TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Forward ROE %" UniqueName="ROE" 
+                                                        DataMemberBinding="{Binding ROE,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                                         <telerik:GridViewDataColumn Header="{Binding RevenueGrowthCurrentYear, Source={StaticResource ColumnHeaders}}" UniqueName="Revenue Growth Current Year" 
                                                         DataMemberBinding="{Binding RevenueGrowthCurrentYear,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right" 
@@ -286,11 +265,6 @@
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                                        <telerik:GridViewDataColumn Header="ROE %" UniqueName="ROE" 
-                                                        DataMemberBinding="{Binding ROE,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
-                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
-                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                                         <telerik:GridViewDataColumn Header="Net Debt Equity %" UniqueName="Net Debt Equity" 
                                                         DataMemberBinding="{Binding NetDebtEquity}" DataFormatString="{}{0:n1}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
@@ -301,6 +275,37 @@
                                                         TextAlignment="Right" HeaderTextAlignment="Right" 
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="Portfolio Name" UniqueName="Portfolio Name" DataMemberBinding="{Binding PfcHoldingPortfolio}" IsGroupable="False" 
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Portfolio Path" UniqueName="Portfolio Path" DataMemberBinding="{Binding PortfolioPath}" IsGroupable="False" 
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Security Type" UniqueName="Security Type" DataMemberBinding="{Binding SecurityType}" HeaderTextAlignment="Left"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Quantity" UniqueName="Quantity" DataMemberBinding="{Binding BalanceNominal}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n0}"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
+                                        <telerik:GridViewDataColumn Header="Market Value, $" UniqueName="Market Value" DataMemberBinding="{Binding DirtyValuePC}" TextAlignment="Right" 
+                                                        HeaderTextAlignment="Right" DataFormatString="{}{0:n0}"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
+                                        <telerik:GridViewDataColumn Header="Region Code" UniqueName="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"
+                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
+                                                        HeaderTextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Industry Name" UniqueName="Industry Name" DataMemberBinding="{Binding IndustryName}" 
+                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left" HeaderTextAlignment="Left"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
+                                        <telerik:GridViewDataColumn Header="Sub-Industry Name" UniqueName="Sub-Industry Name" HeaderTextAlignment="Left"
+                                                        DataMemberBinding="{Binding SubIndustryName}" IsGroupable="True" TextAlignment="Left"
+                                                        IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
+
+
                                     </telerik:RadGridView.Columns>
                                 </telerik:RadGridView>
                             </DataTemplate>
@@ -320,21 +325,6 @@
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
-                            <telerik:GridViewDataColumn Header="Portfolio Name" UniqueName="Portfolio Name" DataMemberBinding="{Binding PfcHoldingPortfolio}" IsGroupable="False" 
-                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
-                            <telerik:GridViewDataColumn Header="Portfolio Path" UniqueName="Portfolio Path" DataMemberBinding="{Binding PortfolioPath}" IsGroupable="False" 
-                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
-                            <telerik:GridViewDataColumn Header="Security Type" UniqueName="Security Type" DataMemberBinding="{Binding SecurityType}" HeaderTextAlignment="Left"
-                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Left"/>
-                            <telerik:GridViewDataColumn Header="Region Code" UniqueName="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"
-                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        HeaderTextAlignment="Left"/>
                             <telerik:GridViewDataColumn Header="Country" UniqueName="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
                                                         IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
@@ -342,20 +332,7 @@
                             <telerik:GridViewDataColumn Header="Sector Name" UniqueName="Sector Name" DataMemberBinding="{Binding SectorName}" 
                                                         IsGroupable="True" IsFilterable="True" TextAlignment="Left" HeaderTextAlignment="Left"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Industry Name" UniqueName="Industry Name" DataMemberBinding="{Binding IndustryName}" 
-                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left" HeaderTextAlignment="Left"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
-                            <telerik:GridViewDataColumn Header="Sub-Industry Name" UniqueName="Sub-Industry Name" HeaderTextAlignment="Left"
-                                                        DataMemberBinding="{Binding SubIndustryName}" IsGroupable="True" TextAlignment="Left"
-                                                        IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
-                            <telerik:GridViewDataColumn Header="Quantity" UniqueName="Quantity" DataMemberBinding="{Binding BalanceNominal}" 
-                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n0}"
-                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
-                            <telerik:GridViewDataColumn Header="Market Value, $" UniqueName="Market Value" DataMemberBinding="{Binding DirtyValuePC}" TextAlignment="Right" 
-                                                        HeaderTextAlignment="Right" DataFormatString="{}{0:n0}"
-                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
+                            
                             <telerik:GridViewDataColumn Header="Target %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
                                                         DataFormatString="{}{0:n2}" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
@@ -412,6 +389,11 @@
                                                         TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Forward ROE %" UniqueName="ROE" 
+                                                        DataMemberBinding="{Binding ROE,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="{Binding RevenueGrowthCurrentYear, Source={StaticResource ColumnHeaders}}" UniqueName="Revenue Growth Current Year" 
                                                         DataMemberBinding="{Binding RevenueGrowthCurrentYear,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right" 
@@ -432,21 +414,48 @@
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="ROE %" UniqueName="ROE" 
-                                                        DataMemberBinding="{Binding ROE,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
-                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
-                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Net Debt Equity %" UniqueName="Net Debt Equity" 
+                            
+                            <telerik:GridViewDataColumn Header="{Binding NetDebtEquityHeader, Source={StaticResource ColumnHeaders}}" UniqueName="Net Debt Equity" 
                                                         DataMemberBinding="{Binding NetDebtEquity}" DataFormatString="{}{0:n1}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Freecash Flow Margin" UniqueName="Freecash Flow Margin" 
+                            <telerik:GridViewDataColumn Header="{Binding FreeCashFlowMarginHeader, Source={StaticResource ColumnHeaders}}" UniqueName="Freecash Flow Margin" 
                                                         DataMemberBinding="{Binding FreecashFlowMargin,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right" 
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="Portfolio Name" UniqueName="Portfolio Name" DataMemberBinding="{Binding PfcHoldingPortfolio}" IsGroupable="False" 
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                            <telerik:GridViewDataColumn Header="Portfolio Path" UniqueName="Portfolio Path" DataMemberBinding="{Binding PortfolioPath}" IsGroupable="False" 
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                            <telerik:GridViewDataColumn Header="Security Type" UniqueName="Security Type" DataMemberBinding="{Binding SecurityType}" HeaderTextAlignment="Left"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Left"/>
+                            <telerik:GridViewDataColumn Header="Quantity" UniqueName="Quantity" DataMemberBinding="{Binding BalanceNominal}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n0}"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
+                            <telerik:GridViewDataColumn Header="Market Value, $" UniqueName="Market Value" DataMemberBinding="{Binding DirtyValuePC}" TextAlignment="Right" 
+                                                        HeaderTextAlignment="Right" DataFormatString="{}{0:n0}"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" FooterTextAlignment="Right"/>
+                            <telerik:GridViewDataColumn Header="Region Code" UniqueName="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"
+                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
+                                                        HeaderTextAlignment="Left"/>
+                            <telerik:GridViewDataColumn Header="Industry Name" UniqueName="Industry Name" DataMemberBinding="{Binding IndustryName}" 
+                                                        IsGroupable="True" IsFilterable="True" TextAlignment="Left" HeaderTextAlignment="Left"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
+                            <telerik:GridViewDataColumn Header="Sub-Industry Name" UniqueName="Sub-Industry Name" HeaderTextAlignment="Left"
+                                                        DataMemberBinding="{Binding SubIndustryName}" IsGroupable="True" TextAlignment="Left"
+                                                        IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
+                           
+                          
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
                 </telerik:RadBusyIndicator>

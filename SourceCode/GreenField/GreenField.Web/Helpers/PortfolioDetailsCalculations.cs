@@ -4,6 +4,7 @@ using System.Linq;
 using GreenField.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using System.Diagnostics;
+using GreenField.DAL;
 
 namespace GreenField.Web.Helpers
 {
@@ -189,6 +190,78 @@ namespace GreenField.Web.Helpers
             }
             return result;
         }
+
+        /// Add Data returned from View(GF_PORTFOLIO_HOLDINGS) to resultSet
+        /// </summary>
+        /// <param name="dimensionPortfolioHoldingsData">List of type GF_PORTFOLIO_HOLDINGS returned from GF_PORTFOLIO_LTHOLDINGS</param>
+        /// <param name="dimensionBenchmarkHoldingsData">List of type GF_BENCHMARK_HOLDINGS returned from GF_BENCHMARK_HOLDINGS</param>
+        /// <returns>List of PortfolioDetailsData</returns>
+        public static List<PortfolioDetailsData> AddCompositePortfolioSecurities(List<GF_COMPOSITE_LTHOLDINGS> compositeHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData, Boolean isFiltered)
+        {
+
+            List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
+
+            if (compositeHoldingsData == null)
+            {
+                return result;
+            }
+            if (compositeHoldingsData.Count == 0)
+            {
+                return result;
+            }
+            if (dimensionBenchmarkHoldingsData == null)
+            {
+                return result;
+            }
+
+            decimal? sumBenchmarkWeight = 0;
+            sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
+            foreach (GF_COMPOSITE_LTHOLDINGS item in compositeHoldingsData)
+            {
+                PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
+                portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
+                portfolioResult.IssueName = item.ISSUE_NAME;
+                portfolioResult.Ticker = item.TICKER;
+                portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
+                portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
+                portfolioResult.SectorName = item.GICS_SECTOR_NAME;
+                portfolioResult.IndustryName = item.GICS_INDUSTRY_NAME;
+                portfolioResult.SubIndustryName = item.GICS_SUB_INDUSTRY_NAME;
+                portfolioResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
+                portfolioResult.SecurityType = item.SECURITY_TYPE;
+                portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
+                portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
+                portfolioResult.PortfolioId = item.PORTFOLIO_ID;
+                if (isFiltered)
+                {
+                    if (sumBenchmarkWeight != 0)
+                    {
+                        portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                                    Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                                    Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault().BENCHMARK_WEIGHT) * 100 / sumBenchmarkWeight;
+
+                    }
+                    else
+                    {
+                        portfolioResult.BenchmarkWeight = 0;
+                    }
+                }
+                else
+                {
+                    portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                                    Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                                    Where(a => a.ASEC_SEC_SHORT_NAME == portfolioResult.AsecSecShortName).FirstOrDefault().BENCHMARK_WEIGHT);
+                }
+                //portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
+
+
+                portfolioResult.IssuerId = item.ISSUER_ID;
+                
+                result.Add(portfolioResult);
+            }
+            return result;
+        }
+
 
         /// <summary>
         /// Add Data returned from View(GF_PORTFOLIO_LTHOLDINGS) to resultSet

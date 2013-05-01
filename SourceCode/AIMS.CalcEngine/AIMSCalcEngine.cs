@@ -163,7 +163,7 @@ namespace AIMS.CalcEngine
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e.Message);
                 DoUpdateProcessStatus(conn, index, "Failed");
                 print("Failed to process issuer " + issuerId[index]);
                 if (conn != null)
