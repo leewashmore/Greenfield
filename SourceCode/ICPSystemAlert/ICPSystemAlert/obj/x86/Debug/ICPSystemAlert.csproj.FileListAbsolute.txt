@@ -50,3 +50,16 @@ D:\Latest_Clone_17September\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Deb
 D:\Latest_Clone_17September\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.pdb
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\DocumentFormat.OpenXml.dll
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\AshmoreEMMLogo.png
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\AshmoreLogo.png
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPresentationTemplate.pptx
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe.config
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.pdb
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\CommandLine.dll
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.dll
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.pdfa.dll
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\log4net.dll
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.exe
+C:\Repositories\Greenfield\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.pdb
