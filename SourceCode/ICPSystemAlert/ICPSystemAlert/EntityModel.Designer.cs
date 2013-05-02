@@ -731,6 +731,7 @@ namespace ICPSystemAlert
             }
     
             return base.ExecuteFunction<PresentationVotingDeadlineDetails>("GetPresentationVotingDeadlineDetails", scheduleMinutesParameter);
+        
         }
     
         /// <summary>

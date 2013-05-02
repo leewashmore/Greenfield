@@ -22,7 +22,10 @@
       [DATA_MASTER].[ANNUAL] AS [ANNUAL], 
       [DATA_MASTER].[CURRENT] AS [CURRENT], 
       [DATA_MASTER].[STATEMENT_TYPE] AS [STATEMENT_TYPE], 
-      [DATA_MASTER].[CONVERT_FLAG] AS [CONVERT_FLAG]
+      [DATA_MASTER].[LONG_DESC] AS [LONG_DESC], 
+      [DATA_MASTER].[CONVERT_FLAG] AS [CONVERT_FLAG], 
+      [DATA_MASTER].[MinValue] AS [MinValue], 
+      [DATA_MASTER].[MaxValue] AS [MaxValue]
       FROM [dbo].[DATA_MASTER] AS [DATA_MASTER]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="FAIR_VALUE" EntityType="ExternalModel.Store.FAIR_VALUE" store:Type="Tables" store:Schema="dbo" store:Name="FAIR_VALUE">
@@ -59,7 +62,7 @@
           </EntitySet>
         </EntityContainer>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="DATA_MASTER">
           <Key>
@@ -87,10 +90,13 @@
           <Property Name="ANNUAL" Type="char" MaxLength="1" />
           <Property Name="CURRENT" Type="char" MaxLength="1" />
           <Property Name="STATEMENT_TYPE" Type="varchar" MaxLength="3" />
+          <Property Name="LONG_DESC" Type="varchar" MaxLength="1024" />
           <Property Name="CONVERT_FLAG" Type="char" MaxLength="1" />
+          <Property Name="MinValue" Type="decimal" Scale="2" />
+          <Property Name="MaxValue" Type="decimal" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FAIR_VALUE">
           <Key>
@@ -112,7 +118,7 @@
           <Property Name="UPDATED" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data2108.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS">
           <Key>
@@ -204,6 +210,9 @@
           <Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CONVERT_FLAG" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="LONG_DESC" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="MinValue" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="MaxValue" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PERIOD_FINANCIALS">
           <Key>
@@ -259,6 +268,9 @@
           <EntitySetMapping Name="DATA_MASTER">
             <EntityTypeMapping TypeName="ExternalModel.DATA_MASTER">
               <MappingFragment StoreEntitySet="DATA_MASTER">
+                <ScalarProperty Name="MaxValue" ColumnName="MaxValue" />
+                <ScalarProperty Name="MinValue" ColumnName="MinValue" />
+                <ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
                 <ScalarProperty Name="CONVERT_FLAG" ColumnName="CONVERT_FLAG" />
                 <ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
                 <ScalarProperty Name="CURRENT" ColumnName="CURRENT" />

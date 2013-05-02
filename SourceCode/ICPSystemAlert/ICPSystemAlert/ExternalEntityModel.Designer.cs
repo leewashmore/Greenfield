@@ -574,6 +574,78 @@ namespace ICPSystemAlert
         private global::System.String _CONVERT_FLAG;
         partial void OnCONVERT_FLAGChanging(global::System.String value);
         partial void OnCONVERT_FLAGChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LONG_DESC
+        {
+            get
+            {
+                return _LONG_DESC;
+            }
+            set
+            {
+                OnLONG_DESCChanging(value);
+                ReportPropertyChanging("LONG_DESC");
+                _LONG_DESC = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LONG_DESC");
+                OnLONG_DESCChanged();
+            }
+        }
+        private global::System.String _LONG_DESC;
+        partial void OnLONG_DESCChanging(global::System.String value);
+        partial void OnLONG_DESCChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MinValue
+        {
+            get
+            {
+                return _MinValue;
+            }
+            set
+            {
+                OnMinValueChanging(value);
+                ReportPropertyChanging("MinValue");
+                _MinValue = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MinValue");
+                OnMinValueChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MinValue;
+        partial void OnMinValueChanging(Nullable<global::System.Decimal> value);
+        partial void OnMinValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MaxValue
+        {
+            get
+            {
+                return _MaxValue;
+            }
+            set
+            {
+                OnMaxValueChanging(value);
+                ReportPropertyChanging("MaxValue");
+                _MaxValue = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MaxValue");
+                OnMaxValueChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MaxValue;
+        partial void OnMaxValueChanging(Nullable<global::System.Decimal> value);
+        partial void OnMaxValueChanged();
 
         #endregion
     
