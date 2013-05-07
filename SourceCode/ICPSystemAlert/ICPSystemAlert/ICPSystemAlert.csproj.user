@@ -15,6 +15,6 @@
     <StartArguments>-r 5</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartArguments>-r 1000</StartArguments>
+    <StartArguments>-r 150</StartArguments>
   </PropertyGroup>
 </Project>
