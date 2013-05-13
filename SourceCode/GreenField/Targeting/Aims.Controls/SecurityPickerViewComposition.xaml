@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Aims.Controls.SecurityPickerView"
+﻿<UserControl x:Class="Aims.Controls.SecurityPickerViewComposition"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,7 @@
     mc:Ignorable="d" d:DesignHeight="30" d:DesignWidth="400">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-        <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Security</TextBlock>
+        <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Add Security to Composition</TextBlock>
         <local:AutoCompleteBoxWithEnterWorking 
             ItemsSource="{Binding Items}"
             MinimumPopulateDelay="250"
