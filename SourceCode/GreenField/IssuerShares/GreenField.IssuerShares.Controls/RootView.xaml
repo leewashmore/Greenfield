@@ -29,7 +29,7 @@
         </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="5">
                 
-                <aims:SecurityPickerView DataContext="{Binding SecurityPickerViewModel}"  />
+                <aims:SecurityPickerViewComposition DataContext="{Binding SecurityPickerViewModelComposition}"  />
             </StackPanel>
         <StackPanel  Grid.Row="1">
             <local:CompositionView DataContext="{Binding CompositionViewModel}" />

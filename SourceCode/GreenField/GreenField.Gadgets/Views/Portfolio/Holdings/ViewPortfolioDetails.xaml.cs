@@ -175,6 +175,24 @@ namespace GreenField.Gadgets.Views
             else
             {
                 RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
+                //The following commented code could be used if reformatting in exported file is necessary - Lane 05-09-2013
+                /*RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false, cellValueConverter: () =>
+                {
+                    object result = e.Value;
+                    if (e.Value != null && e.Element == ExportElement.Cell)
+                    {
+                        GridViewDataColumn column = (e.Context as GridViewDataColumn);
+                        if (column != null && (column.DisplayIndex == 4 || column.DisplayIndex == 5 || column.DisplayIndex == 6 || column.DisplayIndex == 7))  //might be able to use names.
+                        {
+                            decimal? resultInt = 0;
+                            resultInt = Convert.ToDecimal(result);  
+                            resultInt = resultInt/100; 
+                            result = resultInt.ToString();
+                        }
+                    }
+                    return result;
+                });
+               */
             }
         }
 
@@ -272,9 +290,9 @@ namespace GreenField.Gadgets.Views
                         Telerik.Windows.Controls.GridView.ColumnGroupDescriptor groupDescriptor = e.GroupDescriptor as Telerik.Windows.Controls.GridView.ColumnGroupDescriptor;
                         DataContextPortfolioDetails.GroupingColumn = Convert.ToString(groupDescriptor.Column.UniqueName);
                     }
-                   
 
-                    
+
+
                 }
                 else
                 {
@@ -322,7 +340,7 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
             try
             {
-               // SetGroupedData();
+                // SetGroupedData();
                 gridFilterDescriptors = dgPortfolioDetails.FilterDescriptors;
             }
             catch (Exception ex)

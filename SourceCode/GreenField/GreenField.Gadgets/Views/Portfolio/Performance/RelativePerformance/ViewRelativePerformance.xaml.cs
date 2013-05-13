@@ -270,7 +270,7 @@ namespace GreenField.Gadgets.Views
 
                     //Be sure to replace "YourNamespace" and "YourAssembly" with your app's 
                     //actual namespace and assembly here
-                    //      Changed the following block to use converter and publish in Basis Points - Lane - 2012-09-26
+                    //      Changed the following block to use converter and publish in Basis Points 
                     CellTemp.Append(" xmlns:lanes='clr-namespace:GreenField.Gadgets.Helpers;assembly=GreenField.Gadgets'");
                     CellTemp.Append(" xmlns:local='clr-namespace:GreenField.Gadgets.Views;assembly=GreenField.Gadgets'>");
                     CellTemp.Append("<StackPanel Orientation='Horizontal'>");
@@ -316,7 +316,7 @@ namespace GreenField.Gadgets.Views
 
                     TextBlock footerText = new TextBlock()
                     {
-                        Text = (Convert.ToDecimal(aggregateSectorAlpha) * 10000).ToString("n0"), //Needs to be displayed in basis points - Lane - 2012-09-25
+                        Text = (Convert.ToDecimal(aggregateSectorAlpha) * 10000).ToString("n0"), //Needs to be displayed in basis points 
                         Tag = sectorData.SectorId,
                         TextAlignment = TextAlignment.Right,
                         FontSize = 9
@@ -398,7 +398,7 @@ namespace GreenField.Gadgets.Views
                         TextBlock txtSecurityName = new TextBlock()
                         {
                             Text = securityName.SecurityName
-                                + " (" + (Convert.ToDecimal(securityName.SecurityAlpha) * 10000).ToString("n0") + ")",  //Needs to be displayed in basis points - Lane - 2012-09-25
+                                + " (" + (Convert.ToDecimal(securityName.SecurityAlpha) * 10000).ToString("n0") + ")",  //Needs to be displayed in basis points 
                             FontSize = 9,
                             FontWeight = FontWeights.Normal,
                             FontFamily = new FontFamily("Arial"),

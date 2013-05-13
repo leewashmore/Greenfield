@@ -87,10 +87,18 @@
     <Compile Include="SecurityPickerView.xaml.cs">
       <DependentUpon>SecurityPickerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SecurityPickerViewComposition.xaml.cs">
+      <DependentUpon>SecurityPickerViewComposition.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SecurityPickerViewModel.cs" />
+    <Compile Include="SecurityPickerViewModelComposition.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="SecurityPickerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SecurityPickerViewComposition.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
