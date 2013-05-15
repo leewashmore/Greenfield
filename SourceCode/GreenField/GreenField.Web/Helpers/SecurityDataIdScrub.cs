@@ -7,7 +7,7 @@ namespace GreenField.Web.Helpers
     /// <summary>
     /// class to store original value and scrubbed value for each security
     /// </summary>
-    public class SecurityDataIdScrub
+    public class SecurityDataIdScrub 
     {
         public string IssuerId { get; set; }
         public string IssuerName { get; set; }
