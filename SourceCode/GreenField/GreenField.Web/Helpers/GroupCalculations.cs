@@ -37,5 +37,57 @@ namespace GreenField.Web.Helpers
             return numerator / denominator;
 
         }
+
+        public static decimal? PercentageOwned(List<decimal?> numerator,List<decimal?> denominator)
+        {
+            decimal? d;
+            d = denominator.Where(x => !x.HasValue).Count() == denominator.Count() ? null : (decimal?)denominator.Sum();
+            decimal? n;
+            n = numerator.Where(x => !x.HasValue).Count() == numerator.Count() ? null : (decimal?)numerator.Sum();
+            if (d == 0)
+            {
+                return 0;
+            }
+            if (d == null || n == null)
+            {
+                return null;
+            }
+            return n / d;
+
+        }
+
+        public static decimal? Median(List<decimal?> list)
+        {
+            list.Sort();
+
+            int listSize = list.Count;
+            decimal? medianValue = null;
+            if (listSize > 0)
+            {
+                if (listSize % 2 == 0) //even
+                {
+                    int midIndex = listSize / 2;
+                    medianValue = ((list.ElementAt(midIndex - 1) + list.ElementAt(midIndex)) / 2);
+
+                }
+                else
+                {
+                    if (listSize > 1)
+                    {
+                        double element = listSize / 2;
+                        element = Math.Round(element, MidpointRounding.AwayFromZero);
+                        medianValue = list.ElementAt((int)element - 1);
+                    }
+                    else
+                    {
+                        double element = listSize;
+                        medianValue = list.ElementAt((int)element - 1);
+                    }
+                }
+            }
+            return medianValue;
+        }
+
+    
     }
 }
