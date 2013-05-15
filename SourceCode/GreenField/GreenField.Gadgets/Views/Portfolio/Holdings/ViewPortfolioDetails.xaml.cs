@@ -175,24 +175,28 @@ namespace GreenField.Gadgets.Views
             else
             {
                 RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false);
-                //The following commented code could be used if reformatting in exported file is necessary - Lane 05-09-2013
-                /*RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false, cellValueConverter: () =>
+                //The following section is used for reformatting in exported file
+                RadGridView_ElementExport.ElementExporting(e, isGroupFootersVisible: false, cellValueConverter: () =>
                 {
                     object result = e.Value;
-                    if (e.Value != null && e.Element == ExportElement.Cell)
+                    if (e.Value != null && e.Element == ExportElement.Cell && e.Value.ToString() != "")
                     {
                         GridViewDataColumn column = (e.Context as GridViewDataColumn);
-                        if (column != null && (column.DisplayIndex == 4 || column.DisplayIndex == 5 || column.DisplayIndex == 6 || column.DisplayIndex == 7))  //might be able to use names.
-                        {
+                        if (column != null && (column.Header.ToString() == "Target %" ||
+                                                column.Header.ToString() == "Portfolio %" ||
+                                                column.Header.ToString() == "Benchmark %" ||
+                                                column.Header.ToString() == "Active Position %" ||
+                                                column.Header.ToString() == "Upside %")) 
+                            {
                             decimal? resultInt = 0;
-                            resultInt = Convert.ToDecimal(result);  
+                            resultInt = Convert.ToDecimal(result);
+                            //resultInt =  ? 0 : Convert.ToDecimal(result);
                             resultInt = resultInt/100; 
                             result = resultInt.ToString();
                         }
                     }
                     return result;
-                });
-               */
+                });               
             }
         }
 
