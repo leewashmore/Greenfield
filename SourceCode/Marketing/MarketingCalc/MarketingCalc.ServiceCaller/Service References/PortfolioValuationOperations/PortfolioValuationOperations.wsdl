@@ -7,6 +7,7 @@
         <xs:complexType>
           <xs:sequence>
             <xs:element minOccurs="0" name="portfolio_id" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="dt" type="xs:dateTime" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -69,13 +70,24 @@
       <xs:complexType name="PortfolioValuation">
         <xs:sequence>
           <xs:element minOccurs="0" name="Asec_Sec_short_name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Dividend" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="Security_id" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="currYearDYContr" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="currYearEGrowth" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="currYearEGrowthContr" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="currYearPBContr" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="currYearPEContr" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="currYearROE" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="currYearROEContr" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="currYearWeightEGrowth" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="currYearWeightROE" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="currentYearDY" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="currentYearPB" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="currentYearPE" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="currentYearWeightDY" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="dirtvaluepc" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="dirty_price" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="divFactorOwned" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="earnings" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="equity" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="equityFactorOwned" nillable="true" type="xs:decimal" />
@@ -92,6 +104,12 @@
           <xs:element minOccurs="0" name="issuer_id" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="marketcap" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="mktCapContr" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearDY" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearDYContr" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearDivFactorOwned" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearDividend" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearEGrowth" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearEGrowthContr" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="nextYearEarnings" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="nextYearEquity" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="nextYearEquityFactorOwned" nillable="true" type="xs:decimal" />
@@ -100,8 +118,13 @@
           <xs:element minOccurs="0" name="nextYearPE" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="nextYearPEContr" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="nextYearPercentFactorOwned" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearROE" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearROEContr" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="nextYearWeight" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearWeightDY" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearWeightEGrowth" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="nextYearWeightPB" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="nextYearWeightROE" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="percentFactorOwned" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="portfolio_id" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="trailingearnings" nillable="true" type="xs:decimal" />

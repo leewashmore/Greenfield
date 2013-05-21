@@ -93,6 +93,45 @@ namespace GreenField.Web.Helpers
 
         public decimal? mktCapContr { get; set; }
 
+        public decimal? Dividend { get; set; }
+
+        public decimal? divFactorOwned { get; set; }
+
+        public decimal? currentYearWeightDY { get; set; }
+
+        public decimal? currentYearDY { get; set; }
+
+        public decimal? currYearDYContr { get; set; }
+
+        public decimal? nextYearDividend { get; set; }
+
+        public decimal? nextYearDivFactorOwned { get; set; }
+
+        public decimal? nextYearWeightDY { get; set; }
+
+        public decimal? nextYearDY { get; set; }
+
+        public decimal? nextYearDYContr { get; set; }
+
+        public decimal? currYearWeightEGrowth { get; set; }
+
+        public decimal? currYearEGrowth { get; set; }
+        public decimal? currYearEGrowthContr { get; set; }
+
+        public decimal? nextYearWeightEGrowth { get; set; }
+
+        public decimal? nextYearEGrowth { get; set; }
+        public decimal? nextYearEGrowthContr { get; set; }
+
+        public decimal? currYearWeightROE { get; set; }
+
+        public decimal? currYearROE { get; set; }
+        public decimal? currYearROEContr { get; set; }
+
+        public decimal? nextYearWeightROE { get; set; }
+
+        public decimal? nextYearROE { get; set; }
+        public decimal? nextYearROEContr { get; set; }
 
     }
 }
