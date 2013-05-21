@@ -12,11 +12,11 @@ namespace MarketingCalc.ServiceCaller
     public class MarketingCalcServiceCaller
     {
 
-        public void CallService(string portfolio_id)
+        public void CallService(string portfolio_id,DateTime dt)
         {
             PortfolioValuationOperationsClient a = new PortfolioValuationOperationsClient();
             Console.WriteLine(portfolio_id);
-            PortfolioValuation[] t = a.PortfolioLevelValuationForMarketing(portfolio_id);
+            PortfolioValuation[] t = a.PortfolioLevelValuationForMarketing(portfolio_id,dt);
             //Console.WriteLine(t);
             SerializeObjectToXML(t);
         }

@@ -26,7 +26,19 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         private string Asec_Sec_short_nameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> DividendField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string Security_idField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> currYearDYContrField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> currYearEGrowthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> currYearEGrowthContrField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> currYearPBContrField;
@@ -35,16 +47,37 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         private System.Nullable<decimal> currYearPEContrField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> currYearROEField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> currYearROEContrField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> currYearWeightEGrowthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> currYearWeightROEField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> currentYearDYField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> currentYearPBField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> currentYearPEField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> currentYearWeightDYField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> dirtvaluepcField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> dirty_priceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> divFactorOwnedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> earningsField;
@@ -95,6 +128,24 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         private System.Nullable<decimal> mktCapContrField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearDYField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearDYContrField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearDivFactorOwnedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearDividendField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearEGrowthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearEGrowthContrField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> nextYearEarningsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -119,10 +170,25 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         private System.Nullable<decimal> nextYearPercentFactorOwnedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearROEField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearROEContrField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> nextYearWeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearWeightDYField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearWeightEGrowthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> nextYearWeightPBField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> nextYearWeightROEField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<decimal> percentFactorOwnedField;
@@ -169,6 +235,19 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> Dividend {
+            get {
+                return this.DividendField;
+            }
+            set {
+                if ((this.DividendField.Equals(value) != true)) {
+                    this.DividendField = value;
+                    this.RaisePropertyChanged("Dividend");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Security_id {
             get {
                 return this.Security_idField;
@@ -177,6 +256,45 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
                 if ((object.ReferenceEquals(this.Security_idField, value) != true)) {
                     this.Security_idField = value;
                     this.RaisePropertyChanged("Security_id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> currYearDYContr {
+            get {
+                return this.currYearDYContrField;
+            }
+            set {
+                if ((this.currYearDYContrField.Equals(value) != true)) {
+                    this.currYearDYContrField = value;
+                    this.RaisePropertyChanged("currYearDYContr");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> currYearEGrowth {
+            get {
+                return this.currYearEGrowthField;
+            }
+            set {
+                if ((this.currYearEGrowthField.Equals(value) != true)) {
+                    this.currYearEGrowthField = value;
+                    this.RaisePropertyChanged("currYearEGrowth");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> currYearEGrowthContr {
+            get {
+                return this.currYearEGrowthContrField;
+            }
+            set {
+                if ((this.currYearEGrowthContrField.Equals(value) != true)) {
+                    this.currYearEGrowthContrField = value;
+                    this.RaisePropertyChanged("currYearEGrowthContr");
                 }
             }
         }
@@ -208,6 +326,71 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> currYearROE {
+            get {
+                return this.currYearROEField;
+            }
+            set {
+                if ((this.currYearROEField.Equals(value) != true)) {
+                    this.currYearROEField = value;
+                    this.RaisePropertyChanged("currYearROE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> currYearROEContr {
+            get {
+                return this.currYearROEContrField;
+            }
+            set {
+                if ((this.currYearROEContrField.Equals(value) != true)) {
+                    this.currYearROEContrField = value;
+                    this.RaisePropertyChanged("currYearROEContr");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> currYearWeightEGrowth {
+            get {
+                return this.currYearWeightEGrowthField;
+            }
+            set {
+                if ((this.currYearWeightEGrowthField.Equals(value) != true)) {
+                    this.currYearWeightEGrowthField = value;
+                    this.RaisePropertyChanged("currYearWeightEGrowth");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> currYearWeightROE {
+            get {
+                return this.currYearWeightROEField;
+            }
+            set {
+                if ((this.currYearWeightROEField.Equals(value) != true)) {
+                    this.currYearWeightROEField = value;
+                    this.RaisePropertyChanged("currYearWeightROE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> currentYearDY {
+            get {
+                return this.currentYearDYField;
+            }
+            set {
+                if ((this.currentYearDYField.Equals(value) != true)) {
+                    this.currentYearDYField = value;
+                    this.RaisePropertyChanged("currentYearDY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<decimal> currentYearPB {
             get {
                 return this.currentYearPBField;
@@ -234,6 +417,19 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> currentYearWeightDY {
+            get {
+                return this.currentYearWeightDYField;
+            }
+            set {
+                if ((this.currentYearWeightDYField.Equals(value) != true)) {
+                    this.currentYearWeightDYField = value;
+                    this.RaisePropertyChanged("currentYearWeightDY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<decimal> dirtvaluepc {
             get {
                 return this.dirtvaluepcField;
@@ -255,6 +451,19 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
                 if ((this.dirty_priceField.Equals(value) != true)) {
                     this.dirty_priceField = value;
                     this.RaisePropertyChanged("dirty_price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> divFactorOwned {
+            get {
+                return this.divFactorOwnedField;
+            }
+            set {
+                if ((this.divFactorOwnedField.Equals(value) != true)) {
+                    this.divFactorOwnedField = value;
+                    this.RaisePropertyChanged("divFactorOwned");
                 }
             }
         }
@@ -468,6 +677,84 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearDY {
+            get {
+                return this.nextYearDYField;
+            }
+            set {
+                if ((this.nextYearDYField.Equals(value) != true)) {
+                    this.nextYearDYField = value;
+                    this.RaisePropertyChanged("nextYearDY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearDYContr {
+            get {
+                return this.nextYearDYContrField;
+            }
+            set {
+                if ((this.nextYearDYContrField.Equals(value) != true)) {
+                    this.nextYearDYContrField = value;
+                    this.RaisePropertyChanged("nextYearDYContr");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearDivFactorOwned {
+            get {
+                return this.nextYearDivFactorOwnedField;
+            }
+            set {
+                if ((this.nextYearDivFactorOwnedField.Equals(value) != true)) {
+                    this.nextYearDivFactorOwnedField = value;
+                    this.RaisePropertyChanged("nextYearDivFactorOwned");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearDividend {
+            get {
+                return this.nextYearDividendField;
+            }
+            set {
+                if ((this.nextYearDividendField.Equals(value) != true)) {
+                    this.nextYearDividendField = value;
+                    this.RaisePropertyChanged("nextYearDividend");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearEGrowth {
+            get {
+                return this.nextYearEGrowthField;
+            }
+            set {
+                if ((this.nextYearEGrowthField.Equals(value) != true)) {
+                    this.nextYearEGrowthField = value;
+                    this.RaisePropertyChanged("nextYearEGrowth");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearEGrowthContr {
+            get {
+                return this.nextYearEGrowthContrField;
+            }
+            set {
+                if ((this.nextYearEGrowthContrField.Equals(value) != true)) {
+                    this.nextYearEGrowthContrField = value;
+                    this.RaisePropertyChanged("nextYearEGrowthContr");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<decimal> nextYearEarnings {
             get {
                 return this.nextYearEarningsField;
@@ -572,6 +859,32 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearROE {
+            get {
+                return this.nextYearROEField;
+            }
+            set {
+                if ((this.nextYearROEField.Equals(value) != true)) {
+                    this.nextYearROEField = value;
+                    this.RaisePropertyChanged("nextYearROE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearROEContr {
+            get {
+                return this.nextYearROEContrField;
+            }
+            set {
+                if ((this.nextYearROEContrField.Equals(value) != true)) {
+                    this.nextYearROEContrField = value;
+                    this.RaisePropertyChanged("nextYearROEContr");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<decimal> nextYearWeight {
             get {
                 return this.nextYearWeightField;
@@ -585,6 +898,32 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearWeightDY {
+            get {
+                return this.nextYearWeightDYField;
+            }
+            set {
+                if ((this.nextYearWeightDYField.Equals(value) != true)) {
+                    this.nextYearWeightDYField = value;
+                    this.RaisePropertyChanged("nextYearWeightDY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearWeightEGrowth {
+            get {
+                return this.nextYearWeightEGrowthField;
+            }
+            set {
+                if ((this.nextYearWeightEGrowthField.Equals(value) != true)) {
+                    this.nextYearWeightEGrowthField = value;
+                    this.RaisePropertyChanged("nextYearWeightEGrowth");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<decimal> nextYearWeightPB {
             get {
                 return this.nextYearWeightPBField;
@@ -593,6 +932,19 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
                 if ((this.nextYearWeightPBField.Equals(value) != true)) {
                     this.nextYearWeightPBField = value;
                     this.RaisePropertyChanged("nextYearWeightPB");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> nextYearWeightROE {
+            get {
+                return this.nextYearWeightROEField;
+            }
+            set {
+                if ((this.nextYearWeightROEField.Equals(value) != true)) {
+                    this.nextYearWeightROEField = value;
+                    this.RaisePropertyChanged("nextYearWeightROE");
                 }
             }
         }
@@ -705,7 +1057,7 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PortfolioValuationOperations/PortfolioLevelValuationForMarketi" +
             "ng", ReplyAction="http://tempuri.org/PortfolioValuationOperations/PortfolioLevelValuationForMarketi" +
             "ngResponse")]
-        MarketingCalc.ServiceCaller.PortfolioValuationOperations.PortfolioValuation[] PortfolioLevelValuationForMarketing(string portfolio_id);
+        MarketingCalc.ServiceCaller.PortfolioValuationOperations.PortfolioValuation[] PortfolioLevelValuationForMarketing(string portfolio_id, System.DateTime dt);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -735,8 +1087,8 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
                 base(binding, remoteAddress) {
         }
         
-        public MarketingCalc.ServiceCaller.PortfolioValuationOperations.PortfolioValuation[] PortfolioLevelValuationForMarketing(string portfolio_id) {
-            return base.Channel.PortfolioLevelValuationForMarketing(portfolio_id);
+        public MarketingCalc.ServiceCaller.PortfolioValuationOperations.PortfolioValuation[] PortfolioLevelValuationForMarketing(string portfolio_id, System.DateTime dt) {
+            return base.Channel.PortfolioLevelValuationForMarketing(portfolio_id, dt);
         }
     }
 }

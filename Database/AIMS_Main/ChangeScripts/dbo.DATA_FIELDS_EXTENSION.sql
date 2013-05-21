@@ -7,8 +7,8 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[MONTHLY_DATA_FIELDS]') AND type in (N'U'))
-DROP TABLE [dbo].[MONTHLY_DATA_FIELDS]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DATA_FIELDS_EXTENSION]') AND type in (N'U'))
+DROP TABLE [dbo].[DATA_FIELDS_EXTENSION]
 
 SET ANSI_PADDING ON
 GO
@@ -67,4 +67,15 @@ insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'C',	NULL,	'FISCAL','USD',
 insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'A',	-1,	'CALENDAR',	'USD',	177,	'Net Income Growth')
 insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'A',	0,	'CALENDAR',	'USD',	177,	'Net Income Growth')
 insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'A',	1,	'CALENDAR',	'USD',	177,	'Net Income Growth')
+insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'A',	-1,	'CALENDAR',	'USD',	240,	'Net Income Growth, 2 Year (Annualized)')
+insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'A',	0,	'CALENDAR',	'USD',	240,	'Net Income Growth, 2 Year (Annualized)')
+insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'A',	1,	'CALENDAR',	'USD',	240,	'Net Income Growth, 2 Year (Annualized)')
+insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'A',	-1,	'CALENDAR',	'USD',	234,	'Net Income Growth, 2 Year (Annualized)')
+insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'A',	0,	'CALENDAR',	'USD',	234,	'Net Income Growth, 2 Year (Annualized)')
+insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'A',	1,	'CALENDAR',	'USD',	234,	'Net Income Growth, 2 Year (Annualized)')
 
+insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'C',	NULL,	NULL,	'USD',	296,	'Trailing Earnings')
+insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'C',	NULL,	NULL,	'USD',	297,	'Trailing Dividends')
+insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'C',	NULL,	NULL,	'USD',	300,	'Forward Dividends')
+insert into [DATA_FIELDS_EXTENSION] values('PRIMARY',	'C',	NULL,	NULL,	'USD',	298,	'Trailing Book Value')
+GO
