@@ -128,6 +128,7 @@
     <Content Include="Services\LoggingOperations.svc" />
     <Content Include="Services\LoginOperations.svc" />
     <Content Include="Services\PerformanceOperations.svc" />
+    <Content Include="Services\PortfolioValuationOperations.svc" />
     <Content Include="Services\SecurityReferenceOperations.svc" />
     <Content Include="Services\SessionOperations.svc" />
     <Content Include="Services\TargetingOperations.svc" />
@@ -145,6 +146,7 @@
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -184,6 +186,7 @@
     <Compile Include="Helpers\DataScrubber.cs" />
     <Compile Include="Helpers\DefaultCacheProvider.cs" />
     <Compile Include="Helpers\GroupCalculations.cs" />
+    <Compile Include="Helpers\PortfolioValuation.cs" />
     <Compile Include="Helpers\PredicateBuilder.cs" />
     <Compile Include="Helpers\EMSummaryMarketBenchmarkData.cs" />
     <Compile Include="Helpers\EMSummFinalData.cs" />
@@ -295,6 +298,9 @@
     </Compile>
     <Compile Include="Services\PerformanceOperations.svc.cs">
       <DependentUpon>PerformanceOperations.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\PortfolioValuationOperations.svc.cs">
+      <DependentUpon>PortfolioValuationOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\SecurityReferenceOperations.svc.cs">
       <DependentUpon>SecurityReferenceOperations.svc</DependentUpon>
