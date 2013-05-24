@@ -555,11 +555,7 @@ namespace GreenField.Web.Services
 
          }
 
-         [OperationContract]
-         public String PortfolioLevelTest(string portfolio_id, DateTime dt)
-         {
-             return "Hello";
-         }
+     
 
         
 

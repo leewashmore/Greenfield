@@ -16,9 +16,9 @@ namespace MarketingCalc.ServiceCaller
         {
             PortfolioValuationOperationsClient a = new PortfolioValuationOperationsClient();
             Console.WriteLine(portfolio_id);
-            //PortfolioValuation[] t = a.PortfolioLevelValuationForMarketing(portfolio_id,dt);
+            PortfolioValuation[] t = a.PortfolioLevelValuationForMarketing(portfolio_id,dt);
             
-            Console.WriteLine(a.PortfolioLevelTest(portfolio_id,dt));
+            //Console.WriteLine(a.PortfolioLevelTest(portfolio_id,dt));
             //SerializeObjectToXML(t);
         }
 
