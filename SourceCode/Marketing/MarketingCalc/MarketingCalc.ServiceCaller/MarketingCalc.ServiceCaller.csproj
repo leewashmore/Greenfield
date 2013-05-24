@@ -60,7 +60,6 @@
     <None Include="Service References\PortfolioValuationOperations\MarketingCalc.ServiceCaller.PortfolioValuationOperations.PortfolioValuation.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\PortfolioValuationOperations\PortfolioValuationOperations.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\PortfolioValuationOperations\" />
@@ -72,6 +71,7 @@
     <None Include="Service References\PortfolioValuationOperations\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\PortfolioValuationOperations\PortfolioValuationOperations1.wsdl" />
     <None Include="Service References\PortfolioValuationOperations\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
