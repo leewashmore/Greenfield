@@ -45,7 +45,7 @@ namespace MarketingCalc.Runner
             }
             else
             {
-               dt= DateTime.Parse(getPreviousMonthEndDate());
+               dt= getPreviousMonthEndDate();
             }
 
             int holdingCount = entity.GF_PORTFOLIO_LTHOLDINGS_HISTORY.Where(g => g.PORTFOLIO_DATE == dt).Count();
@@ -114,7 +114,7 @@ namespace MarketingCalc.Runner
             }
          }
 
-        private static string getPreviousMonthEndDate()
+        private static DateTime getPreviousMonthEndDate()
         {
             int year = DateTime.Today.Year;
             int currentMonth = DateTime.Today.Month;
@@ -149,8 +149,8 @@ namespace MarketingCalc.Runner
 
             }
 
-            string monthendDate = (DateTime.Today.Month - 1) + "/" + lastDayOfMonth + "/" + DateTime.Today.Year;
-            return monthendDate;
+            
+            return dt;
         }
 
 
