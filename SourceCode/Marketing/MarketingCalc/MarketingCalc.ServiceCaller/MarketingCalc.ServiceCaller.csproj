@@ -54,11 +54,12 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\PortfolioValuationOperations\MarketingCalc.ServiceCaller.PortfolioValuationOperations.PortfolioValuation.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\PortfolioValuationOperations\PortfolioValuationOperations.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\PortfolioValuationOperations\" />
@@ -70,10 +71,23 @@
     <None Include="Service References\PortfolioValuationOperations\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\PortfolioValuationOperations\PortfolioValuationOperations.wsdl" />
+    <None Include="Service References\PortfolioValuationOperations\PortfolioValuationOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PortfolioValuationOperations\PortfolioValuationOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PortfolioValuationOperations\PortfolioValuationOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\PortfolioValuationOperations\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PortfolioValuationOperations\PortfolioValuationOperations.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

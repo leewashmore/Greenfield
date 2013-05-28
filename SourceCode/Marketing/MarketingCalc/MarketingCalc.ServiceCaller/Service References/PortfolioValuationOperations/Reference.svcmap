@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5150aea9-cf78-4e3b-a120-780587f73912" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4ab8b9da-117a-4ffd-8546-c6d3a24ab2aa" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -18,10 +18,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:59430/Services/PortfolioValuationOperations.svc?singleWsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:59430/Services/PortfolioValuationOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="PortfolioValuationOperations.wsdl" MetadataType="Wsdl" ID="f031195b-3a3e-430d-9515-b3229c2579ba" SourceId="1" SourceUrl="http://localhost:59430/Services/PortfolioValuationOperations.svc?singleWsdl" />
+    <MetadataFile FileName="PortfolioValuationOperations.wsdl" MetadataType="Wsdl" ID="a4412fae-13a4-4d11-b92d-5d449869fd1f" SourceId="1" SourceUrl="http://localhost:59430/Services/PortfolioValuationOperations.svc?wsdl" />
+    <MetadataFile FileName="PortfolioValuationOperations.xsd" MetadataType="Schema" ID="b41d2ee9-9587-4b4e-ba71-b9d73be163a8" SourceId="1" SourceUrl="http://localhost:59430/Services/PortfolioValuationOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="PortfolioValuationOperations1.xsd" MetadataType="Schema" ID="fd9d6e5d-78ad-43a6-8fc5-4a090ff917d1" SourceId="1" SourceUrl="http://localhost:59430/Services/PortfolioValuationOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="PortfolioValuationOperations.disco" MetadataType="Disco" ID="3b8cc09b-1db3-44a7-af0e-3710b6be00b4" SourceId="1" SourceUrl="http://localhost:59430/Services/PortfolioValuationOperations.svc?disco" />
+    <MetadataFile FileName="PortfolioValuationOperations2.xsd" MetadataType="Schema" ID="8890e072-eb94-4ae6-b108-e1a4d6e550e8" SourceId="1" SourceUrl="http://localhost:59430/Services/PortfolioValuationOperations.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

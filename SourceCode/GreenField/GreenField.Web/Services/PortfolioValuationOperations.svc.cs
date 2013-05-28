@@ -18,21 +18,35 @@ namespace GreenField.Web.Services
     public class PortfolioValuationOperations
     {
          [OperationContract]
-        public List<PortfolioValuation>  PortfolioLevelValuationForMarketing(string portfolio_id)
+        public List<PortfolioValuation>  PortfolioLevelValuationForMarketing(string portfolio_id, DateTime dt)
         {
             MarketingEntities entity = new MarketingEntities();
-            DateTime dt = new DateTime(2013, 04, 30);
+           // DateTime dt = new DateTime(2013, 04, 30);
             List<GetPCDataForMarketing_Result> portfolioData = entity.GetPCDataForMarketing(dt, portfolio_id).ToList();
 
-            List<GetIssuerLevelPFDataForMarketing_Result> pfEarningsDataList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt,290, "PRIMARY", "USD", "A", DateTime.Today.Year, "CALENDAR").ToList();
-            List<GetIssuerLevelPFDataForMarketing_Result> pfNextYearEarningsDataList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 290, "PRIMARY", "USD", "A", DateTime.Today.Year+1, "CALENDAR").ToList();
+            List<GetIssuerLevelPFDataForMarketing_Result> pfEarningsDataList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 290, "PRIMARY", "USD", "A", dt.Year, "CALENDAR").ToList();
+            List<GetIssuerLevelPFDataForMarketing_Result> pfNextYearEarningsDataList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 290, "PRIMARY", "USD", "A",dt.Year+1, "CALENDAR").ToList();
             List<GetIssuerLevelPFDataForMarketing_Result> pfFwdEarningsDataList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 279, "PRIMARY", "USD", "C", 0, "FISCAL").ToList();
             
-             List<GetIssuerLevelPFDataForMarketing_Result> pfEquityList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt,104, "PRIMARY", "USD", "A", DateTime.Today.Year, "CALENDAR").ToList();
-            List<GetIssuerLevelPFDataForMarketing_Result> pfNextYearEquityList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 104, "PRIMARY", "USD", "A", DateTime.Today.Year+1, "CALENDAR").ToList();
+             List<GetIssuerLevelPFDataForMarketing_Result> pfEquityList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt,104, "PRIMARY", "USD", "A",dt.Year, "CALENDAR").ToList();
+            List<GetIssuerLevelPFDataForMarketing_Result> pfNextYearEquityList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 104, "PRIMARY", "USD", "A",dt.Year+1, "CALENDAR").ToList();
             List<GetIssuerLevelPFDataForMarketing_Result> pfFwdEquityList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 280, "PRIMARY", "USD", "C", 0, "FISCAL").ToList();
 
-             List<GetSecurityLevelPFDataForMarketing_Result> pfMarketCapDataList =entity.GetSecurityLevelPFDataForMarketing(portfolio_id, dt,185, "PRIMARY", "USD", "C", 0, "").ToList();
+            List<GetIssuerLevelPFDataForMarketing_Result> pfDividendList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 124, "PRIMARY", "USD", "A",dt.Year, "CALENDAR").ToList();
+            List<GetIssuerLevelPFDataForMarketing_Result> pfNextYearDividendList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 124, "PRIMARY", "USD", "A",dt.Year + 1, "CALENDAR").ToList();
+
+            List<GetIssuerLevelPFDataForMarketing_Result> pfEarningsGrowthList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 177, "PRIMARY", "USD", "A", dt.Year, "CALENDAR").ToList();
+            List<GetIssuerLevelPFDataForMarketing_Result> pfNextYearEarningsGrowthList = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 177, "PRIMARY", "USD", "A", dt.Year + 1, "CALENDAR").ToList();
+
+            List<GetIssuerLevelPFDataForMarketing_Result> pfCurrYearROE = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 133, "PRIMARY", "USD", "A", dt.Year, "CALENDAR").ToList();
+            List<GetIssuerLevelPFDataForMarketing_Result> pfNextYearROE = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 133, "PRIMARY", "USD", "A", dt.Year + 1, "CALENDAR").ToList();
+
+
+           
+            List<GetSecurityLevelPFDataForMarketing_Result> pfMarketCapDataList =entity.GetSecurityLevelPFDataForMarketing(portfolio_id, dt,185, "PRIMARY", "USD", "C", 0, "").ToList();
+            List<GetSecurityLevelPFDataForMarketing_Result> pfCurrYearDYList = entity.GetSecurityLevelPFDataForMarketing(portfolio_id, dt, 192, "PRIMARY", "USD", "A", dt.Year, "CALENDAR").ToList();
+
+
             List<PortfolioValuation> pfValuation = new List<PortfolioValuation>();
             decimal? totalMarketValue = portfolioData.Sum(g => g.dirty_value_pc);
             
@@ -52,7 +66,14 @@ namespace GreenField.Web.Services
                 pv.equity = pfEquityList.Where(equity => equity.issuer_id == issuers.issuer_id && equity.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.fwdEquity = pfFwdEquityList.Where(fwdequity => fwdequity.issuer_id == issuers.issuer_id && fwdequity.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.nextYearEquity = pfNextYearEquityList.Where(nextyearequity => nextyearequity.issuer_id == issuers.issuer_id && nextyearequity.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
-
+                pv.Dividend =  pfDividendList.Where(div => div.issuer_id == issuers.issuer_id && div.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
+                pv.nextYearDividend = pfNextYearDividendList.Where(nextyeardiv => nextyeardiv.issuer_id == issuers.issuer_id && nextyeardiv.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
+                pv.currentYearDY = pfCurrYearDYList.Where(dy => dy.issuer_id == issuers.issuer_id && dy.issuer_id == issuers.issuer_id).Select(v => v.value).FirstOrDefault();
+                pv.nextYearDY = pfNextYearDividendList.Where(nextyeardy => nextyeardy.issuer_id == issuers.issuer_id && nextyeardy.issuer_id == issuers.issuer_id).Select(v => v.value).FirstOrDefault();
+                pv.currYearEGrowth = pfEarningsGrowthList.Where(egrowth => egrowth.issuer_id == issuers.issuer_id && egrowth.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
+                pv.nextYearEGrowth = pfNextYearEarningsGrowthList.Where(egrowth => egrowth.issuer_id == issuers.issuer_id && egrowth.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
+                pv.currYearROE = pfCurrYearROE.Where(roe => roe.issuer_id == issuers.issuer_id && roe.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
+                pv.nextYearROE = pfNextYearROE.Where(roe => roe.issuer_id == issuers.issuer_id && roe.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 if (pv.dirtvaluepc != null && pv.earnings != null && pv.marketcap != null)
                 {
                     pv.percentFactorOwned = (pv.dirtvaluepc / pv.marketcap) * pv.earnings;
@@ -83,6 +104,19 @@ namespace GreenField.Web.Services
                     pv.nextYearEquityFactorOwned = (pv.dirtvaluepc / pv.marketcap) * pv.nextYearEquity;
                 }
 
+                if (pv.dirtvaluepc != null && pv.Dividend != null && pv.marketcap != null)
+                {
+                    pv.divFactorOwned = (pv.dirtvaluepc / pv.marketcap) * pv.Dividend * -1;
+
+                }
+
+                if (pv.dirtvaluepc != null && pv.nextYearDividend != null && pv.marketcap != null)
+                {
+                    pv.nextYearDivFactorOwned = (pv.dirtvaluepc / pv.marketcap) * pv.nextYearDividend * -1;
+
+                }
+
+                
 
                 pfValuation.Add(pv);
             }
@@ -139,6 +173,16 @@ namespace GreenField.Web.Services
             decimal? nxtYearPBPercentOwnership = GroupCalculations.PercentageOwned(mktValue, nxtYearEquityPercentFactorOwned);
             status = entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "PCT_OWNED",  1, 164, nxtYearPBPercentOwnership);
 
+            mktValue = pfValuation.Where(g => g.portfolio_id == portfolio_id && g.divFactorOwned.HasValue).Select(data => data.dirtvaluepc).ToList();
+            List<decimal?> divPercentFactorOwned = pfValuation.Where(g => g.portfolio_id == portfolio_id).Select(data => data.divFactorOwned).ToList();
+            decimal? divYieldPercentOwnership = 1 / GroupCalculations.PercentageOwned(mktValue, divPercentFactorOwned);
+            status = entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "PCT_OWNED", 0, 192, divYieldPercentOwnership);
+
+            mktValue = pfValuation.Where(g => g.portfolio_id == portfolio_id && g.nextYearDivFactorOwned.HasValue).Select(data => data.dirtvaluepc).ToList();
+            List<decimal?> nextyearDivPercentFactorOwned = pfValuation.Where(g => g.portfolio_id == portfolio_id).Select(data => data.nextYearDivFactorOwned).ToList();
+            decimal? nextyearDivYieldPercentOwnership = 1 / GroupCalculations.PercentageOwned(mktValue, nextyearDivPercentFactorOwned);
+            status = entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "PCT_OWNED", 1, 192, nextyearDivYieldPercentOwnership);
+
 
         }
 
@@ -152,7 +196,12 @@ namespace GreenField.Web.Services
              decimal? fwdTotalMarketValuePB = pfValuation.Where(g => g.fwdEquityFactorOwned.HasValue).Sum(g => g.dirtvaluepc);
              decimal? nextYearTotalMarketValuePB = pfValuation.Where(g => g.nextYearEquityFactorOwned.HasValue).Sum(g => g.dirtvaluepc);
              decimal? totalMarketValueMktCap = pfValuation.Where(g => g.marketcap.HasValue).Sum(g => g.dirtvaluepc);
-
+             decimal? totalMarketValueDiv = pfValuation.Where(g => g.divFactorOwned.HasValue).Sum(g => g.dirtvaluepc);
+             decimal? nextYeartotalMarketValueDiv = pfValuation.Where(g => g.nextYearDivFactorOwned.HasValue).Sum(g => g.dirtvaluepc);
+             decimal? totalMarketValueEGrowth = pfValuation.Where(g => g.currYearEGrowth.HasValue).Sum(g => g.dirtvaluepc);
+             decimal? nextYeartotalMarketValueEGrowth = pfValuation.Where(g => g.nextYearEGrowth.HasValue).Sum(g => g.dirtvaluepc);
+             decimal? totalMarketValueROE = pfValuation.Where(g => g.currYearROE.HasValue).Sum(g => g.dirtvaluepc);
+             decimal? nextYeartotalMarketValueROE = pfValuation.Where(g => g.nextYearROE.HasValue).Sum(g => g.dirtvaluepc);
              DataScrubber d = new DataScrubber();
              foreach (var pfData in pfValuation)
              {
@@ -253,12 +302,105 @@ namespace GreenField.Web.Services
                  {
                      pfData.weightMktCap = pfData.dirtvaluepc / totalMarketValueMktCap;
                  }
-
-                 //For Weighted MarketCap
                  if (pfData.weightMktCap != null && pfData.marketcap != null)
                  {
                      pfData.mktCapContr = pfData.weightMktCap * pfData.marketcap;
                  }
+
+
+                 //For current weighted DY
+                 if (pfData.dirtvaluepc != null && pfData.divFactorOwned != null)
+                 {
+                     pfData.currentYearWeightDY = pfData.dirtvaluepc / totalMarketValueDiv;
+                 }
+                 if (pfData.marketcap != null && pfData.Dividend != null && pfData.divFactorOwned != null)
+                 {
+                     //pfData.currentYearDY = pfData.Dividend / pfData.marketcap;
+                     pfData.currentYearDY = d.doRangeScrubbing(pfData.currentYearDY, 192);
+                 }
+                 if (pfData.currentYearWeightDY != null && pfData.currentYearDY != null)
+                 {
+                     pfData.currYearDYContr = pfData.currentYearWeightDY * pfData.currentYearDY;
+                 }
+
+                 //For next year weighted DY
+                 if (pfData.dirtvaluepc != null && pfData.nextYearDivFactorOwned != null)
+                 {
+                     pfData.nextYearWeightDY = pfData.dirtvaluepc /nextYeartotalMarketValueDiv;
+                 }
+                 if (pfData.marketcap != null && pfData.nextYearDividend != null && pfData.nextYearDivFactorOwned != null)
+                 {
+                    // pfData.nextYearDY = pfData.nextYearDividend / pfData.marketcap;
+                     pfData.nextYearDY = d.doRangeScrubbing(pfData.nextYearDY, 192);
+                 }
+                 if (pfData.nextYearWeightDY != null && pfData.nextYearDY != null)
+                 {
+                     pfData.nextYearDYContr = pfData.nextYearWeightDY * pfData.nextYearDY;
+                 }
+
+
+                 //For current weighted Earnings Growth
+                 if (pfData.dirtvaluepc != null && pfData.currYearEGrowth != null)
+                 {
+                     pfData.currYearWeightEGrowth= pfData.dirtvaluepc / totalMarketValueEGrowth;
+                 }
+                 if (pfData.currYearEGrowth != null)
+                 {
+                     // pfData.nextYearDY = pfData.nextYearDividend / pfData.marketcap;
+                     pfData.currYearEGrowth = d.doRangeScrubbing(pfData.currYearEGrowth, 177);
+                 }
+                 if (pfData.currYearWeightEGrowth != null && pfData.currYearEGrowth != null)
+                 {
+                     pfData.currYearEGrowthContr = pfData.currYearWeightEGrowth * pfData.currYearEGrowth;
+                 }
+
+                 //For next year weighted Earnings Growth
+                 if (pfData.dirtvaluepc != null && pfData.nextYearEGrowth != null)
+                 {
+                     pfData.nextYearWeightEGrowth = pfData.dirtvaluepc / totalMarketValueEGrowth;
+                 }
+                 if (pfData.nextYearEGrowth != null)
+                 {
+                     // pfData.nextYearDY = pfData.nextYearDividend / pfData.marketcap;
+                     pfData.nextYearEGrowth = d.doRangeScrubbing(pfData.nextYearEGrowth, 177);
+                 }
+                 if (pfData.nextYearWeightEGrowth != null && pfData.nextYearEGrowth != null)
+                 {
+                     pfData.nextYearEGrowthContr = pfData.nextYearWeightEGrowth * pfData.nextYearEGrowth;
+                 }
+
+
+                 //For current weighted ROE
+                 if (pfData.dirtvaluepc != null && pfData.currYearROE != null)
+                 {
+                     pfData.currYearWeightROE = pfData.dirtvaluepc / totalMarketValueROE;
+                 }
+                 if (pfData.currYearWeightROE != null)
+                 {
+                     // pfData.nextYearDY = pfData.nextYearDividend / pfData.marketcap;
+                     pfData.currYearROE = d.doRangeScrubbing(pfData.currYearROE, 133);
+                 }
+                 if (pfData.currYearWeightROE != null && pfData.currYearROE != null)
+                 {
+                     pfData.currYearROEContr = pfData.currYearWeightROE * pfData.currYearROE;
+                 }
+
+                 //For next year weighted ROE
+                 if (pfData.dirtvaluepc != null && pfData.nextYearROE != null)
+                 {
+                     pfData.nextYearWeightROE = pfData.dirtvaluepc / nextYeartotalMarketValueROE;
+                 }
+                 if (pfData.nextYearROE != null)
+                 {
+                   
+                     pfData.nextYearROE = d.doRangeScrubbing(pfData.nextYearROE, 133);
+                 }
+                 if (pfData.nextYearWeightROE != null && pfData.nextYearROE != null)
+                 {
+                     pfData.nextYearROEContr = pfData.nextYearWeightROE * pfData.nextYearROE;
+                 }
+
+
              }
           
              decimal? pfWeightPE = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.currYearPEContr);
@@ -268,7 +410,7 @@ namespace GreenField.Web.Services
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED",0, 187, pFwdWeightPE);
 
              decimal? nextYearWeightPE = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.nextYearPEContr);
-             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 0, 166, nextYearWeightPE);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 1, 166, nextYearWeightPE);
 
              decimal? pfWeightPB = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.currYearPBContr);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 0, 164, pfWeightPB);
@@ -281,6 +423,25 @@ namespace GreenField.Web.Services
 
              decimal? weightedMktCap = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.mktCapContr);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 0, 185, weightedMktCap);
+
+             decimal? weightedDY = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.currYearDYContr);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 0, 192, weightedDY);
+
+
+             decimal? nextyearweightedDY = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.nextYearDYContr);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED",1, 192, nextyearweightedDY);
+
+             decimal? currYearWeightedEGrowth = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.currYearEGrowthContr);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 0, 177, currYearWeightedEGrowth);
+
+             decimal? nextYearWeightedEGrowth = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.nextYearEGrowthContr);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 1, 177, nextYearWeightedEGrowth);
+
+             decimal? currYearWeightedROE = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.currYearROEContr);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 0, 133, currYearWeightedROE);
+
+             decimal? nextYearWeightedROE = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.nextYearROEContr);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 1, 133, nextYearWeightedROE);
          }
 
          private void MedianMethodology(List<PortfolioValuation> pfValuation, String portfolio_id, MarketingEntities entity, DateTime effDate)
@@ -301,6 +462,24 @@ namespace GreenField.Web.Services
             list = pfValuation.Where(g => g.marketcap.HasValue).Select(g => g.marketcap).ToList();
             decimal? medianmktCap = GroupCalculations.Median(list);
 
+            list = pfValuation.Where(g => g.currentYearDY.HasValue).Select(g => g.currentYearDY).ToList();
+            decimal? medianCurrDY = GroupCalculations.Median(list);
+
+            list = pfValuation.Where(g => g.nextYearDY.HasValue).Select(g => g.nextYearDY).ToList();
+            decimal? mediannextyearDY = GroupCalculations.Median(list);
+
+            list = pfValuation.Where(g => g.currYearEGrowth.HasValue).Select(g => g.currYearEGrowth).ToList();
+            decimal? medianCurrEGrowth = GroupCalculations.Median(list);
+
+            list = pfValuation.Where(g => g.nextYearEGrowth.HasValue).Select(g => g.nextYearEGrowth).ToList();
+            decimal? mediannextYearEGrowth = GroupCalculations.Median(list);
+
+            list = pfValuation.Where(g => g.currYearROE.HasValue).Select(g => g.currYearROE).ToList();
+            decimal? medianCurrROE = GroupCalculations.Median(list);
+
+            list = pfValuation.Where(g => g.nextYearROE.HasValue).Select(g => g.nextYearROE).ToList();
+            decimal? mediannextYearROE = GroupCalculations.Median(list);
+
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 166, medianCurrPE);
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 187, medianfwdPE);
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 166, nextyearPE);
@@ -308,6 +487,12 @@ namespace GreenField.Web.Services
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 188, medianfwdPB);
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 164, nextyearPB);
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 185, medianmktCap);
+            entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 192, medianCurrDY);
+            entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 192, mediannextyearDY);
+            entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 177, medianCurrEGrowth);
+            entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 177, mediannextYearEGrowth);
+            entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 133, medianCurrROE);
+            entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 133, mediannextYearROE);
          }
 
          private void SimpleAverageMethodology(List<PortfolioValuation> pfValuation, String portfolio_id, MarketingEntities entity, DateTime effDate)
@@ -333,6 +518,25 @@ namespace GreenField.Web.Services
              list = pfValuation.Where(g => g.marketcap.HasValue).Select(g => g.marketcap).ToList();
              decimal? averagemktCap = GroupCalculations.SimpleAverage(list);
 
+             list = pfValuation.Where(g => g.currentYearDY.HasValue).Select(g => g.currentYearDY).ToList();
+             decimal? averagecurrentYearDY = GroupCalculations.SimpleAverage(list);
+
+             list = pfValuation.Where(g => g.nextYearDY.HasValue).Select(g => g.nextYearDY).ToList();
+             decimal? averagenextYearDY = GroupCalculations.SimpleAverage(list);
+
+             list = pfValuation.Where(g => g.currYearEGrowth.HasValue).Select(g => g.currYearEGrowth).ToList();
+             decimal? averagecurrentYearEGrowth = GroupCalculations.SimpleAverage(list);
+
+
+             list = pfValuation.Where(g => g.nextYearEGrowth.HasValue).Select(g => g.nextYearEGrowth).ToList();
+             decimal? averagenextYearEGrowth = GroupCalculations.SimpleAverage(list);
+
+             list = pfValuation.Where(g => g.currYearROE.HasValue).Select(g => g.currYearROE).ToList();
+             decimal? averagecurrentYearROE = GroupCalculations.SimpleAverage(list);
+
+
+             list = pfValuation.Where(g => g.nextYearROE.HasValue).Select(g => g.nextYearROE).ToList();
+             decimal? averagenextYearROE = GroupCalculations.SimpleAverage(list);
 
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 166, averageCurrYearPE);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 187, averageFwdPE);
@@ -341,8 +545,17 @@ namespace GreenField.Web.Services
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 188, averageFwdPB);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 1, 164, averagenextyearPB);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 185, averagemktCap);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 192, averagecurrentYearDY);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 1, 192, averagenextYearDY);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 177, averagecurrentYearEGrowth);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 1, 177, averagenextYearEGrowth);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 133, averagecurrentYearROE);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 1, 133, averagenextYearROE);
+
 
          }
+
+     
 
         
 
