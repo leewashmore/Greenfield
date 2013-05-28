@@ -28,8 +28,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="5">
-                
-                <aims:SecurityPickerViewComposition DataContext="{Binding SecurityPickerViewModelComposition}"  />
+                <!-- <aims:SecurityPickerViewComposition DataContext="{Binding SecurityPickerViewModelComposition}"  /> -->
+                <aims:SecurityPickerView DataContext="{Binding SecurityPickerViewModel}"  />
             </StackPanel>
         <StackPanel  Grid.Row="1">
             <local:CompositionView DataContext="{Binding CompositionViewModel}" />
