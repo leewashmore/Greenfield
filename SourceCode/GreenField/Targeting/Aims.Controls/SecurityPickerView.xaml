@@ -9,7 +9,7 @@
     mc:Ignorable="d" d:DesignHeight="30" d:DesignWidth="400">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-        <TextBlock Margin="0 0 5 0" VerticalAlignment="Center">Security</TextBlock>
+        <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" Name="SecurityLBL" Text="{Binding SecurityPickerLabelName}">Security</TextBlock>
         <local:AutoCompleteBoxWithEnterWorking 
             ItemsSource="{Binding Items}"
             MinimumPopulateDelay="250"

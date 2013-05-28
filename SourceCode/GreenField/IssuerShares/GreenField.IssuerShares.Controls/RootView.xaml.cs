@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 
 namespace GreenField.IssuerShares.Controls
 {
@@ -21,6 +22,8 @@ namespace GreenField.IssuerShares.Controls
         {
             InitializeComponent();
             this.DataContext = viewModel;
+            viewModel.SecurityPickerViewModel.SecurityPickerLabelName = "Add Security to Composition";
+            
         }
 
         
