@@ -55,7 +55,7 @@ namespace GreenField.IssuerShares.Controls
             this.IsChanged = true;
         }
 
-        public void SaveComposition()
+        public void SaveComposition()  
         {
             this.StartLoading();
             var client = this.clientFactory.CreateClient();

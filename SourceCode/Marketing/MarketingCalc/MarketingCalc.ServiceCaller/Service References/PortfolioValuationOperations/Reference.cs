@@ -1058,6 +1058,9 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
             "ng", ReplyAction="http://tempuri.org/PortfolioValuationOperations/PortfolioLevelValuationForMarketi" +
             "ngResponse")]
         MarketingCalc.ServiceCaller.PortfolioValuationOperations.PortfolioValuation[] PortfolioLevelValuationForMarketing(string portfolio_id, System.DateTime dt);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PortfolioValuationOperations/PortfolioLevelTest", ReplyAction="http://tempuri.org/PortfolioValuationOperations/PortfolioLevelTestResponse")]
+        string PortfolioLevelTest(string portfolio_id, System.DateTime dt);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1089,6 +1092,10 @@ namespace MarketingCalc.ServiceCaller.PortfolioValuationOperations {
         
         public MarketingCalc.ServiceCaller.PortfolioValuationOperations.PortfolioValuation[] PortfolioLevelValuationForMarketing(string portfolio_id, System.DateTime dt) {
             return base.Channel.PortfolioLevelValuationForMarketing(portfolio_id, dt);
+        }
+        
+        public string PortfolioLevelTest(string portfolio_id, System.DateTime dt) {
+            return base.Channel.PortfolioLevelTest(portfolio_id, dt);
         }
     }
 }

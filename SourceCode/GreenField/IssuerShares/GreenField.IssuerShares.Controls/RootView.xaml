@@ -28,12 +28,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="5">
-                
-                <aims:SecurityPickerViewComposition DataContext="{Binding SecurityPickerViewModelComposition}"  />
+                <!-- <aims:SecurityPickerViewComposition DataContext="{Binding SecurityPickerViewModelComposition}"  /> -->
+                <aims:SecurityPickerView DataContext="{Binding SecurityPickerViewModel}" Name="SecurityPickerComposition"  />
             </StackPanel>
         <StackPanel  Grid.Row="1">
             <local:CompositionView DataContext="{Binding CompositionViewModel}" />
-            <Button Content="Save" Height="28" Width="49" Margin="0 5 0 5" DataContext="{Binding}" Command="{Binding CompositionViewModel.SaveCompositionCommand}" />
+            <Button Content="Save" Height="28" Width="49" Margin="0 5 0 5" DataContext="{Binding}" Command="{Binding CompositionViewModel.SaveCompositionCommand}" Click="Button_Click" />
         </StackPanel>
         <!--<StackPanel  Grid.Row="2">-->
             <local:HistoryView Grid.Row="2" DataContext="{Binding HistoryViewModel}" />

@@ -124,6 +124,17 @@ namespace Aims.Controls
         }
 
         private Boolean isEnabled;
+        private String securityPickerLabelName = "Security";
+
+        public String SecurityPickerLabelName
+        {
+            get { return this.securityPickerLabelName; }
+            set
+            {
+                this.securityPickerLabelName = value;
+                this.RaisePropertyChanged(() => this.SecurityPickerLabelName);
+            }
+        }
 
         public Boolean IsEnabled
         {
