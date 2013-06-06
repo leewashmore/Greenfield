@@ -154,9 +154,9 @@ namespace GreenField.IssuerShares.Server
                 var dataManager = this.dataManagerFactory.CreateDataManager(connection, tran);
                 var insertRecordsCount = dataManager.UpdateIssuerSharesComposition(model.Issuer.Id, items);
                 tran.Commit();
-
+                //Calls to the Data-Loader Application
                 var loader = CreateIssuerSharesLoader();
-                loader.RunForSpecificIssuers(new []{ model.Issuer.Id } , null);
+                loader.RunForSpecificIssuers(new[] { model.Issuer.Id }, null, Settings.ConnectionToAims); //Added Connection String for Data-Loader application Issuer Shares
                 loader.Pusher.ExecuteGetDataProcedure(model.Issuer.Id);
                 return model;
             }

@@ -36,7 +36,7 @@ namespace GreenField.IssuerShares.Server
 
             var issuerShareRecordsContext = this.monitor.MeasureAndFailIfAnything("Getting shares records for the \"" + issuerId + "\" issuer from the web-service.", delegate
             {
-                return this.GetIssuerLevelShareRecords(null, securities);
+                return this.GetIssuerLevelShareRecords(null, securities, Settings.ConnectionToAims); //Added Connection String for call to Data-Loader application for Issuer Shares
             });
 
             var records = issuerShareRecordsContext.IssuerShareRecords
