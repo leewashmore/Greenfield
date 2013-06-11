@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
 using AIMS.CalcEngine.Properties;
-
+using System.Runtime.InteropServices;
 namespace AIMS.CalcEngine
 {
     public class AIMS_CalcEngine
@@ -13,9 +13,13 @@ namespace AIMS.CalcEngine
         private static String[] issuerId;
         private static int _runId;
         private static String runMode = "F";
-
+        private static bool isclosing = false;
         private static void Main(string[] args)
         {
+            SetConsoleCtrlHandler(new HandlerRoutine(ConsoleCtrlCheck), true);
+
+            Console.WriteLine("CTRL+C,CTRL+BREAK to exit");
+
             int numberOfThreads = Settings.Default.NumberOfThreads;
             if (args != null && args[0] != null)
             {
@@ -62,10 +66,26 @@ namespace AIMS.CalcEngine
                     }
                     
                     WaitHandle.WaitAll(resetEvents);
+                    if (isclosing)
+                    {
+                        Console.WriteLine("External intervention stopped gracefull ");
+                        break;
+                        //Environment.Exit(-2);
+                    }
                     print("Total issuers processed = " + startIndex);
                 }
                 DoFinalUpdateStatus();
-                Console.WriteLine("Get_Data Completed Successfully "); //Do not remove this print line. This is a return expression for JAMS
+                if (isclosing)
+                {
+                    Console.WriteLine("Get_Data process interrupted. Stopped gracefully ");
+                    Environment.Exit(-2);
+                    
+                }
+                else
+                {
+                    Console.WriteLine("Get_Data Completed Successfully ");
+                }
+                 //Do not remove this print line. This is a return expression for JAMS
             }
             catch (Exception e)
             {
@@ -309,5 +329,63 @@ namespace AIMS.CalcEngine
                 }
             }
         }
+
+        private static bool ConsoleCtrlCheck(CtrlTypes ctrlType)
+        {
+            // Put your own handler here
+            switch (ctrlType)
+            {
+                case CtrlTypes.CTRL_C_EVENT:
+                    isclosing = true;
+                    Console.WriteLine("CTRL+C received!");
+                    break;
+
+                case CtrlTypes.CTRL_BREAK_EVENT:
+                    isclosing = true;
+                    Console.WriteLine("CTRL+BREAK received!");
+                    break;
+
+                case CtrlTypes.CTRL_CLOSE_EVENT:
+                    isclosing = true;
+                    Console.WriteLine("Program being closed!");
+                    break;
+
+                case CtrlTypes.CTRL_LOGOFF_EVENT:
+                case CtrlTypes.CTRL_SHUTDOWN_EVENT:
+                    isclosing = true;
+                    Console.WriteLine("User is logging off!");
+                    break;
+
+            }
+            return true;
+        }
+
+
+
+        #region unmanaged
+        // Declare the SetConsoleCtrlHandler function
+        // as external and receiving a delegate.
+
+        [DllImport("Kernel32")]
+        public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
+
+        // A delegate type to be used as the handler routine
+        // for SetConsoleCtrlHandler.
+        public delegate bool HandlerRoutine(CtrlTypes CtrlType);
+
+        // An enumerated type for the control messages
+        // sent to the handler routine.
+        public enum CtrlTypes
+        {
+            CTRL_C_EVENT = 0,
+            CTRL_BREAK_EVENT,
+            CTRL_CLOSE_EVENT,
+            CTRL_LOGOFF_EVENT = 5,
+            CTRL_SHUTDOWN_EVENT
+        }
+
+        #endregion
+
+
     }
 }
