@@ -175,7 +175,7 @@ namespace GreenField.Gadgets.Views
                     {
                         CultureInfo usa = new CultureInfo("en-US");
                         //usa.NumberFormat.CurrencyDecimalDigits = 0;
-                        decimal val = Math.Round((decimal)icd.MarketValue);
+                        decimal val = Math.Round((decimal)icd.MarketValue,1);
                         //decimal val = (decimal)icd.mktVal;
                         string output = string.Empty;
                         output = val.ToString("C0", usa.NumberFormat);
@@ -593,7 +593,7 @@ namespace GreenField.Gadgets.Views
             {
                 CultureInfo usa = new CultureInfo("en-US");
                 //usa.NumberFormat.CurrencyDecimalDigits = 0;
-                decimal val = Math.Round((decimal)icd.MarketValue);
+                decimal val = Math.Round((decimal)icd.MarketValue,1);
                 //decimal val = (decimal)icd.mktVal;
                 string output = string.Empty;
                 output = val.ToString("C0", usa.NumberFormat);
@@ -793,7 +793,7 @@ namespace GreenField.Gadgets.Views
                 {
                     CultureInfo usa = new CultureInfo("en-US");
                     //usa.NumberFormat.CurrencyDecimalDigits = 0;
-                    decimal val = Math.Round((decimal)child.MarketValue);
+                    decimal val = Math.Round((decimal)child.MarketValue,1);
                     //decimal val = (decimal)icd.mktVal;
                     string output = string.Empty;
                     output = val.ToString("C0", usa.NumberFormat);

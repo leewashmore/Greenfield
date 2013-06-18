@@ -3440,7 +3440,9 @@ namespace GreenField.DAL
         /// <param name="cURRENT_MEASURE_VALUE">No Metadata Documentation available.</param>
         /// <param name="uPSIDE">No Metadata Documentation available.</param>
         /// <param name="uPDATED">No Metadata Documentation available.</param>
-        public int InsertDCFFairValue(global::System.String sECURITY_ID, global::System.String vALUE_TYPE, Nullable<global::System.Int32> fV_MEASURE, Nullable<global::System.Decimal> fV_BUY, Nullable<global::System.Decimal> fV_SELL, Nullable<global::System.Decimal> cURRENT_MEASURE_VALUE, Nullable<global::System.Decimal> uPSIDE, Nullable<global::System.DateTime> uPDATED)
+        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_YEAR">No Metadata Documentation available.</param>
+        public int InsertDCFFairValue(global::System.String sECURITY_ID, global::System.String vALUE_TYPE, Nullable<global::System.Int32> fV_MEASURE, Nullable<global::System.Decimal> fV_BUY, Nullable<global::System.Decimal> fV_SELL, Nullable<global::System.Decimal> cURRENT_MEASURE_VALUE, Nullable<global::System.Decimal> uPSIDE, Nullable<global::System.DateTime> uPDATED, global::System.String pERIOD_TYPE, Nullable<global::System.Int32> pERIOD_YEAR)
         {
             ObjectParameter sECURITY_IDParameter;
             if (sECURITY_ID != null)
@@ -3522,7 +3524,27 @@ namespace GreenField.DAL
                 uPDATEDParameter = new ObjectParameter("UPDATED", typeof(global::System.DateTime));
             }
     
-            return base.ExecuteFunction("InsertDCFFairValue", sECURITY_IDParameter, vALUE_TYPEParameter, fV_MEASUREParameter, fV_BUYParameter, fV_SELLParameter, cURRENT_MEASURE_VALUEParameter, uPSIDEParameter, uPDATEDParameter);
+            ObjectParameter pERIOD_TYPEParameter;
+            if (pERIOD_TYPE != null)
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
+            }
+            else
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter pERIOD_YEARParameter;
+            if (pERIOD_YEAR.HasValue)
+            {
+                pERIOD_YEARParameter = new ObjectParameter("PERIOD_YEAR", pERIOD_YEAR);
+            }
+            else
+            {
+                pERIOD_YEARParameter = new ObjectParameter("PERIOD_YEAR", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction("InsertDCFFairValue", sECURITY_IDParameter, vALUE_TYPEParameter, fV_MEASUREParameter, fV_BUYParameter, fV_SELLParameter, cURRENT_MEASURE_VALUEParameter, uPSIDEParameter, uPDATEDParameter, pERIOD_TYPEParameter, pERIOD_YEARParameter);
         }
     
         /// <summary>
@@ -5571,6 +5593,54 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _UPDATED;
         partial void OnUPDATEDChanging(Nullable<global::System.DateTime> value);
         partial void OnUPDATEDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PERIOD_TYPE
+        {
+            get
+            {
+                return _PERIOD_TYPE;
+            }
+            set
+            {
+                OnPERIOD_TYPEChanging(value);
+                ReportPropertyChanging("PERIOD_TYPE");
+                _PERIOD_TYPE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PERIOD_TYPE");
+                OnPERIOD_TYPEChanged();
+            }
+        }
+        private global::System.String _PERIOD_TYPE;
+        partial void OnPERIOD_TYPEChanging(global::System.String value);
+        partial void OnPERIOD_TYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PERIOD_YEAR
+        {
+            get
+            {
+                return _PERIOD_YEAR;
+            }
+            set
+            {
+                OnPERIOD_YEARChanging(value);
+                ReportPropertyChanging("PERIOD_YEAR");
+                _PERIOD_YEAR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PERIOD_YEAR");
+                OnPERIOD_YEARChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PERIOD_YEAR;
+        partial void OnPERIOD_YEARChanging(Nullable<global::System.Int32> value);
+        partial void OnPERIOD_YEARChanged();
 
         #endregion
 
