@@ -531,7 +531,7 @@ namespace GreenField.Web.Services
                 if (valueType != null)
                     valueType = valueType.ToUpper();
 
-                entity.InsertDCFFairValue(Convert.ToString(securityId), valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated);
+                entity.InsertDCFFairValue(Convert.ToString(securityId), valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated,"C",0);
                 return true;
             }
             catch (Exception ex)

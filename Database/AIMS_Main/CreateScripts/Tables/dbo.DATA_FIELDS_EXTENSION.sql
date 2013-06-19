@@ -1,6 +1,4 @@
 
-
-/****** Object:  Table [dbo].[PERIOD_FINANCIALS]    Script Date: 04/29/2013 14:39:08 ******/
 SET ANSI_NULLS ON
 GO
 

@@ -1042,6 +1042,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.COASpecificData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.PortfolioSelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.InvestmentContextDetailsData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.GF_SECURITY_BASEVIEW>))]
@@ -1173,6 +1174,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private string ISSUER_NAMEField;
         
+        private string ISSUER_PROXYField;
+        
         private string ISSUE_NAMEField;
         
         private System.Nullable<System.DateTime> LAST_CLOSE_DATEField;
@@ -1212,6 +1215,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         private System.Nullable<decimal> TOT_CURR_SHRS_OUTST_ALL_CLASSField;
         
         private string TRADING_CURRENCYField;
+        
+        private string UPDATE_BB_STATUSField;
         
         private string WACC_COST_DEBTField;
         
@@ -1718,6 +1723,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ISSUER_PROXY {
+            get {
+                return this.ISSUER_PROXYField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ISSUER_PROXYField, value) != true)) {
+                    this.ISSUER_PROXYField = value;
+                    this.RaisePropertyChanged("ISSUER_PROXY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ISSUE_NAME {
             get {
                 return this.ISSUE_NAMEField;
@@ -1978,6 +1996,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UPDATE_BB_STATUS {
+            get {
+                return this.UPDATE_BB_STATUSField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UPDATE_BB_STATUSField, value) != true)) {
+                    this.UPDATE_BB_STATUSField = value;
+                    this.RaisePropertyChanged("UPDATE_BB_STATUS");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string WACC_COST_DEBT {
             get {
                 return this.WACC_COST_DEBTField;
@@ -2208,7 +2239,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             "eFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveInvestmentContextData(string issuerId, string context, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData> EndRetrieveInvestmentContextData(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>> EndRetrieveInvestmentContextData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveDataMaster", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveDataMasterResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveDataMasterServiceFaultFault" +
@@ -2594,10 +2625,10 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             this.results = results;
         }
         
-        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData> Result {
+        public System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>)(this.results[0]));
+                return ((System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>>)(this.results[0]));
             }
         }
     }
@@ -3788,7 +3819,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveInvestmentContextData(System.IAsyncResult result) {
+        System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveInvestmentContextData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveInvestmentContextData(result);
         }
         
@@ -3799,7 +3830,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         private object[] OnEndRetrieveInvestmentContextData(System.IAsyncResult result) {
-            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveInvestmentContextData(result);
+            System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveInvestmentContextData(result);
             return new object[] {
                     retVal};
         }
@@ -4234,9 +4265,9 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 return _result;
             }
             
-            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData> EndRetrieveInvestmentContextData(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>> EndRetrieveInvestmentContextData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>)(base.EndInvoke("RetrieveInvestmentContextData", _args, result)));
+                System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>> _result = ((System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>>)(base.EndInvoke("RetrieveInvestmentContextData", _args, result)));
                 return _result;
             }
             
