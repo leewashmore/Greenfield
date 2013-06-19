@@ -76,12 +76,12 @@ namespace GreenField.Web.Helpers
                     {
                         double element = listSize / 2;
                         element = Math.Round(element, MidpointRounding.AwayFromZero);
-                        medianValue = list.ElementAt((int)element - 1);
+                        medianValue = list.ElementAt((int)element);
                     }
                     else
                     {
                         double element = listSize;
-                        medianValue = list.ElementAt((int)element - 1);
+                        medianValue = list.ElementAt(0);
                     }
                 }
             }
