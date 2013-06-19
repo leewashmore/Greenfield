@@ -39,9 +39,9 @@ namespace GreenField.Gadgets.Views
 
         private static int fontSizePDF = 8;
 
-        
 
-        private static string[] headerData = { "Name","", "Mkt. Value", "$ Mkt. Cap", "Fwd PE", "Fwd PB", "PE  " + DateTime.Now.Year, "PE  " + (DateTime.Now.Year + 1), "PB  " + (DateTime.Now.Year), "PB  "+(DateTime.Now.Year+1), "EV/ EBITDA "+(DateTime.Now.Year), "EV/ EBITDA "+(DateTime.Now.Year+1), "DY  "+(DateTime.Now.Year), "ROE "+(DateTime.Now.Year) };
+
+        private static string[] headerData = { "Name", "", "Mkt. Value", "$ Mkt. Cap", "PE  BF24", "PB   BF24", "PE  " + DateTime.Now.Year, "PE  " + (DateTime.Now.Year + 1), "PB  " + (DateTime.Now.Year), "PB  " + (DateTime.Now.Year + 1), "EV/ EBITDA " + (DateTime.Now.Year), "EV/ EBITDA " + (DateTime.Now.Year + 1), "DY  " + (DateTime.Now.Year +1), "ROE " + (DateTime.Now.Year+1) };
         #region Constructor
 
         /// <summary>

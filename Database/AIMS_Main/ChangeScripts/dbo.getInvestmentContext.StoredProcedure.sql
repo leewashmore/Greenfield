@@ -155,7 +155,7 @@ begin
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
 	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 192 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
-	and period_year = @curryear and fiscal_type = 'CALENDAR'
+	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.iso_country_code = @iso_country_code 
 	group by  pf.amount	
 
@@ -164,7 +164,7 @@ begin
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
 	inner join dbo.period_financials pf on  pf.issuer_id = gsb.issuer_id
 	where pf.data_id = 133 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
-	and period_year = @curryear and fiscal_type = 'CALENDAR'
+	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.iso_country_code = @iso_country_code 
 	group by  pf.amount	
 		
@@ -259,7 +259,7 @@ begin
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
 	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 192 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
-	and period_year = @curryear and fiscal_type = 'CALENDAR'
+	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.gics_industry = @gics_industry    
 	group by  pf.amount	
 	
@@ -268,7 +268,7 @@ begin
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
 	inner join dbo.period_financials pf on pf.issuer_id = gsb.issuer_id
 	where pf.data_id = 133 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
-	and period_year = @curryear and fiscal_type = 'CALENDAR'
+	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.gics_industry = @gics_industry   
 	group by  pf.amount	
 	
