@@ -2758,7 +2758,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveInvestmentContextData(string issuerID, string context, Action<List<InvestmentContextDetailsData>> callback)
+        public void RetrieveInvestmentContextData(string issuerID, string context, Action<List<List<InvestmentContextDetailsData>>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -2779,7 +2779,14 @@ namespace GreenField.ServiceCaller
                     {
                         if (e.Result != null)
                         {
-                            callback(e.Result.ToList());
+                           var lists = e.Result.ToList();
+                           List<List<InvestmentContextDetailsData>> icdList = new List<List<InvestmentContextDetailsData>>();
+                           foreach (var list in lists)
+                           {
+                               List<InvestmentContextDetailsData> ll = list.ToList();
+                               icdList.Add(ll);
+                           }
+                            callback(icdList);
                         }
                         else
                         {

@@ -41,7 +41,7 @@ namespace GreenField.Gadgets.Views
 
         
 
-        private static string[] headerData = { "Name","", "Mkt. Value", "$ Mkt. Cap", "Fwd PE", "Fwd PB", "PE " + DateTime.Now.Year, "PE " + (DateTime.Now.Year + 1), "PB " + (DateTime.Now.Year), "PB "+(DateTime.Now.Year+1), "EV/ EBITDA "+(DateTime.Now.Year), "EV/ EBITDA "+(DateTime.Now.Year+1), "DY "+(DateTime.Now.Year), "ROE "+(DateTime.Now.Year) };
+        private static string[] headerData = { "Name","", "Mkt. Value", "$ Mkt. Cap", "Fwd PE", "Fwd PB", "PE  " + DateTime.Now.Year, "PE  " + (DateTime.Now.Year + 1), "PB  " + (DateTime.Now.Year), "PB  "+(DateTime.Now.Year+1), "EV/ EBITDA "+(DateTime.Now.Year), "EV/ EBITDA "+(DateTime.Now.Year+1), "DY  "+(DateTime.Now.Year), "ROE "+(DateTime.Now.Year) };
         #region Constructor
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace GreenField.Gadgets.Views
 
 
              
-                InvestmentContextDetailsData icdData = dataContextSource.InvestmentContextDataInfo[i];
+                List<InvestmentContextDetailsData> icdData = dataContextSource.InvestmentContextDataInfo[i];
                 
                 string issuerId = dataContextSource.SelectedSecurity.IssuerId;
                 GenerateDataRow(table, icdData,issuerId , context);
@@ -130,9 +130,9 @@ namespace GreenField.Gadgets.Views
             
         }
 
-        private void GenerateDataRow(Table table, InvestmentContextDetailsData icdData,string issuerId, string context)
+        private void GenerateDataRow(Table table, List<InvestmentContextDetailsData> icdData,string issuerId, string context)
         {
-            List<InvestmentContextDetailsData> sortedData = icdData.children.OrderBy(x => x.MarketCap).Reverse().ToList();
+            List<InvestmentContextDetailsData> sortedData = icdData[0].children.OrderBy(x => x.MarketCap).Reverse().ToList();
             Telerik.Windows.Documents.Model.Border leftcellBorder = new Telerik.Windows.Documents.Model.Border(BorderStyle.None);
             Telerik.Windows.Documents.Model.Border topcellBorder = new Telerik.Windows.Documents.Model.Border(BorderStyle.None);
             Telerik.Windows.Documents.Model.Border bottomcellBorder = new Telerik.Windows.Documents.Model.Border(BorderStyle.None);
@@ -178,7 +178,7 @@ namespace GreenField.Gadgets.Views
                         decimal val = Math.Round((decimal)icd.MarketValue,1);
                         //decimal val = (decimal)icd.mktVal;
                         string output = string.Empty;
-                        output = val.ToString("C0", usa.NumberFormat);
+                        output = val.ToString("C1", usa.NumberFormat);
                         if (context == "Country")
                         {
                             AddCellValue(cell, output);
@@ -568,190 +568,193 @@ namespace GreenField.Gadgets.Views
         }
 
 
-        private void GenerateTotalLine(Table table,InvestmentContextDetailsData icd)
+        private void GenerateTotalLine(Table table,List<InvestmentContextDetailsData> icd)
         {
             Telerik.Windows.Documents.Model.Border leftcellBorder = new Telerik.Windows.Documents.Model.Border(BorderStyle.None);
             Telerik.Windows.Documents.Model.Border topcellBorder = new Telerik.Windows.Documents.Model.Border(BorderStyle.None);
             Telerik.Windows.Documents.Model.Border bottomcellBorder = new Telerik.Windows.Documents.Model.Border(BorderStyle.None);
             Telerik.Windows.Documents.Model.Border rightcellBorder = new Telerik.Windows.Documents.Model.Border(BorderStyle.Single);
             //InvestmentContextDetailsData icd = dataContextSource.InvestmentContextDataInfo;
-            TableRow row = new TableRow();
-            ///icd = dataContextSource.InvestmentContextDataInfo[i];
-            TableCell cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Left;
-            //cell.Style = "nowrap";
-            //cell.Style[""] = "nowrap";
-            // cell.T
-            cell.ColumnSpan = 2;
-            cell.PreferredWidth = new TableWidthUnit(150);
-            AddCellValue(cell, icd.GicsSectorName);
-            row.Cells.Add(cell);
+            for (int i = 0; i < icd.Count(); i++)
+            {
+                TableRow row = new TableRow();
+                ///icd = dataContextSource.InvestmentContextDataInfo[i];
+                TableCell cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Left;
+                //cell.Style = "nowrap";
+                //cell.Style[""] = "nowrap";
+                // cell.T
+                cell.ColumnSpan = 2;
+                cell.PreferredWidth = new TableWidthUnit(150);
+                AddCellValue(cell, icd[i].GicsSectorName);
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            if (icd.MarketValue != null)
-            {
-                CultureInfo usa = new CultureInfo("en-US");
-                //usa.NumberFormat.CurrencyDecimalDigits = 0;
-                decimal val = Math.Round((decimal)icd.MarketValue,1);
-                //decimal val = (decimal)icd.mktVal;
-                string output = string.Empty;
-                output = val.ToString("C0", usa.NumberFormat);
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                if (icd[i].MarketValue != null)
+                {
+                    CultureInfo usa = new CultureInfo("en-US");
+                    //usa.NumberFormat.CurrencyDecimalDigits = 0;
+                    decimal val = Math.Round((decimal)icd[i].MarketValue, 1);
+                    //decimal val = (decimal)icd.mktVal;
+                    string output = string.Empty;
+                    // output = val.ToString("C1", usa.NumberFormat);
 
-                AddCellValue(cell, output);
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.MarketValue);
-            }
-            row.Cells.Add(cell);
+                    AddCellValue(cell, output);
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].MarketValue);
+                }
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            cell.Borders = new TableCellBorders(leftcellBorder, topcellBorder, rightcellBorder, bottomcellBorder);
-            if (icd.MarketCap != null)
-            {
-                CultureInfo usa = new CultureInfo("en-US");
-                //usa.NumberFormat.NumberDecimalDigits = 0;
-                decimal val = Math.Round((decimal)icd.MarketCap);
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                cell.Borders = new TableCellBorders(leftcellBorder, topcellBorder, rightcellBorder, bottomcellBorder);
+                if (icd[i].MarketCap != null)
+                {
+                    CultureInfo usa = new CultureInfo("en-US");
+                    //usa.NumberFormat.NumberDecimalDigits = 0;
+                    decimal val = Math.Round((decimal)icd[i].MarketCap);
 
-                //decimal val = (decimal)icd.mktcap;
-                string output = string.Empty;
-                output = val.ToString("C0", usa.NumberFormat);
-                AddCellValue(cell, output);
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.MarketCap);
-            }
-            row.Cells.Add(cell);
+                    //decimal val = (decimal)icd.mktcap;
+                    string output = string.Empty;
+                    //output = val.ToString("C0", usa.NumberFormat);
+                    AddCellValue(cell, output);
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].MarketCap);
+                }
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            if (icd.ForwardPE != null)
-            {
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                if (icd[i].ForwardPE != null)
+                {
 
-                AddCellValue(cell, "" + Math.Round((decimal)icd.ForwardPE, 1));
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.ForwardPE);
-            }
-            row.Cells.Add(cell);
+                    AddCellValue(cell, "" + Math.Round((decimal)icd[i].ForwardPE, 1));
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].ForwardPE);
+                }
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            cell.Borders = new TableCellBorders(leftcellBorder, topcellBorder, rightcellBorder, bottomcellBorder);
-            if (icd.ForwardPBV != null)
-            {
-                AddCellValue(cell, "" + Math.Round((decimal)icd.ForwardPBV, 1));
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.ForwardPBV);
-            }
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                cell.Borders = new TableCellBorders(leftcellBorder, topcellBorder, rightcellBorder, bottomcellBorder);
+                if (icd[i].ForwardPBV != null)
+                {
+                    AddCellValue(cell, "" + Math.Round((decimal)icd[i].ForwardPBV, 1));
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].ForwardPBV);
+                }
 
-            row.Cells.Add(cell);
+                row.Cells.Add(cell);
 
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            if (icd.PECurrentYear != null)
-            {
-                AddCellValue(cell, "" + Math.Round((decimal)icd.PECurrentYear, 1));
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.PECurrentYear);
-            }
-            row.Cells.Add(cell);
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                if (icd[i].PECurrentYear != null)
+                {
+                    AddCellValue(cell, "" + Math.Round((decimal)icd[i].PECurrentYear, 1));
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].PECurrentYear);
+                }
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            if (icd.PENextYear != null)
-            {
-                AddCellValue(cell, "" + Math.Round((decimal)icd.PENextYear, 1));
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.PENextYear);
-            }
-            row.Cells.Add(cell);
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                if (icd[i].PENextYear != null)
+                {
+                    AddCellValue(cell, "" + Math.Round((decimal)icd[i].PENextYear, 1));
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].PENextYear);
+                }
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            if (icd.PBVCurrentYear != null)
-            {
-                AddCellValue(cell, "" + Math.Round((decimal)icd.PBVCurrentYear, 1));
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.PBVCurrentYear);
-            }
-            row.Cells.Add(cell);
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                if (icd[i].PBVCurrentYear != null)
+                {
+                    AddCellValue(cell, "" + Math.Round((decimal)icd[i].PBVCurrentYear, 1));
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].PBVCurrentYear);
+                }
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            cell.Borders = new TableCellBorders(leftcellBorder, topcellBorder, rightcellBorder, bottomcellBorder);
-            if (icd.PBVNextYear != null)
-            {
-                AddCellValue(cell, "" + Math.Round((decimal)icd.PBVNextYear, 1));
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.PBVNextYear);
-            }
-            row.Cells.Add(cell);
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                cell.Borders = new TableCellBorders(leftcellBorder, topcellBorder, rightcellBorder, bottomcellBorder);
+                if (icd[i].PBVNextYear != null)
+                {
+                    AddCellValue(cell, "" + Math.Round((decimal)icd[i].PBVNextYear, 1));
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].PBVNextYear);
+                }
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            if (icd.EB_EBITDA_CurrentYear != null)
-            {
-                AddCellValue(cell, "" + Math.Round((decimal)icd.EB_EBITDA_CurrentYear, 1));
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.EB_EBITDA_CurrentYear);
-            }
-            row.Cells.Add(cell);
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                if (icd[i].EB_EBITDA_CurrentYear != null)
+                {
+                    AddCellValue(cell, "" + Math.Round((decimal)icd[i].EB_EBITDA_CurrentYear, 1));
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].EB_EBITDA_CurrentYear);
+                }
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            cell.Borders = new TableCellBorders(leftcellBorder, topcellBorder, rightcellBorder, bottomcellBorder);
-            if (icd.EB_EBITDA_NextYear != null)
-            {
-                AddCellValue(cell, "" + Math.Round((decimal)icd.EB_EBITDA_NextYear, 1));
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.EB_EBITDA_NextYear);
-            }
-            row.Cells.Add(cell);
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                cell.Borders = new TableCellBorders(leftcellBorder, topcellBorder, rightcellBorder, bottomcellBorder);
+                if (icd[i].EB_EBITDA_NextYear != null)
+                {
+                    AddCellValue(cell, "" + Math.Round((decimal)icd[i].EB_EBITDA_NextYear, 1));
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].EB_EBITDA_NextYear);
+                }
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            if (icd.DividendYield != null)
-            {
-                AddCellValue(cell, "" + Math.Round((decimal)icd.DividendYield * 100, 1));
-            }
-            else
-            {
-                AddCellValue(cell, "" + icd.DividendYield);
-            }
-            row.Cells.Add(cell);
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                if (icd[i].DividendYield != null)
+                {
+                    AddCellValue(cell, "" + Math.Round((decimal)icd[i].DividendYield * 100, 1));
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].DividendYield);
+                }
+                row.Cells.Add(cell);
 
-            cell = new TableCell();
-            cell.TextAlignment = RadTextAlignment.Right;
-            if (icd.ROE != null)
-            {
-                AddCellValue(cell, "" + Math.Round((decimal)icd.ROE * 100, 1));
+                cell = new TableCell();
+                cell.TextAlignment = RadTextAlignment.Right;
+                if (icd[i].ROE != null)
+                {
+                    AddCellValue(cell, "" + Math.Round((decimal)icd[i].ROE * 100, 1));
+                }
+                else
+                {
+                    AddCellValue(cell, "" + icd[i].ROE);
+                }
+                row.Cells.Add(cell);
+                table.AddRow(row);
             }
-            else
-            {
-                AddCellValue(cell, "" + icd.ROE);
-            }
-            row.Cells.Add(cell);
-            table.AddRow(row);
         }
 
 
@@ -796,7 +799,7 @@ namespace GreenField.Gadgets.Views
                     decimal val = Math.Round((decimal)child.MarketValue,1);
                     //decimal val = (decimal)icd.mktVal;
                     string output = string.Empty;
-                    output = val.ToString("C0", usa.NumberFormat);
+                    output = val.ToString("C1", usa.NumberFormat);
                     if (child.IssuerId == issuerId)
                     {
                         AddCellValue(cell, output);
@@ -1108,7 +1111,7 @@ namespace GreenField.Gadgets.Views
                 {
                     headercell.TextAlignment = RadTextAlignment.Left;
                     headercell.VerticalAlignment = RadVerticalAlignment.Center;
-                    headercell.PreferredWidth = new TableWidthUnit(177);
+                    headercell.PreferredWidth = new TableWidthUnit(160);
                     headercell.ColumnSpan = 2;
                 }
                 else
@@ -1273,6 +1276,15 @@ namespace GreenField.Gadgets.Views
                 span.FontWeight = FontWeights.Bold;
                 paragraph.Inlines.Add(span);
             }
+            else
+            {
+                span.Text = " ";
+                span.FontFamily = new System.Windows.Media.FontFamily("Arial");
+                span.FontSize = fontSizePDF;
+                span.FontWeight = FontWeights.Bold;
+                paragraph.Inlines.Add(span);
+            }
+           
             cell.Blocks.Add(paragraph);
         }
 
@@ -1286,11 +1298,19 @@ namespace GreenField.Gadgets.Views
                 span.Text = value;
                 span.FontFamily = new System.Windows.Media.FontFamily("Arial");
                 span.FontSize = fontSizePDF;
-                
+
+                paragraph.Inlines.Add(span);
+            }
+            else
+            {
+                 span.Text = " ";
+                span.FontFamily = new System.Windows.Media.FontFamily("Arial");
+                span.FontSize = fontSizePDF;
+
                 paragraph.Inlines.Add(span);
             }
             cell.Blocks.Add(paragraph);
-        }
+        } 
 
 
 

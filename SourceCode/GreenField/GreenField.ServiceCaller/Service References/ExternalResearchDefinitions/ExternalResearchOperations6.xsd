@@ -46,6 +46,7 @@
       <xs:element minOccurs="0" name="ISO_COUNTRY_CODE" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ISSUER_ID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ISSUER_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ISSUER_PROXY" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ISSUE_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LAST_CLOSE_DATE" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="LAST_CLOSE_FX_QUO_CURR_TO_USD" nillable="true" type="xs:decimal" />
@@ -66,6 +67,7 @@
       <xs:element minOccurs="0" name="TICKER" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TOT_CURR_SHRS_OUTST_ALL_CLASS" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="TRADING_CURRENCY" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UPDATE_BB_STATUS" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="WACC_COST_DEBT" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="WACC_COST_EQUITY" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="WACC_COST_PFD" nillable="true" type="xs:string" />

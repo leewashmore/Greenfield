@@ -2728,9 +2728,9 @@ namespace GreenField.Web.Services
         /// <param name="context"> Retrieve the data group by country, industry or both</param>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<InvestmentContextDetailsData> RetrieveInvestmentContextData(String issuerId, String context)
+        public List<List<InvestmentContextDetailsData>> RetrieveInvestmentContextData(String issuerId, String context)
         {
-            List<InvestmentContextDetailsData> icdData = new List<InvestmentContextDetailsData>(); ;
+            List<List<InvestmentContextDetailsData>> icdData = new List<List<InvestmentContextDetailsData>>(); ;
             if (context == "Country")
             {
                 icdData.Add(getInvestmentContextByCountry(issuerId, context));
@@ -2748,10 +2748,11 @@ namespace GreenField.Web.Services
         }
 
 
-        private InvestmentContextDetailsData getInvestmentContextByCountry(String issuerId,String context)
+        private List<InvestmentContextDetailsData> getInvestmentContextByCountry(String issuerId,String context)
         {
             ExternalResearchEntities entity = new ExternalResearchEntities();
             //call the stored procedure and get the investment context data for the given issuer and the context "country"
+            entity.CommandTimeout = 600;
             List<InvestmentContextData> getInvestmentContextResult = entity.getInvestmentContext(issuerId, context).ToList();
 
             var DistinctDataId = getInvestmentContextResult.Select(a => a.DataId).Distinct().ToList();
@@ -2789,11 +2790,11 @@ namespace GreenField.Web.Services
             // get the list of issuer ids that you want to display
             List<string> issuerList = getListOfIssuersToDisplay(icdList, issuerId);
             // get the report sum/average line
-            InvestmentContextDetailsData finalICD = getTotalLine(icdList, context);
+            List<InvestmentContextDetailsData> finalICD = getTotalLine(icdList, context);
             // get the sum/average for each sector
-            InvestmentContextDetailsData icdGroupedResult = GroupBySector(finalICD);
+            List<InvestmentContextDetailsData> icdGroupedResult = GroupBySector(finalICD);
             // remove the issuers which are not part of the top 100 issuer list based on the market cap.
-            List<InvestmentContextDetailsData> icdSectorChildren = icdGroupedResult.children;
+            List<InvestmentContextDetailsData> icdSectorChildren = icdGroupedResult[0].children;
             foreach (var icd in icdSectorChildren)
             {
                 List<InvestmentContextDetailsData> icdDetailsData = icd.children;
@@ -2805,10 +2806,11 @@ namespace GreenField.Web.Services
         }
 
 
-        private InvestmentContextDetailsData getInvestmentContextByIndustry(String issuerId,String context)
+        private List<InvestmentContextDetailsData> getInvestmentContextByIndustry(String issuerId,String context)
         {
             ExternalResearchEntities entity = new ExternalResearchEntities();
             //call the stored procedure and get the investment context data for the given issuer and the context "country"
+            entity.CommandTimeout = 600;
             List<InvestmentContextData> getInvestmentContextResult = entity.getInvestmentContext(issuerId, context).ToList();
 
             var DistinctDataId = getInvestmentContextResult.Select(a => a.DataId).Distinct().ToList();
@@ -2843,9 +2845,9 @@ namespace GreenField.Web.Services
             // get the list of issuer ids that you want to display
             List<string> issuerList = getListOfIssuersToDisplay(icdList,issuerId);
             // get the report sum/average line
-            InvestmentContextDetailsData finalICD = getTotalLine(icdList,context);
+            List<InvestmentContextDetailsData> finalICD = getTotalLine(icdList,context);
             // remove the issuers which are not part of the top 100 issuer list based on the market cap.
-            List<InvestmentContextDetailsData> icdChildren = finalICD.children;
+            List<InvestmentContextDetailsData> icdChildren = finalICD[0].children;
             icdChildren.RemoveAll(x => !issuerList.Contains(x.IssuerId));
             return finalICD;
 
@@ -2958,11 +2960,11 @@ namespace GreenField.Web.Services
         }
 
 
-        private InvestmentContextDetailsData getTotalLine(List<InvestmentContextDetailsData> icdList,String context)
+        private List<InvestmentContextDetailsData> getTotalLine(List<InvestmentContextDetailsData> icdList,String context)
         {
             //take sum/average for the total line
-            
-            InvestmentContextDetailsData icd = new InvestmentContextDetailsData()
+            List<InvestmentContextDetailsData> allTotalLine = new List<InvestmentContextDetailsData>();
+            InvestmentContextDetailsData averageLine = new InvestmentContextDetailsData()
             {
                 GicsSectorCode = null,
                 GicsSectorName =context+" Average",
@@ -2980,14 +2982,54 @@ namespace GreenField.Web.Services
                 ROE = GroupCalculations.SimpleAverage(icdList.Select(x => x.ROEScrubbed).ToList()),
                 children = icdList
             };
-            return icd;
+            allTotalLine.Add(averageLine);
+            InvestmentContextDetailsData icdMedianLine = new InvestmentContextDetailsData()
+            {
+                GicsSectorCode = null,
+                GicsSectorName = context + " Median",
+                MarketValue = null,
+                MarketCap = null,
+                ForwardPE = GroupCalculations.Median(icdList.Where(x => x.ForwardPEScrubbed.HasValue).Select(x => x.ForwardPEScrubbed).ToList()),
+                ForwardPBV = GroupCalculations.Median(icdList.Where(x => x.ForwardPBVScrubbed.HasValue).Select(x => x.ForwardPBVScrubbed).ToList()),
+                PECurrentYear = GroupCalculations.Median(icdList.Where(x => x.PECurrentYearScrubbed.HasValue).Select(x => x.PECurrentYearScrubbed).ToList()),
+                PENextYear = GroupCalculations.Median(icdList.Where(x => x.PENextYearScrubbed.HasValue).Select(x => x.PENextYearScrubbed).ToList()),
+                PBVCurrentYear = GroupCalculations.Median(icdList.Where(x => x.PBVCurrentYearScrubbed.HasValue).Select(x => x.PBVCurrentYearScrubbed).ToList()),
+                PBVNextYear = GroupCalculations.Median(icdList.Where(x => x.PBVNextYearScrubbed.HasValue).Select(x => x.PBVNextYearScrubbed).ToList()),
+                EB_EBITDA_CurrentYear = GroupCalculations.Median(icdList.Where(x=>x.EB_EBITDA_CurrentYearScrubbed.HasValue).Select(x => x.EB_EBITDA_CurrentYearScrubbed).ToList()),
+                EB_EBITDA_NextYear = GroupCalculations.Median(icdList.Where(x => x.EB_EBITDA_NextYearScrubbed.HasValue).Select(x => x.EB_EBITDA_NextYearScrubbed).ToList()),
+                DividendYield = GroupCalculations.Median(icdList.Where(x => x.DividendYieldScrubbed.HasValue).Select(x => x.DividendYieldScrubbed).ToList()),
+                ROE = GroupCalculations.Median(icdList.Where(x => x.ROEScrubbed.HasValue).Select(x => x.ROEScrubbed).ToList()),
+                children = null
+            };
+             allTotalLine.Add(icdMedianLine);
+
+             InvestmentContextDetailsData icdWeightedAverageLine = new InvestmentContextDetailsData()
+             {
+                 GicsSectorCode = null,
+                 GicsSectorName = context + " Weighted Average",
+                 MarketValue = null,
+                 MarketCap = null,
+                 ForwardPE = GroupCalculations.WeightedAverage(icdList.Where(x => x.ForwardPEScrubbed.HasValue).Select(x => x.MarketCap).ToList(), icdList.Where(x => x.ForwardPEScrubbed.HasValue).Select(x => x.ForwardPEScrubbed).ToList(), icdList.Where(x => x.ForwardPEScrubbed.HasValue).Sum(x => x.MarketCap)),
+                 ForwardPBV = GroupCalculations.WeightedAverage(icdList.Where(x => x.ForwardPBVScrubbed.HasValue).Select(x => x.MarketCap).ToList(), icdList.Where(x => x.ForwardPBVScrubbed.HasValue).Select(x => x.ForwardPBVScrubbed).ToList(), icdList.Where(x => x.ForwardPBVScrubbed.HasValue).Sum(x => x.MarketCap)),
+                 PECurrentYear = GroupCalculations.WeightedAverage(icdList.Where(x => x.PECurrentYearScrubbed.HasValue).Select(x => x.MarketCap).ToList(), icdList.Where(x => x.PECurrentYearScrubbed.HasValue).Select(x => x.PECurrentYearScrubbed).ToList(), icdList.Where(x => x.PECurrentYearScrubbed.HasValue).Sum(x => x.MarketCap)),
+                 PENextYear = GroupCalculations.WeightedAverage(icdList.Where(x => x.PENextYearScrubbed.HasValue).Select(x => x.MarketCap).ToList(), icdList.Where(x => x.PENextYearScrubbed.HasValue).Select(x => x.PENextYearScrubbed).ToList(), icdList.Where(x => x.PENextYearScrubbed.HasValue).Sum(x => x.MarketCap)),
+                 PBVCurrentYear = GroupCalculations.WeightedAverage(icdList.Where(x => x.PBVCurrentYearScrubbed.HasValue).Select(x => x.MarketCap).ToList(), icdList.Where(x => x.PBVCurrentYearScrubbed.HasValue).Select(x => x.PBVCurrentYearScrubbed).ToList(), icdList.Where(x => x.PBVCurrentYearScrubbed.HasValue).Sum(x => x.MarketCap)),
+                 PBVNextYear = GroupCalculations.WeightedAverage(icdList.Where(x => x.PBVNextYearScrubbed.HasValue).Select(x => x.MarketCap).ToList(), icdList.Where(x => x.PBVNextYearScrubbed.HasValue).Select(x => x.PBVNextYearScrubbed).ToList(), icdList.Where(x => x.PBVNextYearScrubbed.HasValue).Sum(x => x.MarketCap)),
+                 EB_EBITDA_CurrentYear = GroupCalculations.WeightedAverage(icdList.Where(x => x.EB_EBITDA_CurrentYearScrubbed.HasValue).Select(x => x.MarketCap).ToList(), icdList.Where(x => x.EB_EBITDA_CurrentYearScrubbed.HasValue).Select(x => x.EB_EBITDA_CurrentYearScrubbed).ToList(), icdList.Where(x => x.EB_EBITDA_CurrentYearScrubbed.HasValue).Sum(x => x.MarketCap)),
+                 EB_EBITDA_NextYear = GroupCalculations.WeightedAverage(icdList.Where(x => x.EB_EBITDA_NextYearScrubbed.HasValue).Select(x => x.MarketCap).ToList(), icdList.Where(x => x.EB_EBITDA_NextYearScrubbed.HasValue).Select(x => x.EB_EBITDA_NextYearScrubbed).ToList(), icdList.Where(x => x.EB_EBITDA_NextYearScrubbed.HasValue).Sum(x => x.MarketCap)),
+                 DividendYield = GroupCalculations.WeightedAverage(icdList.Where(x => x.DividendYieldScrubbed.HasValue).Select(x => x.MarketCap).ToList(), icdList.Where(x => x.DividendYieldScrubbed.HasValue).Select(x => x.DividendYieldScrubbed).ToList(), icdList.Where(x => x.DividendYieldScrubbed.HasValue).Sum(x => x.MarketCap)),
+                 ROE = GroupCalculations.WeightedAverage(icdList.Where(x => x.ROEScrubbed.HasValue && x.MarketCap.HasValue).Select(x => x.MarketCap).ToList(), icdList.Where(x => x.ROEScrubbed.HasValue && x.MarketCap.HasValue).Select(x => x.ROEScrubbed).ToList(), icdList.Where(x => x.ROEScrubbed.HasValue).Sum(x => x.MarketCap)),
+                 children = null
+             };
+             allTotalLine.Add(icdWeightedAverageLine);
+            return allTotalLine;
         }
 
 
-        private InvestmentContextDetailsData GroupBySector(InvestmentContextDetailsData finalICD)
+        private List<InvestmentContextDetailsData> GroupBySector(List<InvestmentContextDetailsData> finalICD)
         { //take the sum/average for the group headers
             var result = new List<InvestmentContextDetailsData>();
-            var query = from d in finalICD.children
+            var query = from d in finalICD[0].children
                         group d by d.GicsSectorCode into grp
                         select grp;
             var groups = query.ToList();
@@ -3017,7 +3059,7 @@ namespace GreenField.Web.Services
                     result.Add(icd);
                 }
             }
-            finalICD.children = result;
+            finalICD[0].children = result;
             return finalICD;
 
         }

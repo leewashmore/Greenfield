@@ -88,6 +88,27 @@ namespace GreenField.Web.Helpers
             return medianValue;
         }
 
+        public static decimal? WeightedAverage(List<decimal?> numerator, List<decimal?> product, decimal? totalValue)
+        {
+            decimal? weightAve ; 
+
+            if (totalValue != null)
+            {
+                weightAve = 0;
+                for (int i = 0; i < numerator.Count; i++)
+                {
+                    weightAve = weightAve + (numerator[i] / totalValue) * product[i];
+                }
+
+            }
+            else
+            {
+                weightAve = null;
+            }
+
+
+            return weightAve;
+        }
     
     }
 }
