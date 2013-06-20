@@ -28,3 +28,4 @@ select mdcc.CURR_DATE,
   join dbo.GF_SECURITY_BASEVIEW gsb on mdcc.SECURITY_ID = gsb.SECURITY_ID
   where mdcc.PRIOR_CAP <>0 and mdcc.CURR_CAP <> 0
   and (mdcc.CURR_CAP/mdcc.PRIOR_CAP > 1.1 or mdcc.CURR_CAP/mdcc.PRIOR_CAP < .9) 
+  order by CHANGE_PCT desc
