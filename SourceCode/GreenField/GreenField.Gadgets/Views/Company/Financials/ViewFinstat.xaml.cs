@@ -236,6 +236,7 @@ namespace GreenField.Gadgets.Views
                 {
                     VerticalAlignment = RadVerticalAlignment.Center
                 };
+            inputSection1Part1Cell.PreferredWidth = new TableWidthUnit(300);
             Paragraph inputSection1Part1Paragraph = new Paragraph() { TextAlignment = RadTextAlignment.Left };
             #region Country
             Span inputSection1Part1Item1Span = new Span()

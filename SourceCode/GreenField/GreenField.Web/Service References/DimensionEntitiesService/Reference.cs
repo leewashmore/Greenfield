@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 4/17/2013 5:18:41 PM
+// Generation date: 6/19/2013 4:46:57 PM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -314,23 +314,6 @@ namespace GreenField.Web.DimensionEntitiesService
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<GF_PORTFOLIO_SELECTION> _GF_PORTFOLIO_SELECTION;
         /// <summary>
-        /// There are no comments for GF_PRICING_BASEVIEW in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Data.Services.Client.DataServiceQuery<GF_PRICING_BASEVIEW> GF_PRICING_BASEVIEW
-        {
-            get
-            {
-                if ((this._GF_PRICING_BASEVIEW == null))
-                {
-                    this._GF_PRICING_BASEVIEW = base.CreateQuery<GF_PRICING_BASEVIEW>("GF_PRICING_BASEVIEW");
-                }
-                return this._GF_PRICING_BASEVIEW;
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Data.Services.Client.DataServiceQuery<GF_PRICING_BASEVIEW> _GF_PRICING_BASEVIEW;
-        /// <summary>
         /// There are no comments for GF_PROGRESS in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -398,6 +381,23 @@ namespace GreenField.Web.DimensionEntitiesService
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<GF_TRANSACTIONS> _GF_TRANSACTIONS;
+        /// <summary>
+        /// There are no comments for GF_PRICING_BASEVIEW in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_PRICING_BASEVIEW> GF_PRICING_BASEVIEW
+        {
+            get
+            {
+                if ((this._GF_PRICING_BASEVIEW == null))
+                {
+                    this._GF_PRICING_BASEVIEW = base.CreateQuery<GF_PRICING_BASEVIEW>("GF_PRICING_BASEVIEW");
+                }
+                return this._GF_PRICING_BASEVIEW;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_PRICING_BASEVIEW> _GF_PRICING_BASEVIEW;
         /// <summary>
         /// There are no comments for GF_BENCHMARK_HOLDINGS in the schema.
         /// </summary>
@@ -519,14 +519,6 @@ namespace GreenField.Web.DimensionEntitiesService
             base.AddObject("GF_PORTFOLIO_SELECTION", gF_PORTFOLIO_SELECTION);
         }
         /// <summary>
-        /// There are no comments for GF_PRICING_BASEVIEW in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public void AddToGF_PRICING_BASEVIEW(GF_PRICING_BASEVIEW gF_PRICING_BASEVIEW)
-        {
-            base.AddObject("GF_PRICING_BASEVIEW", gF_PRICING_BASEVIEW);
-        }
-        /// <summary>
         /// There are no comments for GF_PROGRESS in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -557,6 +549,14 @@ namespace GreenField.Web.DimensionEntitiesService
         public void AddToGF_TRANSACTIONS(GF_TRANSACTIONS gF_TRANSACTIONS)
         {
             base.AddObject("GF_TRANSACTIONS", gF_TRANSACTIONS);
+        }
+        /// <summary>
+        /// There are no comments for GF_PRICING_BASEVIEW in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_PRICING_BASEVIEW(GF_PRICING_BASEVIEW gF_PRICING_BASEVIEW)
+        {
+            base.AddObject("GF_PRICING_BASEVIEW", gF_PRICING_BASEVIEW);
         }
     }
     /// <summary>
@@ -13683,6 +13683,27 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_PBETEWLD;
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanging(global::System.Nullable<decimal> value);
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanged();
+        /// <summary>
+        /// There are no comments for Property PFCH_POR_CALC_SHORT in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PFCH_POR_CALC_SHORT
+        {
+            get
+            {
+                return this._PFCH_POR_CALC_SHORT;
+            }
+            set
+            {
+                this.OnPFCH_POR_CALC_SHORTChanging(value);
+                this._PFCH_POR_CALC_SHORT = value;
+                this.OnPFCH_POR_CALC_SHORTChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PFCH_POR_CALC_SHORT;
+        partial void OnPFCH_POR_CALC_SHORTChanging(string value);
+        partial void OnPFCH_POR_CALC_SHORTChanged();
     }
     /// <summary>
     /// There are no comments for Model.GF_PORTFOLIO_LTHOLDINGS in the schema.
@@ -14586,6 +14607,27 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_PBETEWLD;
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanging(global::System.Nullable<decimal> value);
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanged();
+        /// <summary>
+        /// There are no comments for Property PFCH_POR_CALC_SHORT in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PFCH_POR_CALC_SHORT
+        {
+            get
+            {
+                return this._PFCH_POR_CALC_SHORT;
+            }
+            set
+            {
+                this.OnPFCH_POR_CALC_SHORTChanging(value);
+                this._PFCH_POR_CALC_SHORT = value;
+                this.OnPFCH_POR_CALC_SHORTChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PFCH_POR_CALC_SHORT;
+        partial void OnPFCH_POR_CALC_SHORTChanging(string value);
+        partial void OnPFCH_POR_CALC_SHORTChanged();
     }
     /// <summary>
     /// There are no comments for Model.GF_PORTFOLIO_SELECTION in the schema.
@@ -14691,261 +14733,6 @@ namespace GreenField.Web.DimensionEntitiesService
         private string _PORTFOLIO_THEME_SUBGROUP_NAME;
         partial void OnPORTFOLIO_THEME_SUBGROUP_NAMEChanging(string value);
         partial void OnPORTFOLIO_THEME_SUBGROUP_NAMEChanged();
-    }
-    /// <summary>
-    /// There are no comments for Model.GF_PRICING_BASEVIEW in the schema.
-    /// </summary>
-    /// <KeyProperties>
-    /// GF_ID
-    /// TYPE
-    /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID", "TYPE")]
-    public partial class GF_PRICING_BASEVIEW
-    {
-        /// <summary>
-        /// Create a new GF_PRICING_BASEVIEW object.
-        /// </summary>
-        /// <param name="gF_ID">Initial value of GF_ID.</param>
-        /// <param name="tYPE">Initial value of TYPE.</param>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PRICING_BASEVIEW CreateGF_PRICING_BASEVIEW(decimal gF_ID, string tYPE)
-        {
-            GF_PRICING_BASEVIEW gF_PRICING_BASEVIEW = new GF_PRICING_BASEVIEW();
-            gF_PRICING_BASEVIEW.GF_ID = gF_ID;
-            gF_PRICING_BASEVIEW.TYPE = tYPE;
-            return gF_PRICING_BASEVIEW;
-        }
-        /// <summary>
-        /// There are no comments for Property GF_ID in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public decimal GF_ID
-        {
-            get
-            {
-                return this._GF_ID;
-            }
-            set
-            {
-                this.OnGF_IDChanging(value);
-                this._GF_ID = value;
-                this.OnGF_IDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private decimal _GF_ID;
-        partial void OnGF_IDChanging(decimal value);
-        partial void OnGF_IDChanged();
-        /// <summary>
-        /// There are no comments for Property INSTRUMENT_ID in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string INSTRUMENT_ID
-        {
-            get
-            {
-                return this._INSTRUMENT_ID;
-            }
-            set
-            {
-                this.OnINSTRUMENT_IDChanging(value);
-                this._INSTRUMENT_ID = value;
-                this.OnINSTRUMENT_IDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _INSTRUMENT_ID;
-        partial void OnINSTRUMENT_IDChanging(string value);
-        partial void OnINSTRUMENT_IDChanged();
-        /// <summary>
-        /// There are no comments for Property TYPE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string TYPE
-        {
-            get
-            {
-                return this._TYPE;
-            }
-            set
-            {
-                this.OnTYPEChanging(value);
-                this._TYPE = value;
-                this.OnTYPEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _TYPE;
-        partial void OnTYPEChanging(string value);
-        partial void OnTYPEChanged();
-        /// <summary>
-        /// There are no comments for Property TICKER in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string TICKER
-        {
-            get
-            {
-                return this._TICKER;
-            }
-            set
-            {
-                this.OnTICKERChanging(value);
-                this._TICKER = value;
-                this.OnTICKERChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _TICKER;
-        partial void OnTICKERChanging(string value);
-        partial void OnTICKERChanged();
-        /// <summary>
-        /// There are no comments for Property ISSUE_NAME in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string ISSUE_NAME
-        {
-            get
-            {
-                return this._ISSUE_NAME;
-            }
-            set
-            {
-                this.OnISSUE_NAMEChanging(value);
-                this._ISSUE_NAME = value;
-                this.OnISSUE_NAMEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _ISSUE_NAME;
-        partial void OnISSUE_NAMEChanging(string value);
-        partial void OnISSUE_NAMEChanged();
-        /// <summary>
-        /// There are no comments for Property FROMDATE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<global::System.DateTime> FROMDATE
-        {
-            get
-            {
-                return this._FROMDATE;
-            }
-            set
-            {
-                this.OnFROMDATEChanging(value);
-                this._FROMDATE = value;
-                this.OnFROMDATEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<global::System.DateTime> _FROMDATE;
-        partial void OnFROMDATEChanging(global::System.Nullable<global::System.DateTime> value);
-        partial void OnFROMDATEChanged();
-        /// <summary>
-        /// There are no comments for Property DAILY_CLOSING_PRICE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> DAILY_CLOSING_PRICE
-        {
-            get
-            {
-                return this._DAILY_CLOSING_PRICE;
-            }
-            set
-            {
-                this.OnDAILY_CLOSING_PRICEChanging(value);
-                this._DAILY_CLOSING_PRICE = value;
-                this.OnDAILY_CLOSING_PRICEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _DAILY_CLOSING_PRICE;
-        partial void OnDAILY_CLOSING_PRICEChanging(global::System.Nullable<decimal> value);
-        partial void OnDAILY_CLOSING_PRICEChanged();
-        /// <summary>
-        /// There are no comments for Property DAILY_PRICE_RETURN in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> DAILY_PRICE_RETURN
-        {
-            get
-            {
-                return this._DAILY_PRICE_RETURN;
-            }
-            set
-            {
-                this.OnDAILY_PRICE_RETURNChanging(value);
-                this._DAILY_PRICE_RETURN = value;
-                this.OnDAILY_PRICE_RETURNChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _DAILY_PRICE_RETURN;
-        partial void OnDAILY_PRICE_RETURNChanging(global::System.Nullable<decimal> value);
-        partial void OnDAILY_PRICE_RETURNChanged();
-        /// <summary>
-        /// There are no comments for Property DAILY_GROSS_RETURN in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> DAILY_GROSS_RETURN
-        {
-            get
-            {
-                return this._DAILY_GROSS_RETURN;
-            }
-            set
-            {
-                this.OnDAILY_GROSS_RETURNChanging(value);
-                this._DAILY_GROSS_RETURN = value;
-                this.OnDAILY_GROSS_RETURNChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _DAILY_GROSS_RETURN;
-        partial void OnDAILY_GROSS_RETURNChanging(global::System.Nullable<decimal> value);
-        partial void OnDAILY_GROSS_RETURNChanged();
-        /// <summary>
-        /// There are no comments for Property VOLUME in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> VOLUME
-        {
-            get
-            {
-                return this._VOLUME;
-            }
-            set
-            {
-                this.OnVOLUMEChanging(value);
-                this._VOLUME = value;
-                this.OnVOLUMEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _VOLUME;
-        partial void OnVOLUMEChanging(global::System.Nullable<decimal> value);
-        partial void OnVOLUMEChanged();
-        /// <summary>
-        /// There are no comments for Property DAILY_SPOT_FX in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> DAILY_SPOT_FX
-        {
-            get
-            {
-                return this._DAILY_SPOT_FX;
-            }
-            set
-            {
-                this.OnDAILY_SPOT_FXChanging(value);
-                this._DAILY_SPOT_FX = value;
-                this.OnDAILY_SPOT_FXChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _DAILY_SPOT_FX;
-        partial void OnDAILY_SPOT_FXChanging(global::System.Nullable<decimal> value);
-        partial void OnDAILY_SPOT_FXChanged();
     }
     /// <summary>
     /// There are no comments for Model.GF_PROGRESS in the schema.
@@ -17216,5 +17003,278 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _VALUE_SC;
         partial void OnVALUE_SCChanging(global::System.Nullable<decimal> value);
         partial void OnVALUE_SCChanged();
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_PRICING_BASEVIEW in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// GF_ID
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
+    public partial class GF_PRICING_BASEVIEW
+    {
+        /// <summary>
+        /// Create a new GF_PRICING_BASEVIEW object.
+        /// </summary>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_PRICING_BASEVIEW CreateGF_PRICING_BASEVIEW(decimal gF_ID)
+        {
+            GF_PRICING_BASEVIEW gF_PRICING_BASEVIEW = new GF_PRICING_BASEVIEW();
+            gF_PRICING_BASEVIEW.GF_ID = gF_ID;
+            return gF_PRICING_BASEVIEW;
+        }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
+        /// <summary>
+        /// There are no comments for Property INSTRUMENT_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string INSTRUMENT_ID
+        {
+            get
+            {
+                return this._INSTRUMENT_ID;
+            }
+            set
+            {
+                this.OnINSTRUMENT_IDChanging(value);
+                this._INSTRUMENT_ID = value;
+                this.OnINSTRUMENT_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _INSTRUMENT_ID;
+        partial void OnINSTRUMENT_IDChanging(string value);
+        partial void OnINSTRUMENT_IDChanged();
+        /// <summary>
+        /// There are no comments for Property TYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string TYPE
+        {
+            get
+            {
+                return this._TYPE;
+            }
+            set
+            {
+                this.OnTYPEChanging(value);
+                this._TYPE = value;
+                this.OnTYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _TYPE;
+        partial void OnTYPEChanging(string value);
+        partial void OnTYPEChanged();
+        /// <summary>
+        /// There are no comments for Property TICKER in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string TICKER
+        {
+            get
+            {
+                return this._TICKER;
+            }
+            set
+            {
+                this.OnTICKERChanging(value);
+                this._TICKER = value;
+                this.OnTICKERChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _TICKER;
+        partial void OnTICKERChanging(string value);
+        partial void OnTICKERChanged();
+        /// <summary>
+        /// There are no comments for Property ISSUE_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ISSUE_NAME
+        {
+            get
+            {
+                return this._ISSUE_NAME;
+            }
+            set
+            {
+                this.OnISSUE_NAMEChanging(value);
+                this._ISSUE_NAME = value;
+                this.OnISSUE_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ISSUE_NAME;
+        partial void OnISSUE_NAMEChanging(string value);
+        partial void OnISSUE_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property FROMDATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> FROMDATE
+        {
+            get
+            {
+                return this._FROMDATE;
+            }
+            set
+            {
+                this.OnFROMDATEChanging(value);
+                this._FROMDATE = value;
+                this.OnFROMDATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _FROMDATE;
+        partial void OnFROMDATEChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnFROMDATEChanged();
+        /// <summary>
+        /// There are no comments for Property PRICE_TYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PRICE_TYPE
+        {
+            get
+            {
+                return this._PRICE_TYPE;
+            }
+            set
+            {
+                this.OnPRICE_TYPEChanging(value);
+                this._PRICE_TYPE = value;
+                this.OnPRICE_TYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PRICE_TYPE;
+        partial void OnPRICE_TYPEChanging(string value);
+        partial void OnPRICE_TYPEChanged();
+        /// <summary>
+        /// There are no comments for Property DAILY_CLOSING_PRICE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> DAILY_CLOSING_PRICE
+        {
+            get
+            {
+                return this._DAILY_CLOSING_PRICE;
+            }
+            set
+            {
+                this.OnDAILY_CLOSING_PRICEChanging(value);
+                this._DAILY_CLOSING_PRICE = value;
+                this.OnDAILY_CLOSING_PRICEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _DAILY_CLOSING_PRICE;
+        partial void OnDAILY_CLOSING_PRICEChanging(global::System.Nullable<decimal> value);
+        partial void OnDAILY_CLOSING_PRICEChanged();
+        /// <summary>
+        /// There are no comments for Property DAILY_PRICE_RETURN in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> DAILY_PRICE_RETURN
+        {
+            get
+            {
+                return this._DAILY_PRICE_RETURN;
+            }
+            set
+            {
+                this.OnDAILY_PRICE_RETURNChanging(value);
+                this._DAILY_PRICE_RETURN = value;
+                this.OnDAILY_PRICE_RETURNChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _DAILY_PRICE_RETURN;
+        partial void OnDAILY_PRICE_RETURNChanging(global::System.Nullable<decimal> value);
+        partial void OnDAILY_PRICE_RETURNChanged();
+        /// <summary>
+        /// There are no comments for Property DAILY_GROSS_RETURN in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> DAILY_GROSS_RETURN
+        {
+            get
+            {
+                return this._DAILY_GROSS_RETURN;
+            }
+            set
+            {
+                this.OnDAILY_GROSS_RETURNChanging(value);
+                this._DAILY_GROSS_RETURN = value;
+                this.OnDAILY_GROSS_RETURNChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _DAILY_GROSS_RETURN;
+        partial void OnDAILY_GROSS_RETURNChanging(global::System.Nullable<decimal> value);
+        partial void OnDAILY_GROSS_RETURNChanged();
+        /// <summary>
+        /// There are no comments for Property VOLUME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> VOLUME
+        {
+            get
+            {
+                return this._VOLUME;
+            }
+            set
+            {
+                this.OnVOLUMEChanging(value);
+                this._VOLUME = value;
+                this.OnVOLUMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _VOLUME;
+        partial void OnVOLUMEChanging(global::System.Nullable<decimal> value);
+        partial void OnVOLUMEChanged();
+        /// <summary>
+        /// There are no comments for Property DAILY_SPOT_FX in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> DAILY_SPOT_FX
+        {
+            get
+            {
+                return this._DAILY_SPOT_FX;
+            }
+            set
+            {
+                this.OnDAILY_SPOT_FXChanging(value);
+                this._DAILY_SPOT_FX = value;
+                this.OnDAILY_SPOT_FXChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _DAILY_SPOT_FX;
+        partial void OnDAILY_SPOT_FXChanging(global::System.Nullable<decimal> value);
+        partial void OnDAILY_SPOT_FXChanged();
     }
 }
