@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER OFF
 GO
 
 
-ALTER procedure [dbo].[AIMS_Price_Refresh_Monitoring]
+CREATE procedure [dbo].[AIMS_Price_Refresh_Monitoring]
 as
 
 --First select all the minimum dates
