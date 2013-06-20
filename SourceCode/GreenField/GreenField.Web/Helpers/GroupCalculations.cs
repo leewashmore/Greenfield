@@ -77,6 +77,7 @@ namespace GreenField.Web.Helpers
                         double element = listSize / 2;
                         element = Math.Round(element, MidpointRounding.AwayFromZero);
                         medianValue = list.ElementAt((int)element);
+                        
                     }
                     else
                     {
