@@ -1,6 +1,6 @@
 ﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
   <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="1.0">
-    <Schema Namespace="Model" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+    <Schema Namespace="Model" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
       <EntityContainer Name="Entities" p7:LazyLoadingEnabled="true" m:IsDefaultEntityContainer="true" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntitySet Name="GF_BENCHMARK_HOLDINGS" EntityType="Model.GF_BENCHMARK_HOLDINGS" />
         <EntitySet Name="GF_CTY_CUR" EntityType="Model.GF_CTY_CUR" />
@@ -22,6 +22,8 @@
         <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="Model.GF_SECURITY_BASEVIEW" />
         <EntitySet Name="GF_SELECTION_BASEVIEW" EntityType="Model.GF_SELECTION_BASEVIEW" />
         <EntitySet Name="GF_TRANSACTIONS" EntityType="Model.GF_TRANSACTIONS" />
+        <EntitySet Name="GF_A_FXRATES_PIVOT" EntityType="Model.GF_A_FXRATES_PIVOT" />
+        <EntitySet Name="GF_PRICING_BASEVIEW_JUSTIN" EntityType="Model.GF_PRICING_BASEVIEW_JUSTIN" />
       </EntityContainer>
       <EntityType Name="GF_BENCHMARK_HOLDINGS">
         <Key>
@@ -699,6 +701,7 @@
         <Property Name="BARRA_RISK_FACTOR_LIQUIDITY" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="PFCH_POR_CALC_SHORT" Type="Edm.String" Nullable="true" MaxLength="25" Unicode="false" FixedLength="false" />
       </EntityType>
       <EntityType Name="GF_PORTFOLIO_LTHOLDINGS">
         <Key>
@@ -746,6 +749,7 @@
         <Property Name="BARRA_RISK_FACTOR_LIQUIDITY" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="PFCH_POR_CALC_SHORT" Type="Edm.String" Nullable="true" MaxLength="25" Unicode="false" FixedLength="false" />
       </EntityType>
       <EntityType Name="GF_PORTFOLIO_SELECTION">
         <Key>
@@ -896,6 +900,38 @@
         <Property Name="VALUE_PC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="VALUE_QC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="VALUE_SC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_A_FXRATES_PIVOT">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="CUR_CROSS_REF" Type="Edm.String" Nullable="true" MaxLength="40" Unicode="false" FixedLength="false" />
+        <Property Name="CUR_CROSS" Type="Edm.String" Nullable="false" MaxLength="7" Unicode="false" FixedLength="false" />
+        <Property Name="CURRENCY_REF" Type="Edm.Int16" Nullable="false" />
+        <Property Name="INVERTED" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="PRICE_DATE" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="MSCI_CLOSE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RT_CLOSE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="PRICE_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="FX_RATE_INTERNAL" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+      </EntityType>
+      <EntityType Name="GF_PRICING_BASEVIEW_JUSTIN">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="TYPE" Type="Edm.String" Nullable="true" MaxLength="9" Unicode="false" FixedLength="false" />
+        <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="FROMDATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PRICE_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="DAILY_CLOSING_PRICE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="DAILY_PRICE_RETURN" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="DAILY_GROSS_RETURN" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="VOLUME" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="DAILY_SPOT_FX" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
       </EntityType>
     </Schema>
   </edmx:DataServices>
