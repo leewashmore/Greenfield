@@ -76,18 +76,40 @@ namespace GreenField.Web.Helpers
                     {
                         double element = listSize / 2;
                         element = Math.Round(element, MidpointRounding.AwayFromZero);
-                        medianValue = list.ElementAt((int)element - 1);
+                        medianValue = list.ElementAt((int)element);
+                        
                     }
                     else
                     {
                         double element = listSize;
-                        medianValue = list.ElementAt((int)element - 1);
+                        medianValue = list.ElementAt(0);
                     }
                 }
             }
             return medianValue;
         }
 
+        public static decimal? WeightedAverage(List<decimal?> numerator, List<decimal?> product, decimal? totalValue)
+        {
+            decimal? weightAve ; 
+
+            if (totalValue != null)
+            {
+                weightAve = 0;
+                for (int i = 0; i < numerator.Count; i++)
+                {
+                    weightAve = weightAve + (numerator[i] / totalValue) * product[i];
+                }
+
+            }
+            else
+            {
+                weightAve = null;
+            }
+
+
+            return weightAve;
+        }
     
     }
 }

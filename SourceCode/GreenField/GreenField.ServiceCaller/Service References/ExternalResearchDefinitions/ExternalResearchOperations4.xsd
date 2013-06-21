@@ -311,7 +311,7 @@
   <xs:element name="RetrieveInvestmentContextDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveInvestmentContextDataResult" nillable="true" type="q40:ArrayOfInvestmentContextDetailsData" />
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveInvestmentContextDataResult" nillable="true" type="q40:ArrayOfArrayOfInvestmentContextDetailsData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

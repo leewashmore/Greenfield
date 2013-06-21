@@ -347,14 +347,14 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
 
 
-        private List<InvestmentContextDetailsData> investmentContextDataInfo;
-        public List<InvestmentContextDetailsData> InvestmentContextDataInfo
+        private List<List<InvestmentContextDetailsData>> investmentContextDataInfo;
+        public List<List<InvestmentContextDetailsData>> InvestmentContextDataInfo
         {
             get
             {
                 if (investmentContextDataInfo == null)
                 {
-                    investmentContextDataInfo = new List<InvestmentContextDetailsData>();
+                    investmentContextDataInfo = new List<List<InvestmentContextDetailsData>>();
                 }
                 return investmentContextDataInfo;
             }
@@ -388,7 +388,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
 
-        public void DownloadInvestmentContextCallbackMethod(List<InvestmentContextDetailsData> result)
+        public void DownloadInvestmentContextCallbackMethod(List<List<InvestmentContextDetailsData>> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
