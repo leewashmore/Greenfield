@@ -191,6 +191,7 @@ namespace GreenField.Gadgets.Helpers
             , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null
             , Func<Block> initialHeaderBlock = null)
         {
+
             if (skipColumnDisplayIndex == null)
             {
                 skipColumnDisplayIndex = new List<int>();
@@ -231,6 +232,12 @@ namespace GreenField.Gadgets.Helpers
             Table table = new Table();
             RadDocument document = new RadDocument();
             Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+            document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+            document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+            document.LayoutMode = DocumentLayoutMode.Paged;
+            document.ParagraphDefaultSpacingAfter = document.ParagraphDefaultSpacingBefore = 0;
+            document.PageViewMargin = new SizeF(0, 0);
+            document.SectionDefaultPageMargin = new Padding(0, 0, 0, 0);
             if (initialHeaderBlock != null)
             {
                 Block result = initialHeaderBlock();
@@ -427,9 +434,22 @@ namespace GreenField.Gadgets.Helpers
                 {
                     TableCell cell = new TableCell();
                     cell.TextAlignment = RadTextAlignment.Right;
+
                     object value = cellValueOverwrite != null ? cellValueOverwrite(i, j, columns, items) : columns[j].GetValueForItem(items[i]);
-                    AddCellValue(cell, value == null || value.ToString().Trim() == String.Empty ? "-" : value.ToString());
-                    cell.PreferredWidth = new TableWidthUnit((float)columns[j].ActualWidth);
+
+                    string data = value == null || value.ToString().Trim() == String.Empty ? "-" : value.ToString();
+                    decimal outdecimal = 0;
+                    Boolean isNumeric = decimal.TryParse(data,out outdecimal);
+                    if (isNumeric)
+                    {
+                        cell.TextAlignment = RadTextAlignment.Right;
+                    }
+                    else
+                    {
+                        cell.TextAlignment = RadTextAlignment.Left;
+                    }
+                    AddCellValue(cell, data);
+                    cell.PreferredWidth = new TableWidthUnit((float)columns[j].ActualWidth+data.Length);
                     cell.Background = Colors.White;
                     row.Cells.Add(cell);
                 }
