@@ -453,7 +453,7 @@ namespace GreenField.Web.Services
                     temp.RootSourceDate = Convert.ToDateTime(data[i].ROOT_SOURCE_DATE);
                     if (data[i].HARMONIC == "Y")
                     {
-                        decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
+                       /* decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
 
                         decimal year1Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
                                                     && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
@@ -481,7 +481,27 @@ namespace GreenField.Web.Services
                         if (year4 != 0 && year5 != 0 && year6 != 0 && year4 != null && year5 != null && year6 != null)
                         {
                             temp.HarmonicSecond = Convert.ToDecimal((1 / (year4 + year5 + year6)) * data[i].MULTIPLIER);
-                        }
+                        }*/
+
+                        // Do not get confused . Even though we check for the flag HARMONIC=Y  , we use only Simple Average not Harmonic Mean. Picked up from HeadStrong code 
+                        //and modified it  - Akhtar (06/27/2013)
+                        List<decimal?> listFirst = new List<decimal?>();
+                        
+                        listFirst.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
+                        listFirst.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 1
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
+                        listFirst.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
+                        temp.HarmonicFirst = GroupCalculations.SimpleAverage(listFirst) * data[i].MULTIPLIER;
+                        List<decimal?> listSecond = new List<decimal?>();
+                        listSecond.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 1
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
+                        listSecond.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
+                        listSecond.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 3
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
+                        temp.HarmonicSecond = GroupCalculations.SimpleAverage(listSecond) * data[i].MULTIPLIER;
                     }
                     result.Add(temp);
                 }
@@ -548,7 +568,7 @@ namespace GreenField.Web.Services
                 #endregion
 
                 #region Relative Analysis Data
-                List<FinstatRelativeAnalysisData> relativeData = entity.GetFinstatRelativeAnalysisData(issuerId, securityId, _dataSource, _fiscalType).ToList();
+        /*        List<FinstatRelativeAnalysisData> relativeData = entity.GetFinstatRelativeAnalysisData(issuerId, securityId, _dataSource, _fiscalType).ToList();
                 List<FinstatDetailData> relativeResultSet = new List<FinstatDetailData>();                
 
                 #region direct data
@@ -741,7 +761,7 @@ namespace GreenField.Web.Services
                 relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Industry ROE", _dataSource, 5018, "N"));
                 relativeResultSet.Add(GetFinstatDetailRelativeSampleData("Relative Industry ROE", _dataSource, 5019, "N"));
                 relativeResultSet = relativeResultSet.OrderBy(g => g.SortOrder).ToList();
-                result.AddRange(relativeResultSet);
+                result.AddRange(relativeResultSet);*/
                 #endregion                
 
                 return result;
@@ -753,6 +773,8 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+
 
         private FinstatDetailData GetFinstatDetailRelativeSampleData(String description, String dataSource, int sortOrder
             , String boldFont)

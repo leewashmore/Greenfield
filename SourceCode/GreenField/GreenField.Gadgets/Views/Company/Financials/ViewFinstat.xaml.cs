@@ -9,7 +9,9 @@ using GreenField.Gadgets.Models;
 using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Documents.Layout;
 using System.IO;
-
+using Telerik.Windows.Controls;
+using System.Linq;
+using System.Windows.Media;
 namespace GreenField.Gadgets.Views
 {
     /// <summary>
@@ -436,6 +438,43 @@ namespace GreenField.Gadgets.Views
             resultInputCell.Blocks.Add(inputtable);
             #endregion                     
             #endregion
+            #region headerrow
+            RadGridView grid = this.dgFinstat;
+            List<int> skipColumnDisplayIndex = null;
+            if (skipColumnDisplayIndex == null)
+            {
+                skipColumnDisplayIndex = new List<int>();
+            }
+
+            List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
+                                                     orderby c.DisplayIndex
+                                                     select c).ToList();
+            columns = columns.Where(g => g.IsVisible == true && (!skipColumnDisplayIndex.Contains(g.DisplayIndex))).ToList();
+            Table headtable = new Table();
+            TableRow headRow = new TableRow();
+            for (int i = 0; i < columns.Count(); i++)
+            {
+                TableCell cell = new TableCell() { VerticalAlignment = RadVerticalAlignment.Center };
+              
+                //cell.Background = Color.FromArgb(255, 228, 229, 229);
+                AddCellValue(cell, columns[i].UniqueName);
+                if (i == columns.Count - 1 || i == columns.Count - 2)
+                {
+                    cell.TextAlignment = RadTextAlignment.Center;
+                    cell.PreferredWidth = new TableWidthUnit((float)(columns[i].ActualWidth + columns[i].ActualWidth));
+                }
+                else
+                {
+                    cell.TextAlignment = RadTextAlignment.Left;
+                    cell.PreferredWidth = new TableWidthUnit((float)(columns[i].ActualWidth + columns[i].ActualWidth));
+                }
+                headRow.Cells.Add(cell);
+            }
+   
+
+            headtable.Rows.Add(headRow);
+            resultInputCell.Blocks.Add(headtable);
+            #endregion
 
             return resultBlock;
         }
@@ -479,10 +518,27 @@ namespace GreenField.Gadgets.Views
             dgFinstat.Columns[5].UniqueName = periodColumnHeader[4];
             dgFinstat.Columns[6].UniqueName = periodColumnHeader[5];
             dgFinstat.Columns[7].UniqueName = periodColumnHeader[6];
-            dgFinstat.Columns[8].UniqueName = "Avg " + periodColumnHeader[1] + "-" + periodColumnHeader[3];
-            dgFinstat.Columns[9].UniqueName = "Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
+            dgFinstat.Columns[8].UniqueName = "Avg   " + periodColumnHeader[1] + "-" + periodColumnHeader[3];
+            dgFinstat.Columns[9].UniqueName = "Avg   " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
         }
         #endregion
+
+        private static void AddCellValue(TableCell cell, string value)
+        {
+            Telerik.Windows.Documents.Model.Paragraph paragraph = new Telerik.Windows.Documents.Model.Paragraph();
+            Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span();
+
+            if (value != null && value != "")
+            {
+                span.Text = value;
+                span.FontFamily = new System.Windows.Media.FontFamily("Arial");
+                span.FontSize = 10;
+                span.FontWeight = FontWeights.Bold;
+                paragraph.Inlines.Add(span);
+            }
+            cell.Blocks.Add(paragraph);
+        }
+
 
         #region Dispose Method
         /// <summary>

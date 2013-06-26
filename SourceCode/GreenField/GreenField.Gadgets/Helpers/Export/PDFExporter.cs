@@ -241,24 +241,25 @@ namespace GreenField.Gadgets.Helpers
             if (initialHeaderBlock != null)
             {
                 Block result = initialHeaderBlock();
-                section.Blocks.Add(result);
+
+                RadDocument headerDoc = new RadDocument();
+                headerDoc.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+                headerDoc.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+                headerDoc.ParagraphDefaultSpacingAfter = headerDoc.ParagraphDefaultSpacingBefore = 0;
+                Section hSection = new Section();
+                headerDoc.Sections.Add(hSection);
+                headerDoc.SectionDefaultPageMargin = new Telerik.Windows.Documents.Layout.Padding(0, 0, 0, 0);
+                hSection.Blocks.Add(result);
+
+                Header header = new Header();
+                header.Body = headerDoc;
+
+                section.Headers.Default = header;
+                
+
             }
             section.Blocks.Add(table);
             document.Sections.Add(section);
-
-            TableRow headerRow = new TableRow();
-            for (int i = 0; i < columns.Count(); i++)
-            {
-                TableCell cell = new TableCell() { VerticalAlignment = RadVerticalAlignment.Center };
-                cell.TextAlignment = RadTextAlignment.Right;
-                cell.Background = Color.FromArgb(255, 228, 229, 229);
-                AddCellValue(cell, columns[i].UniqueName);
-                cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
-                headerRow.Cells.Add(cell);
-            }
-
-            table.Rows.Add(headerRow);
-
             if (grid.Items.Groups != null)
             {
                 for (int i = 0; i < grid.Items.Groups.Count(); i++)
@@ -440,7 +441,7 @@ namespace GreenField.Gadgets.Helpers
                     string data = value == null || value.ToString().Trim() == String.Empty ? "-" : value.ToString();
                     decimal outdecimal = 0;
                     Boolean isNumeric = decimal.TryParse(data,out outdecimal);
-                    if (isNumeric)
+                    if (isNumeric||data.Equals("-"))
                     {
                         cell.TextAlignment = RadTextAlignment.Right;
                     }
@@ -507,7 +508,7 @@ namespace GreenField.Gadgets.Helpers
                 headerRow.Cells.Add(cell);
             }
 
-            table.Rows.Add(headerRow);
+           // table.Rows.Add(headerRow);
 
             /*
             TableRow aggregateRow = new TableRow();
