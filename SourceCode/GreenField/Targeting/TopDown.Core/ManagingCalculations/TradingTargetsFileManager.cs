@@ -89,7 +89,7 @@ namespace TopDown.Core.ManagingCalculations
                 result.AddRange(cloneList);
             }
 
-            
+            result = result.OrderBy(x => x.PortfolioId).ToList();
                        
 
             return result;
