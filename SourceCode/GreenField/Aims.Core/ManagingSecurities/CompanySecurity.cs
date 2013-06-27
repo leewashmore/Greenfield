@@ -10,6 +10,8 @@ namespace Aims.Core
     /// <summary>
     /// Security with a country.
     /// </summary>
+    /// 
+    [SerializableAttribute]
 	public class CompanySecurity : ISecurity
 	{
 		[DebuggerStepThrough]

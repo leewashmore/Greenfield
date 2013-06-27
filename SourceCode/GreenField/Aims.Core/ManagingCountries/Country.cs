@@ -3,6 +3,7 @@ using System.Diagnostics;
 
 namespace Aims.Core
 {
+     [SerializableAttribute]
     public class Country
     {
         [DebuggerStepThrough]

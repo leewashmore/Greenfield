@@ -116,7 +116,7 @@ namespace Aims.Core.Persisting
                     .Field("  [ID]", (info, value) => info.Id = value, true)
                     .Field(", [NAME]", (info, value) => info.Name = value, true)
                     .Field(", [IS_BOTTOM_UP]", (PortfolioInfo info, Int32 value) => info.IsBottomUp = (value == 1))
-                    .Text(" from [" + TableNames.PORTFOLIO + "]")
+                    .Text(" from [" + TableNames.PORTFOLIO + "] WHERE PROXY_PORTFOLIO IS NULL")
                     .PullAll();
             }
         }

@@ -70,6 +70,18 @@ namespace TopDown.Core.Persisting
             }
         }
 
+        public virtual IEnumerable<ProxyPortfolioInfo> GetAllProxyPortfolios()
+        {
+            using (var builder = this.CreateQueryCommandBuilder<ProxyPortfolioInfo>())
+            {
+                return builder.Text("select ")
+                    .Field("  [ID]", (info, value) => info.PortfolioId = value, true)
+                    .Field(", [PROXY_PORTFOLIO]", (info, value) => info.ProxyPortfolioId = value, true)
+                    .Text(" from [" + TableNames.PORTFOLIO + "] WHERE PROXY_PORTFOLIO IS NOT NULL")
+                    .PullAll();
+            }
+        }
+
         public virtual DateTime GetLastestDateWhichBenchmarkDataIsAvialableOn()
         {
             DateTime result;

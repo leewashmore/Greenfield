@@ -483,7 +483,7 @@ namespace GreenField.Web.Services
                             temp.HarmonicSecond = Convert.ToDecimal((1 / (year4 + year5 + year6)) * data[i].MULTIPLIER);
                         }*/
 
-                        // Do not get confused . Even though we check for the flag HARMONIC=Y  , we use only Simple Average not Harmonic Mean. Picked up from HeadStrong code 
+                        // Do not get confused . Even though we check for the flag HARMONIC=Y  , we use only Simple Average not Harmonic Mean. This is validated by Gerred Howe. Picked up from HeadStrong code 
                         //and modified it  - Akhtar (06/27/2013)
                         List<decimal?> listFirst = new List<decimal?>();
                         

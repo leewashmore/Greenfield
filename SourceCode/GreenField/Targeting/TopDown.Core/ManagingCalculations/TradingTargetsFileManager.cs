@@ -5,6 +5,9 @@ using System.Text;
 using Aims.Core;
 using TopDown.Core.Persisting;
 using Aims.Core.Sql;
+using System.Diagnostics;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 
 namespace TopDown.Core.ManagingCalculations
@@ -73,10 +76,39 @@ namespace TopDown.Core.ManagingCalculations
                 record.PercentByContry = 1;
                 result.Add(record);
             }
+            var proxyportfolios = dataManager.GetAllProxyPortfolios();
+            foreach (var proxy in proxyportfolios)
+            {
+
+                var lists = result.Where(x => x.PortfolioId == proxy.ProxyPortfolioId).ToList(); // get the list of targets for proxy portfolio
+                var cloneList = CloneList(lists); //clone the list
+                cloneList.ForEach(s => s.PortfolioId = proxy.PortfolioId);
+                //below to lines replace the targets of actual portfolio with the proxy portfolio
+                result.RemoveAll(x => x.PortfolioId == proxy.PortfolioId);
+                // replace the proxy portfolio with the actual portfolio)
+                result.AddRange(cloneList);
+            }
+
+            
                        
 
             return result;
         }
+        // This method does the deep cloning of the list
+
+        public static List<T> CloneList<T>(List<T> oldList)
+        {
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            MemoryStream stream = new MemoryStream();
+            formatter.Serialize(stream, oldList);
+            stream.Position = 0;
+            return (List<T>)formatter.Deserialize(stream);
+
+
+
+        } 
+
 
         public string GetFileContent(SecurityRepository securityRepository, IDataManager dataManager)
         {
