@@ -2930,7 +2930,7 @@ namespace GreenField.Web.Helpers
                     a.ISSUER_ID == ModelReferenceData.IssuerId).ToList();
                 if (data.Any())
                 {
-                    if (data.Exists(x => x.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper()))
+                    if (data.Exists(x => x.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper() || group.Contains(x.ASHMOREEMM_PRIMARY_ANALYST.ToUpper())))  //If this user can upload for a primary analyst, it needs to go in as primary analyst
                     {
                         UserRole = "PRIMARY";
                         RootSource = "PRIMARY";
