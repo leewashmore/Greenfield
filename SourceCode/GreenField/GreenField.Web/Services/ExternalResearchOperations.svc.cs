@@ -487,20 +487,20 @@ namespace GreenField.Web.Services
                         //and modified it  - Akhtar (06/27/2013)
                         List<decimal?> listFirst = new List<decimal?>();
                         
-                        listFirst.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
-                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
-                        listFirst.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 1
-                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
-                        listFirst.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
-                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
+                        listFirst.Add(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                        listFirst.Add(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 1
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                        listFirst.Add(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         temp.HarmonicFirst = GroupCalculations.SimpleAverage(listFirst) * data[i].MULTIPLIER;
                         List<decimal?> listSecond = new List<decimal?>();
-                        listSecond.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 1
-                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
-                        listSecond.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
-                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
-                        listSecond.Add(Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 3
-                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault()));
+                        listSecond.Add(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 1
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                        listSecond.Add(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                        listSecond.Add(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 3
+                                                    && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
                         temp.HarmonicSecond = GroupCalculations.SimpleAverage(listSecond) * data[i].MULTIPLIER;
                     }
                     result.Add(temp);
