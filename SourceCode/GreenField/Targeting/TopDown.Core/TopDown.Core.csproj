@@ -67,6 +67,7 @@
     <Compile Include="ManagingPst\ModelValidator.cs" />
     <Compile Include="OnDemandDataManager.cs" />
     <Compile Include="Persisting\CalculationWithChangesets.cs" />
+    <Compile Include="Persisting\Info, ProxyPortfolio.cs" />
     <Compile Include="Persisting\UsersDataManager.cs" />
     <Compile Include="Persisting\UsersDataManagerFactory.cs" />
     <Compile Include="Persisting\IUsersDataManagerFactory.cs" />

@@ -3257,8 +3257,8 @@ namespace GreenField.Web.Services
                 (entity.GF_PERF_DAILY_ATTRIBUTION.Where (a => a.NODE_NAME == "GICS Level 1" && a.PORTFOLIO == "EMIF").Select(g => new { g.TO_DATE }).ToList()
 					.Select(x => x.TO_DATE.Value))
 					.Distinct()
-					.OrderByDescending(x => x)
-					.Take(13);
+					.OrderByDescending(x => x);
+					//.Take(13);
 
             new DefaultCacheProvider().Set(CacheKeyNames.LastDayOfMonthsCache, q.ToList(), Int32.Parse(ConfigurationManager.AppSettings["PerformanceCacheTime"]));
             return q.ToList();

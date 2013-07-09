@@ -191,6 +191,7 @@ namespace GreenField.Gadgets.Helpers
             , Func<int, int, object, object, object> cellValueOverwrite = null, Func<int, int, string> columnAggregateOverWrite = null
             , Func<Block> initialHeaderBlock = null)
         {
+
             if (skipColumnDisplayIndex == null)
             {
                 skipColumnDisplayIndex = new List<int>();
@@ -231,27 +232,34 @@ namespace GreenField.Gadgets.Helpers
             Table table = new Table();
             RadDocument document = new RadDocument();
             Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+            document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+            document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+            document.LayoutMode = DocumentLayoutMode.Paged;
+            document.ParagraphDefaultSpacingAfter = document.ParagraphDefaultSpacingBefore = 0;
+            document.PageViewMargin = new SizeF(0, 0);
+            document.SectionDefaultPageMargin = new Padding(0, 0, 0, 0);
             if (initialHeaderBlock != null)
             {
                 Block result = initialHeaderBlock();
-                section.Blocks.Add(result);
+
+                RadDocument headerDoc = new RadDocument();
+                headerDoc.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+                headerDoc.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+                headerDoc.ParagraphDefaultSpacingAfter = headerDoc.ParagraphDefaultSpacingBefore = 0;
+                Section hSection = new Section();
+                headerDoc.Sections.Add(hSection);
+                headerDoc.SectionDefaultPageMargin = new Telerik.Windows.Documents.Layout.Padding(0, 0, 0, 0);
+                hSection.Blocks.Add(result);
+
+                Header header = new Header();
+                header.Body = headerDoc;
+
+                section.Headers.Default = header;
+                
+
             }
             section.Blocks.Add(table);
             document.Sections.Add(section);
-
-            TableRow headerRow = new TableRow();
-            for (int i = 0; i < columns.Count(); i++)
-            {
-                TableCell cell = new TableCell() { VerticalAlignment = RadVerticalAlignment.Center };
-                cell.TextAlignment = RadTextAlignment.Right;
-                cell.Background = Color.FromArgb(255, 228, 229, 229);
-                AddCellValue(cell, columns[i].UniqueName);
-                cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
-                headerRow.Cells.Add(cell);
-            }
-
-            table.Rows.Add(headerRow);
-
             if (grid.Items.Groups != null)
             {
                 for (int i = 0; i < grid.Items.Groups.Count(); i++)
@@ -427,9 +435,22 @@ namespace GreenField.Gadgets.Helpers
                 {
                     TableCell cell = new TableCell();
                     cell.TextAlignment = RadTextAlignment.Right;
+
                     object value = cellValueOverwrite != null ? cellValueOverwrite(i, j, columns, items) : columns[j].GetValueForItem(items[i]);
-                    AddCellValue(cell, value == null || value.ToString().Trim() == String.Empty ? "-" : value.ToString());
-                    cell.PreferredWidth = new TableWidthUnit((float)columns[j].ActualWidth);
+
+                    string data = value == null || value.ToString().Trim() == String.Empty ? "-" : value.ToString();
+                    decimal outdecimal = 0;
+                    Boolean isNumeric = decimal.TryParse(data,out outdecimal);
+                    if (isNumeric||data.Equals("-"))
+                    {
+                        cell.TextAlignment = RadTextAlignment.Right;
+                    }
+                    else
+                    {
+                        cell.TextAlignment = RadTextAlignment.Left;
+                    }
+                    AddCellValue(cell, data);
+                    cell.PreferredWidth = new TableWidthUnit((float)columns[j].ActualWidth+data.Length);
                     cell.Background = Colors.White;
                     row.Cells.Add(cell);
                 }
@@ -487,7 +508,7 @@ namespace GreenField.Gadgets.Helpers
                 headerRow.Cells.Add(cell);
             }
 
-            table.Rows.Add(headerRow);
+           // table.Rows.Add(headerRow);
 
             /*
             TableRow aggregateRow = new TableRow();

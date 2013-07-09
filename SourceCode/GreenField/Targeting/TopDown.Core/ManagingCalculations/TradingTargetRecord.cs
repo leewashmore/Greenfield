@@ -8,6 +8,8 @@ using Aims.Expressions;
 
 namespace TopDown.Core.ManagingCalculations
 {
+    [SerializableAttribute]
+
     public class TradingTargetRecord
     {
         [DebuggerStepThrough]

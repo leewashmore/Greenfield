@@ -9,6 +9,9 @@ namespace Aims.Core
     /// <summary>
     /// Security without a country.
     /// </summary>
+    /// 
+
+    [SerializableAttribute]
     public class Fund : ISecurity
     {
         [DebuggerStepThrough]

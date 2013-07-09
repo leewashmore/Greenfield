@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER OFF
 GO
 
 
-ALTER procedure [dbo].[AIMS_Price_Refresh_Monitoring]
+CREATE procedure [dbo].[AIMS_Price_Refresh_Monitoring]
 as
 
 --First select all the minimum dates
@@ -22,5 +22,6 @@ select gsb.ASEC_SEC_SHORT_NAME, gsb.SECURITY_ID, md.MIN_DATE
 from .dbo.GF_SECURITY_BASEVIEW gsb
 left join #minDates md on md.SECURITY_ID = gsb.SECURITY_ID
 where gsb.SECURITY_TYPE not in ('PRV EQUITY','FUND LP','FUND OEIC','BASKET EQ')
+order by gsb.ASEC_SEC_SHORT_NAME
 
 drop table #minDates
