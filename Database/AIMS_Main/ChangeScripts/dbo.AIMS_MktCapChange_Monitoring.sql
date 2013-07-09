@@ -27,5 +27,5 @@ select mdcc.CURR_DATE,
   from dbo.MONITORING_DAILY_CAP_CHANGE mdcc
   join dbo.GF_SECURITY_BASEVIEW gsb on mdcc.SECURITY_ID = gsb.SECURITY_ID
   where mdcc.PRIOR_CAP <>0 and mdcc.CURR_CAP <> 0
-  and (mdcc.CURR_CAP/mdcc.PRIOR_CAP > 1.1 or mdcc.CURR_CAP/mdcc.PRIOR_CAP < .9) 
+  and (mdcc.CURR_CAP/mdcc.PRIOR_CAP > 1.15 or mdcc.CURR_CAP/mdcc.PRIOR_CAP < .85) 
   order by CHANGE_PCT desc
