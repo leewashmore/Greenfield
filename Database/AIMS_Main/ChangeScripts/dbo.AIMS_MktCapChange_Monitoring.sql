@@ -12,6 +12,7 @@ GO
 create procedure [dbo].[AIMS_MktCapChange_Monitoring]
 as
 
+--Modified 7/9/13 (JM) to add where shares are decreasing to the logic per GH
 select mdcc.CURR_DATE, 
 	gsb.ISSUER_ID, 
 	gsb.ASEC_SEC_SHORT_NAME, 
@@ -28,4 +29,5 @@ select mdcc.CURR_DATE,
   join dbo.GF_SECURITY_BASEVIEW gsb on mdcc.SECURITY_ID = gsb.SECURITY_ID
   where mdcc.PRIOR_CAP <>0 and mdcc.CURR_CAP <> 0
   and (mdcc.CURR_CAP/mdcc.PRIOR_CAP > 1.15 or mdcc.CURR_CAP/mdcc.PRIOR_CAP < .85) 
+  and mdcc.CURR_SHARES < mdcc.PRIOR_SHARES
   order by CHANGE_PCT desc
