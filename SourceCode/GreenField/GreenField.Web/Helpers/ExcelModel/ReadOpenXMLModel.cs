@@ -1045,8 +1045,7 @@ namespace GreenField.Web.Helpers
                             {
                                 fetchedAmount = internalCOAChangesData.Select(a => a.AMOUNT).FirstOrDefault();
                                 // if (fetchedAmount != amount) - replaced to correct matching issue when precision is different - Request ID : 18420 Model upload "COA" value change tracking 
-                                if (Math.Round((decimal)fetchedAmount,6) != Math.Round((decimal)amount,6))
-
+                                if (Math.Round((decimal)fetchedAmount, 6, MidpointRounding.AwayFromZero) != Math.Round((decimal)amount, 6, MidpointRounding.AwayFromZero))
                                 {
                                     UpdateInternalCOAChanges(issuerId, rootSource, currency, item.COA, periodYear, TimeStamp);
                                     InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");

@@ -169,9 +169,9 @@ namespace GreenField.Web.Services
                     DocumentCopyService.CopyResult[] cResultArray = { new DocumentCopyService.CopyResult() };
                     DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
 
-                    UInt32 copyResult = CopyService.CopyIntoItems(destinationUrl[0], destinationUrl, ffieldInfoArray, fileByteStream, out cResultArray);
+                    UInt32 copyResult = CopyService.CopyIntoItems(destinationUrl[0], destinationUrl, ffieldInfoArray, fileByteStream, out cResultArray); //Remove if testing model uploading locally 
 
-                    if (cResultArray[0].ErrorCode == CopyErrorCode.Success)
+                     if (cResultArray[0].ErrorCode == CopyErrorCode.Success) //Remove if testing model uploading locally
                         resultUrl = cResultArray[0].DestinationUrl;
                 }
                 catch (Exception)
@@ -211,9 +211,9 @@ namespace GreenField.Web.Services
                 elBatch.SetAttribute("ViewName", String.Empty);
                 elBatch.InnerXml = strBatch;
 
-                XmlNode ndReturn = ListsService.UpdateListItems(DocumentLibrary, elBatch);
+                XmlNode ndReturn = ListsService.UpdateListItems(DocumentLibrary, elBatch); //Remove if testing model uploading locally 
 
-                if (ndReturn.InnerText.ToLower() == "0x00000000".ToLower())
+                if (ndReturn.InnerText.ToLower() == "0x00000000".ToLower()) //Remove if testing model uploading locally 
                 {
                     fileDeleted = true;
                 }
