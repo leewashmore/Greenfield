@@ -106,9 +106,9 @@
         </telerik:RadExpander>
 
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1">
-            <TextBlock Text="Chart Extension" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
-        </Grid>
+       <!--  <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1">
+              <TextBlock Text="Chart Extension" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/> 
+        </Grid>-->
 
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid x:Name="grdRadGridView" Visibility="Collapsed">
