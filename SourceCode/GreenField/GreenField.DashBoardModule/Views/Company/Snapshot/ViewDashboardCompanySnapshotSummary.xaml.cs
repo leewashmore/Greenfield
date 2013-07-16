@@ -125,7 +125,7 @@ namespace GreenField.DashboardModule.Views
                     FontSize = 12,
                     FontFamily = new FontFamily("Arial")
                 },
-                RestoredHeight = 300,
+                RestoredHeight =635,
                 Content = new ViewCOASpecific(new ViewModelCOASpecific(param))
             });
 
@@ -159,6 +159,7 @@ namespace GreenField.DashboardModule.Views
                 Content = new ViewConsensusEstimateSummary(new ViewModelConsensusEstimateSummary(param))
             });
 
+            
             //Relative Performance Gadget
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
