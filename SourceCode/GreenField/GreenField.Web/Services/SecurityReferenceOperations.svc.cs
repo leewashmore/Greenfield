@@ -151,7 +151,6 @@ namespace GreenField.Web.Services
                     SubIndustry = data.GICS_SUB_INDUSTRY_NAME,
                     PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST,
                     Currency = data.TRADING_CURRENCY,
-                    FiscalYearend = data.FISCAL_YEAR_END,
                     IssuerID = data.ISSUER_ID,
                     Website = data.WEBSITE,
                     Description = data.BLOOMBERG_DESCRIPTION
