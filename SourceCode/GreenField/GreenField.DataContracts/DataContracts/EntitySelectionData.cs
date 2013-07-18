@@ -46,6 +46,10 @@ namespace GreenField.DataContracts
         [DataMember]
         public String ISSUER_NAME { get; set; }
 
+        [DataMember]
+        public String ISSUER_PROXY { get; set; }
+
+
     }
 
 

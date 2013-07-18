@@ -101,7 +101,7 @@
                                          IsReadOnly="True"
                                          CanUserReorderColumns="False" 
                                          CanUserSortColumns="True"
-                                         FrozenColumnCount="2" 
+                                         FrozenColumnCount="3" 
                                          Grouping="dgPortfolioDetails_Grouping" 
                                          Filtering="dgPortfolioDetails_Filtering"
                                          Filtered="dgPortfolioDetails_Filtered" 
@@ -171,6 +171,10 @@
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left" />
                                         <telerik:GridViewDataColumn Header="Name" UniqueName="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False"
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                                        <telerik:GridViewDataColumn Header="Ticker" UniqueName="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
@@ -322,6 +326,10 @@
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
                             <telerik:GridViewDataColumn Header="Name" UniqueName="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False"
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
+                            <telerik:GridViewDataColumn Header="Ticker" UniqueName="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
