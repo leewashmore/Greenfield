@@ -94,7 +94,7 @@ namespace GreenField.Web.Services
                         SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
                         PrimaryAnalyst = record.ASHMOREEMM_PRIMARY_ANALYST,
                         Currency = record.TRADING_CURRENCY,
-                        FiscalYearend = record.FISCAL_YEAR_END,
+                        IssuerID = record.ISSUER_ID,
                         Website = record.WEBSITE,
                         Description = record.BLOOMBERG_DESCRIPTION
                     });
@@ -111,7 +111,7 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// retrieving the security data on ticker filter
+        /// retrieving the security data on ticker filter (used by Company Overview gadget and maybe others)
         /// </summary>
         /// <returns>list of security overview data</returns>
         [OperationContract]
@@ -152,6 +152,7 @@ namespace GreenField.Web.Services
                     PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST,
                     Currency = data.TRADING_CURRENCY,
                     FiscalYearend = data.FISCAL_YEAR_END,
+                    IssuerID = data.ISSUER_ID,
                     Website = data.WEBSITE,
                     Description = data.BLOOMBERG_DESCRIPTION
                 };
