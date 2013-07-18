@@ -78,8 +78,8 @@
                         <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtPrimaryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PrimaryAnalyst}" Style="{StaticResource TextBlockStyle}"/>
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Currency :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                         <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtCurrency" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Currency}" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Fiscal Year End :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtFiscalYearEnd" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding FiscalYearend}" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Issuer ID :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtIssuerID" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding IssuerID}" Style="{StaticResource TextBlockStyle}"/>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Website :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                         <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtWebsite" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Website}" Style="{StaticResource TextBlockStyle}"/>
                     </Grid>

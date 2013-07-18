@@ -3606,7 +3606,7 @@ namespace GreenField.App.ViewModel
         }
 
         /// <summary>
-        /// GadgetSecurityOverviewCommand Execution Method - Add Gadget - SECURITY_OVERVIEW
+        /// GadgetSecurityOverviewCommand Execution Method - Add Gadget - SECURITY_OVERVIEW (Company Overview)
         /// </summary>
         /// <param name="param">SenderInfo</param>
         private void GadgetSecurityOverviewCommandMethod(object param)
