@@ -146,7 +146,7 @@
                                     IsReadOnly="True"
                                     CanUserReorderColumns="False" 
                                     CanUserSortColumns="True"
-                                    FrozenColumnCount="2" 
+                                    FrozenColumnCount="3" 
                                     
                                     RowIndicatorVisibility="Collapsed" 
                                     UseLayoutRounding="True" 
