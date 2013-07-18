@@ -1195,7 +1195,7 @@ namespace GreenField.Web.Services
 
         #region Consensus Estimates Summary Gadget
         /// <summary>
-        /// Retrieve data for consensus Estimates Summary Gadget
+        /// Retrieve data for Consensus Estimates Summary Gadget (aka. Comparison with Consensu Gadget)
         /// </summary>
         /// <param name="entityIdentifier">Security identifier selected by the user</param>
         /// <returns>Returns data in the list of type ConsensusEstimatesSummaryData</returns>
