@@ -1,0 +1,11 @@
+update dbo.FINANCIAL_GRIDS_DISPLAY
+set DECIMALS = 3 where DATA_ID = 191
+	  
+update dbo.FINANCIAL_GRIDS_DISPLAY
+set PERCENTAGE = 'N' where DATA_ID = 150
+	
+update dbo.FINANCIAL_GRIDS_DISPLAY
+set PERCENTAGE = 'N' where DATA_ID = 151
+
+update dbo.FINANCIAL_GRIDS_DISPLAY
+set PERCENTAGE = 'N' where DATA_ID = 152
