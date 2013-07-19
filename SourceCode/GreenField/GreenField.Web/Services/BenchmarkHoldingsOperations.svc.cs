@@ -2402,6 +2402,8 @@ namespace GreenField.Web.Services
                     
                     var security = newSecurities.Where(x => x.ShortName == item.AsecSecShortName).FirstOrDefault();
                     item.IssuerName = security == null ? null : security.ISSUER_NAME;
+
+                    item.Issuer_Proxy = security == null ? null : security.ISSUER_PROXY;
                  
                     if (!lookThruEnabled)
                     {

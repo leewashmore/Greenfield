@@ -604,14 +604,15 @@ namespace GreenField.Web.Services
                 {
                     result.Add(new EntitySelectionData()
                         {
-                            ShortName = security.ASEC_SEC_SHORT_NAME,
-                            SecurityType = security.SECURITY_TYPE,
-                            SecurityId = security.SECURITY_ID,
-                            IssuerId = security.ISSUER_ID,
-                            LOOK_THRU_FUND = security.LOOK_THRU_FUND,
-                            Region_Code = security.ASHEMM_PROPRIETARY_REGION_CODE,
-                            Country_Code = security.ISO_COUNTRY_CODE,
-                            ISSUER_NAME = security.ISSUER_NAME
+                            ShortName       = security.ASEC_SEC_SHORT_NAME,
+                            SecurityType    = security.SECURITY_TYPE,
+                            SecurityId      = security.SECURITY_ID,
+                            IssuerId        = security.ISSUER_ID,
+                            LOOK_THRU_FUND  = security.LOOK_THRU_FUND,
+                            Region_Code     = security.ASHEMM_PROPRIETARY_REGION_CODE,
+                            Country_Code    = security.ISO_COUNTRY_CODE,
+                            ISSUER_NAME     = security.ISSUER_NAME,
+                            ISSUER_PROXY    =security.issuer_proxy   
                         });
                 }
 #if DEBUG
