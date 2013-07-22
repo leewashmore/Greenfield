@@ -642,7 +642,7 @@ namespace GreenField.Gadgets.ViewModels
                             ActivePosition = group.Sum(x => x.RePortfolioWeight ?? 0.0m) - sumBenchmarkWeight,
                             AsecSecShortName = null,//group.Key  -do not display anything in the grouped line
                             AshEmmModelWeight = group.Sum(x => x.AshEmmModelWeight ?? 0.0m),
-                            BalanceNominal = null,   //group.Sum(x => x.BalanceNominal ?? 0.0m), do not show qty in total line
+                            BalanceNominal = group.Where(x => x.SecurityId == x.Issuer_Proxy).Select(x => x.BalanceNominal).FirstOrDefault(),   //display  values from issuer_proxy securities
                             BenchmarkWeight = group.Sum(x => x.BenchmarkWeight),  //main.BenchmarkWeight, sum benchmark weight
                             DirtyValuePC = group.Sum(x => x.DirtyValuePC ?? 0.0m),
                             ForwardEB_EBITDA = group.Where(x => x.SecurityId == x.Issuer_Proxy).Select(x => x.ForwardEB_EBITDA).FirstOrDefault(),   //display  values from issuer_proxy securities

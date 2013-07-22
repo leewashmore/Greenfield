@@ -13,6 +13,7 @@ using Telerik.Windows.Controls;
 using System.IO;
 using System.Collections.ObjectModel;
 using Telerik.Windows.Documents.Model;
+using Telerik.Windows.Documents.Layout;
 
 namespace GreenField.Gadgets.Helpers
 {
@@ -133,7 +134,8 @@ namespace GreenField.Gadgets.Helpers
                 }));
 
                 ExportOption.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-                ExportOption.RichTextBox.Print(ExportOption.ElementName, Telerik.Windows.Documents.UI.PrintMode.Native);                
+                ExportOption.RichTextBox.Print(ExportOption.ElementName, Telerik.Windows.Documents.UI.PrintMode.Native);
+              
                 this.DialogResult = true;
             }
             else if (ExportOption.ExportFilterOption == RadExportFilterOption.RADCHART_PRINT_FILTER)
