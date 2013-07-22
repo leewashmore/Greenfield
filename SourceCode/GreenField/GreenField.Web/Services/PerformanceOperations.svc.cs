@@ -74,6 +74,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<RelativePerformanceUIData>();
                 }
+
                 List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
                 //create new Entity for service
                 DimensionEntitiesService.Entities entity = DimensionEntity;
@@ -91,6 +92,10 @@ namespace GreenField.Web.Services
                     throw new Exception("Data Services are not available");
                 }
                 #endregion
+
+                //Reset the objEffectiveDate to the maxdate available to avoid days like weekends when no performace data is available 
+                objEffectiveDate = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.NODE_NAME == "GICS Level 1" && a.PORTFOLIO == "EMIF").Select(g => new { g.TO_DATE }).ToList()
+                        .Select(x => x.TO_DATE.Value)).Distinct().Max();
 
                 countryName = securityBaseData.Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
                 sectorName = securityBaseData.Select(a => a.GICS_SECTOR_NAME).ToList();
