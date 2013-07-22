@@ -1823,6 +1823,7 @@
 					<Property Type="Int32" Name="SortOrder" Nullable="false" />
 					<Property Type="String" Name="Period_Type" Nullable="true" />
 					<Property Type="Int32" Name="PeriodYear" Nullable="true" />
+          <Property Type="Decimal" Name="Multiplier" Nullable="false" Precision="32" Scale="6" />
 				</ComplexType>
 				<ComplexType Name="QuarterlyResults" >
 					<Property Type="String" Name="ISSUER_ID" Nullable="true" />
