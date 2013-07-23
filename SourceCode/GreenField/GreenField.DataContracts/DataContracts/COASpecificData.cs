@@ -46,5 +46,8 @@ namespace GreenField.DataContracts
         [DataMember]
         public Int32? SortOrder { get; set; }
 
+        [DataMember]
+        public decimal? Multiplier { get; set; }
+
     }
 }

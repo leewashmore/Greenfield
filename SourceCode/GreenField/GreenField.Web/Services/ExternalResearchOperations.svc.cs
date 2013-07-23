@@ -365,7 +365,7 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// Get data for Finstat Gadget
+        /// Get data for Finstat Gadget  //example of usage of Multiplier
         /// </summary>
         /// <param name="issuerId">string</param>
         /// <param name="securityId">string</param>
@@ -1498,11 +1498,11 @@ namespace GreenField.Web.Services
                 List<GreenField.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.COASpecificData>();
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 research.CommandTimeout = 5000;
-                result = research.GetDataForPeriodGadgets(_dataSource, _fiscalType, cCurrency, issuerId, securityId.ToString()).ToList();
+                result = research.GetDataForPeriodGadgets(_dataSource, _fiscalType, cCurrency, issuerId, securityId.ToString()).ToList();  //Retrieve data for Summary of Financials and Valuations gadget.
                 foreach (GreenField.DAL.COASpecificData item in result)
                 {
                     GreenField.DataContracts.COASpecificData entry = new GreenField.DataContracts.COASpecificData();
-                    entry.Amount = item.Amount;
+                    entry.Amount = item.Amount * item.Multiplier;  //add in Multiplier logic
                     entry.AmountType = item.AmountType;
                     entry.DataSource = item.DataSource;
                     entry.Decimals = item.Decimals;
@@ -1515,6 +1515,7 @@ namespace GreenField.Web.Services
                     entry.RootSource = item.RootSource;
                     entry.ShowGrid = item.ShowGrid;
                     entry.SortOrder = item.SortOrder;
+                    entry.Multiplier = item.Multiplier;
                     mainResult.Add(entry);
                 }
                 return mainResult;
