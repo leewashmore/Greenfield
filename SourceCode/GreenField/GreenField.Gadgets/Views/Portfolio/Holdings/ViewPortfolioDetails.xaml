@@ -101,7 +101,7 @@
                                          IsReadOnly="True"
                                          CanUserReorderColumns="False" 
                                          CanUserSortColumns="True"
-                                         FrozenColumnCount="3" 
+                                         FrozenColumnCount="2" 
                                          Grouping="dgPortfolioDetails_Grouping" 
                                          Filtering="dgPortfolioDetails_Filtering"
                                          Filtered="dgPortfolioDetails_Filtered" 
@@ -146,7 +146,7 @@
                                     IsReadOnly="True"
                                     CanUserReorderColumns="False" 
                                     CanUserSortColumns="True"
-                                    FrozenColumnCount="3" 
+                                    FrozenColumnCount="2" 
                                     
                                     RowIndicatorVisibility="Collapsed" 
                                     UseLayoutRounding="True" 
@@ -174,10 +174,7 @@
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
-                                        <telerik:GridViewDataColumn Header="Ticker" UniqueName="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
-                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
+
                                         <telerik:GridViewDataColumn Header="Country" UniqueName="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
                                                         IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
@@ -308,7 +305,10 @@
                                         <telerik:GridViewDataColumn Header="Sub-Industry Name" UniqueName="Sub-Industry Name" HeaderTextAlignment="Left"
                                                         DataMemberBinding="{Binding SubIndustryName}" IsGroupable="True" TextAlignment="Left"
                                                         IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
-
+                                        <telerik:GridViewDataColumn Header="Ticker" UniqueName="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
 
                                     </telerik:RadGridView.Columns>
                                 </telerik:RadGridView>
@@ -329,10 +329,7 @@
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
-                            <telerik:GridViewDataColumn Header="Ticker" UniqueName="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
-                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
+
                             <telerik:GridViewDataColumn Header="Country" UniqueName="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
                                                         IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
@@ -462,8 +459,11 @@
                             <telerik:GridViewDataColumn Header="Sub-Industry Name" UniqueName="Sub-Industry Name" HeaderTextAlignment="Left"
                                                         DataMemberBinding="{Binding SubIndustryName}" IsGroupable="True" TextAlignment="Left"
                                                         IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" />
-                           
-                          
+
+                            <telerik:GridViewDataColumn Header="Ticker" UniqueName="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
+                                                        TextAlignment="Left"/>
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
                 </telerik:RadBusyIndicator>
