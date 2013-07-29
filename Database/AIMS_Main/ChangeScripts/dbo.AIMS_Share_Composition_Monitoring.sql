@@ -33,11 +33,11 @@ left join .dbo.GF_SECURITY_BASEVIEW gsb on gcl.ASEC_SEC_SHORT_NAME = gsb.ASEC_SE
 left join dbo.ISSUER_SHARES_COMPOSITION isc on gcl.ISSUER_ID = isc.ISSUER_ID
 where isc.SECURITY_ID is null
 and gsb.SECURITY_TYPE not in ('PRV EQUITY','FUND LP','FUND OEIC','BASKET EQ')
-and gcl.ISSUER_ID is not null
+and gcl.ISSUER_ID is not null 
+and gcl.ISSUER_ID <> '__ISSUER'
 AND gcl.PORTFOLIO_DATE = @PortDate
 and gsb.SECURITY_ID not in (select SECURITY_ID from dbo.monitoring_security_suppress)
 group by gcl.ASEC_SEC_SHORT_NAME
-
 
 select max('BENCHMARK') as Type, 
 max(bm.issuer_id) as ISSUER_ID, 
@@ -55,6 +55,7 @@ left join dbo.ISSUER_SHARES_COMPOSITION isc on bm.ISSUER_ID = isc.ISSUER_ID
 where isc.SECURITY_ID is null
 and gsb.SECURITY_TYPE not in ('PRV EQUITY','FUND LP','FUND OEIC','BASKET EQ')
 and bm.ISSUER_ID is not null
+and bm.ISSUER_ID <> '__ISSUER'
 AND bm.PORTFOLIO_DATE = @PortDate
 and bm.ISSUER_ID not in (select ISSUER_ID from #Hold)
 and gsb.SECURITY_ID not in (select SECURITY_ID from dbo.monitoring_security_suppress)
@@ -76,6 +77,7 @@ left join dbo.ISSUER_SHARES_COMPOSITION isc on gsb.ISSUER_ID = isc.ISSUER_ID
 where isc.SECURITY_ID is null
 and gsb.SECURITY_TYPE not in ('PRV EQUITY','FUND LP','FUND OEIC','BASKET EQ')
 and gsb.ISSUER_ID is not null
+and gsb.ISSUER_ID <> '__ISSUER'
 and gsb.ISSUER_ID not in (select ISSUER_ID from #Hold)
 and gsb.ISSUER_ID not in (select ISSUER_ID from #Benchmark)
 and gsb.SECURITY_ID not in (select SECURITY_ID from dbo.monitoring_security_suppress)

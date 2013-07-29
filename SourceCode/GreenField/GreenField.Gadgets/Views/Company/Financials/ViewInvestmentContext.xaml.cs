@@ -68,9 +68,9 @@ namespace GreenField.Gadgets.Views
             RadDocument document = GenerateRadDocument();
             PDFExporter.ExportPDF_RadDocument(document, fontSizePDF);
             
-            
-            
         }
+
+
         
         private RadDocument GenerateRadDocument()
         {
@@ -320,11 +320,8 @@ namespace GreenField.Gadgets.Views
 
                             }
 
-                           // AddChildCellValue(cell, "" + Math.Round((decimal)icd.PECurrentYear, 1));
                         }
-
-
-                        //AddCellValue(cell, "" + Math.Round((decimal)icd.PECurrentYear, 1));
+                      
                     }
                     else
                     {
@@ -351,10 +348,7 @@ namespace GreenField.Gadgets.Views
                                 AddChildCellValue(cell, "" + Math.Round((decimal)icd.PENextYear, 1));
 
                             }
-                            //AddChildCellValue(cell, "" + Math.Round((decimal)icd.PENextYear, 1));
                         }
-
-                        //AddCellValue(cell, "" + Math.Round((decimal)icd.PENextYear, 1));
                     }
                     else
                     {
@@ -381,10 +375,8 @@ namespace GreenField.Gadgets.Views
                                 AddChildCellValue(cell, "" + Math.Round((decimal)icd.PBVCurrentYear, 1));
 
                             }
-                           // AddChildCellValue(cell, "" + Math.Round((decimal)icd.PBVCurrentYear, 1));
                         }
 
-                        // AddCellValue(cell, "" + Math.Round((decimal)icd.PBVCurrentYear, 1));
                     }
                     else
                     {
@@ -412,11 +404,9 @@ namespace GreenField.Gadgets.Views
                                 AddChildCellValue(cell, "" + Math.Round((decimal)icd.PBVNextYear, 1));
 
                             }
-                            //AddChildCellValue(cell, "" + Math.Round((decimal)icd.PBVNextYear, 1));
                         }
 
-                        // AddCellValue(cell, "" + Math.Round((decimal)icd.PBVNextYear, 1));
-                    }
+                   }
                     else
                     {
                         AddCellValue(cell, "" + icd.PBVNextYear);
@@ -442,10 +432,8 @@ namespace GreenField.Gadgets.Views
                                 AddChildCellValue(cell, "" + Math.Round((decimal)icd.EB_EBITDA_CurrentYear, 1));
 
                             }
-                           // AddChildCellValue(cell, "" + Math.Round((decimal)icd.EB_EBITDA_CurrentYear, 1));
                         }
 
-                        //AddCellValue(cell, "" + Math.Round((decimal)icd.EB_EBITDA_CurrentYear, 1));
                     }
                     else
                     {
@@ -475,9 +463,7 @@ namespace GreenField.Gadgets.Views
                                 AddChildCellValue(cell, "" + Math.Round((decimal)icd.EB_EBITDA_NextYear, 1));
 
                             }
-                           // AddChildCellValue(cell, "" + Math.Round((decimal)icd.EB_EBITDA_NextYear, 1));
                         }
-                        //  AddCellValue(cell, "" + Math.Round((decimal)icd.EB_EBITDA_NextYear, 1));
                     }
                     else
                     {
@@ -504,9 +490,7 @@ namespace GreenField.Gadgets.Views
                                 AddChildCellValue(cell, "" + Math.Round((decimal)icd.DividendYield * 100, 1));
 
                             }
-                           // AddChildCellValue(cell, "" + Math.Round((decimal)icd.DividendYield *100, 1));
                         }
-                        // AddCellValue(cell, "" + Math.Round((decimal)icd.DividendYield *100, 1));
                     }
                     else
                     {
@@ -534,10 +518,8 @@ namespace GreenField.Gadgets.Views
                                 AddChildCellValue(cell, "" + Math.Round((decimal)icd.ROE * 100, 1));
 
                             }
-                         //   AddChildCellValue(cell, "" + Math.Round((decimal)icd.ROE * 100, 1));
                         }
 
-                        // AddCellValue(cell, "" + Math.Round((decimal)icd.ROE * 100, 1));
                     }
                     else
                     {
@@ -545,18 +527,11 @@ namespace GreenField.Gadgets.Views
                     }
                     row.Cells.Add(cell);
                     table.AddRow(row);
-                    //Debug.WriteLine(icd.GicsSectorName + "--->" + icd.children.Count);
                     if (icd.children != null)
                     {
 
                         GenerateChildRows(table, icd.children, issuerId);
                     }
-                    //cell = new TableCell() { ColumnSpan = 5 };
-                    //row.Cells.Add(cell);
-                    //table.AddRow(row);
-
-
-
                 }
 
              if (context == "Industry")
