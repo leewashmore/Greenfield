@@ -255,7 +255,7 @@ namespace GreenField.Web.Services
                  //For current weighted PB
                  if (pfData.dirtvaluepc != null && pfData.equityFactorOwned != null)
                  {
-                     pfData.weightPB = pfData.dirtvaluepc / totalMarketValue;
+                     pfData.weightPB = pfData.dirtvaluepc / totalMarketValuePB;
                  }
                  if (pfData.marketcap != null && pfData.equity != null && pfData.equityFactorOwned != null)
                  {
