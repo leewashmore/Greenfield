@@ -150,7 +150,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// contains value for chackbox
+        /// contains value for checkbox
         /// </summary>
         private bool displayIssuerIsChecked = false;
         public bool DisplayIssuerIsChecked
@@ -276,7 +276,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Helper Method
         /// <summary>
-        /// show data according to issuer view checkbox
+        /// show data according to issuer view checkbox (used by Holdings and Positioning gadget)
         /// </summary>
         /// <param name="record"></param>
         /// <param name="issuerViewChecked"></param>

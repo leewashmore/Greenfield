@@ -772,7 +772,7 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// Retrieving Composite Fund Data 
+        /// Retrieving Composite Fund Data (for Holdings and Positioning gadget)
         /// </summary>
         /// <param name="entityIdentifiers">EntitySelectionData</param>
         /// <param name="portfolio">PortfolioSelectionData</param>
@@ -1049,7 +1049,7 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// method to perform calculations for composite fund gadget
+        /// method to perform calculations for composite fund gadget (also Holdings and Positioning gadget)
         /// </summary>
         /// <param name="InstrumentID"></param>
         /// <param name="issuerId"></param>
@@ -1098,7 +1098,8 @@ namespace GreenField.Web.Services
             if (benchmarkData.Count > 0)
             {
                 objBenchmarkWeight = check 
-                    ? Convert.ToDecimal(benchmarkData.Where(a => a.ISSUER_ID == issuerId).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()) / 100
+                    //? Convert.ToDecimal(benchmarkData.Where(a => a.ISSUER_ID == issuerId).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()) / 100  //This was changed becayse it was not providing an accurate summed total for the issuers
+                    ? Convert.ToDecimal(benchmarkData.Where(a => a.ISSUER_ID == issuerId).ToList().Sum(a => a.BENCHMARK_WEIGHT)) / 100
                     : Convert.ToDecimal(benchmarkData.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()) / 100;
             }
             //Benchmark Weight 
