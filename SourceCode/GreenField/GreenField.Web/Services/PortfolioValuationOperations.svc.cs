@@ -171,7 +171,7 @@ namespace GreenField.Web.Services
             mktValue = pfValuation.Where(g => g.portfolio_id == portfolio_id && g.nextYearEquityFactorOwned.HasValue).Select(data => data.dirtvaluepc).ToList();
             List<decimal?> nxtYearEquityPercentFactorOwned = pfValuation.Where(g => g.portfolio_id == portfolio_id).Select(data => data.nextYearEquityFactorOwned).ToList();
             decimal? nxtYearPBPercentOwnership = GroupCalculations.PercentageOwned(mktValue, nxtYearEquityPercentFactorOwned);
-            status = entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "PCT_OWNED", 1, 306, nxtYearPBPercentOwnership); //Change from 188 to 306 per Justin
+            status = entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "PCT_OWNED", 1, 164, nxtYearPBPercentOwnership); //Change from 188 to 306 per Justin
 
             mktValue = pfValuation.Where(g => g.portfolio_id == portfolio_id && g.divFactorOwned.HasValue).Select(data => data.dirtvaluepc).ToList();
             List<decimal?> divPercentFactorOwned = pfValuation.Where(g => g.portfolio_id == portfolio_id).Select(data => data.divFactorOwned).ToList();
