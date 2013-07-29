@@ -109,7 +109,7 @@
                 <telerik:RadMenu x:Name="radMenuCompany" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
 
-                    <telerik:RadMenuItem x:Name="rmItemCompanySnapshot" Header="Snapshot" IsEnabled="{Binding EnableGadget}">
+                    <telerik:RadMenuItem x:Name="rmItemCompanySnapshot" Header="Snapshot">
                         <telerik:RadMenuItem x:Name="rmItemCompanySummary" Header="Summary" Command="{Binding DashboardCompanySnapshotSummaryCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}" />
                         <!--<telerik:RadMenuItem x:Name="rmItemCompanyProfile" Header="Company Profile"
