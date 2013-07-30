@@ -293,7 +293,7 @@ namespace GreenField.Web.Services
                      //pfData.fwdPB = pfData.marketcap / pfData.fwdEquity;
                      pfData.fwdPB = d.doRangeScrubbing(pfData.fwdPB, 306); //change from 188 to 306 per Justin
                  }
-                 if (pfData.weightPB != null && pfData.fwdPB != null)
+                 if (pfData.fwdWeightPB != null && pfData.fwdPB != null)
                  {
                      pfData.fwdPBContr = pfData.fwdWeightPB * pfData.fwdPB;
                  }
@@ -308,7 +308,7 @@ namespace GreenField.Web.Services
                    //  pfData.nextYearPB = pfData.marketcap / pfData.nextYearEquity;
                      pfData.nextYearPB = d.doRangeScrubbing(pfData.nextYearPB, 164);
                  }
-                 if (pfData.weightPB != null && pfData.nextYearPB != null)
+                 if (pfData.nextYearWeightPB != null && pfData.nextYearPB != null)
                  {
                      pfData.nextYearPBContr = pfData.nextYearWeightPB * pfData.nextYearPB;
                  }
