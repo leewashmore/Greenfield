@@ -126,7 +126,7 @@ namespace GreenField.DashboardModule.Views
                     FontFamily = new FontFamily("Arial")
                 },
                 RestoredHeight = 635,
-                Content = new ViewCOASpecific (new ViewModelCOASpecific (param))
+                Content = new ViewCOASpecific(new ViewModelCOASpecific(param))
             });
 
             //Trade History Gadget
@@ -158,7 +158,7 @@ namespace GreenField.DashboardModule.Views
                 Content = new ViewConsensusEstimateSummary(new ViewModelConsensusEstimateSummary(param))
             });
 
-            
+
             //Relative Performance Gadget
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
