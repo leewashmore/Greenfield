@@ -373,7 +373,7 @@ namespace GreenField.Web.Services
                  //For next year weighted Earnings Growth
                  if (pfData.dirtvaluepc != null && pfData.nextYearEGrowth != null)
                  {
-                     pfData.nextYearWeightEGrowth = pfData.dirtvaluepc / totalMarketValueEGrowth;
+                     pfData.nextYearWeightEGrowth = pfData.dirtvaluepc / nextYeartotalMarketValueEGrowth;
                  }
                  if (pfData.nextYearEGrowth != null)
                  {
