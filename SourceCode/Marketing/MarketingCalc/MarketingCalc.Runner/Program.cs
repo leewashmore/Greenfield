@@ -27,11 +27,7 @@ namespace MarketingCalc.Runner
             String portfolioId = null;
             if (args != null && args.Length > 0)
             {
-                if (args[0] != null)
-                {
-                    portfolioId = args[0];
-                }
-                if (DateTime.TryParse(args[1], out dt))
+                if (DateTime.TryParse(args[0], out dt))
                 {
                     //do nothing
                 }
@@ -40,7 +36,11 @@ namespace MarketingCalc.Runner
                     Console.WriteLine("Bad date format");
                     //return ;
                 }
-
+                if (args.Length > 1 && args[1] != null)
+                {
+                    portfolioId = args[1];
+                }
+               
 
             }
             else
