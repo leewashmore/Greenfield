@@ -67,7 +67,6 @@ namespace GreenField.Gadgets.Views
             this.DataContext = DataContextSource;
             this.DataContextSourceModel = DataContextSource;
             DataContextSource.BasicDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceBasicDataLoadEvent);
-
         }
         #endregion
 
@@ -82,7 +81,10 @@ namespace GreenField.Gadgets.Views
             if (e.ShowBusy)
                 this.busyIndicatorGrid.IsBusy = true;
             else
+            {
                 this.busyIndicatorGrid.IsBusy = false;
+                this.dgBasicData.Rebind(); //needed to refresh the grid
+            }
         }
 
         /// <summary>
@@ -142,12 +144,12 @@ namespace GreenField.Gadgets.Views
                 Logging.LogException(this.DataContextSourceModel._logger, ex);
             }
         }
-        
+
         private static class ExportTypes
         {
             public const string BASIC_DATA = "Basic Data";
         }
-        
+
         /// <summary>
         /// Event handler when user wants to Export the Grid to PDF
         /// </summary>
@@ -171,7 +173,7 @@ namespace GreenField.Gadgets.Views
                 Logging.LogException(this.DataContextSourceModel._logger, ex);
             }
         }
-        
+
         /// <summary>
         /// Styles added to export to Excel
         /// </summary>
