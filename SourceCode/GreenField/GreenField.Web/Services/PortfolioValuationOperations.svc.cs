@@ -45,6 +45,8 @@ namespace GreenField.Web.Services
            
             List<GetSecurityLevelPFDataForMarketing_Result> pfMarketCapDataList =entity.GetSecurityLevelPFDataForMarketing(portfolio_id, dt,185, "PRIMARY", "USD", "C", 0, "").ToList();
             List<GetSecurityLevelPFDataForMarketing_Result> pfCurrYearDYList = entity.GetSecurityLevelPFDataForMarketing(portfolio_id, dt, 192, "PRIMARY", "USD", "A", dt.Year, "CALENDAR").ToList();
+            List<GetSecurityLevelPFDataForMarketing_Result> pfNextYearDYList = entity.GetSecurityLevelPFDataForMarketing(portfolio_id, dt, 192, "PRIMARY", "USD", "A", dt.Year+1, "CALENDAR").ToList();
+
 
             List<GetSecurityLevelPFDataForMarketing_Result> pfCurrentYearPBList = entity.GetSecurityLevelPFDataForMarketing(portfolio_id, dt, 164, "PRIMARY", "USD", "A", dt.Year, "CALENDAR").ToList();
             List<GetSecurityLevelPFDataForMarketing_Result> pfNextYearPBList = entity.GetSecurityLevelPFDataForMarketing(portfolio_id, dt, 164, "PRIMARY", "USD", "A", dt.Year+1, "CALENDAR").ToList();
@@ -77,7 +79,7 @@ namespace GreenField.Web.Services
                 pv.Dividend =  pfDividendList.Where(div => div.issuer_id == issuers.issuer_id && div.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.nextYearDividend = pfNextYearDividendList.Where(nextyeardiv => nextyeardiv.issuer_id == issuers.issuer_id && nextyeardiv.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.currentYearDY = pfCurrYearDYList.Where(dy => dy.issuer_id == issuers.issuer_id && dy.issuer_id == issuers.issuer_id).Select(v => v.value).FirstOrDefault();
-                pv.nextYearDY = pfNextYearDividendList.Where(nextyeardy => nextyeardy.issuer_id == issuers.issuer_id && nextyeardy.issuer_id == issuers.issuer_id).Select(v => v.value).FirstOrDefault();
+                pv.nextYearDY = pfNextYearDYList.Where(nextyeardy => nextyeardy.issuer_id == issuers.issuer_id && nextyeardy.issuer_id == issuers.issuer_id).Select(v => v.value).FirstOrDefault();
                 pv.currYearEGrowth = pfEarningsGrowthList.Where(egrowth => egrowth.issuer_id == issuers.issuer_id && egrowth.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.nextYearEGrowth = pfNextYearEarningsGrowthList.Where(egrowth => egrowth.issuer_id == issuers.issuer_id && egrowth.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.currYearROE = pfCurrYearROE.Where(roe => roe.issuer_id == issuers.issuer_id && roe.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
@@ -212,8 +214,8 @@ namespace GreenField.Web.Services
              decimal? fwdTotalMarketValuePB = pfValuation.Where(g => g.fwdPB.HasValue).Sum(g => g.dirtvaluepc);
              decimal? nextYearTotalMarketValuePB = pfValuation.Where(g => g.nextYearPB.HasValue).Sum(g => g.dirtvaluepc);
              decimal? totalMarketValueMktCap = pfValuation.Where(g => g.marketcap.HasValue).Sum(g => g.dirtvaluepc);
-             decimal? totalMarketValueDiv = pfValuation.Where(g => g.divFactorOwned.HasValue).Sum(g => g.dirtvaluepc);
-             decimal? nextYeartotalMarketValueDiv = pfValuation.Where(g => g.nextYearDivFactorOwned.HasValue).Sum(g => g.dirtvaluepc);
+             decimal? totalMarketValueDY = pfValuation.Where(g => g.currentYearDY.HasValue).Sum(g => g.dirtvaluepc);
+             decimal? nextYeartotalMarketValueDY = pfValuation.Where(g => g.nextYearDY.HasValue).Sum(g => g.dirtvaluepc);
              decimal? totalMarketValueEGrowth = pfValuation.Where(g => g.currYearEGrowth.HasValue).Sum(g => g.dirtvaluepc);
              decimal? nextYeartotalMarketValueEGrowth = pfValuation.Where(g => g.nextYearEGrowth.HasValue).Sum(g => g.dirtvaluepc);
              decimal? totalMarketValueROE = pfValuation.Where(g => g.currYearROE.HasValue).Sum(g => g.dirtvaluepc);
@@ -325,11 +327,11 @@ namespace GreenField.Web.Services
 
 
                  //For current weighted DY
-                 if (pfData.dirtvaluepc != null && pfData.divFactorOwned != null)
+                 if (pfData.dirtvaluepc != null && pfData.currentYearDY != null)
                  {
-                     pfData.currentYearWeightDY = pfData.dirtvaluepc / totalMarketValueDiv;
+                     pfData.currentYearWeightDY = pfData.dirtvaluepc / totalMarketValueDY;
                  }
-                 if (pfData.marketcap != null && pfData.Dividend != null && pfData.divFactorOwned != null)
+                 if (pfData.currentYearDY != null)
                  {
                      //pfData.currentYearDY = pfData.Dividend / pfData.marketcap;
                      pfData.currentYearDY = d.doRangeScrubbing(pfData.currentYearDY, 192);
@@ -340,11 +342,11 @@ namespace GreenField.Web.Services
                  }
 
                  //For next year weighted DY
-                 if (pfData.dirtvaluepc != null && pfData.nextYearDivFactorOwned != null)
+                 if (pfData.dirtvaluepc != null && pfData.nextYearDY != null)
                  {
-                     pfData.nextYearWeightDY = pfData.dirtvaluepc /nextYeartotalMarketValueDiv;
+                     pfData.nextYearWeightDY = pfData.dirtvaluepc / nextYeartotalMarketValueDY;
                  }
-                 if (pfData.marketcap != null && pfData.nextYearDividend != null && pfData.nextYearDivFactorOwned != null)
+                 if (pfData.nextYearDY != null)
                  {
                     // pfData.nextYearDY = pfData.nextYearDividend / pfData.marketcap;
                      pfData.nextYearDY = d.doRangeScrubbing(pfData.nextYearDY, 192);
