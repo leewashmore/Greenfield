@@ -9,6 +9,7 @@ using GreenField.DAL;
 using GreenField.DataContracts;
 using System.IO;
 using GreenField.Web.Helpers;
+using System.Diagnostics;
 namespace GreenField.Web.Services
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "PortfolioValuationOperations" in code, svc and config file together.
@@ -78,8 +79,8 @@ namespace GreenField.Web.Services
                 pv.nextYearEquity = pfNextYearEquityList.Where(nextyearequity => nextyearequity.issuer_id == issuers.issuer_id && nextyearequity.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.Dividend =  pfDividendList.Where(div => div.issuer_id == issuers.issuer_id && div.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.nextYearDividend = pfNextYearDividendList.Where(nextyeardiv => nextyeardiv.issuer_id == issuers.issuer_id && nextyeardiv.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
-                pv.currentYearDY = pfCurrYearDYList.Where(dy => dy.issuer_id == issuers.issuer_id && dy.issuer_id == issuers.issuer_id).Select(v => v.value).FirstOrDefault();
-                pv.nextYearDY = pfNextYearDYList.Where(nextyeardy => nextyeardy.issuer_id == issuers.issuer_id && nextyeardy.issuer_id == issuers.issuer_id).Select(v => v.value).FirstOrDefault();
+                pv.currentYearDY = pfCurrYearDYList.Where(dy => dy.issuer_id == issuers.issuer_id && dy.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
+                pv.nextYearDY = pfNextYearDYList.Where(nextyeardy => nextyeardy.issuer_id == issuers.issuer_id && nextyeardy.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.currYearEGrowth = pfEarningsGrowthList.Where(egrowth => egrowth.issuer_id == issuers.issuer_id && egrowth.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.nextYearEGrowth = pfNextYearEarningsGrowthList.Where(egrowth => egrowth.issuer_id == issuers.issuer_id && egrowth.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.currYearROE = pfCurrYearROE.Where(roe => roe.issuer_id == issuers.issuer_id && roe.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
@@ -246,7 +247,6 @@ namespace GreenField.Web.Services
                  }
                  if (pfData.fwdPE != null)
                  {
-                    // pfData.fwdPE = pfData.marketcap / pfData.fwdearnings;
                      pfData.fwdPE = d.doRangeScrubbing(pfData.fwdPE, 308);//Change from 187 to 308 per Justin
                  }
                  if (pfData.fwdWeight != null && pfData.fwdPE != null)
@@ -262,7 +262,6 @@ namespace GreenField.Web.Services
                  }
                  if (pfData.nextYearPE != null)
                  {
-                   //  pfData.nextYearPE = pfData.marketcap / pfData.nextYearEarnings;
                      pfData.nextYearPE = d.doRangeScrubbing(pfData.nextYearPE, 166);
                  }
                  if (pfData.nextYearWeight != null && pfData.nextYearPE != null)
@@ -277,7 +276,6 @@ namespace GreenField.Web.Services
                  }
                  if (pfData.currentYearPB != null)
                  {
-                    // pfData.currentYearPB = pfData.marketcap / pfData.equity;
                      pfData.currentYearPB = d.doRangeScrubbing(pfData.currentYearPB, 164);
                  }
                  if (pfData.weightPB != null && pfData.currentYearPB != null)
@@ -292,7 +290,6 @@ namespace GreenField.Web.Services
                  }
                  if (pfData.fwdPB != null)
                  {
-                     //pfData.fwdPB = pfData.marketcap / pfData.fwdEquity;
                      pfData.fwdPB = d.doRangeScrubbing(pfData.fwdPB, 306); //change from 188 to 306 per Justin
                  }
                  if (pfData.fwdWeightPB != null && pfData.fwdPB != null)
@@ -307,8 +304,7 @@ namespace GreenField.Web.Services
                  }
                  if (pfData.nextYearPB != null)
                  {
-                   //  pfData.nextYearPB = pfData.marketcap / pfData.nextYearEquity;
-                     pfData.nextYearPB = d.doRangeScrubbing(pfData.nextYearPB, 164);
+                      pfData.nextYearPB = d.doRangeScrubbing(pfData.nextYearPB, 164);
                  }
                  if (pfData.nextYearWeightPB != null && pfData.nextYearPB != null)
                  {
@@ -333,7 +329,6 @@ namespace GreenField.Web.Services
                  }
                  if (pfData.currentYearDY != null)
                  {
-                     //pfData.currentYearDY = pfData.Dividend / pfData.marketcap;
                      pfData.currentYearDY = d.doRangeScrubbing(pfData.currentYearDY, 192);
                  }
                  if (pfData.currentYearWeightDY != null && pfData.currentYearDY != null)
@@ -348,7 +343,6 @@ namespace GreenField.Web.Services
                  }
                  if (pfData.nextYearDY != null)
                  {
-                    // pfData.nextYearDY = pfData.nextYearDividend / pfData.marketcap;
                      pfData.nextYearDY = d.doRangeScrubbing(pfData.nextYearDY, 192);
                  }
                  if (pfData.nextYearWeightDY != null && pfData.nextYearDY != null)
@@ -364,7 +358,6 @@ namespace GreenField.Web.Services
                  }
                  if (pfData.currYearEGrowth != null)
                  {
-                     // pfData.nextYearDY = pfData.nextYearDividend / pfData.marketcap;
                      pfData.currYearEGrowth = d.doRangeScrubbing(pfData.currYearEGrowth, 177);
                  }
                  if (pfData.currYearWeightEGrowth != null && pfData.currYearEGrowth != null)
@@ -379,8 +372,7 @@ namespace GreenField.Web.Services
                  }
                  if (pfData.nextYearEGrowth != null)
                  {
-                     // pfData.nextYearDY = pfData.nextYearDividend / pfData.marketcap;
-                     pfData.nextYearEGrowth = d.doRangeScrubbing(pfData.nextYearEGrowth, 177);
+                      pfData.nextYearEGrowth = d.doRangeScrubbing(pfData.nextYearEGrowth, 177);
                  }
                  if (pfData.nextYearWeightEGrowth != null && pfData.nextYearEGrowth != null)
                  {
@@ -482,7 +474,7 @@ namespace GreenField.Web.Services
 
             list = pfValuation.Where(g => g.currentYearDY.HasValue).Select(g => g.currentYearDY).ToList();
             decimal? medianCurrDY = GroupCalculations.Median(list);
-
+            
             list = pfValuation.Where(g => g.nextYearDY.HasValue).Select(g => g.nextYearDY).ToList();
             decimal? mediannextyearDY = GroupCalculations.Median(list);
 
