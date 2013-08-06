@@ -243,7 +243,7 @@ namespace GreenField.Web.Services
                     previousYearQuarterAmount = data.Where(a => a.ESTIMATE_DESC == data[i].ESTIMATE_DESC && a.PERIOD_YEAR == (data[i].PERIOD_YEAR - 1)
                         && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
 
-                    if (previousYearQuarterAmount == null || previousYearQuarterAmount == 0)
+                    if (previousYearQuarterAmount == 0)
                     {
                         temp.YOYGrowth = 0;
                     }
