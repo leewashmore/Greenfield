@@ -1055,7 +1055,7 @@ namespace GreenField.Web.Services
             temp.PortfolioTarget = objPercent != null ? Math.Round(Convert.ToDecimal(objPercent) * 100, 2) : Math.Round(Convert.ToDecimal(0.00));
 
 
-               //Portfolio Holdings in Country - Lane
+            //Portfolio Holdings in Country 
             objHoldingInCountry = check ? Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ISSUER_ID == issuerId).Sum(a => a.DIRTY_VALUE_PC)) /
                         Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ISO_COUNTRY_CODE == country).Sum(a => a.DIRTY_VALUE_PC))
                 : Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).Select(a => a.DIRTY_VALUE_PC).FirstOrDefault()) /
