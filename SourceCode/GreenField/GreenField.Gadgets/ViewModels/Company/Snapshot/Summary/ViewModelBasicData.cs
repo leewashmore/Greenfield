@@ -282,6 +282,7 @@ namespace GreenField.Gadgets.ViewModels
                    ? ((decimal)(BasicDataInfo.Beta)).ToString("N2") : String.Empty;
                 basicDataValues.Add(String.Format("Beta({0})", BasicDataInfo.BetaSource), betaValue);
 
+                BasicDataDataList.Clear();  //values used to be added to bottom of the list making it larger and larger, Added this to clear before adding. 
                 BasicDataDataList.AddRange(basicDataValues);
             }
         }

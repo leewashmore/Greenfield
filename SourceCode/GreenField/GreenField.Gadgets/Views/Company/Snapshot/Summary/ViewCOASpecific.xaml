@@ -395,7 +395,7 @@
                                         <telerik:ChartDefaultView ChartLegendPosition="Right">
                                             <telerik:ChartDefaultView.ChartArea>
                                                 <telerik:ChartArea LegendName="chCOASpecificLegend" SmartLabelsEnabled="True" 
-                                                           EnableAnimations="False" LabelFormatBehavior="None" NoDataString=" No Data Available for the Selected Item in the provided Time-Period">
+                                                           EnableAnimations="False" LabelFormatBehavior="None" NoDataString=" No Data Available for the Selected Item in the provided Time-Period" BorderThickness="0">
                                                     <telerik:ChartArea.ZoomScrollSettingsX>
                                                         <telerik:ZoomScrollSettings ScrollMode="ScrollOnly" SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
                                                     </telerik:ChartArea.ZoomScrollSettingsX>

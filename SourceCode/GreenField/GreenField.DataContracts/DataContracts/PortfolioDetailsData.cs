@@ -22,6 +22,9 @@ namespace GreenField.DataContracts
         public string IssueName { get; set; }
 
         [DataMember]
+        public string Issuer_Proxy { get; set; }
+
+        [DataMember]
         public string PortfolioPath { get; set; }
 
         [DataMember]

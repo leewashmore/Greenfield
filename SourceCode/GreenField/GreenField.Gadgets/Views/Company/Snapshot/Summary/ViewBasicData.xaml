@@ -22,7 +22,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Market Data" HorizontalAlignment="Center" VerticalAlignment="Center" Height="15"/>
+            <!--  <TextBlock Grid.Row="0" Text="Market Data" HorizontalAlignment="Center" VerticalAlignment="Center" Height="15"/> -->
             <Grid Grid.Row="0" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -81,7 +81,7 @@
                     </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="Value" 
                                                     DataMemberBinding="{Binding Value}"    
-                                                UniqueName="Value"
+                                                    UniqueName="Value"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"
                                                     Width="Auto"     

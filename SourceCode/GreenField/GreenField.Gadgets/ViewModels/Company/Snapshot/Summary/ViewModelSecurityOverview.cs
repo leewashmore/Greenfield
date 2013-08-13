@@ -24,7 +24,7 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 namespace GreenField.Gadgets.ViewModels
 {
     /// <summary>
-    /// view model class for SecurityOverview
+    /// view model class for SecurityOverview (Company Overview)
     /// </summary>
     public class ViewModelSecurityOverview : NotificationObject
     {
@@ -232,17 +232,17 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// fiscal year end property
+        /// Issuer ID property
         /// </summary>
-        private string fiscalYearEnd;
-        public string FiscalYearend
+        private string issuerID;
+        public string IssuerID
         {
-            get { return fiscalYearEnd; }
+            get { return issuerID; }
             set
             {
-                if (fiscalYearEnd != value)
-                    fiscalYearEnd = value;
-                RaisePropertyChanged(() => this.FiscalYearend);
+                if (issuerID != value)
+                    issuerID = value;
+                RaisePropertyChanged(() => this.IssuerID);
             }
         }
 
@@ -336,7 +336,7 @@ namespace GreenField.Gadgets.ViewModels
                     this.SubIndustry = securityOverviewData.SubIndustry;
                     this.PrimaryAnalyst = securityOverviewData.PrimaryAnalyst;
                     this.Currency = securityOverviewData.Currency;
-                    this.FiscalYearend = securityOverviewData.FiscalYearend;
+                    this.IssuerID = securityOverviewData.IssuerID;
                     this.Website = securityOverviewData.Website;
                     this.Description = securityOverviewData.Description;
                 }

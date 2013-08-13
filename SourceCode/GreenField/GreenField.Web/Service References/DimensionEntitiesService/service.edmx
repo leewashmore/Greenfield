@@ -21,7 +21,9 @@
         <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="Model.GF_SECURITY_BASEVIEW" />
         <EntitySet Name="GF_SELECTION_BASEVIEW" EntityType="Model.GF_SELECTION_BASEVIEW" />
         <EntitySet Name="GF_TRANSACTIONS" EntityType="Model.GF_TRANSACTIONS" />
+        <EntitySet Name="GF_PRICING_MAX_DATES" EntityType="Model.GF_PRICING_MAX_DATES" />
         <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="Model.GF_PRICING_BASEVIEW" />
+        <EntitySet Name="GF_EQKEYS_WITH_SH_OUT_MINDATE" EntityType="Model.GF_EQKEYS_WITH_SH_OUT_MINDATE" />
       </EntityContainer>
       <EntityType Name="GF_BENCHMARK_HOLDINGS">
         <Key>
@@ -882,13 +884,25 @@
         <Property Name="VALUE_QC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="VALUE_SC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
       </EntityType>
+      <EntityType Name="GF_PRICING_MAX_DATES">
+        <Key>
+          <PropertyRef Name="TYPE" />
+          <PropertyRef Name="INSTRUMENT_ID" />
+        </Key>
+        <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+        <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="MIN_FROMDATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="MAX_FROMDATE" Type="Edm.DateTime" Nullable="true" />
+      </EntityType>
       <EntityType Name="GF_PRICING_BASEVIEW">
         <Key>
           <PropertyRef Name="GF_ID" />
+          <PropertyRef Name="TYPE" />
         </Key>
         <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
         <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
-        <Property Name="TYPE" Type="Edm.String" Nullable="true" MaxLength="9" Unicode="false" FixedLength="false" />
+        <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
         <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="FROMDATE" Type="Edm.DateTime" Nullable="true" />
@@ -898,6 +912,14 @@
         <Property Name="DAILY_GROSS_RETURN" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="VOLUME" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="DAILY_SPOT_FX" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+      </EntityType>
+      <EntityType Name="GF_EQKEYS_WITH_SH_OUT_MINDATE">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="EQUITYKEYS_SECIK" Type="Edm.Int32" Nullable="true" />
+        <Property Name="MIN_EQUITYKEYS_FROMDATE" Type="Edm.DateTime" Nullable="true" />
       </EntityType>
     </Schema>
   </edmx:DataServices>

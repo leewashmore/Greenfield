@@ -86,7 +86,7 @@ namespace GreenField.Web.Services
                         break;
                     case "Sector":
                         temp = (from iry in entity.GF_SECURITY_BASEVIEW
-                               select new { ASEC_SEC_COUNTRY_ZONE_NAME = iry.GICS_SECTOR_NAME }).AsEnumerable().Select(t => t.ASEC_SEC_COUNTRY_ZONE_NAME)
+                                select new { ASEC_SEC_COUNTRY_ZONE_NAME = iry.GICS_SECTOR_NAME }).AsEnumerable().Select(t => t.ASEC_SEC_COUNTRY_ZONE_NAME)
                                .Distinct().ToList();
                         break;
                     case "Industry":
@@ -482,16 +482,16 @@ namespace GreenField.Web.Services
 
                                 ExceptionTrace.LogInfo(";SecurityIds=" + (_securityIds == null ? "null" : _securityIds), "Start", "GetCustomScreeningREFData");
                                 List<CustomScreeningREFData> data = cstEntity.GetCustomScreeningREFData(_securityIds).ToList();
-                                ExceptionTrace.LogInfo(";SecurityIds=" + (_securityIds == null ? "null" : _securityIds), "End", "GetCustomScreeningREFData");                    
+                                ExceptionTrace.LogInfo(";SecurityIds=" + (_securityIds == null ? "null" : _securityIds), "End", "GetCustomScreeningREFData");
 
                                 foreach (CustomScreeningREFData record in data)
                                 {
-                                    CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();                                    
+                                    CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
 
                                     fillData.SecurityId = record.SECURITY_ID;
                                     fillData.AsecShortName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.AsecShortName).FirstOrDefault(); //record.ASEC_SEC_SHORT_NAME;
                                     fillData.IssueName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.IssueName).FirstOrDefault();
-                                    fillData.Type = referenceData.TABLE_COLUMN;                                    
+                                    fillData.Type = referenceData.TABLE_COLUMN;
                                     fillData.Multiplier = referenceData.MULTIPLIER;
                                     object amount = fillData.Multiplier != null ? Convert.ToDecimal(record.GetType().GetProperty(fillData.Type)
                                         .GetValue(record, null)) * fillData.Multiplier : record.GetType().GetProperty(fillData.Type)
@@ -501,7 +501,7 @@ namespace GreenField.Web.Services
                                     amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(amount), Convert.ToInt16(fillData.Decimals)) : amount;
                                     fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(amount) + "%" : Convert.ToString(amount)
                                                                                    : Convert.ToString(amount);
-                                    
+
                                     result.Add(fillData);
                                 }
                             }
@@ -519,7 +519,7 @@ namespace GreenField.Web.Services
                                         cstEntity.CommandTimeout = 5000;
                                         ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
                                             + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                            + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                            + ";DataId=" + item.DataID.ToString()
                                             + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
                                             + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
                                             + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
@@ -529,7 +529,7 @@ namespace GreenField.Web.Services
                                             item.FromDate, item.YearType, item.DataSource).ToList();
                                         ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
                                             + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                            + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                            + ";DataId=" + item.DataID.ToString()
                                             + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
                                             + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
                                             + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
@@ -541,7 +541,7 @@ namespace GreenField.Web.Services
                                         cstEntity.CommandTimeout = 5000;
                                         ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
                                             + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                            + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                            + ";DataId=" + item.DataID.ToString()
                                             + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
                                             + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
                                             + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
@@ -551,7 +551,7 @@ namespace GreenField.Web.Services
                                             item.YearType, item.DataSource).ToList();
                                         ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
                                             + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                            + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                            + ";DataId=" + item.DataID.ToString()
                                             + ";PeriodType=" + (item == null || item.DataSource == null ? "null" : item.PeriodType.Substring(0, 1))
                                             + ";FromDate=" + (item == null || item.DataSource == null ? "null" : item.FromDate.ToString())
                                             + ";YearType=" + (item == null || item.DataSource == null ? "null" : item.YearType)
@@ -597,13 +597,13 @@ namespace GreenField.Web.Services
                                 cstEntity.CommandTimeout = 5000;
                                 ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
                                     + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                    + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                    + ";DataId=" + item.DataID.ToString()
                                     + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
                                     , "Start", "GetCustomScreeningCURData");
                                 temp = cstEntity.GetCustomScreeningCURData(_issuerIds, _securityIds, item.DataID, item.DataSource).ToList();
                                 ExceptionTrace.LogInfo("IssuerIds=" + (_issuerIds == null ? "null" : _issuerIds)
                                     + ";SecurityIds=" + (_securityIds == null ? "null" : _securityIds)
-                                    + ";DataId=" + (item == null || item.DataID == null ? "null" : item.DataID.ToString())
+                                    + ";DataId=" + item.DataID.ToString()
                                     + ";DataSource=" + (item == null || item.DataSource == null ? "null" : item.DataSource)
                                     , "End", "GetCustomScreeningCURData");
                                 foreach (CustomScreeningCURData record in temp)
@@ -663,7 +663,7 @@ namespace GreenField.Web.Services
                                     fillData.Value = fillData.IsPercentage != null ? fillData.IsPercentage.Contains("Y") ? Convert.ToString(amount) + "%" : Convert.ToString(amount)
                                                                                    : Convert.ToString(amount);
                                     fillData.DataSource = item.DataSource;
-                             
+
                                     result.Add(fillData);
                                 }
                             }
@@ -690,8 +690,8 @@ namespace GreenField.Web.Services
                     }
                 }
 
-                #endregion    
-            
+                #endregion
+
                 ExceptionTrace.LogInfo(input, "End", "RetrieveSecurityData");
                 return result;
             }
@@ -730,7 +730,7 @@ namespace GreenField.Web.Services
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
 
                 result = entity.UpdateCustomScreeningDataPointsPreference(userPreference, username, existingListname, newListname, accessibility).FirstOrDefault();
-                
+
                 if (result < 0)
                 {
                     isSaveSuccessful = false;
@@ -772,7 +772,7 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// Retrieving Composite Fund Data 
+        /// Retrieving Composite Fund Data (for Holdings and Positioning gadget)
         /// </summary>
         /// <param name="entityIdentifiers">EntitySelectionData</param>
         /// <param name="portfolio">PortfolioSelectionData</param>
@@ -787,83 +787,53 @@ namespace GreenField.Web.Services
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
-                    throw new Exception("Services are not available"); 
+                    throw new Exception("Services are not available");
                 }
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 ExternalResearchEntities externalEntity = new ExternalResearchEntities();
 
                 List<CompositeFundData> result = new List<CompositeFundData>();
-                List<Portfolio_Security_Targets_Union> portfolioSecurityTargetsData = new List<Portfolio_Security_Targets_Union>();
                 List<GF_BENCHMARK_HOLDINGS> benchmarkData = new List<GF_BENCHMARK_HOLDINGS>();
-                List<GF_PORTFOLIO_HOLDINGS> portfolioHoldingsData = new List<GF_PORTFOLIO_HOLDINGS>();
+                List<GF_PORTFOLIO_HOLDINGS> portfolioHoldingsDataAll = new List<GF_PORTFOLIO_HOLDINGS>();
                 List<CompositeFundData> portfolioTargets = new List<CompositeFundData>();
-
-                #region Fetching and processing Portfolio_Security_Targets_Union data
-                portfolioSecurityTargetsData = externalEntity.Portfolio_Security_Targets_Union.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).ToList();
-
-                foreach (Portfolio_Security_Targets_Union item in portfolioSecurityTargetsData)
-                {
-                    GF_SECURITY_BASEVIEW specificSecurity = entity.GF_SECURITY_BASEVIEW
-                        .Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault();
-                    portfolioTargets.Add(new CompositeFundData()
-                    {
-                        SecurityId = item.SECURITY_ID,
-                        Target = item.TARGET_PCT,
-                        IssuerId = specificSecurity != null ? specificSecurity.ISSUER_ID : null,
-                        CountryName = specificSecurity != null ? specificSecurity.ISO_COUNTRY_CODE : null
-                    });
-                } 
-               
-                List<string> countryInPortfolioTargets = portfolioTargets.Select(a => a.CountryName).Distinct().ToList();
-                Dictionary<string, decimal> portfolioCountryTargets = new Dictionary<string, decimal>();
-
-                foreach (string item in countryInPortfolioTargets)
-                {
-                    if (item != null)
-                    {
-                        decimal targetSum = portfolioTargets.Where(a => a.CountryName == item).Sum(a => a.Target);
-                        portfolioCountryTargets.Add(item, targetSum);
-                    }
-                }
-                #endregion
 
                 string issuerId = entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == entityIdentifiers.InstrumentID).FirstOrDefault() != null ?
                 entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == entityIdentifiers.InstrumentID).FirstOrDefault().ISSUER_ID : null;
 
-                // GF_PORTFOLIO_HOLDINGS data
-                DateTime lastBusinessDatePortfolio = GetLastBusinessDate("PORTFOLIO_HOLDINGS");
-                    portfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.ISSUER_ID == issuerId && a.PORTFOLIO_ID == portfolio.PortfolioId
-                                                                                    && a.PORTFOLIO_DATE == lastBusinessDatePortfolio).ToList();
+                // GF_PORTFOLIO_HOLDINGS data all
+                DateTime lastBusinessDatePortfolio = GetLastBusinessDate("PORTFOLIO_HOLDINGS"); 
+                portfolioHoldingsDataAll = entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId
+                                 && a.PORTFOLIO_DATE == lastBusinessDatePortfolio).ToList();
 
-                 // GF_BENCHMARK_HOLDINGS data
-                    string benchmarkId = entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).FirstOrDefault() != null ?
-                        entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).FirstOrDefault().BENCHMARK_ID : null;
-                    Dictionary<string, decimal> benchmarkCountryData = new Dictionary<string, decimal>();
-                    if (benchmarkId != null)
+               // GF_BENCHMARK_HOLDINGS data
+                string benchmarkId = entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).FirstOrDefault() != null ?
+                    entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).FirstOrDefault().BENCHMARK_ID : null;
+                Dictionary<string, decimal> benchmarkCountryData = new Dictionary<string, decimal>();
+                if (benchmarkId != null)
+                {
+                    DateTime lastBusinessDateBenchmark = GetLastBusinessDate("BENCHMARK_HOLDINGS");
+                    benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benchmarkId && record.PORTFOLIO_DATE == lastBusinessDateBenchmark).ToList();
+
+                    List<string> countryInBenchmarkData = benchmarkData.Select(a => a.ISO_COUNTRY_CODE).Distinct().ToList();
+                    foreach (string item in countryInBenchmarkData)
                     {
-                        DateTime lastBusinessDateBenchmark = GetLastBusinessDate("BENCHMARK_HOLDINGS");  
-                        benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benchmarkId && record.PORTFOLIO_DATE == lastBusinessDateBenchmark).ToList();
-                        
-                        List<string> countryInBenchmarkData = benchmarkData.Select(a => a.ISO_COUNTRY_CODE).Distinct().ToList();
-                        foreach (string item in countryInBenchmarkData)
+                        if (item != null)
                         {
-                            if (item != null)
-                            {
-                                decimal benchmarkSum = Convert.ToDecimal(benchmarkData.Where(a => a.ISO_COUNTRY_CODE == item).Sum(a => a.BENCHMARK_WEIGHT));
-                                benchmarkCountryData.Add(item, benchmarkSum);
-                            }
+                            decimal benchmarkSum = Convert.ToDecimal(benchmarkData.Where(a => a.ISO_COUNTRY_CODE == item).Sum(a => a.BENCHMARK_WEIGHT));
+                            benchmarkCountryData.Add(item, benchmarkSum);
                         }
                     }
+                }
 
                 // issuer view checkbox is not checked 
-                CompositeFundData rowSecurityLevel = FillResultSetCompositeFund(entityIdentifiers.InstrumentID, issuerId, portfolioTargets, portfolioCountryTargets,
-                                                    benchmarkData, portfolioHoldingsData, benchmarkCountryData, false);                
+                CompositeFundData rowSecurityLevel = FillResultSetCompositeFund(entityIdentifiers.InstrumentID, issuerId, portfolioTargets, 
+                                                    benchmarkData, portfolioHoldingsDataAll, benchmarkCountryData, false);
                 result.Add(rowSecurityLevel);
 
                 // issuer view checkbox is checked
-                CompositeFundData rowIssuerLevel = FillResultSetCompositeFund(entityIdentifiers.InstrumentID, issuerId, portfolioTargets, portfolioCountryTargets,
-                                                   benchmarkData, portfolioHoldingsData, benchmarkCountryData, true);               
+                CompositeFundData rowIssuerLevel = FillResultSetCompositeFund(entityIdentifiers.InstrumentID, issuerId, portfolioTargets, 
+                                                   benchmarkData, portfolioHoldingsDataAll, benchmarkCountryData, true);
                 result.Add(rowIssuerLevel);
                 return result;
             }
@@ -926,7 +896,7 @@ namespace GreenField.Web.Services
                 ExternalResearchEntities externalEntity = new ExternalResearchEntities();
                 List<GF_SECURITY_BASEVIEW_Local> securitiesFromCustomControls = new List<GF_SECURITY_BASEVIEW_Local>();
                 List<CustomScreeningSecurityData> securityList = new List<CustomScreeningSecurityData>();
-               
+
                 if (portfolio != null)
                 {
                     List<GF_PORTFOLIO_HOLDINGS> securitiesFromPortfolio = new List<GF_PORTFOLIO_HOLDINGS>();
@@ -943,16 +913,16 @@ namespace GreenField.Web.Services
                     securitiesFromPortfolio = securitiesFromPortfolio.Distinct().ToList();
                     foreach (GF_PORTFOLIO_HOLDINGS item in securitiesFromPortfolio)
                     {
-                        
+
                         GF_SECURITY_BASEVIEW_Local securityIdRow = item.ASEC_SEC_SHORT_NAME != null
                             ? externalEntity.GF_SECURITY_BASEVIEW_Local.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME).FirstOrDefault() : null;
-                   
+
                         securityList.Add(new CustomScreeningSecurityData()
                         {
                             SecurityId = securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null,
                             IssuerId = item.ISSUER_ID,
                             IssueName = item.ISSUE_NAME,
-                            AsecShortName=securityIdRow != null ? securityIdRow.ASEC_SEC_SHORT_NAME.ToString():null
+                            AsecShortName = securityIdRow != null ? securityIdRow.ASEC_SEC_SHORT_NAME.ToString() : null
                         });
                     }
                     return securityList;
@@ -1001,7 +971,7 @@ namespace GreenField.Web.Services
                     {
                         securitiesList = securitiesList.Distinct().ToList();
                         securitiesFromCustomControls.AddRange(securitiesList);
-                    }                    
+                    }
                 }
                 if (securitiesFromCustomControls == null)
                 {
@@ -1049,7 +1019,7 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// method to perform calculations for composite fund gadget
+        /// method to perform calculations for composite fund gadget (also Holdings and Positioning gadget)
         /// </summary>
         /// <param name="InstrumentID"></param>
         /// <param name="issuerId"></param>
@@ -1060,56 +1030,62 @@ namespace GreenField.Web.Services
         /// <param name="benchmarkCountryData"></param>
         /// <param name="check"></param>
         /// <returns> calculated data for composite fund gadget</returns>
-        public CompositeFundData FillResultSetCompositeFund(string InstrumentID,string issuerId, List<CompositeFundData> portfolioTargets, 
-            Dictionary<string, decimal> portfolioCountryTargets, List<GF_BENCHMARK_HOLDINGS> benchmarkData, List<GF_PORTFOLIO_HOLDINGS> portfolioHoldingsData,
-            Dictionary<string, decimal> benchmarkCountryData,bool check)
+        public CompositeFundData FillResultSetCompositeFund(string InstrumentID, string issuerId, List<CompositeFundData> portfolioTargets,
+            List<GF_BENCHMARK_HOLDINGS> benchmarkData, List<GF_PORTFOLIO_HOLDINGS> portfolioHoldingsDataAll,
+            Dictionary<string, decimal> benchmarkCountryData, bool check)
         {
-             DimensionEntitiesService.Entities entity = DimensionEntity;
+            DimensionEntitiesService.Entities entity = DimensionEntity;
 
             Int32 securityId = entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).FirstOrDefault() != null ?
-                   Convert.ToInt32(entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).FirstOrDefault().SECURITY_ID) : 0;            
+                   Convert.ToInt32(entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).FirstOrDefault().SECURITY_ID) : 0;
             string country = entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).FirstOrDefault() != null ?
                 entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).FirstOrDefault().ISO_COUNTRY_CODE : null;
 
             CompositeFundData temp = new CompositeFundData();
-            decimal targetSumPortfolio, targetSumBenchmark, value;
-            decimal? objTarget = null, objTargetInCountry = null, objBenchmarkWeight = null, objBenchmarkWeightInCountry = null;
+            decimal targetSumBenchmark, value;
+            decimal? objPercent = null, objHoldingInCountry = null, objBenchmarkWeight = null, objBenchmarkWeightInCountry = null;
+ 
+            //Portfolio Holdings Percent
+            objPercent = check ? Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ISSUER_ID == issuerId)
+                      .Sum(a => a.DIRTY_VALUE_PC)) /
+                      Convert.ToDecimal(portfolioHoldingsDataAll.Sum(a => a.DIRTY_VALUE_PC))
+              : Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID)
+                      .Select(a => a.DIRTY_VALUE_PC).FirstOrDefault()) /
+                      Convert.ToDecimal(portfolioHoldingsDataAll.Sum(a => a.DIRTY_VALUE_PC));
+            temp.PortfolioTarget = objPercent != null ? Math.Round(Convert.ToDecimal(objPercent) * 100, 2) : Math.Round(Convert.ToDecimal(0.00));
 
-            //if (portfolioTargets.Select(a => a.SecurityId).ToList().Contains(securityId.ToString()))
-           // {
-                objTarget = check ? portfolioTargets.Where(a => a.IssuerId == issuerId).Sum(a => a.Target)
-                    : portfolioTargets.Where(a => a.SecurityId == securityId.ToString()).Sum(a => a.Target);
-           // }
-            //Portfolio Target 
-             temp.PortfolioTarget = objTarget != null ? Math.Round(Convert.ToDecimal(objTarget) * 100, 2) : Math.Round(Convert.ToDecimal(0.00)) ;
+
+            //Portfolio Holdings in Country 
+            objHoldingInCountry = check ? Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ISSUER_ID == issuerId).Sum(a => a.DIRTY_VALUE_PC)) /
+                        Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ISO_COUNTRY_CODE == country).Sum(a => a.DIRTY_VALUE_PC))
+                : Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).Select(a => a.DIRTY_VALUE_PC).FirstOrDefault()) /
+                        Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ISO_COUNTRY_CODE == country).Sum(a => a.DIRTY_VALUE_PC)) ;
+                temp.PortfolioTargetInCountry = objHoldingInCountry != null ? Math.Round(Convert.ToDecimal(objHoldingInCountry) * 100, 2) : Math.Round(Convert.ToDecimal(0.00));
+
+            //Holdins (mn)
+            temp.Holdings = check ? Math.Round(Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ISSUER_ID == issuerId)
+                                                                                             .Sum(a => a.DIRTY_VALUE_PC)) / Convert.ToDecimal(1000000), 1)
+               : Math.Round(Convert.ToDecimal(portfolioHoldingsDataAll.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID)
+                                                                             .Select(a => a.DIRTY_VALUE_PC).FirstOrDefault()) / Convert.ToDecimal(1000000), 1);
 
 
-            targetSumPortfolio = portfolioCountryTargets.TryGetValue(country, out value) ? value : 0;
-            if (targetSumPortfolio != 0)
-            {
-                objTargetInCountry = objTarget / targetSumPortfolio;
-                //Portfolio Target in Country 
-                temp.PortfolioTargetInCountry = objTargetInCountry != null ? Math.Round(Convert.ToDecimal(objTargetInCountry) * 100, 2) : Math.Round(Convert.ToDecimal(0.00));
-            }
-            temp.Holdings = check ? Math.Round(Convert.ToDecimal(portfolioHoldingsData.Where(a => a.ISSUER_ID == issuerId)
-                                                                                              .Sum(a => a.DIRTY_VALUE_PC)) / Convert.ToDecimal(1000000), 1)
-                : Math.Round(Convert.ToDecimal(portfolioHoldingsData.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID)
-                                                                              .Select(a => a.DIRTY_VALUE_PC).FirstOrDefault()) / Convert.ToDecimal(1000000), 1);
             if (benchmarkData.Count > 0)
             {
-                objBenchmarkWeight = check 
-                    ? Convert.ToDecimal(benchmarkData.Where(a => a.ISSUER_ID == issuerId).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()) / 100
+                objBenchmarkWeight = check
+                    //? Convert.ToDecimal(benchmarkData.Where(a => a.ISSUER_ID == issuerId).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()) / 100  //This was changed becayse it was not providing an accurate summed total for the issuers
+                    ? Convert.ToDecimal(benchmarkData.Where(a => a.ISSUER_ID == issuerId).ToList().Sum(a => a.BENCHMARK_WEIGHT)) / 100
                     : Convert.ToDecimal(benchmarkData.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()) / 100;
             }
             //Benchmark Weight 
             temp.BenchmarkWeight = objBenchmarkWeight != null ? Math.Round(Convert.ToDecimal(objBenchmarkWeight) * 100, 2) : Convert.ToDecimal(0.00);
             targetSumBenchmark = benchmarkCountryData.TryGetValue(country, out value) ? value / 100 : 0;
-            temp.BenchmarkWeightInCountry = Math.Round(0.00) ;
+            
+            //Benchmark Weight in Country 
+            temp.BenchmarkWeightInCountry = Math.Round(0.00);
             if (targetSumBenchmark != 0)
             {
                 objBenchmarkWeightInCountry = objBenchmarkWeight / targetSumBenchmark;
-                //Benchmark Weight in Country 
-                temp.BenchmarkWeightInCountry = objBenchmarkWeightInCountry != null ? Math.Round(Convert.ToDecimal(objBenchmarkWeightInCountry) * 100, 2) 
+                temp.BenchmarkWeightInCountry = objBenchmarkWeightInCountry != null ? Math.Round(Convert.ToDecimal(objBenchmarkWeightInCountry) * 100, 2)
                     : Math.Round(Convert.ToDecimal(0.00));
             }
 
@@ -1117,16 +1093,16 @@ namespace GreenField.Web.Services
             temp.ActivePosition = Math.Round(0.00);
             temp.ActivePositionInCountry = Math.Round(0.00);
 
-            if (objBenchmarkWeight != null && objTarget != null && objBenchmarkWeight!= null)
+            if (objBenchmarkWeight != null && objPercent != null && objBenchmarkWeight != null)
             {
                 //Active benchmark calc
-                temp.ActivePosition = Math.Round(Convert.ToDecimal(objTarget - objBenchmarkWeight) * 100, 2);
+                temp.ActivePosition = Math.Round(Convert.ToDecimal(objPercent - objBenchmarkWeight) * 100, 2);
             }
 
-            if (objBenchmarkWeightInCountry != null && objTargetInCountry != null && objBenchmarkWeightInCountry!= null)
+            if (objBenchmarkWeightInCountry != null && objHoldingInCountry != null && objBenchmarkWeightInCountry != null)
             {
                 //Active position in country calc 
-                temp.ActivePositionInCountry = Math.Round(Convert.ToDecimal(objTargetInCountry - objBenchmarkWeightInCountry) * 100, 2);
+                temp.ActivePositionInCountry = Math.Round(Convert.ToDecimal(objHoldingInCountry - objBenchmarkWeightInCountry) * 100, 2);
             }
             return temp;
         }
@@ -1152,8 +1128,8 @@ namespace GreenField.Web.Services
                             if (lastBusinessRecord != null)
                             {
                                 if (lastBusinessRecord.PORTFOLIO_DATE != null)
-                                { 
-                                    lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE); 
+                                {
+                                    lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
                                 }
                             }
                         }
@@ -1162,7 +1138,7 @@ namespace GreenField.Web.Services
                         {
                             //This was causing issues as there are 3 records being posted to the WCF for current day.  Had to add a little filtering. 
                             //GF_BENCHMARK_HOLDINGS lastBusinessRecord = entity.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
-                            GF_BENCHMARK_HOLDINGS lastBusinessRecord = 
+                            GF_BENCHMARK_HOLDINGS lastBusinessRecord =
                                 entity.GF_BENCHMARK_HOLDINGS.Where(g => g.BENCHMARK_ID == "MSCI EM NET").OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
                             if (lastBusinessRecord != null)
                             {

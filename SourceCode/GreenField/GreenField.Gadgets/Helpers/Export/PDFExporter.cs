@@ -59,16 +59,9 @@ namespace GreenField.Gadgets.Helpers
                     {
                         RadDocument document = CreateDocument(dataGrid, skipColumnDisplayIndex, cellValueOverwrite, columnAggregateOverWrite
                             , initialHeaderBlock);
-                        document.LayoutMode = layoutMode;
-                        document.SectionDefaultPageOrientation = orientation;
-                        document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
-                        document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
-
-                        document.ParagraphDefaultSpacingAfter = 0;
-                        document.PageViewMargin = new SizeF(0, 0);
-                        document.SectionDefaultPageMargin = new Padding(6);
-
-                        PdfFormatProvider provider = new PdfFormatProvider();
+                     //   document.LayoutMode = layoutMode;
+                      //  document.SectionDefaultPageOrientation = orientation;
+                         PdfFormatProvider provider = new PdfFormatProvider();
                         using (Stream output = dialog.OpenFile())
                         {
                             provider.Export(document, output);
@@ -79,16 +72,9 @@ namespace GreenField.Gadgets.Helpers
                 {
                     RadDocument document = CreateDocument(dataGrid, skipColumnDisplayIndex, cellValueOverwrite, columnAggregateOverWrite
                             , initialHeaderBlock);
-                    document.LayoutMode = layoutMode;
-                    document.SectionDefaultPageOrientation = orientation;
-                    document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
-                    document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
-
-                    document.ParagraphDefaultSpacingAfter = 0;
-                    document.PageViewMargin = new SizeF(0, 0);
-                    document.SectionDefaultPageMargin = new Padding(6);
-
-                    PdfFormatProvider provider = new PdfFormatProvider();
+               //     document.LayoutMode = layoutMode;
+                 //   document.SectionDefaultPageOrientation = orientation;
+                     PdfFormatProvider provider = new PdfFormatProvider();
                     provider.Export(document, stream);
                 }
             }
@@ -150,7 +136,8 @@ namespace GreenField.Gadgets.Helpers
         {
             try
             {
-                return CreateDocument(grid);
+                RadDocument document = CreateDocument(grid);
+                return document;
             }
             catch (Exception ex)
             {
@@ -170,7 +157,8 @@ namespace GreenField.Gadgets.Helpers
             try
             {
                 fontSizePDF = 8;
-                return CreateDocument(grid, skipColumnDisplayIndex);
+                RadDocument document = CreateDocument(grid, skipColumnDisplayIndex);
+                return document;
             }
             catch (Exception ex)
             {
@@ -231,14 +219,15 @@ namespace GreenField.Gadgets.Helpers
 
             Table table = new Table();
             RadDocument document = new RadDocument();
-            Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
-            document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
-            document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
             document.LayoutMode = DocumentLayoutMode.Paged;
+            document.SectionDefaultPageOrientation = PageOrientation.Portrait;
+            //document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+            //document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
             document.ParagraphDefaultSpacingAfter = document.ParagraphDefaultSpacingBefore = 0;
             document.PageViewMargin = new SizeF(0, 0);
             document.SectionDefaultPageMargin = new Padding(0, 0, 0, 0);
-            if (initialHeaderBlock != null)
+            Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+             if (initialHeaderBlock != null)
             {
                 Block result = initialHeaderBlock();
 
@@ -508,33 +497,6 @@ namespace GreenField.Gadgets.Helpers
                 headerRow.Cells.Add(cell);
             }
 
-           // table.Rows.Add(headerRow);
-
-            /*
-            TableRow aggregateRow = new TableRow();
-            //TableCell groupIndicatorCell = new TableCell() { Background = Color.FromArgb(255, 228, 229, 229) };
-            //aggregateRow.Cells.Add(groupIndicatorCell);
-
-            int j = 0;
-            for (int i = 0; i < columns.Count; i++)
-            {
-                if (columns[i].AggregateFunctions.Count.Equals(0))
-                {
-                    TableCell aggregatesCell = new TableCell() { Background = Color.FromArgb(255, 228, 229, 229) };
-                    aggregateRow.Cells.Add(aggregatesCell);
-                }
-                else
-                {
-                    TableCell aggregatesCell = new TableCell() { VerticalAlignment = RadVerticalAlignment.Center };
-                    aggregatesCell.Background = Color.FromArgb(255, 228, 229, 229);
-                    AddCellValue(aggregatesCell, group.AggregateResults[j].FormattedValue != null
-                        ? group.AggregateResults[j].FormattedValue.ToString() : string.Empty);
-                    aggregateRow.Cells.Add(aggregatesCell);
-                    j++;
-                }
-            }
-            table.Rows.Add(aggregateRow);
-             * */
         }
 
         /// <summary>

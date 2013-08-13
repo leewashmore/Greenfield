@@ -1,1 +1,1 @@
-Any script that needs to be run only one time during the deployment process has to be saved here.
+Any script that needs to be run only one time during the deployment process has to be saved here. Then move to CreateScripts once executed.

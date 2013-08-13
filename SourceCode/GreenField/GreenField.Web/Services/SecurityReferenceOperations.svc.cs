@@ -94,7 +94,7 @@ namespace GreenField.Web.Services
                         SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
                         PrimaryAnalyst = record.ASHMOREEMM_PRIMARY_ANALYST,
                         Currency = record.TRADING_CURRENCY,
-                        FiscalYearend = record.FISCAL_YEAR_END,
+                        IssuerID = record.ISSUER_ID,
                         Website = record.WEBSITE,
                         Description = record.BLOOMBERG_DESCRIPTION
                     });
@@ -111,7 +111,7 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// retrieving the security data on ticker filter
+        /// retrieving the security data on ticker filter (used by Company Overview gadget and maybe others)
         /// </summary>
         /// <returns>list of security overview data</returns>
         [OperationContract]
@@ -151,7 +151,7 @@ namespace GreenField.Web.Services
                     SubIndustry = data.GICS_SUB_INDUSTRY_NAME,
                     PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST,
                     Currency = data.TRADING_CURRENCY,
-                    FiscalYearend = data.FISCAL_YEAR_END,
+                    IssuerID = data.ISSUER_ID,
                     Website = data.WEBSITE,
                     Description = data.BLOOMBERG_DESCRIPTION
                 };
@@ -604,14 +604,15 @@ namespace GreenField.Web.Services
                 {
                     result.Add(new EntitySelectionData()
                         {
-                            ShortName = security.ASEC_SEC_SHORT_NAME,
-                            SecurityType = security.SECURITY_TYPE,
-                            SecurityId = security.SECURITY_ID,
-                            IssuerId = security.ISSUER_ID,
-                            LOOK_THRU_FUND = security.LOOK_THRU_FUND,
-                            Region_Code = security.ASHEMM_PROPRIETARY_REGION_CODE,
-                            Country_Code = security.ISO_COUNTRY_CODE,
-                            ISSUER_NAME = security.ISSUER_NAME
+                            ShortName       = security.ASEC_SEC_SHORT_NAME,
+                            SecurityType    = security.SECURITY_TYPE,
+                            SecurityId      = security.SECURITY_ID,
+                            IssuerId        = security.ISSUER_ID,
+                            LOOK_THRU_FUND  = security.LOOK_THRU_FUND,
+                            Region_Code     = security.ASHEMM_PROPRIETARY_REGION_CODE,
+                            Country_Code    = security.ISO_COUNTRY_CODE,
+                            ISSUER_NAME     = security.ISSUER_NAME,
+                            ISSUER_PROXY    =security.issuer_proxy   
                         });
                 }
 #if DEBUG

@@ -243,7 +243,7 @@ namespace GreenField.Web.Services
                     previousYearQuarterAmount = data.Where(a => a.ESTIMATE_DESC == data[i].ESTIMATE_DESC && a.PERIOD_YEAR == (data[i].PERIOD_YEAR - 1)
                         && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
 
-                    if (previousYearQuarterAmount == null || previousYearQuarterAmount == 0)
+                    if (previousYearQuarterAmount == 0)
                     {
                         temp.YOYGrowth = 0;
                     }
@@ -365,7 +365,7 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// Get data for Finstat Gadget
+        /// Get data for Finstat Gadget  //example of usage of Multiplier
         /// </summary>
         /// <param name="issuerId">string</param>
         /// <param name="securityId">string</param>
@@ -1195,7 +1195,7 @@ namespace GreenField.Web.Services
 
         #region Consensus Estimates Summary Gadget
         /// <summary>
-        /// Retrieve data for consensus Estimates Summary Gadget
+        /// Retrieve data for Consensus Estimates Summary Gadget (aka. Comparison with Consensus Gadget)
         /// </summary>
         /// <param name="entityIdentifier">Security identifier selected by the user</param>
         /// <returns>Returns data in the list of type ConsensusEstimatesSummaryData</returns>
@@ -1498,11 +1498,11 @@ namespace GreenField.Web.Services
                 List<GreenField.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.COASpecificData>();
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 research.CommandTimeout = 5000;
-                result = research.GetDataForPeriodGadgets(_dataSource, _fiscalType, cCurrency, issuerId, securityId.ToString()).ToList();
+                result = research.GetDataForPeriodGadgets(_dataSource, _fiscalType, cCurrency, issuerId, securityId.ToString()).ToList();  //Retrieve data for Summary of Financials and Valuations gadget.
                 foreach (GreenField.DAL.COASpecificData item in result)
                 {
                     GreenField.DataContracts.COASpecificData entry = new GreenField.DataContracts.COASpecificData();
-                    entry.Amount = item.Amount;
+                    entry.Amount = item.Amount * item.Multiplier;  //add in Multiplier logic
                     entry.AmountType = item.AmountType;
                     entry.DataSource = item.DataSource;
                     entry.Decimals = item.Decimals;
@@ -1515,6 +1515,7 @@ namespace GreenField.Web.Services
                     entry.RootSource = item.RootSource;
                     entry.ShowGrid = item.ShowGrid;
                     entry.SortOrder = item.SortOrder;
+                    entry.Multiplier = item.Multiplier;
                     mainResult.Add(entry);
                 }
                 return mainResult;

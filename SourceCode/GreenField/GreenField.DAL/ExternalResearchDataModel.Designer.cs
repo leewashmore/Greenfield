@@ -8,15 +8,15 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.ComponentModel;
-using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Linq;
-using System.Runtime.Serialization;
+using System.Data.EntityClient;
+using System.ComponentModel;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+
 namespace GreenField.DAL
 {
     #region Contexts
@@ -450,7 +450,6 @@ namespace GreenField.DAL
         private ObjectSet<COMPOSITE_MATRIX> _COMPOSITE_MATRIX;
 
         #endregion
-
         #region AddTo Methods
     
         /// <summary>
@@ -646,7 +645,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Function Imports
     
         /// <summary>
@@ -3741,11 +3739,11 @@ namespace GreenField.DAL
         }
 
         #endregion
-
     }
+    
 
     #endregion
-
+    
     #region Entities
     
     /// <summary>
@@ -3772,7 +3770,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -3830,7 +3827,6 @@ namespace GreenField.DAL
         partial void OnBENCHMARK_NAMEChanged();
 
         #endregion
-
     
     }
     
@@ -3856,7 +3852,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -3983,7 +3978,6 @@ namespace GreenField.DAL
         partial void OnACTIVEChanged();
 
         #endregion
-
     
     }
     
@@ -4011,7 +4005,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -4093,7 +4086,6 @@ namespace GreenField.DAL
         partial void OnACTIVEChanged();
 
         #endregion
-
     
     }
     
@@ -4151,7 +4143,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -4614,7 +4605,6 @@ namespace GreenField.DAL
         partial void OnAMOUNT_TYPEChanged();
 
         #endregion
-
     
     }
     
@@ -4656,7 +4646,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -5119,7 +5108,6 @@ namespace GreenField.DAL
         partial void OnMaxValueChanged();
 
         #endregion
-
     
     }
     
@@ -5153,7 +5141,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -5340,7 +5327,6 @@ namespace GreenField.DAL
         partial void OnASHEMM_PROPRIETARY_REGION_CODEChanged();
 
         #endregion
-
     
     }
     
@@ -5378,7 +5364,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -5643,7 +5628,6 @@ namespace GreenField.DAL
         partial void OnPERIOD_YEARChanged();
 
         #endregion
-
     
     }
     
@@ -5673,7 +5657,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -5806,7 +5789,6 @@ namespace GreenField.DAL
         partial void OnAVG12MonthRATEChanged();
 
         #endregion
-
     
     }
     
@@ -5832,7 +5814,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -6799,7 +6780,6 @@ namespace GreenField.DAL
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanged();
 
         #endregion
-
     
     }
     
@@ -6825,7 +6805,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -7624,7 +7603,6 @@ namespace GreenField.DAL
         partial void OnLOOK_THRU_FUNDChanged();
 
         #endregion
-
     
     }
     
@@ -7650,7 +7628,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -9241,7 +9218,6 @@ namespace GreenField.DAL
         partial void OnUPDATE_BB_STATUSChanged();
 
         #endregion
-
     
     }
     
@@ -9269,7 +9245,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -9375,7 +9350,6 @@ namespace GreenField.DAL
         partial void OnLastIndustryModelLoadChanged();
 
         #endregion
-
     
     }
     
@@ -9405,7 +9379,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -9490,7 +9463,6 @@ namespace GreenField.DAL
         partial void OnSHARES_OUTSTANDINGChanged();
 
         #endregion
-
     
     }
     
@@ -9518,7 +9490,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -9600,7 +9571,6 @@ namespace GreenField.DAL
         partial void OnPREFERREDChanged();
 
         #endregion
-
     
     }
     
@@ -9634,7 +9604,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -9791,7 +9760,6 @@ namespace GreenField.DAL
         partial void OnUPDATE_SOURCEChanged();
 
         #endregion
-
     
     }
     
@@ -9827,7 +9795,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -10041,7 +10008,6 @@ namespace GreenField.DAL
         partial void OnHELP_TEXTChanged();
 
         #endregion
-
     
     }
     
@@ -10073,7 +10039,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -10185,7 +10150,6 @@ namespace GreenField.DAL
         partial void OnLONG_TERM_GDP_GRChanged();
 
         #endregion
-
     
     }
     
@@ -10213,7 +10177,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -10271,7 +10234,6 @@ namespace GreenField.DAL
         partial void OnANALYST_NAMEChanged();
 
         #endregion
-
     
     }
     
@@ -10325,7 +10287,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -10758,7 +10719,6 @@ namespace GreenField.DAL
         partial void OnAMOUNT_TYPEChanged();
 
         #endregion
-
     
     }
     
@@ -10798,7 +10758,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -11042,7 +11001,6 @@ namespace GreenField.DAL
         partial void OnMULTIPLIERChanged();
 
         #endregion
-
     
     }
     
@@ -11072,7 +11030,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -11445,7 +11402,6 @@ namespace GreenField.DAL
         partial void OnISSUER_NAMEChanged();
 
         #endregion
-
     
     }
     
@@ -11477,7 +11433,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -11589,7 +11544,6 @@ namespace GreenField.DAL
         partial void OnUPDATEDChanged();
 
         #endregion
-
     
     }
     
@@ -11619,7 +11573,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -11728,7 +11681,6 @@ namespace GreenField.DAL
         partial void OnUPDATEDChanged();
 
         #endregion
-
     
     }
     
@@ -11762,7 +11714,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -11901,12 +11852,10 @@ namespace GreenField.DAL
         partial void OnADR_CONVChanged();
 
         #endregion
-
     
     }
 
     #endregion
-
     #region ComplexTypes
     
     /// <summary>
@@ -11935,7 +11884,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -12107,7 +12055,6 @@ namespace GreenField.DAL
         partial void OnReported_CurrencyChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -12127,18 +12074,19 @@ namespace GreenField.DAL
         /// <param name="gridDesc">Initial value of the GridDesc property.</param>
         /// <param name="isPercentage">Initial value of the IsPercentage property.</param>
         /// <param name="sortOrder">Initial value of the SortOrder property.</param>
-        public static COASpecificData CreateCOASpecificData(global::System.Int32 gridId, global::System.String gridDesc, global::System.String isPercentage, global::System.Int32 sortOrder)
+        /// <param name="multiplier">Initial value of the Multiplier property.</param>
+        public static COASpecificData CreateCOASpecificData(global::System.Int32 gridId, global::System.String gridDesc, global::System.String isPercentage, global::System.Int32 sortOrder, global::System.Decimal multiplier)
         {
             COASpecificData cOASpecificData = new COASpecificData();
             cOASpecificData.GridId = gridId;
             cOASpecificData.GridDesc = gridDesc;
             cOASpecificData.IsPercentage = isPercentage;
             cOASpecificData.SortOrder = sortOrder;
+            cOASpecificData.Multiplier = multiplier;
             return cOASpecificData;
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -12452,9 +12400,32 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _PeriodYear;
         partial void OnPeriodYearChanging(Nullable<global::System.Int32> value);
         partial void OnPeriodYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Multiplier
+        {
+            get
+            {
+                return _Multiplier;
+            }
+            set
+            {
+                OnMultiplierChanging(value);
+                ReportPropertyChanging("Multiplier");
+                _Multiplier = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Multiplier");
+                OnMultiplierChanged();
+            }
+        }
+        private global::System.Decimal _Multiplier;
+        partial void OnMultiplierChanging(global::System.Decimal value);
+        partial void OnMultiplierChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -12507,7 +12478,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -12919,7 +12889,6 @@ namespace GreenField.DAL
         partial void OnACTUALChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -12972,7 +12941,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -13384,7 +13352,6 @@ namespace GreenField.DAL
         partial void OnACTUALChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -13409,7 +13376,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -13581,7 +13547,6 @@ namespace GreenField.DAL
         partial void OncurrencyChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -13618,7 +13583,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -14030,7 +13994,6 @@ namespace GreenField.DAL
         partial void OnACTUALChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -14055,7 +14018,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -14083,7 +14045,6 @@ namespace GreenField.DAL
         partial void OnCurrencyChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -14110,7 +14071,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -14210,7 +14170,6 @@ namespace GreenField.DAL
         partial void OnCONVERT_FLAGChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -14239,7 +14198,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -14315,7 +14273,6 @@ namespace GreenField.DAL
         partial void OnFISCALChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -14368,7 +14325,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -14756,7 +14712,6 @@ namespace GreenField.DAL
         partial void OnAMOUNT_TYPEChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -14787,7 +14742,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -14887,7 +14841,6 @@ namespace GreenField.DAL
         partial void OnFREE_CASH_FLOWChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -14914,7 +14867,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -14966,7 +14918,6 @@ namespace GreenField.DAL
         partial void OnDATA_IDChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -15003,7 +14954,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -15175,7 +15125,6 @@ namespace GreenField.DAL
         partial void OnDataTypeChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -15206,7 +15155,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -15306,7 +15254,6 @@ namespace GreenField.DAL
         partial void OnTypeChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -15339,7 +15286,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -15679,7 +15625,6 @@ namespace GreenField.DAL
         partial void OnCalculationDiagramChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -15710,7 +15655,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -16050,7 +15994,6 @@ namespace GreenField.DAL
         partial void OnCalculationDiagramChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -16091,7 +16034,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -16455,7 +16397,6 @@ namespace GreenField.DAL
         partial void OnDATA_DESCChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -16484,7 +16425,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -16632,7 +16572,6 @@ namespace GreenField.DAL
         partial void OnVALUEChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -16669,7 +16608,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -16841,7 +16779,6 @@ namespace GreenField.DAL
         partial void OnVALUEChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -16872,7 +16809,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -16972,7 +16908,6 @@ namespace GreenField.DAL
         partial void OnFX_RATEChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -17034,7 +16969,6 @@ namespace GreenField.DAL
         partial void OnENTERPRISE_VALUEChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -17061,7 +16995,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -17209,7 +17142,6 @@ namespace GreenField.DAL
         partial void OnShares_OutstandingChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -17391,7 +17323,6 @@ namespace GreenField.DAL
         partial void OnDATA_IDChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -17418,7 +17349,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -17518,7 +17448,6 @@ namespace GreenField.DAL
         partial void OnPERIOD_YEARChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -17964,7 +17893,6 @@ namespace GreenField.DAL
         partial void OnroeChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -18146,7 +18074,6 @@ namespace GreenField.DAL
         partial void OnShares_OutstandingChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -18171,7 +18098,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -18487,7 +18413,6 @@ namespace GreenField.DAL
         partial void OnMeanLabelChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -18530,7 +18455,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -18798,7 +18722,6 @@ namespace GreenField.DAL
         partial void OnUNITSChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -18833,7 +18756,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -18981,7 +18903,6 @@ namespace GreenField.DAL
         partial void OnDOCUMENT_IDChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -19259,7 +19180,6 @@ namespace GreenField.DAL
         partial void Onperiod_yearChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -19290,7 +19210,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -19390,7 +19309,6 @@ namespace GreenField.DAL
         partial void OnValueChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -19443,7 +19361,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -19831,7 +19748,6 @@ namespace GreenField.DAL
         partial void OnSortOrderChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -19856,7 +19772,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -19884,7 +19799,6 @@ namespace GreenField.DAL
         partial void OnAMOUNTChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -20090,7 +20004,6 @@ namespace GreenField.DAL
         partial void OnPeriodYearChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -20656,7 +20569,6 @@ namespace GreenField.DAL
         partial void OnXREFChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -20790,7 +20702,6 @@ namespace GreenField.DAL
         partial void OnVALUATIONChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -20817,7 +20728,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -20869,7 +20779,6 @@ namespace GreenField.DAL
         partial void OnCOAChanged();
 
         #endregion
-
     }
     
     /// <summary>
@@ -20908,7 +20817,6 @@ namespace GreenField.DAL
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -21104,10 +21012,8 @@ namespace GreenField.DAL
         partial void OnAmountTypeChanged();
 
         #endregion
-
     }
 
     #endregion
-
     
 }

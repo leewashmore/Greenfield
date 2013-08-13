@@ -34,7 +34,7 @@ namespace GreenField.Gadgets.Views
 
         #region Constructor
         /// <summary>
-        /// Constructor
+        /// Constructor - Company Overview gadget
         /// </summary>
         /// <param name="dataContextSource"></param>
         public ViewSecurityOverview(ViewModelSecurityOverview dataContextSource)

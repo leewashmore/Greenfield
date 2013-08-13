@@ -642,13 +642,13 @@ namespace GreenField.Gadgets.ViewModels
                             ActivePosition = group.Sum(x => x.RePortfolioWeight ?? 0.0m) - sumBenchmarkWeight,
                             AsecSecShortName = null,//group.Key  -do not display anything in the grouped line
                             AshEmmModelWeight = group.Sum(x => x.AshEmmModelWeight ?? 0.0m),
-                            BalanceNominal = null,   //group.Sum(x => x.BalanceNominal ?? 0.0m), do not show qty in total line
+                            BalanceNominal = group.Where(x => x.SecurityId == x.Issuer_Proxy).Select(x => x.BalanceNominal).FirstOrDefault(),   //display  values from issuer_proxy securities
                             BenchmarkWeight = group.Sum(x => x.BenchmarkWeight),  //main.BenchmarkWeight, sum benchmark weight
                             DirtyValuePC = group.Sum(x => x.DirtyValuePC ?? 0.0m),
-                            ForwardEB_EBITDA = null, //main.ForwardEB_EBITDA, do not show value in the grouped line
-                            ForwardPE = null,//main.ForwardPE, do not show value in the grouped line
-                            ForwardPBV = null, //main.ForwardPBV, do not show value in the grouped line
-                            FreecashFlowMargin = null,//main.FreecashFlowMargin, do not show value in the grouped line
+                            ForwardEB_EBITDA = group.Where(x => x.SecurityId == x.Issuer_Proxy).Select(x => x.ForwardEB_EBITDA).FirstOrDefault(),   //display  values from issuer_proxy securities
+                            ForwardPE = group.Where(x => x.SecurityId == x.Issuer_Proxy).Select(x => x.ForwardPE).FirstOrDefault(),   //display  values from issuer_proxy securities
+                            ForwardPBV = group.Where(x => x.SecurityId == x.Issuer_Proxy).Select(x => x.ForwardPBV).FirstOrDefault(),   //display  values from issuer_proxy securities
+                            FreecashFlowMargin = group.Where(x => x.SecurityId == x.Issuer_Proxy).Select(x => x.FreecashFlowMargin).FirstOrDefault(),   //display  values from issuer_proxy securities
                             FromDate = main.FromDate,
                             IndustryName = main.IndustryName,
                             IsoCountryCode = main.IsoCountryCode,
@@ -656,7 +656,7 @@ namespace GreenField.Gadgets.ViewModels
                             IssuerId = main.IssuerId,
                             MarketCap = main.MarketCap,
                             MarketCapUSD = main.MarketCapUSD,
-                            NetDebtEquity = null, //main.NetDebtEquity,do not show value in the grouped line
+                            NetDebtEquity = group.Where(x => x.SecurityId == x.Issuer_Proxy).Select(x => x.NetDebtEquity).FirstOrDefault(),   //display  values from issuer_proxy securities
                             NetIncomeGrowthCurrentYear = main.NetIncomeGrowthCurrentYear,
                             NetIncomeGrowthNextYear = main.NetIncomeGrowthNextYear,
                             PfcHoldingPortfolio = String.Join(", ", group.Select(x => x.PfcHoldingPortfolio).ToArray()),
@@ -669,13 +669,13 @@ namespace GreenField.Gadgets.ViewModels
                             ReBenchmarkWeight = sumBenchmarkWeight, //main.ReBenchmarkWeight,sum benchmark weight
                             RevenueGrowthCurrentYear = main.RevenueGrowthCurrentYear,
                             RevenueGrowthNextYear = main.RevenueGrowthNextYear,
-                            ROE = null,// main.ROE, do not show value in the grouped line
+                            ROE = group.Where(x => x.SecurityId == x.Issuer_Proxy).Select(x => x.ROE).FirstOrDefault(),   //display  values from issuer_proxy securities
                             SectorName = main.SectorName,
                             SecurityId = main.SecurityId,
                             SecurityThemeCode = main.SecurityThemeCode,
                             SecurityType = main.SecurityType,
                             SubIndustryName = main.SubIndustryName,
-                            Ticker = main.Ticker,
+                            Ticker = group.Where(x => x.SecurityId == x.Issuer_Proxy).Select(x => x.Ticker).FirstOrDefault(),   //display  values from issuer_proxy securities
                             TradingCurrency = main.TradingCurrency,
                             Type = main.Type,
                             Upside = main.Upside,

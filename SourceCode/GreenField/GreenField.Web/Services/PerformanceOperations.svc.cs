@@ -52,7 +52,8 @@ namespace GreenField.Web.Services
         #region PerformanceServices
 
         /// <summary>
-        /// Service Method for RelativePerformanceUI gadget
+        /// Service Method for RelativePerformanceUI gadget (Relative Performance)
+        ///     *Results will be empty if WCF does not have data for the previous day
         /// </summary>
         /// <param name="objSelectedEntity">details of selected Portfolio & Security</param>
         /// <param name="objEffectiveDate">selected effective Date</param>
@@ -60,6 +61,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         public List<RelativePerformanceUIData> RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime objEffectiveDate)
         {
+            //objEffectiveDate = Convert.ToDateTime("7/5/2013"); //For Debugging puposes only. When running against older WCF, the results will likely be empty.  This is because the WCF will likely not contain previous business days data.  Can reset date here to debug.
             try
             {
                 bool isServiceUp = false;
@@ -72,6 +74,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<RelativePerformanceUIData>();
                 }
+
                 List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
                 //create new Entity for service
                 DimensionEntitiesService.Entities entity = DimensionEntity;
@@ -89,6 +92,10 @@ namespace GreenField.Web.Services
                     throw new Exception("Data Services are not available");
                 }
                 #endregion
+
+                //Reset the objEffectiveDate to the maxdate available to avoid days like weekends when no performace data is available 
+                objEffectiveDate = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.NODE_NAME == "GICS Level 1" && a.PORTFOLIO == "EMIF").Select(g => new { g.TO_DATE }).ToList()
+                        .Select(x => x.TO_DATE.Value)).Distinct().Max();
 
                 countryName = securityBaseData.Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
                 sectorName = securityBaseData.Select(a => a.GICS_SECTOR_NAME).ToList();

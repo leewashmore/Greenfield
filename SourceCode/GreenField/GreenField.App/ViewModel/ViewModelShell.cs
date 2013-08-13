@@ -220,7 +220,7 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        private Boolean _enableGadget = false;
+        private Boolean _enableGadget = false; 
         public Boolean EnableGadget
         {
             get { return _enableGadget; }
@@ -2380,7 +2380,7 @@ namespace GreenField.App.ViewModel
         #region Dashboard
         #region Company
         #region Snapshot
-        private void DashboardCompanySnapshotSummaryCommandMethod(object param)
+        private void DashboardCompanySnapshotSummaryCommandMethod(object param) 
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
@@ -3606,7 +3606,7 @@ namespace GreenField.App.ViewModel
         }
 
         /// <summary>
-        /// GadgetSecurityOverviewCommand Execution Method - Add Gadget - SECURITY_OVERVIEW
+        /// GadgetSecurityOverviewCommand Execution Method - Add Gadget - SECURITY_OVERVIEW (Company Overview)
         /// </summary>
         /// <param name="param">SenderInfo</param>
         private void GadgetSecurityOverviewCommandMethod(object param)
