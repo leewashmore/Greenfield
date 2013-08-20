@@ -94,7 +94,7 @@ where pfh.DATA_ID in (166,164,192)
 select * 
 into #Issuer
 from #PFH pfh
-where pfh.DATA_ID in (104,133,177,124,290)
+where pfh.DATA_ID in (104,133,149,177,124,290)
 
 
 --Pivot data
@@ -128,7 +128,10 @@ select p.*,
 	i9.amount as BV,
 	i10.amount as BV1,
 	i11.amount as DIV,
-	i12.amount as DIV1
+	i12.amount as DIV1,
+	i13.amount as DEBTEQYM1,
+	i14.amount as DEBTEQY,
+	i15.amount as DEBTEQY1	
 into #PortfolioHistory	
 from #PH1 p
 left join #Current c1 on p.security_id = c1.security_id and c1.data_id = 185  --Market Cap
@@ -161,6 +164,9 @@ left join #Issuer i9 on p.issuer_id = i9.issuer_id and i9.data_id = 104 and i9.p
 left join #Issuer i10 on p.issuer_id = i10.issuer_id and i10.data_id = 104 and i10.period_year = @RelPeriod1  --BV Year+1  
 left join #Issuer i11 on p.issuer_id = i11.issuer_id and i11.data_id = 124 and i11.period_year = @RelPeriod  --DIV Year  
 left join #Issuer i12 on p.issuer_id = i12.issuer_id and i12.data_id = 124 and i12.period_year = @RelPeriod1  --DIV Year+1  
+left join #Issuer i13 on p.issuer_id = i13.issuer_id and i13.data_id = 149 and i13.period_year = @RelPeriodM1  --Debt/Equity Year-1  
+left join #Issuer i14 on p.issuer_id = i14.issuer_id and i14.data_id = 149 and i14.period_year = @RelPeriod  --Debt/Equity Year  
+left join #Issuer i15 on p.issuer_id = i15.issuer_id and i15.data_id = 149 and i15.period_year = @RelPeriod1  --Debt/Equity Year+1  
 
 
 declare @PEM1 char(6) =   'PE' + cast(@RelPeriodM1 as char(4)) 
@@ -184,6 +190,9 @@ declare @BV char(6) =   'BV' + cast(@RelPeriod as char(4))
 declare @BV1 char(6) =   'BV' + cast(@RelPeriod1 as char(4))
 declare @DIV char(7) =   'DIV' + cast(@RelPeriod as char(4))
 declare @DIV1 char(7) =   'DIV' + cast(@RelPeriod1 as char(4))
+declare @DEBTEQYM1 char(11) =   'DEBTEQY' + cast(@RelPeriodM1 as char(4))
+declare @DEBTEQY char(11) =   'DEBTEQY' + cast(@RelPeriod as char(4))
+declare @DEBTEQY1 char(11) =   'DEBTEQY' + cast(@RelPeriod1 as char(4))
 
 exec tempdb..sp_rename '#PortfolioHistory.PEM1',@PEM1,'COLUMN'
 exec tempdb..sp_rename '#PortfolioHistory.PE',@PE,'COLUMN'
@@ -206,6 +215,9 @@ exec tempdb..sp_rename '#PortfolioHistory.BV',@BV,'COLUMN'
 exec tempdb..sp_rename '#PortfolioHistory.BV1',@BV1,'COLUMN'
 exec tempdb..sp_rename '#PortfolioHistory.DIV',@DIV,'COLUMN'
 exec tempdb..sp_rename '#PortfolioHistory.DIV1',@DIV1,'COLUMN'
+exec tempdb..sp_rename '#PortfolioHistory.DEBTEQYM1',@DEBTEQYM1,'COLUMN'
+exec tempdb..sp_rename '#PortfolioHistory.DEBTEQY',@DEBTEQY,'COLUMN'
+exec tempdb..sp_rename '#PortfolioHistory.DEBTEQY1',@DEBTEQY1,'COLUMN'
 
 select * 
 from #PortfolioHistory
@@ -220,4 +232,5 @@ drop table #PFH
 drop table #Current
 drop table #Security
 drop table #Issuer
+
 go
