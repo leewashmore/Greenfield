@@ -549,9 +549,8 @@ namespace GreenField.Web.Services
                     {
                         FinstatDetailData tempData = new FinstatDetailData();
                         tempData.GroupDescription = "Economic & Market Data";
-                        tempData.Description = Convert.ToString(item.FIELD)
-                            .Replace("INFLATION_PCT", "Inflation %")
-                            .Replace("ST_INTEREST_RATE", "ST Interest Rate");
+
+                  
                         tempData.PeriodYear = Convert.ToInt32(item.YEAR1);
                         tempData.AmountType = "A";
                         tempData.PeriodType = "A";
@@ -560,8 +559,13 @@ namespace GreenField.Web.Services
                         tempData.RootSource = _dataSource;
                         tempData.RootSourceDate = DateTime.Now;
                         if (!String.IsNullOrEmpty(item.FIELD) && (item.FIELD.Contains("INFLATION_PCT") || item.FIELD.Contains("ST_INTEREST_RATE")))
+                        {
                             tempData.Decimals = 1;
-                        tempData.Amount = Math.Round((Convert.ToDecimal(item.VALUE) * 100), 1);
+                            tempData.Amount = Math.Round((Convert.ToDecimal(item.VALUE) * 100), 1);
+                            tempData.Description = Convert.ToString(item.FIELD)
+                                                .Replace("INFLATION_PCT", "Inflation %")
+                                                .Replace("ST_INTEREST_RATE", "ST Interest Rate");
+                        }
                         result.Add(tempData); 
                     }
                 }

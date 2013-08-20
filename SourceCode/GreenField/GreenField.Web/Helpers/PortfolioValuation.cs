@@ -133,5 +133,18 @@ namespace GreenField.Web.Helpers
         public decimal? nextYearROE { get; set; }
         public decimal? nextYearROEContr { get; set; }
 
+        public decimal? currYearNetDebtEquity { get; set; }
+        public decimal? currYearWeightNetDebtEquity { get; set; }
+        public decimal? currYearWeightNetDebtEquityContr { get; set; }
+
+        public decimal? previousYearNetDebtEquity { get; set; }
+        public decimal? previousYearWeightNetDebtEquity { get; set; }
+        public decimal? previousYearWeightNetDebtEquityContr { get; set; }
+
+        public decimal? NextYearNetDebtEquity { get; set; }
+        public decimal? nextYearWeightNetDebtEquity { get; set; }
+        public decimal? nextYearWeightNetDebtEquityContr { get; set; }
+
+
     }
 }
