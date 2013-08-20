@@ -39,6 +39,7 @@ AND gcl.PORTFOLIO_DATE = @PortDate
 and gsb.SECURITY_ID not in (select SECURITY_ID from dbo.monitoring_security_suppress)
 group by gcl.ASEC_SEC_SHORT_NAME
 
+
 select max('BENCHMARK') as Type, 
 max(bm.issuer_id) as ISSUER_ID, 
 bm.ASEC_SEC_SHORT_NAME, 
