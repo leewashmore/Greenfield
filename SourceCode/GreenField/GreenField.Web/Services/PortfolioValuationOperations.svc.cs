@@ -41,6 +41,10 @@ namespace GreenField.Web.Services
 
             List<GetIssuerLevelPFDataForMarketing_Result> pfCurrYearROE = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 133, "PRIMARY", "USD", "A", dt.Year, "CALENDAR").ToList();
             List<GetIssuerLevelPFDataForMarketing_Result> pfNextYearROE = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 133, "PRIMARY", "USD", "A", dt.Year + 1, "CALENDAR").ToList();
+            List<GetIssuerLevelPFDataForMarketing_Result> pfCurrYearNetDebtEquity = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 149, "PRIMARY", "USD", "A", dt.Year, "CALENDAR").ToList();
+            List<GetIssuerLevelPFDataForMarketing_Result> pfNextYearNetDebtEquity = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 149, "PRIMARY", "USD", "A", dt.Year + 1, "CALENDAR").ToList();
+            List<GetIssuerLevelPFDataForMarketing_Result> pfPreviousYearNetDebtEquity = entity.GetIssuerLevelPFDataForMarketing(portfolio_id, dt, 149, "PRIMARY", "USD", "A", dt.Year - 1, "CALENDAR").ToList();
+
 
 
            
@@ -91,6 +95,9 @@ namespace GreenField.Web.Services
                 pv.nextYearPB = pfNextYearPBList.Where(x => x.issuer_id == issuers.issuer_id && x.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.fwdPB = pfForwardPBList.Where(x => x.issuer_id == issuers.issuer_id && x.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
                 pv.fwdPE = pfForwardPEList.Where(x => x.issuer_id == issuers.issuer_id && x.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
+                pv.currYearNetDebtEquity = pfCurrYearNetDebtEquity.Where(x => x.issuer_id == issuers.issuer_id && x.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
+                pv.previousYearNetDebtEquity = pfPreviousYearNetDebtEquity.Where(x => x.issuer_id == issuers.issuer_id && x.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
+                pv.NextYearNetDebtEquity = pfNextYearNetDebtEquity.Where(x => x.issuer_id == issuers.issuer_id && x.asec_Sec_Short_name == issuers.asec_sec_short_name).Select(v => v.value).FirstOrDefault();
 
 
                 if (pv.dirtvaluepc != null && pv.earnings != null && pv.marketcap != null)
@@ -221,6 +228,11 @@ namespace GreenField.Web.Services
              decimal? nextYeartotalMarketValueEGrowth = pfValuation.Where(g => g.nextYearEGrowth.HasValue).Sum(g => g.dirtvaluepc);
              decimal? totalMarketValueROE = pfValuation.Where(g => g.currYearROE.HasValue).Sum(g => g.dirtvaluepc);
              decimal? nextYeartotalMarketValueROE = pfValuation.Where(g => g.nextYearROE.HasValue).Sum(g => g.dirtvaluepc);
+             decimal? totalMarketValueCurrNetDebtEquity = pfValuation.Where(g => g.currYearNetDebtEquity.HasValue).Sum(g => g.dirtvaluepc);
+             decimal? totalMarketValueNextYearNetDebtEquity = pfValuation.Where(g => g.NextYearNetDebtEquity.HasValue).Sum(g => g.dirtvaluepc);
+             decimal? totalMarketValuePreviousYearNetDebtEquity = pfValuation.Where(g => g.previousYearNetDebtEquity.HasValue).Sum(g => g.dirtvaluepc);
+
+
              DataScrubber d = new DataScrubber();
              foreach (var pfData in pfValuation)
              {
@@ -410,6 +422,21 @@ namespace GreenField.Web.Services
                      pfData.nextYearROEContr = pfData.nextYearWeightROE * pfData.nextYearROE;
                  }
 
+                 //Current Weighted Net Debt to Equity
+
+                 if (pfData.dirtvaluepc != null && pfData.currYearNetDebtEquity != null)
+                 {
+                     pfData.currYearWeightNetDebtEquity = pfData.dirtvaluepc / totalMarketValueCurrNetDebtEquity;
+                 }
+                 if (pfData.currYearNetDebtEquity != null)
+                 {
+
+                     pfData.currYearNetDebtEquity = d.doRangeScrubbing(pfData.currYearNetDebtEquity, 149);
+                 }
+                 if (pfData.currYearWeightNetDebtEquity != null && pfData.currYearNetDebtEquity != null)
+                 {
+                     pfData.currYearWeightNetDebtEquityContr = pfData.currYearWeightNetDebtEquity * pfData.currYearNetDebtEquity;
+                 }
 
              }
           
@@ -452,6 +479,9 @@ namespace GreenField.Web.Services
 
              decimal? nextYearWeightedROE = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.nextYearROEContr);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 1, 133, nextYearWeightedROE);
+
+             decimal? currYearWeightedNetDebtEquity = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.currYearWeightNetDebtEquityContr);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 0, 149, currYearWeightedNetDebtEquity);
          }
 
          private void MedianMethodology(List<PortfolioValuation> pfValuation, String portfolio_id, MarketingEntities entity, DateTime effDate)
@@ -490,6 +520,9 @@ namespace GreenField.Web.Services
             list = pfValuation.Where(g => g.nextYearROE.HasValue).Select(g => g.nextYearROE).ToList();
             decimal? mediannextYearROE = GroupCalculations.Median(list);
 
+            list = pfValuation.Where(g => g.currYearNetDebtEquity.HasValue).Select(g => g.currYearNetDebtEquity).ToList();
+            decimal? mediancurrYearNetDebtEquity = GroupCalculations.Median(list);
+
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 166, medianCurrPE);
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 308, medianfwdPE);//Change from 187 to 308 per Justin
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 166, nextyearPE);
@@ -503,6 +536,7 @@ namespace GreenField.Web.Services
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 177, mediannextYearEGrowth);
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 133, medianCurrROE);
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 133, mediannextYearROE);
+            entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 149, mediancurrYearNetDebtEquity);
          }
 
          private void SimpleAverageMethodology(List<PortfolioValuation> pfValuation, String portfolio_id, MarketingEntities entity, DateTime effDate)
@@ -548,6 +582,9 @@ namespace GreenField.Web.Services
              list = pfValuation.Where(g => g.nextYearROE.HasValue).Select(g => g.nextYearROE).ToList();
              decimal? averagenextYearROE = GroupCalculations.SimpleAverage(list);
 
+             list = pfValuation.Where(g => g.currYearNetDebtEquity.HasValue).Select(g => g.currYearNetDebtEquity).ToList();
+             decimal? averagecurrentYearNetDebtEquity = GroupCalculations.SimpleAverage(list);
+
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 166, averageCurrYearPE);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 308, averageFwdPE); //Change from 187 to 308 per Justin
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 1, 166, averagenextyearPE);
@@ -561,6 +598,7 @@ namespace GreenField.Web.Services
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 1, 177, averagenextYearEGrowth);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 133, averagecurrentYearROE);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 1, 133, averagenextYearROE);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 149, averagecurrentYearNetDebtEquity);
 
 
          }
