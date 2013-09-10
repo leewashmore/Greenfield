@@ -38,6 +38,32 @@ from #S1
 group by issuer_id
 
 
+--Select BGA weight
+
+declare @PortDate datetime
+declare @PortValue decimal(22,8)
+
+select @PortDate = MAX(gcl.PORTFOLIO_DATE)
+from dbo.GF_COMPOSITE_LTHOLDINGS gcl
+where gcl.PORTFOLIO_ID = 'EQYBGA'
+
+select @PortValue = SUM(gcl.DIRTY_VALUE_PC)
+from dbo.GF_COMPOSITE_LTHOLDINGS gcl
+where gcl.PORTFOLIO_DATE = @PortDate and gcl.PORTFOLIO_ID = 'EQYBGA'
+
+select gcl.ASEC_SEC_SHORT_NAME as SHORT_NAME, gcl.DIRTY_VALUE_PC as MKT_VALUE, gcl.DIRTY_VALUE_PC/@PortValue as BGA_WEIGHT 
+into #S3
+from dbo.GF_COMPOSITE_LTHOLDINGS gcl
+where gcl.PORTFOLIO_ID = 'EQYBGA' and gcl.PORTFOLIO_DATE = @PortDate
+
+--Last Analyst Upload
+select ints.ISSUER_ID, MAX(ints.root_source_date) as ANALYST_UPDATE
+into #S4 
+from dbo.INTERNAL_STATEMENT ints
+where ints.ROOT_SOURCE = 'PRIMARY'
+group by ISSUER_ID
+
+
 --Extract Security level data
 
 select * 
@@ -51,7 +77,6 @@ and pf.PERIOD_TYPE in ('C')
 and pf.DATA_ID in (185,186,236,198,238,188,187,189)
 
 select s.security_id, 
-
 	s2.amount as PBV_BF24,
 	s3.amount as PE_BF24,
 	s4.amount as PCE_BF24,
@@ -102,7 +127,10 @@ where fv.VALUE_TYPE = 'PRIMARY'
 
 --Join it all together
 select a.*, 
-	fv.updated AS FV_UPDATED, 
+	B.MKT_VALUE,
+	B.BGA_WEIGHT,
+	C.ANALYST_UPDATE,
+	fv.updated AS FV_UPDATE, 
 	fv.data_desc as FV_MEASURE,
 	fv.fv_buy as BUY,
 	fv.fv_sell as SELL,
@@ -124,6 +152,8 @@ select a.*,
  	F.DIVIDENDS_BF24
 --into #Screening	
 from #S1 a
+left join #S3 b on a.short_name = b.SHORT_NAME
+left join #S4 c on a.issuer_id = c.issuer_id
 left join #SecLevel e on a.security_id = E.security_id
 left join #IssLevel f on a.issuer_id = f.issuer_id
 left join #FV fv on a.security_id = fv.security_id
@@ -146,6 +176,8 @@ exec master..xp_cmdshell @sql
 
 drop table #Issuers
 drop table #S1
+drop table #S3
+drop table #S4
 drop table #S5
 drop table #S6
 drop table #SecLevel
