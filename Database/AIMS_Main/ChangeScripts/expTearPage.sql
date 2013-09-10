@@ -31,7 +31,7 @@ where pf.ISSUER_ID = @ISSUER_ID
 and pf.DATA_SOURCE = 'PRIMARY'
 and pf.FISCAL_TYPE = 'FISCAL'
 and pf.PERIOD_TYPE = 'A'
-and pf.DATA_ID in ('37','51','92','104','116','118','130','133','140','144','157','162','178','190','220','225','290')
+and pf.DATA_ID in ('37','51','92','104','116','118','130','133','140','141','144','157','162','178','190','220','225','290')
 
 
 --Add Current Period Based Fields
