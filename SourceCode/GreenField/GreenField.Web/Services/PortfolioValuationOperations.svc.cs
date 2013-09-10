@@ -438,6 +438,42 @@ namespace GreenField.Web.Services
                      pfData.currYearWeightNetDebtEquityContr = pfData.currYearWeightNetDebtEquity * pfData.currYearNetDebtEquity;
                  }
 
+
+                 //Previous Year Weighted Net Debt to Equity
+
+                 if (pfData.dirtvaluepc != null && pfData.previousYearNetDebtEquity != null)
+                 {
+                     pfData.previousYearWeightNetDebtEquity = pfData.dirtvaluepc / totalMarketValuePreviousYearNetDebtEquity;
+                 }
+                 if (pfData.previousYearNetDebtEquity != null)
+                 {
+
+                     pfData.previousYearNetDebtEquity = d.doRangeScrubbing(pfData.previousYearNetDebtEquity, 149);
+                 }
+                 if (pfData.previousYearWeightNetDebtEquity != null && pfData.previousYearNetDebtEquity != null)
+                 {
+                     pfData.previousYearWeightNetDebtEquityContr = pfData.previousYearWeightNetDebtEquity * pfData.previousYearNetDebtEquity;
+                 }
+
+
+                 //Next Year Weighted Net Debt to Equity
+
+                 if (pfData.dirtvaluepc != null && pfData.NextYearNetDebtEquity != null)
+                 {
+                     pfData.nextYearWeightNetDebtEquity = pfData.dirtvaluepc / totalMarketValueNextYearNetDebtEquity;
+                 }
+                 if (pfData.NextYearNetDebtEquity != null)
+                 {
+
+                     pfData.NextYearNetDebtEquity = d.doRangeScrubbing(pfData.NextYearNetDebtEquity, 149);
+                 }
+                 if (pfData.nextYearWeightNetDebtEquity != null && pfData.NextYearNetDebtEquity != null)
+                 {
+                     pfData.nextYearWeightNetDebtEquityContr = pfData.nextYearWeightNetDebtEquity * pfData.NextYearNetDebtEquity;
+                 }
+
+
+
              }
           
              decimal? pfWeightPE = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.currYearPEContr);
@@ -482,6 +518,13 @@ namespace GreenField.Web.Services
 
              decimal? currYearWeightedNetDebtEquity = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.currYearWeightNetDebtEquityContr);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 0, 149, currYearWeightedNetDebtEquity);
+
+             decimal? previousYearWeightedNetDebtEquity = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.previousYearWeightNetDebtEquityContr);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", -1, 149, previousYearWeightedNetDebtEquity);
+
+             decimal? nextYearWeightedNetDebtEquity = pfValuation.Where(g => g.portfolio_id == portfolio_id).Sum(data => data.nextYearWeightNetDebtEquityContr);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "WEIGHTED", 1, 149, nextYearWeightedNetDebtEquity);
+
          }
 
          private void MedianMethodology(List<PortfolioValuation> pfValuation, String portfolio_id, MarketingEntities entity, DateTime effDate)
@@ -523,6 +566,12 @@ namespace GreenField.Web.Services
             list = pfValuation.Where(g => g.currYearNetDebtEquity.HasValue).Select(g => g.currYearNetDebtEquity).ToList();
             decimal? mediancurrYearNetDebtEquity = GroupCalculations.Median(list);
 
+            list = pfValuation.Where(g => g.previousYearNetDebtEquity.HasValue).Select(g => g.previousYearNetDebtEquity).ToList();
+            decimal? medianPreviousYearNetDebtEquity = GroupCalculations.Median(list);
+
+            list = pfValuation.Where(g => g.NextYearNetDebtEquity.HasValue).Select(g => g.NextYearNetDebtEquity).ToList();
+            decimal? medianNextYearNetDebtEquity = GroupCalculations.Median(list);
+
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 166, medianCurrPE);
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 308, medianfwdPE);//Change from 187 to 308 per Justin
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 166, nextyearPE);
@@ -537,6 +586,8 @@ namespace GreenField.Web.Services
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 133, medianCurrROE);
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 133, mediannextYearROE);
             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 0, 149, mediancurrYearNetDebtEquity);
+            entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", -1, 149, medianPreviousYearNetDebtEquity);
+            entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "MEDIAN", 1, 149, medianNextYearNetDebtEquity);
          }
 
          private void SimpleAverageMethodology(List<PortfolioValuation> pfValuation, String portfolio_id, MarketingEntities entity, DateTime effDate)
@@ -585,6 +636,13 @@ namespace GreenField.Web.Services
              list = pfValuation.Where(g => g.currYearNetDebtEquity.HasValue).Select(g => g.currYearNetDebtEquity).ToList();
              decimal? averagecurrentYearNetDebtEquity = GroupCalculations.SimpleAverage(list);
 
+
+             list = pfValuation.Where(g => g.previousYearNetDebtEquity.HasValue).Select(g => g.previousYearNetDebtEquity).ToList();
+             decimal? averagePreviousYearNetDebtEquity = GroupCalculations.SimpleAverage(list);
+
+             list = pfValuation.Where(g => g.NextYearNetDebtEquity.HasValue).Select(g => g.NextYearNetDebtEquity).ToList();
+             decimal? averageNextYearNetDebtEquity = GroupCalculations.SimpleAverage(list);
+
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 166, averageCurrYearPE);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 308, averageFwdPE); //Change from 187 to 308 per Justin
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 1, 166, averagenextyearPE);
@@ -599,6 +657,8 @@ namespace GreenField.Web.Services
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 133, averagecurrentYearROE);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 1, 133, averagenextYearROE);
              entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 0, 149, averagecurrentYearNetDebtEquity);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", -1, 149, averagePreviousYearNetDebtEquity);
+             entity.SaveUpdatedPortfolioValuation(effDate, portfolio_id, "AVERAGE", 1, 149, averageNextYearNetDebtEquity);
 
 
          }
