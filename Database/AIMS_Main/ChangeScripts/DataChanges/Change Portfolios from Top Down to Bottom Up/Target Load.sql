@@ -30,7 +30,7 @@ select * into #Targets from
 --select * from #Targets
 
 --Loop through Portfolios
-SELECT @PortfolioID = min( NAME ) from [AIMS_Main].[dbo].[PORTFOLIO] where IS_BOTTOM_UP = 0
+SELECT @PortfolioID = min( ID ) from [AIMS_Main].[dbo].[PORTFOLIO] where IS_BOTTOM_UP = 0 and ID in('ABPEQ','BIRCH','EMIF','EMSF','GRD7','IOWA','KODAK','OPB','PRIT','SICVEF','USEF')
 
 while @PortfolioID is not null
 begin
@@ -52,7 +52,7 @@ begin
 	from #ID order by ID desc
 	--select @ChangeSetID as ChangeSetID
 
-	insert into [BU_PORTFOLIO_SECURITY_TARGET_CHANGESET] (  [ID], [USERNAME], [TIMESTAMP], [CALCULATION_ID]) values (@ChangeSetID, 'test6', GETDATE(), @CalcID)
+	insert into [BU_PORTFOLIO_SECURITY_TARGET_CHANGESET] (  [ID], [USERNAME], [TIMESTAMP], [CALCULATION_ID]) values (@ChangeSetID, 'MIGRATE', GETDATE(), @CalcID)
 	truncate table #ID
 
 	--Loop through Securities
@@ -89,7 +89,7 @@ begin
 
 
 --Loop through Portfolios
-	select @PortfolioID = min( NAME ) from [AIMS_Main].[dbo].[PORTFOLIO] where NAME > @PortfolioID and IS_BOTTOM_UP = 0
+	select @PortfolioID = min( ID ) from [AIMS_Main].[dbo].[PORTFOLIO] where NAME > @PortfolioID and IS_BOTTOM_UP = 0 ID in('ABPEQ','BIRCH','EMIF','EMSF','GRD7','IOWA','KODAK','OPB','PRIT','SICVEF','USEF')
 end
 
 
