@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AIMS_MainModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="AIMS_MainModelStoreContainer" />
+        <Function Name="expAimsMktCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AIMS_MainModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="AIMS_Entities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="expAimsMktCap" ReturnType="Collection(AIMS_MainModel.expAimsMktCap_Result)" />
+        </EntityContainer>
+        <ComplexType Name="expAimsMktCap_Result">
+          <Property Type="String" Name="Root_Source_Date" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" Nullable="true" MaxLength="255" />
+          <Property Type="Decimal" Name="amount" Nullable="false" Precision="32" Scale="6" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AIMS_MainModelStoreContainer" CdmEntityContainer="AIMS_Entities" >
+          <FunctionImportMapping FunctionImportName="expAimsMktCap" FunctionName="AIMS_MainModel.Store.expAimsMktCap">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AIMS_MainModel.expAimsMktCap_Result">
+                <ScalarProperty Name="Root_Source_Date" ColumnName="Root_Source_Date" />
+                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="AimsEntities" >
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
