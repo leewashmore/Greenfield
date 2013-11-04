@@ -93,7 +93,7 @@ namespace GreenField.Web.Helpers
         {
             decimal? weightAve ; 
 
-            if (totalValue != null)
+            if (totalValue != null && totalValue != 0)
             {
                 weightAve = 0;
                 for (int i = 0; i < numerator.Count; i++)
