@@ -4,11 +4,30 @@
 ALTER TABLE [Country_Master]
 	ADD remove_t_shares BIT DEFAULT 0 NOT NULL;
 
+
 /* Update based on list from BB */
+EXEC('
 UPDATE [Country_Master]
 	SET remove_t_shares = 1
-	WHERE COUNTRY_CODE not in ('AR','BS','BD','BB','BM','CA','CN','GE','IN','IE','IL','JM','MY','PK','PA','PH','SG','LK','TH','TT','GB','VN')
+	WHERE COUNTRY_CODE not in 
+	(''AR'',''BS'',''BD'',''BB'',''BM'',''CA'',''CN'',''GE'',''IN''
+	,''IE'',''IL'',''JM'',''MT'',''MY'',''PK'',''PA'',''PH'',''SG''
+	,''LK'',''TH'',''TT'',''GB'',''VN'')
+');
+
 	
-/* Update the GF_Security_Baseview table with field to hold Treasury Shares from Issuers Total Outstanding Shares */
-ALTER TABLE [GF_Security_Baseview]
-	ADD remove_t_shares BIT DEFAULT 0 NOT NULL;
+/* Back Out Changes */
+declare @Command  nvarchar(1000)
+select @Command = 'ALTER TABLE ' + 'Country_Master' + ' drop constraint ' + d.name
+ from sys.tables t   
+  join    sys.default_constraints d       
+   on d.parent_object_id = t.object_id  
+  join    sys.columns c      
+   on c.object_id = t.object_id      
+    and c.column_id = d.parent_column_id
+ where t.name = 'Country_Master'
+  and c.name = 'remove_t_shares'
+  print @Command
+execute (@Command)
+ALTER TABLE [dbo].[Country_Master] DROP COLUMN remove_t_shares
+
