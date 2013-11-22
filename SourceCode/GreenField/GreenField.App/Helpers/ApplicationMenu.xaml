@@ -84,14 +84,12 @@
                             x:Name="rmItemAssetAllocation"
                             Style="{StaticResource RadSecondLevelMenuItemStyle}"
                             Command="{Binding TargetingBroadGlobalActiveCommand}"
-                            IsEnabled="{Binding EnableGadget}"
                         />
                         <telerik:RadMenuItem
                             Header="Stock Selection"
                             x:Name="rmItemStockSelection"
                             Style="{StaticResource RadSecondLevelMenuItemStyle}"
                             Command="{Binding TargetingBasketTargetsCommand}"
-                            IsEnabled="{Binding EnableGadget}"
                         />
                         <telerik:RadMenuItem
                             Header="Bottom Up"
