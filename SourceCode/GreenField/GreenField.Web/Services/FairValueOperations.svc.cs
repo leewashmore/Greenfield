@@ -269,7 +269,17 @@ namespace GreenField.Web.Services
                     }
                     else
                     {
-                        upsideValue = (decimal)(editedFairValueData.Sell / amountValue) - 1;
+                        if (dataId != null && dataId != 236)
+                        {
+                            upsideValue = (decimal)(editedFairValueData.Sell / amountValue) - 1;
+                        }
+                        else
+                        {
+                            if (editedFairValueData.Sell != 0)
+                            {
+                                upsideValue = (decimal)(amountValue / (editedFairValueData.Sell / 100)) - 1;
+                            }
+                        }
                     }
                 }
 
