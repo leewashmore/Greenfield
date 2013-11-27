@@ -16,6 +16,7 @@
   <xs:complexType name="PortfolioSelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" name="BenchmarkId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsComposite" type="xs:boolean" />
       <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioThemeSubGroupId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioThemeSubGroupName" nillable="true" type="xs:string" />
@@ -168,6 +169,8 @@
       <xs:element minOccurs="0" name="IsoCountryCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssuerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Issuer_Proxy" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MarketCap" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="MarketCapUSD" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="NetDebtEquity" nillable="true" type="xs:decimal" />
@@ -175,6 +178,7 @@
       <xs:element minOccurs="0" name="NetIncomeGrowthNextYear" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PfcHoldingPortfolio" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioDirtyValuePC" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioPath" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="ProprietaryRegionCode" nillable="true" type="xs:string" />

@@ -17,7 +17,7 @@ namespace GreenField.Web.Helpers
         /// <param name="dimensionPortfolioHoldingsData">Collection GF_PORTFOLIO_HOLDINGS retrieved from Dimension</param>
         /// <param name="portfolioSelectionData">Data of Currently selected Portfolio</param>
         /// <returns>Collection of Asset Allocation Data</returns>
-        public static List<AssetAllocationData> CalculateAssetAllocationValues(List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData, List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData, PortfolioSelectionData portfolioSelectionData)
+        public static List<AssetAllocationData> CalculateAssetAllocationValues(List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData, List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData, PortfolioSelectionData portfolioSelectionData)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace GreenField.Web.Helpers
         /// <param name="dimensionPortfolioLTHoldingsData">Collection GF_PORTFOLIO_LTHOLDINGS retrieved from Dimension</param>
         /// <param name="portfolioSelectionData">Data of Currently selected Portfolio</param>
         /// <returns>Collection of Asset Allocation Data</returns>
-        public static List<AssetAllocationData> CalculateAssetAllocationValuesLT(List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData, List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData, PortfolioSelectionData portfolioSelectionData)
+        public static List<AssetAllocationData> CalculateAssetAllocationValuesLT(List<GreenField.DAL.GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData, List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData, PortfolioSelectionData portfolioSelectionData)
         {
             try
             {

@@ -4,7 +4,6 @@
   <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
   <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
   <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
-  <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DimensionEntitiesService" />
   <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd9" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:element name="RetrieveIssuerId">
     <xs:complexType>
@@ -234,7 +233,7 @@
   <xs:element name="RetrieveRatioSecurityReferenceDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.Web.DimensionEntitiesService" minOccurs="0" name="RetrieveRatioSecurityReferenceDataResult" nillable="true" type="q32:ArrayOfGF_SECURITY_BASEVIEW" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveRatioSecurityReferenceDataResult" nillable="true" type="q32:ArrayOfGF_SECURITY_BASEVIEW" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

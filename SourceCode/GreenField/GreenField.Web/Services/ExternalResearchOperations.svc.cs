@@ -38,7 +38,7 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Instance of DimensionService
         /// </summary>
-        private Entities dimensionEntity;
+        /*private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
@@ -46,6 +46,19 @@ namespace GreenField.Web.Services
                 if (null == dimensionEntity)
                     dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
 
+                return dimensionEntity;
+            }
+        }*/
+
+        private DimensionEntities dimensionEntity;
+        public DimensionEntities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                {
+                    dimensionEntity = new GreenField.DAL.DimensionEntities();
+                }
                 return dimensionEntity;
             }
         }
@@ -80,7 +93,7 @@ namespace GreenField.Web.Services
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
-                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
                         record.ISSUE_NAME == entitySelectionData.LongName &&
                         record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
@@ -96,7 +109,7 @@ namespace GreenField.Web.Services
                 String sectorName = securityDetails.GICS_SECTOR_NAME;
                 String industryCode = securityDetails.GICS_INDUSTRY;
                 String industryName = securityDetails.GICS_INDUSTRY_NAME;
-                int? securityID = securityDetails.SECURITY_ID;
+                int? securityID = int.Parse(securityDetails.SECURITY_ID);
                 String issueName = securityDetails.ISSUE_NAME;
                 String subIndustryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
                 String ticker = securityDetails.TICKER;
@@ -818,7 +831,7 @@ namespace GreenField.Web.Services
                     return null;
                 }
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -829,7 +842,7 @@ namespace GreenField.Web.Services
                 }
 
                 //Retrieving data from security view
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
                         && record.ISSUE_NAME == entitySelectionData.LongName
                         && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
@@ -842,14 +855,14 @@ namespace GreenField.Web.Services
                 }
 
                 BasicData basicData = new BasicData();
-                basicData.WeekRange52Low = data.FIFTYTWO_WEEK_LOW;
-                basicData.WeekRange52High = data.FIFTYTWO_WEEK_HIGH;
-                basicData.AverageVolume = data.SECURITY_VOLUME_AVG_6M;
-                basicData.SharesOutstanding = data.SHARES_OUTSTANDING;
+                basicData.WeekRange52Low = (decimal?)data.FIFTYTWO_WEEK_LOW;
+                basicData.WeekRange52High = (decimal?)data.FIFTYTWO_WEEK_HIGH;
+                basicData.AverageVolume = (decimal?)data.SECURITY_VOLUME_AVG_6M;
+                basicData.SharesOutstanding = (decimal?)data.SHARES_OUTSTANDING;
 
                 if (data.BARRA_BETA != null)
                 {
-                    basicData.Beta = data.BARRA_BETA;
+                    basicData.Beta = (decimal?)data.BARRA_BETA;
                     basicData.BetaSource = "BARRA";
                 }
                 else
@@ -912,8 +925,8 @@ namespace GreenField.Web.Services
             {
                 return new List<TargetPriceCEData>();
             }
-            DimensionEntitiesService.Entities dimensionEntity = DimensionEntity;
-            List<GF_SECURITY_BASEVIEW> securityData = (dimensionEntity.GF_SECURITY_BASEVIEW.
+            DimensionEntities dimensionEntity = DimensionEntity;
+            List<GreenField.DAL.GF_SECURITY_BASEVIEW> securityData = (dimensionEntity.GF_SECURITY_BASEVIEW.
                 Where(a => a.ISSUE_NAME.ToUpper().Trim() == entitySelectionData.LongName.ToUpper().Trim()).ToList());
             if (securityData == null)
                 return result;
@@ -1100,7 +1113,7 @@ namespace GreenField.Web.Services
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
                 decimal? previousYearQuarterAmount;
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-                GF_SECURITY_BASEVIEW securityData = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == longName).FirstOrDefault();
+               GreenField.DAL.GF_SECURITY_BASEVIEW securityData = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == longName).FirstOrDefault();
                 string securityId;
                 if (securityData == null)
                 {
@@ -1242,7 +1255,7 @@ namespace GreenField.Web.Services
             {
                 int dataID;
                 List<QuarterlyResultsData> result = new List<QuarterlyResultsData>();
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 research.CommandTimeout = 3000;
                 if (fieldValue == "Revenue")
@@ -1282,7 +1295,7 @@ namespace GreenField.Web.Services
                 if (entitySelectionData == null)
                     return null;
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -1291,7 +1304,7 @@ namespace GreenField.Web.Services
                     throw new Exception("Services are not available");
 
                 //Retrieving data from security view
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW svcData = entity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW svcData = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
                         && record.ISSUE_NAME == entitySelectionData.LongName
                         && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
@@ -1301,7 +1314,7 @@ namespace GreenField.Web.Services
                 if (svcData == null)
                     return null;
                 //execute store proc giving securityId as an input parameter
-                int? securityId = svcData.SECURITY_ID;
+                int? securityId = int.Parse(svcData.SECURITY_ID);
 
                 if (chartTitle == "EV/EBITDA")
                 {
@@ -1462,7 +1475,7 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<GF_SECURITY_BASEVIEW> RetrieveRatioSecurityReferenceData(ScatterGraphContext context, IssuerReferenceData issuerDetails)
+        public List<GreenField.DAL.GF_SECURITY_BASEVIEW> RetrieveRatioSecurityReferenceData(ScatterGraphContext context, IssuerReferenceData issuerDetails)
         {
             try
             {
@@ -1563,9 +1576,9 @@ namespace GreenField.Web.Services
                 List<String> distinctSecuritiesForBenchmark = new List<String>();
                 Dictionary<String, String> listForPortfolio = new Dictionary<string, string>();
                 Dictionary<String, String> listForBenchmark = new Dictionary<string, string>();
-                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dataPortfolio = new List<GF_PORTFOLIO_HOLDINGS>();
-                List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> dataBenchmark = new List<GF_BENCHMARK_HOLDINGS>();
-                List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> dataPortfolioLookThruDis = new List<GF_PORTFOLIO_LTHOLDINGS>();
+                List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> dataPortfolio = new List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS>();
+                List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> dataBenchmark = new List<GreenField.DAL.GF_BENCHMARK_HOLDINGS>();
+                List<GreenField.DAL.GF_PORTFOLIO_LTHOLDINGS> dataPortfolioLookThruDis = new List<GreenField.DAL.GF_PORTFOLIO_LTHOLDINGS>();
                 //lists for filtering all data according to Data Id's
                 List<CalculatedValuesForValuation> valuesPortForAllDataIds = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesBenchForAllDataIds = new List<CalculatedValuesForValuation>();
@@ -1590,7 +1603,7 @@ namespace GreenField.Web.Services
                 int check = 1;
                 int checkBen = 1;
                 String benchmarkId = null;
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
@@ -1699,7 +1712,7 @@ namespace GreenField.Web.Services
                     }
                     foreach (String issueName in distinctSecuritiesForPortfolio)
                     {
-                        GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
+                        GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
                          .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
                         if (securityDetails != null)
                         {
@@ -1714,7 +1727,7 @@ namespace GreenField.Web.Services
 
                     foreach (String issueName in distinctSecuritiesForBenchmark)
                     {
-                        GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
+                        GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
                          .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
                         if (securityDetails != null)
                         {
@@ -1774,7 +1787,7 @@ namespace GreenField.Web.Services
                             }
                             foreach (String s in dinstinctIssuerIdsForPortfolio)
                             {
-                                foreach (GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUER_ID == s).ToList())
+                                foreach (GreenField.DAL.GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUER_ID == s).ToList())
                                 {
                                     CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
                                     objPort.IssuerId = s;
@@ -1788,7 +1801,7 @@ namespace GreenField.Web.Services
                             }
                             foreach (String s in distinctSecurityNamesForPortfolio)
                             {
-                                foreach (GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUE_NAME == s).ToList())
+                                foreach (GreenField.DAL.GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUE_NAME == s).ToList())
                                 {
                                     CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
                                     objPort.SecurityId = listForPortfolio.FirstOrDefault(t => t.Value == s).Key;
@@ -1802,7 +1815,7 @@ namespace GreenField.Web.Services
                             }
                             foreach (String s in dinstinctIssuerIdsForBenchmark)
                             {
-                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUER_ID == s).ToList())
+                                foreach (GreenField.DAL.GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUER_ID == s).ToList())
                                 {
                                     CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
                                     objPort.IssuerId = s;
@@ -1816,7 +1829,7 @@ namespace GreenField.Web.Services
                             }
                             foreach (String s in distinctSecurityNamesForBenchmark)
                             {
-                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUE_NAME == s).ToList())
+                                foreach (GreenField.DAL.GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUE_NAME == s).ToList())
                                 {
                                     CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
                                     objPort.SecurityId = listForBenchmark.FirstOrDefault(t => t.Value == s).Key;
@@ -1932,7 +1945,7 @@ namespace GreenField.Web.Services
                     }
                     foreach (String issueName in distinctSecuritiesForPortfolio)
                     {
-                        GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
+                        GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
                          .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
                         if (securityDetails != null)
                         {
@@ -1946,7 +1959,7 @@ namespace GreenField.Web.Services
                     securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
                     foreach (String issueName in distinctSecuritiesForBenchmark)
                     {
-                        GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
+                        GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
                          .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
                         if (securityDetails != null)
                         {
@@ -2006,7 +2019,7 @@ namespace GreenField.Web.Services
                             }
                             foreach (String s in dinstinctIssuerIdsForPortfolio)
                             {
-                                foreach (GF_PORTFOLIO_LTHOLDINGS row in dataPortfolioLookThruDis.Where(t => t.ISSUER_ID == s).ToList())
+                                foreach (GreenField.DAL.GF_PORTFOLIO_LTHOLDINGS row in dataPortfolioLookThruDis.Where(t => t.ISSUER_ID == s).ToList())
                                 {
                                     CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
                                     objPort.IssuerId = s;
@@ -2020,7 +2033,7 @@ namespace GreenField.Web.Services
                             }
                             foreach (String s in distinctSecurityNamesForPortfolio)
                             {
-                                foreach (GF_PORTFOLIO_LTHOLDINGS row in dataPortfolioLookThruDis.Where(t => t.ISSUE_NAME == s).ToList())
+                                foreach (GreenField.DAL.GF_PORTFOLIO_LTHOLDINGS row in dataPortfolioLookThruDis.Where(t => t.ISSUE_NAME == s).ToList())
                                 {
                                     CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
                                     objPort.SecurityId = listForPortfolio.FirstOrDefault(t => t.Value == s).Key;
@@ -2034,7 +2047,7 @@ namespace GreenField.Web.Services
                             }
                             foreach (String s in dinstinctIssuerIdsForBenchmark)
                             {
-                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUER_ID == s).ToList())
+                                foreach (GreenField.DAL.GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUER_ID == s).ToList())
                                 {
                                     CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
                                     objPort.IssuerId = s;
@@ -2048,7 +2061,7 @@ namespace GreenField.Web.Services
                             }
                             foreach (String s in distinctSecurityNamesForBenchmark)
                             {
-                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUE_NAME == s).ToList())
+                                foreach (GreenField.DAL.GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUE_NAME == s).ToList())
                                 {
                                     CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
                                     objPort.SecurityId = listForBenchmark.FirstOrDefault(t => t.Value == s).Key;
@@ -2284,7 +2297,7 @@ namespace GreenField.Web.Services
         {
             try
             {
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 List<String> result = entity.GF_SECURITY_BASEVIEW.OrderBy(record => record.ISSUER_NAME).ToList()
                     .Select(record => record.ISSUER_NAME).ToList().Distinct().ToList();
                 return result;
@@ -2308,7 +2321,7 @@ namespace GreenField.Web.Services
         {
             try
             {
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 research.CommandTimeout = 5000;
                 Decimal? benchmarkWeight = 0;
@@ -2322,7 +2335,7 @@ namespace GreenField.Web.Services
                 }
                 List<EMSummaryMarketBenchmarkData> emBenchData = new List<EMSummaryMarketBenchmarkData>();
                 DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
-                GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS
+                GreenField.DAL.GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS
                     .Where(record => record.PORTFOLIO_ID == selectedPortfolio).
                     OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
                 if (lastBusinessRecord != null)
@@ -2334,12 +2347,12 @@ namespace GreenField.Web.Services
                  benId = lastBusinessRecord.BENCHMARK_ID;
                 }    
                 //gathering the data from GF_BENCHMARK_HOLDINGS
-                List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
+                List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GreenField.DAL.GF_BENCHMARK_HOLDINGS>();
                 dataBenchmarkHoldings = dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
                                                          && record.PORTFOLIO_DATE == lastBusinessDate
                                                           && record.BENCHMARK_WEIGHT > 0).ToList();
                 //gathering data from GF_PERF_DAILY_ATTRIBUTION
-                List<GF_PERF_DAILY_ATTRIBUTION> attributionData = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionData = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
                 attributionData = RetrieveBenchmarkYTDReturns(selectedPortfolio, lastBusinessDate);
 
                 var benchData = dataBenchmarkHoldings != null ? (from p in dataBenchmarkHoldings
@@ -2676,7 +2689,7 @@ namespace GreenField.Web.Services
 
             foreach (String asec in asecShortNames)
             {
-                GF_SECURITY_BASEVIEW item = (dimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_SHORT_NAME == asec)
+                GreenField.DAL.GF_SECURITY_BASEVIEW item = (dimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_SHORT_NAME == asec)
                     .FirstOrDefault());
                 if (item != null)
                 {
@@ -2736,11 +2749,11 @@ namespace GreenField.Web.Services
             return Convert.ToDecimal(harmonicMean);
         }
 
-        private List<GF_PERF_DAILY_ATTRIBUTION> RetrieveBenchmarkYTDReturns(String selectedPortfolio,
+        private List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> RetrieveBenchmarkYTDReturns(String selectedPortfolio,
             DateTime lastBusinessDate)
         {
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            List<GF_PERF_DAILY_ATTRIBUTION> dataDailyAttribution = new List<GF_PERF_DAILY_ATTRIBUTION>();
+            DimensionEntities entity = DimensionEntity;
+            List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dataDailyAttribution = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
             dataDailyAttribution = entity.GF_PERF_DAILY_ATTRIBUTION.Where(record => record.PORTFOLIO == selectedPortfolio
                                                           && record.TO_DATE == lastBusinessDate && record.NODE_NAME == "Country").ToList();
             return dataDailyAttribution;

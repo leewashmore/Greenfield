@@ -36,7 +36,7 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Dimension Service Entity
         /// </summary>
-        private Entities dimensionEntity;
+/*        private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
@@ -44,6 +44,20 @@ namespace GreenField.Web.Services
                 if (null == dimensionEntity)
                 {
                     dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+                }
+                return dimensionEntity;
+            }
+        }
+        */
+
+        private DimensionEntities dimensionEntity;
+        public DimensionEntities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                {
+                    dimensionEntity = new GreenField.DAL.DimensionEntities();
                 }
                 return dimensionEntity;
             }
@@ -74,7 +88,7 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Issuer Id is not Valid");
                 }
-                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ISSUER_ID == issuerId).FirstOrDefault();
                 if (securityDetails == null)
                 {

@@ -16,7 +16,7 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="dimensionMonthlyPerfData">Collection of GF_PERF_MOTHLY_ATTRIBUTION retrieved from Dimension for the selected security & portfolio for a specified date </param>
         /// <returns>List of type BenchmarkChartReturnData</returns>
-        public static List<BenchmarkChartReturnData> RetrieveBenchmarkChartData(List<GF_PERF_DAILY_ATTRIBUTION> countrySectorReturns, List<GF_PERF_DAILY_ATTRIBUTION> benchmarkReturns)
+        public static List<BenchmarkChartReturnData> RetrieveBenchmarkChartData(List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> countrySectorReturns, List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> benchmarkReturns)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace GreenField.Web.Helpers
                 {
                     if (countrySectorReturns.Count != 0)
                     {
-                        foreach (GF_PERF_DAILY_ATTRIBUTION item in countrySectorReturns)
+                        foreach (GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION item in countrySectorReturns)
                         {
                             data = new BenchmarkChartReturnData();
                             data.Name = (item.BMNAME + " " + Convert.ToString(item.AGG_LVL_1_LONG_NAME));
@@ -55,7 +55,7 @@ namespace GreenField.Web.Helpers
                 {
                     if (benchmarkReturns.Count != 0)
                     {
-                        foreach (GF_PERF_DAILY_ATTRIBUTION item in benchmarkReturns)
+                        foreach (GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION item in benchmarkReturns)
                         {
                             data = new BenchmarkChartReturnData();
                             data.Name = Convert.ToString(item.BMNAME);
@@ -86,7 +86,7 @@ namespace GreenField.Web.Helpers
         /// <param name="sectorCountryReturn">Collection of GF_PERF_DAILY_ATTRIBUTION retrieved from Dimension for the selected security, portfolio 
         /// and the associated Index for a specified date</param>
         /// <returns>Collection of BenchmarkGridReturnData</returns>
-        public static List<BenchmarkGridReturnData> RetrieveBenchmarkGridData(List<GF_PERF_DAILY_ATTRIBUTION> sectorCountryReturn, List<GF_PERF_DAILY_ATTRIBUTION> benchmarkReturn)
+        public static List<BenchmarkGridReturnData> RetrieveBenchmarkGridData(List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> sectorCountryReturn, List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> benchmarkReturn)
         {
             try
             {

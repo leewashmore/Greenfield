@@ -106,8 +106,15 @@
   <xs:element name="DocumentCategoryType" nillable="true" type="tns:DocumentCategoryType" />
   <xs:complexType name="EntitySelectionData">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Country_Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ISSUER_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ISSUER_PROXY" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LOOK_THRU_FUND" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LongName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Region_Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SortOrder" type="xs:int" />

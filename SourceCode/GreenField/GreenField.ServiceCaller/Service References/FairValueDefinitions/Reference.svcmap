@@ -24,12 +24,12 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="FairValueOperations.xsd" MetadataType="Schema" ID="75df334a-2337-4c64-af88-0316ddf59ad2" SourceId="1" SourceUrl="http://localhost:59430/Services/FairValueOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="FairValueOperations.disco" MetadataType="Disco" ID="a8c1b9b9-2189-429b-9fa2-8d9269aeca02" SourceId="1" SourceUrl="http://localhost:59430/Services/FairValueOperations.svc?disco" />
     <MetadataFile FileName="FairValueOperations1.xsd" MetadataType="Schema" ID="7bc4d485-aff2-43bf-a834-c0605fcf88d2" SourceId="1" SourceUrl="http://localhost:59430/Services/FairValueOperations.svc?xsd=xsd1" />
-    <MetadataFile FileName="FairValueOperations2.xsd" MetadataType="Schema" ID="4a602ce5-6ade-4d8c-8247-88baf2549780" SourceId="1" SourceUrl="http://localhost:59430/Services/FairValueOperations.svc?xsd=xsd0" />
     <MetadataFile FileName="FairValueOperations3.xsd" MetadataType="Schema" ID="41a5ba89-15a4-4e31-a429-f9eb7cbf8b61" SourceId="1" SourceUrl="http://localhost:59430/Services/FairValueOperations.svc?xsd=xsd2" />
     <MetadataFile FileName="FairValueOperations.wsdl" MetadataType="Wsdl" ID="dcc0ae87-ec4f-40be-8a2d-ad7578bce960" SourceId="1" SourceUrl="http://localhost:59430/Services/FairValueOperations.svc?wsdl" />
     <MetadataFile FileName="FairValueOperations1.wsdl" MetadataType="Wsdl" ID="4eda744a-dbea-43f5-b888-1005266610bb" SourceId="1" SourceUrl="http://localhost:59430/Services/FairValueOperations.svc?wsdl=wsdl0" />
-    <MetadataFile FileName="FairValueOperations.disco" MetadataType="Disco" ID="a8c1b9b9-2189-429b-9fa2-8d9269aeca02" SourceId="1" SourceUrl="http://localhost:59430/Services/FairValueOperations.svc?disco" />
+    <MetadataFile FileName="FairValueOperations2.xsd" MetadataType="Schema" ID="4a602ce5-6ade-4d8c-8247-88baf2549780" SourceId="1" SourceUrl="http://localhost:59430/Services/FairValueOperations.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

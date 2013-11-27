@@ -19,7 +19,7 @@ namespace GreenField.Web.Helpers
         /// <param name="result">Collection of PortfolioDetailsData containing data of Securities held by Portfolio</param>
         /// <param name="onlyBenchmarkSecurities">Collection of GF_BENCHMARK_HOLDINGS, contains securities only held by Benchmark & not by Portfolio</param>
         /// <returns>Collection of PortfolioDetailsData</returns>
-        public static List<PortfolioDetailsData> AddBenchmarkSecurities(List<PortfolioDetailsData> result, List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities, Boolean isFiltered, decimal? sumBenchmarkWeight)
+        public static List<PortfolioDetailsData> AddBenchmarkSecurities(List<PortfolioDetailsData> result, List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities, Boolean isFiltered, decimal? sumBenchmarkWeight)
         {
             if (onlyBenchmarkSecurities == null)
             {
@@ -35,7 +35,7 @@ namespace GreenField.Web.Helpers
             }
                         
             Debug.WriteLine(onlyBenchmarkSecurities.Count());
-            foreach (GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
+            foreach (GreenField.DAL.GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
             {
                 PortfolioDetailsData benchmarkResult = new PortfolioDetailsData();
                 benchmarkResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
@@ -126,7 +126,7 @@ namespace GreenField.Web.Helpers
         /// <param name="dimensionPortfolioHoldingsData">List of type GF_PORTFOLIO_HOLDINGS returned from GF_PORTFOLIO_LTHOLDINGS</param>
         /// <param name="dimensionBenchmarkHoldingsData">List of type GF_BENCHMARK_HOLDINGS returned from GF_BENCHMARK_HOLDINGS</param>
         /// <returns>List of PortfolioDetailsData</returns>
-        public static List<PortfolioDetailsData> AddPortfolioSecurities(List<GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData,Boolean isFiltered)
+        public static List<PortfolioDetailsData> AddPortfolioSecurities(List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData, List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData, Boolean isFiltered)
         {
 
             List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
@@ -146,7 +146,7 @@ namespace GreenField.Web.Helpers
 
             decimal? sumBenchmarkWeight = 0;
             sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
-            foreach (GF_PORTFOLIO_HOLDINGS item in dimensionPortfolioHoldingsData)
+            foreach (GreenField.DAL.GF_PORTFOLIO_HOLDINGS item in dimensionPortfolioHoldingsData)
             {
                 PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
                 portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
@@ -196,7 +196,7 @@ namespace GreenField.Web.Helpers
         /// <param name="dimensionPortfolioHoldingsData">List of type GF_PORTFOLIO_HOLDINGS returned from GF_PORTFOLIO_LTHOLDINGS</param>
         /// <param name="dimensionBenchmarkHoldingsData">List of type GF_BENCHMARK_HOLDINGS returned from GF_BENCHMARK_HOLDINGS</param>
         /// <returns>List of PortfolioDetailsData</returns>
-        public static List<PortfolioDetailsData> AddCompositePortfolioSecurities(List<GF_COMPOSITE_LTHOLDINGS> compositeHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData, Boolean isFiltered)
+        public static List<PortfolioDetailsData> AddCompositePortfolioSecurities(List<GF_COMPOSITE_LTHOLDINGS> compositeHoldingsData, List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData, Boolean isFiltered)
         {
 
             List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
@@ -269,7 +269,7 @@ namespace GreenField.Web.Helpers
         /// <param name="dimensionPortfolioLTHoldingsData">List of type GF_PORTFOLIO_LTHOLDINGS returned from GF_PORTFOLIO_LTHOLDINGS</param>
         /// <param name="dimensionBenchmarkHoldingsData">List of type GF_BENCHMARK_HOLDINGS returned from GF_BENCHMARK_HOLDINGS</param>
         /// <returns>List of PortfolioDetailsData</returns>
-        public static List<PortfolioDetailsData> AddPortfolioLTSecurities(List<GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData,Boolean isFiltered)
+        public static List<PortfolioDetailsData> AddPortfolioLTSecurities(List<GreenField.DAL.GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData, List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData, Boolean isFiltered)
         {
             List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
 
@@ -287,7 +287,7 @@ namespace GreenField.Web.Helpers
             }
             decimal? sumBenchmarkWeight = 0;
             sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => a.BENCHMARK_WEIGHT);
-            foreach (GF_PORTFOLIO_LTHOLDINGS item in dimensionPortfolioLTHoldingsData)
+            foreach (GreenField.DAL.GF_PORTFOLIO_LTHOLDINGS item in dimensionPortfolioLTHoldingsData)
             {
                 PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
                 portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
