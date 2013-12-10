@@ -1244,7 +1244,7 @@ namespace GreenField.Web.Services
 
                 result = entity.GF_PERF_DAILY_ATTRIBUTION
                     .Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                        t.TO_DATE == effectiveDate &&
                         t.NODE_NAME == "Security ID" &&
                         t.COUNTRY != null &&
                         t.GICS_LVL1 != null &&
@@ -1313,7 +1313,7 @@ namespace GreenField.Web.Services
 
                 IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
                     .Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                        t.TO_DATE ==effectiveDate &&
                         t.NODE_NAME == "Security ID" &&
                         t.COUNTRY != null &&
                         t.GICS_LVL1 != null &&
@@ -1321,7 +1321,7 @@ namespace GreenField.Web.Services
 
 
                 #region Inception Date Check
-                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate);
+                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate.Date);
                 if (!isInceptionDateValid)
                 {
                     return result;
@@ -1516,10 +1516,10 @@ namespace GreenField.Web.Services
                 DimensionEntities entity = DimensionEntity;
 
                 IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceCountryDataQuery(portfolioSelectionData
-                    , effectiveDate, countryID, sectorID);
+                    , effectiveDate.Date, countryID, sectorID);
 
                 #region Inception Date Check
-                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate);
+                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate.Date);
                 if (!isInceptionDateValid)
                 {
                     return result;
@@ -1678,10 +1678,10 @@ namespace GreenField.Web.Services
                 DimensionEntities entity = DimensionEntity;
 
                 IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceSectorDataQuery(portfolioSelectionData
-                    , effectiveDate, countryID, sectorID);
+                    , effectiveDate.Date, countryID, sectorID);
 
                 #region Inception Date Check
-                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate);
+                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate.Date);
                 if (!isInceptionDateValid)
                 {
                     return result;
@@ -1842,10 +1842,10 @@ namespace GreenField.Web.Services
                 DimensionEntities entity = DimensionEntity;
 
                 IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceSecurityDataQuery(portfolioSelectionData
-                    , effectiveDate, countryID, sectorID);
+                    , effectiveDate.Date, countryID, sectorID);
 
                 #region Inception Date Check
-                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate);
+                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate.Date);
                 if (!isInceptionDateValid)
                 {
                     return result;
@@ -1973,10 +1973,10 @@ namespace GreenField.Web.Services
                 DimensionEntities entity = DimensionEntity;
 
                 IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceSecurityDataQuery(portfolioSelectionData
-                    , effectiveDate, countryID, sectorID);
+                    , effectiveDate.Date, countryID, sectorID);
 
                 #region Inception Date Check
-                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate);
+                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate.Date);
                 if (!isInceptionDateValid)
                 {
                     return result;
@@ -2083,7 +2083,7 @@ namespace GreenField.Web.Services
             DimensionEntities entity = DimensionEntity;
             IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
                     .Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                        t.TO_DATE ==effectiveDate &&
                         t.NODE_NAME == "Security ID" &&
                         t.AGG_LVL_1_LONG_NAME != null &&
                         t.SEC_INV_THEME == "EQUITY");
@@ -2106,7 +2106,7 @@ namespace GreenField.Web.Services
             DimensionEntities entity = DimensionEntity;
             IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
                     .Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                        t.TO_DATE ==effectiveDate &&
                         t.NODE_NAME == "GICS Level 1" &&
                         t.AGG_LVL_1_LONG_NAME != "-" &&
                         t.AGG_LVL_1_LONG_NAME != null);
@@ -2129,7 +2129,7 @@ namespace GreenField.Web.Services
             DimensionEntities entity = DimensionEntity;
             IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
                     .Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                        t.TO_DATE == effectiveDate &&
                         t.NODE_NAME == "Country" &&
                         t.AGG_LVL_1 != null);
             if (sectorID != null)
