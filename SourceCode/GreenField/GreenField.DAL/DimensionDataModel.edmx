@@ -6,50 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="DimensionDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="DimensionDataModelStoreContainer">
-          <EntitySet Name="GF_BENCHMARK_HOLDINGS" EntityType="DimensionDataModel.Store.GF_BENCHMARK_HOLDINGS" store:Type="Tables" store:Schema="dbo" store:Name="GF_BENCHMARK_HOLDINGS">
-            <DefiningQuery>SELECT 
-      [GF_BENCHMARK_HOLDINGS].[GF_ID] AS [GF_ID], 
-      [GF_BENCHMARK_HOLDINGS].[PORTFOLIO_DATE] AS [PORTFOLIO_DATE], 
-      [GF_BENCHMARK_HOLDINGS].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
-      [GF_BENCHMARK_HOLDINGS].[PORTFOLIO_THEME_SUBGROUP_CODE] AS [PORTFOLIO_THEME_SUBGROUP_CODE], 
-      [GF_BENCHMARK_HOLDINGS].[PORTFOLIO_CURRENCY] AS [PORTFOLIO_CURRENCY], 
-      [GF_BENCHMARK_HOLDINGS].[BENCHMARK_ID] AS [BENCHMARK_ID], 
-      [GF_BENCHMARK_HOLDINGS].[ISSUER_ID] AS [ISSUER_ID], 
-      [GF_BENCHMARK_HOLDINGS].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME], 
-      [GF_BENCHMARK_HOLDINGS].[ISSUE_NAME] AS [ISSUE_NAME], 
-      [GF_BENCHMARK_HOLDINGS].[TICKER] AS [TICKER], 
-      [GF_BENCHMARK_HOLDINGS].[SECURITYTHEMECODE] AS [SECURITYTHEMECODE], 
-      [GF_BENCHMARK_HOLDINGS].[A_SEC_INSTR_TYPE] AS [A_SEC_INSTR_TYPE], 
-      [GF_BENCHMARK_HOLDINGS].[SECURITY_TYPE] AS [SECURITY_TYPE], 
-      [GF_BENCHMARK_HOLDINGS].[BALANCE_NOMINAL] AS [BALANCE_NOMINAL], 
-      [GF_BENCHMARK_HOLDINGS].[DIRTY_PRICE] AS [DIRTY_PRICE], 
-      [GF_BENCHMARK_HOLDINGS].[TRADING_CURRENCY] AS [TRADING_CURRENCY], 
-      [GF_BENCHMARK_HOLDINGS].[DIRTY_VALUE_PC] AS [DIRTY_VALUE_PC], 
-      [GF_BENCHMARK_HOLDINGS].[BENCHMARK_WEIGHT] AS [BENCHMARK_WEIGHT], 
-      [GF_BENCHMARK_HOLDINGS].[ASH_EMM_MODEL_WEIGHT] AS [ASH_EMM_MODEL_WEIGHT], 
-      [GF_BENCHMARK_HOLDINGS].[MARKET_CAP_IN_USD] AS [MARKET_CAP_IN_USD], 
-      [GF_BENCHMARK_HOLDINGS].[ASHEMM_PROP_REGION_CODE] AS [ASHEMM_PROP_REGION_CODE], 
-      [GF_BENCHMARK_HOLDINGS].[ASHEMM_PROP_REGION_NAME] AS [ASHEMM_PROP_REGION_NAME], 
-      [GF_BENCHMARK_HOLDINGS].[ISO_COUNTRY_CODE] AS [ISO_COUNTRY_CODE], 
-      [GF_BENCHMARK_HOLDINGS].[COUNTRYNAME] AS [COUNTRYNAME], 
-      [GF_BENCHMARK_HOLDINGS].[GICS_SECTOR] AS [GICS_SECTOR], 
-      [GF_BENCHMARK_HOLDINGS].[GICS_SECTOR_NAME] AS [GICS_SECTOR_NAME], 
-      [GF_BENCHMARK_HOLDINGS].[GICS_INDUSTRY] AS [GICS_INDUSTRY], 
-      [GF_BENCHMARK_HOLDINGS].[GICS_INDUSTRY_NAME] AS [GICS_INDUSTRY_NAME], 
-      [GF_BENCHMARK_HOLDINGS].[GICS_SUB_INDUSTRY] AS [GICS_SUB_INDUSTRY], 
-      [GF_BENCHMARK_HOLDINGS].[GICS_SUB_INDUSTRY_NAME] AS [GICS_SUB_INDUSTRY_NAME], 
-      [GF_BENCHMARK_HOLDINGS].[LOOK_THRU_FUND] AS [LOOK_THRU_FUND], 
-      [GF_BENCHMARK_HOLDINGS].[BARRA_RISK_FACTOR_MOMENTUM] AS [BARRA_RISK_FACTOR_MOMENTUM], 
-      [GF_BENCHMARK_HOLDINGS].[BARRA_RISK_FACTOR_VOLATILITY] AS [BARRA_RISK_FACTOR_VOLATILITY], 
-      [GF_BENCHMARK_HOLDINGS].[BARRA_RISK_FACTOR_VALUE] AS [BARRA_RISK_FACTOR_VALUE], 
-      [GF_BENCHMARK_HOLDINGS].[BARRA_RISK_FACTOR_SIZE] AS [BARRA_RISK_FACTOR_SIZE], 
-      [GF_BENCHMARK_HOLDINGS].[BARRA_RISK_FACTOR_SIZE_NONLIN] AS [BARRA_RISK_FACTOR_SIZE_NONLIN], 
-      [GF_BENCHMARK_HOLDINGS].[BARRA_RISK_FACTOR_GROWTH] AS [BARRA_RISK_FACTOR_GROWTH], 
-      [GF_BENCHMARK_HOLDINGS].[BARRA_RISK_FACTOR_LIQUIDITY] AS [BARRA_RISK_FACTOR_LIQUIDITY], 
-      [GF_BENCHMARK_HOLDINGS].[BARRA_RISK_FACTOR_LEVERAGE] AS [BARRA_RISK_FACTOR_LEVERAGE], 
-      [GF_BENCHMARK_HOLDINGS].[BARRA_RISK_FACTOR_PBETEWLD] AS [BARRA_RISK_FACTOR_PBETEWLD]
-      FROM [dbo].[GF_BENCHMARK_HOLDINGS] AS [GF_BENCHMARK_HOLDINGS]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="GF_BENCHMARK_HOLDINGS" EntityType="DimensionDataModel.Store.GF_BENCHMARK_HOLDINGS" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GF_PERF_DAILY_ATTRIBUTION" EntityType="DimensionDataModel.Store.GF_PERF_DAILY_ATTRIBUTION" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GF_PERF_TOPLEVELSTATS" EntityType="DimensionDataModel.Store.GF_PERF_TOPLEVELSTATS" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GF_PERF_TOPLEVELYEAR" EntityType="DimensionDataModel.Store.GF_PERF_TOPLEVELYEAR" store:Type="Tables" Schema="dbo" />
@@ -61,9 +18,6 @@
           <EntitySet Name="GF_SELECTION_BASEVIEW" EntityType="DimensionDataModel.Store.GF_SELECTION_BASEVIEW" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GF_TRANSACTIONS" EntityType="DimensionDataModel.Store.GF_TRANSACTIONS" store:Type="Tables" Schema="dbo" />
         </EntityContainer>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_Dev.dbo.GF_BENCHMARK_HOLDINGS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="GF_BENCHMARK_HOLDINGS">
           <Key>
             <PropertyRef Name="GF_ID" />
@@ -781,6 +735,24 @@
           <Property Name="VALUE_QC" Type="decimal" Precision="32" Scale="6" />
           <Property Name="VALUE_SC" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
+        <Function Name="RetrieveCompositeDetailsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="portfolio_id" Type="varchar" Mode="In" />
+          <Parameter Name="portfolio_date" Type="datetime" Mode="In" />
+          <Parameter Name="filterType" Type="varchar" Mode="In" />
+          <Parameter Name="filterValue" Type="varchar" Mode="In" />
+          <Parameter Name="excludeCash" Type="int" Mode="In" />
+          <Parameter Name="isLookThru" Type="int" Mode="In" />
+          <Parameter Name="includeBenchmark" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RetrievePortfolioDetailsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="portfolio_id" Type="varchar" Mode="In" />
+          <Parameter Name="portfolio_date" Type="datetime" Mode="In" />
+          <Parameter Name="filterType" Type="varchar" Mode="In" />
+          <Parameter Name="filterValue" Type="varchar" Mode="In" />
+          <Parameter Name="excludeCash" Type="int" Mode="In" />
+          <Parameter Name="isLookThru" Type="int" Mode="In" />
+          <Parameter Name="includeBenchmark" Type="int" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -797,6 +769,24 @@
           <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="DimensionDataModel.GF_PRICING_BASEVIEW" />
           <EntitySet Name="GF_PERF_TOPLEVELYEAR" EntityType="DimensionDataModel.GF_PERF_TOPLEVELYEAR" />
           <EntitySet Name="GF_SELECTION_BASEVIEW" EntityType="DimensionDataModel.GF_SELECTION_BASEVIEW" />
+          <FunctionImport Name="RetrievePortfolioDetailsData" ReturnType="Collection(DimensionDataModel.HoldingsDetailsData)">
+            <Parameter Name="portfolio_id" Mode="In" Type="String" />
+            <Parameter Name="portfolio_date" Mode="In" Type="DateTime" />
+            <Parameter Name="filterType" Mode="In" Type="String" />
+            <Parameter Name="filterValue" Mode="In" Type="String" />
+            <Parameter Name="excludeCash" Mode="In" Type="Int32" />
+            <Parameter Name="isLookThru" Mode="In" Type="Int32" />
+            <Parameter Name="includeBenchmark" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveCompositeDetailsData" ReturnType="Collection(DimensionDataModel.HoldingsDetailsData)">
+            <Parameter Name="portfolio_id" Mode="In" Type="String" />
+            <Parameter Name="portfolio_date" Mode="In" Type="DateTime" />
+            <Parameter Name="filterType" Mode="In" Type="String" />
+            <Parameter Name="filterValue" Mode="In" Type="String" />
+            <Parameter Name="excludeCash" Mode="In" Type="Int32" />
+            <Parameter Name="isLookThru" Mode="In" Type="Int32" />
+            <Parameter Name="includeBenchmark" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="GF_PORTFOLIO_SELECTION">
           <Key>
@@ -1515,6 +1505,54 @@
           <Property Type="String" Name="SECURITY_TYPE" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="AIMS_COMMODITY_ID" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="HoldingsDetailsData" >
+          <Property Type="DateTime" Name="FromDate" Nullable="true" />
+          <Property Type="String" Name="AsecSecShortName" Nullable="true" />
+          <Property Type="String" Name="IssueName" Nullable="true" />
+          <Property Type="String" Name="Issuer_Proxy" Nullable="true" />
+          <Property Type="String" Name="PortfolioPath" Nullable="true" />
+          <Property Type="String" Name="PfcHoldingPortfolio" Nullable="true" />
+          <Property Type="String" Name="PortfolioId" Nullable="true" />
+          <Property Type="Int32" Name="IsExpanded" Nullable="true" />
+          <Property Type="String" Name="Ticker" Nullable="true" />
+          <Property Type="String" Name="SecurityThemeCode" Nullable="true" />
+          <Property Type="String" Name="A_Sec_Instr_Type" Nullable="true" />
+          <Property Type="String" Name="SecurityType" Nullable="true" />
+          <Property Type="String" Name="ProprietaryRegionCode" Nullable="true" />
+          <Property Type="String" Name="IsoCountryCode" Nullable="true" />
+          <Property Type="String" Name="SectorName" Nullable="true" />
+          <Property Type="String" Name="IndustryName" Nullable="true" />
+          <Property Type="String" Name="SubIndustryName" Nullable="true" />
+          <Property Type="Decimal" Name="BalanceNominal" Nullable="true" />
+          <Property Type="Decimal" Name="DirtyValuePC" Nullable="true" />
+          <Property Type="Decimal" Name="PortfolioDirtyValuePC" Nullable="true" />
+          <Property Type="String" Name="TradingCurrency" Nullable="true" />
+          <Property Type="Decimal" Name="AshEmmModelWeight" Nullable="true" />
+          <Property Type="Decimal" Name="PortfolioWeight" Nullable="true" />
+          <Property Type="Decimal" Name="BenchmarkWeight" Nullable="true" />
+          <Property Type="Decimal" Name="MarketCapUSD" Nullable="true" />
+          <Property Type="Decimal" Name="ActivePosition" Nullable="true" />
+          <Property Type="Decimal" Name="ReAshEmmModelWeight" Nullable="true" />
+          <Property Type="Decimal" Name="RePortfolioWeight" Nullable="true" />
+          <Property Type="Decimal" Name="ReBenchmarkWeight" Nullable="true" />
+          <Property Type="String" Name="SType" Nullable="true" />
+          <Property Type="String" Name="SecurityId" Nullable="true" />
+          <Property Type="Decimal" Name="MarketCap" Nullable="true" />
+          <Property Type="Decimal" Name="Upside" Nullable="true" />
+          <Property Type="Decimal" Name="ForwardPE" Nullable="true" />
+          <Property Type="Decimal" Name="ForwardPBV" Nullable="true" />
+          <Property Type="Decimal" Name="ForwardEB_EBITDA" Nullable="true" />
+          <Property Type="Decimal" Name="RevenueGrowthCurrentYear" Nullable="true" />
+          <Property Type="Decimal" Name="RevenueGrowthNextYear" Nullable="true" />
+          <Property Type="Decimal" Name="NetIncomeGrowthCurrentYear" Nullable="true" />
+          <Property Type="Decimal" Name="NetIncomeGrowthNextYear" Nullable="true" />
+          <Property Type="Decimal" Name="ROE" Nullable="true" />
+          <Property Type="Decimal" Name="NetDebtEquity" Nullable="true" />
+          <Property Type="Decimal" Name="FreecashFlowMargin" Nullable="true" />
+          <Property Type="String" Name="IssuerId" Nullable="true" />
+          <Property Type="String" Name="IssuerName" Nullable="true" />
+          <Property Type="Decimal" Name="FairValue" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2249,6 +2287,63 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="RetrievePortfolioDetailsData" FunctionName="DimensionDataModel.Store.RetrievePortfolioDetailsData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DimensionDataModel.HoldingsDetailsData" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveCompositeDetailsData" FunctionName="DimensionDataModel.Store.RetrieveCompositeDetailsData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DimensionDataModel.HoldingsDetailsData">
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="AsecSecShortName" ColumnName="AsecSecShortName" />
+                <ScalarProperty Name="IssueName" ColumnName="IssueName" />
+                <ScalarProperty Name="Issuer_Proxy" ColumnName="Issuer_Proxy" />
+                <ScalarProperty Name="PortfolioPath" ColumnName="PortfolioPath" />
+                <ScalarProperty Name="PfcHoldingPortfolio" ColumnName="PfcHoldingPortfolio" />
+                <ScalarProperty Name="PortfolioId" ColumnName="PortfolioId" />
+                <ScalarProperty Name="IsExpanded" ColumnName="IsExpanded" />
+                <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+                <ScalarProperty Name="SecurityThemeCode" ColumnName="SecurityThemeCode" />
+                <ScalarProperty Name="A_Sec_Instr_Type" ColumnName="A_Sec_Instr_Type" />
+                <ScalarProperty Name="SecurityType" ColumnName="SecurityType" />
+                <ScalarProperty Name="ProprietaryRegionCode" ColumnName="ProprietaryRegionCode" />
+                <ScalarProperty Name="IsoCountryCode" ColumnName="IsoCountryCode" />
+                <ScalarProperty Name="SectorName" ColumnName="SectorName" />
+                <ScalarProperty Name="IndustryName" ColumnName="IndustryName" />
+                <ScalarProperty Name="SubIndustryName" ColumnName="SubIndustryName" />
+                <ScalarProperty Name="BalanceNominal" ColumnName="BalanceNominal" />
+                <ScalarProperty Name="DirtyValuePC" ColumnName="DirtyValuePC" />
+                <ScalarProperty Name="PortfolioDirtyValuePC" ColumnName="PortfolioDirtyValuePC" />
+                <ScalarProperty Name="TradingCurrency" ColumnName="TradingCurrency" />
+                <ScalarProperty Name="AshEmmModelWeight" ColumnName="AshEmmModelWeight" />
+                <ScalarProperty Name="PortfolioWeight" ColumnName="PortfolioWeight" />
+                <ScalarProperty Name="BenchmarkWeight" ColumnName="BenchmarkWeight" />
+                <ScalarProperty Name="MarketCapUSD" ColumnName="MarketCapUSD" />
+                <ScalarProperty Name="ActivePosition" ColumnName="ActivePosition" />
+                <ScalarProperty Name="ReAshEmmModelWeight" ColumnName="ReAshEmmModelWeight" />
+                <ScalarProperty Name="RePortfolioWeight" ColumnName="RePortfolioWeight" />
+                <ScalarProperty Name="ReBenchmarkWeight" ColumnName="ReBenchmarkWeight" />
+                <ScalarProperty Name="SType" ColumnName="SType" />
+                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+                <ScalarProperty Name="MarketCap" ColumnName="MarketCap" />
+                <ScalarProperty Name="Upside" ColumnName="Upside" />
+                <ScalarProperty Name="ForwardPE" ColumnName="ForwardPE" />
+                <ScalarProperty Name="ForwardPBV" ColumnName="ForwardPBV" />
+                <ScalarProperty Name="ForwardEB_EBITDA" ColumnName="ForwardEB_EBITDA" />
+                <ScalarProperty Name="RevenueGrowthCurrentYear" ColumnName="RevenueGrowthCurrentYear" />
+                <ScalarProperty Name="RevenueGrowthNextYear" ColumnName="RevenueGrowthNextYear" />
+                <ScalarProperty Name="NetIncomeGrowthCurrentYear" ColumnName="NetIncomeGrowthCurrentYear" />
+                <ScalarProperty Name="NetIncomeGrowthNextYear" ColumnName="NetIncomeGrowthNextYear" />
+                <ScalarProperty Name="ROE" ColumnName="ROE" />
+                <ScalarProperty Name="NetDebtEquity" ColumnName="NetDebtEquity" />
+                <ScalarProperty Name="FreecashFlowMargin" ColumnName="FreecashFlowMargin" />
+                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+                <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
+                <ScalarProperty Name="FairValue" ColumnName="FairValue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1183,6 +1183,9 @@ namespace GreenField.Web.Services
 
         #region Build2 Services
 
+      
+        #region holdings screen old 
+    /*    
         /// <summary>
         /// Service to return data for PortfolioDetailsUI
         /// </summary>
@@ -1933,8 +1936,120 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+      */ 
+        # endregion
+       
+        
+        
+        
+        #region holdings screen new
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime effectiveDate, String filterType, String filterValue, bool lookThruEnabled, bool excludeCash = false, bool objGetBenchmark = false)
+        {
+            List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
+            DimensionEntities entity = DimensionEntity;
+            Boolean isComposite = objPortfolioIdentifier.IsComposite;
+            DateTime? effDate = effectiveDate;
+            int? iExcludeCash = 0;
+            if(excludeCash) 
+            {
+                iExcludeCash = 1;
+            }
+            else
+            {
+                   iExcludeCash =0;
+            }
+            
+            
 
-    
+            int? isLookThru = 0;
+            if (lookThruEnabled)
+            {
+                isLookThru = 1;
+            }
+            else
+            {
+                isLookThru = 0;
+            }
+
+            int? includeBenchmark = 0;
+            if (objGetBenchmark)
+            {
+                includeBenchmark = 1;
+            }
+            else
+            {
+                includeBenchmark = 0;
+            }
+            List<HoldingsDetailsData> holdingsDetailsData = null;
+            if (isComposite)
+            {
+                holdingsDetailsData = entity.RetrieveCompositeDetailsData(objPortfolioIdentifier.PortfolioId, effDate, filterType, filterValue, iExcludeCash, isLookThru, includeBenchmark).ToList();
+            }
+            else
+            {
+               holdingsDetailsData = entity.RetrievePortfolioDetailsData(objPortfolioIdentifier.PortfolioId, effDate, filterType, filterValue, iExcludeCash, isLookThru, includeBenchmark).ToList();
+            }
+
+            holdingsDetailsData.ForEach(l => result.Add(new PortfolioDetailsData
+            {   
+               
+                AsecSecShortName=l.AsecSecShortName,
+                IssueName = l.IssueName,
+                Issuer_Proxy = l.Issuer_Proxy,
+                PortfolioPath = l.PortfolioPath,
+                PfcHoldingPortfolio = l.PfcHoldingPortfolio,
+                PortfolioId = l.PortfolioId,
+                Ticker = l.Ticker,
+                SecurityThemeCode=l.SecurityThemeCode,
+                A_Sec_Instr_Type=l.A_Sec_Instr_Type,
+                SecurityType = l.SecurityType,
+                ProprietaryRegionCode = l.ProprietaryRegionCode,
+                IsoCountryCode = l.IsoCountryCode,
+                SectorName=l.SectorName,
+                IndustryName = l.IndustryName,
+                SubIndustryName = l.SubIndustryName,
+                BalanceNominal = l.BalanceNominal,
+                DirtyValuePC = l.DirtyValuePC,
+                PortfolioDirtyValuePC = l.PortfolioDirtyValuePC,
+                TradingCurrency=l.TradingCurrency,
+                AshEmmModelWeight=l.AshEmmModelWeight,
+                PortfolioWeight=l.PortfolioWeight,
+                BenchmarkWeight=l.BenchmarkWeight,
+                MarketCapUSD=l.MarketCapUSD,
+                ActivePosition=l.ActivePosition,
+                ReAshEmmModelWeight = l.ReAshEmmModelWeight,
+                RePortfolioWeight=l.RePortfolioWeight,
+                ReBenchmarkWeight = l.ReBenchmarkWeight,
+                Type=l.SType,
+                SecurityId=l.SecurityId,
+                MarketCap=l.MarketCap,
+                Upside=l.Upside,
+                ForwardPE=l.ForwardPE,
+                ForwardPBV = l.ForwardPBV,
+                ForwardEB_EBITDA = l.ForwardEB_EBITDA,
+                RevenueGrowthCurrentYear = l.RevenueGrowthCurrentYear,
+                RevenueGrowthNextYear = l.RevenueGrowthNextYear,
+                NetIncomeGrowthCurrentYear = l.NetIncomeGrowthCurrentYear,
+                NetIncomeGrowthNextYear = l.NetIncomeGrowthNextYear,
+                ROE = l.ROE,
+                NetDebtEquity = l.NetDebtEquity,
+                FreecashFlowMargin = l.FreecashFlowMargin,
+                IssuerId = l.IssuerId,
+                IssuerName = l.IssuerName,
+                FairValue = l.FairValue
+            })
+            );
+
+            result = RetrieveExternalResearchData(result, effectiveDate.Date, filterType, filterValue, lookThruEnabled);
+            
+            return result;
+        }
+
+        #endregion
+
+
 
         private static void XMLStringValue(List<PortfolioDetailsData> result)
         {
@@ -2054,7 +2169,7 @@ namespace GreenField.Web.Services
 
         #region HelperMethods
 
-
+/*
         private List<PortfolioDetailsData> RetrieveExternalResearchData(List<PortfolioDetailsData> portfolioDetailsData, DateTime effectiveDate, String filterType, String filterValue, bool lookThruEnabled, bool excludeCash = false, bool objGetBenchmark = false)
         {
             try
@@ -2286,6 +2401,160 @@ namespace GreenField.Web.Services
 
 
 
+
+                    }
+
+                }
+
+
+                return portfolioDetailsData;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+        */
+
+        private List<PortfolioDetailsData> RetrieveExternalResearchData(List<PortfolioDetailsData> portfolioDetailsData, DateTime effectiveDate, String filterType, String filterValue, bool lookThruEnabled)
+        {
+            try
+            {
+
+
+                var portfolios = portfolioDetailsData.Select(x => x.PortfolioId).Distinct().ToList();
+                var securityWithPortfolioPath = portfolioDetailsData.Select(x => new { x.AsecSecShortName, x.PortfolioPath }).Distinct().ToList();
+                var externalResearchEntities = new GreenField.DAL.ExternalResearchEntities();
+                var targets = new List<Portfolio_Security_Target_Baseview>();
+                var portfolioSecuritiesBaseviewList = externalResearchEntities.Portfolio_Security_Target_Baseview.ToList();
+                decimal sumTargetPct = 0;
+                #region    CalculatelookthruNumbers
+                //this region is used to get the look through numbers which will be used to calculate model%
+                Hashtable lookthruHash = new Hashtable();
+                if (lookThruEnabled)
+                {
+                    Hashtable ht = new Hashtable();
+                    foreach (var a in securityWithPortfolioPath)
+                    {
+                        if (ht.ContainsKey(a.AsecSecShortName))
+                        {
+                            string pfPortPath = (string)ht[a.AsecSecShortName];
+                            if (a.PortfolioPath.Length > pfPortPath.Length)
+                            {
+                                ht[a.AsecSecShortName] = a.PortfolioPath;
+                            }
+
+                        }
+                        else
+                        {
+                            ht[a.AsecSecShortName] = a.PortfolioPath;
+                        }
+
+                    }
+                    lookthruHash = CalculateLookThruNumbers(ht, filterType, filterValue, portfolioSecuritiesBaseviewList);
+                }
+                #endregion
+                if (filterType != null && filterValue != null)
+                {
+                    switch (filterType)
+                    {
+                        case "Region":
+                            targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.ASHEMM_PROPRIETARY_REGION_CODE == filterValue).ToList();
+                            break;
+                        case "Country":
+                            targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.ISO_COUNTRY_CODE == filterValue).ToList();
+                            break;
+                        case "Industry":
+                            targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.GICS_INDUSTRY_NAME == filterValue).ToList();
+                            break;
+                        case "Sector":
+                            targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID) && x.GICS_SECTOR_NAME == filterValue).ToList();
+                            break;
+                        case "Show Everything":
+                            targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
+                            break;
+                    }
+                }
+                else
+                {
+                    targets = portfolioSecuritiesBaseviewList.Where(x => portfolios.Contains(x.PORTFOLIO_ID)).ToList();
+                }
+                sumTargetPct = targets.Sum(x => x.TARGET_PCT);
+                foreach (PortfolioDetailsData item in portfolioDetailsData)
+                {
+                   
+                    if (!lookThruEnabled)
+                    {
+                        if (filterType != null && filterValue != null)
+                        {
+                            if (!filterType.Equals("Show Everything")) //for everything reweight target%
+                            {
+                                if (sumTargetPct != 0)
+                                {
+                                    var target = targets.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName);
+                                    item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT) / sumTargetPct;
+
+                                }
+                                else
+                                {
+                                    item.AshEmmModelWeight = 0;
+                                }
+                            }
+                            else //for show everything display as it is
+                            {
+                                var target = targets.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName);
+                                item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT);
+                            }
+
+                        }
+                        else
+                        {
+                            var target = targets.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName);
+                            item.AshEmmModelWeight = target.Sum(x => x.TARGET_PCT);
+                        }
+                    }
+                    else
+                    {
+                        decimal lookthrutargetProduct = 1;
+                        if (item.PfcHoldingPortfolio != item.PortfolioPath)
+                        {
+                            var securityPortfolioPath = item.PortfolioPath.Split(',');
+
+                            for (int i = 0; i < securityPortfolioPath.Count() - 1; i++)
+                            {
+                                var portfolioId = securityPortfolioPath[i];
+                                var lookthruportfolioId = securityPortfolioPath[i + 1];
+                                var target = portfolioSecuritiesBaseviewList.Where(x => x.PORTFOLIO_ID == portfolioId && x.LOOK_THRU_FUND == lookthruportfolioId).ToList();
+                                if (target != null)
+                                    lookthrutargetProduct = lookthrutargetProduct * target.Sum(x => x.TARGET_PCT);
+                            }
+                        }
+
+                        List<decimal> lookthruNumbers = (List<decimal>)lookthruHash[item.AsecSecShortName];
+                        if (lookthruNumbers != null)
+                        {
+                            ///lookthrutargetProduct
+                            decimal lookthrutargetSum = lookthruNumbers[1];                                                    ///
+                            var targetSecurity = portfolioSecuritiesBaseviewList.Where(x => x.ASEC_SEC_SHORT_NAME == item.AsecSecShortName && x.PORTFOLIO_ID == item.PfcHoldingPortfolio).ToList();
+                            if (targetSecurity != null)
+                            {
+                                if ((lookthrutargetSum + sumTargetPct) != 0)
+                                {
+                                    item.AshEmmModelWeight = targetSecurity.Sum(x => x.TARGET_PCT) * lookthrutargetProduct / (lookthrutargetSum + sumTargetPct);
+                                }
+                                else
+                                {
+                                    item.AshEmmModelWeight = 0;
+                                }
+
+                            }
+                            else
+                            {
+                                item.AshEmmModelWeight = 0;
+                            }
+                        }
 
                     }
 
