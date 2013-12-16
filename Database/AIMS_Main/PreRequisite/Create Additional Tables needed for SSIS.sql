@@ -1,13 +1,3 @@
-CREATE TABLE [GF_SELECTION_BASEVIEW] (
-    [GF_ID] float NOT NULL PRIMARY KEY,
-    [SHORT_NAME] nvarchar(30),
-    [LONG_NAME] nvarchar(50),
-    [INSTRUMENT_ID] varchar(40),
-    [TYPE] varchar(9),
-    [SECURITY_TYPE] nvarchar(10),
-    [AIMS_COMMODITY_ID] nvarchar(100)
-)ON [PRIMARY];
-
 CREATE TABLE [GF_EQUITYKEYS] (
     [GF_ID] float NOT NULL PRIMARY KEY,
     [EQUITYKEYS_SECIK] numeric(10,0),
@@ -224,7 +214,7 @@ CREATE TABLE [GF_PRICING_MAX_DATES] (
 )ON [PRIMARY];
 
 
-CREATE TABLE [GF_PRICING_RECENT_VALUE] (
+CREATE TABLE [GF_PRICING_RECENT_VALUES] (
     [TYPE] varchar(9),
     [INSTRUMENT_ID] varchar(30),
     [MAX_FROMDATE] datetime,
