@@ -3,8 +3,6 @@ IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[Portfol
 DROP VIEW [dbo].[Portfolio_Security_Targets_Union]
 GO
 
-USE [AIMS_Main]
-GO
 
 /****** Object:  View [dbo].[Portfolio_Security_Targets_Union]    Script Date: 09/27/2013 11:42:37 ******/
 SET ANSI_NULLS ON
