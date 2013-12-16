@@ -1,15 +1,12 @@
-USE [AIMS_Main_Dev]
-GO
 
-/****** Object:  Table [dbo].[GFQ_TRANSACTIONS]    Script Date: 11/27/2013 11:51:48 ******/
+/****** Object:  Table [dbo].[GF_TRANSACTIONS]    Script Date: 11/27/2013 11:51:48 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GF_TRANSACTIONS]') AND type in (N'U'))
 DROP TABLE [dbo].[GF_TRANSACTIONS]
 GO
 
-USE [AIMS_Main_Dev]
-GO
 
-/****** Object:  Table [dbo].[GFQ_TRANSACTIONS]    Script Date: 11/27/2013 11:51:52 ******/
+
+/****** Object:  Table [dbo].[GF_TRANSACTIONS]    Script Date: 11/27/2013 11:51:52 ******/
 SET ANSI_NULLS ON
 GO
 

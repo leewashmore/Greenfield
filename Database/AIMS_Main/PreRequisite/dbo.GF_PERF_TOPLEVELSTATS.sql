@@ -1,13 +1,10 @@
-USE [AIMS_Main_Dev]
-GO
+
 
 /****** Object:  Table [dbo].[GF_PERF_TOPLEVELSTATS]    Script Date: 11/27/2013 11:27:14 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GF_PERF_TOPLEVELSTATS]') AND type in (N'U'))
 DROP TABLE [dbo].[GF_PERF_TOPLEVELSTATS]
 GO
 
-USE [AIMS_Main_Dev]
-GO
 
 /****** Object:  Table [dbo].[GF_PERF_TOPLEVELSTATS]    Script Date: 11/27/2013 11:27:18 ******/
 SET ANSI_NULLS ON

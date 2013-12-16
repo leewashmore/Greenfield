@@ -1,13 +1,10 @@
-USE [AIMS_Main_Dev]
-GO
 
 /****** Object:  Table [dbo].[GF_PORTFOLIO_LTHOLDINGS]    Script Date: 11/26/2013 17:02:18 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GF_PORTFOLIO_LTHOLDINGS]') AND type in (N'U'))
 DROP TABLE [dbo].[GF_PORTFOLIO_LTHOLDINGS]
 GO
 
-USE [AIMS_Main_Dev]
-GO
+
 
 /****** Object:  Table [dbo].[GF_PORTFOLIO_LTHOLDINGS]    Script Date: 11/26/2013 17:02:21 ******/
 SET ANSI_NULLS ON

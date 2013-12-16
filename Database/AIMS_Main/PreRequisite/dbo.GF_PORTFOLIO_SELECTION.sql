@@ -1,5 +1,3 @@
-USE [AIMS_Main_Dev]
-GO
 
 /****** Object:  Table [dbo].[GFQ_PORTFOLIO_SELECTION]    Script Date: 11/26/2013 16:40:37 ******/
 SET ANSI_NULLS ON

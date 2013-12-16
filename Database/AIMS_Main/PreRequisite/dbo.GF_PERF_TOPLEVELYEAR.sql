@@ -1,13 +1,11 @@
-USE [AIMS_Main_Dev]
-GO
+
 
 /****** Object:  Table [dbo].[GFQ_PERF_TOPLEVELYEAR]    Script Date: 11/27/2013 12:20:58 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GF_PERF_TOPLEVELYEAR]') AND type in (N'U'))
 DROP TABLE [dbo].[GF_PERF_TOPLEVELYEAR]
 GO
 
-USE [AIMS_Main_Dev]
-GO
+
 
 /****** Object:  Table [dbo].[GFQ_PERF_TOPLEVELYEAR]    Script Date: 11/27/2013 12:21:02 ******/
 SET ANSI_NULLS ON

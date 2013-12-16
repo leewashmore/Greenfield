@@ -1,13 +1,10 @@
-USE [AIMS_Main_Dev]
-GO
+
 
 /****** Object:  Table [dbo].[GFQ_PERF_DAILY_ATTRIBUTION]    Script Date: 11/27/2013 10:58:26 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GF_PERF_DAILY_ATTRIBUTION]') AND type in (N'U'))
 DROP TABLE [dbo].[GF_PERF_DAILY_ATTRIBUTION]
 GO
 
-USE [AIMS_Main_Dev]
-GO
 
 /****** Object:  Table [dbo].[GFQ_PERF_DAILY_ATTRIBUTION]    Script Date: 11/27/2013 10:58:29 ******/
 SET ANSI_NULLS ON
