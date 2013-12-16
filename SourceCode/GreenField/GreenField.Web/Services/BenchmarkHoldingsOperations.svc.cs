@@ -128,11 +128,11 @@ namespace GreenField.Web.Services
                     return fromCache;
 
                 // otherwise fetch the data and cache it
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                    throw new Exception("Services are not available");*/
 
                 List<PortfolioSelectionData> result = new List<PortfolioSelectionData>();
 
@@ -208,10 +208,10 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
                 if (lookThruEnabled)
                 {
@@ -406,10 +406,10 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
                 if (lookThruEnabled)
                 {
@@ -603,10 +603,10 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
                 decimal sumMarketValuePortfolio = 0;
                 if (lookThruEnabled)
@@ -748,10 +748,10 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
                 if (lookThruEnabled)
                 {
@@ -886,10 +886,10 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
                 #region Local Variables
                 decimal? portfolioMomentum = 0;
@@ -3049,12 +3049,12 @@ namespace GreenField.Web.Services
                     return result;
                 }
                 //checking if the service is down
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception();
-                }
+                }*/
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
@@ -3555,12 +3555,12 @@ namespace GreenField.Web.Services
                 if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue == null)
                     return result;
                 //checking if the service is down
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception();
-                }
+                }*/
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
@@ -4124,12 +4124,12 @@ namespace GreenField.Web.Services
             if (portfolioSelectionData == null || effectiveDate == null)
                 return result;
             //checking if the service is down
-            bool isServiceUp;
+           /* bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
             if (!isServiceUp)
             {
                 throw new Exception();
-            }
+            }*/
             List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> topTenBenchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.BM1_RC_WGT_EOD != null && t.BM1_RC_WGT_EOD > 0).OrderByDescending(t => t.BM1_RC_WGT_EOD).ToList();
             IEqualityComparer<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
             topTenBenchmarkData = topTenBenchmarkData.Distinct(customComparer).Take(10).ToList();
@@ -4177,11 +4177,11 @@ namespace GreenField.Web.Services
                     return fromCache;
 
                 // otherwise fetch the data and cache it
-                bool isServiceUp;
+             /*   bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                    throw new Exception("Services are not available");*/
 
                 List<DateTime> availableDateList = new List<DateTime>();
                 //FileCacheManager cacheManager = new FileCacheManager(CacheFolder);
@@ -4388,12 +4388,12 @@ namespace GreenField.Web.Services
                 return result;
             }
             //checking if the service is down
-            bool isServiceUp;
+         /*   bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
             if (!isServiceUp)
             {
                 throw new Exception();
-            }
+            }*/
             EqualityComparer<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
             List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionData = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
             switch (nodeName)
@@ -4507,11 +4507,11 @@ namespace GreenField.Web.Services
                 return result;
             }
             //checking if the service is down
-            bool isServiceUp;
+            /*bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
             if (!isServiceUp)
-                throw new Exception();
+                throw new Exception();*/
             List<GreenField.DAL.GF_PERF_TOPLEVELSTATS> riskReturnData = (from p in DimensionEntity.GF_PERF_TOPLEVELSTATS
                                                                                    where p.PORTFOLIO == portfolioSelectionData.PortfolioId
                                                                                    && p.TO_DATE == effectiveDate.Date

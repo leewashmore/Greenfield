@@ -82,7 +82,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<DCFAnalysisSummaryData>();
                 }
-                #region ServiceAvailabilityChecker
+              /*  #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -91,7 +91,7 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Services are not available");
                 }
-                #endregion
+                #endregion*/
 
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
@@ -159,7 +159,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<DCFTerminalValueCalculationsData>();
                 }
-                #region ServiceAvailabilityChecker
+                /*#region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -167,7 +167,7 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Services are not available");
                 }
-                #endregion
+                #endregion*/
 
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
@@ -224,11 +224,11 @@ namespace GreenField.Web.Services
 
                 DimensionEntities entity = DimensionEntity;
 
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                    throw new Exception("Services are not available");*/
 
                 //Retrieving data from security view
                 GreenField.DAL.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
@@ -281,7 +281,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<DCFCashFlowData>();
                 }
-                #region ServiceAvailabilityChecker
+               /*  #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -290,7 +290,7 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Services are not available");
                 }
-                #endregion
+                #endregion */
 
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
@@ -357,7 +357,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<DCFSummaryData>();
                 }
-                #region ServiceAvailabilityChecker
+              /*  #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -366,7 +366,7 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Services are not available");
                 }
-                #endregion
+                #endregion*/
 
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
@@ -412,7 +412,7 @@ namespace GreenField.Web.Services
                 {
                     return 0;
                 }
-                #region ServiceAvailabilityChecker
+             /*   #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -421,7 +421,7 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Services are not available");
                 }
-                #endregion
+                #endregion*/
 
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&

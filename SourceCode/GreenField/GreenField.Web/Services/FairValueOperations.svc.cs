@@ -423,11 +423,11 @@ namespace GreenField.Web.Services
         {
             DimensionEntities entity = DimensionEntity;
 
-            bool isServiceUp;
+            /*bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
             if (!isServiceUp)
-                throw new Exception("Services are not available");
+                throw new Exception("Services are not available");*/
             //Retrieving data from security view
             GreenField.DAL.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
                 .Where(record => record.TICKER == entitySelectionData.ShortName

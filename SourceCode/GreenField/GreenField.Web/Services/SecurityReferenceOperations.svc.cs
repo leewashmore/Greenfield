@@ -138,11 +138,11 @@ namespace GreenField.Web.Services
 
                 DimensionEntities entity = DimensionEntity;
 
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                { throw new Exception("Services are not available"); }
+                { throw new Exception("Services are not available"); }*/
 
                 GreenField.DAL.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
@@ -466,11 +466,11 @@ namespace GreenField.Web.Services
                     return fromCache;
 
                 // otherwise fetch the data and cache it
-                bool isServiceUp;
+             /*   bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                    throw new Exception("Services are not available");*/
 
 
                 List<GreenField.DAL.GF_SELECTION_BASEVIEW> data = DimensionEntity.GF_SELECTION_BASEVIEW.ToList();
@@ -598,11 +598,11 @@ namespace GreenField.Web.Services
                     return fromCache;
 
                 // otherwise fetch the data and cache it
-                bool isServiceUp;
+/*                bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                    throw new Exception("Services are not available");*/
 
 #if DEBUG
                 Stopwatch swLocalSec = new Stopwatch();

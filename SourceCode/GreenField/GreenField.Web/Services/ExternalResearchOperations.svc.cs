@@ -833,13 +833,13 @@ namespace GreenField.Web.Services
 
                 DimensionEntities entity = DimensionEntity;
 
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
 
                 //Retrieving data from security view
                 GreenField.DAL.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
@@ -1297,11 +1297,11 @@ namespace GreenField.Web.Services
 
                 DimensionEntities entity = DimensionEntity;
 
-                bool isServiceUp;
+             /*   bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                    throw new Exception("Services are not available");*/
 
                 //Retrieving data from security view
                 GreenField.DAL.GF_SECURITY_BASEVIEW svcData = entity.GF_SECURITY_BASEVIEW
@@ -1604,12 +1604,12 @@ namespace GreenField.Web.Services
                 int checkBen = 1;
                 String benchmarkId = null;
                 DimensionEntities entity = DimensionEntity;
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
                 List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> result = new
                     List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>();
                 List<GreenField.DAL.ValuationQualityGrowthData> storedProcResult = new List<GreenField.DAL.ValuationQualityGrowthData>();
@@ -2327,12 +2327,12 @@ namespace GreenField.Web.Services
                 Decimal? benchmarkWeight = 0;
                 String benId = null;
                 List<String> benchmarkIds = new List<string>();
-                bool isServiceUp;
+           /*     bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
                 List<EMSummaryMarketBenchmarkData> emBenchData = new List<EMSummaryMarketBenchmarkData>();
                 DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
                 GreenField.DAL.GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS
