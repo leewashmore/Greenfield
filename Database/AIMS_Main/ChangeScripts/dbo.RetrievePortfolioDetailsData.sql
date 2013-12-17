@@ -204,7 +204,7 @@ BEGIN
 	set @sumbenchmarkWeight = (select sum(benchmark_weight) from #BenchmarkTemp);
     insert into #PortfolioDetailsData
     (AsecSecShortName,IssueName,Ticker,PortfolioId, portfoliopath, pfcholdingportfolio,ProprietaryRegionCode,IsoCountryCode,SectorName,
-    IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,IssuerId,issuer_proxy,IssuerName,SecurityId)
+    IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,IssuerId,issuer_proxy,IssuerName,SecurityId,SECURITYTHEMECODE)
     select p.asec_sec_short_name,p.issue_name,p.ticker,p.portfolio_id,p.portfolio_id,p.portfolio_id,
 		p.ashemm_prop_Region_code,
 		p.iso_country_code,
@@ -225,9 +225,10 @@ BEGIN
 		p.issuer_id,
 		s.issuer_proxy,
 		rtrim(ltrim(s.Issuer_Name)),
-		s.Security_Id
+		s.Security_Id,
+		p.SECURITYTHEMECODE
 	 from #PortfolioTemp p
-	 inner join GF_SECURITY_BASEVIEW s on s.asec_Sec_Short_name = p.asec_Sec_short_name
+	 Left outer join GF_SECURITY_BASEVIEW s on s.asec_Sec_Short_name = p.asec_Sec_short_name
      left outer join #BenchmarkTemp b on b.asec_Sec_short_name = p.asec_sec_short_name;	
      	/**********************End of  no Look Thru ********************************/
 	end
@@ -311,7 +312,7 @@ BEGIN
 	set @sumbenchmarkWeight = (select sum(benchmark_weight) from #BenchmarkTemp);
     insert into #PortfolioDetailsData
     (AsecSecShortName,IssueName,Ticker,PfcHoldingPortfolio,PortfolioId,PortfolioPath,ProprietaryRegionCode,IsoCountryCode,SectorName,
-    IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,AshEmmModelWeight,IssuerId,issuer_proxy,IssuerName,SecurityId)
+    IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,AshEmmModelWeight,IssuerId,issuer_proxy,IssuerName,SecurityId,SECURITYTHEMECODE)
     select p.asec_sec_short_name,p.issue_name,p.ticker,p.A_PFCHOLDINGS_PORLT,p.portfolio_id,p.porpath,
 		p.ashemm_prop_Region_code,
 		p.iso_country_code,
@@ -334,9 +335,10 @@ BEGIN
 		p.issuer_id,
 		s.issuer_proxy,
 		rtrim(ltrim(s.Issuer_Name)),
-		s.security_id
+		s.security_id,
+		p.SECURITYTHEMECODE
 	 from #PortfolioLTTemp p
-	 inner join GF_SECURITY_BASEVIEW s on s.asec_Sec_Short_name = p.asec_Sec_short_name
+	 Left outer join GF_SECURITY_BASEVIEW s on s.asec_Sec_Short_name = p.asec_Sec_short_name
      left outer join #BenchmarkTemp b on b.asec_Sec_short_name = p.asec_sec_short_name;	
 			
 			
@@ -353,7 +355,7 @@ BEGIN
     begin
     insert into #PortfolioDetailsData
     (AsecSecShortName,IssueName,Ticker,ProprietaryRegionCode,IsoCountryCode,SectorName,
-    IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,stype,IssuerId,issuer_proxy,IssuerName,SecurityId)
+    IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,stype,IssuerId,issuer_proxy,IssuerName,SecurityId,SECURITYTHEMECODE)
      select b.asec_sec_short_name,b.issue_name,b.ticker,
 		b.ashemm_prop_Region_code,
 		b.iso_country_code,
@@ -377,16 +379,17 @@ BEGIN
 		b.issuer_id,
 		s.issuer_proxy,
 		rtrim(ltrim(s.Issuer_Name)),
-		s.security_id
+		s.security_id,
+		b.SECURITYTHEMECODE
      from #BenchmarkTemp b
-     inner join GF_SECURITY_BASEVIEW s on s.asec_sec_short_name = b.asec_sec_short_name
+     Left outer join GF_SECURITY_BASEVIEW s on s.asec_sec_short_name = b.asec_sec_short_name
     WHERE NOT EXISTS(SELECT * FROM #PortfolioLTTemp p WHERE P.ASEC_Sec_Short_name = b.asec_Sec_short_name)
     end
     else
     begin
      insert into #PortfolioDetailsData
     (AsecSecShortName,IssueName,Ticker,ProprietaryRegionCode,IsoCountryCode,SectorName,
-    IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,stype,IssuerId,issuer_proxy,IssuerName,SecurityId)
+    IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,stype,IssuerId,issuer_proxy,IssuerName,SecurityId,SECURITYTHEMECODE)
      select b.asec_sec_short_name,b.issue_name,b.ticker,
 		b.ashemm_prop_Region_code,
 		b.iso_country_code,
@@ -410,10 +413,11 @@ BEGIN
 		b.issuer_id,
 		s.issuer_proxy,
 		rtrim(ltrim(s.Issuer_Name)),
-		s.security_id
+		s.security_id,
+		b.SECURITYTHEMECODE
 		
      from #BenchmarkTemp b
-      inner join GF_SECURITY_BASEVIEW s on s.asec_sec_short_name = b.asec_sec_short_name
+      Left outer join GF_SECURITY_BASEVIEW s on s.asec_sec_short_name = b.asec_sec_short_name
     WHERE NOT EXISTS(SELECT * FROM #PortfolioTemp p WHERE P.ASEC_Sec_Short_name = b.asec_Sec_short_name)
     end
     
