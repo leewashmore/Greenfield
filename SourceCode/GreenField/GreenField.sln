@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targeting", "Targeting", "{78994EE7-638E-4217-8C28-E12F8E98BE31}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IssuerShares", "IssuerShares", "{5CFEF42B-4012-4460-BB16-8D0916785E8B}"
