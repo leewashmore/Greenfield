@@ -16,6 +16,7 @@
       <xs:element minOccurs="0" name="LongDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Quaterly" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ScreeningId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShortDescription" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CustomSelectionData" nillable="true" type="tns:CustomSelectionData" />
@@ -37,6 +38,7 @@
       <xs:element minOccurs="0" name="ListName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ScreeningId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShortColumnDesc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TableColumn" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TableColumnName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ToDate" type="xs:int" />
@@ -48,6 +50,7 @@
   <xs:complexType name="PortfolioSelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" name="BenchmarkId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsComposite" type="xs:boolean" />
       <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioThemeSubGroupId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioThemeSubGroupName" nillable="true" type="xs:string" />
@@ -56,8 +59,15 @@
   <xs:element name="PortfolioSelectionData" nillable="true" type="tns:PortfolioSelectionData" />
   <xs:complexType name="EntitySelectionData">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Country_Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ISSUER_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ISSUER_PROXY" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LOOK_THRU_FUND" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LongName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Region_Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
@@ -73,6 +83,7 @@
   <xs:element name="ArrayOfCustomScreeningSecurityData" nillable="true" type="tns:ArrayOfCustomScreeningSecurityData" />
   <xs:complexType name="CustomScreeningSecurityData">
     <xs:sequence>
+      <xs:element minOccurs="0" name="AsecShortName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DataId" type="xs:int" />
       <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Decimals" nillable="true" type="xs:int" />

@@ -94,7 +94,7 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Dimension Service Entity
         /// </summary>
-        private Entities dimensionEntity;
+        /*private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
@@ -102,6 +102,19 @@ namespace GreenField.Web.Services
                 if (null == dimensionEntity)
                     dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
 
+                return dimensionEntity;
+            }
+        }*/
+
+        private DimensionEntities dimensionEntity;
+        public DimensionEntities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                {
+                    dimensionEntity = new GreenField.DAL.DimensionEntities();
+                }
                 return dimensionEntity;
             }
         }
@@ -556,7 +569,7 @@ namespace GreenField.Web.Services
                 {
                     return new byte[1];
                 }
-                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == selectedSecurity.InstrumentID &&
                         record.ISSUE_NAME == selectedSecurity.LongName &&
                         record.TICKER == selectedSecurity.ShortName).FirstOrDefault();
@@ -831,7 +844,7 @@ namespace GreenField.Web.Services
         /// <param name="issuerId">IssuerId of the selected Security</param>
         /// <param name="securityDetails">Data of the selected security from GF_SECURITY_BASEVIEW</param>
         /// <returns>object of type ModelReferenceDatapoints</returns>
-        private ModelReferenceDataPoints RetrieveExcelModelReferenceData(string issuerId, GF_SECURITY_BASEVIEW securityDetails)
+        private ModelReferenceDataPoints RetrieveExcelModelReferenceData(string issuerId, GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails)
         {
             try
             {

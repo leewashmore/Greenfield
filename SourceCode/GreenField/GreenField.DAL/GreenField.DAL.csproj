@@ -51,6 +51,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CustomScreeningToolDataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DimensionDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DimensionDataModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="ExternalResearchDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -105,6 +110,10 @@
     <EntityDeploy Include="MarketingModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MarketingModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="DimensionDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DimensionDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Properties\DataSources\CustomScreeningToolEntities.datasource" />
     <None Include="Properties\DataSources\ExternalResearchEntities.datasource" />

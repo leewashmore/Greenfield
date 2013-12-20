@@ -13,6 +13,7 @@ using GreenField.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
+using GreenField.DAL;
 
 namespace GreenField.Web.Services
 {
@@ -23,7 +24,7 @@ namespace GreenField.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class SecurityReferenceOperations
     {
-        private Entities dimensionEntity;
+        /*private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
@@ -33,8 +34,20 @@ namespace GreenField.Web.Services
 
                 return dimensionEntity;
             }
-        }
+        }*/
 
+        private DimensionEntities dimensionEntity;
+        public DimensionEntities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                {
+                    dimensionEntity = new GreenField.DAL.DimensionEntities();
+                }
+                return dimensionEntity;
+            }
+        }
         private class BenchmarkSelectionData : IEquatable<BenchmarkSelectionData>
         {
             public String BenchmarkId { get; set; }
@@ -78,11 +91,11 @@ namespace GreenField.Web.Services
         {
             try
             {
-                DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<DimensionEntitiesService.GF_SECURITY_BASEVIEW> data = entity.GF_SECURITY_BASEVIEW.ToList();
+                DimensionEntities entity = DimensionEntity;
+                List<GreenField.DAL.GF_SECURITY_BASEVIEW> data = entity.GF_SECURITY_BASEVIEW.ToList();
 
                 List<SecurityOverviewData> result = new List<SecurityOverviewData>();
-                foreach (DimensionEntitiesService.GF_SECURITY_BASEVIEW record in data)
+                foreach (GreenField.DAL.GF_SECURITY_BASEVIEW record in data)
                 {
                     result.Add(new SecurityOverviewData()
                     {
@@ -123,15 +136,15 @@ namespace GreenField.Web.Services
                 if (entitySelectionData == null)
                 { return new SecurityOverviewData(); }
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                { throw new Exception("Services are not available"); }
+                { throw new Exception("Services are not available"); }*/
 
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
                         && record.ISSUE_NAME == entitySelectionData.LongName
                         && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
@@ -205,7 +218,7 @@ namespace GreenField.Web.Services
 
                 List<PricingReferenceData> pricingDataResult = new List<PricingReferenceData>();
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
                 //Plotting a Single Line Chart
                 #region SingleLineChart
@@ -217,7 +230,7 @@ namespace GreenField.Web.Services
 
                     DateTime webServiceStartTime = DateTime.Now;
 
-                    List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
+                    List<GreenField.DAL.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
                     .Where(r => (r.INSTRUMENT_ID == entityInstrumentID) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
                     .OrderByDescending(res => res.FROMDATE).ToList();
 
@@ -242,7 +255,7 @@ namespace GreenField.Web.Services
                         curReturn = (totalReturnCheck) ? (Convert.ToDecimal(dimensionServicePricingData[0].DAILY_GROSS_RETURN)) : (Convert.ToDecimal(dimensionServicePricingData[0].DAILY_PRICE_RETURN));
                         calculatedPrice = curPrice;
 
-                        foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
+                        foreach (GreenField.DAL.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
                         {
                             PricingReferenceData objPricingReferenceData = new PricingReferenceData();
                             objPricingReferenceData.Type = pricingItem.TYPE;
@@ -290,14 +303,14 @@ namespace GreenField.Web.Services
                             entityInstrumentID = Convert.ToString(item.InstrumentID);
 
 
-                            List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData =
+                            List<GreenField.DAL.GF_PRICING_BASEVIEW> dimensionServicePricingData =
                                 entity.GF_PRICING_BASEVIEW.Where(r => (r.INSTRUMENT_ID == entityInstrumentID) && (r.FROMDATE >=
                                     startDate) && (r.FROMDATE <= endDate) && (r.DAILY_SPOT_FX != 0)).OrderByDescending(res => res.FROMDATE).ToList();
 
 
                             if (dimensionServicePricingData.Count != 0)
                             {
-                                foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
+                                foreach (GreenField.DAL.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
                                 {
                                     if (pricingItem.DAILY_SPOT_FX == 0)
                                         continue;
@@ -337,13 +350,13 @@ namespace GreenField.Web.Services
                         {
                             sortingID = ++sortingID;
                             entityInstrumentID = Convert.ToString(item.InstrumentID);
-                            List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData =
+                            List<GreenField.DAL.GF_PRICING_BASEVIEW> dimensionServicePricingData =
                                 entity.GF_PRICING_BASEVIEW.Where(r => (r.INSTRUMENT_ID == entityInstrumentID) && (r.FROMDATE >=
                                     startDate) && (r.FROMDATE <= endDate)).OrderBy(res => res.FROMDATE).ToList();
 
                             if (dimensionServicePricingData.Count != 0)
                             {
-                                foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
+                                foreach (GreenField.DAL.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
                                 {
                                     if (pricingItem.DAILY_SPOT_FX == 0)
                                         continue;
@@ -453,14 +466,14 @@ namespace GreenField.Web.Services
                     return fromCache;
 
                 // otherwise fetch the data and cache it
-                bool isServiceUp;
+             /*   bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                    throw new Exception("Services are not available");*/
 
 
-                List<DimensionEntitiesService.GF_SELECTION_BASEVIEW> data = DimensionEntity.GF_SELECTION_BASEVIEW.ToList();
+                List<GreenField.DAL.GF_SELECTION_BASEVIEW> data = DimensionEntity.GF_SELECTION_BASEVIEW.ToList();
 #if DEBUG
                 Stopwatch swDimensionSec = new Stopwatch();
                 DateTime timedimensionSec = new DateTime();
@@ -492,7 +505,7 @@ namespace GreenField.Web.Services
                 List<EntitySelectionData> result = new List<EntitySelectionData>();
                 if (data != null)
                 {
-                    foreach (DimensionEntitiesService.GF_SELECTION_BASEVIEW record in data)
+                    foreach (GreenField.DAL.GF_SELECTION_BASEVIEW record in data)
                     {
                         var security = securities.Where(sec => sec.ASEC_SEC_SHORT_NAME == record.INSTRUMENT_ID).FirstOrDefault();
                     
@@ -585,11 +598,11 @@ namespace GreenField.Web.Services
                     return fromCache;
 
                 // otherwise fetch the data and cache it
-                bool isServiceUp;
+/*                bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                    throw new Exception("Services are not available");*/
 
 #if DEBUG
                 Stopwatch swLocalSec = new Stopwatch();
@@ -911,8 +924,8 @@ namespace GreenField.Web.Services
                 {
                     return result;
                 }
-                DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<DimensionEntitiesService.GF_PRICING_BASEVIEW> resultSet
+                DimensionEntities entity = DimensionEntity;
+                List<GreenField.DAL.GF_PRICING_BASEVIEW> resultSet
                     = entity.GF_PRICING_BASEVIEW
                         .Where(record => (record.INSTRUMENT_ID == entityIdentifier.InstrumentID))
                         .OrderByDescending(record => record.FROMDATE)

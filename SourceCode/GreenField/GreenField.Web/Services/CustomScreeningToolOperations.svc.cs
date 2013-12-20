@@ -26,7 +26,7 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Instance of DimensionService
         /// </summary>
-        private Entities dimensionEntity;
+      /*  private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
@@ -36,8 +36,20 @@ namespace GreenField.Web.Services
 
                 return dimensionEntity;
             }
-        }
+        }*/
 
+        private DimensionEntities dimensionEntity;
+        public DimensionEntities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                {
+                    dimensionEntity = new GreenField.DAL.DimensionEntities();
+                }
+                return dimensionEntity;
+            }
+        }
         /// <summary>
         /// Fault Resource manager
         /// </summary>
@@ -60,17 +72,17 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
 
                 List<string> result = new List<string>();
                 List<string> temp = new List<string>();
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
                 switch (parameter)
                 {
@@ -318,13 +330,13 @@ namespace GreenField.Web.Services
                     return false;
                 }
 
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
                 }
-
+                */
                 int? result;
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
 
@@ -355,12 +367,12 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
 
                 List<CSTUserPreferenceInfo> result = new List<CSTUserPreferenceInfo>();
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
@@ -444,14 +456,14 @@ namespace GreenField.Web.Services
                 }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception();
-                }
+                }*/
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities externalEntity = new ExternalResearchEntities();
                 CustomScreeningToolEntities cstEntity = new CustomScreeningToolEntities();
                 List<CustomScreeningSecurityData> securityList = new List<CustomScreeningSecurityData>();
@@ -783,19 +795,19 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities externalEntity = new ExternalResearchEntities();
 
                 List<CompositeFundData> result = new List<CompositeFundData>();
-                List<GF_BENCHMARK_HOLDINGS> benchmarkData = new List<GF_BENCHMARK_HOLDINGS>();
-                List<GF_PORTFOLIO_HOLDINGS> portfolioHoldingsDataAll = new List<GF_PORTFOLIO_HOLDINGS>();
+                List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> benchmarkData = new List<GreenField.DAL.GF_BENCHMARK_HOLDINGS>();
+                List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> portfolioHoldingsDataAll = new List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS>();
                 List<CompositeFundData> portfolioTargets = new List<CompositeFundData>();
 
                 string issuerId = entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == entityIdentifiers.InstrumentID).FirstOrDefault() != null ?
@@ -892,14 +904,14 @@ namespace GreenField.Web.Services
         {
             try
             {
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities externalEntity = new ExternalResearchEntities();
                 List<GF_SECURITY_BASEVIEW_Local> securitiesFromCustomControls = new List<GF_SECURITY_BASEVIEW_Local>();
                 List<CustomScreeningSecurityData> securityList = new List<CustomScreeningSecurityData>();
 
                 if (portfolio != null)
                 {
-                    List<GF_PORTFOLIO_HOLDINGS> securitiesFromPortfolio = new List<GF_PORTFOLIO_HOLDINGS>();
+                    List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> securitiesFromPortfolio = new List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS>();
                     DateTime lastBusinessDate = GetLastBusinessDate("PORTFOLIO_HOLDINGS");
                     List<GF_SECURITY_BASEVIEW_Local> fullSecurityList = externalEntity.GF_SECURITY_BASEVIEW_Local.ToList();
 
@@ -911,7 +923,7 @@ namespace GreenField.Web.Services
                         return securityList;
 
                     securitiesFromPortfolio = securitiesFromPortfolio.Distinct().ToList();
-                    foreach (GF_PORTFOLIO_HOLDINGS item in securitiesFromPortfolio)
+                    foreach (GreenField.DAL.GF_PORTFOLIO_HOLDINGS item in securitiesFromPortfolio)
                     {
 
                         GF_SECURITY_BASEVIEW_Local securityIdRow = item.ASEC_SEC_SHORT_NAME != null
@@ -1031,10 +1043,10 @@ namespace GreenField.Web.Services
         /// <param name="check"></param>
         /// <returns> calculated data for composite fund gadget</returns>
         public CompositeFundData FillResultSetCompositeFund(string InstrumentID, string issuerId, List<CompositeFundData> portfolioTargets,
-            List<GF_BENCHMARK_HOLDINGS> benchmarkData, List<GF_PORTFOLIO_HOLDINGS> portfolioHoldingsDataAll,
+            List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> benchmarkData, List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> portfolioHoldingsDataAll,
             Dictionary<string, decimal> benchmarkCountryData, bool check)
         {
-            DimensionEntitiesService.Entities entity = DimensionEntity;
+            DimensionEntities entity = DimensionEntity;
 
             Int32 securityId = entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).FirstOrDefault() != null ?
                    Convert.ToInt32(entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == InstrumentID).FirstOrDefault().SECURITY_ID) : 0;
@@ -1116,14 +1128,14 @@ namespace GreenField.Web.Services
         {
             try
             {
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
 
                 switch (viewName)
                 {
                     case "PORTFOLIO_HOLDINGS":
                         {
-                            GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE)
+                            GreenField.DAL.GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE)
                                                                                                                 .FirstOrDefault();
                             if (lastBusinessRecord != null)
                             {
@@ -1138,7 +1150,7 @@ namespace GreenField.Web.Services
                         {
                             //This was causing issues as there are 3 records being posted to the WCF for current day.  Had to add a little filtering. 
                             //GF_BENCHMARK_HOLDINGS lastBusinessRecord = entity.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
-                            GF_BENCHMARK_HOLDINGS lastBusinessRecord =
+                            GreenField.DAL.GF_BENCHMARK_HOLDINGS lastBusinessRecord =
                                 entity.GF_BENCHMARK_HOLDINGS.Where(g => g.BENCHMARK_ID == "MSCI EM NET").OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
                             if (lastBusinessRecord != null)
                             {

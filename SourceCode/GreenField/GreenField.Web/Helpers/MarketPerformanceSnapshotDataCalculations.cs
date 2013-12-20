@@ -19,13 +19,13 @@ namespace GreenField.Web.Helpers
         /// <param name="entity">Dimension service entity instance</param>
         /// <param name="preference">MarketSnapshotPreference object</param>
         /// <returns>MarketSnapshotPerformanceData</returns>
-        public static MarketSnapshotPerformanceData GetBenchmarkPerformanceData(Entities entity, MarketSnapshotPreference preference)
+        public static MarketSnapshotPerformanceData GetBenchmarkPerformanceData(DimensionEntities entity, MarketSnapshotPreference preference)
         {
             MarketSnapshotPerformanceData result = new MarketSnapshotPerformanceData();
 
             try
             {
-                List<GF_PERF_DAILY_ATTRIBUTION> benchmarkRecords = entity.GF_PERF_DAILY_ATTRIBUTION
+                List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> benchmarkRecords = entity.GF_PERF_DAILY_ATTRIBUTION
                 .Where(record => record.NODE_NAME == (preference.EntityNodeType == "Country" ? "Country" : "GICS Level 1")
                     && record.AGG_LVL_1 == (preference.EntityNodeType == null ? "Undefined" : preference.EntityNodeValueCode)
                     && record.AGG_LVL_1_LONG_NAME == (preference.EntityNodeType == null ? "-" : preference.EntityNodeValueName)
@@ -35,9 +35,9 @@ namespace GreenField.Web.Helpers
                     && record.POR_INCEPTION_DATE != null)
                 .OrderByDescending(record => record.TO_DATE).ToList();
 
-                GF_PERF_DAILY_ATTRIBUTION lastRecord = benchmarkRecords.FirstOrDefault();
+                GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION lastRecord = benchmarkRecords.FirstOrDefault();
 
-                GF_PERF_DAILY_ATTRIBUTION benchmarkRecord = lastRecord != null ? GetMinInceptionDateRecord<GF_PERF_DAILY_ATTRIBUTION>(benchmarkRecords
+                GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION benchmarkRecord = lastRecord != null ? GetMinInceptionDateRecord<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>(benchmarkRecords
                     .Where(record => record.TO_DATE == lastRecord.TO_DATE).ToList()) : null;
 
                 result.DateToDateReturn = benchmarkRecord != null ? (preference.EntityNodeType == null 
@@ -53,7 +53,7 @@ namespace GreenField.Web.Helpers
 
                 if (preference.EntityNodeType == null)
                 {
-                    GF_PERF_TOPLEVELYEAR benchmarkLastYearRecord = GetMinInceptionDateRecord<GF_PERF_TOPLEVELYEAR>(entity.GF_PERF_TOPLEVELYEAR
+                    GreenField.DAL.GF_PERF_TOPLEVELYEAR benchmarkLastYearRecord = GetMinInceptionDateRecord<GreenField.DAL.GF_PERF_TOPLEVELYEAR>(entity.GF_PERF_TOPLEVELYEAR
                                 .Where(g => g.CURRENCY.ToUpper() == "USD"
                                     && g.RETURN_TYPE.ToUpper() == "NET"
                                     && g.TO_DATE == "31/12/" + (DateTime.Today.Year - 1).ToString()
@@ -65,7 +65,7 @@ namespace GreenField.Web.Helpers
                     result.LastYearReturn = preference.EntityNodeType == null ? (benchmarkLastYearRecord != null 
                         ? benchmarkLastYearRecord.BM1_RC_TWR_YTD * Convert.ToDecimal(100) : null) : null;
 
-                    GF_PERF_TOPLEVELYEAR benchmarkSecondLastYearRecord = GetMinInceptionDateRecord<GF_PERF_TOPLEVELYEAR>(entity.GF_PERF_TOPLEVELYEAR
+                    GreenField.DAL.GF_PERF_TOPLEVELYEAR benchmarkSecondLastYearRecord = GetMinInceptionDateRecord<GreenField.DAL.GF_PERF_TOPLEVELYEAR>(entity.GF_PERF_TOPLEVELYEAR
                         .Where(g => g.CURRENCY.ToUpper() == "USD"
                             && g.RETURN_TYPE.ToUpper() == "NET"
                             && g.TO_DATE == "31/12/" + (DateTime.Today.Year - 2).ToString()
@@ -77,7 +77,7 @@ namespace GreenField.Web.Helpers
                     result.SecondLastYearReturn = preference.EntityNodeType == null ? (benchmarkSecondLastYearRecord != null 
                         ? benchmarkSecondLastYearRecord.BM1_RC_TWR_YTD * Convert.ToDecimal(100) : null) : null;
 
-                    GF_PERF_TOPLEVELYEAR benchmarkThirdLastYearRecord = GetMinInceptionDateRecord<GF_PERF_TOPLEVELYEAR>(entity.GF_PERF_TOPLEVELYEAR
+                    GreenField.DAL.GF_PERF_TOPLEVELYEAR benchmarkThirdLastYearRecord = GetMinInceptionDateRecord<GreenField.DAL.GF_PERF_TOPLEVELYEAR>(entity.GF_PERF_TOPLEVELYEAR
                         .Where(g => g.CURRENCY.ToUpper() == "USD"
                             && g.RETURN_TYPE.ToUpper() == "NET"
                             && g.TO_DATE == "31/12/" + (DateTime.Today.Year - 3).ToString()
@@ -104,14 +104,14 @@ namespace GreenField.Web.Helpers
         /// <param name="entity">Dimension service entity instance</param>
         /// <param name="preference">MarketSnapshotPreference object</param>
         /// <returns>MarketSnapshotPerformanceData</returns>
-        public static MarketSnapshotPerformanceData GetSecurityCommodityIndexPerformanceData(Entities entity, MarketSnapshotPreference preference)
+        public static MarketSnapshotPerformanceData GetSecurityCommodityIndexPerformanceData(DimensionEntities entity, MarketSnapshotPreference preference)
         {
             MarketSnapshotPerformanceData result = new MarketSnapshotPerformanceData();
             try
             {
                 DateTime TrackDate = DateTime.Today;
 
-                GF_PRICING_BASEVIEW lastDateToDateRecord = entity.GF_PRICING_BASEVIEW
+                GreenField.DAL.GF_PRICING_BASEVIEW lastDateToDateRecord = entity.GF_PRICING_BASEVIEW
                     .Where(record => record.INSTRUMENT_ID == preference.EntityId
                         && record.TYPE == preference.EntityType
                         && record.ISSUE_NAME == preference.EntityName
@@ -122,7 +122,7 @@ namespace GreenField.Web.Helpers
                 if (lastDateToDateRecord == null)
                     return result;
 
-                GF_PRICING_BASEVIEW firstRecord = entity.GF_PRICING_BASEVIEW
+                GreenField.DAL.GF_PRICING_BASEVIEW firstRecord = entity.GF_PRICING_BASEVIEW
                     .Where(record => record.INSTRUMENT_ID == preference.EntityId
                         && record.TYPE == preference.EntityType
                         && record.ISSUE_NAME == preference.EntityName
@@ -170,11 +170,11 @@ namespace GreenField.Web.Helpers
         /// <param name="fromDate">start date</param>
         /// <param name="toDate">end date</param>
         /// <returns>security return value</returns>
-        private static Decimal? GetReturn(Entities entity, MarketSnapshotPreference preference, DateTime fromDate, DateTime toDate)
+        private static Decimal? GetReturn(DimensionEntities entity, MarketSnapshotPreference preference, DateTime fromDate, DateTime toDate)
         {
             try
             {
-                List<GF_PRICING_BASEVIEW> datedRecords = entity.GF_PRICING_BASEVIEW
+                List<GreenField.DAL.GF_PRICING_BASEVIEW> datedRecords = entity.GF_PRICING_BASEVIEW
                             .Where(record => record.INSTRUMENT_ID == preference.EntityId
                                 && record.TYPE == preference.EntityType
                                 && record.ISSUE_NAME == preference.EntityName
@@ -183,7 +183,7 @@ namespace GreenField.Web.Helpers
                             .ToList();
 
                 Decimal result = -1;
-                foreach (GF_PRICING_BASEVIEW record in datedRecords)
+                foreach (GreenField.DAL.GF_PRICING_BASEVIEW record in datedRecords)
                 {
                     Decimal? returnValue = preference.EntityReturnType == "Price"
                     ? (record.DAILY_PRICE_RETURN != null ? record.DAILY_PRICE_RETURN : 0)
@@ -206,13 +206,13 @@ namespace GreenField.Web.Helpers
             }
         }
 
-        private static GF_PERF_TOPLEVELYEAR GetTopLevelYearMinInceptionDateRecord(List<GF_PERF_TOPLEVELYEAR> list)
+        private static GreenField.DAL.GF_PERF_TOPLEVELYEAR GetTopLevelYearMinInceptionDateRecord(List<GreenField.DAL.GF_PERF_TOPLEVELYEAR> list)
         {
             if (list == null)
                 return null;
 
-            GF_PERF_TOPLEVELYEAR result = list.FirstOrDefault();
-            foreach (GF_PERF_TOPLEVELYEAR item in list)
+            GreenField.DAL.GF_PERF_TOPLEVELYEAR result = list.FirstOrDefault();
+            foreach (GreenField.DAL.GF_PERF_TOPLEVELYEAR item in list)
             {
                 DateTime resultInceptionDate;
                 DateTime itemInceptionDate;

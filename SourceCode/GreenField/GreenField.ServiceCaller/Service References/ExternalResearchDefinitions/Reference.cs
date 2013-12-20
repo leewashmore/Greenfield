@@ -535,6 +535,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.EntityObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.GF_SECURITY_BASEVIEW))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.DATA_MASTER))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData))]
@@ -554,6 +555,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="EntityObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.GF_SECURITY_BASEVIEW))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.DATA_MASTER))]
     public partial class EntityObject : GreenField.ServiceCaller.ExternalResearchDefinitions.StructuralObject {
         
@@ -568,6 +570,1002 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((object.ReferenceEquals(this.EntityKeyField, value) != true)) {
                     this.EntityKeyField = value;
                     this.RaisePropertyChanged("EntityKey");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GF_SECURITY_BASEVIEW", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class GF_SECURITY_BASEVIEW : GreenField.ServiceCaller.ExternalResearchDefinitions.EntityObject {
+        
+        private string ADR_UNDERLYING_TICKERField;
+        
+        private System.Nullable<int> ASEC_FC_SEC_REFField;
+        
+        private string ASEC_INSTR_TYPEField;
+        
+        private System.Nullable<double> ASEC_ISSUED_VOLUMEField;
+        
+        private string ASEC_SEC_COUNTRY_NAMEField;
+        
+        private string ASEC_SEC_COUNTRY_ZONE_NAMEField;
+        
+        private string ASEC_SEC_SHORT_NAMEField;
+        
+        private string ASHEMM_ONE_LINER_DESCRIPTIONField;
+        
+        private string ASHEMM_PROPRIETARY_REGION_CODEField;
+        
+        private string ASHMOREEMM_INDUSTRY_ANALYSTField;
+        
+        private string ASHMOREEMM_PORTFOLIO_MANAGERField;
+        
+        private string ASHMOREEMM_PRIMARY_ANALYSTField;
+        
+        private string BARRAField;
+        
+        private System.Nullable<double> BARRA_BETAField;
+        
+        private string BETAField;
+        
+        private string BLOOMBERG_DESCRIPTIONField;
+        
+        private string CHG_PCT_1YRField;
+        
+        private string CHG_PCT_MTDField;
+        
+        private string CHG_PCT_QTDField;
+        
+        private string CHG_PCT_YTDField;
+        
+        private System.Nullable<double> CLOSING_PRICEField;
+        
+        private string CUSIPField;
+        
+        private System.Nullable<double> FIFTYTWO_WEEK_HIGHField;
+        
+        private System.Nullable<double> FIFTYTWO_WEEK_LOWField;
+        
+        private string FISCAL_YEAR_ENDField;
+        
+        private string FLOAT_AMOUNTField;
+        
+        private System.Nullable<short> GF_IDField;
+        
+        private string GICS_INDUSTRYField;
+        
+        private string GICS_INDUSTRY_NAMEField;
+        
+        private string GICS_SECTORField;
+        
+        private string GICS_SECTOR_NAMEField;
+        
+        private string GICS_SUB_INDUSTRYField;
+        
+        private string GICS_SUB_INDUSTRY_NAMEField;
+        
+        private string GREENFIELD_FLAGField;
+        
+        private int IDField;
+        
+        private string ISINField;
+        
+        private string ISO_COUNTRY_CODEField;
+        
+        private string ISSUER_IDField;
+        
+        private string ISSUER_NAMEField;
+        
+        private string ISSUE_NAMEField;
+        
+        private System.Nullable<System.DateTime> LAST_CLOSE_DATEField;
+        
+        private System.Nullable<double> LAST_CLOSE_FX_QUO_CURR_TO_USDField;
+        
+        private string LOOK_THRU_FUNDField;
+        
+        private System.Nullable<double> MARKET_CAP_IN_TRADING_CURRENCYField;
+        
+        private string MSCIField;
+        
+        private string REPORTNUMBERField;
+        
+        private string SECS_INSTYPEField;
+        
+        private string SECURITY_IDField;
+        
+        private string SECURITY_TYPEField;
+        
+        private System.Nullable<double> SECURITY_VOLUME_AVG_30DField;
+        
+        private System.Nullable<double> SECURITY_VOLUME_AVG_6MField;
+        
+        private string SECURITY_VOLUME_AVG_90DField;
+        
+        private string SEDOLField;
+        
+        private System.Nullable<double> SHARES_OUTSTANDINGField;
+        
+        private System.Nullable<double> SHARES_PER_ADRField;
+        
+        private string STOCK_EXCHANGE_IDField;
+        
+        private string TICKERField;
+        
+        private System.Nullable<double> TOT_CURR_SHRS_OUTST_ALL_CLASSField;
+        
+        private string TRADING_CURRENCYField;
+        
+        private string UPDATE_BB_STATUSField;
+        
+        private string WACC_COST_DEBTField;
+        
+        private string WACC_COST_EQUITYField;
+        
+        private string WACC_COST_PFDField;
+        
+        private string WEBSITEField;
+        
+        private string XREFField;
+        
+        private string issuer_proxyField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ADR_UNDERLYING_TICKER {
+            get {
+                return this.ADR_UNDERLYING_TICKERField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ADR_UNDERLYING_TICKERField, value) != true)) {
+                    this.ADR_UNDERLYING_TICKERField = value;
+                    this.RaisePropertyChanged("ADR_UNDERLYING_TICKER");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> ASEC_FC_SEC_REF {
+            get {
+                return this.ASEC_FC_SEC_REFField;
+            }
+            set {
+                if ((this.ASEC_FC_SEC_REFField.Equals(value) != true)) {
+                    this.ASEC_FC_SEC_REFField = value;
+                    this.RaisePropertyChanged("ASEC_FC_SEC_REF");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ASEC_INSTR_TYPE {
+            get {
+                return this.ASEC_INSTR_TYPEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ASEC_INSTR_TYPEField, value) != true)) {
+                    this.ASEC_INSTR_TYPEField = value;
+                    this.RaisePropertyChanged("ASEC_INSTR_TYPE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> ASEC_ISSUED_VOLUME {
+            get {
+                return this.ASEC_ISSUED_VOLUMEField;
+            }
+            set {
+                if ((this.ASEC_ISSUED_VOLUMEField.Equals(value) != true)) {
+                    this.ASEC_ISSUED_VOLUMEField = value;
+                    this.RaisePropertyChanged("ASEC_ISSUED_VOLUME");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ASEC_SEC_COUNTRY_NAME {
+            get {
+                return this.ASEC_SEC_COUNTRY_NAMEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ASEC_SEC_COUNTRY_NAMEField, value) != true)) {
+                    this.ASEC_SEC_COUNTRY_NAMEField = value;
+                    this.RaisePropertyChanged("ASEC_SEC_COUNTRY_NAME");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ASEC_SEC_COUNTRY_ZONE_NAME {
+            get {
+                return this.ASEC_SEC_COUNTRY_ZONE_NAMEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ASEC_SEC_COUNTRY_ZONE_NAMEField, value) != true)) {
+                    this.ASEC_SEC_COUNTRY_ZONE_NAMEField = value;
+                    this.RaisePropertyChanged("ASEC_SEC_COUNTRY_ZONE_NAME");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ASEC_SEC_SHORT_NAME {
+            get {
+                return this.ASEC_SEC_SHORT_NAMEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ASEC_SEC_SHORT_NAMEField, value) != true)) {
+                    this.ASEC_SEC_SHORT_NAMEField = value;
+                    this.RaisePropertyChanged("ASEC_SEC_SHORT_NAME");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ASHEMM_ONE_LINER_DESCRIPTION {
+            get {
+                return this.ASHEMM_ONE_LINER_DESCRIPTIONField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ASHEMM_ONE_LINER_DESCRIPTIONField, value) != true)) {
+                    this.ASHEMM_ONE_LINER_DESCRIPTIONField = value;
+                    this.RaisePropertyChanged("ASHEMM_ONE_LINER_DESCRIPTION");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ASHEMM_PROPRIETARY_REGION_CODE {
+            get {
+                return this.ASHEMM_PROPRIETARY_REGION_CODEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ASHEMM_PROPRIETARY_REGION_CODEField, value) != true)) {
+                    this.ASHEMM_PROPRIETARY_REGION_CODEField = value;
+                    this.RaisePropertyChanged("ASHEMM_PROPRIETARY_REGION_CODE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ASHMOREEMM_INDUSTRY_ANALYST {
+            get {
+                return this.ASHMOREEMM_INDUSTRY_ANALYSTField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ASHMOREEMM_INDUSTRY_ANALYSTField, value) != true)) {
+                    this.ASHMOREEMM_INDUSTRY_ANALYSTField = value;
+                    this.RaisePropertyChanged("ASHMOREEMM_INDUSTRY_ANALYST");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ASHMOREEMM_PORTFOLIO_MANAGER {
+            get {
+                return this.ASHMOREEMM_PORTFOLIO_MANAGERField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ASHMOREEMM_PORTFOLIO_MANAGERField, value) != true)) {
+                    this.ASHMOREEMM_PORTFOLIO_MANAGERField = value;
+                    this.RaisePropertyChanged("ASHMOREEMM_PORTFOLIO_MANAGER");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ASHMOREEMM_PRIMARY_ANALYST {
+            get {
+                return this.ASHMOREEMM_PRIMARY_ANALYSTField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ASHMOREEMM_PRIMARY_ANALYSTField, value) != true)) {
+                    this.ASHMOREEMM_PRIMARY_ANALYSTField = value;
+                    this.RaisePropertyChanged("ASHMOREEMM_PRIMARY_ANALYST");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BARRA {
+            get {
+                return this.BARRAField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BARRAField, value) != true)) {
+                    this.BARRAField = value;
+                    this.RaisePropertyChanged("BARRA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> BARRA_BETA {
+            get {
+                return this.BARRA_BETAField;
+            }
+            set {
+                if ((this.BARRA_BETAField.Equals(value) != true)) {
+                    this.BARRA_BETAField = value;
+                    this.RaisePropertyChanged("BARRA_BETA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BETA {
+            get {
+                return this.BETAField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BETAField, value) != true)) {
+                    this.BETAField = value;
+                    this.RaisePropertyChanged("BETA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BLOOMBERG_DESCRIPTION {
+            get {
+                return this.BLOOMBERG_DESCRIPTIONField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BLOOMBERG_DESCRIPTIONField, value) != true)) {
+                    this.BLOOMBERG_DESCRIPTIONField = value;
+                    this.RaisePropertyChanged("BLOOMBERG_DESCRIPTION");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CHG_PCT_1YR {
+            get {
+                return this.CHG_PCT_1YRField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CHG_PCT_1YRField, value) != true)) {
+                    this.CHG_PCT_1YRField = value;
+                    this.RaisePropertyChanged("CHG_PCT_1YR");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CHG_PCT_MTD {
+            get {
+                return this.CHG_PCT_MTDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CHG_PCT_MTDField, value) != true)) {
+                    this.CHG_PCT_MTDField = value;
+                    this.RaisePropertyChanged("CHG_PCT_MTD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CHG_PCT_QTD {
+            get {
+                return this.CHG_PCT_QTDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CHG_PCT_QTDField, value) != true)) {
+                    this.CHG_PCT_QTDField = value;
+                    this.RaisePropertyChanged("CHG_PCT_QTD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CHG_PCT_YTD {
+            get {
+                return this.CHG_PCT_YTDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CHG_PCT_YTDField, value) != true)) {
+                    this.CHG_PCT_YTDField = value;
+                    this.RaisePropertyChanged("CHG_PCT_YTD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> CLOSING_PRICE {
+            get {
+                return this.CLOSING_PRICEField;
+            }
+            set {
+                if ((this.CLOSING_PRICEField.Equals(value) != true)) {
+                    this.CLOSING_PRICEField = value;
+                    this.RaisePropertyChanged("CLOSING_PRICE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CUSIP {
+            get {
+                return this.CUSIPField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CUSIPField, value) != true)) {
+                    this.CUSIPField = value;
+                    this.RaisePropertyChanged("CUSIP");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> FIFTYTWO_WEEK_HIGH {
+            get {
+                return this.FIFTYTWO_WEEK_HIGHField;
+            }
+            set {
+                if ((this.FIFTYTWO_WEEK_HIGHField.Equals(value) != true)) {
+                    this.FIFTYTWO_WEEK_HIGHField = value;
+                    this.RaisePropertyChanged("FIFTYTWO_WEEK_HIGH");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> FIFTYTWO_WEEK_LOW {
+            get {
+                return this.FIFTYTWO_WEEK_LOWField;
+            }
+            set {
+                if ((this.FIFTYTWO_WEEK_LOWField.Equals(value) != true)) {
+                    this.FIFTYTWO_WEEK_LOWField = value;
+                    this.RaisePropertyChanged("FIFTYTWO_WEEK_LOW");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FISCAL_YEAR_END {
+            get {
+                return this.FISCAL_YEAR_ENDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FISCAL_YEAR_ENDField, value) != true)) {
+                    this.FISCAL_YEAR_ENDField = value;
+                    this.RaisePropertyChanged("FISCAL_YEAR_END");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FLOAT_AMOUNT {
+            get {
+                return this.FLOAT_AMOUNTField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FLOAT_AMOUNTField, value) != true)) {
+                    this.FLOAT_AMOUNTField = value;
+                    this.RaisePropertyChanged("FLOAT_AMOUNT");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<short> GF_ID {
+            get {
+                return this.GF_IDField;
+            }
+            set {
+                if ((this.GF_IDField.Equals(value) != true)) {
+                    this.GF_IDField = value;
+                    this.RaisePropertyChanged("GF_ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GICS_INDUSTRY {
+            get {
+                return this.GICS_INDUSTRYField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GICS_INDUSTRYField, value) != true)) {
+                    this.GICS_INDUSTRYField = value;
+                    this.RaisePropertyChanged("GICS_INDUSTRY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GICS_INDUSTRY_NAME {
+            get {
+                return this.GICS_INDUSTRY_NAMEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GICS_INDUSTRY_NAMEField, value) != true)) {
+                    this.GICS_INDUSTRY_NAMEField = value;
+                    this.RaisePropertyChanged("GICS_INDUSTRY_NAME");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GICS_SECTOR {
+            get {
+                return this.GICS_SECTORField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GICS_SECTORField, value) != true)) {
+                    this.GICS_SECTORField = value;
+                    this.RaisePropertyChanged("GICS_SECTOR");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GICS_SECTOR_NAME {
+            get {
+                return this.GICS_SECTOR_NAMEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GICS_SECTOR_NAMEField, value) != true)) {
+                    this.GICS_SECTOR_NAMEField = value;
+                    this.RaisePropertyChanged("GICS_SECTOR_NAME");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GICS_SUB_INDUSTRY {
+            get {
+                return this.GICS_SUB_INDUSTRYField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GICS_SUB_INDUSTRYField, value) != true)) {
+                    this.GICS_SUB_INDUSTRYField = value;
+                    this.RaisePropertyChanged("GICS_SUB_INDUSTRY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GICS_SUB_INDUSTRY_NAME {
+            get {
+                return this.GICS_SUB_INDUSTRY_NAMEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GICS_SUB_INDUSTRY_NAMEField, value) != true)) {
+                    this.GICS_SUB_INDUSTRY_NAMEField = value;
+                    this.RaisePropertyChanged("GICS_SUB_INDUSTRY_NAME");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GREENFIELD_FLAG {
+            get {
+                return this.GREENFIELD_FLAGField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GREENFIELD_FLAGField, value) != true)) {
+                    this.GREENFIELD_FLAGField = value;
+                    this.RaisePropertyChanged("GREENFIELD_FLAG");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ISIN {
+            get {
+                return this.ISINField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ISINField, value) != true)) {
+                    this.ISINField = value;
+                    this.RaisePropertyChanged("ISIN");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ISO_COUNTRY_CODE {
+            get {
+                return this.ISO_COUNTRY_CODEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ISO_COUNTRY_CODEField, value) != true)) {
+                    this.ISO_COUNTRY_CODEField = value;
+                    this.RaisePropertyChanged("ISO_COUNTRY_CODE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ISSUER_ID {
+            get {
+                return this.ISSUER_IDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ISSUER_IDField, value) != true)) {
+                    this.ISSUER_IDField = value;
+                    this.RaisePropertyChanged("ISSUER_ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ISSUER_NAME {
+            get {
+                return this.ISSUER_NAMEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ISSUER_NAMEField, value) != true)) {
+                    this.ISSUER_NAMEField = value;
+                    this.RaisePropertyChanged("ISSUER_NAME");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ISSUE_NAME {
+            get {
+                return this.ISSUE_NAMEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ISSUE_NAMEField, value) != true)) {
+                    this.ISSUE_NAMEField = value;
+                    this.RaisePropertyChanged("ISSUE_NAME");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LAST_CLOSE_DATE {
+            get {
+                return this.LAST_CLOSE_DATEField;
+            }
+            set {
+                if ((this.LAST_CLOSE_DATEField.Equals(value) != true)) {
+                    this.LAST_CLOSE_DATEField = value;
+                    this.RaisePropertyChanged("LAST_CLOSE_DATE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> LAST_CLOSE_FX_QUO_CURR_TO_USD {
+            get {
+                return this.LAST_CLOSE_FX_QUO_CURR_TO_USDField;
+            }
+            set {
+                if ((this.LAST_CLOSE_FX_QUO_CURR_TO_USDField.Equals(value) != true)) {
+                    this.LAST_CLOSE_FX_QUO_CURR_TO_USDField = value;
+                    this.RaisePropertyChanged("LAST_CLOSE_FX_QUO_CURR_TO_USD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LOOK_THRU_FUND {
+            get {
+                return this.LOOK_THRU_FUNDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LOOK_THRU_FUNDField, value) != true)) {
+                    this.LOOK_THRU_FUNDField = value;
+                    this.RaisePropertyChanged("LOOK_THRU_FUND");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> MARKET_CAP_IN_TRADING_CURRENCY {
+            get {
+                return this.MARKET_CAP_IN_TRADING_CURRENCYField;
+            }
+            set {
+                if ((this.MARKET_CAP_IN_TRADING_CURRENCYField.Equals(value) != true)) {
+                    this.MARKET_CAP_IN_TRADING_CURRENCYField = value;
+                    this.RaisePropertyChanged("MARKET_CAP_IN_TRADING_CURRENCY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MSCI {
+            get {
+                return this.MSCIField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MSCIField, value) != true)) {
+                    this.MSCIField = value;
+                    this.RaisePropertyChanged("MSCI");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string REPORTNUMBER {
+            get {
+                return this.REPORTNUMBERField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.REPORTNUMBERField, value) != true)) {
+                    this.REPORTNUMBERField = value;
+                    this.RaisePropertyChanged("REPORTNUMBER");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SECS_INSTYPE {
+            get {
+                return this.SECS_INSTYPEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SECS_INSTYPEField, value) != true)) {
+                    this.SECS_INSTYPEField = value;
+                    this.RaisePropertyChanged("SECS_INSTYPE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SECURITY_ID {
+            get {
+                return this.SECURITY_IDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SECURITY_IDField, value) != true)) {
+                    this.SECURITY_IDField = value;
+                    this.RaisePropertyChanged("SECURITY_ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SECURITY_TYPE {
+            get {
+                return this.SECURITY_TYPEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SECURITY_TYPEField, value) != true)) {
+                    this.SECURITY_TYPEField = value;
+                    this.RaisePropertyChanged("SECURITY_TYPE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SECURITY_VOLUME_AVG_30D {
+            get {
+                return this.SECURITY_VOLUME_AVG_30DField;
+            }
+            set {
+                if ((this.SECURITY_VOLUME_AVG_30DField.Equals(value) != true)) {
+                    this.SECURITY_VOLUME_AVG_30DField = value;
+                    this.RaisePropertyChanged("SECURITY_VOLUME_AVG_30D");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SECURITY_VOLUME_AVG_6M {
+            get {
+                return this.SECURITY_VOLUME_AVG_6MField;
+            }
+            set {
+                if ((this.SECURITY_VOLUME_AVG_6MField.Equals(value) != true)) {
+                    this.SECURITY_VOLUME_AVG_6MField = value;
+                    this.RaisePropertyChanged("SECURITY_VOLUME_AVG_6M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SECURITY_VOLUME_AVG_90D {
+            get {
+                return this.SECURITY_VOLUME_AVG_90DField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SECURITY_VOLUME_AVG_90DField, value) != true)) {
+                    this.SECURITY_VOLUME_AVG_90DField = value;
+                    this.RaisePropertyChanged("SECURITY_VOLUME_AVG_90D");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SEDOL {
+            get {
+                return this.SEDOLField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SEDOLField, value) != true)) {
+                    this.SEDOLField = value;
+                    this.RaisePropertyChanged("SEDOL");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SHARES_OUTSTANDING {
+            get {
+                return this.SHARES_OUTSTANDINGField;
+            }
+            set {
+                if ((this.SHARES_OUTSTANDINGField.Equals(value) != true)) {
+                    this.SHARES_OUTSTANDINGField = value;
+                    this.RaisePropertyChanged("SHARES_OUTSTANDING");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> SHARES_PER_ADR {
+            get {
+                return this.SHARES_PER_ADRField;
+            }
+            set {
+                if ((this.SHARES_PER_ADRField.Equals(value) != true)) {
+                    this.SHARES_PER_ADRField = value;
+                    this.RaisePropertyChanged("SHARES_PER_ADR");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string STOCK_EXCHANGE_ID {
+            get {
+                return this.STOCK_EXCHANGE_IDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.STOCK_EXCHANGE_IDField, value) != true)) {
+                    this.STOCK_EXCHANGE_IDField = value;
+                    this.RaisePropertyChanged("STOCK_EXCHANGE_ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TICKER {
+            get {
+                return this.TICKERField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TICKERField, value) != true)) {
+                    this.TICKERField = value;
+                    this.RaisePropertyChanged("TICKER");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> TOT_CURR_SHRS_OUTST_ALL_CLASS {
+            get {
+                return this.TOT_CURR_SHRS_OUTST_ALL_CLASSField;
+            }
+            set {
+                if ((this.TOT_CURR_SHRS_OUTST_ALL_CLASSField.Equals(value) != true)) {
+                    this.TOT_CURR_SHRS_OUTST_ALL_CLASSField = value;
+                    this.RaisePropertyChanged("TOT_CURR_SHRS_OUTST_ALL_CLASS");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TRADING_CURRENCY {
+            get {
+                return this.TRADING_CURRENCYField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TRADING_CURRENCYField, value) != true)) {
+                    this.TRADING_CURRENCYField = value;
+                    this.RaisePropertyChanged("TRADING_CURRENCY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UPDATE_BB_STATUS {
+            get {
+                return this.UPDATE_BB_STATUSField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UPDATE_BB_STATUSField, value) != true)) {
+                    this.UPDATE_BB_STATUSField = value;
+                    this.RaisePropertyChanged("UPDATE_BB_STATUS");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WACC_COST_DEBT {
+            get {
+                return this.WACC_COST_DEBTField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WACC_COST_DEBTField, value) != true)) {
+                    this.WACC_COST_DEBTField = value;
+                    this.RaisePropertyChanged("WACC_COST_DEBT");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WACC_COST_EQUITY {
+            get {
+                return this.WACC_COST_EQUITYField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WACC_COST_EQUITYField, value) != true)) {
+                    this.WACC_COST_EQUITYField = value;
+                    this.RaisePropertyChanged("WACC_COST_EQUITY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WACC_COST_PFD {
+            get {
+                return this.WACC_COST_PFDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WACC_COST_PFDField, value) != true)) {
+                    this.WACC_COST_PFDField = value;
+                    this.RaisePropertyChanged("WACC_COST_PFD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WEBSITE {
+            get {
+                return this.WEBSITEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WEBSITEField, value) != true)) {
+                    this.WEBSITEField = value;
+                    this.RaisePropertyChanged("WEBSITE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string XREF {
+            get {
+                return this.XREFField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.XREFField, value) != true)) {
+                    this.XREFField = value;
+                    this.RaisePropertyChanged("XREF");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string issuer_proxy {
+            get {
+                return this.issuer_proxyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.issuer_proxyField, value) != true)) {
+                    this.issuer_proxyField = value;
+                    this.RaisePropertyChanged("issuer_proxy");
                 }
             }
         }
@@ -1001,26 +1999,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="EntityKeyMember", Namespace="http://schemas.datacontract.org/2004/07/System.Data")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.StructuralObject))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.EntityObject))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.QuarterlyResultsData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.PRevenueData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.PRevenueData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.ValuationQualityGrowthData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.EMSummaryMarketData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.EMSummaryMarketData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.DATA_MASTER>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.DATA_MASTER))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.EntityKey))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.EntityKeyMember>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.EntitySelectionData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.FinancialStatementDataSource))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.FinancialStatementPeriodType))]
@@ -1045,11 +2029,25 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.InvestmentContextDetailsData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.InvestmentContextDetailsData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.QuarterlyResultsData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.PRevenueData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.PRevenueData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.ValuationQualityGrowthData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.EMSummaryMarketData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.EMSummaryMarketData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.GF_SECURITY_BASEVIEW>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.GF_SECURITY_BASEVIEW))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.EntityKey))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.EntityKeyMember>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.DATA_MASTER>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.DATA_MASTER))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<string>))]
     public partial class EntityKeyMember : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -1079,996 +2077,6 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((object.ReferenceEquals(this.ValueField, value) != true)) {
                     this.ValueField = value;
                     this.RaisePropertyChanged("Value");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GF_SECURITY_BASEVIEW", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DimensionEntitiesService")]
-    public partial class GF_SECURITY_BASEVIEW : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string ADR_UNDERLYING_TICKERField;
-        
-        private System.Nullable<int> ASEC_FC_SEC_REFField;
-        
-        private string ASEC_INSTR_TYPEField;
-        
-        private System.Nullable<decimal> ASEC_ISSUED_VOLUMEField;
-        
-        private string ASEC_SEC_COUNTRY_NAMEField;
-        
-        private string ASEC_SEC_COUNTRY_ZONE_NAMEField;
-        
-        private string ASEC_SEC_SHORT_NAMEField;
-        
-        private string ASHEMM_ONE_LINER_DESCRIPTIONField;
-        
-        private string ASHEMM_PROPRIETARY_REGION_CODEField;
-        
-        private string ASHMOREEMM_INDUSTRY_ANALYSTField;
-        
-        private string ASHMOREEMM_PORTFOLIO_MANAGERField;
-        
-        private string ASHMOREEMM_PRIMARY_ANALYSTField;
-        
-        private string BARRAField;
-        
-        private System.Nullable<decimal> BARRA_BETAField;
-        
-        private string BETAField;
-        
-        private string BLOOMBERG_DESCRIPTIONField;
-        
-        private string CHG_PCT_1YRField;
-        
-        private string CHG_PCT_MTDField;
-        
-        private string CHG_PCT_QTDField;
-        
-        private string CHG_PCT_YTDField;
-        
-        private System.Nullable<decimal> CLOSING_PRICEField;
-        
-        private string CUSIPField;
-        
-        private System.Nullable<decimal> FIFTYTWO_WEEK_HIGHField;
-        
-        private System.Nullable<decimal> FIFTYTWO_WEEK_LOWField;
-        
-        private string FISCAL_YEAR_ENDField;
-        
-        private string FLOAT_AMOUNTField;
-        
-        private decimal GF_IDField;
-        
-        private string GICS_INDUSTRYField;
-        
-        private string GICS_INDUSTRY_NAMEField;
-        
-        private string GICS_SECTORField;
-        
-        private string GICS_SECTOR_NAMEField;
-        
-        private string GICS_SUB_INDUSTRYField;
-        
-        private string GICS_SUB_INDUSTRY_NAMEField;
-        
-        private string GREENFIELD_FLAGField;
-        
-        private string ISINField;
-        
-        private string ISO_COUNTRY_CODEField;
-        
-        private string ISSUER_IDField;
-        
-        private string ISSUER_NAMEField;
-        
-        private string ISSUER_PROXYField;
-        
-        private string ISSUE_NAMEField;
-        
-        private System.Nullable<System.DateTime> LAST_CLOSE_DATEField;
-        
-        private System.Nullable<decimal> LAST_CLOSE_FX_QUO_CURR_TO_USDField;
-        
-        private string LOOK_THRU_FUNDField;
-        
-        private System.Nullable<decimal> MARKET_CAP_IN_TRADING_CURRENCYField;
-        
-        private string MSCIField;
-        
-        private string REPORTNUMBERField;
-        
-        private string SECS_INSTYPEField;
-        
-        private System.Nullable<int> SECURITY_IDField;
-        
-        private string SECURITY_TYPEField;
-        
-        private System.Nullable<decimal> SECURITY_VOLUME_AVG_30DField;
-        
-        private System.Nullable<decimal> SECURITY_VOLUME_AVG_6MField;
-        
-        private string SECURITY_VOLUME_AVG_90DField;
-        
-        private string SEDOLField;
-        
-        private System.Nullable<decimal> SHARES_OUTSTANDINGField;
-        
-        private System.Nullable<decimal> SHARES_PER_ADRField;
-        
-        private string STOCK_EXCHANGE_IDField;
-        
-        private string TICKERField;
-        
-        private System.Nullable<decimal> TOT_CURR_SHRS_OUTST_ALL_CLASSField;
-        
-        private string TRADING_CURRENCYField;
-        
-        private string UPDATE_BB_STATUSField;
-        
-        private string WACC_COST_DEBTField;
-        
-        private string WACC_COST_EQUITYField;
-        
-        private string WACC_COST_PFDField;
-        
-        private string WEBSITEField;
-        
-        private string XREFField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ADR_UNDERLYING_TICKER {
-            get {
-                return this.ADR_UNDERLYING_TICKERField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ADR_UNDERLYING_TICKERField, value) != true)) {
-                    this.ADR_UNDERLYING_TICKERField = value;
-                    this.RaisePropertyChanged("ADR_UNDERLYING_TICKER");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> ASEC_FC_SEC_REF {
-            get {
-                return this.ASEC_FC_SEC_REFField;
-            }
-            set {
-                if ((this.ASEC_FC_SEC_REFField.Equals(value) != true)) {
-                    this.ASEC_FC_SEC_REFField = value;
-                    this.RaisePropertyChanged("ASEC_FC_SEC_REF");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ASEC_INSTR_TYPE {
-            get {
-                return this.ASEC_INSTR_TYPEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ASEC_INSTR_TYPEField, value) != true)) {
-                    this.ASEC_INSTR_TYPEField = value;
-                    this.RaisePropertyChanged("ASEC_INSTR_TYPE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> ASEC_ISSUED_VOLUME {
-            get {
-                return this.ASEC_ISSUED_VOLUMEField;
-            }
-            set {
-                if ((this.ASEC_ISSUED_VOLUMEField.Equals(value) != true)) {
-                    this.ASEC_ISSUED_VOLUMEField = value;
-                    this.RaisePropertyChanged("ASEC_ISSUED_VOLUME");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ASEC_SEC_COUNTRY_NAME {
-            get {
-                return this.ASEC_SEC_COUNTRY_NAMEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ASEC_SEC_COUNTRY_NAMEField, value) != true)) {
-                    this.ASEC_SEC_COUNTRY_NAMEField = value;
-                    this.RaisePropertyChanged("ASEC_SEC_COUNTRY_NAME");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ASEC_SEC_COUNTRY_ZONE_NAME {
-            get {
-                return this.ASEC_SEC_COUNTRY_ZONE_NAMEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ASEC_SEC_COUNTRY_ZONE_NAMEField, value) != true)) {
-                    this.ASEC_SEC_COUNTRY_ZONE_NAMEField = value;
-                    this.RaisePropertyChanged("ASEC_SEC_COUNTRY_ZONE_NAME");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ASEC_SEC_SHORT_NAME {
-            get {
-                return this.ASEC_SEC_SHORT_NAMEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ASEC_SEC_SHORT_NAMEField, value) != true)) {
-                    this.ASEC_SEC_SHORT_NAMEField = value;
-                    this.RaisePropertyChanged("ASEC_SEC_SHORT_NAME");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ASHEMM_ONE_LINER_DESCRIPTION {
-            get {
-                return this.ASHEMM_ONE_LINER_DESCRIPTIONField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ASHEMM_ONE_LINER_DESCRIPTIONField, value) != true)) {
-                    this.ASHEMM_ONE_LINER_DESCRIPTIONField = value;
-                    this.RaisePropertyChanged("ASHEMM_ONE_LINER_DESCRIPTION");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ASHEMM_PROPRIETARY_REGION_CODE {
-            get {
-                return this.ASHEMM_PROPRIETARY_REGION_CODEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ASHEMM_PROPRIETARY_REGION_CODEField, value) != true)) {
-                    this.ASHEMM_PROPRIETARY_REGION_CODEField = value;
-                    this.RaisePropertyChanged("ASHEMM_PROPRIETARY_REGION_CODE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ASHMOREEMM_INDUSTRY_ANALYST {
-            get {
-                return this.ASHMOREEMM_INDUSTRY_ANALYSTField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ASHMOREEMM_INDUSTRY_ANALYSTField, value) != true)) {
-                    this.ASHMOREEMM_INDUSTRY_ANALYSTField = value;
-                    this.RaisePropertyChanged("ASHMOREEMM_INDUSTRY_ANALYST");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ASHMOREEMM_PORTFOLIO_MANAGER {
-            get {
-                return this.ASHMOREEMM_PORTFOLIO_MANAGERField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ASHMOREEMM_PORTFOLIO_MANAGERField, value) != true)) {
-                    this.ASHMOREEMM_PORTFOLIO_MANAGERField = value;
-                    this.RaisePropertyChanged("ASHMOREEMM_PORTFOLIO_MANAGER");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ASHMOREEMM_PRIMARY_ANALYST {
-            get {
-                return this.ASHMOREEMM_PRIMARY_ANALYSTField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ASHMOREEMM_PRIMARY_ANALYSTField, value) != true)) {
-                    this.ASHMOREEMM_PRIMARY_ANALYSTField = value;
-                    this.RaisePropertyChanged("ASHMOREEMM_PRIMARY_ANALYST");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BARRA {
-            get {
-                return this.BARRAField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BARRAField, value) != true)) {
-                    this.BARRAField = value;
-                    this.RaisePropertyChanged("BARRA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> BARRA_BETA {
-            get {
-                return this.BARRA_BETAField;
-            }
-            set {
-                if ((this.BARRA_BETAField.Equals(value) != true)) {
-                    this.BARRA_BETAField = value;
-                    this.RaisePropertyChanged("BARRA_BETA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BETA {
-            get {
-                return this.BETAField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BETAField, value) != true)) {
-                    this.BETAField = value;
-                    this.RaisePropertyChanged("BETA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BLOOMBERG_DESCRIPTION {
-            get {
-                return this.BLOOMBERG_DESCRIPTIONField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BLOOMBERG_DESCRIPTIONField, value) != true)) {
-                    this.BLOOMBERG_DESCRIPTIONField = value;
-                    this.RaisePropertyChanged("BLOOMBERG_DESCRIPTION");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CHG_PCT_1YR {
-            get {
-                return this.CHG_PCT_1YRField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CHG_PCT_1YRField, value) != true)) {
-                    this.CHG_PCT_1YRField = value;
-                    this.RaisePropertyChanged("CHG_PCT_1YR");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CHG_PCT_MTD {
-            get {
-                return this.CHG_PCT_MTDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CHG_PCT_MTDField, value) != true)) {
-                    this.CHG_PCT_MTDField = value;
-                    this.RaisePropertyChanged("CHG_PCT_MTD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CHG_PCT_QTD {
-            get {
-                return this.CHG_PCT_QTDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CHG_PCT_QTDField, value) != true)) {
-                    this.CHG_PCT_QTDField = value;
-                    this.RaisePropertyChanged("CHG_PCT_QTD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CHG_PCT_YTD {
-            get {
-                return this.CHG_PCT_YTDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CHG_PCT_YTDField, value) != true)) {
-                    this.CHG_PCT_YTDField = value;
-                    this.RaisePropertyChanged("CHG_PCT_YTD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> CLOSING_PRICE {
-            get {
-                return this.CLOSING_PRICEField;
-            }
-            set {
-                if ((this.CLOSING_PRICEField.Equals(value) != true)) {
-                    this.CLOSING_PRICEField = value;
-                    this.RaisePropertyChanged("CLOSING_PRICE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CUSIP {
-            get {
-                return this.CUSIPField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CUSIPField, value) != true)) {
-                    this.CUSIPField = value;
-                    this.RaisePropertyChanged("CUSIP");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> FIFTYTWO_WEEK_HIGH {
-            get {
-                return this.FIFTYTWO_WEEK_HIGHField;
-            }
-            set {
-                if ((this.FIFTYTWO_WEEK_HIGHField.Equals(value) != true)) {
-                    this.FIFTYTWO_WEEK_HIGHField = value;
-                    this.RaisePropertyChanged("FIFTYTWO_WEEK_HIGH");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> FIFTYTWO_WEEK_LOW {
-            get {
-                return this.FIFTYTWO_WEEK_LOWField;
-            }
-            set {
-                if ((this.FIFTYTWO_WEEK_LOWField.Equals(value) != true)) {
-                    this.FIFTYTWO_WEEK_LOWField = value;
-                    this.RaisePropertyChanged("FIFTYTWO_WEEK_LOW");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FISCAL_YEAR_END {
-            get {
-                return this.FISCAL_YEAR_ENDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FISCAL_YEAR_ENDField, value) != true)) {
-                    this.FISCAL_YEAR_ENDField = value;
-                    this.RaisePropertyChanged("FISCAL_YEAR_END");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FLOAT_AMOUNT {
-            get {
-                return this.FLOAT_AMOUNTField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FLOAT_AMOUNTField, value) != true)) {
-                    this.FLOAT_AMOUNTField = value;
-                    this.RaisePropertyChanged("FLOAT_AMOUNT");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal GF_ID {
-            get {
-                return this.GF_IDField;
-            }
-            set {
-                if ((this.GF_IDField.Equals(value) != true)) {
-                    this.GF_IDField = value;
-                    this.RaisePropertyChanged("GF_ID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string GICS_INDUSTRY {
-            get {
-                return this.GICS_INDUSTRYField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.GICS_INDUSTRYField, value) != true)) {
-                    this.GICS_INDUSTRYField = value;
-                    this.RaisePropertyChanged("GICS_INDUSTRY");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string GICS_INDUSTRY_NAME {
-            get {
-                return this.GICS_INDUSTRY_NAMEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.GICS_INDUSTRY_NAMEField, value) != true)) {
-                    this.GICS_INDUSTRY_NAMEField = value;
-                    this.RaisePropertyChanged("GICS_INDUSTRY_NAME");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string GICS_SECTOR {
-            get {
-                return this.GICS_SECTORField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.GICS_SECTORField, value) != true)) {
-                    this.GICS_SECTORField = value;
-                    this.RaisePropertyChanged("GICS_SECTOR");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string GICS_SECTOR_NAME {
-            get {
-                return this.GICS_SECTOR_NAMEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.GICS_SECTOR_NAMEField, value) != true)) {
-                    this.GICS_SECTOR_NAMEField = value;
-                    this.RaisePropertyChanged("GICS_SECTOR_NAME");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string GICS_SUB_INDUSTRY {
-            get {
-                return this.GICS_SUB_INDUSTRYField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.GICS_SUB_INDUSTRYField, value) != true)) {
-                    this.GICS_SUB_INDUSTRYField = value;
-                    this.RaisePropertyChanged("GICS_SUB_INDUSTRY");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string GICS_SUB_INDUSTRY_NAME {
-            get {
-                return this.GICS_SUB_INDUSTRY_NAMEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.GICS_SUB_INDUSTRY_NAMEField, value) != true)) {
-                    this.GICS_SUB_INDUSTRY_NAMEField = value;
-                    this.RaisePropertyChanged("GICS_SUB_INDUSTRY_NAME");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string GREENFIELD_FLAG {
-            get {
-                return this.GREENFIELD_FLAGField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.GREENFIELD_FLAGField, value) != true)) {
-                    this.GREENFIELD_FLAGField = value;
-                    this.RaisePropertyChanged("GREENFIELD_FLAG");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ISIN {
-            get {
-                return this.ISINField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ISINField, value) != true)) {
-                    this.ISINField = value;
-                    this.RaisePropertyChanged("ISIN");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ISO_COUNTRY_CODE {
-            get {
-                return this.ISO_COUNTRY_CODEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ISO_COUNTRY_CODEField, value) != true)) {
-                    this.ISO_COUNTRY_CODEField = value;
-                    this.RaisePropertyChanged("ISO_COUNTRY_CODE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ISSUER_ID {
-            get {
-                return this.ISSUER_IDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ISSUER_IDField, value) != true)) {
-                    this.ISSUER_IDField = value;
-                    this.RaisePropertyChanged("ISSUER_ID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ISSUER_NAME {
-            get {
-                return this.ISSUER_NAMEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ISSUER_NAMEField, value) != true)) {
-                    this.ISSUER_NAMEField = value;
-                    this.RaisePropertyChanged("ISSUER_NAME");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ISSUER_PROXY {
-            get {
-                return this.ISSUER_PROXYField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ISSUER_PROXYField, value) != true)) {
-                    this.ISSUER_PROXYField = value;
-                    this.RaisePropertyChanged("ISSUER_PROXY");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ISSUE_NAME {
-            get {
-                return this.ISSUE_NAMEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ISSUE_NAMEField, value) != true)) {
-                    this.ISSUE_NAMEField = value;
-                    this.RaisePropertyChanged("ISSUE_NAME");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> LAST_CLOSE_DATE {
-            get {
-                return this.LAST_CLOSE_DATEField;
-            }
-            set {
-                if ((this.LAST_CLOSE_DATEField.Equals(value) != true)) {
-                    this.LAST_CLOSE_DATEField = value;
-                    this.RaisePropertyChanged("LAST_CLOSE_DATE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> LAST_CLOSE_FX_QUO_CURR_TO_USD {
-            get {
-                return this.LAST_CLOSE_FX_QUO_CURR_TO_USDField;
-            }
-            set {
-                if ((this.LAST_CLOSE_FX_QUO_CURR_TO_USDField.Equals(value) != true)) {
-                    this.LAST_CLOSE_FX_QUO_CURR_TO_USDField = value;
-                    this.RaisePropertyChanged("LAST_CLOSE_FX_QUO_CURR_TO_USD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LOOK_THRU_FUND {
-            get {
-                return this.LOOK_THRU_FUNDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LOOK_THRU_FUNDField, value) != true)) {
-                    this.LOOK_THRU_FUNDField = value;
-                    this.RaisePropertyChanged("LOOK_THRU_FUND");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> MARKET_CAP_IN_TRADING_CURRENCY {
-            get {
-                return this.MARKET_CAP_IN_TRADING_CURRENCYField;
-            }
-            set {
-                if ((this.MARKET_CAP_IN_TRADING_CURRENCYField.Equals(value) != true)) {
-                    this.MARKET_CAP_IN_TRADING_CURRENCYField = value;
-                    this.RaisePropertyChanged("MARKET_CAP_IN_TRADING_CURRENCY");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MSCI {
-            get {
-                return this.MSCIField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MSCIField, value) != true)) {
-                    this.MSCIField = value;
-                    this.RaisePropertyChanged("MSCI");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string REPORTNUMBER {
-            get {
-                return this.REPORTNUMBERField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.REPORTNUMBERField, value) != true)) {
-                    this.REPORTNUMBERField = value;
-                    this.RaisePropertyChanged("REPORTNUMBER");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SECS_INSTYPE {
-            get {
-                return this.SECS_INSTYPEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SECS_INSTYPEField, value) != true)) {
-                    this.SECS_INSTYPEField = value;
-                    this.RaisePropertyChanged("SECS_INSTYPE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> SECURITY_ID {
-            get {
-                return this.SECURITY_IDField;
-            }
-            set {
-                if ((this.SECURITY_IDField.Equals(value) != true)) {
-                    this.SECURITY_IDField = value;
-                    this.RaisePropertyChanged("SECURITY_ID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SECURITY_TYPE {
-            get {
-                return this.SECURITY_TYPEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SECURITY_TYPEField, value) != true)) {
-                    this.SECURITY_TYPEField = value;
-                    this.RaisePropertyChanged("SECURITY_TYPE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> SECURITY_VOLUME_AVG_30D {
-            get {
-                return this.SECURITY_VOLUME_AVG_30DField;
-            }
-            set {
-                if ((this.SECURITY_VOLUME_AVG_30DField.Equals(value) != true)) {
-                    this.SECURITY_VOLUME_AVG_30DField = value;
-                    this.RaisePropertyChanged("SECURITY_VOLUME_AVG_30D");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> SECURITY_VOLUME_AVG_6M {
-            get {
-                return this.SECURITY_VOLUME_AVG_6MField;
-            }
-            set {
-                if ((this.SECURITY_VOLUME_AVG_6MField.Equals(value) != true)) {
-                    this.SECURITY_VOLUME_AVG_6MField = value;
-                    this.RaisePropertyChanged("SECURITY_VOLUME_AVG_6M");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SECURITY_VOLUME_AVG_90D {
-            get {
-                return this.SECURITY_VOLUME_AVG_90DField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SECURITY_VOLUME_AVG_90DField, value) != true)) {
-                    this.SECURITY_VOLUME_AVG_90DField = value;
-                    this.RaisePropertyChanged("SECURITY_VOLUME_AVG_90D");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SEDOL {
-            get {
-                return this.SEDOLField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SEDOLField, value) != true)) {
-                    this.SEDOLField = value;
-                    this.RaisePropertyChanged("SEDOL");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> SHARES_OUTSTANDING {
-            get {
-                return this.SHARES_OUTSTANDINGField;
-            }
-            set {
-                if ((this.SHARES_OUTSTANDINGField.Equals(value) != true)) {
-                    this.SHARES_OUTSTANDINGField = value;
-                    this.RaisePropertyChanged("SHARES_OUTSTANDING");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> SHARES_PER_ADR {
-            get {
-                return this.SHARES_PER_ADRField;
-            }
-            set {
-                if ((this.SHARES_PER_ADRField.Equals(value) != true)) {
-                    this.SHARES_PER_ADRField = value;
-                    this.RaisePropertyChanged("SHARES_PER_ADR");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string STOCK_EXCHANGE_ID {
-            get {
-                return this.STOCK_EXCHANGE_IDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.STOCK_EXCHANGE_IDField, value) != true)) {
-                    this.STOCK_EXCHANGE_IDField = value;
-                    this.RaisePropertyChanged("STOCK_EXCHANGE_ID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TICKER {
-            get {
-                return this.TICKERField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TICKERField, value) != true)) {
-                    this.TICKERField = value;
-                    this.RaisePropertyChanged("TICKER");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> TOT_CURR_SHRS_OUTST_ALL_CLASS {
-            get {
-                return this.TOT_CURR_SHRS_OUTST_ALL_CLASSField;
-            }
-            set {
-                if ((this.TOT_CURR_SHRS_OUTST_ALL_CLASSField.Equals(value) != true)) {
-                    this.TOT_CURR_SHRS_OUTST_ALL_CLASSField = value;
-                    this.RaisePropertyChanged("TOT_CURR_SHRS_OUTST_ALL_CLASS");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TRADING_CURRENCY {
-            get {
-                return this.TRADING_CURRENCYField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TRADING_CURRENCYField, value) != true)) {
-                    this.TRADING_CURRENCYField = value;
-                    this.RaisePropertyChanged("TRADING_CURRENCY");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UPDATE_BB_STATUS {
-            get {
-                return this.UPDATE_BB_STATUSField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UPDATE_BB_STATUSField, value) != true)) {
-                    this.UPDATE_BB_STATUSField = value;
-                    this.RaisePropertyChanged("UPDATE_BB_STATUS");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string WACC_COST_DEBT {
-            get {
-                return this.WACC_COST_DEBTField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.WACC_COST_DEBTField, value) != true)) {
-                    this.WACC_COST_DEBTField = value;
-                    this.RaisePropertyChanged("WACC_COST_DEBT");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string WACC_COST_EQUITY {
-            get {
-                return this.WACC_COST_EQUITYField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.WACC_COST_EQUITYField, value) != true)) {
-                    this.WACC_COST_EQUITYField = value;
-                    this.RaisePropertyChanged("WACC_COST_EQUITY");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string WACC_COST_PFD {
-            get {
-                return this.WACC_COST_PFDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.WACC_COST_PFDField, value) != true)) {
-                    this.WACC_COST_PFDField = value;
-                    this.RaisePropertyChanged("WACC_COST_PFD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string WEBSITE {
-            get {
-                return this.WEBSITEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.WEBSITEField, value) != true)) {
-                    this.WEBSITEField = value;
-                    this.RaisePropertyChanged("WEBSITE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string XREF {
-            get {
-                return this.XREFField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.XREFField, value) != true)) {
-                    this.XREFField = value;
-                    this.RaisePropertyChanged("XREF");
                 }
             }
         }

@@ -17,7 +17,7 @@ namespace GreenField.Web.Helpers
         /// <param name="dimensionSecurityPricingData">Collection of type GF_PRICING_BASEVIEW</param>
         /// <param name="totalReturnCheck">Total/Gross Return</param>
         /// <returns>Collection of type ChartExtensionData</returns>
-        public static List<ChartExtensionData> CalculateSecurityPricing(List<GF_PRICING_BASEVIEW> dimensionSecurityPricingData, bool totalReturnCheck = false)
+        public static List<ChartExtensionData> CalculateSecurityPricing(List<GreenField.DAL.GF_PRICING_BASEVIEW> dimensionSecurityPricingData, bool totalReturnCheck = false)
         {
             try
             {
@@ -33,13 +33,13 @@ namespace GreenField.Web.Helpers
 
                 if (dimensionSecurityPricingData.Count != 0)
                 {
-                    List<GF_PRICING_BASEVIEW> dimensionPricingData = new List<GF_PRICING_BASEVIEW>(dimensionSecurityPricingData);
-                    foreach (GF_PRICING_BASEVIEW item in dimensionPricingData)
+                    List<GreenField.DAL.GF_PRICING_BASEVIEW> dimensionPricingData = new List<GreenField.DAL.GF_PRICING_BASEVIEW>(dimensionSecurityPricingData);
+                    foreach (GreenField.DAL.GF_PRICING_BASEVIEW item in dimensionPricingData)
                     {
                         if (item.DAILY_SPOT_FX == 0)
                             dimensionSecurityPricingData.Remove(item);
                     }
-                    foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionSecurityPricingData)
+                    foreach (GreenField.DAL.GF_PRICING_BASEVIEW pricingItem in dimensionSecurityPricingData)
                     {
                         if (pricingItem.DAILY_SPOT_FX == 0)
                         {
@@ -106,7 +106,7 @@ namespace GreenField.Web.Helpers
         /// <param name="dimensionTransactionData">collection of Data of type GF_TRANSACTION returned from Dimension</param>
         /// <param name="securityExtensionData">Collection of type ChartExtensionData, containing calculated data for the security</param>
         /// <returns>Collection of ChartExtensionData</returns>
-        public static List<ChartExtensionData> CalculateTransactionValues(List<GF_TRANSACTIONS> dimensionTransactionData, List<ChartExtensionData> securityExtensionData)
+        public static List<ChartExtensionData> CalculateTransactionValues(List<GreenField.DAL.GF_TRANSACTIONS> dimensionTransactionData, List<ChartExtensionData> securityExtensionData)
         {
             try
             {
@@ -185,7 +185,7 @@ namespace GreenField.Web.Helpers
         /// <param name="dimensionReturnData">Collection of type GF_PERF_DAILY_ATRRIBUTION retrieved from Dimension,contains Sector & Country level Data</param>
         /// <param name="securityTransactionExtensionData">Collection of type ChartExtension Data, contains Pricing data & Transaction Data</param>
         /// <returns>Collection of ChartExtensionData</returns>
-        public static List<ChartExtensionData> CalculateSectorCountryReturnValues(List<GF_PERF_DAILY_ATTRIBUTION> dimensionReturnData)
+        public static List<ChartExtensionData> CalculateSectorCountryReturnValues(List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dimensionReturnData)
         {
             List<ChartExtensionData> result = new List<ChartExtensionData>();
             ChartExtensionData data = new ChartExtensionData();
@@ -194,7 +194,7 @@ namespace GreenField.Web.Helpers
             {
                 throw new InvalidOperationException();
             }
-            foreach (GF_PERF_DAILY_ATTRIBUTION item in dimensionReturnData)
+            foreach (GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION item in dimensionReturnData)
             {
                 data = new ChartExtensionData();
                 if (item.NODE_NAME.ToUpper().Trim() == "COUNTRY")

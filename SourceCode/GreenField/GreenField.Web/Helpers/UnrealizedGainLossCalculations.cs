@@ -17,7 +17,7 @@ public static class UnrealizedGainLossCalculations
     /// <param name="resultSetArrangedByDescRecord">The input list sorted in descending order of fromdate</param>
     /// <param name="noOfRows">No. of records in the arrangedByDescRecord list</param>
     /// <returns>adjustedPriceResult</returns>
-    public static List<UnrealizedGainLossData> CalculateAdjustedPrice(List<GF_PRICING_BASEVIEW> resultSetArrangedByDescRecord)
+    public static List<UnrealizedGainLossData> CalculateAdjustedPrice(List<GreenField.DAL.GF_PRICING_BASEVIEW> resultSetArrangedByDescRecord)
     {
         if (resultSetArrangedByDescRecord == null)
         {

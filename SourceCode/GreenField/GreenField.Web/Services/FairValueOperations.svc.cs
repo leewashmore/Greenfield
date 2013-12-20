@@ -37,7 +37,7 @@ namespace GreenField.Web.Services
             }
         }
 
-        private Entities dimensionEntity;
+        /*private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
@@ -45,6 +45,19 @@ namespace GreenField.Web.Services
                 if (null == dimensionEntity)
                     dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
 
+                return dimensionEntity;
+            }
+        }*/
+
+        private DimensionEntities dimensionEntity;
+        public DimensionEntities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                {
+                    dimensionEntity = new GreenField.DAL.DimensionEntities();
+                }
                 return dimensionEntity;
             }
         }
@@ -68,7 +81,7 @@ namespace GreenField.Web.Services
                     return null;
 
                //Retrieving data from security view
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
 
                 if (data == null)
                     return null;
@@ -144,7 +157,7 @@ namespace GreenField.Web.Services
                 }
 
                 //retrieving data from security view
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
 
                 if (data == null)
                 {
@@ -246,7 +259,7 @@ namespace GreenField.Web.Services
                 }
 
                 //retrieving data from security view
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
 
                 if (data == null)
                 {
@@ -313,7 +326,7 @@ namespace GreenField.Web.Services
                     return null;
                 }
 
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
 
                 if (data == null)
                 {
@@ -406,17 +419,17 @@ namespace GreenField.Web.Services
         }
 
 
-        private GF_SECURITY_BASEVIEW GetSecurityDataForSelectedSecurity(EntitySelectionData entitySelectionData)
+        private GreenField.DAL.GF_SECURITY_BASEVIEW GetSecurityDataForSelectedSecurity(EntitySelectionData entitySelectionData)
         {
-            DimensionEntitiesService.Entities entity = DimensionEntity;
+            DimensionEntities entity = DimensionEntity;
 
-            bool isServiceUp;
+            /*bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
             if (!isServiceUp)
-                throw new Exception("Services are not available");
+                throw new Exception("Services are not available");*/
             //Retrieving data from security view
-            DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+            GreenField.DAL.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
                 .Where(record => record.TICKER == entitySelectionData.ShortName
                     && record.ISSUE_NAME == entitySelectionData.LongName
                     && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
@@ -473,7 +486,7 @@ namespace GreenField.Web.Services
             return xmlDoc;
         }
 
-        private List<FairValueCompositionSummaryData> GetSummaryDataIfDatabaseContaisnNorecords(GF_SECURITY_BASEVIEW data)
+        private List<FairValueCompositionSummaryData> GetSummaryDataIfDatabaseContaisnNorecords(GreenField.DAL.GF_SECURITY_BASEVIEW data)
         {
             List<FairValueCompositionSummaryData> dataList = new List<FairValueCompositionSummaryData>();
 

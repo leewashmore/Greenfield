@@ -4,6 +4,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Country_Code" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ISSUER_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ISSUER_PROXY" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LOOK_THRU_FUND" nillable="true" type="xs:string" />
@@ -241,6 +242,7 @@
       <xs:element minOccurs="0" name="GridId" type="xs:int" />
       <xs:element minOccurs="0" name="GroupDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsPercentage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Multiplier" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodYear" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="RootSource" nillable="true" type="xs:string" />

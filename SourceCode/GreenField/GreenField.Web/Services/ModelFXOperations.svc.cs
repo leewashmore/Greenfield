@@ -26,7 +26,7 @@ namespace GreenField.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ModelFXOperations 
     {
-        private Entities dimensionEntity;
+        /*private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
@@ -34,6 +34,19 @@ namespace GreenField.Web.Services
                 if (null == dimensionEntity)
                 {
                     dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+                }
+                return dimensionEntity;
+            }
+        }
+        */
+        private DimensionEntities dimensionEntity;
+        public DimensionEntities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                {
+                    dimensionEntity = new GreenField.DAL.DimensionEntities();
                 }
                 return dimensionEntity;
             }
@@ -58,14 +71,14 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+             /*   bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception();
-                }
+                }*/
                 List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();              
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 ResearchEntities research = new ResearchEntities();              
                 result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>
                     ("exec RetrieveCTYSUMMARYDataReportPerCountry @country={0}", countryNameVal).ToList();                
@@ -149,15 +162,15 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception();
-                }
+                }*/
                 List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();
                 List<MacroDatabaseKeyAnnualReportData> finalResult = new List<MacroDatabaseKeyAnnualReportData>();            
-                DimensionEntitiesService.Entities entity = DimensionEntity;              
+                DimensionEntities entity = DimensionEntity;              
                 ResearchEntities research = new ResearchEntities();            
                 foreach (String c in countryValues)
                 {
@@ -197,20 +210,20 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception();
+                    throw new Exception();*/
 
                 List<CommodityResult> resultDB = new List<CommodityResult>();                
                 List<FXCommodityData> calculatedViewResult = new List<FXCommodityData>();
                 List<FXCommodityData> result = new List<FXCommodityData>();
                 ResearchEntities research = new ResearchEntities();
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimSvcPricingViewData = null;
-                List<DimensionEntitiesService.GF_SELECTION_BASEVIEW> dimSvcSelectionViewData = null;
+                DimensionEntities entity = DimensionEntity;
+                List<GreenField.DAL.GF_PRICING_BASEVIEW> dimSvcPricingViewData = null;
+                List<GreenField.DAL.GF_SELECTION_BASEVIEW> dimSvcSelectionViewData = null;
 
                 if (entity.GF_SELECTION_BASEVIEW == null && entity.GF_SELECTION_BASEVIEW.Count() == 0)
                     return null;
@@ -252,18 +265,18 @@ namespace GreenField.Web.Services
 
                 if (dimSvcSelectionViewData != null && dimSvcSelectionViewData.Count > 0)
                 {
-                    List<GF_PRICING_BASEVIEW> queryResultSet = new List<GF_PRICING_BASEVIEW>();
+                    List<GreenField.DAL.GF_PRICING_BASEVIEW> queryResultSet = new List<GreenField.DAL.GF_PRICING_BASEVIEW>();
 
-                    Expression<Func<GF_PRICING_BASEVIEW, bool>> searchPredicate1 = p => p.FROMDATE == Convert.ToDateTime(Date1DayBack.ToString()).Date;
-                    searchPredicate1 = Utility.Or<GF_PRICING_BASEVIEW>(searchPredicate1, g => g.FROMDATE == Convert.ToDateTime(DateLastYearEnd.ToString()).Date);
-                    searchPredicate1 = Utility.Or<GF_PRICING_BASEVIEW>(searchPredicate1, g => g.FROMDATE == Convert.ToDateTime(Date12MonthsAgo.ToString()).Date);
-                    searchPredicate1 = Utility.Or<GF_PRICING_BASEVIEW>(searchPredicate1, g => g.FROMDATE == Convert.ToDateTime(Date36MonthsAgo.ToString()).Date);
+                    Expression<Func<GreenField.DAL.GF_PRICING_BASEVIEW, bool>> searchPredicate1 = p => p.FROMDATE == Convert.ToDateTime(Date1DayBack.ToString()).Date;
+                    searchPredicate1 = Utility.Or<GreenField.DAL.GF_PRICING_BASEVIEW>(searchPredicate1, g => g.FROMDATE == Convert.ToDateTime(DateLastYearEnd.ToString()).Date);
+                    searchPredicate1 = Utility.Or<GreenField.DAL.GF_PRICING_BASEVIEW>(searchPredicate1, g => g.FROMDATE == Convert.ToDateTime(Date12MonthsAgo.ToString()).Date);
+                    searchPredicate1 = Utility.Or<GreenField.DAL.GF_PRICING_BASEVIEW>(searchPredicate1, g => g.FROMDATE == Convert.ToDateTime(Date36MonthsAgo.ToString()).Date);
 
                     int recursionLimit = 10;
 
                     for (int j = 0; j < dimSvcSelectionViewData.Count(); j = j + recursionLimit)
                     {
-                        Expression<Func<GF_PRICING_BASEVIEW, bool>> searchPredicate2 = p => p.INSTRUMENT_ID.ToUpper() == dimSvcSelectionViewData[j].INSTRUMENT_ID.ToUpper();
+                        Expression<Func<GreenField.DAL.GF_PRICING_BASEVIEW, bool>> searchPredicate2 = p => p.INSTRUMENT_ID.ToUpper() == dimSvcSelectionViewData[j].INSTRUMENT_ID.ToUpper();
                         for (int i = j + 1; i < j + recursionLimit && i < dimSvcSelectionViewData.Count(); i++)
                         {
                             if (dimSvcSelectionViewData[i].INSTRUMENT_ID == null)
@@ -271,14 +284,14 @@ namespace GreenField.Web.Services
                                 continue;
                             }
                             string comparisonInstrumentId = dimSvcSelectionViewData[i].INSTRUMENT_ID.ToUpper();
-                            searchPredicate2 = Utility.Or<GF_PRICING_BASEVIEW>(searchPredicate2, p => p.INSTRUMENT_ID.ToUpper() == comparisonInstrumentId);
+                            searchPredicate2 = Utility.Or<GreenField.DAL.GF_PRICING_BASEVIEW>(searchPredicate2, p => p.INSTRUMENT_ID.ToUpper() == comparisonInstrumentId);
                         }
 
-                        Expression<Func<GF_PRICING_BASEVIEW, bool>> searchPredicate = Utility.And<GF_PRICING_BASEVIEW>(searchPredicate1, searchPredicate2);
+                        Expression<Func<GreenField.DAL.GF_PRICING_BASEVIEW, bool>> searchPredicate = Utility.And<GreenField.DAL.GF_PRICING_BASEVIEW>(searchPredicate1, searchPredicate2);
                         queryResultSet.AddRange(entity.GF_PRICING_BASEVIEW.Where(searchPredicate));
                     }                    
 
-                    foreach (DimensionEntitiesService.GF_SELECTION_BASEVIEW item in dimSvcSelectionViewData)
+                    foreach (GreenField.DAL.GF_SELECTION_BASEVIEW item in dimSvcSelectionViewData)
                     {
                         if (item.INSTRUMENT_ID != null && item.INSTRUMENT_ID != string.Empty)
                         {
@@ -286,7 +299,7 @@ namespace GreenField.Web.Services
                             if (dimSvcPricingViewData != null && dimSvcPricingViewData.Count > 0)
                             {
                                 List<FXCommodityData> resultView = new List<FXCommodityData>();
-                                foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW itemPricing in dimSvcPricingViewData)
+                                foreach (GreenField.DAL.GF_PRICING_BASEVIEW itemPricing in dimSvcPricingViewData)
                                 {
                                     FXCommodityData data = new FXCommodityData();
 

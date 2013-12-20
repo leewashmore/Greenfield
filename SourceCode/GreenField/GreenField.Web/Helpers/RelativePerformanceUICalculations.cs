@@ -16,8 +16,8 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="dimensionDailyPerfData">Collection of type GF_PERF_DAILY_ATTRIBUTION retrieved from Dimension</param>
         /// <returns>List of RelativePerformanceUIData</returns>
-        public static List<RelativePerformanceUIData> CalculateRelativePerformanceUIData(List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData,
-            GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData)
+        public static List<RelativePerformanceUIData> CalculateRelativePerformanceUIData(List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData,
+            GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace GreenField.Web.Helpers
                 {
                     if (dimensionDailyPerfData.Count != 0)
                     {
-                        foreach (GF_PERF_DAILY_ATTRIBUTION item in dimensionDailyPerfData)
+                        foreach (GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION item in dimensionDailyPerfData)
                         {
                             data = new RelativePerformanceUIData();
                             data.EffectiveDate = Convert.ToDateTime(item.TO_DATE);

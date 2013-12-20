@@ -24,7 +24,7 @@ namespace GreenField.Web.Helpers
         /// <summary>
         /// Dimension Service Entity
         /// </summary>
-        private Entities dimensionEntity;
+        /*private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
@@ -35,8 +35,21 @@ namespace GreenField.Web.Helpers
                 }
                 return dimensionEntity;
             }
-        }
+        }*/
 
+
+        private DimensionEntities dimensionEntity;
+        public DimensionEntities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                {
+                    dimensionEntity = new GreenField.DAL.DimensionEntities();
+                }
+                return dimensionEntity;
+            }
+        }
         /// <summary>
         /// ICPresentation Entity
         /// </summary>
@@ -1269,7 +1282,7 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUER_ID == issuerId).FirstOrDefault();
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUER_ID == issuerId).FirstOrDefault();
                 if (data == null)
                 {
                     return false;

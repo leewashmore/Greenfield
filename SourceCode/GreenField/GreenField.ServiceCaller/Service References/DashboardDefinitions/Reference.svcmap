@@ -24,12 +24,12 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="DashboardOperations.xsd" MetadataType="Schema" ID="75a3b022-2732-46bf-8f5b-afb8d8db9ffc" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="DashboardOperations5.xsd" MetadataType="Schema" ID="5221fe79-cc5b-4241-a05e-bbb7ae29f96c" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd4" />
     <MetadataFile FileName="DashboardOperations1.xsd" MetadataType="Schema" ID="002cd219-882d-489e-afe9-c65009658e70" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd3" />
     <MetadataFile FileName="DashboardOperations.disco" MetadataType="Disco" ID="a2e69607-26c6-4845-8cd2-0f6dffa224b0" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?disco" />
     <MetadataFile FileName="DashboardOperations2.xsd" MetadataType="Schema" ID="c50017e9-77c2-4be3-8d1e-b64482f89534" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd0" />
-    <MetadataFile FileName="DashboardOperations3.xsd" MetadataType="Schema" ID="ee396396-c931-4167-b75f-0c7ea92f6771" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd5" />
     <MetadataFile FileName="DashboardOperations4.xsd" MetadataType="Schema" ID="19dbba07-1f16-4118-b588-21eaafdf462b" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd2" />
-    <MetadataFile FileName="DashboardOperations5.xsd" MetadataType="Schema" ID="5221fe79-cc5b-4241-a05e-bbb7ae29f96c" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd4" />
+    <MetadataFile FileName="DashboardOperations3.xsd" MetadataType="Schema" ID="ee396396-c931-4167-b75f-0c7ea92f6771" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd5" />
     <MetadataFile FileName="DashboardOperations.wsdl" MetadataType="Wsdl" ID="878442a4-fbc4-49f2-832e-c9a054168957" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?wsdl" />
   </Metadata>
   <Extensions>

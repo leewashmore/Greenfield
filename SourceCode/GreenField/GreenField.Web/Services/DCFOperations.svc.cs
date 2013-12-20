@@ -34,7 +34,7 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Instance of Dimension Service
         /// </summary>
-        private Entities dimensionEntity;
+        /*private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
@@ -44,8 +44,21 @@ namespace GreenField.Web.Services
 
                 return dimensionEntity;
             }
-        }
+        }*/
 
+
+        private DimensionEntities dimensionEntity;
+        public DimensionEntities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                {
+                    dimensionEntity = new GreenField.DAL.DimensionEntities();
+                }
+                return dimensionEntity;
+            }
+        }
         #region AnalysisSummary
 
         /// <summary>
@@ -69,7 +82,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<DCFAnalysisSummaryData>();
                 }
-                #region ServiceAvailabilityChecker
+              /*  #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -78,9 +91,9 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Services are not available");
                 }
-                #endregion
+                #endregion*/
 
-                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
                         record.ISSUE_NAME == entitySelectionData.LongName &&
                         record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
@@ -146,7 +159,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<DCFTerminalValueCalculationsData>();
                 }
-                #region ServiceAvailabilityChecker
+                /*#region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -154,9 +167,9 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Services are not available");
                 }
-                #endregion
+                #endregion*/
 
-                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
                         record.ISSUE_NAME == entitySelectionData.LongName &&
                         record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
@@ -209,16 +222,16 @@ namespace GreenField.Web.Services
                 if (entitySelectionData == null)
                     return null;
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                    throw new Exception("Services are not available");*/
 
                 //Retrieving data from security view
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
                         && record.ISSUE_NAME == entitySelectionData.LongName
                         && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
@@ -268,7 +281,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<DCFCashFlowData>();
                 }
-                #region ServiceAvailabilityChecker
+               /*  #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -277,9 +290,9 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Services are not available");
                 }
-                #endregion
+                #endregion */
 
-                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
                         record.ISSUE_NAME == entitySelectionData.LongName &&
                         record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
@@ -344,7 +357,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<DCFSummaryData>();
                 }
-                #region ServiceAvailabilityChecker
+              /*  #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -353,9 +366,9 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Services are not available");
                 }
-                #endregion
+                #endregion*/
 
-                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
                         record.ISSUE_NAME == entitySelectionData.LongName &&
                         record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
@@ -399,7 +412,7 @@ namespace GreenField.Web.Services
                 {
                     return 0;
                 }
-                #region ServiceAvailabilityChecker
+             /*   #region ServiceAvailabilityChecker
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -408,9 +421,9 @@ namespace GreenField.Web.Services
                 {
                     throw new Exception("Services are not available");
                 }
-                #endregion
+                #endregion*/
 
-                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                GreenField.DAL.GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
                         record.ISSUE_NAME == entitySelectionData.LongName &&
                         record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
@@ -440,7 +453,7 @@ namespace GreenField.Web.Services
             try
             {
                 string countryName = string.Empty;
-                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
                 if (data != null)
                 {
                     countryName = data.ASEC_SEC_COUNTRY_NAME;
@@ -473,12 +486,12 @@ namespace GreenField.Web.Services
             try
             {
                 List<PERIOD_FINANCIALS> result = new List<PERIOD_FINANCIALS>();
-                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
                 if (data == null)
                 {
                     return new List<PERIOD_FINANCIALS>();
                 }
-                int? securityId = data.SECURITY_ID;
+                int? securityId = int.Parse(data.SECURITY_ID);
                 if (securityId == null)
                 {
                     return new List<PERIOD_FINANCIALS>();
@@ -518,12 +531,12 @@ namespace GreenField.Web.Services
             try
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
                 if (data == null)
                 {
                     return false;
                 }
-                int? securityId = data.SECURITY_ID;
+                int? securityId = int.Parse(data.SECURITY_ID);
                 if (securityId == null)
                 {
                     return false;
@@ -554,12 +567,12 @@ namespace GreenField.Web.Services
             try
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
+                GreenField.DAL.GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
                 if (data == null)
                 {
                     return false;
                 }
-                int? securityId = data.SECURITY_ID;
+                int? securityId = int.Parse(data.SECURITY_ID);
                 if (securityId == null)
                 {
                     return false;

@@ -23,7 +23,7 @@ namespace GreenField.Web.Services
     {
         #region PropertyDeclaration
 
-        private Entities dimensionEntity;
+        /*private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
@@ -31,6 +31,19 @@ namespace GreenField.Web.Services
                 if (null == dimensionEntity)
                     dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
 
+                return dimensionEntity;
+            }
+        }*/
+
+        private DimensionEntities dimensionEntity;
+        public DimensionEntities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                {
+                    dimensionEntity = new GreenField.DAL.DimensionEntities();
+                }
                 return dimensionEntity;
             }
         }
@@ -77,21 +90,21 @@ namespace GreenField.Web.Services
 
                 List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
                 //create new Entity for service
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 List<string> countryName = new List<string>();
                 List<string> benchmarkName = new List<string>();
                 List<string> sectorName = new List<string>();
                 string securityName = objSelectedEntity.Where(a => a.Key == "SECURITY").First().Value;
                 string portfolioName = objSelectedEntity.Where(a => a.Key == "PORTFOLIO").First().Value;
-                List<GF_SECURITY_BASEVIEW> securityBaseData = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList());
-                #region ServiceAvailabilityChecker
+                List<GreenField.DAL.GF_SECURITY_BASEVIEW> securityBaseData = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList());
+              /*  #region ServiceAvailabilityChecker
 
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Data Services are not available");
                 }
-                #endregion
+                #endregion*/
 
                 //Reset the objEffectiveDate to the maxdate available to avoid days like weekends when no performace data is available 
                 objEffectiveDate = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.NODE_NAME == "GICS Level 1" && a.PORTFOLIO == "EMIF").Select(g => new { g.TO_DATE }).ToList()
@@ -125,26 +138,26 @@ namespace GreenField.Web.Services
                 {
                     return result;
                 }
-                #region ServiceAvailabilityChecker
+                /*#region ServiceAvailabilityChecker
 
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Data Services are not available");
                 }
-                #endregion
+                #endregion */
 
-                List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a =>
+                List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a =>
                     ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim() && a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim())
                     || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim() && a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim())
                     || (a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 1" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim())) && a.TO_DATE == objEffectiveDate.Date).ToList().Distinct().ToList();
 
                 #region Comparator
-                IEqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GF_PERF_DAILY_ATTRIBUTION_Comparer();
+                IEqualityComparer<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> customComparer = new GF_PERF_DAILY_ATTRIBUTION_Comparer();
                 dimensionDailyPerfData = dimensionDailyPerfData.Distinct(customComparer).ToList();
                 #endregion
 
-                GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData = (entity.GF_PERF_DAILY_ATTRIBUTION.
+                GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData = (entity.GF_PERF_DAILY_ATTRIBUTION.
                     Where(a => a.BMNAME == benchmarkName.First() && a.TO_DATE == objEffectiveDate.Date).FirstOrDefault());
 
                 if (dimensionDailyPerfData != null || dimensionBenchmarkReturnData != null)
@@ -190,7 +203,7 @@ namespace GreenField.Web.Services
                 {
                     return result;
                 }
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
                 string portfolioId = "";
                 DateTime startDate = DateTime.Today.AddYears(-1);
                 string countryName = "";
@@ -201,14 +214,14 @@ namespace GreenField.Web.Services
                 {
                     portfolioId = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
                 }
-                #region ServiceAvailabilityChecker
+                /*#region ServiceAvailabilityChecker
 
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Data Services are not available");
                 }
-                #endregion
+                #endregion*/
 
                 if (objSelectedEntities.ContainsKey("COUNTRY"))
                 {
@@ -229,9 +242,9 @@ namespace GreenField.Web.Services
                 {
                     return result;
                 }
-                List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = new List<GF_PERF_DAILY_ATTRIBUTION>();
-                List<GF_PERF_DAILY_ATTRIBUTION> dimensionBenchmarkReturnData = new List<GF_PERF_DAILY_ATTRIBUTION>();
-                List<GF_PERF_DAILY_ATTRIBUTION> dimensionBenchmarkReturns = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
+                List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dimensionBenchmarkReturnData = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
+                List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dimensionBenchmarkReturns = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
                 List<DateTime> endDates = MultiLineBenchmarkUICalculations.CalculateEndDates();
 
                 foreach (DateTime item in endDates)
@@ -246,7 +259,7 @@ namespace GreenField.Web.Services
                             dimensionBenchmarkReturnData.Add(dimensionBenchmarkReturns.First());
                         }
                     }
-                    dimensionBenchmarkReturns = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                    dimensionBenchmarkReturns = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
                 }
                 if (countryName != "")
                 {
@@ -288,7 +301,7 @@ namespace GreenField.Web.Services
             List<BenchmarkGridReturnData> result = new List<BenchmarkGridReturnData>();
             try
             {
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
                 if (objSelectedEntities == null)
                 {
@@ -339,14 +352,14 @@ namespace GreenField.Web.Services
                 {
                     sectorName = objSelectedEntities.Where(a => a.Key == "SECTOR").First().Value;
                 }
-                #region ServiceAvailabilityChecker
+                /*#region ServiceAvailabilityChecker
 
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Data Services are not available");
                 }
-                #endregion
+                #endregion*/
 
                 benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).ToList().Distinct().ToList();
                 if (benchmarkName == null)
@@ -357,9 +370,9 @@ namespace GreenField.Web.Services
                 {
                     return result;
                 }
-                List<GF_PERF_DAILY_ATTRIBUTION> sectorCountryReturn = new List<GF_PERF_DAILY_ATTRIBUTION>();
-                List<GF_PERF_DAILY_ATTRIBUTION> dimensionBenchmarkSingleReturn = new List<GF_PERF_DAILY_ATTRIBUTION>();
-                List<GF_PERF_DAILY_ATTRIBUTION> dimensionBenchmarkReturnData = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> sectorCountryReturn = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
+                List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dimensionBenchmarkSingleReturn = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
+                List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dimensionBenchmarkReturnData = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
                 foreach (DateTime item in endDates)
                 {
                     dimensionBenchmarkSingleReturn = entity.GF_PERF_DAILY_ATTRIBUTION.
@@ -372,7 +385,7 @@ namespace GreenField.Web.Services
                             dimensionBenchmarkReturnData.Add(dimensionBenchmarkSingleReturn.First());
                         }
                     }
-                    dimensionBenchmarkSingleReturn = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                    dimensionBenchmarkSingleReturn = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
                 }
                 if (countryName != "")
                 {
@@ -428,7 +441,7 @@ namespace GreenField.Web.Services
                 List<string> countryName;
                 List<string> benchmarkName = new List<string>();
                 List<string> sectorName = new List<string>();
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities  entity = DimensionEntity;
 
                 if (objSelectedEntities.ContainsKey("SECURITY"))
                 {
@@ -442,7 +455,7 @@ namespace GreenField.Web.Services
                 {
                     portfolioId = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
                 }
-                List<GF_SECURITY_BASEVIEW> securityBaseData = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityLongName.ToUpper().Trim()).ToList());
+                List<GreenField.DAL.GF_SECURITY_BASEVIEW> securityBaseData = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityLongName.ToUpper().Trim()).ToList());
                 countryName = securityBaseData.Select(a => a.ASEC_SEC_COUNTRY_NAME).Distinct().ToList();
                 sectorName = securityBaseData.Select(a => a.GICS_SECTOR_NAME).Distinct().ToList();
                 benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).ToList().Distinct().ToList();
@@ -473,22 +486,22 @@ namespace GreenField.Web.Services
                 }
                 if (securityLongName != null && securityLongName != "")
                 {
-                    #region ServiceAvailabilityChecker
+                    /*#region ServiceAvailabilityChecker
 
                     isServiceUp = CheckServiceAvailability.ServiceAvailability();
                     if (!isServiceUp)
                     {
                         throw new Exception();
                     }
-                    #endregion
-                    List<GF_PRICING_BASEVIEW> dimensionSecurityPrice = entity.GF_PRICING_BASEVIEW.
+                    #endregion*/
+                    List<GreenField.DAL.GF_PRICING_BASEVIEW> dimensionSecurityPrice = entity.GF_PRICING_BASEVIEW.
                         Where(a => (a.ISSUE_NAME == securityLongName) && (a.FROMDATE >= objStartDate.Date) && (a.DAILY_SPOT_FX != 0)).OrderByDescending(a => a.FROMDATE).ToList();
                     result = ChartExtensionCalculations.CalculateSecurityPricing(dimensionSecurityPrice);
                 }
                 //transaction data
                 if (portfolioId != null && portfolioId != "")
                 {
-                    List<GF_TRANSACTIONS> dimensionTransactionData = entity.GF_TRANSACTIONS.
+                    List<GreenField.DAL.GF_TRANSACTIONS> dimensionTransactionData = entity.GF_TRANSACTIONS.
                         Where(a => ((a.TRANSACTION_CODE.ToUpper().Trim() == "BUY") || (a.TRANSACTION_CODE.ToUpper().Trim() == "SELL"))
                             && (a.PORTFOLIO_ID.ToUpper().Trim() == portfolioId.ToUpper().Trim())
                             && (a.SEC_NAME.ToUpper().Trim() == securityLongName.ToUpper().Trim()) && (a.TRADE_DATE >= Convert.ToDateTime(objStartDate.Date))).ToList();
@@ -496,13 +509,13 @@ namespace GreenField.Web.Services
                 }
 
                 //Sector & Country Return Data
-                List<GF_PERF_DAILY_ATTRIBUTION> dimensionSectorCountryReturnData = entity.GF_PERF_DAILY_ATTRIBUTION.
+                List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dimensionSectorCountryReturnData = entity.GF_PERF_DAILY_ATTRIBUTION.
                     Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && a.TO_DATE > objStartDate.Date
                         && ((a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 1" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim())
                         || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()))).ToList();
 
                 #region Comparator
-                IEqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GF_PERF_DAILY_ATTRIBUTION_Comparer();
+                IEqualityComparer<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> customComparer = new GF_PERF_DAILY_ATTRIBUTION_Comparer();
                 dimensionSectorCountryReturnData = dimensionSectorCountryReturnData.Distinct(customComparer).ToList();
                 #endregion
 
@@ -545,7 +558,7 @@ namespace GreenField.Web.Services
         {
             List<BenchmarkFilterSelectionData> result = new List<BenchmarkFilterSelectionData>();
 
-            GF_PERF_DAILY_ATTRIBUTION lastBusinessDateRecord = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION
+            GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION lastBusinessDateRecord = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION
                 .Where(record => record.NODE_NAME == (filterType == "Country" ? "Country" : "GICS Level 1")
                     && record.BMNAME == benchmarkName
                     && record.BM == benchmarkCode)
@@ -553,14 +566,14 @@ namespace GreenField.Web.Services
 
             DateTime? lastBusinessDate = lastBusinessDateRecord.TO_DATE;
 
-            List<GF_PERF_DAILY_ATTRIBUTION> benchmarkCountryPerformanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION
+            List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> benchmarkCountryPerformanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION
                 .Where(record => record.NODE_NAME == (filterType == "Country" ? "Country" : "GICS Level 1")
                     && record.BMNAME == benchmarkName
                     && record.BM == benchmarkCode
                     && record.TO_DATE == lastBusinessDate)
                 .ToList();
 
-            foreach (GF_PERF_DAILY_ATTRIBUTION item in benchmarkCountryPerformanceData)
+            foreach (GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION item in benchmarkCountryPerformanceData)
             {
                 if (result.Where(record => record.FilterCode == item.AGG_LVL_1 && record.FilterName == item.AGG_LVL_1_LONG_NAME)
                     .FirstOrDefault() == null)
@@ -640,8 +653,8 @@ namespace GreenField.Web.Services
 
         private Decimal? GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(string instrumentId, string returnType, DateTime recordDate, out DateTime returnDate)
         {
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            GF_PRICING_BASEVIEW pricingRecord = null;
+            DimensionEntities entity = DimensionEntity;
+            GreenField.DAL.GF_PRICING_BASEVIEW pricingRecord = null;
             int iteration = 0;
             while (pricingRecord == null)
             {
@@ -740,7 +753,7 @@ namespace GreenField.Web.Services
             try
             {
                 List<MarketSnapshotPerformanceData> result = new List<MarketSnapshotPerformanceData>();
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
                 if (marketSnapshotPreference == null)
                     return result;
@@ -1222,16 +1235,16 @@ namespace GreenField.Web.Services
                 }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
                 result = entity.GF_PERF_DAILY_ATTRIBUTION
                     .Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                        t.TO_DATE == effectiveDate &&
                         t.NODE_NAME == "Security ID" &&
                         t.COUNTRY != null &&
                         t.GICS_LVL1 != null &&
@@ -1296,11 +1309,11 @@ namespace GreenField.Web.Services
                     return result; 
                 }
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
-                IQueryable<GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
+                IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
                     .Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                        t.TO_DATE ==effectiveDate &&
                         t.NODE_NAME == "Security ID" &&
                         t.COUNTRY != null &&
                         t.GICS_LVL1 != null &&
@@ -1308,7 +1321,7 @@ namespace GreenField.Web.Services
 
 
                 #region Inception Date Check
-                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate);
+                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate.Date);
                 if (!isInceptionDateValid)
                 {
                     return result;
@@ -1495,18 +1508,18 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
-                IQueryable<GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceCountryDataQuery(portfolioSelectionData
-                    , effectiveDate, countryID, sectorID);
+                IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceCountryDataQuery(portfolioSelectionData
+                    , effectiveDate.Date, countryID, sectorID);
 
                 #region Inception Date Check
-                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate);
+                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate.Date);
                 if (!isInceptionDateValid)
                 {
                     return result;
@@ -1657,18 +1670,18 @@ namespace GreenField.Web.Services
                 }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
-                IQueryable<GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceSectorDataQuery(portfolioSelectionData
-                    , effectiveDate, countryID, sectorID);
+                IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceSectorDataQuery(portfolioSelectionData
+                    , effectiveDate.Date, countryID, sectorID);
 
                 #region Inception Date Check
-                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate);
+                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate.Date);
                 if (!isInceptionDateValid)
                 {
                     return result;
@@ -1821,18 +1834,18 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
-                IQueryable<GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceSecurityDataQuery(portfolioSelectionData
-                    , effectiveDate, countryID, sectorID);
+                IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceSecurityDataQuery(portfolioSelectionData
+                    , effectiveDate.Date, countryID, sectorID);
 
                 #region Inception Date Check
-                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate);
+                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate.Date);
                 if (!isInceptionDateValid)
                 {
                     return result;
@@ -1952,18 +1965,18 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DimensionEntities entity = DimensionEntity;
 
-                IQueryable<GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceSecurityDataQuery(portfolioSelectionData
-                    , effectiveDate, countryID, sectorID);
+                IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = GetRelativePerformanceSecurityDataQuery(portfolioSelectionData
+                    , effectiveDate.Date, countryID, sectorID);
 
                 #region Inception Date Check
-                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate);
+                Boolean isInceptionDateValid = InceptionDateCheck(resultQuery, period, effectiveDate.Date);
                 if (!isInceptionDateValid)
                 {
                     return result;
@@ -2064,13 +2077,13 @@ namespace GreenField.Web.Services
         /// <param name="country"></param>
         /// <param name="sector"></param>
         /// <returns>GF_PERF_DAILY_ATTRIBUTION Collection</returns>
-        private IQueryable<GF_PERF_DAILY_ATTRIBUTION> GetRelativePerformanceSecurityDataQuery(PortfolioSelectionData portfolioSelectionData,
+        private IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> GetRelativePerformanceSecurityDataQuery(PortfolioSelectionData portfolioSelectionData,
             DateTime effectiveDate, string countryID = null, string sectorID = null)
         {
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            IQueryable<GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
+            DimensionEntities entity = DimensionEntity;
+            IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
                     .Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                        t.TO_DATE ==effectiveDate &&
                         t.NODE_NAME == "Security ID" &&
                         t.AGG_LVL_1_LONG_NAME != null &&
                         t.SEC_INV_THEME == "EQUITY");
@@ -2087,13 +2100,13 @@ namespace GreenField.Web.Services
             return resultQuery;
         }
 
-        private IQueryable<GF_PERF_DAILY_ATTRIBUTION> GetRelativePerformanceSectorDataQuery(PortfolioSelectionData portfolioSelectionData,
+        private IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> GetRelativePerformanceSectorDataQuery(PortfolioSelectionData portfolioSelectionData,
             DateTime effectiveDate, string countryID = null, string sectorID = null)
         {
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            IQueryable<GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
+            DimensionEntities entity = DimensionEntity;
+            IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
                     .Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                        t.TO_DATE ==effectiveDate &&
                         t.NODE_NAME == "GICS Level 1" &&
                         t.AGG_LVL_1_LONG_NAME != "-" &&
                         t.AGG_LVL_1_LONG_NAME != null);
@@ -2110,13 +2123,13 @@ namespace GreenField.Web.Services
             return resultQuery;
         }
 
-        private IQueryable<GF_PERF_DAILY_ATTRIBUTION> GetRelativePerformanceCountryDataQuery(PortfolioSelectionData portfolioSelectionData,
+        private IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> GetRelativePerformanceCountryDataQuery(PortfolioSelectionData portfolioSelectionData,
             DateTime effectiveDate, string countryID = null, string sectorID = null)
         {
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            IQueryable<GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
+            DimensionEntities entity = DimensionEntity;
+            IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> resultQuery = entity.GF_PERF_DAILY_ATTRIBUTION
                     .Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                        t.TO_DATE == effectiveDate &&
                         t.NODE_NAME == "Country" &&
                         t.AGG_LVL_1 != null);
             if (sectorID != null)
@@ -2130,9 +2143,9 @@ namespace GreenField.Web.Services
             }
 
             return resultQuery;
-        }        
+        }
 
-        private Boolean InceptionDateCheck(IQueryable<GF_PERF_DAILY_ATTRIBUTION> query, String period, DateTime effectiveDate)
+        private Boolean InceptionDateCheck(IQueryable<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> query, String period, DateTime effectiveDate)
         {
             Boolean result = true;
             if (period != "1D" && period != "1W")
@@ -2297,9 +2310,9 @@ namespace GreenField.Web.Services
 
             List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
             //List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> filteredResult = new List<GF_PORTFOLIO_HOLDINGS>();
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionServicePortfolioData = null;
-            List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> dimensionServicePortfolioLTData = null;
+            DimensionEntities entity = DimensionEntity;
+            List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> dimensionServicePortfolioData = null;
+            List<GreenField.DAL.GF_PORTFOLIO_LTHOLDINGS> dimensionServicePortfolioLTData = null;
 
             if (entity.GF_PORTFOLIO_HOLDINGS == null && entity.GF_BENCHMARK_HOLDINGS.Count() == 0)
                 return null;
@@ -2435,8 +2448,8 @@ namespace GreenField.Web.Services
         {
 
             //List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> filteredResult = new List<GF_BENCHMARK_HOLDINGS>();
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            List<GF_BENCHMARK_HOLDINGS> dimensionServiceBenchmarkData = null;
+            DimensionEntities entity = DimensionEntity;
+            List<GreenField.DAL.GF_BENCHMARK_HOLDINGS> dimensionServiceBenchmarkData = null;
             List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
 
             //Retrieve the Id of benchmark associated with the Portfolio
@@ -2635,13 +2648,13 @@ namespace GreenField.Web.Services
                 return result;
             }
             //checking if the service is down
-            bool isServiceUp;
+          /*  bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
             if (!isServiceUp)
             {
                 throw new Exception();
-            }
-            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData;
+            }*/
+            GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION performanceData;
             if (country == "NoFiltering")
             {
                 performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
@@ -2687,7 +2700,7 @@ namespace GreenField.Web.Services
 
             String benchmarkID;
             String portfolioID = performanceData.PORTFOLIO;
-            List<GF_PORTFOLIO_HOLDINGS> holdingsData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioID).ToList();
+            List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> holdingsData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioID).ToList();
             if (holdingsData != null && holdingsData.Count != 0)
             {
                 benchmarkID = holdingsData.FirstOrDefault().BENCHMARK_ID;
@@ -2746,11 +2759,11 @@ namespace GreenField.Web.Services
                 return result;
             }
             //checking if the service is down
-            bool isServiceUp;
-            EqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
-            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+            /*bool isServiceUp;*/
+            EqualityComparer<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
+            /*isServiceUp = CheckServiceAvailability.ServiceAvailability();*/
             String benchmarkID;
-            List<GF_PORTFOLIO_HOLDINGS> holdingsData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).ToList();
+            List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> holdingsData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).ToList();
             if (holdingsData != null && holdingsData.Count != 0)
             {
                 benchmarkID = holdingsData.FirstOrDefault().BENCHMARK_ID;
@@ -2759,17 +2772,17 @@ namespace GreenField.Web.Services
             {
                 benchmarkID = null;
             }
-            if (!isServiceUp)
+          /*  if (!isServiceUp)
             {
                 throw new Exception();
-            }
+            }*/
             try
             {
                 switch (period)
                 {
                     case "1D":
                         #region When Period Selected is "1D"
-                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1D;
+                        List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1D;
                         if (country == "NoFiltering")
                         {
                             attributionDatafor1D = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate &&
@@ -2811,7 +2824,7 @@ namespace GreenField.Web.Services
                             newDate = effectiveDate.AddDays(-i);
                             listOfEffectiveDates1W.Add(newDate);
                         }
-                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1W = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                        List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1W = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
                         FetchDataPerformanceGraph(country, attributionDatafor1W, ref result, benchmarkID, fundSelectionData, listOfEffectiveDates1W, "1W");
                         break;
                         #endregion
@@ -2827,7 +2840,7 @@ namespace GreenField.Web.Services
                             DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
                             listOfEffectiveDatesMTD.Add(newDate);
                         }
-                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforMTD = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                        List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionDataforMTD = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
                         FetchDataPerformanceGraph(country, attributionDataforMTD, ref result, benchmarkID, fundSelectionData, listOfEffectiveDatesMTD, "MTD");
                         break;
                         #endregion
@@ -2890,7 +2903,7 @@ namespace GreenField.Web.Services
                             default:
                                 break;
                         }
-                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforQTD = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                        List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionDataforQTD = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
                         FetchDataPerformanceGraph(country, attributionDataforQTD, ref result, benchmarkID, fundSelectionData, listOfEffectiveDatesQTD, "QTD");
                         break;
                         #endregion
@@ -2910,7 +2923,7 @@ namespace GreenField.Web.Services
                         {
                             listOfEffectiveDatesYTD.Add(effectiveDate);
                         }
-                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforYTD = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                        List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionDataforYTD = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
                         FetchDataPerformanceGraphforMTDVaules(country, attributionDataforYTD, ref result, benchmarkID, fundSelectionData, listOfEffectiveDatesYTD, "YTD");
                         break;
                         #endregion
@@ -2930,7 +2943,7 @@ namespace GreenField.Web.Services
                             DateTime newDate = new DateTime(previousYearDate.Year, nextMonthEnd.Month, i);
                             startingStubDates.Add(newDate);
                         }
-                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                        List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y = new List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>();
                         List<Decimal?> portfolioReturns = new List<decimal?>();
                         List<Decimal?> benchmarkReturns = new List<decimal?>();
                         FetchDataPerformanceGraph1YValues(country, attributionDatafor1Y, ref result, benchmarkID, fundSelectionData, startingStubDates, portfolioReturns,
@@ -2987,10 +3000,10 @@ namespace GreenField.Web.Services
         /// <param name="fundSelectionData"></param>
         /// <param name="listOfEffectiveDates"></param>
         /// <param name="period"></param>
-        private void FetchDataPerformanceGraph(String country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData, ref List<PerformanceGraphData> result,
+        private void FetchDataPerformanceGraph(String country, List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionData, ref List<PerformanceGraphData> result,
             String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> listOfEffectiveDates, String period)
         {
-            EqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
+            EqualityComparer<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
 
             foreach (DateTime d in listOfEffectiveDates)
             {
@@ -3048,10 +3061,10 @@ namespace GreenField.Web.Services
         /// <param name="fundSelectionData"></param>
         /// <param name="listOfEffectiveDates"></param>
         /// <param name="period"></param>
-        private void FetchDataPerformanceGraphforMTDVaules(String country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData, ref List<PerformanceGraphData> result,
+        private void FetchDataPerformanceGraphforMTDVaules(String country, List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionData, ref List<PerformanceGraphData> result,
             String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> listOfEffectiveDates, String period)
         {
-            EqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
+            EqualityComparer<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
             foreach (DateTime d in listOfEffectiveDates)
             {
                 Decimal? sumPerformanceWeight = 0;
@@ -3112,10 +3125,10 @@ namespace GreenField.Web.Services
         /// <param name="eportfolioReturns"></param>
         /// <param name="ebenchmarkReturns"></param>
         /// <param name="period"></param>
-        private void FetchDataPerformanceGraph1YValues(String country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y, ref List<PerformanceGraphData> result,
+        private void FetchDataPerformanceGraph1YValues(String country, List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y, ref List<PerformanceGraphData> result,
             String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> StubDates, List<Decimal?> eportfolioReturns, List<Decimal?> ebenchmarkReturns, String period)
         {
-            EqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
+            EqualityComparer<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
             foreach (DateTime d in StubDates)
             {
                 if (country == "NoFiltering")
@@ -3191,9 +3204,9 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Comparator to remove duplicates from GF_PERF_DAILY_ATTRIBUTION
         /// </summary>
-        public class GF_PERF_DAILY_ATTRIBUTION_Comparer : EqualityComparer<GF_PERF_DAILY_ATTRIBUTION>
+        public class GF_PERF_DAILY_ATTRIBUTION_Comparer : EqualityComparer<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION>
         {
-            public override bool Equals(GF_PERF_DAILY_ATTRIBUTION row1, GF_PERF_DAILY_ATTRIBUTION row2)
+            public override bool Equals(GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION row1, GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION row2)
             {
                 if ((row1 == null) && (row2 == null))
                     return true;
@@ -3226,7 +3239,7 @@ namespace GreenField.Web.Services
                     && (row1.NODE_NAME.ToUpper().Trim().Equals(row2.NODE_NAME.ToUpper().Trim()) && (row1.PORTFOLIO.ToUpper().Trim() == row2.PORTFOLIO.ToUpper().Trim()));
             }
 
-            public override int GetHashCode(GF_PERF_DAILY_ATTRIBUTION data)
+            public override int GetHashCode(GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION data)
             {
                 if (data.AGG_LVL_1_LONG_NAME == null || data.NODE_NAME == null || data.TO_DATE == null || data.PORTFOLIO == null)
                     return 0;
@@ -3251,7 +3264,7 @@ namespace GreenField.Web.Services
                 return fromCache;
 
             // otherwise fetch the data and cache it
-            DimensionEntitiesService.Entities entity = DimensionEntity;
+            DimensionEntities entity = DimensionEntity;
     
            /* var q =
                 (entity.GF_PERF_TOPLEVELMONTH.Select(g => new { g.TO_DATE })).ToList()
