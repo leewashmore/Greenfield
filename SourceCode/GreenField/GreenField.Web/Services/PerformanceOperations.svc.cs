@@ -97,14 +97,14 @@ namespace GreenField.Web.Services
                 string securityName = objSelectedEntity.Where(a => a.Key == "SECURITY").First().Value;
                 string portfolioName = objSelectedEntity.Where(a => a.Key == "PORTFOLIO").First().Value;
                 List<GreenField.DAL.GF_SECURITY_BASEVIEW> securityBaseData = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList());
-                #region ServiceAvailabilityChecker
+              /*  #region ServiceAvailabilityChecker
 
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Data Services are not available");
                 }
-                #endregion
+                #endregion*/
 
                 //Reset the objEffectiveDate to the maxdate available to avoid days like weekends when no performace data is available 
                 objEffectiveDate = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.NODE_NAME == "GICS Level 1" && a.PORTFOLIO == "EMIF").Select(g => new { g.TO_DATE }).ToList()
@@ -138,14 +138,14 @@ namespace GreenField.Web.Services
                 {
                     return result;
                 }
-                #region ServiceAvailabilityChecker
+                /*#region ServiceAvailabilityChecker
 
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Data Services are not available");
                 }
-                #endregion
+                #endregion */
 
                 List<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a =>
                     ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim() && a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim())
@@ -214,14 +214,14 @@ namespace GreenField.Web.Services
                 {
                     portfolioId = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
                 }
-                #region ServiceAvailabilityChecker
+                /*#region ServiceAvailabilityChecker
 
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Data Services are not available");
                 }
-                #endregion
+                #endregion*/
 
                 if (objSelectedEntities.ContainsKey("COUNTRY"))
                 {
@@ -352,14 +352,14 @@ namespace GreenField.Web.Services
                 {
                     sectorName = objSelectedEntities.Where(a => a.Key == "SECTOR").First().Value;
                 }
-                #region ServiceAvailabilityChecker
+                /*#region ServiceAvailabilityChecker
 
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Data Services are not available");
                 }
-                #endregion
+                #endregion*/
 
                 benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).ToList().Distinct().ToList();
                 if (benchmarkName == null)
@@ -486,14 +486,14 @@ namespace GreenField.Web.Services
                 }
                 if (securityLongName != null && securityLongName != "")
                 {
-                    #region ServiceAvailabilityChecker
+                    /*#region ServiceAvailabilityChecker
 
                     isServiceUp = CheckServiceAvailability.ServiceAvailability();
                     if (!isServiceUp)
                     {
                         throw new Exception();
                     }
-                    #endregion
+                    #endregion*/
                     List<GreenField.DAL.GF_PRICING_BASEVIEW> dimensionSecurityPrice = entity.GF_PRICING_BASEVIEW.
                         Where(a => (a.ISSUE_NAME == securityLongName) && (a.FROMDATE >= objStartDate.Date) && (a.DAILY_SPOT_FX != 0)).OrderByDescending(a => a.FROMDATE).ToList();
                     result = ChartExtensionCalculations.CalculateSecurityPricing(dimensionSecurityPrice);
@@ -1235,10 +1235,10 @@ namespace GreenField.Web.Services
                 }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
                 DimensionEntities entity = DimensionEntity;
 
@@ -1508,10 +1508,10 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
                 DimensionEntities entity = DimensionEntity;
 
@@ -1670,10 +1670,10 @@ namespace GreenField.Web.Services
                 }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
                 DimensionEntities entity = DimensionEntity;
 
@@ -1834,10 +1834,10 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
                 DimensionEntities entity = DimensionEntity;
 
@@ -1965,10 +1965,10 @@ namespace GreenField.Web.Services
                 { return result; }
 
                 //checking if the service is down
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
-                { throw new Exception(); }
+                { throw new Exception(); }*/
 
                 DimensionEntities entity = DimensionEntity;
 
@@ -2648,12 +2648,12 @@ namespace GreenField.Web.Services
                 return result;
             }
             //checking if the service is down
-            bool isServiceUp;
+          /*  bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
             if (!isServiceUp)
             {
                 throw new Exception();
-            }
+            }*/
             GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION performanceData;
             if (country == "NoFiltering")
             {
@@ -2759,9 +2759,9 @@ namespace GreenField.Web.Services
                 return result;
             }
             //checking if the service is down
-            bool isServiceUp;
+            /*bool isServiceUp;*/
             EqualityComparer<GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
-            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+            /*isServiceUp = CheckServiceAvailability.ServiceAvailability();*/
             String benchmarkID;
             List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> holdingsData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).ToList();
             if (holdingsData != null && holdingsData.Count != 0)
@@ -2772,10 +2772,10 @@ namespace GreenField.Web.Services
             {
                 benchmarkID = null;
             }
-            if (!isServiceUp)
+          /*  if (!isServiceUp)
             {
                 throw new Exception();
-            }
+            }*/
             try
             {
                 switch (period)

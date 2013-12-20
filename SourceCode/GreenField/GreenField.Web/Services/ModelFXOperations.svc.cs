@@ -71,12 +71,12 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+             /*   bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception();
-                }
+                }*/
                 List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();              
                 DimensionEntities entity = DimensionEntity;
                 ResearchEntities research = new ResearchEntities();              
@@ -162,12 +162,12 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception();
-                }
+                }*/
                 List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();
                 List<MacroDatabaseKeyAnnualReportData> finalResult = new List<MacroDatabaseKeyAnnualReportData>();            
                 DimensionEntities entity = DimensionEntity;              
@@ -210,11 +210,11 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+              /*  bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception();
+                    throw new Exception();*/
 
                 List<CommodityResult> resultDB = new List<CommodityResult>();                
                 List<FXCommodityData> calculatedViewResult = new List<FXCommodityData>();

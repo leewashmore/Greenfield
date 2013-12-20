@@ -1,13 +1,10 @@
-USE [AIMS_Main_Dev]
-GO
 
 /****** Object:  Table [dbo].[GFQ_PRICING_BASEVIEW]    Script Date: 11/27/2013 12:03:38 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GF_PRICING_BASEVIEW]') AND type in (N'U'))
 DROP TABLE [dbo].[GF_PRICING_BASEVIEW]
 GO
 
-USE [AIMS_Main_Dev]
-GO
+
 
 /****** Object:  Table [dbo].[GFQ_PRICING_BASEVIEW]    Script Date: 11/27/2013 12:03:41 ******/
 SET ANSI_NULLS ON

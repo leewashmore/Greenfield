@@ -72,13 +72,13 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
 
                 List<string> result = new List<string>();
                 List<string> temp = new List<string>();
@@ -330,13 +330,13 @@ namespace GreenField.Web.Services
                     return false;
                 }
 
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
                 }
-
+                */
                 int? result;
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
 
@@ -367,12 +367,12 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
 
                 List<CSTUserPreferenceInfo> result = new List<CSTUserPreferenceInfo>();
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
@@ -456,12 +456,12 @@ namespace GreenField.Web.Services
                 }
 
                 //checking if the service is down
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception();
-                }
+                }*/
 
                 DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities externalEntity = new ExternalResearchEntities();
@@ -795,12 +795,12 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
 
                 DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities externalEntity = new ExternalResearchEntities();

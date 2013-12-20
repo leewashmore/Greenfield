@@ -1,13 +1,10 @@
-USE [AIMS_Main_Dev]
-GO
 
 /****** Object:  StoredProcedure [dbo].[RetrieveExternalResearchData]    Script Date: 12/12/2013 16:06:15 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RetrieveExternalResearchData]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].[RetrieveExternalResearchData]
 GO
 
-USE [AIMS_Main_Dev]
-GO
+
 
 /****** Object:  StoredProcedure [dbo].[RetrieveExternalResearchData]    Script Date: 12/12/2013 16:06:15 ******/
 SET ANSI_NULLS ON

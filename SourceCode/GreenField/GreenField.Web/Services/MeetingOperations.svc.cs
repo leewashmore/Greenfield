@@ -294,13 +294,13 @@ namespace GreenField.Web.Services
                 DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities externalResearchEntity = new ExternalResearchEntities();
 
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
                 //manual inputs
                 presentationOverviewData.PortfolioId = portfolio.PortfolioId;
                 presentationOverviewData.YTDRet_Absolute = "0.00%";
@@ -480,12 +480,12 @@ namespace GreenField.Web.Services
                 ExternalResearchEntities externalResearchEntity = new ExternalResearchEntities();
                 Dictionary<String, Decimal?> result = new Dictionary<string, decimal?>();
 
-                bool isServiceUp = CheckServiceAvailability.ServiceAvailability();
+              /*  bool isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == securityTicker).FirstOrDefault();
 
@@ -940,13 +940,13 @@ namespace GreenField.Web.Services
                 DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities externalResearchEntity = new ExternalResearchEntities();
 
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
 
                 #region GF_SECURITY_BASEVIEW info
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
@@ -1530,13 +1530,13 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
+                /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
                 {
                     throw new Exception("Services are not available");
-                }
+                }*/
 
                 XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverViewData }
                     , strictlyInclusiveProperties: new List<string> { "PresentationID", "AdminNotes", "CommitteePFVMeasure", "CommitteeBuyRange",

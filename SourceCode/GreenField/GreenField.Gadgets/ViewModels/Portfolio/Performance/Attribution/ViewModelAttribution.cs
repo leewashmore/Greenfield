@@ -463,12 +463,12 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (portSelectionData != null)
                 {
-                    Logging.LogMethodParameter(logger, methodNamespace, portSelectionData, 1);
+                   Logging.LogMethodParameter(logger, methodNamespace, portSelectionData, 1);
                     portfolioSelectionData = portSelectionData;
-                    if (portSelectionData != null && effectiveDate != null && selectedPeriod != null && IsActive && nodeName != null)
-                    {
-                        BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate), nodeName);
-                    }
+                    /*  if (portSelectionData != null && effectiveDate != null && selectedPeriod != null && IsActive && nodeName != null)
+                     {
+                         BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate), nodeName);
+                     }*/
                 }
                 else
                 {
@@ -497,10 +497,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, effectDate, 1);
                     effectiveDate = effectDate;
-                    if (portfolioSelectionData != null && effectiveDate != null && selectedPeriod != null && IsActive && nodeName != null)
+                  /*  if (portfolioSelectionData != null && effectiveDate != null && selectedPeriod != null && IsActive && nodeName != null)
                     {
                         BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate), nodeName);
-                    }
+                    }*/
                 }
                 else
                 {
@@ -531,7 +531,7 @@ namespace GreenField.Gadgets.ViewModels
                     selectedPeriod = selectedPeriodType;
                     if (portfolioSelectionData != null && effectiveDate != null && selectedPeriod != null && nodeName != null)
                     {
-                        if (AttributionDataInfo.Count == 0 && IsActive)
+                       /* if (AttributionDataInfo.Count == 0 && IsActive)
                         {
                             BeginWebServiceCall(portfolioSelectionData, Convert.ToDateTime(effectiveDate), nodeName); 
                         }
@@ -542,7 +542,7 @@ namespace GreenField.Gadgets.ViewModels
                                 AttributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                             }
                             SelectedPeriod = selectedPeriodType;
-                        }
+                        }*/
                     }
                 }
                 else
