@@ -22,6 +22,7 @@ namespace GreenField.Web.Services
         public List<PortfolioValuation>  PortfolioLevelValuationForMarketing(string portfolio_id, DateTime dt)
         {
             MarketingEntities entity = new MarketingEntities();
+            entity.CommandTimeout = 0;
            // DateTime dt = new DateTime(2013, 04, 30);
             List<GetPCDataForMarketing_Result> portfolioData = entity.GetPCDataForMarketing(dt, portfolio_id).ToList();
 
