@@ -140,33 +140,33 @@ BEGIN
 		begin
 			if (@filterType='Region' )
 			begin
-				insert into #CompositeLTTemp  select * from gf_composite_ltholdings	where portfolio_id = @portfolio_id and portfolio_date = @portfolio_date and ASHEMM_PROP_REGION_CODE = @filterValue and upper(SECURITYTHEMECODE)='CASH' and upper(SECURITYTHEMECODE)='LOC_CCY'
+				insert into #CompositeLTTemp  select * from gf_composite_ltholdings	where portfolio_id = @portfolio_id and portfolio_date = @portfolio_date and ASHEMM_PROP_REGION_CODE = @filterValue and upper(SECURITYTHEMECODE)<>'CASH' and upper(SECURITYTHEMECODE)<>'LOC_CCY'
 				set @benchmarkId =  (select distinct benchmark_id from #CompositeLTTemp)
-				insert into #BenchmarkTemp select * from gf_benchmark_holdings		where benchmark_id = @benchmarkId and portfolio_date = @portfolio_date and ASHEMM_PROP_REGION_CODE = @filterValue and upper(SECURITYTHEMECODE)='CASH' and upper(SECURITYTHEMECODE)='LOC_CCY'
+				insert into #BenchmarkTemp select * from gf_benchmark_holdings		where benchmark_id = @benchmarkId and portfolio_date = @portfolio_date and ASHEMM_PROP_REGION_CODE = @filterValue and upper(SECURITYTHEMECODE)<>'CASH' and upper(SECURITYTHEMECODE)<>'LOC_CCY'
 			end
 			else if (@filterType='Country')
 			begin
-				insert into #CompositeLTTemp select *  from gf_composite_ltholdings	where portfolio_id = @portfolio_id and portfolio_date = @portfolio_date and ISO_COUNTRY_CODE = @filterValue and upper(SECURITYTHEMECODE)='CASH' and upper(SECURITYTHEMECODE)='LOC_CCY'
+				insert into #CompositeLTTemp select *  from gf_composite_ltholdings	where portfolio_id = @portfolio_id and portfolio_date = @portfolio_date and ISO_COUNTRY_CODE = @filterValue and upper(SECURITYTHEMECODE)<>'CASH' and upper(SECURITYTHEMECODE)<>'LOC_CCY'
 				set @benchmarkId =  (select distinct benchmark_id from #CompositeLTTemp)
-				insert into #BenchmarkTemp select *   from gf_benchmark_holdings		where benchmark_id = @benchmarkId and portfolio_date = @portfolio_date and ISO_COUNTRY_CODE = @filterValue and upper(SECURITYTHEMECODE)='CASH' and upper(SECURITYTHEMECODE)='LOC_CCY'
+				insert into #BenchmarkTemp select *   from gf_benchmark_holdings		where benchmark_id = @benchmarkId and portfolio_date = @portfolio_date and ISO_COUNTRY_CODE = @filterValue and upper(SECURITYTHEMECODE)<>'CASH' and upper(SECURITYTHEMECODE)<>'LOC_CCY'
 			end
 			else if	(@filterType='Industry')
 			begin
-				insert into #CompositeLTTemp  select * from gf_composite_ltholdings	where portfolio_id = @portfolio_id and portfolio_date = @portfolio_date and GICS_INDUSTRY_NAME = @filterValue and upper(SECURITYTHEMECODE)='CASH' and upper(SECURITYTHEMECODE)='LOC_CCY'
+				insert into #CompositeLTTemp  select * from gf_composite_ltholdings	where portfolio_id = @portfolio_id and portfolio_date = @portfolio_date and GICS_INDUSTRY_NAME = @filterValue and upper(SECURITYTHEMECODE)<>'CASH' and upper(SECURITYTHEMECODE)<>'LOC_CCY'
 				set @benchmarkId =  (select distinct benchmark_id from #CompositeLTTemp)
-				insert into #BenchmarkTemp select * from gf_benchmark_holdings		where benchmark_id = @benchmarkId and portfolio_date = @portfolio_date and GICS_INDUSTRY_NAME = @filterValue and upper(SECURITYTHEMECODE)='CASH' and upper(SECURITYTHEMECODE)='LOC_CCY'
+				insert into #BenchmarkTemp select * from gf_benchmark_holdings		where benchmark_id = @benchmarkId and portfolio_date = @portfolio_date and GICS_INDUSTRY_NAME = @filterValue and upper(SECURITYTHEMECODE)<>'CASH' and upper(SECURITYTHEMECODE)<>'LOC_CCY'
 			end
 			else if (@filterType='Sector') 
 			begin
-				insert into #CompositeLTTemp  select * from gf_composite_ltholdings	where portfolio_id = @portfolio_id and portfolio_date = @portfolio_date and GICS_SECTOR_NAME = @filterValue	and upper(SECURITYTHEMECODE)='CASH' and upper(SECURITYTHEMECODE)='LOC_CCY' 	
+				insert into #CompositeLTTemp  select * from gf_composite_ltholdings	where portfolio_id = @portfolio_id and portfolio_date = @portfolio_date and GICS_SECTOR_NAME = @filterValue	and upper(SECURITYTHEMECODE)<>'CASH' and upper(SECURITYTHEMECODE)<>'LOC_CCY' 	
 				set @benchmarkId =  (select distinct benchmark_id from #CompositeLTTemp)
-				insert into #BenchmarkTemp select * from gf_benchmark_holdings		where benchmark_id = @benchmarkId and portfolio_date = @portfolio_date and GICS_SECTOR_NAME = @filterValue	and upper(SECURITYTHEMECODE)='CASH' and upper(SECURITYTHEMECODE)='LOC_CCY' 	
+				insert into #BenchmarkTemp select * from gf_benchmark_holdings		where benchmark_id = @benchmarkId and portfolio_date = @portfolio_date and GICS_SECTOR_NAME = @filterValue	and upper(SECURITYTHEMECODE)<>'CASH' and upper(SECURITYTHEMECODE)<>'LOC_CCY' 	
 			end
 			else
 			begin
-				insert into #CompositeLTTemp  select * from gf_composite_ltholdings	where portfolio_id = @portfolio_id and portfolio_date = @portfolio_date and upper(SECURITYTHEMECODE)='CASH' and upper(SECURITYTHEMECODE)='LOC_CCY'
+				insert into #CompositeLTTemp  select * from gf_composite_ltholdings	where portfolio_id = @portfolio_id and portfolio_date = @portfolio_date and upper(SECURITYTHEMECODE)<>'CASH' and upper(SECURITYTHEMECODE)<>'LOC_CCY'
 				set @benchmarkId =  (select distinct benchmark_id from #CompositeLTTemp)
-				insert into #BenchmarkTemp select * from gf_benchmark_holdings		where benchmark_id = @benchmarkId and portfolio_date = @portfolio_date and upper(SECURITYTHEMECODE)='CASH' and upper(SECURITYTHEMECODE)='LOC_CCY'
+				insert into #BenchmarkTemp select * from gf_benchmark_holdings		where benchmark_id = @benchmarkId and portfolio_date = @portfolio_date and upper(SECURITYTHEMECODE)<>'CASH' and upper(SECURITYTHEMECODE)<>'LOC_CCY'
 			end
 				
 		end
