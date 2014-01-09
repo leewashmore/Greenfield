@@ -14,10 +14,17 @@ namespace MarketingCalc.ServiceCaller
 
         public void CallService(string portfolio_id,DateTime dt)
         {
-            PortfolioValuationOperationsClient a = new PortfolioValuationOperationsClient();
-            Console.WriteLine(portfolio_id);
-            PortfolioValuation[] t = a.PortfolioLevelValuationForMarketing(portfolio_id,dt);
-            
+            try
+            {
+                PortfolioValuationOperationsClient a = new PortfolioValuationOperationsClient();
+                Console.WriteLine(portfolio_id);
+                
+                PortfolioValuation[] t = a.PortfolioLevelValuationForMarketing(portfolio_id, dt);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.Write(e.ToString());
+            }
             //Console.WriteLine(a.PortfolioLevelTest(portfolio_id,dt));
             //SerializeObjectToXML(t);
         }

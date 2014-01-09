@@ -158,7 +158,7 @@ namespace GreenField.Web.Services
                 #endregion
 
                 GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData = (entity.GF_PERF_DAILY_ATTRIBUTION.
-                    Where(a => a.BMNAME == benchmarkName.First() && a.TO_DATE == objEffectiveDate.Date).FirstOrDefault());
+                    Where(a => a.BMNAME == benchmarkName.First() && a.TO_DATE == objEffectiveDate.Date).First());
 
                 if (dimensionDailyPerfData != null || dimensionBenchmarkReturnData != null)
                 {
