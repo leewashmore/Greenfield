@@ -30,6 +30,8 @@ namespace GreenField.Web.Helpers
         public decimal? fwdearnings { get; set; }
 
         public decimal? nextYearEarnings { get; set; }
+
+        public decimal? secondYearEarnings { get; set; }
          
         public decimal? trailingearnings { get; set; }
            
@@ -38,6 +40,8 @@ namespace GreenField.Web.Helpers
         public decimal? fwdpercentFactorOwned { get; set; }
 
         public decimal? nextYearPercentFactorOwned { get; set; }
+
+        public decimal? secondYearPercentFactorOwned { get; set; }
 
         public decimal? trailingpercentFactorOwned { get; set; }
 
@@ -59,6 +63,13 @@ namespace GreenField.Web.Helpers
 
         public decimal? nextYearPEContr { get; set; }
 
+        public decimal? secondYearWeight { get; set; }
+
+        public decimal? secondYearPE { get; set; }
+
+        public decimal? secondYearPEContr { get; set; }
+
+        
         public decimal? equity { get; set; }
 
         public decimal? equityFactorOwned { get; set; }
@@ -70,6 +81,10 @@ namespace GreenField.Web.Helpers
         public decimal? nextYearEquity { get; set; }
 
         public decimal? nextYearEquityFactorOwned { get; set; }
+
+        public decimal? secondYearEquity { get; set; }
+
+        public decimal? secondYearEquityFactorOwned { get; set; }
 
         public decimal? weightPB { get; set; }
 
@@ -88,6 +103,13 @@ namespace GreenField.Web.Helpers
         public decimal? nextYearPB { get; set; }
 
         public decimal? nextYearPBContr { get; set; }
+
+        public decimal? secondYearWeightPB { get; set; }
+
+        public decimal? secondYearPB { get; set; }
+
+        public decimal? secondYearPBContr { get; set; }
+
 
         public decimal? weightMktCap { get; set; }
 
@@ -113,6 +135,19 @@ namespace GreenField.Web.Helpers
 
         public decimal? nextYearDYContr { get; set; }
 
+
+        public decimal? secondYearDividend { get; set; }
+
+        public decimal? secondYearDivFactorOwned { get; set; }
+
+        public decimal? secondYearWeightDY { get; set; }
+
+        public decimal? secondYearDY { get; set; }
+
+        public decimal? secondYearDYContr { get; set; }
+
+
+
         public decimal? currYearWeightEGrowth { get; set; }
 
         public decimal? currYearEGrowth { get; set; }
@@ -123,15 +158,29 @@ namespace GreenField.Web.Helpers
         public decimal? nextYearEGrowth { get; set; }
         public decimal? nextYearEGrowthContr { get; set; }
 
-        public decimal? currYearWeightROE { get; set; }
 
+
+        public decimal? secondYearWeightEGrowth { get; set; }
+        public decimal? secondYearEGrowth { get; set; }
+        public decimal? secondYearEGrowthContr { get; set; }
+
+
+
+
+        public decimal? currYearWeightROE { get; set; }
         public decimal? currYearROE { get; set; }
         public decimal? currYearROEContr { get; set; }
 
         public decimal? nextYearWeightROE { get; set; }
-
         public decimal? nextYearROE { get; set; }
         public decimal? nextYearROEContr { get; set; }
+
+
+
+        public decimal? secondYearWeightROE { get; set; }
+        public decimal? secondYearROE { get; set; }
+        public decimal? secondYearROEContr { get; set; }
+
 
         public decimal? currYearNetDebtEquity { get; set; }
         public decimal? currYearWeightNetDebtEquity { get; set; }
@@ -144,6 +193,10 @@ namespace GreenField.Web.Helpers
         public decimal? NextYearNetDebtEquity { get; set; }
         public decimal? nextYearWeightNetDebtEquity { get; set; }
         public decimal? nextYearWeightNetDebtEquityContr { get; set; }
+
+        public decimal? secondYearNetDebtEquity { get; set; }
+        public decimal? secondYearWeightNetDebtEquity { get; set; }
+        public decimal? secondYearWeightNetDebtEquityContr { get; set; }
 
 
     }
