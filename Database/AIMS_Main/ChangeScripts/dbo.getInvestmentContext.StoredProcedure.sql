@@ -60,7 +60,7 @@ else if @ViewReportBy = 'Industry'
 --print @gics_industry
 -- Get the market cap for the issuer id passed.
 
-select @marketcap = amount from period_financials where security_id = (select max(issuer_proxy) from dbo.gf_security_baseview where issuer_id = @issuer_id)
+select @marketcap = amount from period_financials with(nolock) where security_id = (select max(issuer_proxy) from dbo.gf_security_baseview where issuer_id = @issuer_id)
 and data_id = 185 and period_type = 'C' and currency ='USD' and data_source='PRIMARY' 
 print @marketcap
 
@@ -72,7 +72,7 @@ begin
 -- insert market cap
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount  from dbo.gf_security_baseview gsb
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock) on pf.security_id = gsb.issuer_proxy
 	where  pf.data_id = 185 and pf.period_type = 'C' and pf.currency ='USD' and pf.data_source='PRIMARY' 
 	and gsb.iso_country_code = @iso_country_code 
 	group by pf.amount
@@ -80,7 +80,7 @@ begin
 	-- insert forward pe
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 187 and pf.period_type = 'C' and pf.currency ='USD' and pf.data_source='PRIMARY' 
 	and gsb.iso_country_code = @iso_country_code 
 	group by  pf.amount
@@ -89,7 +89,7 @@ begin
 	
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 188 and pf.period_type = 'C' and pf.currency ='USD' and pf.data_source='PRIMARY' 
 	and gsb.iso_country_code = @iso_country_code 
 	group by  pf.amount	
@@ -97,7 +97,7 @@ begin
 	-- insert pe current year	
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 166 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @curryear and fiscal_type = 'CALENDAR' 
 	and gsb.iso_country_code = @iso_country_code 
@@ -106,7 +106,7 @@ begin
 	-- insert pe next year
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 166 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.iso_country_code = @iso_country_code 
@@ -116,7 +116,7 @@ begin
 	
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 164 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @curryear and fiscal_type = 'CALENDAR'
 	and gsb.iso_country_code = @iso_country_code 
@@ -126,7 +126,7 @@ begin
 	
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 164 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.iso_country_code = @iso_country_code 
@@ -135,7 +135,7 @@ begin
 	--- insert ev/ebitda current year
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 193 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @curryear and fiscal_type = 'CALENDAR'
 	and gsb.iso_country_code = @iso_country_code 
@@ -144,7 +144,7 @@ begin
 	--- insert ev/ebitda next year
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 193 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.iso_country_code = @iso_country_code 
@@ -153,7 +153,7 @@ begin
 	--insert  DY
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 192 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.iso_country_code = @iso_country_code 
@@ -162,7 +162,7 @@ begin
 	--insert  ROE
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on  pf.issuer_id = gsb.issuer_id
+	inner join dbo.period_financials pf with(nolock)  on  pf.issuer_id = gsb.issuer_id
 	where pf.data_id = 133 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.iso_country_code = @iso_country_code 
@@ -177,7 +177,7 @@ begin
 	-- insert market cap
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where  pf.data_id = 185 and pf.period_type = 'C' and pf.currency ='USD' and pf.data_source='PRIMARY' 
 	and gsb.gics_industry = @gics_industry 
 		group by pf.amount
@@ -186,7 +186,7 @@ begin
 
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 187 and pf.period_type = 'C' and pf.currency ='USD' and pf.data_source='PRIMARY' 
 	and gsb.gics_industry = @gics_industry 
 	group by  pf.amount
@@ -194,7 +194,7 @@ begin
 	-- insert forward pb
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 188 and pf.period_type = 'C' and pf.currency ='USD' and pf.data_source='PRIMARY' 
 	and gsb.gics_industry = @gics_industry 
 	group by  pf.amount	
@@ -202,7 +202,7 @@ begin
 	-- insert pe current year	
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf  with(nolock) on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 166 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @curryear and fiscal_type = 'CALENDAR' 
 	and gsb.gics_industry = @gics_industry 
@@ -211,7 +211,7 @@ begin
 		-- insert pe next year
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 166 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.gics_industry = @gics_industry 
@@ -221,7 +221,7 @@ begin
 	
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf  with(nolock) on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 164 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @curryear and fiscal_type = 'CALENDAR'
 	and gsb.gics_industry = @gics_industry 
@@ -230,7 +230,7 @@ begin
 	--insert pb NEXT year
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 164 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.gics_industry = @gics_industry  
@@ -239,7 +239,7 @@ begin
 	--- insert ev/ebitda current year
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 193 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @curryear and fiscal_type = 'CALENDAR'
 	and gsb.gics_industry = @gics_industry   
@@ -248,7 +248,7 @@ begin
 	--insert ev/ebitda next year
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 193 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.gics_industry = @gics_industry   
@@ -257,7 +257,7 @@ begin
 	--insert  DY
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.security_id = gsb.issuer_proxy
+	inner join dbo.period_financials pf with(nolock)  on pf.security_id = gsb.issuer_proxy
 	where pf.data_id = 192 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.gics_industry = @gics_industry    
@@ -266,7 +266,7 @@ begin
 	--insert  ROE
 	insert into @IC_Temp (issuer_id,issuer_name,iso_country_code,gics_sector,gics_sector_name,gics_industry,gics_industry_name,securityid,DataId,period_year,value)
 	select max(gsb.issuer_id),max(gsb.issuer_name),max(gsb.iso_country_code),max(gsb.gics_sector),max(gsb.gics_sector_name),max(gsb.gics_industry),max(gsb.gics_industry_name), max(gsb.issuer_proxy),max(pf.Data_id),max(pf.period_year),pf.amount from dbo.gf_security_baseview gsb	
-	inner join dbo.period_financials pf on pf.issuer_id = gsb.issuer_id
+	inner join dbo.period_financials pf  with(nolock) on pf.issuer_id = gsb.issuer_id
 	where pf.data_id = 133 and pf.period_type = 'A' and pf.currency ='USD' and pf.data_source='PRIMARY'  
 	and period_year = @nextyear and fiscal_type = 'CALENDAR'
 	and gsb.gics_industry = @gics_industry   
