@@ -18,6 +18,7 @@
           <Property Type="String" Name="Root_Source_Date" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="ASEC_SEC_SHORT_NAME" Nullable="true" MaxLength="255" />
           <Property Type="Decimal" Name="amount" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="asec_instr_type" Nullable="true" MaxLength="255" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -31,6 +32,7 @@
                 <ScalarProperty Name="Root_Source_Date" ColumnName="Root_Source_Date" />
                 <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="asec_instr_type" ColumnName="asec_instr_type" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
