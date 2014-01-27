@@ -12,9 +12,10 @@ namespace AIMS.Composites.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class GF_COMPOSITE_LTHOLDINGS
+    public partial class GF_PORTFOLIO_LTHOLDINGS
     {
-        public decimal GF_ID { get; set; }
+        public long GF_ID { get; set; }
+        public string PFCH_POR_CALC_SHORT { get; set; }
         public Nullable<System.DateTime> PORTFOLIO_DATE { get; set; }
         public string PORTFOLIO_ID { get; set; }
         public string A_PFCHOLDINGS_PORLT { get; set; }
@@ -47,5 +48,14 @@ namespace AIMS.Composites.DAL
         public string GICS_SUB_INDUSTRY { get; set; }
         public string GICS_SUB_INDUSTRY_NAME { get; set; }
         public string LOOK_THRU_FUND { get; set; }
+        public Nullable<decimal> BARRA_RISK_FACTOR_MOMENTUM { get; set; }
+        public Nullable<decimal> BARRA_RISK_FACTOR_VOLATILITY { get; set; }
+        public Nullable<decimal> BARRA_RISK_FACTOR_VALUE { get; set; }
+        public Nullable<decimal> BARRA_RISK_FACTOR_SIZE { get; set; }
+        public Nullable<decimal> BARRA_RISK_FACTOR_SIZE_NONLIN { get; set; }
+        public Nullable<decimal> BARRA_RISK_FACTOR_GROWTH { get; set; }
+        public Nullable<decimal> BARRA_RISK_FACTOR_LIQUIDITY { get; set; }
+        public Nullable<decimal> BARRA_RISK_FACTOR_LEVERAGE { get; set; }
+        public Nullable<decimal> BARRA_RISK_FACTOR_PBETEWLD { get; set; }
     }
 }

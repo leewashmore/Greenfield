@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <configuration>
-  <!--<appSettings>
+  <appSettings>
     <add key="DimensionWebService" value="http://lonaims1t.ashmore.local:7000/AIMS_DATA/WcfDataService.svc/" />
-  </appSettings>-->
+  </appSettings>
 
   <startup> 
         <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>

@@ -72,16 +72,10 @@
     <Compile Include="IDumper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PusherBase.cs" />
-    <Compile Include="Service References\DimensionWebService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.datasvcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Service References\DimensionWebService\service.edmx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AIMS.Composites.DAL\AIMS.Composites.DAL.csproj">
@@ -91,17 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ServiceReferenceMetadataStorage Include="Service References\DimensionWebService\">
-      <Type>datasvcmap</Type>
-    </ServiceReferenceMetadataStorage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\DimensionWebService\Reference.datasvcmap">
-      <Generator>DataServiceClientGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
