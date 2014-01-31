@@ -112,7 +112,7 @@ namespace GreenField.IssuerShares.Server
             var dumper = new TraceDumper();
 
             var targetPuller = new TargetDataPuller(settings.ConnectionStringToAimsEntities);
-            var sourcePuller = new SourceDataPuller(settings.WebServiceUri, settings.RecordsPerChunk, dumper);
+            var sourcePuller = new SourceDataPuller(settings.WebServiceUri, settings.RecordsPerChunk,settings.ConnectionStringToAimsEntities,  dumper);
             var monitor = new DataLoader.Core.Monitor(dumper);
             var pusher = new IssueSharesPusherExtension(monitor, settings.ConnectionStringToAims, settings.RecordsPerBulk);
             var filler = new GapsFiller<IssuerShareRecord>(settings.MaxNumberOfDaysToStopExtrapolatingAfter, new IssuerSharesGapFillerAdapter());
