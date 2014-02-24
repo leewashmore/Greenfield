@@ -50,6 +50,11 @@ namespace GreenField.DataContracts
         public String ISSUER_PROXY { get; set; }
 
 
+        [DataMember]
+        public String UpdateBBStatus { get; set; }
+
+
+
     }
 
 

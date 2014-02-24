@@ -42,5 +42,8 @@ namespace GreenField.DataContracts
         [DataMember]
         public String Description { get; set; }
 
+        [DataMember]
+        public String UpdateBBStatus { get; set; }
+
     }
 }

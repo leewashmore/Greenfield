@@ -114,7 +114,8 @@
                             <TextBlock Text="{Binding LongName}" Style="{StaticResource TextBlockStyle}"/>
                             <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, '}" Style="{StaticResource TextBlockStyle}"/>
                             <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:'}" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\})'}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\}:'}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Text="{Binding UpdateBBStatus, StringFormat='\{0\})'}" Style="{StaticResource TextBlockStyle}"/>
                         </StackPanel>
                     </DataTemplate>
                 </telerik:RadComboBox.ItemTemplate>

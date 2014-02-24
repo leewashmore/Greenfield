@@ -109,7 +109,8 @@ namespace GreenField.Web.Services
                         Currency = record.TRADING_CURRENCY,
                         IssuerID = record.ISSUER_ID,
                         Website = record.WEBSITE,
-                        Description = record.BLOOMBERG_DESCRIPTION
+                        Description = record.BLOOMBERG_DESCRIPTION,
+                        UpdateBBStatus = record.UPDATE_BB_STATUS
                     });
                 }
 
@@ -166,7 +167,8 @@ namespace GreenField.Web.Services
                     Currency = data.TRADING_CURRENCY,
                     IssuerID = data.ISSUER_ID,
                     Website = data.WEBSITE,
-                    Description = data.BLOOMBERG_DESCRIPTION
+                    Description = data.BLOOMBERG_DESCRIPTION,
+                    UpdateBBStatus = data.UPDATE_BB_STATUS
                 };
 
                 return result;
@@ -508,19 +510,23 @@ namespace GreenField.Web.Services
                     foreach (GreenField.DAL.GF_SELECTION_BASEVIEW record in data)
                     {
                         var security = securities.Where(sec => sec.ASEC_SEC_SHORT_NAME == record.INSTRUMENT_ID).FirstOrDefault();
-                    
-                        result.Add(new EntitySelectionData()
+                        if (security!=null && security.UPDATE_BB_STATUS == "ACTIVE")  //Suppress all the inactive securities
                         {
-                            SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
-                            ShortName = record.SHORT_NAME == null ? String.Empty : record.SHORT_NAME,
-                            LongName = record.LONG_NAME == null ? String.Empty : record.LONG_NAME,
-                            InstrumentID = record.INSTRUMENT_ID == null ? String.Empty : record.INSTRUMENT_ID,
-                            Type = record.TYPE == null ? String.Empty : record.TYPE,
-                            SecurityType = record.SECURITY_TYPE == null ? String.Empty : record.SECURITY_TYPE,
-                            SecurityId = security != null ? security.SECURITY_ID : null,
-                            IssuerId = security != null ? security.ISSUER_ID : null,
-                            LOOK_THRU_FUND = security != null ? security.LOOK_THRU_FUND : null
-                        });
+                            result.Add(new EntitySelectionData()
+                            {
+                                SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
+                                ShortName = record.SHORT_NAME == null ? String.Empty : record.SHORT_NAME,
+                                LongName = record.LONG_NAME == null ? String.Empty : record.LONG_NAME,
+                                InstrumentID = record.INSTRUMENT_ID == null ? String.Empty : record.INSTRUMENT_ID,
+                                Type = record.TYPE == null ? String.Empty : record.TYPE,
+                                SecurityType = record.SECURITY_TYPE == null ? String.Empty : record.SECURITY_TYPE,
+                                SecurityId = security != null ? security.SECURITY_ID : null,
+                                IssuerId = security != null ? security.ISSUER_ID : null,
+                                LOOK_THRU_FUND = security != null ? security.LOOK_THRU_FUND : null,
+                                UpdateBBStatus = security != null ? security.UPDATE_BB_STATUS : null,
+
+                            });
+                        }
                     }
                 }
 
