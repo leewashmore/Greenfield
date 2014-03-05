@@ -58,7 +58,7 @@ as
 					and c.PERIOD_YEAR = a.PERIOD_YEAR-1 and c.FISCAL_TYPE = a.FISCAL_TYPE
 					and c.CURRENCY = a.CURRENCY
 	 where 1=1 
-	  and (isnull(b.AMOUNT, 0.0)+isnull(c.AMOUNT,0.0)) > 0.0		-- Data validation
+	  and (isnull(b.AMOUNT, 0.0)+isnull(c.AMOUNT,0.0)) > 0.0		and a.AMOUNT > 0-- Data validation
 --	 order by a.ISSUER_ID, a.COA_TYPE, a.DATA_SOURCE, a.PERIOD_TYPE, a.PERIOD_YEAR,  a.FISCAL_TYPE, a.CURRENCY
 	COMMIT TRAN T1
 
