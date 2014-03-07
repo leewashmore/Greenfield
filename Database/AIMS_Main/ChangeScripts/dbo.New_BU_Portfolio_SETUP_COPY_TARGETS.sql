@@ -126,17 +126,4 @@ drop table #TargetsUnClean
 drop table #Targets
 
 end
---exec	[New_BU_Portfolio_SETUP_COPY_TARGETS] 'STARS','SICVISCF','NAZIRALIA'
-
- 
-
---select * from portfolio where id = 'SICVESC'
-
-/*insert into username_fund values
-('NAZIRALIA','SICVESC')*/
-
-
-
-select * from [BU_PORTFOLIO_SECURITY_TARGET] where portfolio_id ='CURIANESC'
-and security_id not in 
-(select security_id from [BU_PORTFOLIO_SECURITY_TARGET] where portfolio_id = 'SICVESC')
+--exec	[New_BU_Portfolio_SETUP_COPY_TARGETS] 'STARS','SICVISCF','SENYUZE'
