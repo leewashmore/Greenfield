@@ -1,5 +1,4 @@
-USE [AIMS_Main]
-GO
+
 
 /****** Object:  StoredProcedure [dbo].[Get_Data_Process_Thread]    Script Date: 02/22/2013 18:52:34 ******/
 SET ANSI_NULLS ON
@@ -44,7 +43,8 @@ as
 
 				if @RUN_MODE = 'F'
 					begin
-						truncate table period_financials
+						truncate table period_financials_ISSUER
+						truncate table period_financials_SECURITY
 						--select 'test'
 					end
 

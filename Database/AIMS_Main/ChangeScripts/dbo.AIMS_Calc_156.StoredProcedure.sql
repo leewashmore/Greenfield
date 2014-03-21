@@ -13,7 +13,7 @@ as
 	-- Get the data
 	select pf.* 
 	  into #A
-	  from dbo.PERIOD_FINANCIALS  pf with (nolock)
+	  from dbo.PERIOD_FINANCIALS_ISSUER  pf with (nolock) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
 	 where DATA_ID = 259			--VRUQ		
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
@@ -21,7 +21,7 @@ as
 	   -- Get the data
 	select pf.* 
 	  into #B
-	  from dbo.PERIOD_FINANCIALS  pf with (nolock)
+	  from dbo.PERIOD_FINANCIALS_ISSUER  pf with (nolock) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
 	 where DATA_ID = 281			--ALLA		
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
@@ -29,16 +29,16 @@ as
        -- Get the data
 	select pf.* 
 	  into #C
-	  from dbo.PERIOD_FINANCIALS  pf with (nolock)
+	  from dbo.PERIOD_FINANCIALS_ISSUER  pf with (nolock) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
 	 where DATA_ID = 104			--QTLE	   
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
 
 	-- Add the data to the table
 	BEGIN TRAN T1
-	insert into PERIOD_FINANCIALS(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
+	insert into PERIOD_FINANCIALS_ISSUER(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
 		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
-		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE)
+		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
 	select c.ISSUER_ID, c.SECURITY_ID, c.COA_TYPE, c.DATA_SOURCE, c.ROOT_SOURCE
 		,  c.ROOT_SOURCE_DATE, c.PERIOD_TYPE, c.PERIOD_YEAR, c.PERIOD_END_DATE
 		,  c.FISCAL_TYPE, c.CURRENCY

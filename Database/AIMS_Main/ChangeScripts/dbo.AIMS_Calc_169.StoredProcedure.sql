@@ -13,7 +13,7 @@ as
 	-- Get the data
 	select pf.* 
 	  into #A
-	  from dbo.PERIOD_FINANCIALS  pf with (nolock)
+	  from dbo.PERIOD_FINANCIALS_SECURITY  pf with (nolock) -- Splitting into 2 tables 
 	 inner join dbo.GF_SECURITY_BASEVIEW sb on sb.SECURITY_ID = pf.SECURITY_ID
 	 where DATA_ID = 185			--Market Capitalization		
 	   and sb.ISSUER_ID = @ISSUER_ID
@@ -21,14 +21,14 @@ as
 
 	select pf.* 
 	  into #B
-	  from dbo.PERIOD_FINANCIALS  pf with (nolock)
+	  from dbo.PERIOD_FINANCIALS_ISSUER  pf with (nolock) -- Splitting into 2 tables 
 	 where DATA_ID = 110			--Appraisal Value	   
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
 
 	-- Add the data to the table
 	BEGIN TRAN T1
-	insert into PERIOD_FINANCIALS(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
+	insert into PERIOD_FINANCIALS_SECURITY(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
 		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
 		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE)
 	select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE

@@ -13,21 +13,21 @@ as
 	-- Get the data
 	select pf.* 
 	  into #A
-	  from dbo.PERIOD_FINANCIALS pf with (nolock)
+	  from dbo.PERIOD_FINANCIALS_ISSUER pf with (nolock)
 	 where DATA_ID = 4					-- SPRE
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
 
 	select pf.* 
 	  into #B
-	  from dbo.PERIOD_FINANCIALS pf with (nolock)
+	  from dbo.PERIOD_FINANCIALS_ISSUER pf with (nolock)
 	 where DATA_ID = 104					-- QTLE
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
 
 	-- Add the data to the table
 	BEGIN TRAN T1
-	insert into PERIOD_FINANCIALS(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
+	insert into PERIOD_FINANCIALS_ISSUER(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
 		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
 		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE)
 	select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE

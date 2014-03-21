@@ -32,7 +32,7 @@ select pf.ISSUER_ID,
 		MAX(SOURCE_CURRENCY) as SOURCE_CURRENCY, 
 		MAX(amount_type) as AMOUNT_TYPE
 	  into #A
-	  from dbo.PERIOD_FINANCIALS pf with (nolock)
+	  from dbo.PERIOD_FINANCIALS_ISSUER pf with (nolock) -- Splitting into 2 tables 
 	 where DATA_ID in ('63','64','65','66')
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
@@ -55,7 +55,7 @@ select pf.ISSUER_ID,
 		MAX(SOURCE_CURRENCY) as SOURCE_CURRENCY, 
 		MAX(amount_type) as AMOUNT_TYPE
 	  into #B
-	  from dbo.PERIOD_FINANCIALS pf with (nolock)
+	  from dbo.PERIOD_FINANCIALS_ISSUER pf with (nolock) -- Splitting into 2 tables 
 	 where DATA_ID in ('63','64','65','66')
 	   and pf.ISSUER_ID = @ISSUER_ID
 	   and pf.PERIOD_TYPE = 'A'
@@ -74,9 +74,9 @@ select pf.ISSUER_ID,
 
 	-- Add the data to the table
 	BEGIN TRAN T1
-	insert into PERIOD_FINANCIALS(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
+	insert into PERIOD_FINANCIALS_ISSUER(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
 		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
-		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE)
+		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE) -- Splitting into 2 tables 
 	select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
