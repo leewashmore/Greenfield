@@ -618,6 +618,11 @@ namespace GreenField.Gadgets.ViewModels
 
             foreach (var group in groups)
             {
+                if (group.Key == "Petroleo Brasileiro SA") {
+                    Console.WriteLine("Hello"); 
+                
+                }
+
                 var main = group.Where(x => x.PortfolioPath == portfolioId ).FirstOrDefault();
                 if (main == null || group.Count() == 1)
                 {
@@ -652,7 +657,7 @@ namespace GreenField.Gadgets.ViewModels
                             FromDate = main.FromDate,
                             IndustryName = main.IndustryName,
                             IsoCountryCode = main.IsoCountryCode,
-                            IssueName = group.Key.ToUpper(),  //main.IssueName  - display issuer name in the grouped line
+                            IssueName = main.IssuerName,//group.Key.ToUpper(),  //main.IssueName  - display issuer name in the grouped line
                             IssuerId = main.IssuerId,
                             MarketCap = main.MarketCap,
                             MarketCapUSD = main.MarketCapUSD,
