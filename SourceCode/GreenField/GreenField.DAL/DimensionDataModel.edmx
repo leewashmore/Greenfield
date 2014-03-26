@@ -13,10 +13,25 @@
           <EntitySet Name="GF_PORTFOLIO_HOLDINGS" EntityType="DimensionDataModel.Store.GF_PORTFOLIO_HOLDINGS" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GF_PORTFOLIO_LTHOLDINGS" EntityType="DimensionDataModel.Store.GF_PORTFOLIO_LTHOLDINGS" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GF_PORTFOLIO_SELECTION" EntityType="DimensionDataModel.Store.GF_PORTFOLIO_SELECTION" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="DimensionDataModel.Store.GF_PRICING_BASEVIEW" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="DimensionDataModel.Store.GF_SECURITY_BASEVIEW" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GF_SELECTION_BASEVIEW" EntityType="DimensionDataModel.Store.GF_SELECTION_BASEVIEW" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GF_TRANSACTIONS" EntityType="DimensionDataModel.Store.GF_TRANSACTIONS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="DimensionDataModel.Store.GF_PRICING_BASEVIEW" store:Type="Views" store:Schema="dbo" store:Name="GF_PRICING_BASEVIEW">
+            <DefiningQuery>SELECT 
+      [GF_PRICING_BASEVIEW].[GF_ID] AS [GF_ID], 
+      [GF_PRICING_BASEVIEW].[INSTRUMENT_ID] AS [INSTRUMENT_ID], 
+      [GF_PRICING_BASEVIEW].[TYPE] AS [TYPE], 
+      [GF_PRICING_BASEVIEW].[TICKER] AS [TICKER], 
+      [GF_PRICING_BASEVIEW].[ISSUE_NAME] AS [ISSUE_NAME], 
+      [GF_PRICING_BASEVIEW].[FROMDATE] AS [FROMDATE], 
+      [GF_PRICING_BASEVIEW].[PRICE_TYPE] AS [PRICE_TYPE], 
+      [GF_PRICING_BASEVIEW].[DAILY_CLOSING_PRICE] AS [DAILY_CLOSING_PRICE], 
+      [GF_PRICING_BASEVIEW].[DAILY_PRICE_RETURN] AS [DAILY_PRICE_RETURN], 
+      [GF_PRICING_BASEVIEW].[DAILY_GROSS_RETURN] AS [DAILY_GROSS_RETURN], 
+      [GF_PRICING_BASEVIEW].[VOLUME] AS [VOLUME], 
+      [GF_PRICING_BASEVIEW].[DAILY_SPOT_FX] AS [DAILY_SPOT_FX]
+      FROM [dbo].[GF_PRICING_BASEVIEW] AS [GF_PRICING_BASEVIEW]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
         <EntityType Name="GF_BENCHMARK_HOLDINGS">
           <Key>
@@ -62,6 +77,9 @@
           <Property Name="BARRA_RISK_FACTOR_LIQUIDITY" Type="decimal" Precision="32" Scale="6" />
           <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="decimal" Precision="32" Scale="6" />
           <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="COMPANY_FULL_MKT_CAP_USD" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="FOREIGN_INCLUSION_FACTOR" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="CLOSE_NUMBER_SHARES" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <EntityType Name="GF_PERF_DAILY_ATTRIBUTION">
           <Key>
@@ -605,23 +623,6 @@
           <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="nvarchar" MaxLength="10" />
           <Property Name="PORTFOLIO_THEME_SUBGROUP_NAME" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="GF_PRICING_BASEVIEW">
-          <Key>
-            <PropertyRef Name="GF_ID" />
-          </Key>
-          <Property Name="GF_ID" Type="bigint" Nullable="false" />
-          <Property Name="INSTRUMENT_ID" Type="varchar" MaxLength="30" />
-          <Property Name="TYPE" Type="varchar" MaxLength="9" />
-          <Property Name="TICKER" Type="nvarchar" MaxLength="30" />
-          <Property Name="ISSUE_NAME" Type="varchar" MaxLength="50" />
-          <Property Name="FROMDATE" Type="datetime" />
-          <Property Name="PRICE_TYPE" Type="varchar" MaxLength="11" />
-          <Property Name="DAILY_CLOSING_PRICE" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="DAILY_PRICE_RETURN" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="DAILY_GROSS_RETURN" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="VOLUME" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="DAILY_SPOT_FX" Type="decimal" Precision="32" Scale="6" />
-        </EntityType>
         <EntityType Name="GF_SECURITY_BASEVIEW">
           <Key>
             <PropertyRef Name="ID" />
@@ -698,7 +699,7 @@
             <PropertyRef Name="GF_ID" />
           </Key>
           <Property Name="GF_ID" Type="bigint" Nullable="false" />
-          <Property Name="SHORT_NAME" Type="nvarchar" MaxLength="30" />
+          <Property Name="SHORT_NAME" Type="nvarchar" MaxLength="50" />
           <Property Name="LONG_NAME" Type="nvarchar" MaxLength="50" />
           <Property Name="INSTRUMENT_ID" Type="varchar" MaxLength="40" />
           <Property Name="TYPE" Type="varchar" MaxLength="9" />
@@ -735,6 +736,26 @@
           <Property Name="VALUE_QC" Type="decimal" Precision="32" Scale="6" />
           <Property Name="VALUE_SC" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Main.dbo.GF_PRICING_BASEVIEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="GF_PRICING_BASEVIEW">
+          <Key>
+            <PropertyRef Name="GF_ID" />
+          </Key>
+          <Property Name="GF_ID" Type="float" Nullable="false" />
+          <Property Name="INSTRUMENT_ID" Type="varchar" MaxLength="30" />
+          <Property Name="TYPE" Type="varchar" MaxLength="9" />
+          <Property Name="TICKER" Type="varchar" MaxLength="30" />
+          <Property Name="ISSUE_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="FROMDATE" Type="datetime" />
+          <Property Name="PRICE_TYPE" Type="varchar" MaxLength="50" />
+          <Property Name="DAILY_CLOSING_PRICE" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DAILY_PRICE_RETURN" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DAILY_GROSS_RETURN" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="VOLUME" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DAILY_SPOT_FX" Type="decimal" Precision="32" Scale="6" />
+        </EntityType>
         <Function Name="RetrieveCompositeDetailsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="portfolio_id" Type="varchar" Mode="In" />
           <Parameter Name="portfolio_date" Type="datetime" Mode="In" />
@@ -766,7 +787,6 @@
           <EntitySet Name="GF_PERF_TOPLEVELSTATS" EntityType="DimensionDataModel.GF_PERF_TOPLEVELSTATS" />
           <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="DimensionDataModel.GF_SECURITY_BASEVIEW" />
           <EntitySet Name="GF_TRANSACTIONS" EntityType="DimensionDataModel.GF_TRANSACTIONS" />
-          <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="DimensionDataModel.GF_PRICING_BASEVIEW" />
           <EntitySet Name="GF_PERF_TOPLEVELYEAR" EntityType="DimensionDataModel.GF_PERF_TOPLEVELYEAR" />
           <EntitySet Name="GF_SELECTION_BASEVIEW" EntityType="DimensionDataModel.GF_SELECTION_BASEVIEW" />
           <FunctionImport Name="RetrievePortfolioDetailsData" ReturnType="Collection(DimensionDataModel.HoldingsDetailsData)">
@@ -787,6 +807,7 @@
             <Parameter Name="isLookThru" Mode="In" Type="Int32" />
             <Parameter Name="includeBenchmark" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="DimensionDataModel.GF_PRICING_BASEVIEW" />
         </EntityContainer>
         <EntityType Name="GF_PORTFOLIO_SELECTION">
           <Key>
@@ -935,6 +956,9 @@
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LIQUIDITY" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LEVERAGE" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_PBETEWLD" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="COMPANY_FULL_MKT_CAP_USD" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="FOREIGN_INCLUSION_FACTOR" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="CLOSE_NUMBER_SHARES" Precision="32" Scale="6" />
         </EntityType>
         <EntityType Name="GF_PERF_DAILY_ATTRIBUTION">
           <Key>
@@ -1449,23 +1473,6 @@
           <Property Type="Decimal" Name="VALUE_QC" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="VALUE_SC" Precision="32" Scale="6" />
         </EntityType>
-        <EntityType Name="GF_PRICING_BASEVIEW">
-          <Key>
-            <PropertyRef Name="GF_ID" />
-          </Key>
-          <Property Type="Int64" Name="GF_ID" Nullable="false" />
-          <Property Type="String" Name="INSTRUMENT_ID" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="TYPE" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="TICKER" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ISSUE_NAME" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="FROMDATE" />
-          <Property Type="String" Name="PRICE_TYPE" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="DAILY_CLOSING_PRICE" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="DAILY_PRICE_RETURN" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="DAILY_GROSS_RETURN" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="VOLUME" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="DAILY_SPOT_FX" Precision="32" Scale="6" />
-        </EntityType>
         <EntityType Name="GF_PERF_TOPLEVELYEAR">
           <Key>
             <PropertyRef Name="GF_ID" />
@@ -1553,6 +1560,23 @@
           <Property Type="String" Name="IssuerName" Nullable="true" />
           <Property Type="Decimal" Name="FairValue" Nullable="true" />
         </ComplexType>
+        <EntityType Name="GF_PRICING_BASEVIEW">
+          <Key>
+            <PropertyRef Name="GF_ID" />
+          </Key>
+          <Property Type="Double" Name="GF_ID" Nullable="false" />
+          <Property Type="String" Name="INSTRUMENT_ID" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TYPE" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TICKER" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ISSUE_NAME" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="FROMDATE" />
+          <Property Type="String" Name="PRICE_TYPE" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="DAILY_CLOSING_PRICE" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="DAILY_PRICE_RETURN" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="DAILY_GROSS_RETURN" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="VOLUME" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="DAILY_SPOT_FX" Precision="32" Scale="6" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1668,6 +1692,9 @@
           <EntitySetMapping Name="GF_BENCHMARK_HOLDINGS">
             <EntityTypeMapping TypeName="DimensionDataModel.GF_BENCHMARK_HOLDINGS">
               <MappingFragment StoreEntitySet="GF_BENCHMARK_HOLDINGS">
+                <ScalarProperty Name="CLOSE_NUMBER_SHARES" ColumnName="CLOSE_NUMBER_SHARES" />
+                <ScalarProperty Name="FOREIGN_INCLUSION_FACTOR" ColumnName="FOREIGN_INCLUSION_FACTOR" />
+                <ScalarProperty Name="COMPANY_FULL_MKT_CAP_USD" ColumnName="COMPANY_FULL_MKT_CAP_USD" />
                 <ScalarProperty Name="BARRA_RISK_FACTOR_PBETEWLD" ColumnName="BARRA_RISK_FACTOR_PBETEWLD" />
                 <ScalarProperty Name="BARRA_RISK_FACTOR_LEVERAGE" ColumnName="BARRA_RISK_FACTOR_LEVERAGE" />
                 <ScalarProperty Name="BARRA_RISK_FACTOR_LIQUIDITY" ColumnName="BARRA_RISK_FACTOR_LIQUIDITY" />
@@ -2228,24 +2255,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="GF_PRICING_BASEVIEW">
-            <EntityTypeMapping TypeName="DimensionDataModel.GF_PRICING_BASEVIEW">
-              <MappingFragment StoreEntitySet="GF_PRICING_BASEVIEW">
-                <ScalarProperty Name="DAILY_SPOT_FX" ColumnName="DAILY_SPOT_FX" />
-                <ScalarProperty Name="VOLUME" ColumnName="VOLUME" />
-                <ScalarProperty Name="DAILY_GROSS_RETURN" ColumnName="DAILY_GROSS_RETURN" />
-                <ScalarProperty Name="DAILY_PRICE_RETURN" ColumnName="DAILY_PRICE_RETURN" />
-                <ScalarProperty Name="DAILY_CLOSING_PRICE" ColumnName="DAILY_CLOSING_PRICE" />
-                <ScalarProperty Name="PRICE_TYPE" ColumnName="PRICE_TYPE" />
-                <ScalarProperty Name="FROMDATE" ColumnName="FROMDATE" />
-                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
-                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
-                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
-                <ScalarProperty Name="INSTRUMENT_ID" ColumnName="INSTRUMENT_ID" />
-                <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="GF_PERF_TOPLEVELYEAR">
             <EntityTypeMapping TypeName="DimensionDataModel.GF_PERF_TOPLEVELYEAR">
               <MappingFragment StoreEntitySet="GF_PERF_TOPLEVELYEAR">
@@ -2344,6 +2353,24 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="GF_PRICING_BASEVIEW">
+            <EntityTypeMapping TypeName="DimensionDataModel.GF_PRICING_BASEVIEW">
+              <MappingFragment StoreEntitySet="GF_PRICING_BASEVIEW">
+                <ScalarProperty Name="DAILY_SPOT_FX" ColumnName="DAILY_SPOT_FX" />
+                <ScalarProperty Name="VOLUME" ColumnName="VOLUME" />
+                <ScalarProperty Name="DAILY_GROSS_RETURN" ColumnName="DAILY_GROSS_RETURN" />
+                <ScalarProperty Name="DAILY_PRICE_RETURN" ColumnName="DAILY_PRICE_RETURN" />
+                <ScalarProperty Name="DAILY_CLOSING_PRICE" ColumnName="DAILY_CLOSING_PRICE" />
+                <ScalarProperty Name="PRICE_TYPE" ColumnName="PRICE_TYPE" />
+                <ScalarProperty Name="FROMDATE" ColumnName="FROMDATE" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="INSTRUMENT_ID" ColumnName="INSTRUMENT_ID" />
+                <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2373,9 +2400,9 @@
         <EntityTypeShape EntityType="DimensionDataModel.GF_PERF_TOPLEVELSTATS" Width="1.5" PointX="10.375" PointY="0.75" Height="5.05710937500001" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_SECURITY_BASEVIEW" Width="1.5" PointX="3.375" PointY="10.75" Height="13.71067382812501" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_TRANSACTIONS" Width="1.5" PointX="5.375" PointY="10.75" Height="5.8263151041666674" />
-        <EntityTypeShape EntityType="DimensionDataModel.GF_PRICING_BASEVIEW" Width="2" PointX="10.125" PointY="6.75" Height="3.3263964843750102" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_PERF_TOPLEVELYEAR" Width="2.5" PointX="10.375" PointY="11.75" Height="5.2494108072916674" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_SELECTION_BASEVIEW" Width="1.5" PointX="12.375" PointY="0.75" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="DimensionDataModel.GF_PRICING_BASEVIEW" Width="3.125" PointX="10.375" PointY="6.75" Height="3.3263964843750031" />
       </Diagram>
     </Diagrams>
   </Designer>

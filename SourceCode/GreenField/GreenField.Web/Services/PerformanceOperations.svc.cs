@@ -158,7 +158,7 @@ namespace GreenField.Web.Services
                 #endregion
 
                 GreenField.DAL.GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData = (entity.GF_PERF_DAILY_ATTRIBUTION.
-                    Where(a => a.BMNAME == benchmarkName.First() && a.TO_DATE == objEffectiveDate.Date).FirstOrDefault());
+                    Where(a => a.BMNAME == benchmarkName.FirstOrDefault() && a.TO_DATE == objEffectiveDate.Date).FirstOrDefault());
 
                 if (dimensionDailyPerfData != null || dimensionBenchmarkReturnData != null)
                 {
@@ -504,7 +504,7 @@ namespace GreenField.Web.Services
                     List<GreenField.DAL.GF_TRANSACTIONS> dimensionTransactionData = entity.GF_TRANSACTIONS.
                         Where(a => ((a.TRANSACTION_CODE.ToUpper().Trim() == "BUY") || (a.TRANSACTION_CODE.ToUpper().Trim() == "SELL"))
                             && (a.PORTFOLIO_ID.ToUpper().Trim() == portfolioId.ToUpper().Trim())
-                            && (a.SEC_NAME.ToUpper().Trim() == securityLongName.ToUpper().Trim()) && (a.TRADE_DATE >= Convert.ToDateTime(objStartDate.Date))).ToList();
+                            && (a.SEC_NAME.ToUpper().Trim() == securityLongName.ToUpper().Trim()) && (a.TRADE_DATE >= objStartDate.Date)).ToList();
                     result = ChartExtensionCalculations.CalculateTransactionValues(dimensionTransactionData, result);
                 }
 
