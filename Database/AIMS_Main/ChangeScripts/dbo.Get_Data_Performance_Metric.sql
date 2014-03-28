@@ -25,7 +25,7 @@ if @COMMAND = 'SUMMARY'
 			 where (@RUN_ID is NULL or RUN_ID = @RUN_ID)
 			 order by RUN_ID;
 		END
-declare @ThreadCount int = 20;
+declare @ThreadCount int = 10;
 	if @COMMAND = 'REPORT'
 		BEGIN
 			-- Provide a detailed report about the run(s).  If RUN_ID is NULL show all
