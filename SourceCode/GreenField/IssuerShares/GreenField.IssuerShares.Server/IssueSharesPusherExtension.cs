@@ -18,6 +18,7 @@ namespace GreenField.IssuerShares.Server
             int recCount = 0;
             using (var connection = this.CreateConnection())
             {
+                connection.Open();
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandType = System.Data.CommandType.Text;
@@ -57,17 +58,17 @@ namespace GreenField.IssuerShares.Server
                     var param5 = command.CreateParameter();
                     if (recCount != 0)
                     {
-                        param4.Value = "Y";
+                        param5.Value = "Y";
                     }
                     else
                     {
-                        param4.Value = "N";
+                        param5.Value = "N";
                     }
-                    param4.ParameterName = "STAGE";
-                    command.Parameters.Add(param4);
+                    param5.ParameterName = "STAGE";
+                    command.Parameters.Add(param5);
 
 
-                    connection.Open();
+                   // connection.Open();
                     var result = command.ExecuteNonQuery();
                 }
             }
