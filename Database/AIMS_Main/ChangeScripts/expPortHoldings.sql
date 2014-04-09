@@ -1,13 +1,22 @@
-USE [AIMS_Main]
+
+
+/****** Object:  StoredProcedure [dbo].[expPortHoldings]    Script Date: 04/09/2014 14:27:40 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[expPortHoldings]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[expPortHoldings]
 GO
-/****** Object:  StoredProcedure [dbo].[expPortHoldings]    Script Date: 03/21/2014 16:16:45 ******/
+
+
+/****** Object:  StoredProcedure [dbo].[expPortHoldings]    Script Date: 04/09/2014 14:27:40 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER OFF
 GO
 
-Alter procedure [dbo].[expPortHoldings]
+
+CREATE procedure [dbo].[expPortHoldings]
 as
+
 
 declare @totDirtyValue decimal(22,8) 
 declare @tmpDate varchar(22)
