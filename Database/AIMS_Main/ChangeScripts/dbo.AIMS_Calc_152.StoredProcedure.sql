@@ -7,30 +7,89 @@ GO
 alter procedure [dbo].[AIMS_Calc_152](
 	@ISSUER_ID			varchar(20) = NULL			-- The company identifier		
 ,	@CALC_LOG			char		= 'Y'			-- write calculation errors to the log table
+,	@STAGE				char		= 'N'
 )
 as
 
 	-- Get the data
-	select pf.* 
+	  select pf.* 
 	  into #A
-	  from dbo.PERIOD_FINANCIALS_ISSUER pf with (nolock) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
-	 where DATA_ID = 104					-- QTLE 
-	   and pf.ISSUER_ID = @ISSUER_ID
-	   and pf.PERIOD_TYPE= 'A'
-
-	select pf.* 
+	  from dbo.PERIOD_FINANCIALS_ISSUER_STAGE pf with (nolock)
+	  WHERE 1=0
+	  
+	  select pf.* 
 	  into #B
-	  from dbo.PERIOD_FINANCIALS_ISSUER pf with (nolock) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
-	 where DATA_ID = 94					 -- LTLL
-	   and pf.ISSUER_ID = @ISSUER_ID
-	   and pf.PERIOD_TYPE= 'A'
-
+	  from dbo.PERIOD_FINANCIALS_ISSUER_STAGE pf with (nolock)
+	  WHERE 1=0
+	
+	IF @STAGE = 'Y'
+	BEGIN
+		INSERT into #A
+		select pf.* 
+		from dbo.PERIOD_FINANCIALS_ISSUER_STAGE pf with (nolock) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
+		where DATA_ID = 104					-- QTLE 
+		and pf.ISSUER_ID = @ISSUER_ID
+		and pf.PERIOD_TYPE= 'A'
+		
+		INSERT into #B
+		select pf.* 
+		
+		from dbo.PERIOD_FINANCIALS_ISSUER_STAGE pf with (nolock) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
+		where DATA_ID = 94					 -- LTLL
+		and pf.ISSUER_ID = @ISSUER_ID
+		and pf.PERIOD_TYPE= 'A'
+	END
+	ELSE
+	BEGIN
+	
+		INSERT into #A
+		select pf.* 
+		from dbo.PERIOD_FINANCIALS_ISSUER_MAIN pf with (nolock) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
+		where DATA_ID = 104					-- QTLE 
+		and pf.ISSUER_ID = @ISSUER_ID
+		and pf.PERIOD_TYPE= 'A'
+		
+		INSERT into #B
+		select pf.* 
+		from dbo.PERIOD_FINANCIALS_ISSUER_MAIN pf with (nolock) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
+		where DATA_ID = 94					 -- LTLL
+		and pf.ISSUER_ID = @ISSUER_ID
+		and pf.PERIOD_TYPE= 'A'
+	
+	END
 	-- Add the data to the table
 	BEGIN TRAN T1
-	insert into PERIOD_FINANCIALS_ISSUER(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
+	IF @STAGE = 'Y'
+	BEGIN
+		insert into PERIOD_FINANCIALS_ISSUER_STAGE(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
 		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
 		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
-	select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE
+		select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE
+		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
+		,  a.FISCAL_TYPE, a.CURRENCY
+		,  152 as DATA_ID										-- DATA_ID:152 Equity/Total Liabilities
+		, CASE WHEN a.AMOUNT >= 0 and b.AMOUNT > 0  THEN a.AMOUNT / b.AMOUNT
+				ELSE NULL 
+				END as AMOUNT						-- QTLE/ LTLL
+		,  'QTLE(' + CAST(a.AMOUNT as varchar(32)) + ') / LTLL(' + CAST(b.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
+		,  a.SOURCE_CURRENCY
+		,  a.AMOUNT_TYPE
+		from #A a
+		inner join	#B b on b.ISSUER_ID = a.ISSUER_ID --and b.AMOUNT_TYPE = a.AMOUNT_TYPE
+					and b.DATA_SOURCE = a.DATA_SOURCE and b.PERIOD_TYPE = a.PERIOD_TYPE
+					and b.PERIOD_YEAR = a.PERIOD_YEAR and b.FISCAL_TYPE = a.FISCAL_TYPE
+					and b.CURRENCY = a.CURRENCY
+		where 1=1 
+		and a.PERIOD_TYPE= 'A'
+		and isnull(a.AMOUNT,0.0) >= 0.0 and isnull(b.AMOUNT, 0.0) <> 0.0	-- Data validation
+	END
+	ELSE
+	BEGIN
+
+		insert into PERIOD_FINANCIALS_ISSUER_MAIN(ISSUER_ID, SECURITY_ID, COA_TYPE, DATA_SOURCE, ROOT_SOURCE
+		  , ROOT_SOURCE_DATE, PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE, FISCAL_TYPE, CURRENCY
+		  , DATA_ID, AMOUNT, CALCULATION_DIAGRAM, SOURCE_CURRENCY, AMOUNT_TYPE) -- Splitting into 2 tables Change to insert the data into period_Financials_issuer
+		select a.ISSUER_ID, a.SECURITY_ID, a.COA_TYPE, a.DATA_SOURCE, a.ROOT_SOURCE
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  152 as DATA_ID										-- DATA_ID:152 Equity/Total Liabilities
@@ -49,6 +108,7 @@ as
 	   and a.PERIOD_TYPE= 'A'
 	  and isnull(a.AMOUNT,0.0) >= 0.0 and isnull(b.AMOUNT, 0.0) <> 0.0	-- Data validation
 --	 order by a.ISSUER_ID, a.COA_TYPE, a.DATA_SOURCE, a.PERIOD_TYPE, a.PERIOD_YEAR,  a.FISCAL_TYPE, a.CURRENCY
+	END
 	COMMIT TRAN T1
 	
 	if @CALC_LOG = 'Y'
