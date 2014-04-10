@@ -25,8 +25,6 @@ namespace GreenField.IssuerShares.Server
                     command.CommandTimeout = 1200;
                     command.CommandText = "Select count(*) from period_financials_issuer_stage where issuer_id = '"+issuerId+"'";
                     recCount = int.Parse(command.ExecuteScalar().ToString());
-
-                  
                 }
 
 
@@ -71,6 +69,7 @@ namespace GreenField.IssuerShares.Server
                    // connection.Open();
                     var result = command.ExecuteNonQuery();
                 }
+                connection.Close();
             }
         }
     }
