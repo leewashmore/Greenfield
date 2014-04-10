@@ -92,7 +92,7 @@ begin
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  269 as DATA_ID										-- DATA_ID:269 Non-Performing Loan Growth 
 		,  CASE WHEN a.AMOUNT > 0 and b.AMOUNT > 0 THEN (a.AMOUNT /b.AMOUNT)-1 
-				ELSE NULL 
+				ELSE 0 
 				END as AMOUNT						--  (VRUQ for Year/ VRUQ for Prior Year)-1
 		,  '(VRUQ for ('+ CAST(a.PERIOD_YEAR as varchar(32)) + '(' + CAST(a.AMOUNT as varchar(32)) + ') / VRUQ for ('+ CAST(b.PERIOD_YEAR as varchar(32)) +')(' + CAST(b.AMOUNT as varchar(32)) + ')) - 1 ' as CALCULATION_DIAGRAM
 		,  a.SOURCE_CURRENCY

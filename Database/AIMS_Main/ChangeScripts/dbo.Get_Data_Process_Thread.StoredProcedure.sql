@@ -43,11 +43,16 @@ as
 
 				if @RUN_MODE = 'F'
 					begin
-						truncate table period_financials_ISSUER
-						truncate table period_financials_SECURITY
+						truncate table period_financials_ISSUER_MAIN
+						truncate table period_financials_ISSUER_STAGE
+						truncate table period_financials_SECURITY_MAIN
+						truncate table period_financials_SECURITY_STAGE
 						--select 'test'
 					end
-
+				if @RUN_MODE = 'I'  -- In incremental mode when called from JAMS copy the data from staging to main table and truncate the stage table.
+				BEGIN
+					exec Copy_PF_STAGE_TO_MAIN
+				END
 				--if @RUN_MODE = 'I'
 				--	begin
 				--		DBCC INDEXDEFRAG (0, PERIOD_FINANCIALS, PERIOD_FINANCIALS_idx2 ,0 )
@@ -100,7 +105,6 @@ as
 					
 					--select distinct @RUN_ID_OUT, issuer_id, GETDATE(), null, 'Ready', 0 
 					--from TEST_issuer_list;
-					
 					
 
 					
