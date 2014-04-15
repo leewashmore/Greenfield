@@ -1,3 +1,5 @@
+DROP TABLE DBO.PERIOD_FINANCIALS
+
 /****** Object:  View [dbo].[PERIOD_FINANCIALS]    Script Date: 03/17/2014 11:53:03 ******/
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[PERIOD_FINANCIALS]'))
 DROP VIEW [dbo].[PERIOD_FINANCIALS]
