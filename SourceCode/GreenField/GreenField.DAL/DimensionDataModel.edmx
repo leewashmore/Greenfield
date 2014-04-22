@@ -24,12 +24,12 @@
       [GF_PRICING_BASEVIEW].[TICKER] AS [TICKER], 
       [GF_PRICING_BASEVIEW].[ISSUE_NAME] AS [ISSUE_NAME], 
       [GF_PRICING_BASEVIEW].[FROMDATE] AS [FROMDATE], 
-      [GF_PRICING_BASEVIEW].[PRICE_TYPE] AS [PRICE_TYPE], 
       [GF_PRICING_BASEVIEW].[DAILY_CLOSING_PRICE] AS [DAILY_CLOSING_PRICE], 
       [GF_PRICING_BASEVIEW].[DAILY_PRICE_RETURN] AS [DAILY_PRICE_RETURN], 
       [GF_PRICING_BASEVIEW].[DAILY_GROSS_RETURN] AS [DAILY_GROSS_RETURN], 
       [GF_PRICING_BASEVIEW].[VOLUME] AS [VOLUME], 
-      [GF_PRICING_BASEVIEW].[DAILY_SPOT_FX] AS [DAILY_SPOT_FX]
+      [GF_PRICING_BASEVIEW].[DAILY_SPOT_FX] AS [DAILY_SPOT_FX], 
+      [GF_PRICING_BASEVIEW].[PRICE_TYPE] AS [PRICE_TYPE]
       FROM [dbo].[GF_PRICING_BASEVIEW] AS [GF_PRICING_BASEVIEW]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -77,9 +77,6 @@
           <Property Name="BARRA_RISK_FACTOR_LIQUIDITY" Type="decimal" Precision="32" Scale="6" />
           <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="decimal" Precision="32" Scale="6" />
           <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="COMPANY_FULL_MKT_CAP_USD" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="FOREIGN_INCLUSION_FACTOR" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="CLOSE_NUMBER_SHARES" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <EntityType Name="GF_PERF_DAILY_ATTRIBUTION">
           <Key>
@@ -749,12 +746,12 @@
           <Property Name="TICKER" Type="varchar" MaxLength="30" />
           <Property Name="ISSUE_NAME" Type="varchar" MaxLength="50" />
           <Property Name="FROMDATE" Type="datetime" />
-          <Property Name="PRICE_TYPE" Type="varchar" MaxLength="50" />
           <Property Name="DAILY_CLOSING_PRICE" Type="decimal" Precision="32" Scale="6" />
           <Property Name="DAILY_PRICE_RETURN" Type="decimal" Precision="32" Scale="6" />
           <Property Name="DAILY_GROSS_RETURN" Type="decimal" Precision="32" Scale="6" />
           <Property Name="VOLUME" Type="decimal" Precision="32" Scale="6" />
           <Property Name="DAILY_SPOT_FX" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="PRICE_TYPE" Type="varchar" MaxLength="50" />
         </EntityType>
         <Function Name="RetrieveCompositeDetailsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="portfolio_id" Type="varchar" Mode="In" />
@@ -782,7 +779,6 @@
           <EntitySet Name="GF_PORTFOLIO_SELECTION" EntityType="DimensionDataModel.GF_PORTFOLIO_SELECTION" />
           <EntitySet Name="GF_PORTFOLIO_HOLDINGS" EntityType="DimensionDataModel.GF_PORTFOLIO_HOLDINGS" />
           <EntitySet Name="GF_PORTFOLIO_LTHOLDINGS" EntityType="DimensionDataModel.GF_PORTFOLIO_LTHOLDINGS" />
-          <EntitySet Name="GF_BENCHMARK_HOLDINGS" EntityType="DimensionDataModel.GF_BENCHMARK_HOLDINGS" />
           <EntitySet Name="GF_PERF_DAILY_ATTRIBUTION" EntityType="DimensionDataModel.GF_PERF_DAILY_ATTRIBUTION" />
           <EntitySet Name="GF_PERF_TOPLEVELSTATS" EntityType="DimensionDataModel.GF_PERF_TOPLEVELSTATS" />
           <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="DimensionDataModel.GF_SECURITY_BASEVIEW" />
@@ -808,6 +804,7 @@
             <Parameter Name="includeBenchmark" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="DimensionDataModel.GF_PRICING_BASEVIEW" />
+          <EntitySet Name="GF_BENCHMARK_HOLDINGS" EntityType="DimensionDataModel.GF_BENCHMARK_HOLDINGS" />
         </EntityContainer>
         <EntityType Name="GF_PORTFOLIO_SELECTION">
           <Key>
@@ -911,54 +908,6 @@
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LIQUIDITY" Precision="22" Scale="8" />
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LEVERAGE" Precision="22" Scale="8" />
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_PBETEWLD" Precision="22" Scale="8" />
-        </EntityType>
-        <EntityType Name="GF_BENCHMARK_HOLDINGS">
-          <Key>
-            <PropertyRef Name="GF_ID" />
-          </Key>
-          <Property Type="Int32" Name="GF_ID" Nullable="false" />
-          <Property Type="DateTime" Name="PORTFOLIO_DATE" />
-          <Property Type="String" Name="PORTFOLIO_ID" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PORTFOLIO_THEME_SUBGROUP_CODE" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PORTFOLIO_CURRENCY" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="BENCHMARK_ID" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ISSUER_ID" MaxLength="16" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="16" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ISSUE_NAME" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="TICKER" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="SECURITYTHEMECODE" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="A_SEC_INSTR_TYPE" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="SECURITY_TYPE" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="BALANCE_NOMINAL" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="DIRTY_PRICE" Precision="32" Scale="6" />
-          <Property Type="String" Name="TRADING_CURRENCY" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="DIRTY_VALUE_PC" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="BENCHMARK_WEIGHT" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="ASH_EMM_MODEL_WEIGHT" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="MARKET_CAP_IN_USD" Precision="32" Scale="6" />
-          <Property Type="String" Name="ASHEMM_PROP_REGION_CODE" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ASHEMM_PROP_REGION_NAME" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ISO_COUNTRY_CODE" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="COUNTRYNAME" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="GICS_SECTOR" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="GICS_SECTOR_NAME" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="GICS_INDUSTRY" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="GICS_INDUSTRY_NAME" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="GICS_SUB_INDUSTRY" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="LOOK_THRU_FUND" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_MOMENTUM" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_VOLATILITY" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_VALUE" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_SIZE" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_SIZE_NONLIN" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_GROWTH" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LIQUIDITY" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LEVERAGE" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_PBETEWLD" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="COMPANY_FULL_MKT_CAP_USD" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="FOREIGN_INCLUSION_FACTOR" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="CLOSE_NUMBER_SHARES" Precision="32" Scale="6" />
         </EntityType>
         <EntityType Name="GF_PERF_DAILY_ATTRIBUTION">
           <Key>
@@ -1577,6 +1526,51 @@
           <Property Type="Decimal" Name="VOLUME" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="DAILY_SPOT_FX" Precision="32" Scale="6" />
         </EntityType>
+        <EntityType Name="GF_BENCHMARK_HOLDINGS">
+          <Key>
+            <PropertyRef Name="GF_ID" />
+          </Key>
+          <Property Type="Int32" Name="GF_ID" Nullable="false" />
+          <Property Type="DateTime" Name="PORTFOLIO_DATE" />
+          <Property Type="String" Name="PORTFOLIO_ID" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PORTFOLIO_THEME_SUBGROUP_CODE" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PORTFOLIO_CURRENCY" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BENCHMARK_ID" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISSUER_ID" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISSUE_NAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TICKER" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SECURITYTHEMECODE" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="A_SEC_INSTR_TYPE" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SECURITY_TYPE" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="BALANCE_NOMINAL" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="DIRTY_PRICE" Precision="32" Scale="6" />
+          <Property Type="String" Name="TRADING_CURRENCY" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="DIRTY_VALUE_PC" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="BENCHMARK_WEIGHT" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="ASH_EMM_MODEL_WEIGHT" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="MARKET_CAP_IN_USD" Precision="32" Scale="6" />
+          <Property Type="String" Name="ASHEMM_PROP_REGION_CODE" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHEMM_PROP_REGION_NAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISO_COUNTRY_CODE" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="COUNTRYNAME" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SECTOR" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SECTOR_NAME" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_INDUSTRY" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_INDUSTRY_NAME" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LOOK_THRU_FUND" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_MOMENTUM" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_VOLATILITY" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_VALUE" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_SIZE" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_SIZE_NONLIN" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_GROWTH" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LIQUIDITY" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LEVERAGE" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="BARRA_RISK_FACTOR_PBETEWLD" Precision="32" Scale="6" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1685,55 +1679,6 @@
                 <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
                 <ScalarProperty Name="PORTFOLIO_DATE" ColumnName="PORTFOLIO_DATE" />
                 <ScalarProperty Name="PFCH_POR_CALC_SHORT" ColumnName="PFCH_POR_CALC_SHORT" />
-                <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GF_BENCHMARK_HOLDINGS">
-            <EntityTypeMapping TypeName="DimensionDataModel.GF_BENCHMARK_HOLDINGS">
-              <MappingFragment StoreEntitySet="GF_BENCHMARK_HOLDINGS">
-                <ScalarProperty Name="CLOSE_NUMBER_SHARES" ColumnName="CLOSE_NUMBER_SHARES" />
-                <ScalarProperty Name="FOREIGN_INCLUSION_FACTOR" ColumnName="FOREIGN_INCLUSION_FACTOR" />
-                <ScalarProperty Name="COMPANY_FULL_MKT_CAP_USD" ColumnName="COMPANY_FULL_MKT_CAP_USD" />
-                <ScalarProperty Name="BARRA_RISK_FACTOR_PBETEWLD" ColumnName="BARRA_RISK_FACTOR_PBETEWLD" />
-                <ScalarProperty Name="BARRA_RISK_FACTOR_LEVERAGE" ColumnName="BARRA_RISK_FACTOR_LEVERAGE" />
-                <ScalarProperty Name="BARRA_RISK_FACTOR_LIQUIDITY" ColumnName="BARRA_RISK_FACTOR_LIQUIDITY" />
-                <ScalarProperty Name="BARRA_RISK_FACTOR_GROWTH" ColumnName="BARRA_RISK_FACTOR_GROWTH" />
-                <ScalarProperty Name="BARRA_RISK_FACTOR_SIZE_NONLIN" ColumnName="BARRA_RISK_FACTOR_SIZE_NONLIN" />
-                <ScalarProperty Name="BARRA_RISK_FACTOR_SIZE" ColumnName="BARRA_RISK_FACTOR_SIZE" />
-                <ScalarProperty Name="BARRA_RISK_FACTOR_VALUE" ColumnName="BARRA_RISK_FACTOR_VALUE" />
-                <ScalarProperty Name="BARRA_RISK_FACTOR_VOLATILITY" ColumnName="BARRA_RISK_FACTOR_VOLATILITY" />
-                <ScalarProperty Name="BARRA_RISK_FACTOR_MOMENTUM" ColumnName="BARRA_RISK_FACTOR_MOMENTUM" />
-                <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
-                <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
-                <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
-                <ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
-                <ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
-                <ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
-                <ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
-                <ScalarProperty Name="COUNTRYNAME" ColumnName="COUNTRYNAME" />
-                <ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
-                <ScalarProperty Name="ASHEMM_PROP_REGION_NAME" ColumnName="ASHEMM_PROP_REGION_NAME" />
-                <ScalarProperty Name="ASHEMM_PROP_REGION_CODE" ColumnName="ASHEMM_PROP_REGION_CODE" />
-                <ScalarProperty Name="MARKET_CAP_IN_USD" ColumnName="MARKET_CAP_IN_USD" />
-                <ScalarProperty Name="ASH_EMM_MODEL_WEIGHT" ColumnName="ASH_EMM_MODEL_WEIGHT" />
-                <ScalarProperty Name="BENCHMARK_WEIGHT" ColumnName="BENCHMARK_WEIGHT" />
-                <ScalarProperty Name="DIRTY_VALUE_PC" ColumnName="DIRTY_VALUE_PC" />
-                <ScalarProperty Name="TRADING_CURRENCY" ColumnName="TRADING_CURRENCY" />
-                <ScalarProperty Name="DIRTY_PRICE" ColumnName="DIRTY_PRICE" />
-                <ScalarProperty Name="BALANCE_NOMINAL" ColumnName="BALANCE_NOMINAL" />
-                <ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
-                <ScalarProperty Name="A_SEC_INSTR_TYPE" ColumnName="A_SEC_INSTR_TYPE" />
-                <ScalarProperty Name="SECURITYTHEMECODE" ColumnName="SECURITYTHEMECODE" />
-                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
-                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
-                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
-                <ScalarProperty Name="PORTFOLIO_CURRENCY" ColumnName="PORTFOLIO_CURRENCY" />
-                <ScalarProperty Name="PORTFOLIO_THEME_SUBGROUP_CODE" ColumnName="PORTFOLIO_THEME_SUBGROUP_CODE" />
-                <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
-                <ScalarProperty Name="PORTFOLIO_DATE" ColumnName="PORTFOLIO_DATE" />
                 <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2371,6 +2316,52 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="GF_BENCHMARK_HOLDINGS">
+            <EntityTypeMapping TypeName="DimensionDataModel.GF_BENCHMARK_HOLDINGS">
+              <MappingFragment StoreEntitySet="GF_BENCHMARK_HOLDINGS">
+                <ScalarProperty Name="BARRA_RISK_FACTOR_PBETEWLD" ColumnName="BARRA_RISK_FACTOR_PBETEWLD" />
+                <ScalarProperty Name="BARRA_RISK_FACTOR_LEVERAGE" ColumnName="BARRA_RISK_FACTOR_LEVERAGE" />
+                <ScalarProperty Name="BARRA_RISK_FACTOR_LIQUIDITY" ColumnName="BARRA_RISK_FACTOR_LIQUIDITY" />
+                <ScalarProperty Name="BARRA_RISK_FACTOR_GROWTH" ColumnName="BARRA_RISK_FACTOR_GROWTH" />
+                <ScalarProperty Name="BARRA_RISK_FACTOR_SIZE_NONLIN" ColumnName="BARRA_RISK_FACTOR_SIZE_NONLIN" />
+                <ScalarProperty Name="BARRA_RISK_FACTOR_SIZE" ColumnName="BARRA_RISK_FACTOR_SIZE" />
+                <ScalarProperty Name="BARRA_RISK_FACTOR_VALUE" ColumnName="BARRA_RISK_FACTOR_VALUE" />
+                <ScalarProperty Name="BARRA_RISK_FACTOR_VOLATILITY" ColumnName="BARRA_RISK_FACTOR_VOLATILITY" />
+                <ScalarProperty Name="BARRA_RISK_FACTOR_MOMENTUM" ColumnName="BARRA_RISK_FACTOR_MOMENTUM" />
+                <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
+                <ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
+                <ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
+                <ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
+                <ScalarProperty Name="COUNTRYNAME" ColumnName="COUNTRYNAME" />
+                <ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
+                <ScalarProperty Name="ASHEMM_PROP_REGION_NAME" ColumnName="ASHEMM_PROP_REGION_NAME" />
+                <ScalarProperty Name="ASHEMM_PROP_REGION_CODE" ColumnName="ASHEMM_PROP_REGION_CODE" />
+                <ScalarProperty Name="MARKET_CAP_IN_USD" ColumnName="MARKET_CAP_IN_USD" />
+                <ScalarProperty Name="ASH_EMM_MODEL_WEIGHT" ColumnName="ASH_EMM_MODEL_WEIGHT" />
+                <ScalarProperty Name="BENCHMARK_WEIGHT" ColumnName="BENCHMARK_WEIGHT" />
+                <ScalarProperty Name="DIRTY_VALUE_PC" ColumnName="DIRTY_VALUE_PC" />
+                <ScalarProperty Name="TRADING_CURRENCY" ColumnName="TRADING_CURRENCY" />
+                <ScalarProperty Name="DIRTY_PRICE" ColumnName="DIRTY_PRICE" />
+                <ScalarProperty Name="BALANCE_NOMINAL" ColumnName="BALANCE_NOMINAL" />
+                <ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
+                <ScalarProperty Name="A_SEC_INSTR_TYPE" ColumnName="A_SEC_INSTR_TYPE" />
+                <ScalarProperty Name="SECURITYTHEMECODE" ColumnName="SECURITYTHEMECODE" />
+                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+                <ScalarProperty Name="PORTFOLIO_CURRENCY" ColumnName="PORTFOLIO_CURRENCY" />
+                <ScalarProperty Name="PORTFOLIO_THEME_SUBGROUP_CODE" ColumnName="PORTFOLIO_THEME_SUBGROUP_CODE" />
+                <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
+                <ScalarProperty Name="PORTFOLIO_DATE" ColumnName="PORTFOLIO_DATE" />
+                <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2393,9 +2384,8 @@
     <Diagrams>
       <Diagram Name="DimensionDataModel" >
         <EntityTypeShape EntityType="DimensionDataModel.GF_PORTFOLIO_SELECTION" Width="2.625" PointX="0.75" PointY="0.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="DimensionDataModel.GF_PORTFOLIO_HOLDINGS" Width="1.5" PointX="3.75" PointY="0.75" Height="8.9031380208333246" />
+        <EntityTypeShape EntityType="DimensionDataModel.GF_PORTFOLIO_HOLDINGS" Width="1.5" PointX="3.75" PointY="0.75" Height="0.4" IsExpanded="false" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_PORTFOLIO_LTHOLDINGS" Width="1.5" PointX="0.75" PointY="3.75" Height="9.2877408854166674" />
-        <EntityTypeShape EntityType="DimensionDataModel.GF_BENCHMARK_HOLDINGS" Width="1.5" PointX="6.375" PointY="0.75" Height="8.7108365885416674" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_PERF_DAILY_ATTRIBUTION" Width="1.5" PointX="8.375" PointY="0.75" Height="74.28562500000001" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_PERF_TOPLEVELSTATS" Width="1.5" PointX="10.375" PointY="0.75" Height="5.05710937500001" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_SECURITY_BASEVIEW" Width="1.5" PointX="3.375" PointY="10.75" Height="13.71067382812501" />
@@ -2403,6 +2393,7 @@
         <EntityTypeShape EntityType="DimensionDataModel.GF_PERF_TOPLEVELYEAR" Width="2.5" PointX="10.375" PointY="11.75" Height="5.2494108072916674" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_SELECTION_BASEVIEW" Width="1.5" PointX="12.375" PointY="0.75" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_PRICING_BASEVIEW" Width="3.125" PointX="10.375" PointY="6.75" Height="3.3263964843750031" />
+        <EntityTypeShape EntityType="DimensionDataModel.GF_BENCHMARK_HOLDINGS" Width="1.5" PointX="13.375" PointY="11.75" Height="8.7108365885416674" />
       </Diagram>
     </Diagrams>
   </Designer>

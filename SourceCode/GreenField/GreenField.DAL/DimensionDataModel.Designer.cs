@@ -116,22 +116,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<GF_BENCHMARK_HOLDINGS> GF_BENCHMARK_HOLDINGS
-        {
-            get
-            {
-                if ((_GF_BENCHMARK_HOLDINGS == null))
-                {
-                    _GF_BENCHMARK_HOLDINGS = base.CreateObjectSet<GF_BENCHMARK_HOLDINGS>("GF_BENCHMARK_HOLDINGS");
-                }
-                return _GF_BENCHMARK_HOLDINGS;
-            }
-        }
-        private ObjectSet<GF_BENCHMARK_HOLDINGS> _GF_BENCHMARK_HOLDINGS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<GF_PERF_DAILY_ATTRIBUTION> GF_PERF_DAILY_ATTRIBUTION
         {
             get
@@ -240,6 +224,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<GF_PRICING_BASEVIEW> _GF_PRICING_BASEVIEW;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<GF_BENCHMARK_HOLDINGS> GF_BENCHMARK_HOLDINGS
+        {
+            get
+            {
+                if ((_GF_BENCHMARK_HOLDINGS == null))
+                {
+                    _GF_BENCHMARK_HOLDINGS = base.CreateObjectSet<GF_BENCHMARK_HOLDINGS>("GF_BENCHMARK_HOLDINGS");
+                }
+                return _GF_BENCHMARK_HOLDINGS;
+            }
+        }
+        private ObjectSet<GF_BENCHMARK_HOLDINGS> _GF_BENCHMARK_HOLDINGS;
 
         #endregion
 
@@ -267,14 +267,6 @@ namespace GreenField.DAL
         public void AddToGF_PORTFOLIO_LTHOLDINGS(GF_PORTFOLIO_LTHOLDINGS gF_PORTFOLIO_LTHOLDINGS)
         {
             base.AddObject("GF_PORTFOLIO_LTHOLDINGS", gF_PORTFOLIO_LTHOLDINGS);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the GF_BENCHMARK_HOLDINGS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToGF_BENCHMARK_HOLDINGS(GF_BENCHMARK_HOLDINGS gF_BENCHMARK_HOLDINGS)
-        {
-            base.AddObject("GF_BENCHMARK_HOLDINGS", gF_BENCHMARK_HOLDINGS);
         }
     
         /// <summary>
@@ -331,6 +323,14 @@ namespace GreenField.DAL
         public void AddToGF_PRICING_BASEVIEW(GF_PRICING_BASEVIEW gF_PRICING_BASEVIEW)
         {
             base.AddObject("GF_PRICING_BASEVIEW", gF_PRICING_BASEVIEW);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the GF_BENCHMARK_HOLDINGS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToGF_BENCHMARK_HOLDINGS(GF_BENCHMARK_HOLDINGS gF_BENCHMARK_HOLDINGS)
+        {
+            base.AddObject("GF_BENCHMARK_HOLDINGS", gF_BENCHMARK_HOLDINGS);
         }
 
         #endregion
@@ -1502,78 +1502,6 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _BARRA_RISK_FACTOR_PBETEWLD;
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanging(Nullable<global::System.Decimal> value);
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> COMPANY_FULL_MKT_CAP_USD
-        {
-            get
-            {
-                return _COMPANY_FULL_MKT_CAP_USD;
-            }
-            set
-            {
-                OnCOMPANY_FULL_MKT_CAP_USDChanging(value);
-                ReportPropertyChanging("COMPANY_FULL_MKT_CAP_USD");
-                _COMPANY_FULL_MKT_CAP_USD = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("COMPANY_FULL_MKT_CAP_USD");
-                OnCOMPANY_FULL_MKT_CAP_USDChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _COMPANY_FULL_MKT_CAP_USD;
-        partial void OnCOMPANY_FULL_MKT_CAP_USDChanging(Nullable<global::System.Decimal> value);
-        partial void OnCOMPANY_FULL_MKT_CAP_USDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> FOREIGN_INCLUSION_FACTOR
-        {
-            get
-            {
-                return _FOREIGN_INCLUSION_FACTOR;
-            }
-            set
-            {
-                OnFOREIGN_INCLUSION_FACTORChanging(value);
-                ReportPropertyChanging("FOREIGN_INCLUSION_FACTOR");
-                _FOREIGN_INCLUSION_FACTOR = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("FOREIGN_INCLUSION_FACTOR");
-                OnFOREIGN_INCLUSION_FACTORChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _FOREIGN_INCLUSION_FACTOR;
-        partial void OnFOREIGN_INCLUSION_FACTORChanging(Nullable<global::System.Decimal> value);
-        partial void OnFOREIGN_INCLUSION_FACTORChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> CLOSE_NUMBER_SHARES
-        {
-            get
-            {
-                return _CLOSE_NUMBER_SHARES;
-            }
-            set
-            {
-                OnCLOSE_NUMBER_SHARESChanging(value);
-                ReportPropertyChanging("CLOSE_NUMBER_SHARES");
-                _CLOSE_NUMBER_SHARES = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CLOSE_NUMBER_SHARES");
-                OnCLOSE_NUMBER_SHARESChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _CLOSE_NUMBER_SHARES;
-        partial void OnCLOSE_NUMBER_SHARESChanging(Nullable<global::System.Decimal> value);
-        partial void OnCLOSE_NUMBER_SHARESChanged();
 
         #endregion
 
