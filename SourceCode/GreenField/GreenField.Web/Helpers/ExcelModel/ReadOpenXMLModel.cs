@@ -523,7 +523,7 @@ namespace GreenField.Web.Helpers
                 CreateTempFile(fileStream);
                 UserName = userName;
                 DistinctCurrency = GetDistinctCurrency();
-                ExternalResearchEntity.CommandTimeout = 0;
+                ExternalResearchEntity.CommandTimeout = 300;
                 using (SpreadsheetDocument myWorkbook = SpreadsheetDocument.Open(Filepath, true))
                 {
                     WorkbookPart workbookPart = myWorkbook.WorkbookPart;
@@ -2765,7 +2765,7 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                ExternalResearchEntity.CommandTimeout = 0;
+                ExternalResearchEntity.CommandTimeout = 300;
                 InvalidValue = "Issuer Id= " + issuerId;
                 ExternalResearchEntity.Get_Data(issuerId, calcLog, "N", "F","Y");
             }
