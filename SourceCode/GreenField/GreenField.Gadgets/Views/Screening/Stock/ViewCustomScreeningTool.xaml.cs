@@ -198,7 +198,15 @@ namespace GreenField.Gadgets.Views
                     var cells = row.Descendants("Element").Where(a => a.Attribute("name").Value == kvp.Key).ToList();
                     foreach (var cell in cells)
                     {
-                        rowData[kvp.Key] = cell.Value;
+                        try
+                        {
+                            if (cell.Value.Length != 0)
+                                rowData[kvp.Key] = Decimal.Parse(cell.Value.Replace("%", ""));
+                        }
+                        catch
+                        {
+                            rowData[kvp.Key] = cell.Value;
+                        }
                     }                 
                 }
                 _data.Add(rowData);
