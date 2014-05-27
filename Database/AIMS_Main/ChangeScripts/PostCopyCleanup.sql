@@ -33,10 +33,20 @@ as
 
 -------AIMS_PORTFOLIO-------
 --GF_BENCHMARK_HOLDINGS
+print 'truncating GF_BENCHMARK_HOLDINGS'
 Truncate TABLE GF_BENCHMARK_HOLDINGS;
-INSERT INTO GF_BENCHMARK_HOLDINGS SELECT * FROM GFq_BENCHMARK_HOLDINGS;
+print 'inserting from GFq_BENCHMARK_HOLDINGS'
+begin transaction
+	INSERT INTO GF_BENCHMARK_HOLDINGS 
+	SELECT * FROM GFq_BENCHMARK_HOLDINGS;
+commit
+begin transaction
+print 'deleting from GF_BENCHMARK_HOLDINGS for Carveouts'
 delete from GF_BENCHMARK_HOLDINGS where benchmark_id in
 	(select bhco.benchmark_id from GFq_BENCHMARK_HOLDING_CARVEOUT bhco group by bhco.benchmark_id);
+commit
+print 'inserting from GFq_BENCHMARK_HOLDINGS'
+begin transaction
 INSERT INTO GF_BENCHMARK_HOLDINGS
    (GF_ID
    ,PORTFOLIO_DATE
@@ -119,23 +129,46 @@ INSERT INTO GF_BENCHMARK_HOLDINGS
          ,BARRA_RISK_FACTOR_LEVERAGE
          ,BARRA_RISK_FACTOR_PBETEWLD
    FROM   GFq_BENCHMARK_HOLDING_CARVEOUT;
+commit
 
+print 'truncating GF_PORTFOLIO_HOLDINGS'
 --GF_PORTFOLIO_HOLDINGS
 Truncate table GF_PORTFOLIO_HOLDINGS;
-INSERT INTO GF_PORTFOLIO_HOLDINGS SELECT * FROM GFq_PORTFOLIO_HOLDINGS;
+print 'inserting GF_PORTFOLIO_HOLDINGS'
+begin transaction
+	INSERT INTO GF_PORTFOLIO_HOLDINGS 
+	SELECT * FROM GFq_PORTFOLIO_HOLDINGS;
 --  Deletes rows where daily date = monthly date 
-Delete from GF_PORTFOLIO_HOLDINGS where portfolio_date in (
-	SELECT max(portfolio_date) FROM GF_PORTFOLIO_HOLDINGS  where PFCH_POR_CALC_SHORT <>  'DAILY' )
-	and PFCH_POR_CALC_SHORT = 'DAILY';
+commit
+print 'deleting some and replace with DAILY in table GF_PORTFOLIO_HOLDINGS'
+begin transaction
+	Delete 
+	from GF_PORTFOLIO_HOLDINGS 
+	where portfolio_date in (
+		SELECT max(portfolio_date) 
+		FROM GF_PORTFOLIO_HOLDINGS  
+		where PFCH_POR_CALC_SHORT <>  'DAILY' )
+		and PFCH_POR_CALC_SHORT = 'DAILY';
+commit
+print 'truncating GF_PORTFOLIO_LTHOLDINGS'
 
 --GF_PORTFOLIO_LTHOLDINGS
 TRUNCATE TABLE GF_PORTFOLIO_LTHOLDINGS;
-INSERT INTO GF_PORTFOLIO_LTHOLDINGS SELECT * FROM GFQ_PORTFOLIO_LTHOLDINGS;
+print 'inserting into GF_PORTFOLIO_LTHOLDINGS'
+begin transaction
+	INSERT INTO GF_PORTFOLIO_LTHOLDINGS 
+	SELECT * FROM GFQ_PORTFOLIO_LTHOLDINGS;
 --  Deletes rows where daily date = monthly date 
-Delete from GF_PORTFOLIO_LTHOLDINGS where portfolio_date in (
-	SELECT max(portfolio_date) FROM GF_PORTFOLIO_LTHOLDINGS  where PFCH_POR_CALC_SHORT <> 'DAILY' )
+commit
+print 'deleting some and replace with DAILY in table  GF_PORTFOLIO_LTHOLDINGS'
+begin transaction
+	Delete from GF_PORTFOLIO_LTHOLDINGS 
+	where portfolio_date in (
+		SELECT max(portfolio_date) 
+		FROM GF_PORTFOLIO_LTHOLDINGS  
+		where PFCH_POR_CALC_SHORT <> 'DAILY' )
 	and PFCH_POR_CALC_SHORT = 'DAILY';
-
+commit
 
 	DBCC INDEXDEFRAG (0, GF_BENCHMARK_HOLDINGS, GF_BENCHMARK_HOLDINGS_idx ,0 )
 	DBCC INDEXDEFRAG (0, GF_BENCHMARK_HOLDINGS, GF_BENCHMARK_HOLDINGS_idx1 ,0 )
