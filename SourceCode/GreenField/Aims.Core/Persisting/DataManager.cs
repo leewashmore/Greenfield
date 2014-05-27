@@ -93,7 +93,7 @@ namespace Aims.Core.Persisting
                 return builder.Text("select")
                     .Field("  [SECURITY_ID]", (info, value) => info.Id = value, false)
                     .Field(", [TICKER]", (info, value) => info.Ticker = value, false)
-                    .Field(", [ASEC_SEC_SHORT_NAME]", (info, value) => info.ShortName = value, false)
+                    .Field(", (case when s.security_no is not null then s.security_no else g.asec_sec_short_name end )", (info, value) => info.ShortName = value, false)
                     .Field(", [ISSUE_NAME]", (info, value) => info.Name = value, false)
                     .Field(", [ISO_COUNTRY_CODE]", (info, value) => info.IsoCountryCode = value, false)
                     .Field(", [LOOK_THRU_FUND]", (info, value) => info.LookThruFund = value, false)
@@ -104,7 +104,7 @@ namespace Aims.Core.Persisting
                     .Field(", [ISIN]", (info, value) => info.Isin = value, false)
                     .Field(", [ISO_COUNTRY_CODE]", (info, value) => info.IsoCountryCode = value, false)
                     .Field(", [ASEC_SEC_COUNTRY_NAME]", (info, value) => info.AsecCountryName = value, false)
-                .Text(" from " + TableNames.GF_SECURITY_BASEVIEW)
+                .Text(" from " + TableNames.GF_SECURITY_BASEVIEW + " g left outer join security_id_translation s on s.asec_sec_short_name = g.asec_sec_short_name ")
                 .PullAll();
             }
         }

@@ -177,6 +177,30 @@ namespace AIMS_MarketCap
         private global::System.Decimal _amount;
         partial void OnamountChanging(global::System.Decimal value);
         partial void OnamountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String asec_instr_type
+        {
+            get
+            {
+                return _asec_instr_type;
+            }
+            set
+            {
+                Onasec_instr_typeChanging(value);
+                ReportPropertyChanging("asec_instr_type");
+                _asec_instr_type = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("asec_instr_type");
+                Onasec_instr_typeChanged();
+            }
+        }
+        private global::System.String _asec_instr_type;
+        partial void Onasec_instr_typeChanging(global::System.String value);
+        partial void Onasec_instr_typeChanged();
 
         #endregion
 

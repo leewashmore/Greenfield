@@ -697,7 +697,7 @@ namespace GreenField.Web.Helpers
                 }
                 CheckInternalIssuer();
                 SetInterimAmountsServiceCall(ModelReferenceData.IssuerId, RootSource);
-                GetDataServiceCall(ModelReferenceData.IssuerId, "Y");
+                GetDataServiceCall(ModelReferenceData.IssuerId, "N");
                 CheckInternalModelLoad();
                 CheckInternalCOAChanges();
             }
@@ -2765,8 +2765,9 @@ namespace GreenField.Web.Helpers
         {
             try
             {
+                ExternalResearchEntity.CommandTimeout = 300;
                 InvalidValue = "Issuer Id= " + issuerId;
-                ExternalResearchEntity.Get_Data(issuerId, calcLog, "Y", "F");
+                ExternalResearchEntity.Get_Data(issuerId, calcLog, "N", "F","Y");
             }
             catch (Exception ex)
             {

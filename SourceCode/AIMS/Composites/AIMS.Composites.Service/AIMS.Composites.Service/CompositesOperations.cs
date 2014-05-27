@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using AIMS.Composites.DAL;
-using AIMS.Composites.Service.DimensionWebService;
+//using AIMS.Composites.Service.DimensionWebService;
 
 namespace AIMS.Composites.Service
 {
@@ -17,20 +17,19 @@ namespace AIMS.Composites.Service
 
         //private const int InsertRecordsBatchSize = 1000;
         private readonly IDumper _dumper;
-        private Entities _dimensionEntity;
+        private AIMS_MainEntities _holdingsEntity;
 
         public CompositesOperations(IDumper dumper)
         {
             _dumper = dumper;
         }
 
-        public Entities DimensionEntity
+        public AIMS_MainEntities HoldingsEntity
         {
             get
             {
-                return _dimensionEntity ??
-                       (_dimensionEntity =
-                        new Entities(new Uri(ConfigurationSettings.AppSettings["DimensionWebService"])));
+                return _holdingsEntity ??
+                       (_holdingsEntity = new AIMS_MainEntities());
             }
         }
 
@@ -110,7 +109,7 @@ namespace AIMS.Composites.Service
                     _dumper.Write(
                         "For portfolios returned, retrieve all records from GF_PORTFOLIO_LTHOLDINGS: count= ");
                     List<GF_PORTFOLIO_LTHOLDINGS> gfPortfolioLtholdings =
-                        DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.ToList().Where(
+                        HoldingsEntity.GF_PORTFOLIO_LTHOLDINGS.ToList().Where(
                             record => CompositePortfoliosIds.Contains(record.PORTFOLIO_ID)).ToList();
                     _dumper.WriteLine(gfPortfolioLtholdings.Count().ToString(CultureInfo.InvariantCulture),
                                       stopwatch);

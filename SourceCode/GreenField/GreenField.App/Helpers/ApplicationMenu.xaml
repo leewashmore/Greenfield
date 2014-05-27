@@ -109,14 +109,14 @@
                 <telerik:RadMenu x:Name="radMenuCompany" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
 
-                    <telerik:RadMenuItem x:Name="rmItemCompanySnapshot" Header="Snapshot">
+                    <!--<telerik:RadMenuItem x:Name="rmItemCompanySnapshot" Header="Snapshot">
                         <telerik:RadMenuItem x:Name="rmItemCompanySummary" Header="Summary" Command="{Binding DashboardCompanySnapshotSummaryCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}" />
-                        <!--<telerik:RadMenuItem x:Name="rmItemCompanyProfile" Header="Company Profile"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                        <!--<telerik:RadMenuItem x:Name="rmItemTearSheet" Header="Tear Sheet"
-                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
-                    </telerik:RadMenuItem>
+                        <telerik:RadMenuItem x:Name="rmItemCompanyProfile" Header="Company Profile"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <telerik:RadMenuItem x:Name="rmItemTearSheet" Header="Tear Sheet"
+                                               Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                    </telerik:RadMenuItem> -->
 
                     <telerik:RadMenuItem x:Name="rmItemFinancials" Header="Financials">
                         <telerik:RadMenuItem Header="Summary" x:Name="rmItemFinancialsSummary"

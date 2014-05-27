@@ -15,8 +15,19 @@ namespace GreenField.IssuerShares.Server
 
         public void ExecuteGetDataProcedure(String issuerId)
         {
+            int recCount = 0;
             using (var connection = this.CreateConnection())
             {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandType = System.Data.CommandType.Text;
+                    command.CommandTimeout = 1200;
+                    command.CommandText = "Select count(*) from period_financials_issuer_stage where issuer_id = '"+issuerId+"'";
+                    recCount = int.Parse(command.ExecuteScalar().ToString());
+                }
+
+
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -42,10 +53,23 @@ namespace GreenField.IssuerShares.Server
                     param4.ParameterName = "RUN_MODE";
                     command.Parameters.Add(param4);
 
-                    
-                    connection.Open();
+                    var param5 = command.CreateParameter();
+                    if (recCount != 0)
+                    {
+                        param5.Value = "Y";
+                    }
+                    else
+                    {
+                        param5.Value = "N";
+                    }
+                    param5.ParameterName = "STAGE";
+                    command.Parameters.Add(param5);
+
+
+                   // connection.Open();
                     var result = command.ExecuteNonQuery();
                 }
+                connection.Close();
             }
         }
     }

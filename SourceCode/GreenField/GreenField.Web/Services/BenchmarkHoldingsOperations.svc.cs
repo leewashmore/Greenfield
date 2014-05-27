@@ -3058,6 +3058,7 @@ namespace GreenField.Web.Services
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
+          
                 if (lookThruEnabled)
                 {
                     #region lookThru Enabled
@@ -3564,6 +3565,7 @@ namespace GreenField.Web.Services
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
+               
                 if (lookThruEnabled)
                 {
                     #region Look Thru Enabled

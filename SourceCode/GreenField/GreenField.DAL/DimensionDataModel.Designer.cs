@@ -116,22 +116,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<GF_BENCHMARK_HOLDINGS> GF_BENCHMARK_HOLDINGS
-        {
-            get
-            {
-                if ((_GF_BENCHMARK_HOLDINGS == null))
-                {
-                    _GF_BENCHMARK_HOLDINGS = base.CreateObjectSet<GF_BENCHMARK_HOLDINGS>("GF_BENCHMARK_HOLDINGS");
-                }
-                return _GF_BENCHMARK_HOLDINGS;
-            }
-        }
-        private ObjectSet<GF_BENCHMARK_HOLDINGS> _GF_BENCHMARK_HOLDINGS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<GF_PERF_DAILY_ATTRIBUTION> GF_PERF_DAILY_ATTRIBUTION
         {
             get
@@ -196,22 +180,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<GF_PRICING_BASEVIEW> GF_PRICING_BASEVIEW
-        {
-            get
-            {
-                if ((_GF_PRICING_BASEVIEW == null))
-                {
-                    _GF_PRICING_BASEVIEW = base.CreateObjectSet<GF_PRICING_BASEVIEW>("GF_PRICING_BASEVIEW");
-                }
-                return _GF_PRICING_BASEVIEW;
-            }
-        }
-        private ObjectSet<GF_PRICING_BASEVIEW> _GF_PRICING_BASEVIEW;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<GF_PERF_TOPLEVELYEAR> GF_PERF_TOPLEVELYEAR
         {
             get
@@ -240,6 +208,38 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<GF_SELECTION_BASEVIEW> _GF_SELECTION_BASEVIEW;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<GF_PRICING_BASEVIEW> GF_PRICING_BASEVIEW
+        {
+            get
+            {
+                if ((_GF_PRICING_BASEVIEW == null))
+                {
+                    _GF_PRICING_BASEVIEW = base.CreateObjectSet<GF_PRICING_BASEVIEW>("GF_PRICING_BASEVIEW");
+                }
+                return _GF_PRICING_BASEVIEW;
+            }
+        }
+        private ObjectSet<GF_PRICING_BASEVIEW> _GF_PRICING_BASEVIEW;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<GF_BENCHMARK_HOLDINGS> GF_BENCHMARK_HOLDINGS
+        {
+            get
+            {
+                if ((_GF_BENCHMARK_HOLDINGS == null))
+                {
+                    _GF_BENCHMARK_HOLDINGS = base.CreateObjectSet<GF_BENCHMARK_HOLDINGS>("GF_BENCHMARK_HOLDINGS");
+                }
+                return _GF_BENCHMARK_HOLDINGS;
+            }
+        }
+        private ObjectSet<GF_BENCHMARK_HOLDINGS> _GF_BENCHMARK_HOLDINGS;
 
         #endregion
 
@@ -267,14 +267,6 @@ namespace GreenField.DAL
         public void AddToGF_PORTFOLIO_LTHOLDINGS(GF_PORTFOLIO_LTHOLDINGS gF_PORTFOLIO_LTHOLDINGS)
         {
             base.AddObject("GF_PORTFOLIO_LTHOLDINGS", gF_PORTFOLIO_LTHOLDINGS);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the GF_BENCHMARK_HOLDINGS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToGF_BENCHMARK_HOLDINGS(GF_BENCHMARK_HOLDINGS gF_BENCHMARK_HOLDINGS)
-        {
-            base.AddObject("GF_BENCHMARK_HOLDINGS", gF_BENCHMARK_HOLDINGS);
         }
     
         /// <summary>
@@ -310,14 +302,6 @@ namespace GreenField.DAL
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the GF_PRICING_BASEVIEW EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToGF_PRICING_BASEVIEW(GF_PRICING_BASEVIEW gF_PRICING_BASEVIEW)
-        {
-            base.AddObject("GF_PRICING_BASEVIEW", gF_PRICING_BASEVIEW);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the GF_PERF_TOPLEVELYEAR EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToGF_PERF_TOPLEVELYEAR(GF_PERF_TOPLEVELYEAR gF_PERF_TOPLEVELYEAR)
@@ -331,6 +315,22 @@ namespace GreenField.DAL
         public void AddToGF_SELECTION_BASEVIEW(GF_SELECTION_BASEVIEW gF_SELECTION_BASEVIEW)
         {
             base.AddObject("GF_SELECTION_BASEVIEW", gF_SELECTION_BASEVIEW);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the GF_PRICING_BASEVIEW EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToGF_PRICING_BASEVIEW(GF_PRICING_BASEVIEW gF_PRICING_BASEVIEW)
+        {
+            base.AddObject("GF_PRICING_BASEVIEW", gF_PRICING_BASEVIEW);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the GF_BENCHMARK_HOLDINGS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToGF_BENCHMARK_HOLDINGS(GF_BENCHMARK_HOLDINGS gF_BENCHMARK_HOLDINGS)
+        {
+            base.AddObject("GF_BENCHMARK_HOLDINGS", gF_BENCHMARK_HOLDINGS);
         }
 
         #endregion
@@ -14008,7 +14008,7 @@ namespace GreenField.DAL
         /// Create a new GF_PRICING_BASEVIEW object.
         /// </summary>
         /// <param name="gF_ID">Initial value of the GF_ID property.</param>
-        public static GF_PRICING_BASEVIEW CreateGF_PRICING_BASEVIEW(global::System.Int64 gF_ID)
+        public static GF_PRICING_BASEVIEW CreateGF_PRICING_BASEVIEW(global::System.Double gF_ID)
         {
             GF_PRICING_BASEVIEW gF_PRICING_BASEVIEW = new GF_PRICING_BASEVIEW();
             gF_PRICING_BASEVIEW.GF_ID = gF_ID;
@@ -14024,7 +14024,7 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int64 GF_ID
+        public global::System.Double GF_ID
         {
             get
             {
@@ -14042,8 +14042,8 @@ namespace GreenField.DAL
                 }
             }
         }
-        private global::System.Int64 _GF_ID;
-        partial void OnGF_IDChanging(global::System.Int64 value);
+        private global::System.Double _GF_ID;
+        partial void OnGF_IDChanging(global::System.Double value);
         partial void OnGF_IDChanged();
     
         /// <summary>

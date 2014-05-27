@@ -18,16 +18,16 @@ namespace AIMS.Composites.DAL
         public Nullable<System.DateTime> PORTFOLIO_DATE { get; set; }
         public string PORTFOLIO_ID { get; set; }
         public string A_PFCHOLDINGS_PORLT { get; set; }
-        public byte[] PORPATH { get; set; }
+        public string PORPATH { get; set; }
         public string PORTFOLIO_THEME_SUBGROUP_CODE { get; set; }
-        public byte[] PORTFOLIO_CURRENCY { get; set; }
+        public string PORTFOLIO_CURRENCY { get; set; }
         public string BENCHMARK_ID { get; set; }
         public string ISSUER_ID { get; set; }
         public string ASEC_SEC_SHORT_NAME { get; set; }
         public string ISSUE_NAME { get; set; }
         public string TICKER { get; set; }
         public string SECURITYTHEMECODE { get; set; }
-        public byte[] A_SEC_INSTR_TYPE { get; set; }
+        public string A_SEC_INSTR_TYPE { get; set; }
         public string SECURITY_TYPE { get; set; }
         public Nullable<decimal> BALANCE_NOMINAL { get; set; }
         public Nullable<decimal> DIRTY_PRICE { get; set; }

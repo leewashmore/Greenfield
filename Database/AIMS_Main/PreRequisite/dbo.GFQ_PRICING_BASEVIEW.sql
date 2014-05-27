@@ -1,0 +1,3 @@
+
+
+ALTER TABLE [dbo].[GFQ_PRICING_BASEVIEW] ADD [PRICE_TYPE] [varchar](50)

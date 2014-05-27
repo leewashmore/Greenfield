@@ -18,7 +18,7 @@ GO
 CREATE procedure [dbo].[expAimsMktCap]
 as
 
-select convert(varchar(10),pf.Root_source_Date,101) as Root_Source_Date, g.ASEC_SEC_SHORT_NAME,pf.amount from period_financials pf inner join gf_Security_baseview g on g.security_id = pf.security_id
+select convert(varchar(10),pf.Root_source_Date,101) as Root_Source_Date, g.ASEC_SEC_SHORT_NAME,g.asec_instr_type,pf.amount from period_financials pf inner join gf_Security_baseview g on g.security_id = pf.security_id
 where pf.data_id = 185  and pf.period_type = 'C' and pf.data_source = 'PRIMARY'
 and pf.Currency = 'USD'
  

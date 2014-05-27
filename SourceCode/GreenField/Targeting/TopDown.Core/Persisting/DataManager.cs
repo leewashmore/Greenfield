@@ -92,7 +92,11 @@ namespace TopDown.Core.Persisting
                 {
                     command.Transaction = this.TransactionOpt;
                 }
-                command.CommandText = "select top 1 PORTFOLIO_DATE from [" + TableNames.GF_BENCHMARK_HOLDINGS + "] order by [PORTFOLIO_DATE] desc";
+                //command.CommandText = "select top 1 PORTFOLIO_DATE from [" + TableNames.GF_BENCHMARK_HOLDINGS + "] order by [PORTFOLIO_DATE] desc";  //2014-01-09 - Replaced because the FTSE index would be at the top and have the wrong date- Lane
+                command.CommandText = "select top 1 PORTFOLIO_DATE from [" + TableNames.GF_BENCHMARK_HOLDINGS + "] where BENCHMARK_ID = 'MSCI EM NET' order by [PORTFOLIO_DATE] desc";  
+                
+                //select MAX(PORTFOLIO_DATE) from GF_BENCHMARK_HOLDINGS bh where bh.BENCHMARK_ID = 'MSCI EM NET' 
+
                 var something = command.ExecuteScalar();
                 if (something is DBNull || something == null)
                 {

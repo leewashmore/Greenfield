@@ -29,6 +29,8 @@ namespace AIMS.Composites.DAL
         }
     
         public DbSet<GF_COMPOSITE_LTHOLDINGS> GF_COMPOSITE_LTHOLDINGS { get; set; }
+        public DbSet<GF_PORTFOLIO_HOLDINGS> GF_PORTFOLIO_HOLDINGS { get; set; }
+        public DbSet<GF_PORTFOLIO_LTHOLDINGS> GF_PORTFOLIO_LTHOLDINGS { get; set; }
     
         public virtual ObjectResult<GetComposites_Result> GetComposites()
         {

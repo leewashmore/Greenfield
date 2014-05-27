@@ -202,10 +202,11 @@ BEGIN
 			end
 		end
 	set @sumbenchmarkWeight = (select sum(benchmark_weight) from #BenchmarkTemp);
+	print @portfolio_id
     insert into #PortfolioDetailsData
     (AsecSecShortName,IssueName,Ticker,PortfolioId, portfoliopath, pfcholdingportfolio,ProprietaryRegionCode,IsoCountryCode,SectorName,
     IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,IssuerId,issuer_proxy,IssuerName,SecurityId,SECURITYTHEMECODE)
-    select p.asec_sec_short_name,p.issue_name,p.ticker,p.portfolio_id,p.portfolio_id,p.portfolio_id,
+    select p.asec_sec_short_name,p.issue_name,p.ticker,@portfolio_id,@portfolio_id,@portfolio_id,
 		p.ashemm_prop_Region_code,
 		p.iso_country_code,
 		p.gics_sector_name,
@@ -228,8 +229,8 @@ BEGIN
 		s.Security_Id,
 		p.SECURITYTHEMECODE
 	 from #PortfolioTemp p
-	 Left outer join GF_SECURITY_BASEVIEW s on s.asec_Sec_Short_name = p.asec_Sec_short_name
-     left outer join #BenchmarkTemp b on b.asec_Sec_short_name = p.asec_sec_short_name;	
+	 Left outer join GF_SECURITY_BASEVIEW s on p.asec_Sec_Short_name = s.asec_Sec_short_name
+     left outer join #BenchmarkTemp b on p.asec_Sec_short_name = b.asec_sec_short_name;	
      	/**********************End of  no Look Thru ********************************/
 	end
 	
@@ -354,9 +355,9 @@ BEGIN
     if @isLookThru = 1 
     begin
     insert into #PortfolioDetailsData
-    (AsecSecShortName,IssueName,Ticker,ProprietaryRegionCode,IsoCountryCode,SectorName,
+    (AsecSecShortName,IssueName,Ticker,PfcHoldingPortfolio,PortfolioId,PortfolioPath,ProprietaryRegionCode,IsoCountryCode,SectorName,
     IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,stype,IssuerId,issuer_proxy,IssuerName,SecurityId,SECURITYTHEMECODE)
-     select b.asec_sec_short_name,b.issue_name,b.ticker,
+     select b.asec_sec_short_name,b.issue_name,b.ticker,@portfolio_id,@portfolio_id,@portfolio_id,
 		b.ashemm_prop_Region_code,
 		b.iso_country_code,
 		b.gics_sector_name,
@@ -388,9 +389,9 @@ BEGIN
     else
     begin
      insert into #PortfolioDetailsData
-    (AsecSecShortName,IssueName,Ticker,ProprietaryRegionCode,IsoCountryCode,SectorName,
+    (AsecSecShortName,IssueName,Ticker,PfcHoldingPortfolio,PortfolioId,PortfolioPath,ProprietaryRegionCode,IsoCountryCode,SectorName,
     IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,stype,IssuerId,issuer_proxy,IssuerName,SecurityId,SECURITYTHEMECODE)
-     select b.asec_sec_short_name,b.issue_name,b.ticker,
+     select b.asec_sec_short_name,b.issue_name,b.ticker,@portfolio_id,@portfolio_id,@portfolio_id,
 		b.ashemm_prop_Region_code,
 		b.iso_country_code,
 		b.gics_sector_name,
@@ -439,7 +440,8 @@ END
 
 --select * from fair_value
 
---exec RetrievePortfolioDetailsData 'EMIF','10/31/2013',null,null,0,0,1
+--exec RetrievePortfolioDetailsData 'ABPEQ','03/06/2014',null,null,0,0,1
+
 GO
 
 

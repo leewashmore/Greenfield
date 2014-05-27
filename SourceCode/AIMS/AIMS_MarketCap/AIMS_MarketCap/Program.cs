@@ -20,7 +20,27 @@ namespace AIMS_MarketCap
                  if (args != null && args.Length > 0)
                  { 
                      filePath =args[0];
-                     fileName =filePath+"\\Aims_MarketCap_"+DateTime.Now.Year+""+DateTime.Now.Month+""+DateTime.Now.Day+".csv";
+                     string monthstr = "";
+                     string daystr = "";
+                     if (DateTime.Now.Month < 10)
+                     {
+                         monthstr = "0" + DateTime.Now.Month;
+                     }
+                     else
+                     {
+                         monthstr = "" + DateTime.Now.Month;
+                     }
+
+                     if (DateTime.Now.Day < 10)
+                     {
+                         daystr = "0" + DateTime.Now.Day;
+                     }
+                     else
+                     {
+                         daystr = "" + DateTime.Now.Day;
+                     }
+
+                     fileName = filePath + "\\Aims_MarketCap_" + DateTime.Now.Year + "" + monthstr + "" + daystr + ".csv";
 
                  } else 
                  {
@@ -42,9 +62,10 @@ namespace AIMS_MarketCap
                     fs1 = new FileStream(fileName, FileMode.Create, FileAccess.Write);
                     writer = new StreamWriter(fs1);
                     List<expAimsMktCap_Result> result = entity.expAimsMktCap().ToList();
+                    string findstr = "<FIND>";
                     foreach (var record in result)
                     {
-                        writer.Write(record.Root_Source_Date + "," + record.ASEC_SEC_SHORT_NAME + "," + record.amount + "\n");
+                        writer.WriteLine(findstr.PadRight(20,' ')+","+record.Root_Source_Date + "," + record.ASEC_SEC_SHORT_NAME + "," +record.asec_instr_type+","+ record.amount);
                     }
                     writer.Close();
                 }

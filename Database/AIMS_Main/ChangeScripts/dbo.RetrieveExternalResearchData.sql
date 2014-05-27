@@ -45,7 +45,7 @@ update #PortfolioDetailsData
 	from #PortfolioDetailsData as por
 	inner join (
 		select asec_sec_short_name,[185] as marketcap ,[187] as forwardpe, [188] as forwardpbv , [198] as ForwardEB_EBITDA from
-		(	select data_id,s.asec_sec_short_name , amount from period_financials p 
+		(	select data_id,s.asec_sec_short_name , amount from period_financials_security p 
 			inner join gf_security_baseview s on s.security_id = p.security_id
 			where  CURRENCY = 'USD'
 			and PERIOD_TYPE = 'C'
@@ -72,7 +72,7 @@ update #PortfolioDetailsData
 	from #PortfolioDetailsData as por
 	Inner join (
 		select Issuer_Id,[178] AS RevenueGrowth ,[177] As NetIncomeGrowth   ,[133] As ROE,[149] As NetDebtEquity,[146] as FreeCashflowMargin from 
-		(select data_id,issuer_id , amount from period_financials
+		(select data_id,issuer_id , amount from period_financials_issuer
 			where CURRENCY = 'USD'
 			and PERIOD_TYPE = 'A'
 			and FISCAL_TYPE='CALENDAR'
@@ -94,7 +94,7 @@ update #PortfolioDetailsData
 	from #PortfolioDetailsData as por
 	Inner join (
 		select Issuer_Id,[178] AS RevenueGrowth ,[177] As NetIncomeGrowth   from 
-		(select data_id,issuer_id , amount from period_financials
+		(select data_id,issuer_id , amount from period_financials_issuer
 			where CURRENCY = 'USD'
 			and PERIOD_TYPE = 'A'
 			and FISCAL_TYPE='CALENDAR'
