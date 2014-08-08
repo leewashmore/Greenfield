@@ -66,7 +66,7 @@ update #PortfolioDetailsData
 update #PortfolioDetailsData 
 	set RevenueGrowthCurrentYear = x.RevenueGrowth *100,
 		NetIncomeGrowthCurrentYear = x.NetIncomeGrowth * 100,
-		ROE = x.ROE,
+		ROE = x.ROE *100,
 		NetDebtEquity=x.NetDebtEquity,
 		FreecashFlowMargin = x.FreeCashflowMargin
 	from #PortfolioDetailsData as por
