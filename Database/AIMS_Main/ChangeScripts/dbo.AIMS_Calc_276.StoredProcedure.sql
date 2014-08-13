@@ -65,7 +65,7 @@ as
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  276 as DATA_ID										-- DATA_ID:276 Customer Deposits/Liabilities 
-		,  CASE WHEN  b.AMOUNT > 0 THEN a.AMOUNT /  b.AMOUNT 
+		,  CASE WHEN  b.AMOUNT <> 0 THEN a.AMOUNT /  b.AMOUNT 
 			ELSE NULL
 			END as AMOUNT					-- (LDBT/LTLL)
 		,  '80(' + CAST(a.AMOUNT as varchar(32)) + ') / 94(' + CAST(b.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
@@ -90,7 +90,7 @@ BEGIN
 		,  a.ROOT_SOURCE_DATE, a.PERIOD_TYPE, a.PERIOD_YEAR, a.PERIOD_END_DATE
 		,  a.FISCAL_TYPE, a.CURRENCY
 		,  276 as DATA_ID										-- DATA_ID:276 Customer Deposits/Liabilities 
-		,  CASE WHEN  b.AMOUNT > 0 THEN a.AMOUNT /  b.AMOUNT 
+		,  CASE WHEN  b.AMOUNT <> 0 THEN a.AMOUNT /  b.AMOUNT 
 			ELSE NULL
 			END as AMOUNT					-- (LDBT/LTLL)
 		,  '80(' + CAST(a.AMOUNT as varchar(32)) + ') / 94(' + CAST(b.AMOUNT as varchar(32)) + ')' as CALCULATION_DIAGRAM
