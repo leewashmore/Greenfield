@@ -31,6 +31,8 @@ namespace GreenField.Web.Helpers
             {
                 result = new ICPresentation();
                 PresentationPart presentatioPart = presentationDocument.PresentationPart;
+                
+
                 SlideId[] slideIds = presentatioPart.Presentation.SlideIdList.Elements<SlideId>().ToArray();
 
                 string relId = (slideIds[0] as SlideId).RelationshipId;
@@ -712,7 +714,7 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="slidePart">SlidePart</param>
         /// <returns>List of data</returns>
-        private static List<String> GetCompanyOverview(SlidePart slidePart)
+        private static List<String> GetCompanyOverview1(SlidePart slidePart)
         {
             List<String> items = new List<string>();
 
@@ -735,11 +737,47 @@ namespace GreenField.Web.Helpers
         }
 
         /// <summary>
+        /// Get company overview data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
+        private static List<String> GetCompanyOverview(SlidePart slidePart)
+        {
+            List<String> items = new List<string>();
+
+          //  TextBody overviewText = slidePart.Slide.Descendants<TextBody>().FirstOrDefault();
+
+            CommonSlideData overviewText = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+            var shapeTree = overviewText.Descendants<ShapeTree>().FirstOrDefault();
+
+            var textBody = shapeTree.Descendants<TextBody>().ToList();
+
+            if (textBody.Count > 0)
+            {
+                var paraGraphs = textBody[textBody.Count-1].Descendants<Drawing.Paragraph>().ToList();
+
+                if (paraGraphs != null && paraGraphs.Count > 0)
+                {
+                    for (int i = 1; i < paraGraphs.Count; i++)
+                    {
+                        if (!String.IsNullOrEmpty(paraGraphs[i].InnerText))
+                        {
+                            items.Add(paraGraphs[i].InnerText);
+                        }
+                    }
+                }
+            }
+
+            return items;
+        }
+
+
+        /// <summary>
         /// Get investment thesis data
         /// </summary>
         /// <param name="slidePart">SlidePart</param>
         /// <returns>List of data</returns>
-        private static List<String> GetInvestmentThesis(SlidePart slidePart)
+        private static List<String> GetInvestmentThesis1(SlidePart slidePart)
         {
             List<String> items = new List<string>();
 
@@ -776,6 +814,56 @@ namespace GreenField.Web.Helpers
                     }
                 }
             }
+
+            return items;
+        }
+
+
+
+
+        /// <summary>
+        /// Get investment thesis data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
+        private static List<String> GetInvestmentThesis(SlidePart slidePart)
+        {
+            List<String> items = new List<string>();
+
+            CommonSlideData investmentText = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+
+            var shapeTree = investmentText.Descendants<ShapeTree>().FirstOrDefault();
+
+
+            var textBody = shapeTree.Descendants<TextBody>().ToList();
+           
+            if (textBody.Count > 0)
+            {
+                var paragraphs = textBody[4].Descendants<Drawing.Paragraph>().ToList();
+
+                if (paragraphs != null && paragraphs.Count > 0)
+                {
+                    for (int i = 0; i < paragraphs.Count; i++)
+                    {
+                        string thesisText = String.Empty;
+                        var runList = paragraphs[i].Descendants<Drawing.Run>().ToList();
+
+                        if (runList != null && runList.Count > 0)
+                        {
+                            foreach (Drawing.Run run in runList)
+                            {
+                                thesisText += run.InnerText;
+                            }
+                        }
+
+                        if (!String.IsNullOrEmpty(thesisText))
+                        {
+                            items.Add(thesisText);
+
+                        }
+                    }
+                }
+            } 
 
             return items;
         }
@@ -820,12 +908,15 @@ namespace GreenField.Web.Helpers
             return risks;
         }
 
+
+
+
         /// <summary>
         /// Get key operating assumptions data
         /// </summary>
         /// <param name="slidePart">SlidePart</param>
         /// <returns>List of data</returns>
-        private static List<String> GetKeyOperatingAssumpations(SlidePart slidePart)
+        private static List<String> GetKeyOperatingAssumpations1(SlidePart slidePart)
         {
             List<String> items = new List<String>();
 
@@ -867,12 +958,60 @@ namespace GreenField.Web.Helpers
             return items;
         }
 
+
+        /// <summary>
+        /// Get key operating assumptions data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
+        private static List<String> GetKeyOperatingAssumpations(SlidePart slidePart)
+        {
+            List<String> items = new List<String>();
+
+            CommonSlideData investmentText = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+
+            var shapeTree = investmentText.Descendants<ShapeTree>().FirstOrDefault();
+
+            var shapeContent = investmentText.Descendants<Shape>().ToList();
+
+            var textBody = shapeContent[3].Descendants<TextBody>().FirstOrDefault();
+
+            if (textBody != null)
+            {
+                var paragraphs = textBody.Descendants<Drawing.Paragraph>().ToList();
+
+                if (paragraphs != null && paragraphs.Count > 0)
+                {
+                    for (int i = 0; i < paragraphs.Count; i++)
+                    {
+                        string thesisText = String.Empty;
+                        var runList = paragraphs[i].Descendants<Drawing.Run>().ToList();
+
+                        if (runList != null && runList.Count > 0)
+                        {
+                            foreach (Drawing.Run run in runList)
+                            {
+                                thesisText += run.InnerText;
+                            }
+                        }
+
+                        if (!String.IsNullOrEmpty(thesisText))
+                        {
+                            items.Add(thesisText);
+                        }
+                    }
+                }
+            }
+
+            return items;
+        }
+
         /// <summary>
         /// Get value, quality and growth data
         /// </summary>
         /// <param name="slidePart">SlidePart</param>
         /// <returns>key Value pair dictionary data</returns>
-        private static Dictionary<int, List<String>> GetVQG(SlidePart slidePart)
+        private static Dictionary<int, List<String>> GetVQG1(SlidePart slidePart)
         {
             Dictionary<int, List<String>> result = new Dictionary<int, List<string>>();
 
@@ -919,12 +1058,66 @@ namespace GreenField.Web.Helpers
             return result;
         }
 
+
+        /// <summary>
+        /// Get value, quality and growth data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>key Value pair dictionary data</returns>
+        private static Dictionary<int, List<String>> GetVQG(SlidePart slidePart)
+        {
+            Dictionary<int, List<String>> result = new Dictionary<int, List<string>>();
+
+            CommonSlideData investmentText = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+
+            var shapeTree = investmentText.Descendants<ShapeTree>().FirstOrDefault();
+
+            var shapeContent = investmentText.Descendants<Shape>().ToList();
+
+            for (int i = 6; i < 9; i++)
+            {
+                var textBody = shapeContent[i].Descendants<TextBody>().FirstOrDefault();
+
+                if (textBody != null)
+                {
+                    var paragraphs = textBody.Descendants<Drawing.Paragraph>().ToList();
+
+                    if (paragraphs != null && paragraphs.Count > 0)
+                    {
+                        List<String> items = new List<string>();
+
+                        for (int j = 0; j < paragraphs.Count; j++)
+                        {
+                            string thesisText = String.Empty;
+                            var runList = paragraphs[j].Descendants<Drawing.Run>().ToList();
+
+                            if (runList != null && runList.Count > 0)
+                            {
+                                foreach (Drawing.Run run in runList)
+                                {
+                                    thesisText += run.InnerText;
+                                }
+                            }
+
+                            if (!String.IsNullOrEmpty(thesisText))
+                            {
+                                items.Add(thesisText);
+                            }
+                        }
+                        result.Add(i - 6, items);
+                    }
+                }
+            }
+            return result;
+        }
+
         /// <summary>
         /// Get strength, weakness, opportunity and threat data
         /// </summary>
         /// <param name="slidePart">SlidePart</param>
         /// <returns>key Value pair dictionary data</returns>
-        private static Dictionary<int, List<String>> GetSWOTAnalysis(SlidePart slidePart)
+         /// 
+       private static Dictionary<int, List<String>> GetSWOTAnalysis1(SlidePart slidePart)
         {
             Dictionary<int, List<String>> result = new Dictionary<int, List<string>>();
 
@@ -934,6 +1127,7 @@ namespace GreenField.Web.Helpers
 
             var groupShape = investmentText.Descendants<GroupShape>().FirstOrDefault();
             var shapeData = groupShape.Descendants<Shape>().ToList();
+           // var shapeData = investmentText.Descendants<Shape>().ToList();
 
             for (int i = 4; i < 8; i++)
             {
@@ -972,6 +1166,146 @@ namespace GreenField.Web.Helpers
 
             return result;
         }
+       
+
+         /// Get strength, weakness, opportunity and threat data-- mOdified to read the new presentation format
+         /// </summary>
+         /// <param name="slidePart">SlidePart</param>
+         /// <returns>key Value pair dictionary data</returns>
+         private static Dictionary<int, List<String>> GetSWOTAnalysis(SlidePart slidePart)
+         {
+             Dictionary<int, List<String>> result = new Dictionary<int, List<string>>();
+
+             CommonSlideData investmentText = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+
+             var shapeTree = investmentText.Descendants<ShapeTree>().FirstOrDefault();
+
+             //var groupShape = investmentText.Descendants<Drawing.Graphic>().FirstOrDefault();
+             var graphicFrameShape = investmentText.Descendants<GraphicFrame>().FirstOrDefault();
+             var graphic = investmentText.Descendants<Drawing.Graphic>().FirstOrDefault();
+
+
+
+             var graphicData = graphic.Descendants<Drawing.GraphicData>().FirstOrDefault();
+             var table = graphicData.Descendants<Drawing.Table>().FirstOrDefault();
+             var tableRow = table.Descendants<Drawing.TableRow>().ToList();
+             // var shapeData = investmentText.Descendants<Shape>().ToList();
+            // for (int i = 0; i < 4; i++)
+             //{
+                //Strength
+                 var tableCellList = tableRow[1].Descendants<Drawing.TableCell>().ToList();
+                 string thesisText = String.Empty;
+                 List<String> items0 = new List<string>();
+                 if (tableCellList != null && tableCellList.Count > 0)
+                 {
+                     var paragraphList = tableCellList[1].Descendants<Drawing.Paragraph>().ToList();
+                     foreach (Drawing.Paragraph paragraph in paragraphList)
+                     {
+                         thesisText = paragraph.InnerText;
+                         if (!String.IsNullOrEmpty(thesisText))
+                         {
+                             items0.Add(thesisText);
+                         }
+                     }
+                 }
+
+                 //Weakness
+                  tableCellList = tableRow[1].Descendants<Drawing.TableCell>().ToList();
+                  thesisText = String.Empty;
+                 List<String> items1 = new List<string>();
+                 if (tableCellList != null && tableCellList.Count > 0)
+                 {
+                     var paragraphList = tableCellList[0].Descendants<Drawing.Paragraph>().ToList();
+                     foreach (Drawing.Paragraph paragraph in paragraphList)
+                     {
+                         thesisText = paragraph.InnerText;
+                         if (!String.IsNullOrEmpty(thesisText))
+                         {
+                             items1.Add(thesisText);
+                         }
+                     }
+                 }
+
+             //opportunity
+                 tableCellList = tableRow[3].Descendants<Drawing.TableCell>().ToList();
+                 thesisText = String.Empty;
+                 List<String> items2 = new List<string>();
+                 if (tableCellList != null && tableCellList.Count > 0)
+                 {
+                     var paragraphList = tableCellList[1].Descendants<Drawing.Paragraph>().ToList();
+                     foreach (Drawing.Paragraph paragraph in paragraphList)
+                     {
+                         thesisText = paragraph.InnerText;
+                         if (!String.IsNullOrEmpty(thesisText))
+                         {
+                             items2.Add(thesisText);
+                         }
+                     }
+                 }
+
+             //weakness
+                 tableCellList = tableRow[3].Descendants<Drawing.TableCell>().ToList();
+                 thesisText = String.Empty;
+                 List<String> items3 = new List<string>();
+                 if (tableCellList != null && tableCellList.Count > 0)
+                 {
+                     var paragraphList = tableCellList[0].Descendants<Drawing.Paragraph>().ToList();
+                     foreach (Drawing.Paragraph paragraph in paragraphList)
+                     {
+                         thesisText = paragraph.InnerText;
+                         if (!String.IsNullOrEmpty(thesisText))
+                         {
+                             items3.Add(thesisText);
+                         }
+                     }
+                 }
+
+
+
+                 result.Add(0, items3);
+                 result.Add(1, items1);
+                 result.Add(2, items0);
+                 result.Add(3, items2);
+            // }
+
+                /*for (int i = 0; i < tableRow.Count(); i++)
+                {
+                    var textBody = tableRow[i].Descendants<Drawing.TextBody>().FirstOrDefault();
+
+                    if (textBody != null)
+                    {
+                        var paragraphs = textBody.Descendants<Drawing.Paragraph>().ToList();
+
+                        if (paragraphs != null && paragraphs.Count > 0)
+                        {
+                            List<String> items = new List<string>();
+
+                            for (int j = 0; j < paragraphs.Count; j++)
+                            {
+                                string thesisText = String.Empty;
+                                var runList = paragraphs[j].Descendants<Drawing.Run>().ToList();
+
+                                if (runList != null && runList.Count > 0)
+                                {
+                                    foreach (Drawing.Run run in runList)
+                                    {
+                                        thesisText += run.InnerText;
+                                    }
+                                }
+
+                                if (!String.IsNullOrEmpty(thesisText))
+                                {
+                                    items.Add(thesisText);
+                                }
+                            }
+                            result.Add(i , items);
+                        }
+                    }
+                } */
+
+             return result;
+         }   
+
 
         /// <summary>
         /// Adds PdfPCell to PdfPTable with custom properties

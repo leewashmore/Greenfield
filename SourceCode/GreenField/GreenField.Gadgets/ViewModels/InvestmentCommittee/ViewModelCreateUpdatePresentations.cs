@@ -467,6 +467,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     Initialize();
+                    BusyIndicatorNotification();
                 }
                 else
                 {

@@ -221,8 +221,15 @@
                     <telerik:RadMenuItem x:Name="rmItemCreateEdit" Header="Create/Edit"
                                                 Command="{Binding DashboardInvestmentCommitteeCreateEditCommand}"
                                                />
+                    <telerik:RadMenuItem x:Name="rmItemNewPresentation" Header="New Presentation"
+                                                Command="{Binding DashboardInvestmentCommitteeNewCommand}"
+                                               />
+                    <telerik:RadMenuItem x:Name="rmItemICPresentation" Header="IC Presentation"
+                                                Command="{Binding DashboardInvestmentCommitteeICCommand}"
+                                               />
                     <!--<telerik:RadMenuItem x:Name="rmItemVote" Header="Vote" Command="{Binding DashboardInvestmentCommitteeVoteCommand}"/>-->
                     <!--<telerik:RadMenuItem x:Name="rmItemPreMeetingReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Pre-Meeting Report" Command="{Binding DashboardInvestmentCommitteePreMeetingReportCommand}"/>-->
+                    <telerik:RadMenuItem x:Name="rmItemPreMeetingReport" IsEnabled="True" Header="Pre-Meeting Report" Command="{Binding DashboardInvestmentCommitteePreMeetingReportCommand}"/>
                     <telerik:RadMenuItem x:Name="rmItemMeetingMinutes" IsEnabled="{Binding RoleIsICAdmin}" Header="Meeting Minutes" Command="{Binding DashboardInvestmentCommitteeMeetingMinutesCommand}"/>
                     <telerik:RadMenuItem x:Name="rmItemSummaryReport" Header="Summary Report" Command="{Binding DashboardInvestmentCommitteeSummaryReportCommand}"/>
                     <!--<telerik:RadMenuItem x:Name="rmItemMetricsReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Metrics Report" Command="{Binding DashboardInvestmentCommitteeMetricsReportCommand}"/>-->

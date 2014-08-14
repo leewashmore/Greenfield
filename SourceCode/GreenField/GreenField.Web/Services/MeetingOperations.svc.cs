@@ -21,6 +21,7 @@ using GreenField.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
+using System.Text.RegularExpressions;
 
 namespace GreenField.Web.Services
 {
@@ -175,12 +176,12 @@ namespace GreenField.Web.Services
                 #endregion
 
                 #region Generate powerpoint presentation
-                String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
+                String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\New IC template.pptx";
 
                 if (!File.Exists(presentationFile))
                     throw new Exception("Missing IC Presentation Template file");
 
-                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
+                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_NewICPresentation.pptx";
                 File.Copy(presentationFile, copiedFilePath, true);
 
                 try
@@ -211,7 +212,7 @@ namespace GreenField.Web.Services
 
                 #region Upload generated powerpoint presentation and create file master object
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
-                String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
+                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingDateTime.HasValue
                     ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
 
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
@@ -250,6 +251,12 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
+        }
+
+        private String removeSpecialCharacters(String str)
+        {
+            return Regex.Replace(str, @"[^\w\.@-]", "");
+                
         }
 
         /// <summary>
@@ -590,8 +597,8 @@ namespace GreenField.Web.Services
             SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.YTDRet_Absolute);
             SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.FVCalc);
             SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_RELtoLOC);
-            SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
-                presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
+           // SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
+             //   presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
             SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
         }
 
@@ -688,7 +695,7 @@ namespace GreenField.Web.Services
 
                 #region Update power point presentation file
                 #region Retrieve presentation file or create new one if not exists
-                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
+                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_NewICPresentation.pptx";
                 List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
                 FileMaster presentationPowerPointAttachedFile = null;
 
@@ -707,13 +714,13 @@ namespace GreenField.Web.Services
                     }
                     else
                     {
-                        String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
+                        String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\New IC template.pptx";
                         File.Copy(presentationFile, copiedFilePath, true);
                     }
                 }
                 else
                 {
-                    String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
+                    String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\New IC template.pptx";
                     File.Copy(presentationFile, copiedFilePath, true);
                 }
                 #endregion

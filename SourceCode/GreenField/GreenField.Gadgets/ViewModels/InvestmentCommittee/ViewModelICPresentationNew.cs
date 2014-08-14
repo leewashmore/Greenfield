@@ -250,7 +250,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
 
                     eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICPresentation");
                 }
                 else
                 {
