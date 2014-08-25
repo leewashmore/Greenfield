@@ -544,6 +544,21 @@ namespace GreenField.Web.Services
                  }
 
 
+                 //For next year weighted Earnings Growth
+                 if (pfData.dirtvaluepc != null && pfData.secondYearEGrowth != null && secondYeartotalMarketValueEGrowth != 0)
+                 {
+                     pfData.secondYearWeightEGrowth = pfData.dirtvaluepc / secondYeartotalMarketValueEGrowth;
+                 }
+                 if (pfData.secondYearEGrowth != null)
+                 {
+                     pfData.secondYearEGrowth = d.doRangeScrubbing(pfData.secondYearEGrowth, 177);
+                 }
+                 if (pfData.secondYearWeightEGrowth != null && pfData.secondYearEGrowth != null)
+                 {
+                     pfData.secondYearEGrowthContr = pfData.secondYearWeightEGrowth * pfData.secondYearEGrowth;
+                 }
+
+
                  //For current weighted ROE
                  if (pfData.dirtvaluepc != null && pfData.currYearROE != null && totalMarketValueROE != 0 )
                  {
