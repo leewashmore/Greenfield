@@ -95,6 +95,10 @@
         <binding name="DCFOperations1" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
           <security mode="None" />
         </binding>
+        <binding name="MeetingOperations1" maxBufferSize="2147483647"
+          maxReceivedMessageSize="2147483647">
+          <security mode="None" />
+        </binding>
       </basicHttpBinding>
     </bindings>
 
@@ -119,9 +123,6 @@
         binding="basicHttpBinding" bindingConfiguration="BenchmarkHoldingsOperations"
         contract="BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations"
         name="BenchmarkHoldingsOperations" />
-      <endpoint address="http://localhost:59430/Services/MeetingOperations.svc"
-        binding="basicHttpBinding" bindingConfiguration="MeetingOperations"
-        contract="MeetingDefinitions.MeetingOperations" name="MeetingOperations" />
       <endpoint address="http://localhost:59430/Services/TargetingOperations.svc"
         binding="basicHttpBinding" bindingConfiguration="TargetingOperations"
         contract="Backend.Targeting.IFacade" name="TargetingOperations" />
@@ -155,6 +156,9 @@
       <endpoint address="http://localhost:59430/Services/LoginOperations.svc"
         binding="basicHttpBinding" bindingConfiguration="LoginOperations"
         contract="LoginDefinitions.LoginOperations" name="LoginOperations" />
+      <endpoint address="http://localhost:59430/Services/MeetingOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="MeetingOperations"
+        contract="MeetingDefinitions.MeetingOperations" name="MeetingOperations" />
     </client>
   </system.serviceModel>
 </configuration>
