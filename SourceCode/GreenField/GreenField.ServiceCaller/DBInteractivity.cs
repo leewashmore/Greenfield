@@ -3944,7 +3944,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrievePresentationOverviewData(Action<List<ICPresentationOverviewData>> callback)
+        public void RetrievePresentationOverviewData(String userName,String status,Action<List<ICPresentationOverviewData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -3952,7 +3952,7 @@ namespace GreenField.ServiceCaller
             MeetingOperationsClient client = new MeetingOperationsClient();
             client.Endpoint.Behaviors.Add(new CookieBehavior());
             long startTime = DateTime.Now.Ticks;
-            client.RetrievePresentationOverviewDataAsync();
+            client.RetrievePresentationOverviewDataAsync(userName,status );
             client.RetrievePresentationOverviewDataCompleted += (se, e) =>
             {
                 long endTime = DateTime.Now.Ticks;
