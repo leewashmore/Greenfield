@@ -280,7 +280,7 @@
                                    Width="100"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
-                                   Content="DECISION ENTRY"/>
+                                   Content="DECISION ENTRY" Visibility="{Binding DecisionEntryIsVisible}" />
             </Grid>
             
             <telerik:RadRichTextBox x:Name="RichTextBox" Grid.Row="3" Width="0"/>

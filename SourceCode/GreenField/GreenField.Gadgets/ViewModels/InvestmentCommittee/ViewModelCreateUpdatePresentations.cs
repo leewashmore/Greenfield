@@ -325,7 +325,8 @@ namespace GreenField.Gadgets.ViewModels
             return SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.POWERPOINT_PRESENTATION).Count() == 1
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.INVESTMENT_CONTEXT_REPORT).Count() == 1
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.FINSTAT_REPORT).Count() == 1
-                && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.DCF_MODEL).Count() == 1;
+                //&& SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.DCF_MODEL).Count() == 1
+                ;
         }
 
         /// <summary>
@@ -551,7 +552,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
                 eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICPresentation");
             }
         }
 
