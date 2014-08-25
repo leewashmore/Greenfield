@@ -150,8 +150,11 @@
           <xs:element minOccurs="0" name="SecurityCashPosition" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityCountry" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityCountryCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityGlobalActiveWeight" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityIndustry" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityLastClosingPrice" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityMSCIIMIWeight" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityMSCIStdWeight" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityMarketCapitalization" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityPFVMeasure" nillable="true" type="xs:string" />
