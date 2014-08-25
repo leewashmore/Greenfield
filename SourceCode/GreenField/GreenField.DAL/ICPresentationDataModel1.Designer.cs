@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -223,6 +224,7 @@ namespace GreenField.DAL
         private ObjectSet<FileMaster> _FileMasters;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -298,6 +300,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Function Imports
     
         /// <summary>
@@ -2442,9 +2445,31 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectResult<ICPresentationOverviewData> RetrieveICPresentationOverviewData()
+        /// <param name="userid">No Metadata Documentation available.</param>
+        /// <param name="statusType">No Metadata Documentation available.</param>
+        public ObjectResult<ICPresentationOverviewData> RetrieveICPresentationOverviewData(global::System.String userid, global::System.String statusType)
         {
-            return base.ExecuteFunction<ICPresentationOverviewData>("RetrieveICPresentationOverviewData");
+            ObjectParameter useridParameter;
+            if (userid != null)
+            {
+                useridParameter = new ObjectParameter("userid", userid);
+            }
+            else
+            {
+                useridParameter = new ObjectParameter("userid", typeof(global::System.String));
+            }
+    
+            ObjectParameter statusTypeParameter;
+            if (statusType != null)
+            {
+                statusTypeParameter = new ObjectParameter("statusType", statusType);
+            }
+            else
+            {
+                statusTypeParameter = new ObjectParameter("statusType", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ICPresentationOverviewData>("RetrieveICPresentationOverviewData", useridParameter, statusTypeParameter);
         }
     
         /// <summary>
@@ -2742,11 +2767,11 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -2771,6 +2796,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2921,6 +2947,7 @@ namespace GreenField.DAL
         partial void OnCommentOnChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3001,6 +3028,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3025,6 +3053,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3343,6 +3372,7 @@ namespace GreenField.DAL
         partial void OnIssuerNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3413,6 +3443,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3449,6 +3480,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3623,6 +3655,7 @@ namespace GreenField.DAL
         partial void OnModifiedOnChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3703,6 +3736,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3741,6 +3775,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4080,6 +4115,7 @@ namespace GreenField.DAL
         partial void OnModifiedOnChanged();
 
         #endregion
+
     
     }
     
@@ -4119,6 +4155,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4341,6 +4378,7 @@ namespace GreenField.DAL
         partial void OnModifiedOnChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4389,6 +4427,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -4425,6 +4464,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4599,6 +4639,7 @@ namespace GreenField.DAL
         partial void OnModifiedOnChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4679,6 +4720,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -4715,6 +4757,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4889,6 +4932,7 @@ namespace GreenField.DAL
         partial void OnModifiedOnChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4969,6 +5013,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -5005,6 +5050,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5993,8 +6039,81 @@ namespace GreenField.DAL
         private global::System.String _PortfolioId;
         partial void OnPortfolioIdChanging(global::System.String value);
         partial void OnPortfolioIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityMSCIStdWeight
+        {
+            get
+            {
+                return _SecurityMSCIStdWeight;
+            }
+            set
+            {
+                OnSecurityMSCIStdWeightChanging(value);
+                ReportPropertyChanging("SecurityMSCIStdWeight");
+                _SecurityMSCIStdWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityMSCIStdWeight");
+                OnSecurityMSCIStdWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityMSCIStdWeight;
+        partial void OnSecurityMSCIStdWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityMSCIStdWeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityMSCIIMIWeight
+        {
+            get
+            {
+                return _SecurityMSCIIMIWeight;
+            }
+            set
+            {
+                OnSecurityMSCIIMIWeightChanging(value);
+                ReportPropertyChanging("SecurityMSCIIMIWeight");
+                _SecurityMSCIIMIWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityMSCIIMIWeight");
+                OnSecurityMSCIIMIWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityMSCIIMIWeight;
+        partial void OnSecurityMSCIIMIWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityMSCIIMIWeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityGlobalActiveWeight
+        {
+            get
+            {
+                return _SecurityGlobalActiveWeight;
+            }
+            set
+            {
+                OnSecurityGlobalActiveWeightChanging(value);
+                ReportPropertyChanging("SecurityGlobalActiveWeight");
+                _SecurityGlobalActiveWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityGlobalActiveWeight");
+                OnSecurityGlobalActiveWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityGlobalActiveWeight;
+        partial void OnSecurityGlobalActiveWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityGlobalActiveWeightChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -6087,6 +6206,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -6123,6 +6243,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6513,6 +6634,7 @@ namespace GreenField.DAL
         partial void OnModifiedOnChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -6555,9 +6677,11 @@ namespace GreenField.DAL
         }
 
         #endregion
+
     }
 
     #endregion
+
     #region ComplexTypes
     
     /// <summary>
@@ -6582,6 +6706,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6969,6 +7094,7 @@ namespace GreenField.DAL
         partial void OnCommentOnChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -6993,6 +7119,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7308,6 +7435,7 @@ namespace GreenField.DAL
         partial void OnIssuerNameChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -7344,6 +7472,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8403,6 +8532,7 @@ namespace GreenField.DAL
         partial void OnMeetingVotingClosedDateTimeChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -8433,6 +8563,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8580,6 +8711,7 @@ namespace GreenField.DAL
         partial void OnConfigurablePreMeetingVotingDeadlineChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -8614,6 +8746,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8833,6 +8966,7 @@ namespace GreenField.DAL
         partial void OnAttendanceTypeChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -9662,6 +9796,7 @@ namespace GreenField.DAL
         partial void OnLocationChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -10251,6 +10386,7 @@ namespace GreenField.DAL
         partial void OnLocationChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -10792,6 +10928,7 @@ namespace GreenField.DAL
         partial void OnCurrentUpsideChanged();
 
         #endregion
+
     }
     
     /// <summary>
@@ -10828,6 +10965,7 @@ namespace GreenField.DAL
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -11215,8 +11353,10 @@ namespace GreenField.DAL
         partial void OnModifiedOnChanged();
 
         #endregion
+
     }
 
     #endregion
+
     
 }

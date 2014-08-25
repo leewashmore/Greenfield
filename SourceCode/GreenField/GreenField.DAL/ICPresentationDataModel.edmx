@@ -90,11 +90,11 @@
           <Property Name="Location" Type="varchar" MaxLength="255" />
           <Property Name="MetaTags" Type="varchar" MaxLength="255" />
           <Property Name="Type" Type="varchar" MaxLength="50" />
-          <Property Name="Category" Type="varchar" MaxLength="50" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="Category" Type="varchar" MaxLength="50" />
           <Property Name="IssuerName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MeetingAttachedFileInfo">
@@ -110,7 +110,7 @@
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AshmoreEMMPOC.dbo.MeetingConfigurationSchedule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Config.dbo.MeetingConfigurationSchedule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="MeetingConfigurationSchedule">
           <Key>
@@ -189,6 +189,9 @@
           <Property Name="SecurityIndustry" Type="varchar" MaxLength="50" />
           <Property Name="SecurityCashPosition" Type="real" />
           <Property Name="SecurityPosition" Type="bigint" />
+          <Property Name="SecurityMSCIStdWeight" Type="real" />
+          <Property Name="SecurityMSCIIMIWeight" Type="real" />
+          <Property Name="SecurityGlobalActiveWeight" Type="real" />
           <Property Name="SecurityLastClosingPrice" Type="real" />
           <Property Name="SecurityMarketCapitalization" Type="real" />
           <Property Name="SecurityPFVMeasure" Type="varchar" MaxLength="50" />
@@ -396,7 +399,10 @@
         <Function Name="RetrieveICPresentationAttachedFileDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PresentationId" Type="bigint" Mode="In" />
         </Function>
-        <Function Name="RetrieveICPresentationOverviewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="RetrieveICPresentationOverviewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="varchar" Mode="In" />
+          <Parameter Name="statusType" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="RetrieveSummaryReportDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="startDate" Type="datetime" Mode="In" />
           <Parameter Name="endDate" Type="datetime" Mode="In" />
@@ -513,119 +519,6 @@
         <Function Name="UpdatePresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userName" Type="varchar" Mode="In" />
           <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
-        </Function>
-        <Function Name="usp_InsertFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="presentationID" Type="bigint" Mode="In" />
-          <Parameter Name="fileName" Type="varchar" Mode="In" />
-          <Parameter Name="fileData" Type="varchar(max)" Mode="In" />
-          <Parameter Name="createdBy" Type="varchar" Mode="In" />
-          <Parameter Name="createdOn" Type="datetime" Mode="In" />
-          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
-          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="usp_InsertMeetingInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="meetingDateTime" Type="datetime" Mode="In" />
-          <Parameter Name="meetingClosedDateTime" Type="datetime" Mode="In" />
-          <Parameter Name="description" Type="varchar" Mode="In" />
-          <Parameter Name="createdBy" Type="varchar" Mode="In" />
-          <Parameter Name="createdOn" Type="datetime" Mode="In" />
-          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
-          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="usp_InsertMeetingPresentationMappingInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="meetingID" Type="bigint" Mode="In" />
-          <Parameter Name="presentationID" Type="bigint" Mode="In" />
-          <Parameter Name="createdBy" Type="varchar" Mode="In" />
-          <Parameter Name="createdOn" Type="datetime" Mode="In" />
-          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
-          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="usp_InsertVoterInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="presentationID" Type="bigint" Mode="In" />
-          <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="notes" Type="varchar" Mode="In" />
-          <Parameter Name="voteTypeID" Type="bigint" Mode="In" />
-          <Parameter Name="attendanceTypeID" Type="bigint" Mode="In" />
-          <Parameter Name="postMeetingFlag" Type="bit" Mode="In" />
-          <Parameter Name="discussionFlag" Type="bit" Mode="In" />
-          <Parameter Name="voterPFVMeasure" Type="varchar" Mode="In" />
-          <Parameter Name="voterBuyRange" Type="real" Mode="In" />
-          <Parameter Name="voterSellRange" Type="real" Mode="In" />
-          <Parameter Name="voterRecommendation" Type="varchar" Mode="In" />
-          <Parameter Name="createdBy" Type="varchar" Mode="In" />
-          <Parameter Name="createdOn" Type="datetime" Mode="In" />
-          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
-          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="usp_SelectMeetingInfoDistinctMeetingDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="usp_SelectMeetingInfoMeetingDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="usp_SelectPresentationInfoByMeetingDatePresenterStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="meetingDate" Type="datetime" Mode="In" />
-          <Parameter Name="presenter" Type="varchar" Mode="In" />
-          <Parameter Name="status" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="usp_SelectPresentationInfoByMeetingID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="meetingID" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="usp_SelectPresentationInfoByPresentationDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="presentationDate" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="usp_SelectPresentationInfoDistinctPresenters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="usp_SelectVoterInfoByPresentationIDPostMeetingFlag" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="presentationID" Type="bigint" Mode="In" />
-          <Parameter Name="postMeetingFlag" Type="bit" Mode="In" />
-        </Function>
-        <Function Name="usp_UpdateMeetingInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="meetingDateTime" Type="datetime" Mode="In" />
-          <Parameter Name="meetingClosedDateTime" Type="datetime" Mode="In" />
-          <Parameter Name="description" Type="varchar" Mode="In" />
-          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
-          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
-          <Parameter Name="meetingID" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="usp_UpdateMeetingPresentationMappingInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="meetingID" Type="bigint" Mode="In" />
-          <Parameter Name="presentationID" Type="bigint" Mode="In" />
-          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
-          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="usp_UpdatePresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="presentationID" Type="bigint" Mode="In" />
-          <Parameter Name="presenter" Type="varchar" Mode="In" />
-          <Parameter Name="statusTypeID" Type="bigint" Mode="In" />
-          <Parameter Name="securityTicker" Type="varchar" Mode="In" />
-          <Parameter Name="securityName" Type="varchar" Mode="In" />
-          <Parameter Name="securityCountry" Type="varchar" Mode="In" />
-          <Parameter Name="securityCountryCode" Type="varchar" Mode="In" />
-          <Parameter Name="securityIndustry" Type="varchar" Mode="In" />
-          <Parameter Name="securityCashPosition" Type="real" Mode="In" />
-          <Parameter Name="securityPosition" Type="bigint" Mode="In" />
-          <Parameter Name="securityMSCIStdWeight" Type="real" Mode="In" />
-          <Parameter Name="securityMSCIIMIWeight" Type="real" Mode="In" />
-          <Parameter Name="securityGlobalActiveWeight" Type="real" Mode="In" />
-          <Parameter Name="securityLastClosingPrice" Type="real" Mode="In" />
-          <Parameter Name="securityMarketCapitalization" Type="real" Mode="In" />
-          <Parameter Name="securityPFVMeasure" Type="varchar" Mode="In" />
-          <Parameter Name="securityBuyRange" Type="real" Mode="In" />
-          <Parameter Name="securitySellRange" Type="real" Mode="In" />
-          <Parameter Name="securityRecommendation" Type="varchar" Mode="In" />
-          <Parameter Name="investmentThesis" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="background" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="valuations" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="earningsOutlook" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="competitiveAdvantage" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="competitiveDisadvantage" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="committeePFVMeasure" Type="varchar" Mode="In" />
-          <Parameter Name="committeeBuyRange" Type="real" Mode="In" />
-          <Parameter Name="committeeSellRange" Type="real" Mode="In" />
-          <Parameter Name="committeeRecommendation" Type="varchar" Mode="In" />
-          <Parameter Name="committeeRangeEffectiveThrough" Type="datetime" Mode="In" />
-          <Parameter Name="acceptWithoutDiscussionFlag" Type="bit" Mode="In" />
-          <Parameter Name="adminNotes" Type="varchar" Mode="In" />
-          <Parameter Name="createdBy" Type="varchar" Mode="In" />
-          <Parameter Name="createdOn" Type="datetime" Mode="In" />
-          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
-          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -893,7 +786,10 @@
           <FunctionImport Name="GetPreMeetingVotingReportDetails" ReturnType="Collection(ICPresentationModel.PresentationVotingDeadlineDetails)">
           <Parameter Name="PresentationId" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveICPresentationOverviewData" ReturnType="Collection(ICPresentationModel.ICPresentationOverviewData)" />
+          <FunctionImport Name="RetrieveICPresentationOverviewData" ReturnType="Collection(ICPresentationModel.ICPresentationOverviewData)" >
+            <Parameter Name="userid" Mode="In" Type="String" />
+            <Parameter Name="statusType" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="UpdatePresentationInfo" ReturnType="Collection(Int32)">
             <Parameter Name="userName" Mode="In" Type="String" />
             <Parameter Name="xmlScript" Mode="In" Type="String" />
@@ -939,7 +835,7 @@
           <Parameter Name="PresentationStatus" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RetrieveICMeetingInfoByMeetingDateTime" EntitySet="MeetingInfoes" ReturnType="Collection(ICPresentationModel.MeetingInfo)">
-            <Parameter Name="MeetingDateTime" Mode="In" Type="DateTime" />
+          <Parameter Name="MeetingDateTime" Mode="In" Type="DateTime" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
@@ -1206,6 +1102,9 @@
           <NavigationProperty Name="PresentationAttachedFileInfoes" Relationship="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="PresentationAttachedFileInfo" />
           <NavigationProperty Name="VoterInfoes" Relationship="ICPresentationModel.FK_VoterInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="VoterInfo" />
           <Property Type="String" Name="PortfolioId" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Single" Name="SecurityMSCIStdWeight" />
+          <Property Type="Single" Name="SecurityMSCIIMIWeight" />
+          <Property Type="Single" Name="SecurityGlobalActiveWeight" />
         </EntityType>
         <Association Name="FK_CommentInfo_PresentationInfo">
           <End Type="ICPresentationModel.PresentationInfo" Role="PresentationInfo" Multiplicity="0..1" />
@@ -1447,44 +1346,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ICPresentationModelStoreContainer" CdmEntityContainer="ICPresentationEntities">
-          <FunctionImportMapping FunctionImportName="usp_InsertMeetingInformation" FunctionName="ICPresentationModel.Store.usp_InsertMeetingInformation" />
-          <FunctionImportMapping FunctionImportName="usp_InsertMeetingPresentationMappingInfo" FunctionName="ICPresentationModel.Store.usp_InsertMeetingPresentationMappingInfo" />
-          <FunctionImportMapping FunctionImportName="usp_InsertVoterInfo" FunctionName="ICPresentationModel.Store.usp_InsertVoterInfo" />
-          <FunctionImportMapping FunctionImportName="usp_InsertFileInfo" FunctionName="ICPresentationModel.Store.usp_InsertFileInfo" />
-          <FunctionImportMapping FunctionImportName="usp_SelectMeetingInfoDistinctMeetingDates" FunctionName="ICPresentationModel.Store.usp_SelectMeetingInfoDistinctMeetingDates" />
-          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoByMeetingDatePresenterStatus" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoByMeetingDatePresenterStatus">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoByMeetingID" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoByMeetingID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoByPresentationDate" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoByPresentationDate">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoDistinctPresenters" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoDistinctPresenters" />
-          <FunctionImportMapping FunctionImportName="usp_SelectVoterInfoByPresentationIDPostMeetingFlag" FunctionName="ICPresentationModel.Store.usp_SelectVoterInfoByPresentationIDPostMeetingFlag">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ICPresentationModel.VoterInfoByPresentationIDResult">
-                <ScalarProperty Name="VoterID" ColumnName="VoterID" />
-                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="VoteTypeID" ColumnName="VoteTypeID" />
-                <ScalarProperty Name="AttendanceTypeID" ColumnName="AttendanceTypeID" />
-                <ScalarProperty Name="PostMeetingFlag" ColumnName="PostMeetingFlag" />
-                <ScalarProperty Name="DiscussionFlag" ColumnName="DiscussionFlag" />
-                <ScalarProperty Name="VoterPFVMeasure" ColumnName="VoterPFVMeasure" />
-                <ScalarProperty Name="VoterBuyRange" ColumnName="VoterBuyRange" />
-                <ScalarProperty Name="VoterSellRange" ColumnName="VoterSellRange" />
-                <ScalarProperty Name="VoterRecommendation" ColumnName="VoterRecommendation" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="usp_UpdateMeetingInfo" FunctionName="ICPresentationModel.Store.usp_UpdateMeetingInfo" />
-          <FunctionImportMapping FunctionImportName="usp_UpdateMeetingPresentationMappingInfo" FunctionName="ICPresentationModel.Store.usp_UpdateMeetingPresentationMappingInfo" />
-          <FunctionImportMapping FunctionImportName="usp_UpdatePresentationInfo" FunctionName="ICPresentationModel.Store.usp_UpdatePresentationInfo" />
-          <FunctionImportMapping FunctionImportName="usp_SelectMeetingInfoMeetingDates" FunctionName="ICPresentationModel.Store.usp_SelectMeetingInfoMeetingDates" />
           <FunctionImportMapping FunctionImportName="SetICPMeetingMinutesDetails" FunctionName="ICPresentationModel.Store.SetICPMeetingMinutesDetails" />
           <EntitySetMapping Name="MeetingInfoes">
             <EntityTypeMapping TypeName="ICPresentationModel.MeetingInfo">
@@ -1664,6 +1525,9 @@
           <EntitySetMapping Name="PresentationInfoes">
             <EntityTypeMapping TypeName="ICPresentationModel.PresentationInfo">
               <MappingFragment StoreEntitySet="PresentationInfo">
+                <ScalarProperty Name="SecurityGlobalActiveWeight" ColumnName="SecurityGlobalActiveWeight" />
+                <ScalarProperty Name="SecurityMSCIIMIWeight" ColumnName="SecurityMSCIIMIWeight" />
+                <ScalarProperty Name="SecurityMSCIStdWeight" ColumnName="SecurityMSCIStdWeight" />
                 <ScalarProperty Name="PortfolioId" ColumnName="PortfolioId" />
                 <ScalarProperty Name="CommitteePFVMeasureValue" ColumnName="CommitteePFVMeasureValue" />
                 <ScalarProperty Name="SecurityPFVMeasureValue" ColumnName="SecurityPFVMeasureValue" />
