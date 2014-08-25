@@ -385,7 +385,7 @@ namespace GreenField.ServiceCaller
 
         void UpdateMeetingAttachedFileStreamData(String userName, Int64 meetingId, FileMaster fileMasterInfo, Boolean deletionFlag, Action<Boolean?> callback);
 
-        void RetrievePresentationOverviewData(Action<List<ICPresentationOverviewData>> callback);
+        void RetrievePresentationOverviewData(String userName,String status, Action<List<ICPresentationOverviewData>> callback);
 
         void RetrievePresentationVoterData(Int64 presentationId, Action<List<VoterInfo>> callback, Boolean includeICAdminInfo = false);
 
