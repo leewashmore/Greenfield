@@ -5,7 +5,10 @@
   <xs:import schemaLocation="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
   <xs:element name="RetrievePresentationOverviewData">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrievePresentationOverviewDataResponse">

@@ -82,12 +82,12 @@ namespace GreenField.Web.Services
         /// <returns>List of ICPresentationOverviewData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<ICPresentationOverviewData> RetrievePresentationOverviewData()
+        public List<ICPresentationOverviewData> RetrievePresentationOverviewData(String userName,String status)
         {
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-                return entity.RetrieveICPresentationOverviewData().ToList();
+                return entity.RetrieveICPresentationOverviewData(userName,status).ToList();
             }
             catch (Exception ex)
             {
@@ -230,7 +230,7 @@ namespace GreenField.Web.Services
                 {
                     Category = "Power Point Presentation",
                     Location = url,
-                    Name = presentationOverviewData.SecurityName + "_"
+                    Name = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_"
                         + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
                     IssuerName = issuerName,
                     SecurityName = presentationOverviewData.SecurityName,
@@ -759,7 +759,7 @@ namespace GreenField.Web.Services
                 String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
 
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
-                String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
+                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingDateTime.HasValue
                     ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
 
                 String url = documentOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath), String.Empty);
@@ -771,7 +771,7 @@ namespace GreenField.Web.Services
                 {
                     Category = "Power Point Presentation",
                     Location = url,
-                    Name = presentationOverviewData.SecurityName + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                    Name = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
                     IssuerName = issuerName,
                     SecurityName = presentationOverviewData.SecurityName,
                     SecurityTicker = presentationOverviewData.SecurityTicker,
@@ -783,11 +783,11 @@ namespace GreenField.Web.Services
                 };
 
                 Boolean insertedFileMasterRecord = UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster, false);
-                if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord)
+               /* if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord)
                 {
                     documentOperations.DeleteDocument(presentationPowerPointAttachedFile.Location);
                     entity.DeleteFileMaster(presentationPowerPointAttachedFile.FileID);
-                }
+                } */
                 #endregion
                 #endregion
 

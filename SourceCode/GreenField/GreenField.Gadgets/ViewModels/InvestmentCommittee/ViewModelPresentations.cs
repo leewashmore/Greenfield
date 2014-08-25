@@ -177,6 +177,17 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
+        private Boolean decisionEntryVisibility;
+
+        public Boolean DecisionEntryVisibility
+        {
+            get { return decisionEntryVisibility; }
+            set 
+            {
+                decisionEntryVisibility = false;        
+            }
+        }
         #endregion
 
         #region ICommand Properties
@@ -249,6 +260,7 @@ namespace GreenField.Gadgets.ViewModels
             this.logger = param.LoggerFacade;
             this.eventAggregator = param.EventAggregator;
             this.regionManager = param.RegionManager;
+            
         }
         #endregion        
 
@@ -355,8 +367,10 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return false;
             }
-            return UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
-                && SelectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING;
+            
+            return true;
+            /*return UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
+                && SelectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING;*/
         }
 
         /// <summary>
@@ -485,8 +499,10 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return false;
             }
-            return SelectedPresentationOverviewInfo.StatusType != StatusType.IN_PROGRESS
-                && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN;
+            /*return SelectedPresentationOverviewInfo.StatusType != StatusType.IN_PROGRESS
+                && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN;*/
+
+            return true;
         }
 
         /// <summary>
@@ -844,7 +860,7 @@ namespace GreenField.Gadgets.ViewModels
             if (dbInteractivity != null && IsActive)
             {
                 BusyIndicatorNotification(true, "Retrieving Presentation Overview Information...");
-                dbInteractivity.RetrievePresentationOverviewData(RetrievePresentationOverviewDataCallbackMethod);
+                dbInteractivity.RetrievePresentationOverviewData(UserSession.SessionManager.SESSION.UserName,"In Progress",RetrievePresentationOverviewDataCallbackMethod);
             }
         }
 

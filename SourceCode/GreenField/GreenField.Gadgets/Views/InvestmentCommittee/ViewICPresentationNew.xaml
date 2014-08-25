@@ -242,7 +242,7 @@
                                    Width="75"
                                    Visibility="Visible"
                                    HorizontalAlignment="Center"
-                                   Content="SUBMIT"/>
+                                   Content="Create"/>
             </Grid>
         </Grid>
     </telerik:RadBusyIndicator>
