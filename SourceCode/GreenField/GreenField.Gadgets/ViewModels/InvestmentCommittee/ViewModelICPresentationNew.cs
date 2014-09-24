@@ -215,7 +215,8 @@ namespace GreenField.Gadgets.ViewModels
                 && ICPresentationOverviewInfo.YTDRet_RELtoEM != null
                 && ICPresentationOverviewInfo.YTDRet_RELtoEM.Count() > 1
                 && ICPresentationOverviewInfo.YTDRet_RELtoLOC != null
-                && ICPresentationOverviewInfo.YTDRet_RELtoLOC.Count() > 1;
+                && ICPresentationOverviewInfo.YTDRet_RELtoLOC.Count() > 1
+                && ICPresentationOverviewInfo.MeetingClosedDateTime != null;
 
             return selectionValidation && dataValidation;
         }
@@ -239,18 +240,24 @@ namespace GreenField.Gadgets.ViewModels
         /// 
         /// </summary>
         /// <param name="result"></param>
-        private void CreatePresentationCallBackMethod(Boolean? result)
+        private void CreatePresentationCallBackMethod(Int64? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (result == true)
+                if (result> 0)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
 
+                   /* eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+                    ICNavigation.Update(ICNavigationInfo.MeetingInfo, iCPresentationOverviewInfo);
+                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICPresentation", UriKind.Relative);*/
+                    iCPresentationOverviewInfo.PresentationID = (long)result;
+                    ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, iCPresentationOverviewInfo);
                     eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICPresentation");
+                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICPresentation", UriKind.Relative));
+
                 }
                 else
                 {

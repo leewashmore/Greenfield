@@ -714,7 +714,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (result == true)
                     {
                         Prompt.ShowDialog("Input submission successfully completed");
-                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICVoteDecision");
                     }
                 }
                 else
@@ -794,7 +794,7 @@ namespace GreenField.Gadgets.ViewModels
             if (IsActive)
             {
                 SelectedPresentationOverviewInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
-                ViewPluginFlagEnumeration flag = (ViewPluginFlagEnumeration)ICNavigation.Fetch(ICNavigationInfo.ViewPluginFlagEnumerationInfo);
+            //    ViewPluginFlagEnumeration flag = (ViewPluginFlagEnumeration)ICNavigation.Fetch(ICNavigationInfo.ViewPluginFlagEnumerationInfo);
 
                 if (UserSession.SessionManager.SESSION != null)
                 {

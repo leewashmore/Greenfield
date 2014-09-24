@@ -265,6 +265,9 @@ namespace GreenField.App.Helpers
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
                     break;
+                case DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION:
+                    UpdateToolBoxItemVisibility();
+                    break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE:
                     UpdateToolBoxItemVisibility();
                     break;

@@ -467,8 +467,9 @@ namespace GreenField.Gadgets.ViewModels
                 if (result == true)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, selectedPresentationOverviewInfo);
                     Initialize();
-                    BusyIndicatorNotification();
+                   // BusyIndicatorNotification();
                 }
                 else
                 {
@@ -519,7 +520,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(logger, methodNamespace);
-                BusyIndicatorNotification();
+                //BusyIndicatorNotification();
             }
         }
 
@@ -550,7 +551,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(logger, methodNamespace);
-                BusyIndicatorNotification();
+               // BusyIndicatorNotification();
                 eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
                 regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICPresentation");
             }

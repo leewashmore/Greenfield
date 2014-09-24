@@ -47,13 +47,30 @@ namespace GreenField.Gadgets.Views
         /// Constructor
         /// </summary>
         /// <param name="dataContextSource"></param>
+        public ViewPresentations(ViewModelPresentations dataContextSource,DashboardCategoryType dashboardCategoryType)
+        {
+            InitializeComponent();
+            this.DataContext = dataContextSource;
+            this.DataContextViewModelPresentations = dataContextSource;
+            this.DataContextViewModelPresentations.DashBoardCategoryType = dashboardCategoryType;
+            if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION)
+            {
+                btnICPPresentationsListView.Visibility = Visibility.Collapsed;
+            }
+            else if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION)
+            {
+                btnICPPresentationsListView.Visibility = Visibility.Visible;
+                btnICPPresentationsListDecisionEntry.Visibility = Visibility.Visible;
+            }
+
+            
+        }
+
         public ViewPresentations(ViewModelPresentations dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextViewModelPresentations = dataContextSource;
-            
-            
         }
         #endregion
 

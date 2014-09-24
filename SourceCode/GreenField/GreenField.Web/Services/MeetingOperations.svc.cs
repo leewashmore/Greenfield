@@ -139,7 +139,7 @@ namespace GreenField.Web.Services
         /// <returns>True if successful</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public Boolean CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData)
+        public long CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData)
         {
             try
             {
@@ -170,9 +170,10 @@ namespace GreenField.Web.Services
                 //generate presentation info and voter info in database
                 String xmlScript = xmlDoc.ToString();
                 Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
+                presentationOverviewData.PresentationID = (long) result;
 
                 if (result < 0)
-                    return false;
+                    return (long)result;
                 #endregion
 
                 #region Generate powerpoint presentation
@@ -212,8 +213,8 @@ namespace GreenField.Web.Services
 
                 #region Upload generated powerpoint presentation and create file master object
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
-                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingDateTime.HasValue
-                    ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
+                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
 
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
                 .Where(record => record.ISSUE_NAME == presentationOverviewData.SecurityName
@@ -230,8 +231,8 @@ namespace GreenField.Web.Services
                 {
                     Category = "Power Point Presentation",
                     Location = url,
-                    Name = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_"
-                        + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                    Name = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx",
                     IssuerName = issuerName,
                     SecurityName = presentationOverviewData.SecurityName,
                     SecurityTicker = presentationOverviewData.SecurityTicker,
@@ -242,8 +243,13 @@ namespace GreenField.Web.Services
                     ModifiedOn = DateTime.UtcNow
                 };
                 #endregion
+                if (UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false))
+                {
+                    return (long)result;
+                }
+                else { return -1; };
 
-                return UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false);
+                //return UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false);
             }
             catch (Exception ex)
             {
@@ -759,8 +765,8 @@ namespace GreenField.Web.Services
                 String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
 
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
-                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingDateTime.HasValue
-                    ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
+                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
 
                 String url = documentOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath), String.Empty);
 
@@ -771,7 +777,8 @@ namespace GreenField.Web.Services
                 {
                     Category = "Power Point Presentation",
                     Location = url,
-                    Name = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                    Name = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx",
                     IssuerName = issuerName,
                     SecurityName = presentationOverviewData.SecurityName,
                     SecurityTicker = presentationOverviewData.SecurityTicker,
@@ -779,7 +786,8 @@ namespace GreenField.Web.Services
                     CreatedBy = userName,
                     CreatedOn = DateTime.UtcNow,
                     ModifiedBy = userName,
-                    ModifiedOn = DateTime.UtcNow
+                    ModifiedOn = DateTime.UtcNow,
+                    FileID = presentationPowerPointAttachedFile.FileID
                 };
 
                 Boolean insertedFileMasterRecord = UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster, false);

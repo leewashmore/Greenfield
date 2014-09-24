@@ -96,7 +96,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 selectedPresentationOverviewInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
-                IsAcceptWithoutDiscussionChecked = value.AcceptWithoutDiscussionFlag;
+                //IsAcceptWithoutDiscussionChecked = value.AcceptWithoutDiscussionFlag;
             }
         } 
         #endregion

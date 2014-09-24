@@ -188,6 +188,18 @@ namespace GreenField.Gadgets.ViewModels
                 decisionEntryVisibility = false;        
             }
         }
+
+        private DashboardCategoryType dashBoardCategoryType;
+
+        public DashboardCategoryType DashBoardCategoryType
+        {
+            get { return dashBoardCategoryType; }
+            set
+            {
+                dashBoardCategoryType = value;
+            }
+        }
+
         #endregion
 
         #region ICommand Properties
@@ -368,9 +380,9 @@ namespace GreenField.Gadgets.ViewModels
                 return false;
             }
             
-            return true;
-            /*return UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
-                && SelectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING;*/
+           // return true;
+            return UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
+                && SelectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING;
         }
 
         /// <summary>
@@ -379,7 +391,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         private void DecisionEntryCommandMethod(object param)
         {
-            regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteeDecisionEntry");
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
         } 
         #endregion
 
@@ -499,10 +511,10 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return false;
             }
-            /*return SelectedPresentationOverviewInfo.StatusType != StatusType.IN_PROGRESS
-                && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN;*/
+            return SelectedPresentationOverviewInfo.StatusType != StatusType.IN_PROGRESS
+                && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN;
 
-            return true;
+          //  return true;
         }
 
         /// <summary>
@@ -522,7 +534,7 @@ namespace GreenField.Gadgets.ViewModels
                 ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.View);
             }
             eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE);
-            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeVote", UriKind.Relative));
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
         } 
         #endregion
 
@@ -860,7 +872,23 @@ namespace GreenField.Gadgets.ViewModels
             if (dbInteractivity != null && IsActive)
             {
                 BusyIndicatorNotification(true, "Retrieving Presentation Overview Information...");
-                dbInteractivity.RetrievePresentationOverviewData(UserSession.SessionManager.SESSION.UserName,"In Progress",RetrievePresentationOverviewDataCallbackMethod);
+                if (DashBoardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION)
+                {
+                    dbInteractivity.RetrievePresentationOverviewData(UserSession.SessionManager.SESSION.UserName, "", RetrievePresentationOverviewDataCallbackMethod);
+                }
+                else if (DashBoardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION)
+                {
+
+                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE) || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER))
+                    {
+                        dbInteractivity.RetrievePresentationOverviewData("", "VotingDecisionScreen", RetrievePresentationOverviewDataCallbackMethod);
+                    }
+                    else
+                    {
+                        RetrievePresentationOverviewDataCallbackMethod(new List<ICPresentationOverviewData>());
+
+                    }
+                }
             }
         }
 

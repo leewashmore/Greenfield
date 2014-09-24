@@ -67,7 +67,8 @@ namespace GreenField.DashboardModule.Views
             if (this.rtvDashboard.Items.Count > 0)
             {
                 return;
-            }
+            } 
+            this.rtvDashboard.Items.Clear();
             DashboardGadgetParam param = new DashboardGadgetParam()
             {
                 DashboardGadgetPayload = payload,
@@ -97,7 +98,7 @@ namespace GreenField.DashboardModule.Views
             {
 
                 Header = GadgetNames.ICPRESENTATION_PRESENTATIONS,
-                Content = new ViewPresentations(new ViewModelPresentations(param)),
+                Content = new ViewPresentations(new ViewModelPresentations(param),DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION),
                 RestoredHeight = 300
             });
         }

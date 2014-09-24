@@ -3771,7 +3771,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/CreatePresentationServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginCreatePresentation(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, System.AsyncCallback callback, object asyncState);
         
-        bool EndCreatePresentation(System.IAsyncResult result);
+        long EndCreatePresentation(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/SetICPPresentationStatus", ReplyAction="http://tempuri.org/MeetingOperations/SetICPPresentationStatusResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/SetICPPresentationStatusServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
@@ -4015,10 +4015,10 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public long Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((long)(this.results[0]));
             }
         }
     }
@@ -4964,7 +4964,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndCreatePresentation(System.IAsyncResult result) {
+        long GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndCreatePresentation(System.IAsyncResult result) {
             return base.Channel.EndCreatePresentation(result);
         }
         
@@ -4975,7 +4975,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         private object[] OnEndCreatePresentation(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndCreatePresentation(result);
+            long retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndCreatePresentation(result);
             return new object[] {
                     retVal};
         }
@@ -6465,9 +6465,9 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 return _result;
             }
             
-            public bool EndCreatePresentation(System.IAsyncResult result) {
+            public long EndCreatePresentation(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("CreatePresentation", _args, result)));
+                long _result = ((long)(base.EndInvoke("CreatePresentation", _args, result)));
                 return _result;
             }
             
