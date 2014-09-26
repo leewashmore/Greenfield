@@ -16,25 +16,48 @@ alter procedure [dbo].[updateICTable](
 	,@Buy decimal(32,6) = ''
 	,@Sell decimal(32,6) = ''
 	,@updateDate datetime = ''
+	,@presenter varchar(50) = ''
 	)
 	as
 
-declare @presenter varchar(50)
+--declare @presenter varchar(50)
 declare @icAction varchar(50) 
 
-select @presenter = sb.ASHMOREEMM_PRIMARY_ANALYST from GF_SECURITY_BASEVIEW sb 
-where sb.ISSUER_ID = @issuerID
-and sb.issuer_proxy = sb.SECURITY_ID
-
-set @icAction = CASE WHEN @tmpICAction = '' 
-	THEN (
-		select ic.IC_ACTION 
-		from IC_TABLE ic 
-		where ic.ISSUER_ID = @issuerID 
-			and ic.DATE_PRESENTED = (
-				select MIN(ic.DATE_PRESENTED) from IC_TABLE ic where ic.ISSUER_ID = @issuerID
-				)
+set @datePresented = case when @datePresented = '' 
+	then
+		(
+		select ic.DATE_PRESENTED from IC_TABLE ic
+		where ic.ISSUER_ID = @issuerID
+		and ic.update_date = (
+			select MAX(ic.update_date) from IC_TABLE ic 
+			where ic.ISSUER_ID = @issuerID
 			)
+		)
+		else @datePresented
+	end
+
+set @presenter = case when @presenter = '' 
+	then
+		(
+		select sb.ASHMOREEMM_PRIMARY_ANALYST from GF_SECURITY_BASEVIEW sb 
+		where sb.ISSUER_ID = @issuerID
+		and sb.issuer_proxy = sb.SECURITY_ID
+		)
+		else @presenter
+	end
+	
+
+set @icAction = CASE WHEN isnull(@tmpICAction,'') = '' 
+	THEN 
+		(
+		select ic.IC_ACTION from IC_TABLE ic 
+		where ic.ISSUER_ID = '11787621' 
+		and ic.update_date = 
+			(
+			select max(ic.update_date) from IC_TABLE ic 
+			where ic.ISSUER_ID = '11787621'
+			)
+		)
 		ELSE @tmpICAction
 	END
 
