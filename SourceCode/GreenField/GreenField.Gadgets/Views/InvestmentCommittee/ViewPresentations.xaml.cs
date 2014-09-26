@@ -55,12 +55,15 @@ namespace GreenField.Gadgets.Views
             this.DataContextViewModelPresentations.DashBoardCategoryType = dashboardCategoryType;
             if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION)
             {
+                btnICPPresentationsListEdit.Visibility = Visibility.Visible;
                 btnICPPresentationsListView.Visibility = Visibility.Collapsed;
             }
             else if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION)
             {
                 btnICPPresentationsListView.Visibility = Visibility.Visible;
                 btnICPPresentationsListDecisionEntry.Visibility = Visibility.Visible;
+                btnICPPresentationsListEdit.Visibility = Visibility.Collapsed;
+                
             }
 
             

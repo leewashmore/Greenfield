@@ -213,20 +213,20 @@ namespace GreenField.Common
 
     public static class PFVType
     {
-        public static String FORWARD_DIVIDEND_YIELD = "Forward Dividend Yield";
-        public static String FORWARD_EV_EBITDA = "Forward EV/EBITDA";
+        public static String FORWARD_DIVIDEND_YIELD = "DY BF2";
+        public static String FORWARD_EV_EBITDA = "EV/EBITDA BF2";
         public static String FORWARD_EV_EBITDA_RELATIVE_TO_COUNTRY = "Forward EV/EBITDA relative to Country";
         public static String FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY = "Forward EV/EBITDA relative to Industry";
         public static String FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward EV/EBITDA Relative to Country Industry";
         public static String FORWARD_EV_REVENUE = "Forward EV/Revenue";
-        public static String FORWARD_P_NAV = "Forward P/NAV";
+        public static String FORWARD_P_NAV = "P/NAV BF24";
         public static String FORWARD_P_APPRAISAL_VALUE = "Forward P/Appraisal Value";
-        public static String FORWARD_P_BV = "Forward P/BV";
+        public static String FORWARD_P_BV = "P/BV BF2";
         public static String FORWARD_P_BV_RELATIVE_TO_COUNTRY = "Forward P/BV relative to Country";
         public static String FORWARD_P_BV_RELATIVE_TO_INDUSTRY = "Forward P/BV relative to Industry";
         public static String FORWARD_P_BV_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward P/BV Relative to Country Industry";
-        public static String FORWARD_P_CE = "Forward P/CE";
-        public static String FORWARD_P_E = "Forward P/E";
+        public static String FORWARD_P_CE = "P/CE BF2";
+        public static String FORWARD_P_E = "P/E BF2";
         public static String FORWARD_P_E_RELATIVE_TO_COUNTRY = "Forward P/E relative to Country";
         public static String FORWARD_P_E_RELATIVE_TO_INDUSTRY = "Forward P/E relative to Industry";
         public static String FORWARD_P_E_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward P/E Relative to Country Industry";

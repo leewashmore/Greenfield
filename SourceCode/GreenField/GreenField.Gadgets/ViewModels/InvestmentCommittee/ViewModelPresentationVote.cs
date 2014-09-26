@@ -714,7 +714,8 @@ namespace GreenField.Gadgets.ViewModels
                     if (result == true)
                     {
                         Prompt.ShowDialog("Input submission successfully completed");
-                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICVoteDecision");
+                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
+                        
                     }
                 }
                 else

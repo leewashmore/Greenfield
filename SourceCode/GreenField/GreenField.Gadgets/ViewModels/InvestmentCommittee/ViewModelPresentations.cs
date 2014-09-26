@@ -107,6 +107,16 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
+
+        private DashboardGadgetParam _param;
+        public DashboardGadgetParam Param
+        {
+            get { return _param; }
+            set
+            {
+                _param=value;
+            }
+        }
         #endregion
 
         #region Binded
@@ -272,6 +282,7 @@ namespace GreenField.Gadgets.ViewModels
             this.logger = param.LoggerFacade;
             this.eventAggregator = param.EventAggregator;
             this.regionManager = param.RegionManager;
+            this.Param = param;
             
         }
         #endregion        
@@ -534,7 +545,11 @@ namespace GreenField.Gadgets.ViewModels
                 ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.View);
             }
             eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE);
-            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
+            //regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
+            regionManager.Regions[RegionNames.MAIN_REGION].Activate(new ViewPresentationVote(new ViewModelPresentationVote(Param)));
+
+             
+
         } 
         #endregion
 
@@ -581,6 +596,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     ICPresentationOverviewInfo = result;
+                    ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, ICPresentationOverviewInfo);
                     if (dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving available meeting dates...");

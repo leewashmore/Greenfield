@@ -521,10 +521,11 @@ namespace GreenField.Web.Services
                             if (periodFinancialRecord != null)
                             {
                                 value = periodFinancialRecord.AMOUNT;
+                                result.Add(pfvType, value);
                             }
                         }
                     }
-                    result.Add(pfvType, value);
+                   
                 }
                 return result;
             }

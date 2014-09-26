@@ -120,7 +120,7 @@ namespace GreenField.DashboardModule
 
             #region Investment Committee
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeCreataEditPresentations));
-            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeVote));
+            _regionManager.RegisterViewWithRegion("Vote", typeof(ViewDashboardInvestmentCommitteeVote));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteePreMeetingReport));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeMeetingMinutes));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeSummaryReport));
