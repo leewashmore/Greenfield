@@ -402,7 +402,14 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         private void DecisionEntryCommandMethod(object param)
         {
-            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
+            eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+            (new DashboardTileViewItemInfo
+                       {
+                           DashboardTileHeader = GadgetNames.ICPRESENTATION_PRESENTATIONS_DECISION_ENTRY,
+                           DashboardTileObject = new ViewPresentationDecisionEntry(new ViewModelPresentationDecisionEntry(this.Param))
+                       });
+            
+            //regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
         } 
         #endregion
 
@@ -545,8 +552,17 @@ namespace GreenField.Gadgets.ViewModels
                 ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.View);
             }
             eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE);
+
+            eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                       (new DashboardTileViewItemInfo
+                       {
+                           DashboardTileHeader = GadgetNames.ICPRESENTATION_VOTE,
+                           DashboardTileObject = new ViewPresentationVote(new ViewModelPresentationVote(this.Param))
+                       });
+
+           // new ViewModelPresentationVote(this.Param).SelectedPresentationOverviewInfo = this.SelectedPresentationOverviewInfo;
             //regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
-            regionManager.Regions[RegionNames.MAIN_REGION].Activate(new ViewPresentationVote(new ViewModelPresentationVote(Param)));
+            //regionManager.Regions[RegionNames.MAIN_REGION].Activate(new ViewPresentationVote(new ViewModelPresentationVote(Param)));
 
              
 

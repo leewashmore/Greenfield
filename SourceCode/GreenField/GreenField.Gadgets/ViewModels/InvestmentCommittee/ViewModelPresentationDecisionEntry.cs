@@ -13,6 +13,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.MeetingDefinitions;
+using GreenField.Gadgets.Views;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -292,6 +293,17 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
+
+        private DashboardGadgetParam _param;
+        public DashboardGadgetParam Param
+        {
+            get { return _param; }
+            set
+            {
+                _param = value;
+            }
+        }
+
         #endregion
         #endregion
 
@@ -306,6 +318,7 @@ namespace GreenField.Gadgets.ViewModels
             logger = param.LoggerFacade;
             eventAggregator = param.EventAggregator;
             regionManager = param.RegionManager;
+            this.Param = param;
         }
         #endregion                
 
@@ -470,7 +483,15 @@ namespace GreenField.Gadgets.ViewModels
                     if (result == true)
                     {
                         Prompt.ShowDialog("Decision Entry successfully completed");
-                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                       // regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+
+                        eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                      (new DashboardTileViewItemInfo
+                      {
+                          DashboardTileHeader = GadgetNames.ICPRESENTATION_PRESENTATIONS,
+                          DashboardTileObject = new ViewPresentations(new ViewModelPresentations(this.Param), DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION)
+                      });
+
                     }
                 }
                 else
