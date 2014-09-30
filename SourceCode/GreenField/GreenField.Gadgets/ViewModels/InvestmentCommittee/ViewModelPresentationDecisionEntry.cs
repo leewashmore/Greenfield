@@ -211,8 +211,11 @@ namespace GreenField.Gadgets.ViewModels
                 securityPFVMeasureCurrentPrices = value;
                 if (value != null)
                 {
-                    SelectedPresentationOverviewInfo.CommitteePFVMeasureValue = 
-                        value[SelectedPresentationOverviewInfo.CommitteePFVMeasure];
+                    if (SelectedPresentationOverviewInfo.CommitteePFVMeasure != null)
+                    {
+                        SelectedPresentationOverviewInfo.CommitteePFVMeasureValue =
+                            value[SelectedPresentationOverviewInfo.CommitteePFVMeasure];
+                    }
                 }
             }
         } 
