@@ -518,7 +518,7 @@ namespace GreenField.Gadgets.ViewModels
                     PresentationMeetingVoterInfo = result;
                     PresentationPreMeetingVoterInfo = result.Where(record => record.PostMeetingFlag == false).OrderBy(record => record.Name).ToList();
 
-                    if(UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
+                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
                     {
                         PresentationMeetingVoterInfo = PresentationMeetingVoterInfo
                             .Where(record => record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower()).ToList();
@@ -527,6 +527,7 @@ namespace GreenField.Gadgets.ViewModels
                         IsVoterEnabled = true;
                         IsVoteEnabled = false;
                     }
+                   
                     if (result.Any(record => record.Name.ToLower() == UserSession.SessionManager.SESSION.UserName))
                     {
                         SelectedPresentationPreMeetingVoterInfo = result

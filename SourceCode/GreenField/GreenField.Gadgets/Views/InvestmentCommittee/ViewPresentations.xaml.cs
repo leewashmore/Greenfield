@@ -58,12 +58,19 @@ namespace GreenField.Gadgets.Views
                 btnICPPresentationsListEdit.Visibility = Visibility.Visible;
                 btnICPPresentationsListView.Visibility = Visibility.Collapsed;
             }
-            else if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION)
+            else if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION && UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
             {
                 btnICPPresentationsListView.Visibility = Visibility.Visible;
                 btnICPPresentationsListDecisionEntry.Visibility = Visibility.Visible;
                 btnICPPresentationsListEdit.Visibility = Visibility.Collapsed;
-                
+
+            }
+            else if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION && UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER))
+            {
+                btnICPPresentationsListView.Visibility = Visibility.Visible;
+                btnICPPresentationsListDecisionEntry.Visibility = Visibility.Collapsed;
+                btnICPPresentationsListEdit.Visibility = Visibility.Collapsed;
+
             }
 
             

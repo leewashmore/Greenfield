@@ -551,7 +551,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(logger, methodNamespace);
-               // BusyIndicatorNotification();
+                BusyIndicatorNotification();
                 eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
                 regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICPresentation");
             }
