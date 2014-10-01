@@ -212,6 +212,46 @@
       [PERIOD_FINANCIALS].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
       FROM [dbo].[PERIOD_FINANCIALS] AS [PERIOD_FINANCIALS]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="PERIOD_FINANCIALS_ISSUER" EntityType="ExternalResearchModel.Store.PERIOD_FINANCIALS_ISSUER" store:Type="Views" store:Schema="dbo" store:Name="PERIOD_FINANCIALS_ISSUER">
+            <DefiningQuery>SELECT 
+      [PERIOD_FINANCIALS_ISSUER].[ISSUER_ID] AS [ISSUER_ID], 
+      [PERIOD_FINANCIALS_ISSUER].[SECURITY_ID] AS [SECURITY_ID], 
+      [PERIOD_FINANCIALS_ISSUER].[COA_TYPE] AS [COA_TYPE], 
+      [PERIOD_FINANCIALS_ISSUER].[DATA_SOURCE] AS [DATA_SOURCE], 
+      [PERIOD_FINANCIALS_ISSUER].[ROOT_SOURCE] AS [ROOT_SOURCE], 
+      [PERIOD_FINANCIALS_ISSUER].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE], 
+      [PERIOD_FINANCIALS_ISSUER].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [PERIOD_FINANCIALS_ISSUER].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [PERIOD_FINANCIALS_ISSUER].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
+      [PERIOD_FINANCIALS_ISSUER].[FISCAL_TYPE] AS [FISCAL_TYPE], 
+      [PERIOD_FINANCIALS_ISSUER].[CURRENCY] AS [CURRENCY], 
+      [PERIOD_FINANCIALS_ISSUER].[DATA_ID] AS [DATA_ID], 
+      [PERIOD_FINANCIALS_ISSUER].[AMOUNT] AS [AMOUNT], 
+      [PERIOD_FINANCIALS_ISSUER].[CALCULATION_DIAGRAM] AS [CALCULATION_DIAGRAM], 
+      [PERIOD_FINANCIALS_ISSUER].[SOURCE_CURRENCY] AS [SOURCE_CURRENCY], 
+      [PERIOD_FINANCIALS_ISSUER].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
+      FROM [dbo].[PERIOD_FINANCIALS_ISSUER] AS [PERIOD_FINANCIALS_ISSUER]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PERIOD_FINANCIALS_SECURITY" EntityType="ExternalResearchModel.Store.PERIOD_FINANCIALS_SECURITY" store:Type="Views" store:Schema="dbo" store:Name="PERIOD_FINANCIALS_SECURITY">
+            <DefiningQuery>SELECT 
+      [PERIOD_FINANCIALS_SECURITY].[ISSUER_ID] AS [ISSUER_ID], 
+      [PERIOD_FINANCIALS_SECURITY].[SECURITY_ID] AS [SECURITY_ID], 
+      [PERIOD_FINANCIALS_SECURITY].[COA_TYPE] AS [COA_TYPE], 
+      [PERIOD_FINANCIALS_SECURITY].[DATA_SOURCE] AS [DATA_SOURCE], 
+      [PERIOD_FINANCIALS_SECURITY].[ROOT_SOURCE] AS [ROOT_SOURCE], 
+      [PERIOD_FINANCIALS_SECURITY].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE], 
+      [PERIOD_FINANCIALS_SECURITY].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [PERIOD_FINANCIALS_SECURITY].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [PERIOD_FINANCIALS_SECURITY].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
+      [PERIOD_FINANCIALS_SECURITY].[FISCAL_TYPE] AS [FISCAL_TYPE], 
+      [PERIOD_FINANCIALS_SECURITY].[CURRENCY] AS [CURRENCY], 
+      [PERIOD_FINANCIALS_SECURITY].[DATA_ID] AS [DATA_ID], 
+      [PERIOD_FINANCIALS_SECURITY].[AMOUNT] AS [AMOUNT], 
+      [PERIOD_FINANCIALS_SECURITY].[CALCULATION_DIAGRAM] AS [CALCULATION_DIAGRAM], 
+      [PERIOD_FINANCIALS_SECURITY].[SOURCE_CURRENCY] AS [SOURCE_CURRENCY], 
+      [PERIOD_FINANCIALS_SECURITY].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
+      FROM [dbo].[PERIOD_FINANCIALS_SECURITY] AS [PERIOD_FINANCIALS_SECURITY]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Portfolio_Security_Target_Baseview" EntityType="ExternalResearchModel.Store.Portfolio_Security_Target_Baseview" store:Type="Views" store:Schema="dbo" store:Name="Portfolio_Security_Target_Baseview">
             <DefiningQuery>SELECT 
       [Portfolio_Security_Target_Baseview].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
@@ -241,7 +281,7 @@
           </EntitySet>
         </EntityContainer>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.BENCHMARK_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.BENCHMARK_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="BENCHMARK_MASTER">
           <Key>
@@ -252,7 +292,7 @@
           <Property Name="BENCHMARK_NAME" Type="varchar" Nullable="false" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.COMPOSITE_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.COMPOSITE_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="COMPOSITE_MASTER">
           <Key>
@@ -274,7 +314,7 @@
           <Property Name="ACTIVE" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CONSENSUS_MASTER">
           <Key>
@@ -301,7 +341,7 @@
           <Property Name="CURRENT" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Country_Master">
           <Key>
@@ -320,7 +360,7 @@
           <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
           <Key>
@@ -361,7 +401,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="DATA_MASTER">
           <Key>
@@ -395,7 +435,7 @@
           <Property Name="MaxValue" Type="decimal" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FAIR_VALUE">
           <Key>
@@ -419,7 +459,7 @@
           <Property Name="PERIOD_YEAR" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FX_RATES">
           <Key>
@@ -477,6 +517,10 @@
           <Property Name="BARRA_RISK_FACTOR_LIQUIDITY" Type="decimal" Precision="32" Scale="6" />
           <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="decimal" Precision="32" Scale="6" />
           <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="COMPANY_FULL_MKT_CAP_USD" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="FOREIGN_INCLUSION_FACTOR" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="CLOSE_NUMBER_SHARES" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="Sec_Init_Full_Mkt_Cap_USD_ND" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <EntityType Name="GF_COMPOSITE_LTHOLDINGS">
           <Key>
@@ -588,7 +632,7 @@
           <Property Name="UPDATE_BB_STATUS" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_ISSUER">
           <Key>
@@ -601,7 +645,7 @@
           <Property Name="LastIndustryModelLoad" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES">
           <Key>
@@ -614,7 +658,7 @@
           <Property Name="SHARES_OUTSTANDING" Type="decimal" Nullable="false" Precision="32" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES_COMPOSITION">
           <Key>
@@ -639,7 +683,7 @@
           <Property Name="UPDATE_SOURCE" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Display">
           <Key>
@@ -660,7 +704,7 @@
           <Property Name="HELP_TEXT" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.MODEL_INPUTS_CTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.MODEL_INPUTS_CTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="MODEL_INPUTS_CTY">
           <Key>
@@ -683,7 +727,7 @@
           <Property Name="ANALYST_NAME" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS_DISPLAY">
           <Key>
@@ -707,7 +751,7 @@
           <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.PORTFOLIO_SECURITY_TARGETS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.PORTFOLIO_SECURITY_TARGETS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PORTFOLIO_SECURITY_TARGETS">
           <Key>
@@ -722,7 +766,7 @@
           <Property Name="UPDATED" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PRICES">
           <Key>
@@ -739,7 +783,7 @@
           <Property Name="ADR_CONV" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS">
           <Key>
@@ -777,7 +821,83 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.Portfolio_Security_Target_Baseview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.PERIOD_FINANCIALS_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PERIOD_FINANCIALS_ISSUER">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="SOURCE_CURRENCY" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
+          <Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="ROOT_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="ROOT_SOURCE_DATE" Type="datetime" Nullable="false" />
+          <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+          <Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
+          <Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
+          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="CALCULATION_DIAGRAM" Type="varchar" MaxLength="255" />
+          <Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Main.dbo.PERIOD_FINANCIALS_SECURITY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PERIOD_FINANCIALS_SECURITY">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="SOURCE_CURRENCY" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
+          <Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="ROOT_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="ROOT_SOURCE_DATE" Type="datetime" Nullable="false" />
+          <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+          <Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
+          <Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
+          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="CALCULATION_DIAGRAM" Type="varchar" MaxLength="255" />
+          <Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Main.dbo.Portfolio_Security_Target_Baseview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Portfolio_Security_Target_Baseview">
           <Key>
@@ -802,7 +922,7 @@
           <Property Name="ISSUER_NAME" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Main_QA.dbo.Portfolio_Security_Targets_Union' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Main.dbo.Portfolio_Security_Targets_Union' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Portfolio_Security_Targets_Union">
           <Key>
@@ -1560,8 +1680,10 @@
           <EntitySet Name="COMPOSITE_MATRIX" EntityType="ExternalResearchModel.COMPOSITE_MATRIX" />
           <EntitySet Name="PERIOD_FINANCIALS" EntityType="ExternalResearchModel.PERIOD_FINANCIALS" />
           <FunctionImport Name="GetDCFFairValue" EntitySet="PERIOD_FINANCIALS" ReturnType="Collection(ExternalResearchModel.PERIOD_FINANCIALS)">
-            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="PERIOD_FINANCIALS_ISSUER" EntityType="ExternalResearchModel.PERIOD_FINANCIALS_ISSUER" />
+          <EntitySet Name="PERIOD_FINANCIALS_SECURITY" EntityType="ExternalResearchModel.PERIOD_FINANCIALS_SECURITY" />
 
 
 				</EntityContainer>
@@ -2352,6 +2474,10 @@
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LIQUIDITY" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LEVERAGE" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_PBETEWLD" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="COMPANY_FULL_MKT_CAP_USD" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="FOREIGN_INCLUSION_FACTOR" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="CLOSE_NUMBER_SHARES" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="Sec_Init_Full_Mkt_Cap_USD_ND" Precision="32" Scale="6" />
         </EntityType>
         <ComplexType Name="getInvestmentContext_Result">
           <Property Type="String" Name="issuer_id" Nullable="true" MaxLength="20" />
@@ -2444,6 +2570,76 @@
           <Property Type="Boolean" Name="ACTIVE" />
         </EntityType>
         <EntityType Name="PERIOD_FINANCIALS">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="SOURCE_CURRENCY" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COA_TYPE" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" />
+          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" />
+          <Property Type="String" Name="FISCAL_TYPE" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="CALCULATION_DIAGRAM" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PERIOD_FINANCIALS_ISSUER">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="SOURCE_CURRENCY" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COA_TYPE" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" />
+          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" />
+          <Property Type="String" Name="FISCAL_TYPE" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="CALCULATION_DIAGRAM" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PERIOD_FINANCIALS_SECURITY">
           <Key>
             <PropertyRef Name="ISSUER_ID" />
             <PropertyRef Name="SECURITY_ID" />
@@ -3361,6 +3557,10 @@
           <EntitySetMapping Name="GF_BENCHMARK_HOLDINGS_Local">
             <EntityTypeMapping TypeName="ExternalResearchModel.GF_BENCHMARK_HOLDINGS_Local">
               <MappingFragment StoreEntitySet="GF_BENCHMARK_HOLDINGS">
+                <ScalarProperty Name="Sec_Init_Full_Mkt_Cap_USD_ND" ColumnName="Sec_Init_Full_Mkt_Cap_USD_ND" />
+                <ScalarProperty Name="CLOSE_NUMBER_SHARES" ColumnName="CLOSE_NUMBER_SHARES" />
+                <ScalarProperty Name="FOREIGN_INCLUSION_FACTOR" ColumnName="FOREIGN_INCLUSION_FACTOR" />
+                <ScalarProperty Name="COMPANY_FULL_MKT_CAP_USD" ColumnName="COMPANY_FULL_MKT_CAP_USD" />
                 <ScalarProperty Name="BARRA_RISK_FACTOR_PBETEWLD" ColumnName="BARRA_RISK_FACTOR_PBETEWLD" />
                 <ScalarProperty Name="BARRA_RISK_FACTOR_LEVERAGE" ColumnName="BARRA_RISK_FACTOR_LEVERAGE" />
                 <ScalarProperty Name="BARRA_RISK_FACTOR_LIQUIDITY" ColumnName="BARRA_RISK_FACTOR_LIQUIDITY" />
@@ -3503,6 +3703,50 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetDCFFairValue" FunctionName="ExternalResearchModel.Store.GetDCFFairValue" />
+          <EntitySetMapping Name="PERIOD_FINANCIALS_ISSUER">
+            <EntityTypeMapping TypeName="ExternalResearchModel.PERIOD_FINANCIALS_ISSUER">
+              <MappingFragment StoreEntitySet="PERIOD_FINANCIALS_ISSUER">
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+                <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERIOD_FINANCIALS_SECURITY">
+            <EntityTypeMapping TypeName="ExternalResearchModel.PERIOD_FINANCIALS_SECURITY">
+              <MappingFragment StoreEntitySet="PERIOD_FINANCIALS_SECURITY">
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+                <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -3563,6 +3807,8 @@
         <EntityTypeShape EntityType="ExternalResearchModel.COMPOSITE_MASTER" Width="1.5" PointX="7.375" PointY="15.75" Height="1.9802864583333246" />
         <EntityTypeShape EntityType="ExternalResearchModel.COMPOSITE_MATRIX" Width="1.5" PointX="20.375" PointY="8.125" Height="1.5956835937500102" />
         <EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS" Width="1.5" PointX="0.75" PointY="16.75" Height="4.0956022135416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS_ISSUER" Width="1.5" PointX="15.375" PointY="16.75" Height="4.0956022135416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS_SECURITY" Width="1.5" PointX="17.375" PointY="0.75" Height="4.0956022135416674" />
 			</Diagram>
 		</Diagrams>
 	</Designer>

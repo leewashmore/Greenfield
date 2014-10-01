@@ -453,7 +453,7 @@ namespace GreenField.Web.Services
                                 ? "Buy" : "Watch";
                         }
                         String securityID = securityData.SECURITY_ID.ToString();
-                        PERIOD_FINANCIALS periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS
+                        PERIOD_FINANCIALS_SECURITY periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS_SECURITY
                             .Where(record => record.SECURITY_ID == securityID
                                 && record.DATA_ID == 185
                                 && record.CURRENCY == "USD"
@@ -513,7 +513,7 @@ namespace GreenField.Web.Services
                         if (securityData != null)
                         {
                             String securityID = securityData.SECURITY_ID.ToString();
-                            PERIOD_FINANCIALS periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS
+                            PERIOD_FINANCIALS_SECURITY periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS_SECURITY
                                 .Where(record => record.SECURITY_ID == securityID
                                     && record.DATA_ID == dataMasterRecord.DATA_ID
                                     && record.CURRENCY == "USD"

@@ -489,7 +489,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return false;
             }
-            bool isUserRoleValidated = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
+            bool isUserRoleValidated = UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN);
             bool isStatusValided = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
                 || SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING;
 
@@ -911,9 +911,13 @@ namespace GreenField.Gadgets.ViewModels
                 else if (DashBoardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION)
                 {
 
-                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE) || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER))
+                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) )
                     {
-                        dbInteractivity.RetrievePresentationOverviewData("", "VotingDecisionScreen", RetrievePresentationOverviewDataCallbackMethod);
+                        dbInteractivity.RetrievePresentationOverviewData("", "VotingDecision", RetrievePresentationOverviewDataCallbackMethod);
+                    }
+                    else if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE) || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER))
+                    {
+                        dbInteractivity.RetrievePresentationOverviewData("", "Voting", RetrievePresentationOverviewDataCallbackMethod);
                     }
                     else
                     {
