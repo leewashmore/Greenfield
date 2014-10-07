@@ -324,9 +324,9 @@
                     </ItemsControl>
                 </Grid>
                 <!--Pre Meeting Votes-->
-                <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Text="Pre-Meeting Votes" FontWeight="Bold" 
-                           Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
-                <Grid Grid.Row="1" Grid.Column="1" Margin="5,5,0,0">
+               <!-- <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Text="Pre-Meeting Votes" FontWeight="Bold" 
+                           Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>-->
+               <!-- <Grid Grid.Row="1" Grid.Column="1" Margin="5,5,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="100"/>
@@ -352,9 +352,9 @@
                     </Grid>
                     <Grid Grid.Row="0" Grid.Column="4" Background="{StaticResource DefaultGridHeaderBackground}">
                         <TextBlock Margin="5" Text="SELL" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                    </Grid>
+                    </Grid> -->
 
-                    <ItemsControl Grid.Row="1" Grid.Column="0"
+                    <!--<ItemsControl Grid.Row="1" Grid.Column="0"
                                   ItemsSource="{Binding PresentationPreMeetingVoterInfo}" 
                                   Style="{StaticResource ItemsControlStyle}">
                         <ItemsControl.ItemTemplate>
@@ -409,7 +409,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </Grid>
+                </Grid>-->
             </Grid>
             <Grid Grid.Row="5" Margin="0,2">
                 <Grid.RowDefinitions>
