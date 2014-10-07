@@ -44,7 +44,11 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private string CurrentHoldingsField;
         
+        private System.Nullable<int> Data_idField;
+        
         private string FVCalcField;
+        
+        private string Issuer_idField;
         
         private System.Nullable<System.DateTime> MeetingClosedDateTimeField;
         
@@ -99,6 +103,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         private System.Nullable<float> SecuritySellRangeField;
         
         private string SecurityTickerField;
+        
+        private string Security_idField;
         
         private string StatusTypeField;
         
@@ -265,6 +271,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Data_id {
+            get {
+                return this.Data_idField;
+            }
+            set {
+                if ((this.Data_idField.Equals(value) != true)) {
+                    this.Data_idField = value;
+                    this.RaisePropertyChanged("Data_id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string FVCalc {
             get {
                 return this.FVCalcField;
@@ -273,6 +292,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.FVCalcField, value) != true)) {
                     this.FVCalcField = value;
                     this.RaisePropertyChanged("FVCalc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Issuer_id {
+            get {
+                return this.Issuer_idField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Issuer_idField, value) != true)) {
+                    this.Issuer_idField = value;
+                    this.RaisePropertyChanged("Issuer_id");
                 }
             }
         }
@@ -624,6 +656,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.SecurityTickerField, value) != true)) {
                     this.SecurityTickerField = value;
                     this.RaisePropertyChanged("SecurityTicker");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Security_id {
+            get {
+                return this.Security_idField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Security_idField, value) != true)) {
+                    this.Security_idField = value;
+                    this.RaisePropertyChanged("Security_id");
                 }
             }
         }
@@ -1173,7 +1218,11 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private string CurrentHoldingsField;
         
+        private System.Nullable<int> Data_idField;
+        
         private string FVCalcField;
+        
+        private string Issuer_idField;
         
         private System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingPresentationMappingInfo> MeetingPresentationMappingInfoesField;
         
@@ -1232,6 +1281,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         private System.Nullable<float> SecuritySellRangeField;
         
         private string SecurityTickerField;
+        
+        private string Security_idField;
         
         private string StatusTypeField;
         
@@ -1413,6 +1464,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Data_id {
+            get {
+                return this.Data_idField;
+            }
+            set {
+                if ((this.Data_idField.Equals(value) != true)) {
+                    this.Data_idField = value;
+                    this.RaisePropertyChanged("Data_id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string FVCalc {
             get {
                 return this.FVCalcField;
@@ -1421,6 +1485,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.FVCalcField, value) != true)) {
                     this.FVCalcField = value;
                     this.RaisePropertyChanged("FVCalc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Issuer_id {
+            get {
+                return this.Issuer_idField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Issuer_idField, value) != true)) {
+                    this.Issuer_idField = value;
+                    this.RaisePropertyChanged("Issuer_id");
                 }
             }
         }
@@ -1798,6 +1875,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.SecurityTickerField, value) != true)) {
                     this.SecurityTickerField = value;
                     this.RaisePropertyChanged("SecurityTicker");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Security_id {
+            get {
+                return this.Security_idField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Security_idField, value) != true)) {
+                    this.Security_idField = value;
+                    this.RaisePropertyChanged("Security_id");
                 }
             }
         }

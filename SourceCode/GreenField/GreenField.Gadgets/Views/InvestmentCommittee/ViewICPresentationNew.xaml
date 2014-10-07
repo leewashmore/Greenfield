@@ -60,7 +60,7 @@
                                Style="{StaticResource TextBlockStyle}"/>    
                 </StackPanel>  -->
                 <StackPanel Grid.Column="0" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock FontWeight="Bold" Text="Presentation Deadline: " Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center"/>
+                    <TextBlock FontWeight="Bold" Text="Planned Submission Date: " Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center"/>
                     <telerik:RadDatePicker Grid.Column="1" HorizontalAlignment="Left" Name="PresentationDeadlineDatePicker" VerticalAlignment="Top" Width="90" Height="18"  SelectedValue="{Binding ICPresentationOverviewInfo.MeetingClosedDateTime, Mode=TwoWay}" />
                     <!--<TextBlock FontWeight="Bold" 
                                Text="{Binding ICPresentationOverviewInfo.MeetingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}" 
@@ -132,9 +132,28 @@
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="FV Calculation :" TextWrapping="Wrap" 
                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" 
                                Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtFVCalc" TextWrapping="Wrap" 
-                               VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.FVCalc}" 
+                    <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="5,2,0,0">
+                        <!--<TextBox Width="50" HorizontalAlignment="Left" x:Name="txtPFVMeasure" TextWrapping="Wrap" VerticalAlignment="Center" 
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtbYTDReltoLoc_LostFocus" Text="{Binding ICPresentationOverviewInfo.SecurityPFVMeasure}"/>-->
+                        <telerik:RadComboBox Margin="5,0,0,0" Name="FVMeasure"
+                                         SelectedItem="{Binding ICPresentationOverviewInfo.SecurityPFVMeasure, Mode=TwoWay}" 
+                                         VerticalAlignment="Center" HorizontalContentAlignment="Left" 
+                                         Style="{StaticResource RadComboBoxStyle}" Width="120" EmptyText="Select P/FV Measure"
+                                         ItemsSource="{Binding PFVTypeInfo}" HorizontalAlignment="Left"  SelectionChanged="FVMeasure_SelectionChanged"/>
+                        <TextBlock  x:Name="txtSpace" TextWrapping="Wrap" 
+                               VerticalAlignment="Center" Margin="5,0,0,0" Text="" 
                                Style="{StaticResource TextBlockStyle}"/>
+                         <TextBox Width="50" HorizontalAlignment="Right" x:Name="txtFVBuy" VerticalAlignment="Center" 
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtFVBuy_LostFocus" Text="{Binding ICPresentationOverviewInfo.SecurityBuyRange, Mode=TwoWay}"/>
+                        <TextBlock  x:Name="txtHyphen" TextWrapping="Wrap" 
+                               VerticalAlignment="Center" Margin="5,0,0,0" Text="- " 
+                               Style="{StaticResource TextBlockStyle}"/>
+                        <TextBox Width="50" HorizontalAlignment="Right" x:Name="txtFVSell" VerticalAlignment="Center" 
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtFVSell_LostFocus" Text="{Binding ICPresentationOverviewInfo.SecuritySellRange, Mode=TwoWay}"/>
+                        <!-- <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtFVCalc" TextWrapping="Wrap" 
+                               VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.FVCalc}" 
+                               Style="{StaticResource TextBlockStyle}"/>-->
+                    </StackPanel>
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Current Valuation:" TextWrapping="Wrap" 
                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" 
                                Style="{StaticResource TextBlockStyle}"/>

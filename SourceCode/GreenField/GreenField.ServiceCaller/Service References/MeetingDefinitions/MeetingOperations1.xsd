@@ -23,7 +23,9 @@
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="CurrentHoldings" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Data_id" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="FVCalc" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Issuer_id" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MeetingClosedDateTime" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="MeetingDateTime" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="MeetingVotingClosedDateTime" nillable="true" type="xs:dateTime" />
@@ -51,6 +53,7 @@
           <xs:element minOccurs="0" name="SecurityRecommendation" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecuritySellRange" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Security_id" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="StatusType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="YTDRet_Absolute" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="YTDRet_RELtoEM" nillable="true" type="xs:string" />
@@ -133,7 +136,9 @@
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="CurrentHoldings" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Data_id" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="FVCalc" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Issuer_id" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MeetingPresentationMappingInfoes" nillable="true" type="tns:ArrayOfMeetingPresentationMappingInfo" />
           <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
@@ -163,6 +168,7 @@
           <xs:element minOccurs="0" name="SecurityRecommendation" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecuritySellRange" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Security_id" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="StatusType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="VoterInfoes" nillable="true" type="tns:ArrayOfVoterInfo" />
           <xs:element minOccurs="0" name="YTDRet_Absolute" nillable="true" type="xs:string" />

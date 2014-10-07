@@ -322,16 +322,18 @@ namespace GreenField.Web.Services
 
                 #region GF_SECURITY_BASEVIEW info
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
-                            .Where(record => record.TICKER == entitySelectionData.ShortName
-                                && record.ISSUE_NAME == entitySelectionData.LongName)
+                            .Where(record => record.SECURITY_ID == entitySelectionData.SecurityId)
                             .FirstOrDefault();
 
-                presentationOverviewData.SecurityTicker = securityData.TICKER;
-                presentationOverviewData.SecurityName = securityData.ISSUE_NAME;
-                presentationOverviewData.SecurityCountry = securityData.ASEC_SEC_COUNTRY_NAME;
+                presentationOverviewData.SecurityTicker = securityData.TICKER ;
+                presentationOverviewData.SecurityName = securityData.ISSUE_NAME ;
+                presentationOverviewData.SecurityCountry = securityData.ASEC_SEC_COUNTRY_NAME ;
                 presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
                 presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
                 presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
+                presentationOverviewData.Security_id = securityData.SECURITY_ID;
+                presentationOverviewData.Issuer_id = securityData.ISSUER_ID;
+
                 if (securityData.CLOSING_PRICE != null)
                 {
                     presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
@@ -426,11 +428,12 @@ namespace GreenField.Web.Services
                     if (dataMasterRecord != null)
                     {
                         presentationOverviewData.SecurityPFVMeasure = dataMasterRecord.DATA_DESC;
+                        //presentationOverviewData.Data_id     = (int?)dataMasterRecord.DATA_ID;
                         presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
                         presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
                         presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
                         presentationOverviewData.FVCalc = String.Format("{0} {1:n2} - {2:n2}",
-                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL);
+                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL) + "Akhtar was here";
 
                         if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
                         {
@@ -974,6 +977,8 @@ namespace GreenField.Web.Services
                 presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
                 presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
                 presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
+                presentationOverviewData.Security_id = securityData.SECURITY_ID;
+                presentationOverviewData.Issuer_id = securityData.ISSUER_ID;
                 if (securityData.CLOSING_PRICE != null)
                     presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
 
@@ -1061,12 +1066,13 @@ namespace GreenField.Web.Services
 
                     if (dataMasterRecord != null)
                     {
+                        presentationOverviewData.Data_id = (int?) dataMasterRecord.DATA_ID;
                         presentationOverviewData.SecurityPFVMeasure = dataMasterRecord.DATA_DESC;
                         presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
                         presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
                         presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
                         presentationOverviewData.FVCalc = String.Format("{0} {1:n2} - {2:n2}",
-                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL);
+                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL) ;
                         if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
                         {
                             presentationOverviewData.SecurityBuySellvsCrnt = String.Format("{0} {1:n2} - {0} {2:n2}",
@@ -1089,7 +1095,7 @@ namespace GreenField.Web.Services
                         }
                         String securityID = securityData.SECURITY_ID.ToString();
 
-                        PERIOD_FINANCIALS periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS
+                        PERIOD_FINANCIALS_SECURITY periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS_SECURITY
                             .Where(record => record.SECURITY_ID == securityID
                                 && record.DATA_ID == 185
                                 && record.CURRENCY == "USD"

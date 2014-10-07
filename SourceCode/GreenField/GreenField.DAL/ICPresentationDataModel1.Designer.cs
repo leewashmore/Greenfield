@@ -21,13 +21,13 @@ using System.Xml.Serialization;
 
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingPresentationMappingInfo_MeetingInfo", "MeetingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.MeetingInfo), "MeetingPresentationMappingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingPresentationMappingInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_MeetingInfo", "MeetingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.MeetingInfo), "MeetingAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingAttachedFileInfo), true)]
+[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_CommentInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(GreenField.DAL.FileMaster), "CommentInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.CommentInfo), true)]
+[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.FileMaster), "MeetingAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingAttachedFileInfo), true)]
+[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_PresentationAttachedFileInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.FileMaster), "PresentationAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.PresentationAttachedFileInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(GreenField.DAL.PresentationInfo), "CommentInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.CommentInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingPresentationMappingInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "MeetingPresentationMappingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingPresentationMappingInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_AttachedFileInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "PresentationAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.PresentationAttachedFileInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_VoterInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "VoterInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.VoterInfo), true)]
-[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_CommentInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(GreenField.DAL.FileMaster), "CommentInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.CommentInfo), true)]
-[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.FileMaster), "MeetingAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingAttachedFileInfo), true)]
-[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_PresentationAttachedFileInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.FileMaster), "PresentationAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.PresentationAttachedFileInfo), true)]
 
 #endregion
 
@@ -194,22 +194,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<PresentationInfo> PresentationInfoes
-        {
-            get
-            {
-                if ((_PresentationInfoes == null))
-                {
-                    _PresentationInfoes = base.CreateObjectSet<PresentationInfo>("PresentationInfoes");
-                }
-                return _PresentationInfoes;
-            }
-        }
-        private ObjectSet<PresentationInfo> _PresentationInfoes;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<FileMaster> FileMasters
         {
             get
@@ -222,6 +206,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<FileMaster> _FileMasters;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PresentationInfo> PresentationInfoes
+        {
+            get
+            {
+                if ((_PresentationInfoes == null))
+                {
+                    _PresentationInfoes = base.CreateObjectSet<PresentationInfo>("PresentationInfoes");
+                }
+                return _PresentationInfoes;
+            }
+        }
+        private ObjectSet<PresentationInfo> _PresentationInfoes;
 
         #endregion
 
@@ -284,19 +284,19 @@ namespace GreenField.DAL
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the PresentationInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPresentationInfoes(PresentationInfo presentationInfo)
-        {
-            base.AddObject("PresentationInfoes", presentationInfo);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the FileMasters EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFileMasters(FileMaster fileMaster)
         {
             base.AddObject("FileMasters", fileMaster);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PresentationInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPresentationInfoes(PresentationInfo presentationInfo)
+        {
+            base.AddObject("PresentationInfoes", presentationInfo);
         }
 
         #endregion
@@ -2957,44 +2957,6 @@ namespace GreenField.DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo")]
-        public PresentationInfo PresentationInfo
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PresentationInfo> PresentationInfoReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_FileMaster", "FileMaster")]
         public FileMaster FileMaster
         {
@@ -3023,6 +2985,44 @@ namespace GreenField.DAL
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FileMaster>("ICPresentationModel.FK_CommentInfo_FileMaster", "FileMaster", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo")]
+        public PresentationInfo PresentationInfo
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PresentationInfo> PresentationInfoReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo", value);
                 }
             }
         }
@@ -4942,44 +4942,6 @@ namespace GreenField.DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_AttachedFileInfo_PresentationInfo", "PresentationInfo")]
-        public PresentationInfo PresentationInfo
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_AttachedFileInfo_PresentationInfo", "PresentationInfo").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_AttachedFileInfo_PresentationInfo", "PresentationInfo").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PresentationInfo> PresentationInfoReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_AttachedFileInfo_PresentationInfo", "PresentationInfo");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PresentationInfo>("ICPresentationModel.FK_AttachedFileInfo_PresentationInfo", "PresentationInfo", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_PresentationAttachedFileInfo_FileMaster", "FileMaster")]
         public FileMaster FileMaster
         {
@@ -5008,6 +4970,44 @@ namespace GreenField.DAL
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FileMaster>("ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster", "FileMaster", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_AttachedFileInfo_PresentationInfo", "PresentationInfo")]
+        public PresentationInfo PresentationInfo
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_AttachedFileInfo_PresentationInfo", "PresentationInfo").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_AttachedFileInfo_PresentationInfo", "PresentationInfo").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PresentationInfo> PresentationInfoReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_AttachedFileInfo_PresentationInfo", "PresentationInfo");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PresentationInfo>("ICPresentationModel.FK_AttachedFileInfo_PresentationInfo", "PresentationInfo", value);
                 }
             }
         }
@@ -5295,6 +5295,78 @@ namespace GreenField.DAL
         private Nullable<global::System.Int64> _SecurityPosition;
         partial void OnSecurityPositionChanging(Nullable<global::System.Int64> value);
         partial void OnSecurityPositionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityMSCIStdWeight
+        {
+            get
+            {
+                return _SecurityMSCIStdWeight;
+            }
+            set
+            {
+                OnSecurityMSCIStdWeightChanging(value);
+                ReportPropertyChanging("SecurityMSCIStdWeight");
+                _SecurityMSCIStdWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityMSCIStdWeight");
+                OnSecurityMSCIStdWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityMSCIStdWeight;
+        partial void OnSecurityMSCIStdWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityMSCIStdWeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityMSCIIMIWeight
+        {
+            get
+            {
+                return _SecurityMSCIIMIWeight;
+            }
+            set
+            {
+                OnSecurityMSCIIMIWeightChanging(value);
+                ReportPropertyChanging("SecurityMSCIIMIWeight");
+                _SecurityMSCIIMIWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityMSCIIMIWeight");
+                OnSecurityMSCIIMIWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityMSCIIMIWeight;
+        partial void OnSecurityMSCIIMIWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityMSCIIMIWeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityGlobalActiveWeight
+        {
+            get
+            {
+                return _SecurityGlobalActiveWeight;
+            }
+            set
+            {
+                OnSecurityGlobalActiveWeightChanging(value);
+                ReportPropertyChanging("SecurityGlobalActiveWeight");
+                _SecurityGlobalActiveWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityGlobalActiveWeight");
+                OnSecurityGlobalActiveWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityGlobalActiveWeight;
+        partial void OnSecurityGlobalActiveWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityGlobalActiveWeightChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6045,72 +6117,72 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityMSCIStdWeight
+        public global::System.String Security_id
         {
             get
             {
-                return _SecurityMSCIStdWeight;
+                return _Security_id;
             }
             set
             {
-                OnSecurityMSCIStdWeightChanging(value);
-                ReportPropertyChanging("SecurityMSCIStdWeight");
-                _SecurityMSCIStdWeight = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityMSCIStdWeight");
-                OnSecurityMSCIStdWeightChanged();
+                OnSecurity_idChanging(value);
+                ReportPropertyChanging("Security_id");
+                _Security_id = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Security_id");
+                OnSecurity_idChanged();
             }
         }
-        private Nullable<global::System.Single> _SecurityMSCIStdWeight;
-        partial void OnSecurityMSCIStdWeightChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityMSCIStdWeightChanged();
+        private global::System.String _Security_id;
+        partial void OnSecurity_idChanging(global::System.String value);
+        partial void OnSecurity_idChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityMSCIIMIWeight
+        public global::System.String Issuer_id
         {
             get
             {
-                return _SecurityMSCIIMIWeight;
+                return _Issuer_id;
             }
             set
             {
-                OnSecurityMSCIIMIWeightChanging(value);
-                ReportPropertyChanging("SecurityMSCIIMIWeight");
-                _SecurityMSCIIMIWeight = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityMSCIIMIWeight");
-                OnSecurityMSCIIMIWeightChanged();
+                OnIssuer_idChanging(value);
+                ReportPropertyChanging("Issuer_id");
+                _Issuer_id = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Issuer_id");
+                OnIssuer_idChanged();
             }
         }
-        private Nullable<global::System.Single> _SecurityMSCIIMIWeight;
-        partial void OnSecurityMSCIIMIWeightChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityMSCIIMIWeightChanged();
+        private global::System.String _Issuer_id;
+        partial void OnIssuer_idChanging(global::System.String value);
+        partial void OnIssuer_idChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityGlobalActiveWeight
+        public Nullable<global::System.Int32> Data_id
         {
             get
             {
-                return _SecurityGlobalActiveWeight;
+                return _Data_id;
             }
             set
             {
-                OnSecurityGlobalActiveWeightChanging(value);
-                ReportPropertyChanging("SecurityGlobalActiveWeight");
-                _SecurityGlobalActiveWeight = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityGlobalActiveWeight");
-                OnSecurityGlobalActiveWeightChanged();
+                OnData_idChanging(value);
+                ReportPropertyChanging("Data_id");
+                _Data_id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Data_id");
+                OnData_idChanged();
             }
         }
-        private Nullable<global::System.Single> _SecurityGlobalActiveWeight;
-        partial void OnSecurityGlobalActiveWeightChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityGlobalActiveWeightChanged();
+        private Nullable<global::System.Int32> _Data_id;
+        partial void OnData_idChanging(Nullable<global::System.Int32> value);
+        partial void OnData_idChanged();
 
         #endregion
 
@@ -8530,6 +8602,78 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _MeetingVotingClosedDateTime;
         partial void OnMeetingVotingClosedDateTimeChanging(Nullable<global::System.DateTime> value);
         partial void OnMeetingVotingClosedDateTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Data_id
+        {
+            get
+            {
+                return _Data_id;
+            }
+            set
+            {
+                OnData_idChanging(value);
+                ReportPropertyChanging("Data_id");
+                _Data_id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Data_id");
+                OnData_idChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Data_id;
+        partial void OnData_idChanging(Nullable<global::System.Int32> value);
+        partial void OnData_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Security_id
+        {
+            get
+            {
+                return _Security_id;
+            }
+            set
+            {
+                OnSecurity_idChanging(value);
+                ReportPropertyChanging("Security_id");
+                _Security_id = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Security_id");
+                OnSecurity_idChanged();
+            }
+        }
+        private global::System.String _Security_id;
+        partial void OnSecurity_idChanging(global::System.String value);
+        partial void OnSecurity_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Issuer_id
+        {
+            get
+            {
+                return _Issuer_id;
+            }
+            set
+            {
+                OnIssuer_idChanging(value);
+                ReportPropertyChanging("Issuer_id");
+                _Issuer_id = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Issuer_id");
+                OnIssuer_idChanged();
+            }
+        }
+        private global::System.String _Issuer_id;
+        partial void OnIssuer_idChanging(global::System.String value);
+        partial void OnIssuer_idChanged();
 
         #endregion
 

@@ -13,6 +13,7 @@ using GreenField.Gadgets.Models;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.MeetingDefinitions;
 using GreenField.UserSession;
+using System.Collections.Generic;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -76,6 +77,38 @@ namespace GreenField.Gadgets.ViewModels
             {
                 isBusyIndicatorBusy = value;
                 RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
+            }
+        }
+
+
+        public List<String> PFVTypeInfo
+        {
+            get
+            {
+                return new List<string> 
+                { 
+                    PFVType.FORWARD_DIVIDEND_YIELD,
+                    PFVType.FORWARD_EV_EBITDA,
+                    //PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_COUNTRY,
+                    //PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY,
+                    //PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY,
+                    //PFVType.FORWARD_EV_REVENUE,
+                    PFVType.FORWARD_P_NAV,
+                    //PFVType.FORWARD_P_APPRAISAL_VALUE,
+                    PFVType.FORWARD_P_BV,
+                    //PFVType.FORWARD_P_BV_RELATIVE_TO_COUNTRY,
+                    //PFVType.FORWARD_P_BV_RELATIVE_TO_INDUSTRY,
+                    //PFVType.FORWARD_P_BV_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY,
+                    PFVType.FORWARD_P_CE,
+                    PFVType.FORWARD_P_E,
+                    //PFVType.FORWARD_P_E_RELATIVE_TO_COUNTRY,
+                    //PFVType.FORWARD_P_E_RELATIVE_TO_INDUSTRY,
+                    //PFVType.FORWARD_P_E_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY,
+                    //PFVType.FORWARD_P_E_TO_2_YEAR_EARNINGS_GROWTH,
+                    //PFVType.FORWARD_P_E_TO_3_YEAR_EARNINGS_GROWTH,
+                    //PFVType.FORWARD_P_EMBEDDED_VALUE,
+                    //PFVType.FORWARD_P_REVENUE
+                };
             }
         }
 
@@ -429,11 +462,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="valueYTDAbs">YTDRet_Absolute</param>
         /// <param name="valueYTDReltoLoc">YTDRet_RELtoLOC</param>
         /// <param name="valueYTDReltoEM">YTDRet_RELtoEM</param>
-        public void RaiseICPresentationOverviewInfoChanged(Decimal valueYTDAbs, Decimal valueYTDReltoLoc, Decimal valueYTDReltoEM)
+        public void RaiseICPresentationOverviewInfoChanged(Decimal valueYTDAbs, Decimal valueYTDReltoLoc, Decimal valueYTDReltoEM,Decimal valueFVBuy,Decimal valueFVSell,String valueFVMeasure)
         {
             ICPresentationOverviewInfo.YTDRet_Absolute = String.Format("{0:n2}", valueYTDAbs) + "%";
             ICPresentationOverviewInfo.YTDRet_RELtoLOC = String.Format("{0:n2}", valueYTDReltoEM) + "%";
-            ICPresentationOverviewInfo.YTDRet_RELtoEM = String.Format("{0:n2}", valueYTDReltoLoc) + "%";            
+            ICPresentationOverviewInfo.YTDRet_RELtoEM = String.Format("{0:n2}", valueYTDReltoLoc) + "%";
+            ICPresentationOverviewInfo.SecurityBuyRange = (float?)valueFVBuy;
+            ICPresentationOverviewInfo.SecuritySellRange = (float?)valueFVSell;
+            iCPresentationOverviewInfo.SecurityPFVMeasure = valueFVMeasure;
+            //iCPresentationOverviewInfo. = valueFVMeasure;
+            iCPresentationOverviewInfo.FVCalc = String.Format("{0} {1:n2} - {2:n2}", valueFVMeasure, valueFVBuy, valueFVSell);
             RaisePropertyChanged(() => this.SubmitCommand);
         }
         #endregion
