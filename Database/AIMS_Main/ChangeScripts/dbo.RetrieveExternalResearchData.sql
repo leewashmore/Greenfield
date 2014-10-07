@@ -1,17 +1,21 @@
+USE [AIMS_Main]
+GO
 
-/****** Object:  StoredProcedure [dbo].[RetrieveExternalResearchData]    Script Date: 12/12/2013 16:06:15 ******/
+/****** Object:  StoredProcedure [dbo].[RetrieveExternalResearchData]    Script Date: 10/07/2014 16:03:25 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RetrieveExternalResearchData]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].[RetrieveExternalResearchData]
 GO
 
+USE [AIMS_Main]
+GO
 
-
-/****** Object:  StoredProcedure [dbo].[RetrieveExternalResearchData]    Script Date: 12/12/2013 16:06:15 ******/
+/****** Object:  StoredProcedure [dbo].[RetrieveExternalResearchData]    Script Date: 10/07/2014 16:03:25 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 
@@ -40,38 +44,89 @@ update #PortfolioDetailsData
 	set marketcap = x.marketcap ,
 		forwardpe = x.forwardpe ,
 		forwardpbv = x.forwardpbv,
-		ForwardEB_EBITDA=x.ForwardEB_EBITDA
-		
+		ForwardEB_EBITDA=x.ForwardEB_EBITDA,
+		DYBF2 = x.DYBF2
 	from #PortfolioDetailsData as por
 	inner join (
-		select asec_sec_short_name,[185] as marketcap ,[187] as forwardpe, [188] as forwardpbv , [198] as ForwardEB_EBITDA from
+		select asec_sec_short_name,[185] as marketcap ,[187] as forwardpe, [188] as forwardpbv , [198] as ForwardEB_EBITDA, [236] as DYBF2 from
 		(	select data_id,s.asec_sec_short_name , amount from period_financials_security p 
 			inner join gf_security_baseview s on s.security_id = p.security_id
 			where  CURRENCY = 'USD'
 			and PERIOD_TYPE = 'C'
 			and DATA_SOURCE = 'PRIMARY'
-			and DATA_ID IN (185,187,198,188)
+			and DATA_ID IN (185,187,198,188, 236)
 				
 		) a
 		pivot 
 		(
 			sum(AMOUNT)
-			for data_id in ([185],[187],[198],[188])
+			for data_id in ([185],[187],[198],[188], [236])
 		) as p
 	)x on x.asec_sec_short_name COLLATE DATABASE_DEFAULT = por.AsecSecShortName COLLATE DATABASE_DEFAULT
 
+
+--update Dividend Yields(0)
+update #PortfolioDetailsData 
+	set DividendYieldCurrentYear = x.DivCurrYear	
+	from #PortfolioDetailsData as por
+	inner join (
+		select asec_sec_short_name,[192] as DivCurrYear from
+		(	select data_id,s.asec_sec_short_name , amount from period_financials_security p 
+			inner join gf_security_baseview s on s.security_id = p.security_id
+			where  CURRENCY = 'USD'
+			and PERIOD_TYPE = 'A'
+			and DATA_SOURCE = 'PRIMARY'
+			and FISCAL_TYPE='CALENDAR'
+			and period_year=year(getdate())			
+			and DATA_ID IN (192)
+				
+		) a
+		pivot 
+		(
+			sum(AMOUNT)
+			for data_id in ([192])
+		) as p
+	)x on x.asec_sec_short_name COLLATE DATABASE_DEFAULT = por.AsecSecShortName COLLATE DATABASE_DEFAULT
+	
+--update Dividend Yields (1)
+update #PortfolioDetailsData 
+	set DividendYieldNextYear = x.DivNextYear	
+	from #PortfolioDetailsData as por
+	inner join (
+		select asec_sec_short_name,[192] as DivNextYear from
+		(	select data_id,s.asec_sec_short_name , amount from period_financials_security p 
+			inner join gf_security_baseview s on s.security_id = p.security_id
+			where  CURRENCY = 'USD'
+			and PERIOD_TYPE = 'A'
+			and DATA_SOURCE = 'PRIMARY'
+			and FISCAL_TYPE='CALENDAR'
+			and period_year=year(getdate())+1			
+			and DATA_ID IN (192)
+				
+		) a
+		pivot 
+		(
+			sum(AMOUNT)
+			for data_id in ([192])
+		) as p
+	)x on x.asec_sec_short_name COLLATE DATABASE_DEFAULT = por.AsecSecShortName COLLATE DATABASE_DEFAULT	
 
 
 --update current year issuer level valuations
 update #PortfolioDetailsData 
 	set RevenueGrowthCurrentYear = x.RevenueGrowth *100,
 		NetIncomeGrowthCurrentYear = x.NetIncomeGrowth * 100,
-		ROE = x.ROE *100,
+		ROE = x.ROE * 100,
 		NetDebtEquity=x.NetDebtEquity,
 		FreecashFlowMargin = x.FreeCashflowMargin
 	from #PortfolioDetailsData as por
 	Inner join (
-		select Issuer_Id,[178] AS RevenueGrowth ,[177] As NetIncomeGrowth   ,[133] As ROE,[149] As NetDebtEquity,[146] as FreeCashflowMargin from 
+		select Issuer_Id,[178] AS RevenueGrowth 
+						,[177] As NetIncomeGrowth   
+						,[133] As ROE
+						,[149] As NetDebtEquity
+						,[146] as FreeCashflowMargin 					
+		from 
 		(select data_id,issuer_id , amount from period_financials_issuer
 			where CURRENCY = 'USD'
 			and PERIOD_TYPE = 'A'
@@ -116,6 +171,6 @@ update #PortfolioDetailsData
 END
 
 
-GO
 
+GO
 

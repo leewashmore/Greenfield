@@ -1,12 +1,7 @@
-
-
-/****** Object:  StoredProcedure [dbo].[RetrievePortfolioDetailsData]    Script Date: 12/12/2013 16:04:04 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[RetrievePortfolioDetailsData]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [dbo].[RetrievePortfolioDetailsData]
+USE [AIMS_Main]
 GO
 
-
-/****** Object:  StoredProcedure [dbo].[RetrievePortfolioDetailsData]    Script Date: 12/12/2013 16:04:04 ******/
+/****** Object:  StoredProcedure [dbo].[RetrievePortfolioDetailsData]    Script Date: 10/07/2014 16:01:51 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,7 +9,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE procedure [dbo].[RetrievePortfolioDetailsData] 
+
+ALTER procedure [dbo].[RetrievePortfolioDetailsData] 
 	(
 		@portfolio_id varchar(25),
 		@portfolio_date datetime,
@@ -70,6 +66,9 @@ BEGIN
 		RevenueGrowthNextYear decimal(22,8),
 		NetIncomeGrowthCurrentYear decimal(22,8),
 		NetIncomeGrowthNextYear decimal(22,8),
+		DividendYieldCurrentYear decimal(22,8),
+		DividendYieldNextYear decimal(22,8),		
+		DYBF2 decimal(22,8),		
 		ROE decimal(22,8),
 		NetDebtEquity decimal(22,8),
 		FreecashFlowMargin decimal(22,8),
@@ -120,6 +119,9 @@ BEGIN
 		RevenueGrowthNextYear decimal(22,8),
 		NetIncomeGrowthCurrentYear decimal(22,8),
 		NetIncomeGrowthNextYear decimal(22,8),
+		DividendYieldCurrentYear decimal(22,8),
+		DividendYieldNextYear decimal(22,8),		
+		DYBF2 decimal(22,8),			
 		ROE decimal(22,8),
 		NetDebtEquity decimal(22,8),
 		FreecashFlowMargin decimal(22,8),
@@ -442,6 +444,6 @@ END
 
 --exec RetrievePortfolioDetailsData 'ABPEQ','03/06/2014',null,null,0,0,1
 
-GO
 
+GO
 
