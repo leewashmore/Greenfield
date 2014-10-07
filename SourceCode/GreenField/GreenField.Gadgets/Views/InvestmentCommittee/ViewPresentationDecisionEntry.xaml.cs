@@ -5,6 +5,8 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.MeetingDefinitions;
+using GreenField.Common;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.Views
 {
@@ -60,6 +62,16 @@ namespace GreenField.Gadgets.Views
                 if (DataContextViewModelPresentationDecisionEntry != null)
                 {
                     DataContextViewModelPresentationDecisionEntry.IsActive = isActive;
+                    ICPresentationOverviewData selectedPresentationOverviewInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
+                    if (selectedPresentationOverviewInfo != null && selectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING)
+                    {
+                        this.btnSubmit.IsEnabled = true;
+                    }
+                    else
+                    {
+                        this.btnSubmit.IsEnabled = false;
+                    }
+
                 }
             }
         }
@@ -75,6 +87,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextViewModelPresentationDecisionEntry = dataContextSource;
+           
         }
         #endregion        
 

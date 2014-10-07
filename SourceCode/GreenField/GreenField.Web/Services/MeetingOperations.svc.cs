@@ -21,6 +21,7 @@ using GreenField.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
+using System.Text.RegularExpressions;
 
 namespace GreenField.Web.Services
 {
@@ -81,12 +82,12 @@ namespace GreenField.Web.Services
         /// <returns>List of ICPresentationOverviewData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<ICPresentationOverviewData> RetrievePresentationOverviewData()
+        public List<ICPresentationOverviewData> RetrievePresentationOverviewData(String userName,String status)
         {
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-                return entity.RetrieveICPresentationOverviewData().ToList();
+                return entity.RetrieveICPresentationOverviewData(userName,status).ToList();
             }
             catch (Exception ex)
             {
@@ -138,7 +139,7 @@ namespace GreenField.Web.Services
         /// <returns>True if successful</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public Boolean CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData)
+        public long CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData)
         {
             try
             {
@@ -169,18 +170,19 @@ namespace GreenField.Web.Services
                 //generate presentation info and voter info in database
                 String xmlScript = xmlDoc.ToString();
                 Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
+                presentationOverviewData.PresentationID = (long) result;
 
                 if (result < 0)
-                    return false;
+                    return (long)result;
                 #endregion
 
                 #region Generate powerpoint presentation
-                String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
+                String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\New IC template.pptx";
 
                 if (!File.Exists(presentationFile))
                     throw new Exception("Missing IC Presentation Template file");
 
-                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
+                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_NewICPresentation.pptx";
                 File.Copy(presentationFile, copiedFilePath, true);
 
                 try
@@ -211,8 +213,8 @@ namespace GreenField.Web.Services
 
                 #region Upload generated powerpoint presentation and create file master object
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
-                String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
-                    ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
+                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
 
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
                 .Where(record => record.ISSUE_NAME == presentationOverviewData.SecurityName
@@ -229,8 +231,8 @@ namespace GreenField.Web.Services
                 {
                     Category = "Power Point Presentation",
                     Location = url,
-                    Name = presentationOverviewData.SecurityName + "_"
-                        + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                    Name = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx",
                     IssuerName = issuerName,
                     SecurityName = presentationOverviewData.SecurityName,
                     SecurityTicker = presentationOverviewData.SecurityTicker,
@@ -241,8 +243,13 @@ namespace GreenField.Web.Services
                     ModifiedOn = DateTime.UtcNow
                 };
                 #endregion
+                if (UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false))
+                {
+                    return (long)result;
+                }
+                else { return -1; };
 
-                return UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false);
+                //return UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false);
             }
             catch (Exception ex)
             {
@@ -250,6 +257,12 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
+        }
+
+        private String removeSpecialCharacters(String str)
+        {
+            return Regex.Replace(str, @"[^\w\.@-]", "");
+                
         }
 
         /// <summary>
@@ -309,16 +322,18 @@ namespace GreenField.Web.Services
 
                 #region GF_SECURITY_BASEVIEW info
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
-                            .Where(record => record.TICKER == entitySelectionData.ShortName
-                                && record.ISSUE_NAME == entitySelectionData.LongName)
+                            .Where(record => record.SECURITY_ID == entitySelectionData.SecurityId)
                             .FirstOrDefault();
 
-                presentationOverviewData.SecurityTicker = securityData.TICKER;
-                presentationOverviewData.SecurityName = securityData.ISSUE_NAME;
-                presentationOverviewData.SecurityCountry = securityData.ASEC_SEC_COUNTRY_NAME;
+                presentationOverviewData.SecurityTicker = securityData.TICKER ;
+                presentationOverviewData.SecurityName = securityData.ISSUE_NAME ;
+                presentationOverviewData.SecurityCountry = securityData.ASEC_SEC_COUNTRY_NAME ;
                 presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
                 presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
                 presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
+                presentationOverviewData.Security_id = securityData.SECURITY_ID;
+                presentationOverviewData.Issuer_id = securityData.ISSUER_ID;
+
                 if (securityData.CLOSING_PRICE != null)
                 {
                     presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
@@ -413,11 +428,12 @@ namespace GreenField.Web.Services
                     if (dataMasterRecord != null)
                     {
                         presentationOverviewData.SecurityPFVMeasure = dataMasterRecord.DATA_DESC;
+                        //presentationOverviewData.Data_id     = (int?)dataMasterRecord.DATA_ID;
                         presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
                         presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
                         presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
                         presentationOverviewData.FVCalc = String.Format("{0} {1:n2} - {2:n2}",
-                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL);
+                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL) + "Akhtar was here";
 
                         if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
                         {
@@ -440,7 +456,7 @@ namespace GreenField.Web.Services
                                 ? "Buy" : "Watch";
                         }
                         String securityID = securityData.SECURITY_ID.ToString();
-                        PERIOD_FINANCIALS periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS
+                        PERIOD_FINANCIALS_SECURITY periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS_SECURITY
                             .Where(record => record.SECURITY_ID == securityID
                                 && record.DATA_ID == 185
                                 && record.CURRENCY == "USD"
@@ -500,7 +516,7 @@ namespace GreenField.Web.Services
                         if (securityData != null)
                         {
                             String securityID = securityData.SECURITY_ID.ToString();
-                            PERIOD_FINANCIALS periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS
+                            PERIOD_FINANCIALS_SECURITY periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS_SECURITY
                                 .Where(record => record.SECURITY_ID == securityID
                                     && record.DATA_ID == dataMasterRecord.DATA_ID
                                     && record.CURRENCY == "USD"
@@ -508,10 +524,11 @@ namespace GreenField.Web.Services
                             if (periodFinancialRecord != null)
                             {
                                 value = periodFinancialRecord.AMOUNT;
+                                result.Add(pfvType, value);
                             }
                         }
                     }
-                    result.Add(pfvType, value);
+                   
                 }
                 return result;
             }
@@ -590,8 +607,8 @@ namespace GreenField.Web.Services
             SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.YTDRet_Absolute);
             SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.FVCalc);
             SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_RELtoLOC);
-            SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
-                presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
+           // SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
+             //   presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
             SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
         }
 
@@ -688,7 +705,7 @@ namespace GreenField.Web.Services
 
                 #region Update power point presentation file
                 #region Retrieve presentation file or create new one if not exists
-                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
+                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_NewICPresentation.pptx";
                 List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
                 FileMaster presentationPowerPointAttachedFile = null;
 
@@ -707,13 +724,13 @@ namespace GreenField.Web.Services
                     }
                     else
                     {
-                        String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
+                        String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\New IC template.pptx";
                         File.Copy(presentationFile, copiedFilePath, true);
                     }
                 }
                 else
                 {
-                    String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
+                    String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\New IC template.pptx";
                     File.Copy(presentationFile, copiedFilePath, true);
                 }
                 #endregion
@@ -752,8 +769,8 @@ namespace GreenField.Web.Services
                 String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
 
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
-                String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
-                    ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
+                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
 
                 String url = documentOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath), String.Empty);
 
@@ -764,7 +781,8 @@ namespace GreenField.Web.Services
                 {
                     Category = "Power Point Presentation",
                     Location = url,
-                    Name = presentationOverviewData.SecurityName + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                    Name = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx",
                     IssuerName = issuerName,
                     SecurityName = presentationOverviewData.SecurityName,
                     SecurityTicker = presentationOverviewData.SecurityTicker,
@@ -772,15 +790,16 @@ namespace GreenField.Web.Services
                     CreatedBy = userName,
                     CreatedOn = DateTime.UtcNow,
                     ModifiedBy = userName,
-                    ModifiedOn = DateTime.UtcNow
+                    ModifiedOn = DateTime.UtcNow,
+                    FileID = presentationPowerPointAttachedFile.FileID
                 };
 
                 Boolean insertedFileMasterRecord = UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster, false);
-                if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord)
+               /* if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord)
                 {
                     documentOperations.DeleteDocument(presentationPowerPointAttachedFile.Location);
                     entity.DeleteFileMaster(presentationPowerPointAttachedFile.FileID);
-                }
+                } */
                 #endregion
                 #endregion
 
@@ -958,6 +977,8 @@ namespace GreenField.Web.Services
                 presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
                 presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
                 presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
+                presentationOverviewData.Security_id = securityData.SECURITY_ID;
+                presentationOverviewData.Issuer_id = securityData.ISSUER_ID;
                 if (securityData.CLOSING_PRICE != null)
                     presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
 
@@ -1045,12 +1066,13 @@ namespace GreenField.Web.Services
 
                     if (dataMasterRecord != null)
                     {
+                        presentationOverviewData.Data_id = (int?) dataMasterRecord.DATA_ID;
                         presentationOverviewData.SecurityPFVMeasure = dataMasterRecord.DATA_DESC;
                         presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
                         presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
                         presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
                         presentationOverviewData.FVCalc = String.Format("{0} {1:n2} - {2:n2}",
-                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL);
+                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL) ;
                         if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
                         {
                             presentationOverviewData.SecurityBuySellvsCrnt = String.Format("{0} {1:n2} - {0} {2:n2}",
@@ -1073,7 +1095,7 @@ namespace GreenField.Web.Services
                         }
                         String securityID = securityData.SECURITY_ID.ToString();
 
-                        PERIOD_FINANCIALS periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS
+                        PERIOD_FINANCIALS_SECURITY periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS_SECURITY
                             .Where(record => record.SECURITY_ID == securityID
                                 && record.DATA_ID == 185
                                 && record.CURRENCY == "USD"

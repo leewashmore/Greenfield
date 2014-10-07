@@ -24,7 +24,19 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// YTD ReltoEM value
         /// </summary>
-        private Decimal valueYTDReltoEM; 
+        private Decimal valueYTDReltoEM;
+
+        /// <summary>
+        /// Value FV Buy
+        /// </summary>
+        private Decimal valueFVBuy;
+
+        /// <summary>
+        /// Value FV Sell
+        /// </summary>
+        private Decimal valueFVSell; 
+
+
         #endregion
 
         #region Properties
@@ -104,6 +116,27 @@ namespace GreenField.Gadgets.Views
         private void txtbYTDReltoEM_LostFocus(object sender, RoutedEventArgs e)
         {
             RaiseICPresentationOverviewInfoChanged();
+        }
+
+        /// <summary>
+        /// txtFVBuy LostFocus event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtFVBuy_LostFocus(object sender, RoutedEventArgs e)
+        {
+            RaiseICPresentationOverviewInfoChanged();
+        }
+
+
+        /// <summary>
+        /// txtFVSell LostFocus event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtFVSell_LostFocus(object sender, RoutedEventArgs e)
+        {
+            RaiseICPresentationOverviewInfoChanged();
         }  
         #endregion        
 
@@ -113,6 +146,36 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private void RaiseICPresentationOverviewInfoChanged()
         {
+
+            #region valueFVBuy
+            Decimal valueFVBuy;
+            if (!Decimal.TryParse(this.txtFVBuy.Text, out valueFVBuy))
+            {
+                this.txtFVBuy.Text = valueFVBuy.ToString();
+                return;
+            }
+           // valueYTDAbs = Convert.ToDecimal((int)(valueYTDAbs * Convert.ToDecimal(100))) / Convert.ToDecimal(100);
+            this.txtFVBuy.Text = valueFVBuy.ToString();
+            this.valueFVBuy = valueFVBuy;
+            #endregion
+
+
+            #region valueFVSell
+            Decimal valueFVSell;
+            if (!Decimal.TryParse(this.txtFVSell.Text, out valueFVSell))
+            {
+                this.txtFVSell.Text = valueFVSell.ToString();
+                return;
+            }
+            // valueYTDAbs = Convert.ToDecimal((int)(valueYTDAbs * Convert.ToDecimal(100))) / Convert.ToDecimal(100);
+            this.txtFVSell.Text = valueFVSell.ToString();
+            this.valueFVSell = valueFVSell;
+            #endregion
+
+            #region FVMeasure
+            String valFVMeasure = this.FVMeasure.SelectedValue as String;
+            #endregion
+
             #region valueYTDAbs
             Decimal valueYTDAbs;
             if (!Decimal.TryParse(this.txtbYTDAbsolute.Text, out valueYTDAbs))
@@ -149,8 +212,21 @@ namespace GreenField.Gadgets.Views
             this.valueYTDReltoEM = valueYTDReltoEM; 
             #endregion
 
-            DataContextViewModelICPresentationNew.RaiseICPresentationOverviewInfoChanged(valueYTDAbs, valueYTDReltoLoc, valueYTDReltoEM);
-        } 
+            DataContextViewModelICPresentationNew.RaiseICPresentationOverviewInfoChanged(valueYTDAbs, valueYTDReltoLoc, valueYTDReltoEM, valueFVBuy, valueFVSell, valFVMeasure);
+        }
+
+
+        /// <summary>
+        /// cbVoteType SelectionChanged EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">SelectionChangedEventArgs</param>
+        private void FVMeasure_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            RaiseICPresentationOverviewInfoChanged();
+        }
+
+
         #endregion
 
         #region Dispose Method

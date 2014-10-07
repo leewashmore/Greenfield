@@ -139,6 +139,7 @@
     <Content Include="Templates\ICPresentationTemplate.pptx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Templates\New IC template.pptx" />
     <None Include="Web References\DocumentCopyService\copy.disco" />
     <None Include="Web References\ListsDefinitions\lists.disco" />
     <Content Include="Web.config">

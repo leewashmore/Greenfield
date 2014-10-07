@@ -262,14 +262,23 @@ namespace GreenField.App.Helpers
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_NEW_PRESENTATION:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
                     break;
+                case DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION:
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
+                    break;
+                case DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION:
+                    UpdateToolBoxItemVisibility();
+                    break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE:
                     UpdateToolBoxItemVisibility();
                     break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS:
                     UpdateToolBoxItemVisibility();
+                   // UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION:
-                    UpdateToolBoxItemVisibility();
+                    //UpdateToolBoxItemVisibility();
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
+
                     break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATION_CHANGE_DATE:
                     UpdateToolBoxItemVisibility();

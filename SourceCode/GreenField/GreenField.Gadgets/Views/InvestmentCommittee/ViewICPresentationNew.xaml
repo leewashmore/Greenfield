@@ -53,17 +53,18 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" HorizontalAlignment="Center" Orientation="Horizontal">
+                <!--<StackPanel Grid.Column="0" HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock FontWeight="Bold" Text="Meeting DateTime: " Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock FontWeight="Bold" 
                                Text="{Binding ICPresentationOverviewInfo.MeetingDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                Style="{StaticResource TextBlockStyle}"/>    
-                </StackPanel>
-                <StackPanel Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock FontWeight="Bold" Text="Presentation Deadline: " Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock FontWeight="Bold" 
+                </StackPanel>  -->
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock FontWeight="Bold" Text="Planned Submission Date: " Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center"/>
+                    <telerik:RadDatePicker Grid.Column="1" HorizontalAlignment="Left" Name="PresentationDeadlineDatePicker" VerticalAlignment="Top" Width="90" Height="18"  SelectedValue="{Binding ICPresentationOverviewInfo.MeetingClosedDateTime, Mode=TwoWay}" />
+                    <!--<TextBlock FontWeight="Bold" 
                                Text="{Binding ICPresentationOverviewInfo.MeetingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}" 
-                               Style="{StaticResource TextBlockStyle}"/>
+                               Style="{StaticResource TextBlockStyle}"/> -->
                 </StackPanel>
                 <StackPanel Grid.Column="2" HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock FontWeight="Bold" Text="Pre-Meeting Voting Deadline: " Style="{StaticResource TextBlockStyle}"/>
@@ -71,6 +72,7 @@
                                Text="{Binding ICPresentationOverviewInfo.MeetingVotingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}" 
                                Style="{StaticResource TextBlockStyle}"/>
                 </StackPanel>
+                
             </Grid>
             <Grid Grid.Row="2" Margin="0,2,0,2">
                 <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
@@ -121,32 +123,58 @@
                                VerticalAlignment="Center" Margin="5,0,0,0" 
                                Text="{Binding ICPresentationOverviewInfo.SecurityMarketCapitalization, Converter={StaticResource MarketCapitalizationConverter}}" 
                                Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Price :" TextWrapping="Wrap" 
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Current Price :" TextWrapping="Wrap" 
                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" 
                                Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtPrice" TextWrapping="Wrap" 
                                VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.Price}" 
                                Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="FV Calc :" TextWrapping="Wrap" 
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="FV Calculation :" TextWrapping="Wrap" 
                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" 
                                Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtFVCalc" TextWrapping="Wrap" 
+                    <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="5,2,0,0">
+                        <!--<TextBox Width="50" HorizontalAlignment="Left" x:Name="txtPFVMeasure" TextWrapping="Wrap" VerticalAlignment="Center" 
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtbYTDReltoLoc_LostFocus" Text="{Binding ICPresentationOverviewInfo.SecurityPFVMeasure}"/>-->
+                        <telerik:RadComboBox Margin="5,0,0,0" Name="FVMeasure"
+                                         SelectedItem="{Binding ICPresentationOverviewInfo.SecurityPFVMeasure, Mode=TwoWay}" 
+                                         VerticalAlignment="Center" HorizontalContentAlignment="Left" 
+                                         Style="{StaticResource RadComboBoxStyle}" Width="120" EmptyText="Select P/FV Measure"
+                                         ItemsSource="{Binding PFVTypeInfo}" HorizontalAlignment="Left"  SelectionChanged="FVMeasure_SelectionChanged"/>
+                        <TextBlock  x:Name="txtSpace" TextWrapping="Wrap" 
+                               VerticalAlignment="Center" Margin="5,0,0,0" Text="" 
+                               Style="{StaticResource TextBlockStyle}"/>
+                         <TextBox Width="50" HorizontalAlignment="Right" x:Name="txtFVBuy" VerticalAlignment="Center" 
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtFVBuy_LostFocus" Text="{Binding ICPresentationOverviewInfo.SecurityBuyRange, Mode=TwoWay}"/>
+                        <TextBlock  x:Name="txtHyphen" TextWrapping="Wrap" 
+                               VerticalAlignment="Center" Margin="5,0,0,0" Text="- " 
+                               Style="{StaticResource TextBlockStyle}"/>
+                        <TextBox Width="50" HorizontalAlignment="Right" x:Name="txtFVSell" VerticalAlignment="Center" 
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtFVSell_LostFocus" Text="{Binding ICPresentationOverviewInfo.SecuritySellRange, Mode=TwoWay}"/>
+                        <!-- <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtFVCalc" TextWrapping="Wrap" 
                                VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.FVCalc}" 
-                               Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Buy/Sell Range :" TextWrapping="Wrap" 
+                               Style="{StaticResource TextBlockStyle}"/>-->
+                    </StackPanel>
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Current Valuation:" TextWrapping="Wrap" 
                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" 
                                Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="6" Grid.Column="1" x:Name="txtBuySellRange" TextWrapping="Wrap" 
-                               VerticalAlignment="Center" Margin="5,0,0,0" 
-                               Text="{Binding ICPresentationOverviewInfo.SecurityBuySellvsCrnt}" 
-                               Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Recommendation :" TextWrapping="Wrap" 
-                               VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" 
-                               Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="7" Grid.Column="1" x:Name="txtRecommendation" TextWrapping="Wrap" 
+                    <TextBlock Grid.Row="6" Grid.Column="1" x:Name="txtCurrVal" TextWrapping="Wrap" 
                                VerticalAlignment="Center" Margin="5,0,0,0" 
                                Text="{Binding ICPresentationOverviewInfo.SecurityRecommendation}" 
                                Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Buy/Sell Range :" TextWrapping="Wrap" 
+                               VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" 
+                               Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Row="7" Grid.Column="1" x:Name="txtBuySellRange" TextWrapping="Wrap" 
+                               VerticalAlignment="Center" Margin="5,0,0,0" 
+                               Text="{Binding ICPresentationOverviewInfo.SecurityBuySellvsCrnt}" 
+                               Style="{StaticResource TextBlockStyle}"/>
+                    <!--<TextBlock Grid.Row="7" Grid.Column="0" Text="Recommendation :" TextWrapping="Wrap" 
+                               VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" 
+                               Style="{StaticResource TextBlockStyle}"/> 
+                    <TextBlock Grid.Row="7" Grid.Column="1" x:Name="txtRecommendation" TextWrapping="Wrap" 
+                               VerticalAlignment="Center" Margin="5,0,0,0" 
+                               Text="{Binding ICPresentationOverviewInfo.SecurityRecommendation}" 
+                               Style="{StaticResource TextBlockStyle}"/>-->
                 </Grid>
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
@@ -233,8 +261,8 @@
                                    Width="75"
                                    Visibility="Visible"
                                    HorizontalAlignment="Center"
-                                   Content="SUBMIT"/>
-            </Grid>            
+                                   Content="Create"/>
+            </Grid>
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

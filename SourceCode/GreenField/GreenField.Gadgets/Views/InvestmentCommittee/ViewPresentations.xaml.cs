@@ -47,6 +47,38 @@ namespace GreenField.Gadgets.Views
         /// Constructor
         /// </summary>
         /// <param name="dataContextSource"></param>
+        public ViewPresentations(ViewModelPresentations dataContextSource,DashboardCategoryType dashboardCategoryType)
+        {
+            InitializeComponent();
+            this.DataContext = dataContextSource;
+            this.DataContextViewModelPresentations = dataContextSource;
+            this.DataContextViewModelPresentations.DashBoardCategoryType = dashboardCategoryType;
+            if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION)
+            {
+                btnICPPresentationsListEdit.Visibility = Visibility.Visible;
+                btnICPPresentationsListView.Visibility = Visibility.Collapsed;
+            }
+            else if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION && UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
+            {
+                btnICPPresentationsListView.Visibility = Visibility.Visible;
+                btnICPPresentationsListDecisionEntry.Visibility = Visibility.Visible;
+                btnICPPresentationsListChangeDate.Visibility = Visibility.Visible;
+                btnICPPresentationsListWithdrawRequest.Visibility = Visibility.Visible;
+                btnICPPresentationsListEdit.Visibility = Visibility.Collapsed;
+                
+
+            }
+            else if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION && UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER))
+            {
+                btnICPPresentationsListView.Visibility = Visibility.Visible;
+                btnICPPresentationsListDecisionEntry.Visibility = Visibility.Collapsed;
+                btnICPPresentationsListEdit.Visibility = Visibility.Collapsed;
+
+            }
+
+            
+        }
+
         public ViewPresentations(ViewModelPresentations dataContextSource)
         {
             InitializeComponent();

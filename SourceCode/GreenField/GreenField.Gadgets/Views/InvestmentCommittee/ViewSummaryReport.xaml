@@ -159,7 +159,7 @@
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn
                                             Width="Auto"
-                                            Header="EMM Holdings ($US) (Presented)"
+                                            Header="Holdings ($US) (Presented)"
                                             DataMemberBinding="{Binding SecurityCashPosition, StringFormat=c}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
@@ -168,7 +168,7 @@
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn 
                                             Width="Auto"
-                                            Header="EMM Holdings (Shares) (Presented)"
+                                            Header="Holdings (Shares) (Presented)"
                                             DataMemberBinding="{Binding SecurityPosition, StringFormat=n}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
@@ -249,7 +249,7 @@
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn
                                             Width="Auto"
-                                            Header="EMM Holdings ($US) (Current)"
+                                            Header="Holdings ($US) (Current)"
                                             DataMemberBinding="{Binding CurrentCashPosition, StringFormat=c}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
@@ -258,7 +258,7 @@
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn 
                                             Width="Auto"
-                                            Header="EMM Holdings (Shares) (Current)"
+                                            Header="Holdings (Shares) (Current)"
                                             DataMemberBinding="{Binding CurrentPosition, StringFormat=n}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"

@@ -233,7 +233,7 @@
                                    Command="{Binding ChangeDateCommand}"
                                    VerticalAlignment="Center"
                                    Width="100"
-                                   Visibility="Visible"
+                                   Visibility="Collapsed"
                                    HorizontalAlignment="Right"
                                    Content="CHANGE DATE"/>
                 <telerik:RadButton Grid.Column="1"
@@ -242,7 +242,7 @@
                                    VerticalAlignment="Center"
                                    Width="100"
                                    Margin="5,0,0,0"
-                                   Visibility="Visible"
+                                   Visibility="Collapsed"
                                    HorizontalAlignment="Right"
                                    Content="NEW"/>
                 <telerik:RadButton Grid.Column="2"
@@ -250,7 +250,7 @@
                                    Command="{Binding UploadCommand}" 
                                    Margin="5,0,0,0"
                                    Width="100"
-                                   Visibility="Visible"                        
+                                   Visibility="Collapsed"                        
                                    VerticalAlignment="Center"
                                    Content="UPLOAD"/>
                 <telerik:RadButton Grid.Column="3"
@@ -265,22 +265,22 @@
                                    Margin="5,0,0,0"
                                    Width="100"
                                    VerticalAlignment="Center"
-                                   Content="VIEW/VOTE"/>
+                                   Content="VIEW/VOTE"  />
                 <telerik:RadButton Grid.Column="5"
-                                   x:Name="btnICPPresentationsListRequest"
+                                   x:Name="btnICPPresentationsListWithdrawRequest"
                                    Command="{Binding WithdrawCommand}"
                                    Margin="5,0,0,0"
                                    Width="100"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
-                                   Content="WITHDRAW"/>
+                                   Content="WITHDRAW" Visibility="Collapsed" />
                 <telerik:RadButton Grid.Column="6" x:Name="btnICPPresentationsListDecisionEntry"
                                    Command="{Binding DecisionEntryCommand}"
                                    Margin="5,0,0,0"
                                    Width="100"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
-                                   Content="DECISION ENTRY"/>
+                                   Content="DECISION ENTRY" Visibility="Collapsed" />
             </Grid>
             
             <telerik:RadRichTextBox x:Name="RichTextBox" Grid.Row="3" Width="0"/>

@@ -421,7 +421,7 @@
                          MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
             </Grid>
             <Grid Grid.Row="6" Margin="0,2">
-                <telerik:RadButton Content="SUBMIT" Width="100" Command="{Binding SubmitCommand}"
+                <telerik:RadButton Name="btnSubmit" Content="SUBMIT" Width="100" Command="{Binding SubmitCommand}"
                                    Style="{StaticResource RadButtonStyle}"/>
             </Grid>
         </Grid>

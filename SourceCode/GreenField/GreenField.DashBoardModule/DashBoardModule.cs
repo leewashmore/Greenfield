@@ -120,7 +120,7 @@ namespace GreenField.DashboardModule
 
             #region Investment Committee
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeCreataEditPresentations));
-            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeVote));
+            _regionManager.RegisterViewWithRegion("Vote", typeof(ViewDashboardInvestmentCommitteeVote));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteePreMeetingReport));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeMeetingMinutes));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeSummaryReport));
@@ -128,7 +128,9 @@ namespace GreenField.DashboardModule
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteePresentations));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeEditPresentations));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeNew));
-            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeDecisionEntry)); 
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeDecisionEntry));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardICPresentation));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardICVoteDecision));
             #endregion
 
             #region Admin

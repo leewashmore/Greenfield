@@ -518,7 +518,7 @@ namespace GreenField.Gadgets.ViewModels
                     PresentationMeetingVoterInfo = result;
                     PresentationPreMeetingVoterInfo = result.Where(record => record.PostMeetingFlag == false).OrderBy(record => record.Name).ToList();
 
-                    if(UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
+                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
                     {
                         PresentationMeetingVoterInfo = PresentationMeetingVoterInfo
                             .Where(record => record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower()).ToList();
@@ -527,6 +527,7 @@ namespace GreenField.Gadgets.ViewModels
                         IsVoterEnabled = true;
                         IsVoteEnabled = false;
                     }
+                   
                     if (result.Any(record => record.Name.ToLower() == UserSession.SessionManager.SESSION.UserName))
                     {
                         SelectedPresentationPreMeetingVoterInfo = result
@@ -714,7 +715,8 @@ namespace GreenField.Gadgets.ViewModels
                     if (result == true)
                     {
                         Prompt.ShowDialog("Input submission successfully completed");
-                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
+                        
                     }
                 }
                 else
@@ -794,7 +796,7 @@ namespace GreenField.Gadgets.ViewModels
             if (IsActive)
             {
                 SelectedPresentationOverviewInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
-                ViewPluginFlagEnumeration flag = (ViewPluginFlagEnumeration)ICNavigation.Fetch(ICNavigationInfo.ViewPluginFlagEnumerationInfo);
+            //    ViewPluginFlagEnumeration flag = (ViewPluginFlagEnumeration)ICNavigation.Fetch(ICNavigationInfo.ViewPluginFlagEnumerationInfo);
 
                 if (UserSession.SessionManager.SESSION != null)
                 {

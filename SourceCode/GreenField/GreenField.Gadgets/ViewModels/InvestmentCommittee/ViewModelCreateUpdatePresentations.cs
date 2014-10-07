@@ -325,7 +325,8 @@ namespace GreenField.Gadgets.ViewModels
             return SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.POWERPOINT_PRESENTATION).Count() == 1
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.INVESTMENT_CONTEXT_REPORT).Count() == 1
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.FINSTAT_REPORT).Count() == 1
-                && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.DCF_MODEL).Count() == 1;
+                //&& SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.DCF_MODEL).Count() == 1
+                ;
         }
 
         /// <summary>
@@ -466,7 +467,9 @@ namespace GreenField.Gadgets.ViewModels
                 if (result == true)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, selectedPresentationOverviewInfo);
                     Initialize();
+                   // BusyIndicatorNotification();
                 }
                 else
                 {
@@ -517,7 +520,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(logger, methodNamespace);
-                BusyIndicatorNotification();
+                //BusyIndicatorNotification();
             }
         }
 
@@ -550,7 +553,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
                 eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICPresentation");
             }
         }
 

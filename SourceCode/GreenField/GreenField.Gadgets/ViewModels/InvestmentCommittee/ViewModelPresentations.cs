@@ -107,6 +107,16 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
+
+        private DashboardGadgetParam _param;
+        public DashboardGadgetParam Param
+        {
+            get { return _param; }
+            set
+            {
+                _param=value;
+            }
+        }
         #endregion
 
         #region Binded
@@ -177,6 +187,29 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
+        private Boolean decisionEntryVisibility;
+
+        public Boolean DecisionEntryVisibility
+        {
+            get { return decisionEntryVisibility; }
+            set 
+            {
+                decisionEntryVisibility = false;        
+            }
+        }
+
+        private DashboardCategoryType dashBoardCategoryType;
+
+        public DashboardCategoryType DashBoardCategoryType
+        {
+            get { return dashBoardCategoryType; }
+            set
+            {
+                dashBoardCategoryType = value;
+            }
+        }
+
         #endregion
 
         #region ICommand Properties
@@ -249,6 +282,8 @@ namespace GreenField.Gadgets.ViewModels
             this.logger = param.LoggerFacade;
             this.eventAggregator = param.EventAggregator;
             this.regionManager = param.RegionManager;
+            this.Param = param;
+            
         }
         #endregion        
 
@@ -355,6 +390,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return false;
             }
+            
+           // return true;
             return UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
                 && SelectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING;
         }
@@ -365,7 +402,14 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         private void DecisionEntryCommandMethod(object param)
         {
-            regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteeDecisionEntry");
+            eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+            (new DashboardTileViewItemInfo
+                       {
+                           DashboardTileHeader = GadgetNames.ICPRESENTATION_PRESENTATIONS_DECISION_ENTRY,
+                           DashboardTileObject = new ViewPresentationDecisionEntry(new ViewModelPresentationDecisionEntry(this.Param))
+                       });
+            
+            //regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
         } 
         #endregion
 
@@ -428,7 +472,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Edit);
             eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
-            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeEditPresentations", UriKind.Relative));
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICPresentation", UriKind.Relative));
         } 
         #endregion
 
@@ -445,7 +489,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return false;
             }
-            bool isUserRoleValidated = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
+            bool isUserRoleValidated = UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN);
             bool isStatusValided = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
                 || SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING;
 
@@ -487,6 +531,8 @@ namespace GreenField.Gadgets.ViewModels
             }
             return SelectedPresentationOverviewInfo.StatusType != StatusType.IN_PROGRESS
                 && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN;
+
+          //  return true;
         }
 
         /// <summary>
@@ -506,7 +552,20 @@ namespace GreenField.Gadgets.ViewModels
                 ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.View);
             }
             eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE);
-            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeVote", UriKind.Relative));
+
+            eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                       (new DashboardTileViewItemInfo
+                       {
+                           DashboardTileHeader = GadgetNames.ICPRESENTATION_VOTE,
+                           DashboardTileObject = new ViewPresentationVote(new ViewModelPresentationVote(this.Param))
+                       });
+
+           // new ViewModelPresentationVote(this.Param).SelectedPresentationOverviewInfo = this.SelectedPresentationOverviewInfo;
+            //regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
+            //regionManager.Regions[RegionNames.MAIN_REGION].Activate(new ViewPresentationVote(new ViewModelPresentationVote(Param)));
+
+             
+
         } 
         #endregion
 
@@ -553,6 +612,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     ICPresentationOverviewInfo = result;
+                    ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, ICPresentationOverviewInfo);
                     if (dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving available meeting dates...");
@@ -844,7 +904,27 @@ namespace GreenField.Gadgets.ViewModels
             if (dbInteractivity != null && IsActive)
             {
                 BusyIndicatorNotification(true, "Retrieving Presentation Overview Information...");
-                dbInteractivity.RetrievePresentationOverviewData(RetrievePresentationOverviewDataCallbackMethod);
+                if (DashBoardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION)
+                {
+                    dbInteractivity.RetrievePresentationOverviewData(UserSession.SessionManager.SESSION.UserName, "", RetrievePresentationOverviewDataCallbackMethod);
+                }
+                else if (DashBoardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION)
+                {
+
+                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) )
+                    {
+                        dbInteractivity.RetrievePresentationOverviewData("", "VotingDecision", RetrievePresentationOverviewDataCallbackMethod);
+                    }
+                    else if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE) || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER))
+                    {
+                        dbInteractivity.RetrievePresentationOverviewData("", "Voting", RetrievePresentationOverviewDataCallbackMethod);
+                    }
+                    else
+                    {
+                        RetrievePresentationOverviewDataCallbackMethod(new List<ICPresentationOverviewData>());
+
+                    }
+                }
             }
         }
 

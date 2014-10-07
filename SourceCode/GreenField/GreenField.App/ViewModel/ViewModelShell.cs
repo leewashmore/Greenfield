@@ -2101,6 +2101,12 @@ namespace GreenField.App.ViewModel
             get { return new DelegateCommand<object>(DashboardInvestmentCommitteeCreateEditCommandMethod); }
         }
 
+        public ICommand DashboardInvestmentCommitteeNewCommand
+        {
+            get { return new DelegateCommand<object>(DashboardInvestmentCommitteeNewCommandMethod); }
+        }
+
+
         /// <summary>
         /// DashboardInvestmentCommitteeVoteCommand
         /// </summary>
@@ -2140,6 +2146,18 @@ namespace GreenField.App.ViewModel
         {
             get { return new DelegateCommand<object>(DashboardInvestmentCommitteeMetricsReportCommandMethod); }
         }
+
+
+        public ICommand DashboardInvestmentCommitteeICCommand
+        {
+            get { return new DelegateCommand<object>(DashboardInvestmentCommitteeICCommandMethod); }
+        }
+
+        public ICommand DashboardInvestmentCommitteeVoteDecisionCommand
+        {
+            get { return new DelegateCommand<object>(DashboardInvestmentCommitteeVoteDecisionCommandMethod); }
+        }
+
         #endregion
 
         #region Dashboard
@@ -3209,6 +3227,25 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(logger, methodNamespace);
         }
 
+        private void DashboardInvestmentCommitteeNewCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_NEW_PRESENTATION);
+                UpdateToolBoxSelectorVisibility();
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeNew", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            Logging.LogEndMethod(logger, methodNamespace);
+        }
+
         private void DashboardInvestmentCommitteeVoteCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -3304,6 +3341,46 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(logger, methodNamespace);
         }
 
+
+        private void DashboardInvestmentCommitteeVoteDecisionCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION);
+                UpdateToolBoxSelectorVisibility();
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            Logging.LogEndMethod(logger, methodNamespace);
+        }
+
+
+
+        private void DashboardInvestmentCommitteeICCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION);
+                UpdateToolBoxSelectorVisibility();
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICPresentation", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            Logging.LogEndMethod(logger, methodNamespace);
+        }
         #endregion
 
         #region Admin

@@ -13,6 +13,7 @@ using GreenField.Gadgets.Models;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.MeetingDefinitions;
 using GreenField.UserSession;
+using System.Collections.Generic;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -76,6 +77,38 @@ namespace GreenField.Gadgets.ViewModels
             {
                 isBusyIndicatorBusy = value;
                 RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
+            }
+        }
+
+
+        public List<String> PFVTypeInfo
+        {
+            get
+            {
+                return new List<string> 
+                { 
+                    PFVType.FORWARD_DIVIDEND_YIELD,
+                    PFVType.FORWARD_EV_EBITDA,
+                    //PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_COUNTRY,
+                    //PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY,
+                    //PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY,
+                    //PFVType.FORWARD_EV_REVENUE,
+                    PFVType.FORWARD_P_NAV,
+                    //PFVType.FORWARD_P_APPRAISAL_VALUE,
+                    PFVType.FORWARD_P_BV,
+                    //PFVType.FORWARD_P_BV_RELATIVE_TO_COUNTRY,
+                    //PFVType.FORWARD_P_BV_RELATIVE_TO_INDUSTRY,
+                    //PFVType.FORWARD_P_BV_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY,
+                    PFVType.FORWARD_P_CE,
+                    PFVType.FORWARD_P_E,
+                    //PFVType.FORWARD_P_E_RELATIVE_TO_COUNTRY,
+                    //PFVType.FORWARD_P_E_RELATIVE_TO_INDUSTRY,
+                    //PFVType.FORWARD_P_E_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY,
+                    //PFVType.FORWARD_P_E_TO_2_YEAR_EARNINGS_GROWTH,
+                    //PFVType.FORWARD_P_E_TO_3_YEAR_EARNINGS_GROWTH,
+                    //PFVType.FORWARD_P_EMBEDDED_VALUE,
+                    //PFVType.FORWARD_P_REVENUE
+                };
             }
         }
 
@@ -215,7 +248,8 @@ namespace GreenField.Gadgets.ViewModels
                 && ICPresentationOverviewInfo.YTDRet_RELtoEM != null
                 && ICPresentationOverviewInfo.YTDRet_RELtoEM.Count() > 1
                 && ICPresentationOverviewInfo.YTDRet_RELtoLOC != null
-                && ICPresentationOverviewInfo.YTDRet_RELtoLOC.Count() > 1;
+                && ICPresentationOverviewInfo.YTDRet_RELtoLOC.Count() > 1
+                && ICPresentationOverviewInfo.MeetingClosedDateTime != null;
 
             return selectionValidation && dataValidation;
         }
@@ -239,18 +273,24 @@ namespace GreenField.Gadgets.ViewModels
         /// 
         /// </summary>
         /// <param name="result"></param>
-        private void CreatePresentationCallBackMethod(Boolean? result)
+        private void CreatePresentationCallBackMethod(Int64? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (result == true)
+                if (result> 0)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
 
+                   /* eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+                    ICNavigation.Update(ICNavigationInfo.MeetingInfo, iCPresentationOverviewInfo);
+                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICPresentation", UriKind.Relative);*/
+                    iCPresentationOverviewInfo.PresentationID = (long)result;
+                    ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, iCPresentationOverviewInfo);
                     eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICPresentation", UriKind.Relative));
+
                 }
                 else
                 {
@@ -422,11 +462,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="valueYTDAbs">YTDRet_Absolute</param>
         /// <param name="valueYTDReltoLoc">YTDRet_RELtoLOC</param>
         /// <param name="valueYTDReltoEM">YTDRet_RELtoEM</param>
-        public void RaiseICPresentationOverviewInfoChanged(Decimal valueYTDAbs, Decimal valueYTDReltoLoc, Decimal valueYTDReltoEM)
+        public void RaiseICPresentationOverviewInfoChanged(Decimal valueYTDAbs, Decimal valueYTDReltoLoc, Decimal valueYTDReltoEM,Decimal valueFVBuy,Decimal valueFVSell,String valueFVMeasure)
         {
             ICPresentationOverviewInfo.YTDRet_Absolute = String.Format("{0:n2}", valueYTDAbs) + "%";
             ICPresentationOverviewInfo.YTDRet_RELtoLOC = String.Format("{0:n2}", valueYTDReltoEM) + "%";
-            ICPresentationOverviewInfo.YTDRet_RELtoEM = String.Format("{0:n2}", valueYTDReltoLoc) + "%";            
+            ICPresentationOverviewInfo.YTDRet_RELtoEM = String.Format("{0:n2}", valueYTDReltoLoc) + "%";
+            ICPresentationOverviewInfo.SecurityBuyRange = (float?)valueFVBuy;
+            ICPresentationOverviewInfo.SecuritySellRange = (float?)valueFVSell;
+            iCPresentationOverviewInfo.SecurityPFVMeasure = valueFVMeasure;
+            //iCPresentationOverviewInfo. = valueFVMeasure;
+            iCPresentationOverviewInfo.FVCalc = String.Format("{0} {1:n2} - {2:n2}", valueFVMeasure, valueFVBuy, valueFVSell);
             RaisePropertyChanged(() => this.SubmitCommand);
         }
         #endregion
