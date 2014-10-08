@@ -191,7 +191,7 @@ namespace GreenField.Common
     {
         public static String IN_PROGRESS = "In Progress";
         public static String READY_FOR_VOTING = "Ready for Voting";
-        public static String CLOSED_FOR_VOTING = "Closed for Voting";
+        public static String CLOSED_FOR_VOTING = "Voting Closed";
         public static String FINAL = "Final";
         public static String WITHDRAWN = "Withdrawn";
     }

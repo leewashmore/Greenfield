@@ -66,12 +66,12 @@
                                Text="{Binding ICPresentationOverviewInfo.MeetingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}" 
                                Style="{StaticResource TextBlockStyle}"/> -->
                 </StackPanel>
-                <StackPanel Grid.Column="2" HorizontalAlignment="Center" Orientation="Horizontal">
+                <!--<StackPanel Grid.Column="2" HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock FontWeight="Bold" Text="Pre-Meeting Voting Deadline: " Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock FontWeight="Bold" 
                                Text="{Binding ICPresentationOverviewInfo.MeetingVotingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}" 
                                Style="{StaticResource TextBlockStyle}"/>
-                </StackPanel>
+                </StackPanel>-->
                 
             </Grid>
             <Grid Grid.Row="2" Margin="0,2,0,2">

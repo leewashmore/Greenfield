@@ -301,10 +301,10 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return false;
             }
-            return (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
-                || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
-                && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN
-                && SelectedPresentationOverviewInfo.StatusType != StatusType.FINAL;
+            return 
+                 SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN
+                && SelectedPresentationOverviewInfo.StatusType != StatusType.FINAL
+                && SelectedPresentationOverviewInfo.StatusType != StatusType.CLOSED_FOR_VOTING;
         }
 
         /// <summary>

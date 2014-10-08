@@ -928,7 +928,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (dbInteractivity != null)
                 {
                     BusyIndicatorNotification(true, "Retrieving Meetings with 'Closed for Voting' Investment Committee presentation status");
-                    dbInteractivity.RetrieveMeetingInfoByPresentationStatus("Closed for Voting"
+                    dbInteractivity.RetrieveMeetingInfoByPresentationStatus("Voting Closed"
                         , RetrieveMeetingInfoByPresentationStatusCallbackMethod);
                 }
             }
