@@ -265,6 +265,51 @@ namespace GreenField.Web.Services
                 
         }
 
+
+        /// <summary>
+        /// Delete Presentation information from database and files from sharepoint
+        /// </summary>
+        /// <param name="userName">logged in user</param>
+        /// <param name="presentationOverviewData">presentation overview information</param>
+        /// <returns>True if successful</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean DeletePresentation(String userName, ICPresentationOverviewData presentationOverviewData)
+        {
+            try
+            {
+                //Deleting files from Sharepoint
+                DocumentWorkspaceOperations documentOperations = new DocumentWorkspaceOperations();
+                List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
+                if (presentationAttachedFiles != null)
+                {
+                    List<FileMaster> icPacketFiles = presentationAttachedFiles.ToList();
+                    foreach (FileMaster record in icPacketFiles)
+                    {
+                        documentOperations.DeleteDocument(record.Location);
+                    }
+                }
+
+                //Deleting entries from database
+                ICPresentationEntities entity = new ICPresentationEntities();
+                Int32? result = entity.DeletePresentationInfo(presentationOverviewData.PresentationID).FirstOrDefault();
+
+
+                return result==0;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+                
+            }
+           
+
+        }
+
+
+        
         /// <summary>
         /// Changes status type of a specific presentation
         /// </summary>

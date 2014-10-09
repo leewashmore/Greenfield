@@ -375,6 +375,9 @@
         <Function Name="DeleteFileMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fileId" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="DeletePresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PresentationId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="GetDocumentsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="searchString" Type="nvarchar(max)" Mode="In" />
         </Function>
@@ -840,6 +843,9 @@
             <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
             <End Role="VoterInfo" EntitySet="VoterInfoes" />
           </AssociationSet>
+          <FunctionImport Name="DeletePresentationInfo" ReturnType="Collection(Int32)">
+            <Parameter Name="PresentationId" Mode="In" Type="Int64" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
           <Property Type="Int64" Name="VoterID" Nullable="false" />
@@ -1811,6 +1817,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeletePresentationInfo" FunctionName="ICPresentationModel.Store.DeletePresentationInfo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

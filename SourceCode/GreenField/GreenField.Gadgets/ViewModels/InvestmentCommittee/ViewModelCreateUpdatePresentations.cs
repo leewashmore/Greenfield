@@ -625,6 +625,10 @@ namespace GreenField.Gadgets.ViewModels
                         RetrievePresentationAttachedDetailsCallback);
                 }
             }
+            else
+            {
+                RetrievePresentationAttachedDetailsCallback(new List<FileMaster>());
+            }
         }
 
         /// <summary>

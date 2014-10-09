@@ -2765,6 +2765,25 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<MeetingInfo>("RetrieveICMeetingInfoByMeetingDateTime", mergeOption, meetingDateTimeParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> DeletePresentationInfo(Nullable<global::System.Int64> presentationId)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeletePresentationInfo", presentationIdParameter);
+        }
 
         #endregion
 

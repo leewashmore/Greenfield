@@ -3863,6 +3863,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         long EndCreatePresentation(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/DeletePresentation", ReplyAction="http://tempuri.org/MeetingOperations/DeletePresentationResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/DeletePresentationServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginDeletePresentation(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, System.AsyncCallback callback, object asyncState);
+        
+        bool EndDeletePresentation(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/SetICPPresentationStatus", ReplyAction="http://tempuri.org/MeetingOperations/SetICPPresentationStatusResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/SetICPPresentationStatusServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginSetICPPresentationStatus(string userName, long presentationId, string status, System.AsyncCallback callback, object asyncState);
@@ -4109,6 +4115,25 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((long)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class DeletePresentationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public DeletePresentationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }
@@ -4667,6 +4692,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private System.Threading.SendOrPostCallback onCreatePresentationCompletedDelegate;
         
+        private BeginOperationDelegate onBeginDeletePresentationDelegate;
+        
+        private EndOperationDelegate onEndDeletePresentationDelegate;
+        
+        private System.Threading.SendOrPostCallback onDeletePresentationCompletedDelegate;
+        
         private BeginOperationDelegate onBeginSetICPPresentationStatusDelegate;
         
         private EndOperationDelegate onEndSetICPPresentationStatusDelegate;
@@ -4894,6 +4925,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         public event System.EventHandler<CreatePresentationCompletedEventArgs> CreatePresentationCompleted;
         
+        public event System.EventHandler<DeletePresentationCompletedEventArgs> DeletePresentationCompleted;
+        
         public event System.EventHandler<SetICPPresentationStatusCompletedEventArgs> SetICPPresentationStatusCompleted;
         
         public event System.EventHandler<RetrieveSecurityDetailsCompletedEventArgs> RetrieveSecurityDetailsCompleted;
@@ -5094,6 +5127,54 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             base.InvokeAsync(this.onBeginCreatePresentationDelegate, new object[] {
                         userName,
                         presentationOverviewData}, this.onEndCreatePresentationDelegate, this.onCreatePresentationCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginDeletePresentation(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginDeletePresentation(userName, presentationOverviewData, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndDeletePresentation(System.IAsyncResult result) {
+            return base.Channel.EndDeletePresentation(result);
+        }
+        
+        private System.IAsyncResult OnBeginDeletePresentation(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userName = ((string)(inValues[0]));
+            GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData = ((GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData)(inValues[1]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginDeletePresentation(userName, presentationOverviewData, callback, asyncState);
+        }
+        
+        private object[] OnEndDeletePresentation(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndDeletePresentation(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnDeletePresentationCompleted(object state) {
+            if ((this.DeletePresentationCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.DeletePresentationCompleted(this, new DeletePresentationCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void DeletePresentationAsync(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData) {
+            this.DeletePresentationAsync(userName, presentationOverviewData, null);
+        }
+        
+        public void DeletePresentationAsync(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, object userState) {
+            if ((this.onBeginDeletePresentationDelegate == null)) {
+                this.onBeginDeletePresentationDelegate = new BeginOperationDelegate(this.OnBeginDeletePresentation);
+            }
+            if ((this.onEndDeletePresentationDelegate == null)) {
+                this.onEndDeletePresentationDelegate = new EndOperationDelegate(this.OnEndDeletePresentation);
+            }
+            if ((this.onDeletePresentationCompletedDelegate == null)) {
+                this.onDeletePresentationCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDeletePresentationCompleted);
+            }
+            base.InvokeAsync(this.onBeginDeletePresentationDelegate, new object[] {
+                        userName,
+                        presentationOverviewData}, this.onEndDeletePresentationDelegate, this.onDeletePresentationCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -6558,6 +6639,20 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             public long EndCreatePresentation(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 long _result = ((long)(base.EndInvoke("CreatePresentation", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginDeletePresentation(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = userName;
+                _args[1] = presentationOverviewData;
+                System.IAsyncResult _result = base.BeginInvoke("DeletePresentation", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndDeletePresentation(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("DeletePresentation", _args, result)));
                 return _result;
             }
             

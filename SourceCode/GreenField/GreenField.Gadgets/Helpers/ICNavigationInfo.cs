@@ -58,5 +58,23 @@ namespace GreenField.Gadgets.Models
             }
             return null;
         }
+
+        /// <summary>
+        /// Deletes navigation content type value if exists else returns null
+        /// </summary>
+        /// <param name="key">navigation content type</param>
+        /// <returns>navigation content type value</returns>
+        public static void Delete(ICNavigationInfo key)
+        {
+           
+
+            if (NavigationInfo.Keys.Contains(key))
+            {
+                NavigationInfo.Remove(key);
+            }
+            
+            
+        }
+
     }
 }

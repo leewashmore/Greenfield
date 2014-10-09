@@ -282,6 +282,13 @@
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Content="DECISION ENTRY" Visibility="Collapsed" />
+                <telerik:RadButton Grid.Column="6" x:Name="btnICPPresentationsDelete"
+                                   Command="{Binding DeleteCommand}"
+                                   Margin="5,0,0,0"
+                                   Width="100"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Content="DELETE" Visibility="Collapsed" />
             </Grid>
             
             <telerik:RadRichTextBox x:Name="RichTextBox" Grid.Row="3" Width="0"/>

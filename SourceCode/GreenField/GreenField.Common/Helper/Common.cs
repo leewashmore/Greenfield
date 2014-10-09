@@ -267,7 +267,7 @@ namespace GreenField.Common
     }
 
     public enum VIEWVOTEFLAG { VIEW, VOTE } ;
-    public enum ViewPluginFlagEnumeration { Create, Upload, Update, View, Vote, Edit, ChangeDate };
+    public enum ViewPluginFlagEnumeration { Create, Upload, Update, View, Vote, Edit, ChangeDate,Delete };
     #endregion
     
     #region Custom Screening Tool
