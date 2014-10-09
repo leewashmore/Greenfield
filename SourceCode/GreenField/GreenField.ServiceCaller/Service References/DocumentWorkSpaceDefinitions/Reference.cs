@@ -331,6 +331,13 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         bool EndDeleteDocument(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/MakeDocumentReadOnly", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/MakeDocumentReadOnlyResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/MakeDocumentReadOnlyServiceFaultFa" +
+            "ult", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginMakeDocumentReadOnly(string fileName, System.AsyncCallback callback, object asyncState);
+        
+        bool EndMakeDocumentReadOnly(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/DeleteFileMasterRecord", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/DeleteFileMasterRecordResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/DeleteFileMasterRecordServiceFault" +
             "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
@@ -438,6 +445,25 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         private object[] results;
         
         public DeleteDocumentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class MakeDocumentReadOnlyCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public MakeDocumentReadOnlyCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -675,6 +701,12 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         private System.Threading.SendOrPostCallback onDeleteDocumentCompletedDelegate;
         
+        private BeginOperationDelegate onBeginMakeDocumentReadOnlyDelegate;
+        
+        private EndOperationDelegate onEndMakeDocumentReadOnlyDelegate;
+        
+        private System.Threading.SendOrPostCallback onMakeDocumentReadOnlyCompletedDelegate;
+        
         private BeginOperationDelegate onBeginDeleteFileMasterRecordDelegate;
         
         private EndOperationDelegate onEndDeleteFileMasterRecordDelegate;
@@ -798,6 +830,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         public event System.EventHandler<DeleteDocumentCompletedEventArgs> DeleteDocumentCompleted;
         
+        public event System.EventHandler<MakeDocumentReadOnlyCompletedEventArgs> MakeDocumentReadOnlyCompleted;
+        
         public event System.EventHandler<DeleteFileMasterRecordCompletedEventArgs> DeleteFileMasterRecordCompleted;
         
         public event System.EventHandler<RetrieveDocumentCompletedEventArgs> RetrieveDocumentCompleted;
@@ -918,6 +952,52 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             }
             base.InvokeAsync(this.onBeginDeleteDocumentDelegate, new object[] {
                         fileName}, this.onEndDeleteDocumentDelegate, this.onDeleteDocumentCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginMakeDocumentReadOnly(string fileName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginMakeDocumentReadOnly(fileName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndMakeDocumentReadOnly(System.IAsyncResult result) {
+            return base.Channel.EndMakeDocumentReadOnly(result);
+        }
+        
+        private System.IAsyncResult OnBeginMakeDocumentReadOnly(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string fileName = ((string)(inValues[0]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginMakeDocumentReadOnly(fileName, callback, asyncState);
+        }
+        
+        private object[] OnEndMakeDocumentReadOnly(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndMakeDocumentReadOnly(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnMakeDocumentReadOnlyCompleted(object state) {
+            if ((this.MakeDocumentReadOnlyCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.MakeDocumentReadOnlyCompleted(this, new MakeDocumentReadOnlyCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void MakeDocumentReadOnlyAsync(string fileName) {
+            this.MakeDocumentReadOnlyAsync(fileName, null);
+        }
+        
+        public void MakeDocumentReadOnlyAsync(string fileName, object userState) {
+            if ((this.onBeginMakeDocumentReadOnlyDelegate == null)) {
+                this.onBeginMakeDocumentReadOnlyDelegate = new BeginOperationDelegate(this.OnBeginMakeDocumentReadOnly);
+            }
+            if ((this.onEndMakeDocumentReadOnlyDelegate == null)) {
+                this.onEndMakeDocumentReadOnlyDelegate = new EndOperationDelegate(this.OnEndMakeDocumentReadOnly);
+            }
+            if ((this.onMakeDocumentReadOnlyCompletedDelegate == null)) {
+                this.onMakeDocumentReadOnlyCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnMakeDocumentReadOnlyCompleted);
+            }
+            base.InvokeAsync(this.onBeginMakeDocumentReadOnlyDelegate, new object[] {
+                        fileName}, this.onEndMakeDocumentReadOnlyDelegate, this.onMakeDocumentReadOnlyCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1565,6 +1645,19 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             public bool EndDeleteDocument(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("DeleteDocument", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginMakeDocumentReadOnly(string fileName, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = fileName;
+                System.IAsyncResult _result = base.BeginInvoke("MakeDocumentReadOnly", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndMakeDocumentReadOnly(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("MakeDocumentReadOnly", _args, result)));
                 return _result;
             }
             

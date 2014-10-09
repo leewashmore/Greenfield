@@ -119,6 +119,7 @@
       <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateBBStatus" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />

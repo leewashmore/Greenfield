@@ -1111,6 +1111,7 @@
           <Property Type="String" Name="Category" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="FileName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ASHMOREEMM_INDUSTRY_ANALYST" Nullable="true" MaxLength="255" />
         </ComplexType>
         <ComplexType Name="ICPresentationOverviewData">
           <Property Type="Int64" Name="PresentationID" Nullable="false" />
@@ -1592,6 +1593,7 @@
                 <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="ASHMOREEMM_INDUSTRY_ANALYST" ColumnName="ASHMOREEMM_INDUSTRY_ANALYST" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

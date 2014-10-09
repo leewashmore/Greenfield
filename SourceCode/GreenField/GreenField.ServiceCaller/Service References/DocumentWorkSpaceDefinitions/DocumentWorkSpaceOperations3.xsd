@@ -33,6 +33,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="MakeDocumentReadOnly">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fileName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MakeDocumentReadOnlyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MakeDocumentReadOnlyResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="DeleteFileMasterRecord">
     <xs:complexType>
       <xs:sequence>
