@@ -2330,7 +2330,7 @@ namespace GreenField.Web.Services
             topHeaderTableDesc.WidthPercentage = 100;
             topHeaderTableDesc.SetWidths(new float[] { 1 });
 
-            PdfPCell securityDescription = new PdfPCell(new Phrase(securityDesc, PDFFontStyle.STYLE_3));
+            PdfPCell securityDescription = new PdfPCell(new Phrase(string.Empty, PDFFontStyle.STYLE_3));
             securityDescription.PaddingLeft = 5;
             securityDescription.PaddingBottom = 5;
             AddTextCell(topHeaderTableDesc, securityDescription, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_BOTTOM);

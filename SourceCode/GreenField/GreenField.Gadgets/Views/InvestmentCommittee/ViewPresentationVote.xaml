@@ -176,7 +176,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="NOTES:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
                 <TextBox Grid.Row="1" Text="{Binding SelectedPresentationPreMeetingVoterInfo.Notes, Mode=TwoWay}"
-                         MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
+                          MaxLength="50" Style="{StaticResource TextBoxStyle}"/>
                          
             </Grid>
             <!--Blog Section-->
