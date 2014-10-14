@@ -105,7 +105,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
-                        <TextBlock Margin="5" Text="RECOMMENDATION" FontWeight="Bold" VerticalAlignment="Center" 
+                        <TextBlock Margin="5" Text="" FontWeight="Bold" VerticalAlignment="Center" 
                                    Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
                     <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
@@ -122,7 +122,7 @@
                     </Grid>
 
                     <Grid Grid.Row="1" Grid.Column="0">
-                        <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.SecurityRecommendation}" 
+                        <TextBlock Margin="5,2,2,2" Text="" 
                                    VerticalAlignment="Center"
                                    Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
@@ -170,7 +170,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
-                        <TextBlock Margin="5" Text="RECOMMENDATION" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Margin="5" Text="" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
                     <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
                         <TextBlock Margin="5" Text="P/FV" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
@@ -186,7 +186,7 @@
                     </Grid>
 
                     <Grid Grid.Row="1" Grid.Column="0">
-                        <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeRecommendation}"
+                        <TextBlock Margin="5,2,2,2" Text=""
                                    VerticalAlignment="Center"
                                    Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
