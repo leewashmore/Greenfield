@@ -3780,7 +3780,7 @@
 		</Options>
 		<!-- Diagram content (shape and connector positions) -->
 		<Diagrams>
-			<Diagram Name="ExternalResearchDataModel" ZoomLevel="47">
+			<Diagram Name="ExternalResearchDataModel" ZoomLevel="54">
 				<EntityTypeShape EntityType="ExternalResearchModel.CONSENSUS_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921874999996" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" Width="1.5" PointX="4.75" PointY="0.75" Height="4.2879036458333335" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.FX_RATES" Width="1.5" PointX="6.75" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />
@@ -3793,7 +3793,7 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="6.5" PointY="9.75" Height="3.7109993489583317" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PRICE" Width="1.5" PointX="0.75" PointY="13.75" Height="1.9802864583333388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.COUNTRY_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
-				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
+				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="3.125" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
 				<EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9" PointY="8.25" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.25" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />

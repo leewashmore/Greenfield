@@ -73,6 +73,9 @@ BEGIN
 		RevenueGrowthNextYear decimal(22,8),
 		NetIncomeGrowthCurrentYear decimal(22,8),
 		NetIncomeGrowthNextYear decimal(22,8),
+		DividendYieldCurrentYear decimal(22,8),
+		DividendYieldNextYear decimal(22,8),		
+		DYBF2 decimal(22,8),			
 		ROE decimal(22,8),
 		NetDebtEquity decimal(22,8),
 		FreecashFlowMargin decimal(22,8),
@@ -122,6 +125,9 @@ BEGIN
 		RevenueGrowthNextYear decimal(22,8),
 		NetIncomeGrowthCurrentYear decimal(22,8),
 		NetIncomeGrowthNextYear decimal(22,8),
+		DividendYieldCurrentYear decimal(22,8),
+		DividendYieldNextYear decimal(22,8),		
+		DYBF2 decimal(22,8),			
 		ROE decimal(22,8),
 		NetDebtEquity decimal(22,8),
 		FreecashFlowMargin decimal(22,8),
@@ -284,7 +290,7 @@ END
 
 
 
---exec [RetrieveCompositeDetailsData] 'EQYALL','07/31/2013',null,null,0,0,1
+--exec [RetrieveCompositeDetailsData] 'EQYALL','09/29/2013',null,null,0,0,1
 GO
 
 

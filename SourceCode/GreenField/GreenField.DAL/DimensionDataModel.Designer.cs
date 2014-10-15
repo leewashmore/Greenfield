@@ -1502,6 +1502,102 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _BARRA_RISK_FACTOR_PBETEWLD;
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanging(Nullable<global::System.Decimal> value);
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> COMPANY_FULL_MKT_CAP_USD
+        {
+            get
+            {
+                return _COMPANY_FULL_MKT_CAP_USD;
+            }
+            set
+            {
+                OnCOMPANY_FULL_MKT_CAP_USDChanging(value);
+                ReportPropertyChanging("COMPANY_FULL_MKT_CAP_USD");
+                _COMPANY_FULL_MKT_CAP_USD = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("COMPANY_FULL_MKT_CAP_USD");
+                OnCOMPANY_FULL_MKT_CAP_USDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _COMPANY_FULL_MKT_CAP_USD;
+        partial void OnCOMPANY_FULL_MKT_CAP_USDChanging(Nullable<global::System.Decimal> value);
+        partial void OnCOMPANY_FULL_MKT_CAP_USDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> FOREIGN_INCLUSION_FACTOR
+        {
+            get
+            {
+                return _FOREIGN_INCLUSION_FACTOR;
+            }
+            set
+            {
+                OnFOREIGN_INCLUSION_FACTORChanging(value);
+                ReportPropertyChanging("FOREIGN_INCLUSION_FACTOR");
+                _FOREIGN_INCLUSION_FACTOR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FOREIGN_INCLUSION_FACTOR");
+                OnFOREIGN_INCLUSION_FACTORChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _FOREIGN_INCLUSION_FACTOR;
+        partial void OnFOREIGN_INCLUSION_FACTORChanging(Nullable<global::System.Decimal> value);
+        partial void OnFOREIGN_INCLUSION_FACTORChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CLOSE_NUMBER_SHARES
+        {
+            get
+            {
+                return _CLOSE_NUMBER_SHARES;
+            }
+            set
+            {
+                OnCLOSE_NUMBER_SHARESChanging(value);
+                ReportPropertyChanging("CLOSE_NUMBER_SHARES");
+                _CLOSE_NUMBER_SHARES = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CLOSE_NUMBER_SHARES");
+                OnCLOSE_NUMBER_SHARESChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CLOSE_NUMBER_SHARES;
+        partial void OnCLOSE_NUMBER_SHARESChanging(Nullable<global::System.Decimal> value);
+        partial void OnCLOSE_NUMBER_SHARESChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Sec_Init_Full_Mkt_Cap_USD_ND
+        {
+            get
+            {
+                return _Sec_Init_Full_Mkt_Cap_USD_ND;
+            }
+            set
+            {
+                OnSec_Init_Full_Mkt_Cap_USD_NDChanging(value);
+                ReportPropertyChanging("Sec_Init_Full_Mkt_Cap_USD_ND");
+                _Sec_Init_Full_Mkt_Cap_USD_ND = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Sec_Init_Full_Mkt_Cap_USD_ND");
+                OnSec_Init_Full_Mkt_Cap_USD_NDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _Sec_Init_Full_Mkt_Cap_USD_ND;
+        partial void OnSec_Init_Full_Mkt_Cap_USD_NDChanging(Nullable<global::System.Decimal> value);
+        partial void OnSec_Init_Full_Mkt_Cap_USD_NDChanged();
 
         #endregion
 
@@ -17739,6 +17835,78 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _NetIncomeGrowthNextYear;
         partial void OnNetIncomeGrowthNextYearChanging(Nullable<global::System.Decimal> value);
         partial void OnNetIncomeGrowthNextYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> DividendYieldCurrentYear
+        {
+            get
+            {
+                return _DividendYieldCurrentYear;
+            }
+            set
+            {
+                OnDividendYieldCurrentYearChanging(value);
+                ReportPropertyChanging("DividendYieldCurrentYear");
+                _DividendYieldCurrentYear = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DividendYieldCurrentYear");
+                OnDividendYieldCurrentYearChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _DividendYieldCurrentYear;
+        partial void OnDividendYieldCurrentYearChanging(Nullable<global::System.Decimal> value);
+        partial void OnDividendYieldCurrentYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> DividendYieldNextYear
+        {
+            get
+            {
+                return _DividendYieldNextYear;
+            }
+            set
+            {
+                OnDividendYieldNextYearChanging(value);
+                ReportPropertyChanging("DividendYieldNextYear");
+                _DividendYieldNextYear = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DividendYieldNextYear");
+                OnDividendYieldNextYearChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _DividendYieldNextYear;
+        partial void OnDividendYieldNextYearChanging(Nullable<global::System.Decimal> value);
+        partial void OnDividendYieldNextYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> DYBF2
+        {
+            get
+            {
+                return _DYBF2;
+            }
+            set
+            {
+                OnDYBF2Changing(value);
+                ReportPropertyChanging("DYBF2");
+                _DYBF2 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DYBF2");
+                OnDYBF2Changed();
+            }
+        }
+        private Nullable<global::System.Decimal> _DYBF2;
+        partial void OnDYBF2Changing(Nullable<global::System.Decimal> value);
+        partial void OnDYBF2Changed();
     
         /// <summary>
         /// No Metadata Documentation available.

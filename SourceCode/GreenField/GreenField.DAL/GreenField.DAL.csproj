@@ -115,6 +115,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DimensionDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\DataSources\CustomScreeningToolEntities.datasource" />
     <None Include="Properties\DataSources\ExternalResearchEntities.datasource" />
     <None Include="Properties\DataSources\ICPresentationEntities.datasource" />

@@ -59,5 +59,20 @@ namespace GreenField.Gadgets.Helpers.PortfolioDetails
             }
         }
 
+        public string DividendYieldCurrentYear
+        {
+            get
+            {
+                return "Dividend Yield " + DateTime.Now.Year;
+            }
+        }
+
+        public string DividendYieldNextYear
+        {
+            get
+            {
+                return "Dividend Yield " + (DateTime.Now.Year + 1);
+            }
+        }
     }
 }

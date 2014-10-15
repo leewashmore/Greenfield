@@ -246,6 +246,10 @@
                                                         TextAlignment="Right" HeaderTextAlignment="Right" 
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="DY BF2" UniqueName="DY BF2" DataMemberBinding="{Binding DYBF2}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" DataFormatString="{}{0:n1}"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>                                        
                                         <telerik:GridViewDataColumn Header="{Binding RevenueGrowthCurrentYear, Source={StaticResource ColumnHeaders}}" UniqueName="Revenue Growth Current Year" 
                                                         DataMemberBinding="{Binding RevenueGrowthCurrentYear,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right" 
@@ -266,6 +270,16 @@
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="{Binding DividendYieldCurrentYear, Source={StaticResource ColumnHeaders}}" UniqueName="Dividend Yield Current Year" 
+                                                        DataMemberBinding="{Binding DividendYieldCurrentYear,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                        <telerik:GridViewDataColumn Header="{Binding DividendYieldNextYear, Source={StaticResource ColumnHeaders}}" UniqueName="Dividend Yield Next Year" 
+                                                        DataMemberBinding="{Binding DividendYieldNextYear,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>                                        
                                         <telerik:GridViewDataColumn Header="Net Debt Equity %" UniqueName="Net Debt Equity" 
                                                         DataMemberBinding="{Binding NetDebtEquity}" DataFormatString="{}{0:n1}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
@@ -399,6 +413,11 @@
                                                         TextAlignment="Right" HeaderTextAlignment="Right" 
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="DYBF2" UniqueName="DYBF2" 
+                                                        DataMemberBinding="{Binding DYBF2,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right" 
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>                            
                             <telerik:GridViewDataColumn Header="{Binding RevenueGrowthCurrentYear, Source={StaticResource ColumnHeaders}}" UniqueName="Revenue Growth Current Year" 
                                                         DataMemberBinding="{Binding RevenueGrowthCurrentYear,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
                                                         TextAlignment="Right" HeaderTextAlignment="Right" 
@@ -419,7 +438,16 @@
                                                         TextAlignment="Right" HeaderTextAlignment="Right"
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                            
+                            <telerik:GridViewDataColumn Header="{Binding DividendYieldCurrentYear, Source={StaticResource ColumnHeaders}}" UniqueName="Dividend Yield Current Year" 
+                                                        DataMemberBinding="{Binding DividendYieldCurrentYear,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn Header="{Binding DividendYieldNextYear, Source={StaticResource ColumnHeaders}}" UniqueName="Dividend Yield Next Year" 
+                                                        DataMemberBinding="{Binding DividendYieldNextYear,Converter={StaticResource ConvertPercentageValueOneDec},ConverterParameter=1}" 
+                                                        TextAlignment="Right" HeaderTextAlignment="Right"
+                                                        IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>                            
                             <telerik:GridViewDataColumn Header="{Binding NetDebtEquityHeader, Source={StaticResource ColumnHeaders}}" UniqueName="Net Debt Equity" 
                                                         DataMemberBinding="{Binding NetDebtEquity}" DataFormatString="{}{0:n1}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right"

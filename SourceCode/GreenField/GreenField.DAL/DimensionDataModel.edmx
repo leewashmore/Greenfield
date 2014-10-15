@@ -77,6 +77,10 @@
           <Property Name="BARRA_RISK_FACTOR_LIQUIDITY" Type="decimal" Precision="32" Scale="6" />
           <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="decimal" Precision="32" Scale="6" />
           <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="COMPANY_FULL_MKT_CAP_USD" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="FOREIGN_INCLUSION_FACTOR" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="CLOSE_NUMBER_SHARES" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="Sec_Init_Full_Mkt_Cap_USD_ND" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <EntityType Name="GF_PERF_DAILY_ATTRIBUTION">
           <Key>
@@ -1462,52 +1466,55 @@
           <Property Type="String" Name="AIMS_COMMODITY_ID" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <ComplexType Name="HoldingsDetailsData" >
-          <Property Type="DateTime" Name="FromDate" Nullable="true" />
-          <Property Type="String" Name="AsecSecShortName" Nullable="true" />
-          <Property Type="String" Name="IssueName" Nullable="true" />
-          <Property Type="String" Name="Issuer_Proxy" Nullable="true" />
-          <Property Type="String" Name="PortfolioPath" Nullable="true" />
-          <Property Type="String" Name="PfcHoldingPortfolio" Nullable="true" />
-          <Property Type="String" Name="PortfolioId" Nullable="true" />
+          <Property Type="DateTime" Name="FromDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="AsecSecShortName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="IssueName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Issuer_Proxy" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PortfolioPath" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="PfcHoldingPortfolio" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="PortfolioId" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="IsExpanded" Nullable="true" />
-          <Property Type="String" Name="Ticker" Nullable="true" />
-          <Property Type="String" Name="SecurityThemeCode" Nullable="true" />
-          <Property Type="String" Name="A_Sec_Instr_Type" Nullable="true" />
-          <Property Type="String" Name="SecurityType" Nullable="true" />
-          <Property Type="String" Name="ProprietaryRegionCode" Nullable="true" />
-          <Property Type="String" Name="IsoCountryCode" Nullable="true" />
-          <Property Type="String" Name="SectorName" Nullable="true" />
-          <Property Type="String" Name="IndustryName" Nullable="true" />
-          <Property Type="String" Name="SubIndustryName" Nullable="true" />
-          <Property Type="Decimal" Name="BalanceNominal" Nullable="true" />
-          <Property Type="Decimal" Name="DirtyValuePC" Nullable="true" />
-          <Property Type="Decimal" Name="PortfolioDirtyValuePC" Nullable="true" />
-          <Property Type="String" Name="TradingCurrency" Nullable="true" />
-          <Property Type="Decimal" Name="AshEmmModelWeight" Nullable="true" />
-          <Property Type="Decimal" Name="PortfolioWeight" Nullable="true" />
-          <Property Type="Decimal" Name="BenchmarkWeight" Nullable="true" />
-          <Property Type="Decimal" Name="MarketCapUSD" Nullable="true" />
-          <Property Type="Decimal" Name="ActivePosition" Nullable="true" />
-          <Property Type="Decimal" Name="ReAshEmmModelWeight" Nullable="true" />
-          <Property Type="Decimal" Name="RePortfolioWeight" Nullable="true" />
-          <Property Type="Decimal" Name="ReBenchmarkWeight" Nullable="true" />
-          <Property Type="String" Name="SType" Nullable="true" />
-          <Property Type="String" Name="SecurityId" Nullable="true" />
-          <Property Type="Decimal" Name="MarketCap" Nullable="true" />
-          <Property Type="Decimal" Name="Upside" Nullable="true" />
-          <Property Type="Decimal" Name="ForwardPE" Nullable="true" />
-          <Property Type="Decimal" Name="ForwardPBV" Nullable="true" />
-          <Property Type="Decimal" Name="ForwardEB_EBITDA" Nullable="true" />
-          <Property Type="Decimal" Name="RevenueGrowthCurrentYear" Nullable="true" />
-          <Property Type="Decimal" Name="RevenueGrowthNextYear" Nullable="true" />
-          <Property Type="Decimal" Name="NetIncomeGrowthCurrentYear" Nullable="true" />
-          <Property Type="Decimal" Name="NetIncomeGrowthNextYear" Nullable="true" />
-          <Property Type="Decimal" Name="ROE" Nullable="true" />
-          <Property Type="Decimal" Name="NetDebtEquity" Nullable="true" />
-          <Property Type="Decimal" Name="FreecashFlowMargin" Nullable="true" />
-          <Property Type="String" Name="IssuerId" Nullable="true" />
-          <Property Type="String" Name="IssuerName" Nullable="true" />
-          <Property Type="Decimal" Name="FairValue" Nullable="true" />
+          <Property Type="String" Name="Ticker" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SecurityThemeCode" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="A_Sec_Instr_Type" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SecurityType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ProprietaryRegionCode" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="IsoCountryCode" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="SectorName" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="IndustryName" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="SubIndustryName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="BalanceNominal" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="DirtyValuePC" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="PortfolioDirtyValuePC" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="String" Name="TradingCurrency" Nullable="true" MaxLength="3" />
+          <Property Type="Decimal" Name="AshEmmModelWeight" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="PortfolioWeight" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="BenchmarkWeight" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="MarketCapUSD" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="ActivePosition" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="ReAshEmmModelWeight" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="RePortfolioWeight" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="ReBenchmarkWeight" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="String" Name="SType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="MarketCap" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="Upside" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="ForwardPE" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="ForwardPBV" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="ForwardEB_EBITDA" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="RevenueGrowthCurrentYear" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="RevenueGrowthNextYear" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="NetIncomeGrowthCurrentYear" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="NetIncomeGrowthNextYear" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="DividendYieldCurrentYear" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="DividendYieldNextYear" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="DYBF2" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="ROE" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="NetDebtEquity" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="Decimal" Name="FreecashFlowMargin" Nullable="true" Precision="22" Scale="8" />
+          <Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="IssuerName" Nullable="true" MaxLength="255" />
+          <Property Type="Decimal" Name="FairValue" Nullable="true" Precision="22" Scale="8" />
         </ComplexType>
         <EntityType Name="GF_PRICING_BASEVIEW">
           <Key>
@@ -1570,6 +1577,10 @@
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LIQUIDITY" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_LEVERAGE" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="BARRA_RISK_FACTOR_PBETEWLD" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="COMPANY_FULL_MKT_CAP_USD" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="FOREIGN_INCLUSION_FACTOR" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="CLOSE_NUMBER_SHARES" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="Sec_Init_Full_Mkt_Cap_USD_ND" Precision="32" Scale="6" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2243,12 +2254,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="RetrievePortfolioDetailsData" FunctionName="DimensionDataModel.Store.RetrievePortfolioDetailsData">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DimensionDataModel.HoldingsDetailsData" />
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveCompositeDetailsData" FunctionName="DimensionDataModel.Store.RetrieveCompositeDetailsData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DimensionDataModel.HoldingsDetailsData">
+              <ComplexTypeMapping TypeName="DimensionDataModel.HoldingsDetailsData" >
                 <ScalarProperty Name="FromDate" ColumnName="FromDate" />
                 <ScalarProperty Name="AsecSecShortName" ColumnName="AsecSecShortName" />
                 <ScalarProperty Name="IssueName" ColumnName="IssueName" />
@@ -2289,6 +2295,9 @@
                 <ScalarProperty Name="RevenueGrowthNextYear" ColumnName="RevenueGrowthNextYear" />
                 <ScalarProperty Name="NetIncomeGrowthCurrentYear" ColumnName="NetIncomeGrowthCurrentYear" />
                 <ScalarProperty Name="NetIncomeGrowthNextYear" ColumnName="NetIncomeGrowthNextYear" />
+                <ScalarProperty Name="DividendYieldCurrentYear" ColumnName="DividendYieldCurrentYear" />
+                <ScalarProperty Name="DividendYieldNextYear" ColumnName="DividendYieldNextYear" />
+                <ScalarProperty Name="DYBF2" ColumnName="DYBF2" />
                 <ScalarProperty Name="ROE" ColumnName="ROE" />
                 <ScalarProperty Name="NetDebtEquity" ColumnName="NetDebtEquity" />
                 <ScalarProperty Name="FreecashFlowMargin" ColumnName="FreecashFlowMargin" />
@@ -2296,6 +2305,12 @@
                 <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
                 <ScalarProperty Name="FairValue" ColumnName="FairValue" />
               </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveCompositeDetailsData" FunctionName="DimensionDataModel.Store.RetrieveCompositeDetailsData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DimensionDataModel.HoldingsDetailsData">
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <EntitySetMapping Name="GF_PRICING_BASEVIEW">
@@ -2319,6 +2334,10 @@
           <EntitySetMapping Name="GF_BENCHMARK_HOLDINGS">
             <EntityTypeMapping TypeName="DimensionDataModel.GF_BENCHMARK_HOLDINGS">
               <MappingFragment StoreEntitySet="GF_BENCHMARK_HOLDINGS">
+                <ScalarProperty Name="Sec_Init_Full_Mkt_Cap_USD_ND" ColumnName="Sec_Init_Full_Mkt_Cap_USD_ND" />
+                <ScalarProperty Name="CLOSE_NUMBER_SHARES" ColumnName="CLOSE_NUMBER_SHARES" />
+                <ScalarProperty Name="FOREIGN_INCLUSION_FACTOR" ColumnName="FOREIGN_INCLUSION_FACTOR" />
+                <ScalarProperty Name="COMPANY_FULL_MKT_CAP_USD" ColumnName="COMPANY_FULL_MKT_CAP_USD" />
                 <ScalarProperty Name="BARRA_RISK_FACTOR_PBETEWLD" ColumnName="BARRA_RISK_FACTOR_PBETEWLD" />
                 <ScalarProperty Name="BARRA_RISK_FACTOR_LEVERAGE" ColumnName="BARRA_RISK_FACTOR_LEVERAGE" />
                 <ScalarProperty Name="BARRA_RISK_FACTOR_LIQUIDITY" ColumnName="BARRA_RISK_FACTOR_LIQUIDITY" />
@@ -2382,7 +2401,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="DimensionDataModel" >
+      <Diagram Name="DimensionDataModel" ZoomLevel="27" DisplayType="true" >
         <EntityTypeShape EntityType="DimensionDataModel.GF_PORTFOLIO_SELECTION" Width="2.625" PointX="0.75" PointY="0.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_PORTFOLIO_HOLDINGS" Width="1.5" PointX="3.75" PointY="0.75" Height="0.4" IsExpanded="false" />
         <EntityTypeShape EntityType="DimensionDataModel.GF_PORTFOLIO_LTHOLDINGS" Width="1.5" PointX="0.75" PointY="3.75" Height="9.2877408854166674" />
