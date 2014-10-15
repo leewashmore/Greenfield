@@ -265,6 +265,51 @@ namespace GreenField.Web.Services
                 
         }
 
+
+        /// <summary>
+        /// Delete Presentation information from database and files from sharepoint
+        /// </summary>
+        /// <param name="userName">logged in user</param>
+        /// <param name="presentationOverviewData">presentation overview information</param>
+        /// <returns>True if successful</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean DeletePresentation(String userName, ICPresentationOverviewData presentationOverviewData)
+        {
+            try
+            {
+                //Deleting files from Sharepoint
+                DocumentWorkspaceOperations documentOperations = new DocumentWorkspaceOperations();
+                List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
+                if (presentationAttachedFiles != null)
+                {
+                    List<FileMaster> icPacketFiles = presentationAttachedFiles.ToList();
+                    foreach (FileMaster record in icPacketFiles)
+                    {
+                        documentOperations.DeleteDocument(record.Location);
+                    }
+                }
+
+                //Deleting entries from database
+                ICPresentationEntities entity = new ICPresentationEntities();
+                Int32? result = entity.DeletePresentationInfo(presentationOverviewData.PresentationID).FirstOrDefault();
+
+
+                return result==0;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+                
+            }
+           
+
+        }
+
+
+        
         /// <summary>
         /// Changes status type of a specific presentation
         /// </summary>
@@ -843,6 +888,17 @@ namespace GreenField.Web.Services
                     {
                         emailAttachments += uploadFileLocation;
                     }
+
+                    //Make document Readonly 
+                    /*if (presentationAttachedFiles != null)
+                    {
+                        List<FileMaster> icPacketFiles = presentationAttachedFiles.Where(record => record.Category != "Investment Committee Packet").ToList();
+                        foreach (FileMaster record in icPacketFiles)
+                        {
+                            documentOperations.MakeDocumentReadOnly(record.Location);
+                        }
+                    }*/
+
                 }
                 #endregion
 
@@ -2261,25 +2317,41 @@ namespace GreenField.Web.Services
             AddTextCell(topHeaderTableContent, securityCountry, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.TOP);
             PdfPCell securityPFVMeasure = new PdfPCell(new Phrase(presentationDetails.SecurityPFVMeasure, PDFFontStyle.STYLE_5));
             AddTextCell(topHeaderTableContent, securityPFVMeasure, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.TOP);
-            String presentationSecurityBuySellRange = String.Format("{0:n4} to {1:n4}", presentationDetails.SecurityBuyRange, presentationDetails.SecuritySellRange);
+            String presentationSecurityBuySellRange = String.Format("{0:n2} to {1:n2}", presentationDetails.SecurityBuyRange, presentationDetails.SecuritySellRange);
             PdfPCell securityBuySellRange = new PdfPCell(new Phrase(presentationSecurityBuySellRange, PDFFontStyle.STYLE_5));
             AddTextCell(topHeaderTableContent, securityBuySellRange, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.TOP);
-            PdfPCell securityRecommendation = new PdfPCell(new Phrase(presentationDetails.SecurityRecommendation, PDFFontStyle.STYLE_5));
+            PdfPCell securityRecommendation = new PdfPCell(new Phrase(string.Empty, PDFFontStyle.STYLE_5)); // Per felicia no required to display the Recommendation
             securityRecommendation.RightIndent = 5;
             AddTextCell(topHeaderTableContent, securityRecommendation, Element.ALIGN_RIGHT, Element.ALIGN_BOTTOM, PDFBorderType.RIGHT_TOP);
-
+            
             doc.Add(topHeaderTableContent);
 
             PdfPTable topHeaderTableDesc = new PdfPTable(1);
             topHeaderTableDesc.WidthPercentage = 100;
             topHeaderTableDesc.SetWidths(new float[] { 1 });
 
-            PdfPCell securityDescription = new PdfPCell(new Phrase(securityDesc, PDFFontStyle.STYLE_3));
+            PdfPCell securityDescription = new PdfPCell(new Phrase(string.Empty, PDFFontStyle.STYLE_3));
             securityDescription.PaddingLeft = 5;
             securityDescription.PaddingBottom = 5;
             AddTextCell(topHeaderTableDesc, securityDescription, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_BOTTOM);
 
             doc.Add(topHeaderTableDesc);
+
+            
+            PdfPTable PresentedTable = new PdfPTable(1);
+            PresentedTable.WidthPercentage = 100;
+            PresentedTable.SetWidths(new float[] { 1 });
+            PdfPCell AnalystCell = new PdfPCell(new Phrase("Presented By: " + presentationDetails.Presenter, PDFFontStyle.STYLE_2));
+            AddTextCell(PresentedTable, AnalystCell, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
+            doc.Add(PresentedTable);
+
+            PdfPTable IndustryAnalystTable = new PdfPTable(1);
+            IndustryAnalystTable.WidthPercentage = 100;
+            IndustryAnalystTable.SetWidths(new float[] { 1 });
+            PdfPCell IndustryAnalystCell = new PdfPCell(new Phrase("Industry Analyst: " + presentationDetails.ASHMOREEMM_INDUSTRY_ANALYST, PDFFontStyle.STYLE_2));
+            AddTextCell(IndustryAnalystTable, IndustryAnalystCell, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
+            doc.Add(IndustryAnalystTable);
+
 
             PdfPTable contentTable = new PdfPTable(6);
             contentTable.WidthPercentage = 100;

@@ -268,6 +268,15 @@ namespace GreenField.Gadgets.ViewModels
         {
             get { return new DelegateCommand<object>(NewCommandMethod, NewCommandValidationMethod); }
         }
+
+        /// <summary>
+        /// Withdraw command
+        /// </summary>
+        public ICommand DeleteCommand
+        {
+            get { return new DelegateCommand<object>(DeleteCommandMethod, DeleteCommandValidationMethod); }
+        }
+
         #endregion
         #endregion
 
@@ -301,10 +310,10 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return false;
             }
-            return (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
-                || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
-                && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN
-                && SelectedPresentationOverviewInfo.StatusType != StatusType.FINAL;
+            return 
+                 SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN
+                && SelectedPresentationOverviewInfo.StatusType != StatusType.FINAL
+                && SelectedPresentationOverviewInfo.StatusType != StatusType.CLOSED_FOR_VOTING;
         }
 
         /// <summary>
@@ -412,6 +421,59 @@ namespace GreenField.Gadgets.ViewModels
             //regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
         } 
         #endregion
+
+
+        #region Delete Presentation
+        /// <summary>
+        /// DecisionEntryCommand validation method
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True/False</returns>
+        private bool DeleteCommandValidationMethod(object param)
+        {
+            if (UserSession.SessionManager.SESSION == null
+                || SelectedPresentationOverviewInfo == null)
+            {
+                return false;
+            }
+
+            // return true;
+            return SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS;
+        }
+
+        /// <summary>
+        /// DecisionEntryCommand execution method
+        /// </summary>
+        /// <param name="param"></param>
+        private void DeleteCommandMethod(object param)
+        {
+            /*eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+            (new DashboardTileViewItemInfo
+            {
+                DashboardTileHeader = GadgetNames.ICPRESENTATION_PRESENTATIONS_DECISION_ENTRY,
+                DashboardTileObject = new ViewPresentationDecisionEntry(new ViewModelPresentationDecisionEntry(this.Param))
+            }); */
+
+            //regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICVoteDecision", UriKind.Relative));
+
+            
+            Prompt.ShowDialog("Are you sure you want to delete this presentation?", "Confirmation",MessageBoxButton.OKCancel, (result) =>
+            {
+                if (result == MessageBoxResult.OK)
+                {
+                    if (dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Deleting presentation...");
+                        dbInteractivity.DeletePresentation(UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo,DeletePresentationCallback);
+                            
+                    }
+                }
+            });
+
+        }
+        #endregion
+
+
 
         #region Upload
         /// <summary>
@@ -598,6 +660,45 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
         
         #region CallBack Methods
+
+        private void DeletePresentationCallback(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                if (result!=null && result==true)
+                {
+
+
+
+                    ICNavigation.Delete(ICNavigationInfo.PresentationOverviewInfo);
+                    ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Delete);
+                    eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
+                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICPresentation", UriKind.Relative));
+                    
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                //BusyIndicatorNotification();
+            }
+        }
+
+
+
         /// <summary>
         /// RetrievePresentationOverviewData callback method
         /// </summary>
@@ -940,6 +1041,7 @@ namespace GreenField.Gadgets.ViewModels
             RaisePropertyChanged(() => this.ViewCommand);
             RaisePropertyChanged(() => this.ChangeDateCommand);
             RaisePropertyChanged(() => this.DecisionEntryCommand);
+            RaisePropertyChanged(() => this.DeleteCommand);
         }
         
         /// <summary>

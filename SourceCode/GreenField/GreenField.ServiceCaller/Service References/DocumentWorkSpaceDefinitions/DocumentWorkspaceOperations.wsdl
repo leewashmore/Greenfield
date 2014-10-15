@@ -29,6 +29,15 @@
   <wsdl:message name="DocumentWorkspaceOperations_DeleteDocument_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_MakeDocumentReadOnly_InputMessage">
+    <wsdl:part name="parameters" element="tns:MakeDocumentReadOnly" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_MakeDocumentReadOnly_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MakeDocumentReadOnlyResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_MakeDocumentReadOnly_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_DeleteFileMasterRecord_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteFileMasterRecord" />
   </wsdl:message>
@@ -36,7 +45,7 @@
     <wsdl:part name="parameters" element="tns:DeleteFileMasterRecordResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_DeleteFileMasterRecord_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocument_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveDocument" />
@@ -45,7 +54,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveDocumentResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocument_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveDocumentsData" />
@@ -54,7 +63,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveDocumentsDataResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_SetUploadFileInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:SetUploadFileInfo" />
@@ -63,7 +72,7 @@
     <wsdl:part name="parameters" element="tns:SetUploadFileInfoResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_SetUploadFileInfo_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_GetDocumentsMetaTags_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDocumentsMetaTags" />
@@ -72,7 +81,7 @@
     <wsdl:part name="parameters" element="tns:GetDocumentsMetaTagsResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_GetDocumentsMetaTags_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveDocumentsDataForUser" />
@@ -81,7 +90,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveDocumentsDataForUserResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_UpdateDocumentsDataForUser_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateDocumentsDataForUser" />
@@ -90,7 +99,7 @@
     <wsdl:part name="parameters" element="tns:UpdateDocumentsDataForUserResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_UpdateDocumentsDataForUser_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_SetDocumentComment_InputMessage">
     <wsdl:part name="parameters" element="tns:SetDocumentComment" />
@@ -99,7 +108,7 @@
     <wsdl:part name="parameters" element="tns:SetDocumentCommentResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_SetDocumentComment_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveStatementData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveStatementData" />
@@ -108,7 +117,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveStatementDataResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveStatementData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_UploadExcelModel_InputMessage">
     <wsdl:part name="parameters" element="tns:UploadExcelModel" />
@@ -117,7 +126,7 @@
     <wsdl:part name="parameters" element="tns:UploadExcelModelResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_UploadExcelModel_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveCEData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveCEData" />
@@ -126,7 +135,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveCEDataResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveCEData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="DocumentWorkspaceOperations">
     <wsdl:operation name="UploadDocument">
@@ -138,6 +147,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/DeleteDocument" message="tns:DocumentWorkspaceOperations_DeleteDocument_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/DeleteDocumentResponse" message="tns:DocumentWorkspaceOperations_DeleteDocument_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/DeleteDocumentServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_DeleteDocument_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeDocumentReadOnly">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/MakeDocumentReadOnly" message="tns:DocumentWorkspaceOperations_MakeDocumentReadOnly_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/MakeDocumentReadOnlyResponse" message="tns:DocumentWorkspaceOperations_MakeDocumentReadOnly_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/MakeDocumentReadOnlyServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_MakeDocumentReadOnly_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="DeleteFileMasterRecord">
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/DeleteFileMasterRecord" message="tns:DocumentWorkspaceOperations_DeleteFileMasterRecord_InputMessage" />
@@ -211,6 +225,18 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteDocument">
       <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/DeleteDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MakeDocumentReadOnly">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/MakeDocumentReadOnly" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

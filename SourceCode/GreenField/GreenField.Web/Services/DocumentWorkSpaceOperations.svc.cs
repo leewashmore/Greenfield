@@ -241,6 +241,52 @@ namespace GreenField.Web.Services
             return fileDeleted;
         }
 
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public bool MakeDocumentReadOnly(String fileName)
+        {
+            bool filereadonly = false;
+            try
+            {
+
+
+                /*  string strBatch = "<Method ID='1'>" +
+                      "<Field Name='ID'>3</Field>" +
+                     "<Field READONLY='TRUE'/>" +
+                    
+                      "<Field Name='FileRef'>" +
+
+                      fileName +
+                      "</Field>" +
+                      "</Method>";
+
+                  XmlDocument xmlDoc = new XmlDocument();
+                  System.Xml.XmlElement elBatch = xmlDoc.CreateElement("Batch");
+                  elBatch.SetAttribute("OnError", "Continue");
+                  elBatch.SetAttribute("PreCalc", "TRUE");
+                  elBatch.SetAttribute("ListVersion", "0");
+                  elBatch.SetAttribute("ViewName", String.Empty);
+                  elBatch.InnerXml = strBatch;
+
+                  XmlNode ndReturn = ListsService.UpdateListItems(DocumentLibrary, elBatch); //Remove if testing model uploading locally 
+
+                  if (ndReturn.InnerText.ToLower() == "0x00000000".ToLower()) //Remove if testing model uploading locally 
+                  {
+                      filereadonly = true;
+                  } */
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+            return filereadonly;
+        }
+
+
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public bool DeleteFileMasterRecord(Int64 fileId)

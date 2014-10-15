@@ -2765,6 +2765,25 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<MeetingInfo>("RetrieveICMeetingInfoByMeetingDateTime", mergeOption, meetingDateTimeParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> DeletePresentationInfo(Nullable<global::System.Int64> presentationId)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeletePresentationInfo", presentationIdParameter);
+        }
 
         #endregion
 
@@ -10528,6 +10547,30 @@ namespace GreenField.DAL
         private global::System.String _Location;
         partial void OnLocationChanging(global::System.String value);
         partial void OnLocationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ASHMOREEMM_INDUSTRY_ANALYST
+        {
+            get
+            {
+                return _ASHMOREEMM_INDUSTRY_ANALYST;
+            }
+            set
+            {
+                OnASHMOREEMM_INDUSTRY_ANALYSTChanging(value);
+                ReportPropertyChanging("ASHMOREEMM_INDUSTRY_ANALYST");
+                _ASHMOREEMM_INDUSTRY_ANALYST = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ASHMOREEMM_INDUSTRY_ANALYST");
+                OnASHMOREEMM_INDUSTRY_ANALYSTChanged();
+            }
+        }
+        private global::System.String _ASHMOREEMM_INDUSTRY_ANALYST;
+        partial void OnASHMOREEMM_INDUSTRY_ANALYSTChanging(global::System.String value);
+        partial void OnASHMOREEMM_INDUSTRY_ANALYSTChanged();
 
         #endregion
 

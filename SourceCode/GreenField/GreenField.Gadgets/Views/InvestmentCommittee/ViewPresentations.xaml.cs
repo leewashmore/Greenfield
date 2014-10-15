@@ -57,6 +57,8 @@ namespace GreenField.Gadgets.Views
             {
                 btnICPPresentationsListEdit.Visibility = Visibility.Visible;
                 btnICPPresentationsListView.Visibility = Visibility.Collapsed;
+                btnICPPresentationsListChangeDate.Visibility = Visibility.Visible;
+                btnICPPresentationsDelete.Visibility = Visibility.Visible;
             }
             else if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION && UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
             {

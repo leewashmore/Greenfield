@@ -394,6 +394,7 @@ namespace GreenField.ServiceCaller
         void UpdateDecisionEntryDetails(String userName, ICPresentationOverviewData presentationOverViewData, List<VoterInfo> voterInfo, Action<Boolean?> callback);
 
         void CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData, Action<Int64?> callback);
+        void DeletePresentation(String userName, ICPresentationOverviewData presentationOverviewData, Action<Boolean?> callback);
 
         void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData, PortfolioSelectionData portfolioData, Action<ICPresentationOverviewData> callback);
 
