@@ -60,7 +60,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
-        #region IsActive
+       
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -277,7 +277,34 @@ namespace GreenField.Gadgets.ViewModels
             get { return new DelegateCommand<object>(DeleteCommandMethod, DeleteCommandValidationMethod); }
         }
 
-        #endregion
+        /// <summary>
+        /// Distribute command
+        /// </summary>
+        public ICommand DistributeCommand
+        {
+            get { return new DelegateCommand<object>(DistributeCommandMethod); }
+        }
+
+
+
+        /// <summary>
+        ///  Voting Closed Command
+        /// </summary>
+        public ICommand VotingClosedCommand
+        {
+            get { return new DelegateCommand<object>(VotingClosedCommandMethod); }
+        }       
+
+         /// <summary>
+        ///  Publish Decision Command
+        /// </summary>
+        public ICommand PublishDecisionCommand
+        {
+            get { return new DelegateCommand<object>(PublishDecisionCommandMethod); }
+        }       
+
+        
+ 
         #endregion
 
         #region Constructor
@@ -532,9 +559,36 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         private void EditCommandMethod(object param)
         {
-            ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Edit);
+            /*ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Edit);
             eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
             regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICPresentation", UriKind.Relative));
+
+            */
+
+       /*     bool userRoleValidation = UserSession.SessionManager.SESSION.Roles.Contains("IC_MEMBER_VOTING");
+
+            if (userRoleValidation && SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING)
+            {
+                ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Vote);
+            }
+            else
+            {
+                ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.View);
+            }
+            */
+            ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Edit);
+        
+
+            eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_CREATE_EDIT);
+
+            eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+            (new DashboardTileViewItemInfo
+             {
+                 DashboardTileHeader = GadgetNames.ICPRESENTATION_CREATE_EDIT,
+                DashboardTileObject = new ViewCreateUpdatePresentations(new ViewModelCreateUpdatePresentations(this.Param))
+              });
+
+
         } 
         #endregion
 
@@ -657,9 +711,168 @@ namespace GreenField.Gadgets.ViewModels
             regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeNew", UriKind.Relative));
         } 
         #endregion
+
+        #region Distribute
+
+        private void DistributeCommandMethod(object param)
+        {
+            BusyIndicatorNotification(true, "Distributing Packs");
+            dbInteractivity.DistributeICPacks(DistributeICPacksCallback);
+        }
         #endregion
-        
+
+        #region Voting Closed Command
+
+        private void VotingClosedCommandMethod(object param)
+        {
+            BusyIndicatorNotification(true, "Voting closed. Distributing pre meeting voting results");
+            dbInteractivity.VotingClosed(StatusType.READY_FOR_VOTING,StatusType.CLOSED_FOR_VOTING, VotingClosedCallback);
+        }
+        #endregion
+
+
+        #region Publish Decision Command
+
+        private void PublishDecisionCommandMethod(object param)
+        {
+            BusyIndicatorNotification(true, "Decision Published. Sending meeting minutes");
+            dbInteractivity.PublishDecision(StatusType.CLOSED_FOR_VOTING, StatusType.PUBLISH_DECISION, PublishDecisionCallback);
+        }
+        #endregion
+
+
+        #endregion
+
         #region CallBack Methods
+
+
+
+        private void PublishDecisionCallback(Boolean? result)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                if (result != null )
+                {
+
+                    if (result == true)
+                    {
+                        Prompt.ShowDialog("Meeting minutes email sent");
+                        
+                    }
+                    else
+                    {
+                        Prompt.ShowDialog("Meeting minutes not available");
+                    }
+                    Initialize();
+
+
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+
+        }
+
+
+        private void VotingClosedCallback(Boolean? result)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                if (result != null )
+                {
+                    if (result == true)
+                    {
+                        Prompt.ShowDialog("Pre meeting voting results email sent");
+                    }
+                    else
+                    {
+                        Prompt.ShowDialog("Pre meeting voting results are not available");
+                    }
+                    Initialize();
+                    
+
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+
+        }
+
+        private void DistributeICPacksCallback(Boolean? result)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                if (result != null )
+                {
+
+
+                    BusyIndicatorNotification();
+                    if (result==true)
+                    {
+                        Prompt.ShowDialog("IC Pack email sent");
+                    }
+                    else
+                    {
+                        Prompt.ShowDialog("No presentations ready to distribute");
+                    }
+
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+
+        }
 
         private void DeletePresentationCallback(Boolean? result)
         {
@@ -1059,14 +1272,11 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-        #region EventUnSubscribe
-        /// <summary>
-        /// Method that disposes the events
-        /// </summary>
+        #region dispose
         public void Dispose()
         {
-           
         }
-        #endregion           
+        #endregion
+
     }
 }

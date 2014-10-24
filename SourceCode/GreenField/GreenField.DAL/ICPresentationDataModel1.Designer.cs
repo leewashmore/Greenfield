@@ -2784,6 +2784,44 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("DeletePresentationInfo", presentationIdParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectResult<ICPackLocationData> RetrieveICPack()
+        {
+            return base.ExecuteFunction<ICPackLocationData>("RetrieveICPack");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="fromStatus">No Metadata Documentation available.</param>
+        /// <param name="toStatus">No Metadata Documentation available.</param>
+        public int UpdatePresentationInfoStatus(global::System.String fromStatus, global::System.String toStatus)
+        {
+            ObjectParameter fromStatusParameter;
+            if (fromStatus != null)
+            {
+                fromStatusParameter = new ObjectParameter("FromStatus", fromStatus);
+            }
+            else
+            {
+                fromStatusParameter = new ObjectParameter("FromStatus", typeof(global::System.String));
+            }
+    
+            ObjectParameter toStatusParameter;
+            if (toStatus != null)
+            {
+                toStatusParameter = new ObjectParameter("ToStatus", toStatus);
+            }
+            else
+            {
+                toStatusParameter = new ObjectParameter("ToStatus", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("UpdatePresentationInfoStatus", fromStatusParameter, toStatusParameter);
+        }
 
         #endregion
 
@@ -7532,6 +7570,155 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ICPresentationModel", Name="ICPackLocationData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class ICPackLocationData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ICPackLocationData object.
+        /// </summary>
+        /// <param name="fileID">Initial value of the FileID property.</param>
+        public static ICPackLocationData CreateICPackLocationData(global::System.Int64 fileID)
+        {
+            ICPackLocationData iCPackLocationData = new ICPackLocationData();
+            iCPackLocationData.FileID = fileID;
+            return iCPackLocationData;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 FileID
+        {
+            get
+            {
+                return _FileID;
+            }
+            set
+            {
+                OnFileIDChanging(value);
+                ReportPropertyChanging("FileID");
+                _FileID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FileID");
+                OnFileIDChanged();
+            }
+        }
+        private global::System.Int64 _FileID;
+        partial void OnFileIDChanging(global::System.Int64 value);
+        partial void OnFileIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SecurityName
+        {
+            get
+            {
+                return _SecurityName;
+            }
+            set
+            {
+                OnSecurityNameChanging(value);
+                ReportPropertyChanging("SecurityName");
+                _SecurityName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SecurityName");
+                OnSecurityNameChanged();
+            }
+        }
+        private global::System.String _SecurityName;
+        partial void OnSecurityNameChanging(global::System.String value);
+        partial void OnSecurityNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SecurityTicker
+        {
+            get
+            {
+                return _SecurityTicker;
+            }
+            set
+            {
+                OnSecurityTickerChanging(value);
+                ReportPropertyChanging("SecurityTicker");
+                _SecurityTicker = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SecurityTicker");
+                OnSecurityTickerChanged();
+            }
+        }
+        private global::System.String _SecurityTicker;
+        partial void OnSecurityTickerChanging(global::System.String value);
+        partial void OnSecurityTickerChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Location
+        {
+            get
+            {
+                return _Location;
+            }
+            set
+            {
+                OnLocationChanging(value);
+                ReportPropertyChanging("Location");
+                _Location = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Location");
+                OnLocationChanged();
+            }
+        }
+        private global::System.String _Location;
+        partial void OnLocationChanging(global::System.String value);
+        partial void OnLocationChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmComplexTypeAttribute(NamespaceName="ICPresentationModel", Name="ICPresentationOverviewData")]
     [DataContractAttribute(IsReference=true)]
     [Serializable()]
@@ -8693,6 +8880,102 @@ namespace GreenField.DAL
         private global::System.String _Issuer_id;
         partial void OnIssuer_idChanging(global::System.String value);
         partial void OnIssuer_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityMSCIStdWeight
+        {
+            get
+            {
+                return _SecurityMSCIStdWeight;
+            }
+            set
+            {
+                OnSecurityMSCIStdWeightChanging(value);
+                ReportPropertyChanging("SecurityMSCIStdWeight");
+                _SecurityMSCIStdWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityMSCIStdWeight");
+                OnSecurityMSCIStdWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityMSCIStdWeight;
+        partial void OnSecurityMSCIStdWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityMSCIStdWeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityMSCIIMIWeight
+        {
+            get
+            {
+                return _SecurityMSCIIMIWeight;
+            }
+            set
+            {
+                OnSecurityMSCIIMIWeightChanging(value);
+                ReportPropertyChanging("SecurityMSCIIMIWeight");
+                _SecurityMSCIIMIWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityMSCIIMIWeight");
+                OnSecurityMSCIIMIWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityMSCIIMIWeight;
+        partial void OnSecurityMSCIIMIWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityMSCIIMIWeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityGlobalActiveWeight
+        {
+            get
+            {
+                return _SecurityGlobalActiveWeight;
+            }
+            set
+            {
+                OnSecurityGlobalActiveWeightChanging(value);
+                ReportPropertyChanging("SecurityGlobalActiveWeight");
+                _SecurityGlobalActiveWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityGlobalActiveWeight");
+                OnSecurityGlobalActiveWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityGlobalActiveWeight;
+        partial void OnSecurityGlobalActiveWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityGlobalActiveWeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ISSUER_NAME
+        {
+            get
+            {
+                return _ISSUER_NAME;
+            }
+            set
+            {
+                OnISSUER_NAMEChanging(value);
+                ReportPropertyChanging("ISSUER_NAME");
+                _ISSUER_NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ISSUER_NAME");
+                OnISSUER_NAMEChanged();
+            }
+        }
+        private global::System.String _ISSUER_NAME;
+        partial void OnISSUER_NAMEChanging(global::System.String value);
+        partial void OnISSUER_NAMEChanged();
 
         #endregion
 
@@ -11113,6 +11396,30 @@ namespace GreenField.DAL
         private Nullable<global::System.Single> _CurrentUpside;
         partial void OnCurrentUpsideChanging(Nullable<global::System.Single> value);
         partial void OnCurrentUpsideChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Location
+        {
+            get
+            {
+                return _Location;
+            }
+            set
+            {
+                OnLocationChanging(value);
+                ReportPropertyChanging("Location");
+                _Location = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Location");
+                OnLocationChanged();
+            }
+        }
+        private global::System.String _Location;
+        partial void OnLocationChanging(global::System.String value);
+        partial void OnLocationChanged();
 
         #endregion
 

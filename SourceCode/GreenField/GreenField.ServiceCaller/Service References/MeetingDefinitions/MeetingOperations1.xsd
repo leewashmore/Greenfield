@@ -25,6 +25,7 @@
           <xs:element minOccurs="0" name="CurrentHoldings" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Data_id" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="FVCalc" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ISSUER_NAME" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Issuer_id" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MeetingClosedDateTime" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="MeetingDateTime" nillable="true" type="xs:dateTime" />
@@ -43,8 +44,11 @@
           <xs:element minOccurs="0" name="SecurityCashPosition" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityCountry" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityCountryCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityGlobalActiveWeight" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityIndustry" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityLastClosingPrice" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityMSCIIMIWeight" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityMSCIStdWeight" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityMarketCapitalization" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityPFVMeasure" nillable="true" type="xs:string" />
@@ -383,6 +387,7 @@
           <xs:element minOccurs="0" name="CurrentPFVMeasureValue" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="CurrentPosition" nillable="true" type="xs:long" />
           <xs:element minOccurs="0" name="CurrentUpside" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MeetingDateTime" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="SecurityBuySellRange" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityCashPosition" nillable="true" type="xs:float" />

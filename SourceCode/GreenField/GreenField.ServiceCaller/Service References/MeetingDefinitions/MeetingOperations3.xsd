@@ -37,6 +37,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
         <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="presentationOverviewData" nillable="true" type="q4:ICPresentationOverviewData" />
+        <xs:element minOccurs="0" name="template" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -358,20 +359,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GenerateMeetingMinutesReport">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="meetingId" type="xs:long" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GenerateMeetingMinutesReportResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="GenerateMeetingMinutesReportResult" nillable="true" type="xs:base64Binary" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GeneratePreMeetingVotingReport">
     <xs:complexType>
       <xs:sequence>
@@ -478,6 +465,48 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveSummaryReportDataResult" nillable="true" type="q34:ArrayOfSummaryReportData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DistributeICPacks">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DistributeICPacksResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DistributeICPacksResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VotingClosed">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fromstatus" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="tostatus" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VotingClosedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VotingClosedResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PublishDecision">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fromstatus" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="tostatus" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PublishDecisionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PublishDecisionResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

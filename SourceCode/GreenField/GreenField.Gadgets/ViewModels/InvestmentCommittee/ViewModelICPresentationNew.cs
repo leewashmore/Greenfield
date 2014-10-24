@@ -112,6 +112,17 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+
+        public List<string> PowerpointTemplateList
+        {
+            get
+            {
+                return new List<string>
+                { "Full",
+                  "Abreviated"
+                };
+            }
+        }
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
         /// </summary>
@@ -191,6 +202,26 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
+        
+        public DateTime CurrDate
+        {
+            get { return DateTime.Now; }
+        }
+
+
+        private string powerpointTemplate;
+        public string PowerpointTemplate
+        {
+            get { return powerpointTemplate; }
+            set
+            {
+                powerpointTemplate = value;
+                RaisePropertyChanged(() => this.PowerpointTemplate);
+            }
+        }
+
+
         #endregion
 
         #region ICommand
@@ -248,8 +279,8 @@ namespace GreenField.Gadgets.ViewModels
                 && ICPresentationOverviewInfo.YTDRet_RELtoEM != null
                 && ICPresentationOverviewInfo.YTDRet_RELtoEM.Count() > 1
                 && ICPresentationOverviewInfo.YTDRet_RELtoLOC != null
-                && ICPresentationOverviewInfo.YTDRet_RELtoLOC.Count() > 1
-                && ICPresentationOverviewInfo.MeetingClosedDateTime != null;
+                && ICPresentationOverviewInfo.YTDRet_RELtoLOC.Count() > 1;
+               
 
             return selectionValidation && dataValidation;
         }
@@ -263,7 +294,8 @@ namespace GreenField.Gadgets.ViewModels
             if (dbInteractivity != null)
             {
                 BusyIndicatorNotification(true, "Setting up presentation details..");
-                dbInteractivity.CreatePresentation(UserSession.SessionManager.SESSION.UserName, ICPresentationOverviewInfo, CreatePresentationCallBackMethod);
+
+                dbInteractivity.CreatePresentation(UserSession.SessionManager.SESSION.UserName, ICPresentationOverviewInfo,PowerpointTemplate, CreatePresentationCallBackMethod);
             }
         }        
         #endregion
@@ -288,7 +320,8 @@ namespace GreenField.Gadgets.ViewModels
                     regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICPresentation", UriKind.Relative);*/
                     iCPresentationOverviewInfo.PresentationID = (long)result;
                     ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, iCPresentationOverviewInfo);
-                    eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+                
+                    eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION);
                     regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardICPresentation", UriKind.Relative));
 
                 }
@@ -462,7 +495,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="valueYTDAbs">YTDRet_Absolute</param>
         /// <param name="valueYTDReltoLoc">YTDRet_RELtoLOC</param>
         /// <param name="valueYTDReltoEM">YTDRet_RELtoEM</param>
-        public void RaiseICPresentationOverviewInfoChanged(Decimal valueYTDAbs, Decimal valueYTDReltoLoc, Decimal valueYTDReltoEM,Decimal valueFVBuy,Decimal valueFVSell,String valueFVMeasure)
+        public void RaiseICPresentationOverviewInfoChanged(Decimal valueYTDAbs, Decimal valueYTDReltoLoc, Decimal valueYTDReltoEM,Decimal valueFVBuy,Decimal valueFVSell,String valueFVMeasure,String pptTemplate)
         {
             ICPresentationOverviewInfo.YTDRet_Absolute = String.Format("{0:n2}", valueYTDAbs) + "%";
             ICPresentationOverviewInfo.YTDRet_RELtoLOC = String.Format("{0:n2}", valueYTDReltoEM) + "%";
@@ -472,6 +505,7 @@ namespace GreenField.Gadgets.ViewModels
             iCPresentationOverviewInfo.SecurityPFVMeasure = valueFVMeasure;
             //iCPresentationOverviewInfo. = valueFVMeasure;
             iCPresentationOverviewInfo.FVCalc = String.Format("{0} {1:n2} - {2:n2}", valueFVMeasure, valueFVBuy, valueFVSell);
+            PowerpointTemplate = pptTemplate;
             RaisePropertyChanged(() => this.SubmitCommand);
         }
         #endregion

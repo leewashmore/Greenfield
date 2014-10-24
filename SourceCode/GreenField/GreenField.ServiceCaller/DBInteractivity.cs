@@ -4114,7 +4114,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData, Action<Int64?> callback)
+        public void CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData,string template, Action<Int64?> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -4122,7 +4122,7 @@ namespace GreenField.ServiceCaller
             MeetingOperationsClient client = new MeetingOperationsClient();
             client.Endpoint.Behaviors.Add(new CookieBehavior());
             long startTime = DateTime.Now.Ticks;
-            client.CreatePresentationAsync(userName, presentationOverviewData);
+            client.CreatePresentationAsync(userName, presentationOverviewData,template);
             client.CreatePresentationCompleted += (se, e) =>
             {
                 long endTime = DateTime.Now.Ticks;
@@ -4191,7 +4191,129 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
-     
+
+
+        public void DistributeICPacks(Action<Boolean?> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
+            long startTime = DateTime.Now.Ticks;
+            client.DistributeICPacksAsync();
+            client.DistributeICPacksCompleted += (se, e) =>
+            {
+                long endTime = DateTime.Now.Ticks;
+                ServiceLog.LogServiceClientReceivedData(LoggerFacade, methodNamespace, e.Error, DateTime.Now.ToUniversalTime(), startTime, endTime, SessionManager.SESSION != null
+                                                                                                                ? SessionManager.SESSION.UserName : "Unspecified");
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
+
+
+
+        public void VotingClosed(string fromstatus, string tostatus, Action<Boolean?> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
+            long startTime = DateTime.Now.Ticks;
+            client.VotingClosedAsync(fromstatus, tostatus);
+            client.VotingClosedCompleted += (se, e) =>
+            {
+                long endTime = DateTime.Now.Ticks;
+                ServiceLog.LogServiceClientReceivedData(LoggerFacade, methodNamespace, e.Error, DateTime.Now.ToUniversalTime(), startTime, endTime, SessionManager.SESSION != null
+                                                                                                                ? SessionManager.SESSION.UserName : "Unspecified");
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
+
+        public void PublishDecision(string fromstatus, string tostatus, Action<Boolean?> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingOperationsClient client = new MeetingOperationsClient();
+            client.Endpoint.Behaviors.Add(new CookieBehavior());
+            long startTime = DateTime.Now.Ticks;
+            client.PublishDecisionAsync(fromstatus, tostatus);
+            client.PublishDecisionCompleted += (se, e) =>
+            {
+                long endTime = DateTime.Now.Ticks;
+                ServiceLog.LogServiceClientReceivedData(LoggerFacade, methodNamespace, e.Error, DateTime.Now.ToUniversalTime(), startTime, endTime, SessionManager.SESSION != null
+                                                                                                                ? SessionManager.SESSION.UserName : "Unspecified");
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
 
         public void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData, PortfolioSelectionData portfolioData, Action<ICPresentationOverviewData> callback)
         {
@@ -4860,7 +4982,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void GenerateMeetingMinutesReport(Int64 meetingId, Action<Byte[]> callback)
+    /*    public void GenerateMeetingMinutesReport(Int64 meetingId, Action<Byte[]> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -4898,7 +5020,7 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
-
+        */
         public void GeneratePreMeetingVotingReport(Int64 presentationId, Action<Byte[]> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

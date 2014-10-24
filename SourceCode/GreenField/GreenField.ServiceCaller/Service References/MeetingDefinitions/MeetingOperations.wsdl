@@ -228,15 +228,6 @@
   <wsdl:message name="MeetingOperations_GetAllUsers_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q24:ServiceFault" />
   </wsdl:message>
-  <wsdl:message name="MeetingOperations_GenerateMeetingMinutesReport_InputMessage">
-    <wsdl:part name="parameters" element="tns:GenerateMeetingMinutesReport" />
-  </wsdl:message>
-  <wsdl:message name="MeetingOperations_GenerateMeetingMinutesReport_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GenerateMeetingMinutesReportResponse" />
-  </wsdl:message>
-  <wsdl:message name="MeetingOperations_GenerateMeetingMinutesReport_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q25:ServiceFault" />
-  </wsdl:message>
   <wsdl:message name="MeetingOperations_GeneratePreMeetingVotingReport_InputMessage">
     <wsdl:part name="parameters" element="tns:GeneratePreMeetingVotingReport" />
   </wsdl:message>
@@ -244,7 +235,7 @@
     <wsdl:part name="parameters" element="tns:GeneratePreMeetingVotingReportResponse" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_GeneratePreMeetingVotingReport_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q26:ServiceFault" />
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q25:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_RetrievePresentationComments_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePresentationComments" />
@@ -253,7 +244,7 @@
     <wsdl:part name="parameters" element="tns:RetrievePresentationCommentsResponse" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_RetrievePresentationComments_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q27:ServiceFault" />
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q26:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_SetPresentationComments_InputMessage">
     <wsdl:part name="parameters" element="tns:SetPresentationComments" />
@@ -262,7 +253,7 @@
     <wsdl:part name="parameters" element="tns:SetPresentationCommentsResponse" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_SetPresentationComments_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q28:ServiceFault" />
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q27:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_UpdatePreMeetingVoteDetails_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdatePreMeetingVoteDetails" />
@@ -271,7 +262,7 @@
     <wsdl:part name="parameters" element="tns:UpdatePreMeetingVoteDetailsResponse" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_UpdatePreMeetingVoteDetails_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q29:ServiceFault" />
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q28:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_UpdateMeetingPresentationDate_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateMeetingPresentationDate" />
@@ -280,7 +271,7 @@
     <wsdl:part name="parameters" element="tns:UpdateMeetingPresentationDateResponse" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_UpdateMeetingPresentationDate_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q30:ServiceFault" />
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q29:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_SetMessageInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:SetMessageInfo" />
@@ -289,7 +280,7 @@
     <wsdl:part name="parameters" element="tns:SetMessageInfoResponse" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_SetMessageInfo_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q31:ServiceFault" />
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q30:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_RetrieveSummaryReportData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveSummaryReportData" />
@@ -298,7 +289,34 @@
     <wsdl:part name="parameters" element="tns:RetrieveSummaryReportDataResponse" />
   </wsdl:message>
   <wsdl:message name="MeetingOperations_RetrieveSummaryReportData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q31:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_DistributeICPacks_InputMessage">
+    <wsdl:part name="parameters" element="tns:DistributeICPacks" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_DistributeICPacks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DistributeICPacksResponse" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_DistributeICPacks_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q32:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_VotingClosed_InputMessage">
+    <wsdl:part name="parameters" element="tns:VotingClosed" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_VotingClosed_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VotingClosedResponse" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_VotingClosed_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q33:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_PublishDecision_InputMessage">
+    <wsdl:part name="parameters" element="tns:PublishDecision" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_PublishDecision_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PublishDecisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_PublishDecision_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q34:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="MeetingOperations">
     <wsdl:operation name="RetrievePresentationOverviewData">
@@ -421,11 +439,6 @@
       <wsdl:output wsaw:Action="http://tempuri.org/MeetingOperations/GetAllUsersResponse" message="tns:MeetingOperations_GetAllUsers_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/MeetingOperations/GetAllUsersServiceFaultFault" name="ServiceFaultFault" message="tns:MeetingOperations_GetAllUsers_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GenerateMeetingMinutesReport">
-      <wsdl:input wsaw:Action="http://tempuri.org/MeetingOperations/GenerateMeetingMinutesReport" message="tns:MeetingOperations_GenerateMeetingMinutesReport_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/MeetingOperations/GenerateMeetingMinutesReportResponse" message="tns:MeetingOperations_GenerateMeetingMinutesReport_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/MeetingOperations/GenerateMeetingMinutesReportServiceFaultFault" name="ServiceFaultFault" message="tns:MeetingOperations_GenerateMeetingMinutesReport_ServiceFaultFault_FaultMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GeneratePreMeetingVotingReport">
       <wsdl:input wsaw:Action="http://tempuri.org/MeetingOperations/GeneratePreMeetingVotingReport" message="tns:MeetingOperations_GeneratePreMeetingVotingReport_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/MeetingOperations/GeneratePreMeetingVotingReportResponse" message="tns:MeetingOperations_GeneratePreMeetingVotingReport_OutputMessage" />
@@ -460,6 +473,21 @@
       <wsdl:input wsaw:Action="http://tempuri.org/MeetingOperations/RetrieveSummaryReportData" message="tns:MeetingOperations_RetrieveSummaryReportData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/MeetingOperations/RetrieveSummaryReportDataResponse" message="tns:MeetingOperations_RetrieveSummaryReportData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/MeetingOperations/RetrieveSummaryReportDataServiceFaultFault" name="ServiceFaultFault" message="tns:MeetingOperations_RetrieveSummaryReportData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DistributeICPacks">
+      <wsdl:input wsaw:Action="http://tempuri.org/MeetingOperations/DistributeICPacks" message="tns:MeetingOperations_DistributeICPacks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/MeetingOperations/DistributeICPacksResponse" message="tns:MeetingOperations_DistributeICPacks_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/MeetingOperations/DistributeICPacksServiceFaultFault" name="ServiceFaultFault" message="tns:MeetingOperations_DistributeICPacks_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VotingClosed">
+      <wsdl:input wsaw:Action="http://tempuri.org/MeetingOperations/VotingClosed" message="tns:MeetingOperations_VotingClosed_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/MeetingOperations/VotingClosedResponse" message="tns:MeetingOperations_VotingClosed_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/MeetingOperations/VotingClosedServiceFaultFault" name="ServiceFaultFault" message="tns:MeetingOperations_VotingClosed_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PublishDecision">
+      <wsdl:input wsaw:Action="http://tempuri.org/MeetingOperations/PublishDecision" message="tns:MeetingOperations_PublishDecision_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/MeetingOperations/PublishDecisionResponse" message="tns:MeetingOperations_PublishDecision_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/MeetingOperations/PublishDecisionServiceFaultFault" name="ServiceFaultFault" message="tns:MeetingOperations_PublishDecision_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="MeetingOperations" type="tns:MeetingOperations">
@@ -752,18 +780,6 @@
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="GenerateMeetingMinutesReport">
-      <soap:operation soapAction="http://tempuri.org/MeetingOperations/GenerateMeetingMinutesReport" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ServiceFaultFault">
-        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="GeneratePreMeetingVotingReport">
       <soap:operation soapAction="http://tempuri.org/MeetingOperations/GeneratePreMeetingVotingReport" style="document" />
       <wsdl:input>
@@ -838,6 +854,42 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveSummaryReportData">
       <soap:operation soapAction="http://tempuri.org/MeetingOperations/RetrieveSummaryReportData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DistributeICPacks">
+      <soap:operation soapAction="http://tempuri.org/MeetingOperations/DistributeICPacks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VotingClosed">
+      <soap:operation soapAction="http://tempuri.org/MeetingOperations/VotingClosed" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PublishDecision">
+      <soap:operation soapAction="http://tempuri.org/MeetingOperations/PublishDecision" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

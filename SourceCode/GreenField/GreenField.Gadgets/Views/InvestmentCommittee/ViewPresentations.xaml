@@ -33,10 +33,10 @@
             <!--Filters-->
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock x:Name="tblkICPPresentationsListFilter" Text="Presentation Date"
+                    <TextBlock x:Name="tblkICPPresentationsListFilter" Text="Presentation List"
                                Grid.Row="1" HorizontalAlignment="Right" Margin="0,2,0,0"
                                VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-                    <telerik:RadComboBox Grid.Column="1" Width="150" Margin="10,2,0,0" ItemsSource="{Binding MeetingInfoDates}"
+                    <!--<telerik:RadComboBox Grid.Column="1" Width="150" Margin="10,2,0,0" ItemsSource="{Binding MeetingInfoDates}"
                                          SelectedItem="{Binding SelectedMeetingInfoDate, Mode=TwoWay}"
                                          HorizontalContentAlignment="Left"
                                          EmptyText="Select Date"                                 
@@ -48,7 +48,7 @@
                                            Style="{StaticResource TextBlockStyle}"/>
                             </DataTemplate>
                         </telerik:RadComboBox.ItemTemplate>
-                    </telerik:RadComboBox>
+                    </telerik:RadComboBox>-->
                 </StackPanel>
                 <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
                     <Grid.ColumnDefinitions>
@@ -114,25 +114,25 @@
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListDate"
                                                 DataFormatString="{}{0:MMMM dd, yyyy}"
                                                 Width="Auto"
-                                                Header="Plannned Submission Date"
-                                                UniqueName="Presentation Date"
+                                                Header="Date       "
+                                                UniqueName="Date"
                                                 DataMemberBinding="{Binding MeetingDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"
                                                 IsFilterable="True"/>
-                  <!--  <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListTime"
+                   <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListTime"
                                                 DataFormatString="{}{0:h:mm tt}"
                                                 Width="Auto"
-                                                Header="Meeting Time"
-                                                UniqueName="Meeting Time"
+                                                Header="Time"
+                                                UniqueName="Time"
                                                 DataMemberBinding="{Binding MeetingDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"
-                                                IsFilterable="True"/>-->
+                                                IsFilterable="True"/>
                     <!-- <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListSubmitDeadline"
                                                 DataFormatString="{}{0:MM/dd/yyyy h:mm tt}"
                                                 Width="Auto"
@@ -228,16 +228,18 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <telerik:RadButton x:Name="btnICPPresentationsListChangeDate"
+                <!--<telerik:RadButton x:Name="btnICPPresentationsListChangeDate"
                                    Command="{Binding ChangeDateCommand}"
                                    VerticalAlignment="Center"
                                    Width="100"
                                    Visibility="Collapsed"
                                    HorizontalAlignment="Right"
-                                   Content="CHANGE DATE"/>
-                <telerik:RadButton Grid.Column="1"
+                                   Content="CHANGE DATE"/> -->
+                <!--<telerik:RadButton Grid.Column="1"
                                    x:Name="btnICPPresentationsListNew"
                                    Command="{Binding NewCommand}"
                                    VerticalAlignment="Center"
@@ -245,29 +247,31 @@
                                    Margin="5,0,0,0"
                                    Visibility="Collapsed"
                                    HorizontalAlignment="Right"
-                                   Content="NEW"/>
-                <telerik:RadButton Grid.Column="2"
+                                   Content="NEW"/> -->
+                <!--<telerik:RadButton Grid.Column="2"
                                    x:Name="btnICPPresentationsListUpload"
                                    Command="{Binding UploadCommand}" 
                                    Margin="5,0,0,0"
                                    Width="100"
                                    Visibility="Collapsed"                        
                                    VerticalAlignment="Center"
-                                   Content="UPLOAD"/>
-                <telerik:RadButton Grid.Column="3"
+                                   Content="UPLOAD"/> -->
+                <telerik:RadButton Grid.Column="1"
                                    x:Name="btnICPPresentationsListEdit"
                                    Command="{Binding EditCommand}"
                                    Margin="5,0,0,0"
                                    Width="100"
                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
                                    Content="EDIT"/>
-                <telerik:RadButton Grid.Column="4" x:Name="btnICPPresentationsListView"
+                <telerik:RadButton Grid.Column="2" x:Name="btnICPPresentationsListView"
                                    Command="{Binding ViewCommand}"
                                    Margin="5,0,0,0"
                                    Width="100"
                                    VerticalAlignment="Center"
-                                   Content="VIEW/VOTE"  />
-                <telerik:RadButton Grid.Column="5"
+                                    HorizontalAlignment="Left"
+                                   Content="VIEW/VOTE"   />
+                <telerik:RadButton Grid.Column="3"
                                    x:Name="btnICPPresentationsListWithdrawRequest"
                                    Command="{Binding WithdrawCommand}"
                                    Margin="5,0,0,0"
@@ -275,20 +279,45 @@
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                                    Content="WITHDRAW" Visibility="Collapsed" />
-                <telerik:RadButton Grid.Column="6" x:Name="btnICPPresentationsListDecisionEntry"
+                <telerik:RadButton Grid.Column="4" x:Name="btnICPPresentationsListDecisionEntry"
                                    Command="{Binding DecisionEntryCommand}"
                                    Margin="5,0,0,0"
                                    Width="100"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
-                                   Content="DECISION ENTRY" Visibility="Collapsed" />
-                <telerik:RadButton Grid.Column="6" x:Name="btnICPPresentationsDelete"
+                                   Content="DECISION ENTRY"  Visibility="Collapsed"/>
+                <telerik:RadButton Grid.Column="5" x:Name="btnICPPresentationsDelete"
                                    Command="{Binding DeleteCommand}"
                                    Margin="5,0,0,0"
                                    Width="100"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
-                                   Content="DELETE" Visibility="Collapsed" />
+                                   Content="DELETE" Visibility="Collapsed"  />
+                <telerik:RadButton Grid.Column="6"
+                                   x:Name="btnICPPresentationsListDistribute"
+                                   Command="{Binding DistributeCommand}" 
+                                   Margin="5,0,0,0"
+                                   Width="100"
+                                   VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                   Content="Distribute" Visibility="Collapsed"/>
+                <telerik:RadButton Grid.Column="7"
+                                   x:Name="btnICPPresentationsListVotingClosed"
+                                   Command="{Binding VotingClosedCommand}" 
+                                   Margin="5,0,0,0"
+                                   Width="100"
+                                   VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                   Content="Voting Closed" Visibility="Collapsed"/>
+                <telerik:RadButton Grid.Column="8"
+                                   x:Name="btnICPPresentationsListPublishDecision"
+                                   Command="{Binding PublishDecisionCommand}" 
+                                   Margin="5,0,0,0"
+                                   Width="100"
+                                   VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                   Content="Publish Decision" Visibility="Collapsed"/>
+
             </Grid>
             
             <telerik:RadRichTextBox x:Name="RichTextBox" Grid.Row="3" Width="0"/>

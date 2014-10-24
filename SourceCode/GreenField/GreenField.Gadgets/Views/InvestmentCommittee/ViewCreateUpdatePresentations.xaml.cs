@@ -55,6 +55,20 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextViewModelCreateUpdatePresentations = dataContextSource;
+
+            if (dataContextSource != null)
+            {
+                if (dataContextSource.SelectedPresentationOverviewInfo!= null && dataContextSource.SelectedPresentationOverviewInfo.StatusType != StatusType.IN_PROGRESS)
+                {
+                    HyperlinkButton pphyp = this.PPItemsControl.FindName("PowerPointHyperLink") as HyperlinkButton;
+                    pphyp.IsEnabled = false;
+                }
+
+            }
+
+          
+
+           
         }
         #endregion
 
@@ -182,5 +196,15 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        private void ICPacketHyperLink_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBlock_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+
+        }
     }
 }

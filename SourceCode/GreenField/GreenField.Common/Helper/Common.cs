@@ -194,6 +194,7 @@ namespace GreenField.Common
         public static String CLOSED_FOR_VOTING = "Voting Closed";
         public static String FINAL = "Final";
         public static String WITHDRAWN = "Withdrawn";
+        public static String PUBLISH_DECISION = "Decision Published";
     }
 
     public static class VoteType

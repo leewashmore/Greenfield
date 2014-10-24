@@ -61,7 +61,20 @@ namespace GreenField.Gadgets.ViewModels
                     Initialize();
                 }
             }
+        }
+
+
+        private Boolean editEnabled;
+        public Boolean EditEnabled
+        {
+            get { return editEnabled; }
+            set
+            {
+                editEnabled = value;
+                RaisePropertyChanged(() => this.EditEnabled);
+            }
         } 
+
         #endregion
 
         #region Upload/Delete Document
@@ -165,6 +178,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 selectedPresentationOverviewInfo = value;
+                RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
             }
         }
 
@@ -208,6 +222,8 @@ namespace GreenField.Gadgets.ViewModels
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
         }
+
+
         #endregion
 
         #region Busy Indicator Notification
@@ -335,9 +351,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         private void SubmitCommandMethod(object param)
         {
-            if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING
-                && SelectedPresentationOverviewInfo.MeetingDateTime > DateTime.UtcNow)
-            {
+            //if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING)
+           // {
                 Prompt.ShowDialog("Please ensure that all changes have been made before submitting meeting presentation for voting", ""
                     , MessageBoxButton.OKCancel, (result) =>
                 {
@@ -351,12 +366,12 @@ namespace GreenField.Gadgets.ViewModels
                             BusyIndicatorNotification(true, "Updating selected presentation to status 'Ready for Voting'...");
                             dbInteractivity.SetICPPresentationStatus(GreenField.UserSession.SessionManager.SESSION.UserName
                                 , SelectedPresentationOverviewInfo.PresentationID,
-                                    StatusType.READY_FOR_VOTING, SetICPPresentationStatusCallbackMethod);
+                                    StatusType.IN_PROGRESS, SetICPPresentationStatusCallbackMethod);
                         }
                     }
                 });
-            }
-            else
+         //   }
+           /* else
             {
                 ChildViewReSubmitPresentation dialog = new ChildViewReSubmitPresentation();
                 dialog.Show();
@@ -373,8 +388,11 @@ namespace GreenField.Gadgets.ViewModels
                         }
                     }
                 };
-            }
+            }*/
         }
+
+       
+
         #endregion        
 
         #region Callback Methods
@@ -392,6 +410,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     SelectedPresentationDocumentationInfo = result;
+                    if (SelectedPresentationOverviewInfo != null)
+                    {
+                        EditEnabled = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS;
+                    }
+                  
                 }
                 else
                 {
@@ -618,6 +641,10 @@ namespace GreenField.Gadgets.ViewModels
             if (presentationInfo != null)
             {
                 SelectedPresentationOverviewInfo = presentationInfo;
+                if(SelectedPresentationOverviewInfo != null)
+                {
+                    EditEnabled = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS;
+                }
                 if (dbInteractivity != null)
                 {
                     BusyIndicatorNotification(true, "Retrieving updated upload documentation...");
