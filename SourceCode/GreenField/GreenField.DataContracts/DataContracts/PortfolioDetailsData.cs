@@ -150,6 +150,15 @@ namespace GreenField.DataContracts
         [DataMember]
         public decimal? FairValue { get; set; }
 
+        [DataMember]
+        public decimal? DYBF2 { get; set; }
+
+        [DataMember]
+        public decimal? DividendYieldCurrentYear { get; set; }
+
+        [DataMember]
+        public decimal? DividendYieldNextYear { get; set; }
+
         public List<PortfolioDetailsData> Children { get; set; }
     }
 }

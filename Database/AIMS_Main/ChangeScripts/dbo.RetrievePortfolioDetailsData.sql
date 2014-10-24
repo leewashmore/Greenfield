@@ -24,6 +24,7 @@ AS
 BEGIN
 	declare @benchmarkId varchar(50);
 	declare @sumbenchmarkWeight decimal(22,8);
+	SET FMTONLY OFF;		
 	Create table #PortfolioDetailsData
 	(
 		FromDate datetime,
@@ -130,9 +131,13 @@ BEGIN
 		FairValue decimal(22,8)
 	)
 	
+	SET FMTONLY OFF;		
 	select * into #PortfolioLTTemp from gf_portfolio_ltholdings where 1=0;
+	SET FMTONLY OFF;
 	select * into #BenchmarkTemp from  gf_benchmark_holdings where 1=0;
+	SET FMTONLY OFF;	
 	select * into #PortfolioTemp from gf_portfolio_holdings where 1=0;
+	
 	if  @isLookThru = 0  -- no look thru
 	begin
 		/* no look thru*******************************/
@@ -205,6 +210,7 @@ BEGIN
 		end
 	set @sumbenchmarkWeight = (select sum(benchmark_weight) from #BenchmarkTemp);
 	print @portfolio_id
+	SET FMTONLY OFF;
     insert into #PortfolioDetailsData
     (AsecSecShortName,IssueName,Ticker,PortfolioId, portfoliopath, pfcholdingportfolio,ProprietaryRegionCode,IsoCountryCode,SectorName,
     IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,IssuerId,issuer_proxy,IssuerName,SecurityId,SECURITYTHEMECODE)
@@ -313,6 +319,7 @@ BEGIN
 			end
 		end
 	set @sumbenchmarkWeight = (select sum(benchmark_weight) from #BenchmarkTemp);
+	SET FMTONLY OFF;	
     insert into #PortfolioDetailsData
     (AsecSecShortName,IssueName,Ticker,PfcHoldingPortfolio,PortfolioId,PortfolioPath,ProprietaryRegionCode,IsoCountryCode,SectorName,
     IndustryName,SubIndustryName,MarketCapUSD,SecurityType,BalanceNominal,DirtyValuePC,BenchmarkWeight,AshEmmModelWeight,IssuerId,issuer_proxy,IssuerName,SecurityId,SECURITYTHEMECODE)

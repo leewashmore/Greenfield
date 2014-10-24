@@ -45,7 +45,7 @@ update #PortfolioDetailsData
 		forwardpe = x.forwardpe ,
 		forwardpbv = x.forwardpbv,
 		ForwardEB_EBITDA=x.ForwardEB_EBITDA,
-		DYBF2 = x.DYBF2
+		DYBF2 = x.DYBF2 * 100
 	from #PortfolioDetailsData as por
 	inner join (
 		select asec_sec_short_name,[185] as marketcap ,[187] as forwardpe, [188] as forwardpbv , [198] as ForwardEB_EBITDA, [236] as DYBF2 from
@@ -67,7 +67,7 @@ update #PortfolioDetailsData
 
 --update Dividend Yields(0)
 update #PortfolioDetailsData 
-	set DividendYieldCurrentYear = x.DivCurrYear	
+	set DividendYieldCurrentYear = x.DivCurrYear * 100	
 	from #PortfolioDetailsData as por
 	inner join (
 		select asec_sec_short_name,[192] as DivCurrYear from
@@ -90,7 +90,7 @@ update #PortfolioDetailsData
 	
 --update Dividend Yields (1)
 update #PortfolioDetailsData 
-	set DividendYieldNextYear = x.DivNextYear	
+	set DividendYieldNextYear = x.DivNextYear* 100	
 	from #PortfolioDetailsData as por
 	inner join (
 		select asec_sec_short_name,[192] as DivNextYear from

@@ -2033,12 +2033,17 @@ namespace GreenField.Web.Services
                 RevenueGrowthNextYear = l.RevenueGrowthNextYear,
                 NetIncomeGrowthCurrentYear = l.NetIncomeGrowthCurrentYear,
                 NetIncomeGrowthNextYear = l.NetIncomeGrowthNextYear,
+                DividendYieldCurrentYear = l.DividendYieldCurrentYear,
+                DividendYieldNextYear = l.DividendYieldNextYear,
+                DYBF2 = l.DYBF2,
                 ROE = l.ROE,
                 NetDebtEquity = l.NetDebtEquity,
                 FreecashFlowMargin = l.FreecashFlowMargin,
                 IssuerId = l.IssuerId,
                 IssuerName = l.IssuerName,
                 FairValue = l.FairValue
+                
+                
             })
             );
 
