@@ -90,7 +90,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     uploadDocumentInfo = new List<string> 
                     {
-                        UploadDocumentType.POWERPOINT_PRESENTATION, 
+                        UploadDocumentType.PRESENTATION, 
                         UploadDocumentType.FINSTAT_REPORT, 
                         UploadDocumentType.INVESTMENT_CONTEXT_REPORT, 
                         UploadDocumentType.DCF_MODEL, 
@@ -104,7 +104,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected upload document type
         /// </summary>
-        private String selectedUploadDocumentInfo = UploadDocumentType.POWERPOINT_PRESENTATION;
+        private String selectedUploadDocumentInfo = UploadDocumentType.PRESENTATION;
         public String SelectedUploadDocumentInfo
         {
             get { return selectedUploadDocumentInfo; }
@@ -305,7 +305,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <returns>True/False</returns>
         private Boolean UploadCommandValidationMethod(object param)
         {
-            return UploadFileStreamData != null && UploadFileData != null;
+            return UploadFileStreamData != null && UploadFileData != null && (SelectedPresentationOverviewInfo.StatusType==StatusType.IN_PROGRESS);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (SelectedPresentationDocumentationInfo == null)
                 return false;
-            return SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.POWERPOINT_PRESENTATION).Count() == 1
+            return SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.PRESENTATION).Count() == 1
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.INVESTMENT_CONTEXT_REPORT).Count() == 1
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.FINSTAT_REPORT).Count() == 1
                 //&& SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.DCF_MODEL).Count() == 1

@@ -4114,7 +4114,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData,string template, Action<Int64?> callback)
+        public void CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData,string template, Action<PresentationFile> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");

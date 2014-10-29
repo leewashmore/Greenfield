@@ -253,15 +253,22 @@
             </Grid>
             <!-- Security Details -->
             <Grid Grid.Row="5">
-                <telerik:RadButton x:Name="btnICPPresentationsSubmit"
+               <!-- <telerik:RadButton x:Name="btnICPPresentationsSubmit"
                                    Command="{Binding SubmitCommand}"
                                    Grid.Row="1"
                                    VerticalAlignment="Center"
                                    Width="75"
                                    Visibility="Visible"
                                    HorizontalAlignment="Center"
-                                   Content="Create"/>
-            </Grid>
+                                   Content="Create" /> -->
+                <telerik:RadButton x:Name="btnICPPresentationsCreate"
+                                   Grid.Row="1"
+                                   VerticalAlignment="Center"
+                                   Width="75"
+                                   Visibility="Visible"
+                                   HorizontalAlignment="Center"
+                                   Content="Create" Click="btnCreate_Click" />
+                     </Grid>
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

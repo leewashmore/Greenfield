@@ -14,6 +14,7 @@ using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.MeetingDefinitions;
 using GreenField.UserSession;
 using System.Collections.Generic;
+using System.IO;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -221,6 +222,21 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private Stream downloadStream;
+        public Stream DownloadStream
+        {
+            get { return downloadStream; }
+            set
+            {
+                downloadStream = value;
+                if (value != null && dbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Downloading Presentation...");
+                    dbInteractivity.CreatePresentation(UserSession.SessionManager.SESSION.UserName, ICPresentationOverviewInfo, PowerpointTemplate, CreatePresentationCallBackMethod);
+                }
+            }
+        }
+
 
         #endregion
 
@@ -305,20 +321,23 @@ namespace GreenField.Gadgets.ViewModels
         /// 
         /// </summary>
         /// <param name="result"></param>
-        private void CreatePresentationCallBackMethod(Int64? result)
+        private void CreatePresentationCallBackMethod(PresentationFile result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (result> 0)
+                if (result !=null && result.PresentationId > 0)
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
 
                    /* eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
                     ICNavigation.Update(ICNavigationInfo.MeetingInfo, iCPresentationOverviewInfo);
                     regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardICPresentation", UriKind.Relative);*/
-                    iCPresentationOverviewInfo.PresentationID = (long)result;
+                    iCPresentationOverviewInfo.PresentationID = result.PresentationId;
+                    DownloadStream.Write(result.FileStream, 0, result.FileStream.Length);
+                    DownloadStream.Close();
+                    DownloadStream = null;
                     ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, iCPresentationOverviewInfo);
                 
                     eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION);

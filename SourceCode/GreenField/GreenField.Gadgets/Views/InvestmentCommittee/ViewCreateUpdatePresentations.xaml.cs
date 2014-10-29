@@ -81,9 +81,9 @@ namespace GreenField.Gadgets.Views
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
             String filter = "All Files (*.*)|*.*";
-            if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.POWERPOINT_PRESENTATION)
+            if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.PRESENTATION)
             {
-                filter = "PowerPoint Presentation (*.pptx)|*.pptx";
+                filter = "PDF (*.pdf)|*.pdf";
             }
             else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
             {
@@ -96,9 +96,9 @@ namespace GreenField.Gadgets.Views
             OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false, Filter = filter };
             if (dialog.ShowDialog() == true)
             {
-                if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.POWERPOINT_PRESENTATION)
+                if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.PRESENTATION)
                 {
-                    if (dialog.File.Extension != ".pptx")
+                    if (dialog.File.Extension != ".pdf")
                         return;
                 }
                 else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)

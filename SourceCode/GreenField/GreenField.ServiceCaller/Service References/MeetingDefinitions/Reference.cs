@@ -3776,12 +3776,13 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, System.Nullable<decimal>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityKey))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.EntityKeyMember>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.PresentationFile))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.DataContracts.MembershipUserInfo>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.MembershipUserInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.EntitySelectionData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.PortfolioSelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityKey))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.EntityKeyMember>))]
     public partial class EntityKeyMember : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string KeyField;
@@ -3915,6 +3916,51 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PresentationFile", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers")]
+    public partial class PresentationFile : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private byte[] FileStreamField;
+        
+        private long PresentationIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] FileStream {
+            get {
+                return this.FileStreamField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileStreamField, value) != true)) {
+                    this.FileStreamField = value;
+                    this.RaisePropertyChanged("FileStream");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long PresentationId {
+            get {
+                return this.PresentationIdField;
+            }
+            set {
+                if ((this.PresentationIdField.Equals(value) != true)) {
+                    this.PresentationIdField = value;
+                    this.RaisePropertyChanged("PresentationId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MeetingDefinitions.MeetingOperations")]
     public interface MeetingOperations {
@@ -3936,7 +3982,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/CreatePresentationServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginCreatePresentation(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, string template, System.AsyncCallback callback, object asyncState);
         
-        long EndCreatePresentation(System.IAsyncResult result);
+        GreenField.ServiceCaller.MeetingDefinitions.PresentationFile EndCreatePresentation(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/DeletePresentation", ReplyAction="http://tempuri.org/MeetingOperations/DeletePresentationResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/DeletePresentationServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
@@ -4197,10 +4243,10 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             this.results = results;
         }
         
-        public long Result {
+        public GreenField.ServiceCaller.MeetingDefinitions.PresentationFile Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((long)(this.results[0]));
+                return ((GreenField.ServiceCaller.MeetingDefinitions.PresentationFile)(this.results[0]));
             }
         }
     }
@@ -5227,7 +5273,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        long GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndCreatePresentation(System.IAsyncResult result) {
+        GreenField.ServiceCaller.MeetingDefinitions.PresentationFile GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndCreatePresentation(System.IAsyncResult result) {
             return base.Channel.EndCreatePresentation(result);
         }
         
@@ -5239,7 +5285,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         private object[] OnEndCreatePresentation(System.IAsyncResult result) {
-            long retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndCreatePresentation(result);
+            GreenField.ServiceCaller.MeetingDefinitions.PresentationFile retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndCreatePresentation(result);
             return new object[] {
                     retVal};
         }
@@ -6873,9 +6919,9 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 return _result;
             }
             
-            public long EndCreatePresentation(System.IAsyncResult result) {
+            public GreenField.ServiceCaller.MeetingDefinitions.PresentationFile EndCreatePresentation(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                long _result = ((long)(base.EndInvoke("CreatePresentation", _args, result)));
+                GreenField.ServiceCaller.MeetingDefinitions.PresentationFile _result = ((GreenField.ServiceCaller.MeetingDefinitions.PresentationFile)(base.EndInvoke("CreatePresentation", _args, result)));
                 return _result;
             }
             

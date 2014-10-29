@@ -256,6 +256,7 @@ namespace GreenField.Common
     public static class UploadDocumentType
     {
         public static String POWERPOINT_PRESENTATION = "Power Point Presentation";
+        public static String PRESENTATION = "Presentation";
         public static String FINSTAT_REPORT = "FinStat Report";
         public static String INVESTMENT_CONTEXT_REPORT = "Investment Context Report";
         public static String DCF_MODEL = "DCF Model";

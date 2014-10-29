@@ -12,5 +12,6 @@ namespace GreenField.Web.Helpers
         /// Stores key operating assumption information in powerpoint presentation file
         /// </summary>
         public List<String> Assumptions { get; set; }
+        public Dictionary<String,List<string>>  KeyAssumptions { get; set; }
     }
 }

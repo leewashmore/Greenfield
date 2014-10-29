@@ -62,7 +62,7 @@ namespace GreenField.Web.Helpers
                 //get the slide part from the relationship ID.
                 SlidePart slide2 = (SlidePart)presentatioPart.GetPartById(relId2);
 
-                List<String> keyOperatingAssumpations = GetKeyOperatingAssumpations(slide2);
+                List<String> keyOperatingAssumpations = GetKeyOperatingAssumpations1(slide2);
                 result.KeyOperatingAssumpationsInstance =
                     new KeyOperatingAssumpations { Assumptions = keyOperatingAssumpations };
 
@@ -70,7 +70,7 @@ namespace GreenField.Web.Helpers
                 //get the slide part from the relationship ID.
                 SlidePart slide3 = (SlidePart)presentatioPart.GetPartById(relId3);
 
-                Dictionary<int, List<String>> vqg = GetVQG(slide3);
+                Dictionary<int, List<String>> vqg = GetVQG1(slide3);
                 result.VQGInstance = new VQG();
                 foreach (KeyValuePair<int, List<String>> kvp in vqg)
                 {
@@ -92,7 +92,7 @@ namespace GreenField.Web.Helpers
                 //get the slide part from the relationship ID.
                 SlidePart slide4 = (SlidePart)presentatioPart.GetPartById(relId4);
 
-                Dictionary<int, List<String>> swotAnalysis = GetSWOTAnalysis(slide4);
+                Dictionary<int, List<String>> swotAnalysis = GetSWOTAnalysis2(slide4);
                 result.SWOTAnalysisInstance = new SWOTAnalysis();
                 foreach (KeyValuePair<int, List<String>> kvp in swotAnalysis)
                 {
@@ -851,7 +851,7 @@ namespace GreenField.Web.Helpers
             #region Company Overview
             PdfPTable coiCompanyOverViewTable = new PdfPTable(1);
             coiCompanyOverViewTable.WidthPercentage = 100;
-            coiCompanyOverViewTable.SpacingBefore = 5;
+            coiCompanyOverViewTable.SpacingBefore = 10;
 
             iTextSharp.text.Paragraph coiCompanyOverviewHeader = new iTextSharp.text.Paragraph();
             coiCompanyOverviewHeader.SpacingBefore = 5;
@@ -886,7 +886,7 @@ namespace GreenField.Web.Helpers
             coiCompanyOverviewCell.PaddingBottom = listItemSpacing;
             coiCompanyOverviewCell.Border = PDFBorderType.LEFT_RIGHT_TOP_BOTTOM;
             coiCompanyOverviewCell.AddElement(coiCompanyOverviewHeader);
-            coiCompanyOverviewCell.MinimumHeight = doc.PageSize.Height - (2 * doc.TopMargin) - coiSecurityInfoTable.TotalHeight - 500;
+            coiCompanyOverviewCell.MinimumHeight = doc.PageSize.Height - (2 * doc.TopMargin) - coiSecurityInfoTable.TotalHeight - 450;
             coiCompanyOverViewTable.AddCell(coiCompanyOverviewCell);
             doc.Add(coiCompanyOverViewTable);
             #endregion
@@ -897,7 +897,7 @@ namespace GreenField.Web.Helpers
 
             PdfPTable invThesisTable = new PdfPTable(1);
             invThesisTable.WidthPercentage = 100;
-            invThesisTable.SpacingBefore = 5;
+            invThesisTable.SpacingBefore = 10;
 
             iTextSharp.text.Paragraph invthesisHeader = new iTextSharp.text.Paragraph();
             invthesisHeader.SpacingBefore = 5;
@@ -930,64 +930,472 @@ namespace GreenField.Web.Helpers
             invthesisCell.PaddingBottom = listItemSpacing;
             invthesisCell.Border = PDFBorderType.LEFT_RIGHT_TOP_BOTTOM;
             invthesisCell.AddElement(invthesisHeader);
-            invthesisCell.MinimumHeight = doc.PageSize.Height - (2 * doc.TopMargin) - coiCompanyOverViewTable.TotalHeight - 500;
+            invthesisCell.MinimumHeight = doc.PageSize.Height - (2 * doc.TopMargin) - coiCompanyOverViewTable.TotalHeight - 450;
             invThesisTable.AddCell(invthesisCell);
             doc.Add(invThesisTable);
 
-/*
 
-            #region Header
-            PdfPTable itiHeaderTable = new PdfPTable(1);
-            itiHeaderTable.WidthPercentage = 100;
-            itiHeaderTable.SpacingBefore = 5;
+            PdfPTable itiRiskTable = new PdfPTable(1);
+            itiRiskTable.WidthPercentage = 100;
+            itiRiskTable.SpacingBefore = 30;
+            
+            PdfPCell itiRiskHeaderCell = new PdfPCell(new Phrase("Risks to Investment Thesis – What could go wrong?", PDFFontStyle.STYLE_2));
+            itiRiskHeaderCell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            AddTextCell(itiRiskTable, itiRiskHeaderCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP);
 
-            coiHeaderTable.SetWidths(new float[] { 5, 1 });
-            PdfPCell itiHeaderContentCell = new PdfPCell(new Phrase("Investment Thesis", PDFFontStyle.STYLE_2));
-            itiHeaderContentCell.PaddingTop = 5;
-            itiHeaderContentCell.PaddingBottom = 5;
-            AddTextCell(itiHeaderTable, itiHeaderContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
-            PdfPCell itiHeaderImageCell = new PdfPCell(image, false);
-            itiHeaderImageCell.PaddingTop = 10;
-            itiHeaderImageCell.PaddingBottom = 10;
-            AddTextCell(itiHeaderTable, itiHeaderImageCell, Element.ALIGN_RIGHT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);  
-            doc.Add(itiHeaderTable);
+            ZapfDingbatsList itiRiskList = new ZapfDingbatsList(108, 10);
+            itiRiskList.IndentationLeft = 2;
+            itiRiskList.Autoindent = true;
+            itiRiskList.Symbol.Font.Size = PDFFontStyle.STYLE_3.Size;
+            itiRiskList.Symbol.Font.Color = BaseColor.BLACK;
+
+
+           /* List itiRiskList = new List(List.UNORDERED, 10);
+            itiRiskList.IndentationLeft = 2;
+            itiRiskList.Autoindent = true;
+            itiRiskList.Symbol.Font.Size = PDFFontStyle.STYLE_3.Size;
+            itiRiskList.Symbol.Font.Color = BaseColor.BLACK;*/
+            foreach (String risk in presentation.InvestmentThesisInstance.HighlightedRisks)
+            {
+                ListItem item = new ListItem(new Phrase(risk, PDFFontStyle.STYLE_3));
+                if (presentation.InvestmentThesisInstance.HighlightedRisks.IndexOf(risk) !=
+                    presentation.InvestmentThesisInstance.HighlightedRisks.Count - 1)
+                {
+                    item.SpacingAfter = 5F;
+                }
+                itiRiskList.Add(item);
+            }
+
+            PdfPCell itiRiskContentCell = new PdfPCell();
+            itiRiskContentCell.MinimumHeight =  doc.PageSize.Height - (2 * doc.TopMargin) - invThesisTable.TotalHeight - 500;
+            itiRiskContentCell.AddElement(itiRiskList);
+            itiRiskContentCell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            itiRiskContentCell.PaddingTop = 5;
+            itiRiskContentCell.PaddingBottom = 5;
+            AddTextCell(itiRiskTable, itiRiskContentCell, Element.ALIGN_CENTER, Element.ALIGN_TOP, PDFBorderType.LEFT_RIGHT_BOTTOM);
+
+            
+            doc.Add(itiRiskTable);
+
+
+
             #endregion
 
-            #region Investment Thesis Content
-            PdfPTable itiInvestmentThesisContentTable = new PdfPTable(1);
-            itiInvestmentThesisContentTable.WidthPercentage = 100;
-            ZapfDingbatsList itiInvestmentThesisContentList = new ZapfDingbatsList(110, 10);
-            itiInvestmentThesisContentList.IndentationLeft = 2;
-            itiInvestmentThesisContentList.Autoindent = true;
-            itiInvestmentThesisContentList.Symbol.Font.Size = PDFFontStyle.STYLE_3.Size;
-            itiInvestmentThesisContentList.Symbol.Font.Color = BaseColor.BLUE;
+            #region KeyOperatingAssumpationsInstance
+            doc.NewPage();
 
-            foreach (String thesisPoint in presentation.InvestmentThesisInstance.ThesisPoints)
+            #region Header
+            PdfPTable koaiHeaderTable = new PdfPTable(2);
+            koaiHeaderTable.WidthPercentage = 100;
+            koaiHeaderTable.SpacingBefore = 10;
+            koaiHeaderTable.SetWidths(new float[] { 5, 1 });
+
+            PdfPCell koaiHeaderContentCell = new PdfPCell(new Phrase("Key Operating Assumptions", PDFFontStyle.STYLE_1));
+            koaiHeaderContentCell.PaddingTop = 10;
+            koaiHeaderContentCell.PaddingBottom = 10;
+            AddTextCell(koaiHeaderTable, koaiHeaderContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+            PdfPCell koaiHeaderImageCell = new PdfPCell(image, false);
+            koaiHeaderImageCell.PaddingTop = 10;
+            koaiHeaderImageCell.PaddingBottom = 10;
+            AddTextCell(koaiHeaderTable, koaiHeaderImageCell, Element.ALIGN_RIGHT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+            doc.Add(koaiHeaderTable);
+            #endregion
+
+            #region Key Operating Assumpations Content
+
+            PdfPTable keyAssumptionsTbl = new PdfPTable(1);
+            keyAssumptionsTbl.WidthPercentage = 100;
+            keyAssumptionsTbl.SpacingBefore = 10;
+
+            int row = 0;
+            foreach(KeyValuePair<string,List<string>> keyAssumption in presentation.KeyOperatingAssumpationsInstance.KeyAssumptions)
             {
-                ListItem item = new ListItem(new Phrase(thesisPoint, PDFFontStyle.STYLE_3));
-                if (presentation.InvestmentThesisInstance.ThesisPoints.IndexOf(thesisPoint) == 0)
+                PdfPCell koaContentHeaderCell = new PdfPCell(new Phrase(keyAssumption.Key, PDFFontStyle.STYLE_2));
+                koaContentHeaderCell.PaddingTop = 5;
+                if (row == 0)
+                {
+                    AddTextCell(keyAssumptionsTbl, koaContentHeaderCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP);
+                }
+                else
+                {
+                    AddTextCell(keyAssumptionsTbl, koaContentHeaderCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT);
+                }
+                PdfPCell koaContentCell = new PdfPCell(new Phrase(keyAssumption.Key, PDFFontStyle.STYLE_2));
+                koaContentCell.PaddingTop = 5;
+                ZapfDingbatsList koaiInvestmentThesisContentList = new ZapfDingbatsList(108, 10);
+                koaiInvestmentThesisContentList.IndentationLeft = 2;
+                koaiInvestmentThesisContentList.Autoindent = true;
+                koaiInvestmentThesisContentList.Symbol.Font.Size = PDFFontStyle.STYLE_3.Size;
+                koaiInvestmentThesisContentList.Symbol.Font.Color = BaseColor.BLACK;
+
+                foreach (String assumption in keyAssumption.Value)
+                {
+                    ListItem item = new ListItem(new Phrase(assumption, PDFFontStyle.STYLE_3));
+                    if (keyAssumption.Value.IndexOf(assumption) == 0)
+                    {
+                        item.SpacingBefore = listItemSpacing;
+                    }
+                    if (keyAssumption.Value.IndexOf(assumption) !=
+                        keyAssumption.Value.Count - 1)
+                    {
+                        item.SpacingAfter = listItemSpacing;
+                    }
+                    koaiInvestmentThesisContentList.Add(item);
+                }
+                koaContentCell.AddElement(koaiInvestmentThesisContentList);
+                if (row == presentation.KeyOperatingAssumpationsInstance.KeyAssumptions.Count - 1)
+                {
+                    AddTextCell(keyAssumptionsTbl, koaContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_BOTTOM);
+                }
+                else
+                {
+                    AddTextCell(keyAssumptionsTbl, koaContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT);
+                }
+                ++row;
+                 
+            }
+          
+            doc.Add(keyAssumptionsTbl);
+
+            #endregion
+            #endregion
+
+            #region VQGInstance
+            #region Header
+            PdfPTable vqgiHeaderTable = new PdfPTable(1);
+            vqgiHeaderTable.WidthPercentage = 100;
+            vqgiHeaderTable.SpacingBefore = 30;
+          //  vqgiHeaderTable.SetWidths(new float[] { 5, 1 });
+
+            PdfPCell vqgiHeaderContentCell = new PdfPCell(new Phrase("Value, Growth, Quality", PDFFontStyle.STYLE_1));
+            vqgiHeaderContentCell.PaddingTop = 10;
+            vqgiHeaderContentCell.PaddingBottom = 10;
+            AddTextCell(vqgiHeaderTable, vqgiHeaderContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+            doc.Add(vqgiHeaderTable);
+            #endregion
+            #region Value
+            PdfPTable vqgiValueTable = new PdfPTable(2);
+
+            vqgiValueTable.WidthPercentage = 100;
+            vqgiValueTable.SpacingBefore = 5;
+            vqgiValueTable.SetWidths(new float[] { 1, 25 });
+
+            PdfPCell vqgiValueCell = new PdfPCell(new Phrase("Value", PDFFontStyle.STYLE_1));
+            vqgiValueCell.MinimumHeight = (doc.PageSize.Height - (2 * doc.TopMargin) - vqgiHeaderTable.TotalHeight - 500) / 3;
+            vqgiValueCell.BackgroundColor = BaseColor.GRAY;
+            vqgiValueCell.Rotation = 90;
+            AddTextCell(vqgiValueTable, vqgiValueCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+
+            PdfPCell vqgiValueContentCell = new PdfPCell();
+            ZapfDingbatsList vqgiValueContentList = new ZapfDingbatsList(110, 10);
+            vqgiValueContentList.IndentationLeft = 2;
+            vqgiValueContentList.Symbol.Font.Size = 5F;
+            vqgiValueContentList.Symbol.Font.Color = BaseColor.BLUE;
+
+            foreach (String value in presentation.VQGInstance.Value)
+            {
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_3));
+                if (presentation.VQGInstance.Value.IndexOf(value) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
                 }
-                if (presentation.InvestmentThesisInstance.ThesisPoints.IndexOf(thesisPoint) !=
-                    presentation.InvestmentThesisInstance.ThesisPoints.Count - 1)
+                if (presentation.VQGInstance.Value.IndexOf(value) !=
+                    presentation.VQGInstance.Value.Count - 1)
                 {
                     item.SpacingAfter = listItemSpacing;
                 }
-                itiInvestmentThesisContentList.Add(item);
+                vqgiValueContentList.Add(item);
             }
-            PdfPCell itiInvestmentThesisContentCell = new PdfPCell();
-            itiInvestmentThesisContentCell.AddElement(itiInvestmentThesisContentList);
-            itiInvestmentThesisContentCell.MinimumHeight = (doc.PageSize.Height - itiHeaderTable.TotalHeight - 100) * Convert.ToSingle(0.75);
-            itiInvestmentThesisContentCell.Border = PDFBorderType.NONE;
-            itiInvestmentThesisContentTable.AddCell(itiInvestmentThesisContentCell);
-            doc.Add(itiInvestmentThesisContentTable);
+            vqgiValueContentCell.AddElement(vqgiValueContentList);
+            AddTextCell(vqgiValueTable, vqgiValueContentCell, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+            PdfPCell vqgiValueDashedCell = new PdfPCell();
+            vqgiValueDashedCell.AddElement(new DottedLineSeparator());
+            AddTextCell(vqgiValueTable, new PdfPCell(), Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+            AddTextCell(vqgiValueTable, vqgiValueDashedCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+            doc.Add(vqgiValueTable);
             #endregion
 
 
-            */
+            #region Growth
+            PdfPTable vqgiGrowthTable = new PdfPTable(2);
+            vqgiGrowthTable.WidthPercentage = 100;
+            vqgiGrowthTable.SpacingBefore = 5;
+            vqgiGrowthTable.SetWidths(new float[] { 1, 25 });
+
+            PdfPCell vqgiGrowthCell = new PdfPCell(new Phrase("Growth", PDFFontStyle.STYLE_1));
+            vqgiGrowthCell.MinimumHeight = (doc.PageSize.Height - (2 * doc.TopMargin) - vqgiHeaderTable.TotalHeight - 500) / 3;
+            vqgiGrowthCell.BackgroundColor = BaseColor.GRAY;
+            vqgiGrowthCell.Rotation = 90;
+            AddTextCell(vqgiGrowthTable, vqgiGrowthCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+            PdfPCell vqgiGrowthContentCell = new PdfPCell();
+            ZapfDingbatsList vqgiGrowthContentList = new ZapfDingbatsList(110, 10);
+            vqgiGrowthContentList.IndentationLeft = 2;
+            vqgiGrowthContentList.Symbol.Font.Size = 5F;
+            vqgiGrowthContentList.Symbol.Font.Color = BaseColor.BLUE;
+
+            foreach (String value in presentation.VQGInstance.Growth)
+            {
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_3));
+                if (presentation.VQGInstance.Growth.IndexOf(value) == 0)
+                {
+                    item.SpacingBefore = listItemSpacing;
+                }
+                if (presentation.VQGInstance.Growth.IndexOf(value) !=
+                    presentation.VQGInstance.Growth.Count - 1)
+                {
+                    item.SpacingAfter = listItemSpacing;
+                }
+                vqgiGrowthContentList.Add(item);
+            }
+            vqgiGrowthContentCell.AddElement(vqgiGrowthContentList);
+            AddTextCell(vqgiGrowthTable, vqgiGrowthContentCell, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+            PdfPCell vqgiGrowthDashedCell = new PdfPCell();
+            vqgiGrowthDashedCell.AddElement(new DottedLineSeparator());
+            AddTextCell(vqgiGrowthTable, new PdfPCell(), Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+            AddTextCell(vqgiGrowthTable, vqgiGrowthDashedCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+            doc.Add(vqgiGrowthTable);
+            #endregion
+
+
+            #region Quality
+            PdfPTable vqgiQualityTable = new PdfPTable(2);
+            vqgiQualityTable.WidthPercentage = 100;
+            vqgiQualityTable.SpacingBefore = 5;
+            vqgiQualityTable.SetWidths(new float[] { 1, 25 });
+
+            PdfPCell vqgiQualityCell = new PdfPCell(new Phrase("Quality", PDFFontStyle.STYLE_1));
+            vqgiQualityCell.MinimumHeight = (doc.PageSize.Height - (2 * doc.TopMargin) - vqgiHeaderTable.TotalHeight - 500) / 3;
+            vqgiQualityCell.BackgroundColor = BaseColor.GRAY;
+            vqgiQualityCell.Rotation = 90;
+            AddTextCell(vqgiQualityTable, vqgiQualityCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+            PdfPCell vqgiQualityContentCell = new PdfPCell();
+            ZapfDingbatsList vqgiQualityContentList = new ZapfDingbatsList(110, 10);
+            vqgiQualityContentList.IndentationLeft = 2;
+            vqgiQualityContentList.Symbol.Font.Size = 5F;
+            vqgiQualityContentList.Symbol.Font.Color = BaseColor.BLUE;
+
+            foreach (String value in presentation.VQGInstance.Quality)
+            {
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_3));
+                if (presentation.VQGInstance.Quality.IndexOf(value) == 0)
+                {
+                    item.SpacingBefore = listItemSpacing;
+                }
+                if (presentation.VQGInstance.Quality.IndexOf(value) !=
+                    presentation.VQGInstance.Quality.Count - 1)
+                {
+                    item.SpacingAfter = listItemSpacing;
+                }
+                vqgiQualityContentList.Add(item);
+            }
+            vqgiQualityContentCell.AddElement(vqgiQualityContentList);
+            AddTextCell(vqgiQualityTable, vqgiQualityContentCell, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+            doc.Add(vqgiQualityTable);
+            #endregion
 
             #endregion
+
+
+            #region SWOTAnalysisInstance
+            doc.NewPage();
+
+            #region Header
+            PdfPTable saiHeaderTable = new PdfPTable(2);
+            saiHeaderTable.WidthPercentage = 100;
+            saiHeaderTable.SpacingBefore = 10;
+            saiHeaderTable.SetWidths(new float[] { 5, 1 });
+
+            PdfPCell saiHeaderContentCell = new PdfPCell(new Phrase("SWOT Analysis", PDFFontStyle.STYLE_1));
+            saiHeaderContentCell.PaddingTop = 10;
+            saiHeaderContentCell.PaddingBottom = 10;
+            AddTextCell(saiHeaderTable, saiHeaderContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+            PdfPCell saiHeaderImageCell = new PdfPCell(image, false);
+            saiHeaderImageCell.PaddingTop = 10;
+            saiHeaderImageCell.PaddingBottom = 10;
+            AddTextCell(saiHeaderTable, saiHeaderImageCell, Element.ALIGN_RIGHT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+            doc.Add(saiHeaderTable);
+            #endregion
+
+            #region SWOT Analysis Content
+            PdfPTable saiValueTable = new PdfPTable(3);
+            saiValueTable.WidthPercentage = 100;
+            saiValueTable.SpacingBefore = 5;
+            saiValueTable.SetWidths(new float[] { 25, 1, 25 });
+
+            PdfPCell saiStrengthCell = new PdfPCell(new Phrase("STRENGTH", PDFFontStyle.STYLE_7));
+            saiStrengthCell.BackgroundColor = BaseColor.GRAY;
+            AddTextCell(saiValueTable, saiStrengthCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+            AddTextCell(saiValueTable, new PdfPCell(), Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+            PdfPCell saiWeaknessCell = new PdfPCell(new Phrase("WEAKNESS", PDFFontStyle.STYLE_7));
+            saiWeaknessCell.BackgroundColor = BaseColor.GRAY;
+            AddTextCell(saiValueTable, saiWeaknessCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+
+            PdfPCell saiStrengthContentCell = new PdfPCell();
+            saiStrengthContentCell.MinimumHeight = (doc.PageSize.Height - saiHeaderTable.TotalHeight - 100) * Convert.ToSingle(0.125);
+            ZapfDingbatsList saiStrengthContentList = new ZapfDingbatsList(110, 10);
+            saiStrengthContentList.IndentationLeft = 2;
+            saiStrengthContentList.Symbol.Font.Size = 5F;
+            saiStrengthContentList.Symbol.Font.Color = BaseColor.BLUE;
+
+            foreach (String value in presentation.SWOTAnalysisInstance.Strength)
+            {
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_3));
+                if (presentation.SWOTAnalysisInstance.Strength.IndexOf(value) == 0)
+                {
+                    item.SpacingBefore = listItemSpacing;
+                }
+                if (presentation.SWOTAnalysisInstance.Strength.IndexOf(value) !=
+                    presentation.SWOTAnalysisInstance.Strength.Count - 1)
+                {
+                    item.SpacingAfter = listItemSpacing;
+                }
+                saiStrengthContentList.Add(item);
+            }
+            saiStrengthContentCell.AddElement(saiStrengthContentList);
+            saiStrengthContentCell.PaddingBottom = 20;
+            AddTextCell(saiValueTable, saiStrengthContentCell, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+            AddTextCell(saiValueTable, new PdfPCell() { PaddingBottom = 20 }, Element.ALIGN_TOP, Element.ALIGN_CENTER, PDFBorderType.NONE);
+
+            PdfPCell saiWeaknessContentCell = new PdfPCell();
+            ZapfDingbatsList saiWeaknessContentList = new ZapfDingbatsList(110, 10);
+            saiWeaknessContentList.IndentationLeft = 2;
+            saiWeaknessContentList.Symbol.Font.Size = 5F;
+            saiWeaknessContentList.Symbol.Font.Color = BaseColor.BLUE;
+
+            foreach (String value in presentation.SWOTAnalysisInstance.Weakness)
+            {
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_3));
+                if (presentation.SWOTAnalysisInstance.Weakness.IndexOf(value) == 0)
+                {
+                    item.SpacingBefore = listItemSpacing;
+                }
+                if (presentation.SWOTAnalysisInstance.Weakness.IndexOf(value) !=
+                    presentation.SWOTAnalysisInstance.Weakness.Count - 1)
+                {
+                    item.SpacingAfter = listItemSpacing;
+                }
+                saiWeaknessContentList.Add(item);
+            }
+            saiWeaknessContentCell.AddElement(saiWeaknessContentList);
+            saiWeaknessContentCell.PaddingBottom = 20;
+            AddTextCell(saiValueTable, saiWeaknessContentCell, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+            PdfPCell saiOpportunityCell = new PdfPCell(new Phrase("OPPORTUNITY", PDFFontStyle.STYLE_7));
+            saiOpportunityCell.BackgroundColor = BaseColor.GRAY;
+            AddTextCell(saiValueTable, saiOpportunityCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+            AddTextCell(saiValueTable, new PdfPCell(), Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+            PdfPCell saiThreatCell = new PdfPCell(new Phrase("THREAT", PDFFontStyle.STYLE_7));
+            saiThreatCell.BackgroundColor = BaseColor.GRAY;
+            AddTextCell(saiValueTable, saiThreatCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+
+            PdfPCell saiOpportunityContentCell = new PdfPCell();
+            saiOpportunityContentCell.MinimumHeight = (doc.PageSize.Height - saiHeaderTable.TotalHeight - 100) * Convert.ToSingle(0.125);
+            ZapfDingbatsList saiOpportunityContentList = new ZapfDingbatsList(110, 10);
+            saiOpportunityContentList.IndentationLeft = 2;
+            saiOpportunityContentList.Symbol.Font.Size = 5F;
+            saiOpportunityContentList.Symbol.Font.Color = BaseColor.BLUE;
+
+            foreach (String value in presentation.SWOTAnalysisInstance.Opportunity)
+            {
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_3));
+                if (presentation.SWOTAnalysisInstance.Opportunity.IndexOf(value) == 0)
+                {
+                    item.SpacingBefore = listItemSpacing;
+                }
+                if (presentation.SWOTAnalysisInstance.Opportunity.IndexOf(value) !=
+                    presentation.SWOTAnalysisInstance.Opportunity.Count - 1)
+                {
+                    item.SpacingAfter = listItemSpacing;
+                }
+                saiOpportunityContentList.Add(item);
+            }
+            saiOpportunityContentCell.AddElement(saiOpportunityContentList);
+            AddTextCell(saiValueTable, saiOpportunityContentCell, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+            AddTextCell(saiValueTable, new PdfPCell(), Element.ALIGN_TOP, Element.ALIGN_CENTER, PDFBorderType.NONE);
+
+            PdfPCell saiThreatContentCell = new PdfPCell();
+            ZapfDingbatsList saiThreatContentList = new ZapfDingbatsList(110, 10);
+            saiThreatContentList.IndentationLeft = 2;
+            saiThreatContentList.Symbol.Font.Size = 5F;
+            saiThreatContentList.Symbol.Font.Color = BaseColor.BLUE;
+
+            foreach (String value in presentation.SWOTAnalysisInstance.Threat)
+            {
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_3));
+                if (presentation.SWOTAnalysisInstance.Threat.IndexOf(value) == 0)
+                {
+                    item.SpacingBefore = listItemSpacing;
+                }
+                if (presentation.SWOTAnalysisInstance.Threat.IndexOf(value) !=
+                    presentation.SWOTAnalysisInstance.Threat.Count - 1)
+                {
+                    item.SpacingAfter = listItemSpacing;
+                }
+                saiThreatContentList.Add(item);
+            }
+            saiThreatContentCell.AddElement(saiThreatContentList);
+            AddTextCell(saiValueTable, saiThreatContentCell, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+            doc.Add(saiValueTable);
+            #endregion
+            #endregion
+
+            #region ESGCommentariesInstance
+
+
+            PdfPTable esgTable = new PdfPTable(1);
+            esgTable.WidthPercentage = 100;
+            esgTable.SpacingBefore = 10;
+
+            iTextSharp.text.Paragraph esgHeader = new iTextSharp.text.Paragraph();
+            esgHeader.SpacingBefore = 5;
+            esgHeader.Add(new Phrase("ESG Commentaries", PDFFontStyle.STYLE_2));
+            esgHeader.Alignment = Element.ALIGN_TOP;
+            ZapfDingbatsList esgList = new ZapfDingbatsList(110, 10);
+            esgList.IndentationLeft = 2;
+            esgList.Autoindent = true;
+            esgList.Symbol.Font.Size = PDFFontStyle.STYLE_3.Size;
+            esgList.Symbol.Font.Color = BaseColor.BLUE;
+
+            foreach (String esgPoint in presentation.ESGCommentaries.commentaries)
+            {
+                ListItem item = new ListItem(new Phrase(esgPoint, PDFFontStyle.STYLE_3));
+                if (presentation.ESGCommentaries.commentaries.IndexOf(esgPoint) == 0)
+                {
+                    item.SpacingBefore = listItemSpacing;
+                }
+                if (presentation.ESGCommentaries.commentaries.IndexOf(esgPoint) !=
+                   presentation.ESGCommentaries.commentaries.Count - 1)
+                {
+                    item.SpacingAfter = listItemSpacing;
+                }
+                esgList.Add(item);
+            }
+
+            esgHeader.Add(esgList);
+            PdfPCell esgCell = new PdfPCell();
+            esgCell.BorderWidth = 1;
+            esgCell.PaddingBottom = listItemSpacing;
+            esgCell.Border = PDFBorderType.LEFT_RIGHT_TOP_BOTTOM;
+            esgCell.AddElement(esgHeader);
+            esgCell.MinimumHeight = doc.PageSize.Height - (2 * doc.TopMargin) - saiValueTable.TotalHeight - 450;
+            esgTable.AddCell(esgCell);
+            doc.Add(esgTable);
+
+
+            #endregion
+
 
             #region temp
             /*
@@ -1542,6 +1950,7 @@ namespace GreenField.Web.Helpers
             SlideId[] slideIds = presentationPart.Presentation.SlideIdList.Elements<SlideId>().ToArray();
             string relId = (slideIds[0] as SlideId).RelationshipId;
 
+            //Fetch data from powerpoint from powerpoint for company overview , security information , Investment thesis and risk
             //get the slide part from the relationship ID.
             SlidePart slide = (SlidePart)presentationPart.GetPartById(relId);
 
@@ -1555,6 +1964,43 @@ namespace GreenField.Web.Helpers
 
             List<String> investmentThesis = GetInvestmentThesis(slide);
             result.InvestmentThesisInstance = new InvestmentThesis { ThesisPoints = investmentThesis };
+            result.InvestmentThesisInstance.HighlightedRisks = GetInvestmentRisk(slide);
+
+            //Fetch data from powerpoint for for Key Operating Assumptions
+            string relId2 = (slideIds[1] as SlideId).RelationshipId;
+            //get the slide part from the relationship ID.
+            SlidePart slide2 = (SlidePart)presentationPart.GetPartById(relId2);
+
+            Dictionary<string,List<String>> keyOperatingAssumpations = GetKeyOperatingAssumpations(slide2);
+            result.KeyOperatingAssumpationsInstance =
+                new KeyOperatingAssumpations { KeyAssumptions = keyOperatingAssumpations };
+
+         
+
+            Dictionary<string, List<String>> vqg = GetVQG(slide2);
+            result.VQGInstance = new VQG();
+            result.VQGInstance.Value = vqg["Value"];
+            result.VQGInstance.Growth = vqg["Growth"];
+            result.VQGInstance.Quality = vqg["Quality"];
+
+
+            string relId3 = (slideIds[2] as SlideId).RelationshipId;
+            //get the slide part from the relationship ID.
+            SlidePart slide3 = (SlidePart)presentationPart.GetPartById(relId3);
+
+            Dictionary<string, List<String>> swotAnalysis = GetSWOTAnalysis(slide3);
+
+            result.SWOTAnalysisInstance = new SWOTAnalysis();
+
+
+            result.SWOTAnalysisInstance.Strength = swotAnalysis["Strength"];
+            result.SWOTAnalysisInstance.Weakness = swotAnalysis["Weakness"];
+            result.SWOTAnalysisInstance.Opportunity = swotAnalysis["Opportunity"];
+            result.SWOTAnalysisInstance.Threat = swotAnalysis["Threat"];
+
+            List<string> commentaries = GetESGCommentaries(slide3);
+            result.ESGCommentaries = new ESGCommentaries();
+            result.ESGCommentaries.commentaries = commentaries;
 
         }
 
@@ -1799,7 +2245,7 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="slidePart">SlidePart</param>
         /// <returns>List of data</returns>
-        private static List<String> GetInvestmentRisk(SlidePart slidePart)
+        private static List<String> GetInvestmentRisk1(SlidePart slidePart)
         {
             List<String> risks = new List<string>();
 
@@ -1835,6 +2281,31 @@ namespace GreenField.Web.Helpers
         }
 
 
+        /// <summary>
+        /// Get investment risk data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
+        private static List<String> GetInvestmentRisk(SlidePart slidePart)
+        {
+            List<String> risks = new List<string>();
+            CommonSlideData commonSlideData = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+            //List<DocumentFormat.OpenXml.Presentation.GraphicFrame> graphicFrame = commonSlideData.Descendants<DocumentFormat.OpenXml.Presentation.GraphicFrame>().ToList();
+            List<DocumentFormat.OpenXml.Presentation.Shape> shapes = commonSlideData.Descendants<DocumentFormat.OpenXml.Presentation.Shape>().ToList();
+            DocumentFormat.OpenXml.Presentation.TextBody textBody = shapes[shapes.Count - 1].Descendants<DocumentFormat.OpenXml.Presentation.TextBody>().FirstOrDefault();
+            List<DocumentFormat.OpenXml.Drawing.Paragraph> paragraphs = textBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().ToList();
+            for(int i = 1;i<paragraphs.Count();i++)
+            {
+                var paragraph = paragraphs[i];
+                if(!String.IsNullOrEmpty(paragraph.InnerText))
+                {
+                    risks.Add(paragraph.InnerText);
+                }
+            }
+
+            return risks;
+        }
+
 
 
         /// <summary>
@@ -1842,7 +2313,70 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="slidePart">SlidePart</param>
         /// <returns>List of data</returns>
-        private static List<String> GetKeyOperatingAssumpations1(SlidePart slidePart)
+        private static Dictionary<String, List<String>> GetKeyOperatingAssumpations(SlidePart slidePart)
+        {
+            List<String> items = new List<String>();
+
+            CommonSlideData commonSlideData = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+            ShapeTree shapeTree = commonSlideData.Descendants<ShapeTree>().FirstOrDefault();
+            List<DocumentFormat.OpenXml.Presentation.Shape> shapes = shapeTree.Descendants<DocumentFormat.OpenXml.Presentation.Shape>().ToList();
+            DocumentFormat.OpenXml.Presentation.TextBody textBody = shapes[3].Descendants<DocumentFormat.OpenXml.Presentation.TextBody>().FirstOrDefault();
+            List<DocumentFormat.OpenXml.Drawing.Paragraph> paragraphs = textBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().ToList();
+            string key = string.Empty;
+            Dictionary<string, List<string>> keyAssumptions = new Dictionary<string, List<string>>();
+            Boolean newKey = false;
+            for (int i = 0; i < paragraphs.Count(); i++)
+            {
+                var paragraph = paragraphs[i];
+                if (i == 0)
+                {
+                    key = paragraph.InnerText;
+                    newKey=true;
+
+                }
+                if (string.IsNullOrEmpty(paragraph.InnerText))
+                {
+                    newKey = true;
+                    continue;
+                }
+                if (newKey)
+                {
+                    key = paragraph.InnerText;
+                    keyAssumptions.Add(key,new List<string>());
+                    newKey = false;
+                    continue;
+                }
+                if (!newKey)
+                {
+                    if (keyAssumptions.ContainsKey(key))
+                    {
+                        List<string> list = keyAssumptions[key];
+                        if (list != null)
+                        {
+                            list.Add(paragraph.InnerText);
+                        }
+
+                        keyAssumptions[key] = list;
+
+                    }
+                    
+                   // 
+                }
+                
+            }
+           // Dictionary<string, List<string>> dic = keyAssumptions;
+
+            return keyAssumptions;
+        }
+
+
+
+        /// <summary>
+        /// Get key operating assumptions data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>List of data</returns>
+        private static List<String> GetKeyOperatingAssumpations2(SlidePart slidePart)
         {
             List<String> items = new List<String>();
 
@@ -1890,7 +2424,7 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="slidePart">SlidePart</param>
         /// <returns>List of data</returns>
-        private static List<String> GetKeyOperatingAssumpations(SlidePart slidePart)
+        private static List<String> GetKeyOperatingAssumpations1(SlidePart slidePart)
         {
             List<String> items = new List<String>();
 
@@ -1930,6 +2464,61 @@ namespace GreenField.Web.Helpers
             }
 
             return items;
+        }
+
+
+
+
+
+        /// <summary>
+        /// Get value, quality and growth data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>key Value pair dictionary data</returns>
+        private static Dictionary<string, List<String>> GetVQG(SlidePart slidePart)
+        {
+            Dictionary<string, List<String>> result = new Dictionary<string, List<string>>();
+
+            CommonSlideData commonSlideData = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+            DocumentFormat.OpenXml.Presentation.GroupShape groupShape = commonSlideData.ShapeTree.Descendants<DocumentFormat.OpenXml.Presentation.GroupShape>().FirstOrDefault();
+            List<DocumentFormat.OpenXml.Presentation.Shape> shapes = groupShape.Descendants<DocumentFormat.OpenXml.Presentation.Shape>().ToList();
+            DocumentFormat.OpenXml.Presentation.TextBody valuetextBody = shapes[3].Descendants<DocumentFormat.OpenXml.Presentation.TextBody>().FirstOrDefault();
+            DocumentFormat.OpenXml.Presentation.TextBody GrowthtextBody = shapes[4].Descendants<DocumentFormat.OpenXml.Presentation.TextBody>().FirstOrDefault();
+            DocumentFormat.OpenXml.Presentation.TextBody QualitytextBody = shapes[5].Descendants<DocumentFormat.OpenXml.Presentation.TextBody>().FirstOrDefault();
+
+            List<DocumentFormat.OpenXml.Drawing.Paragraph> valueParagraphs = valuetextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().ToList();
+            List<string> valueList = new List<string>();
+            for (int i = 0; i < valueParagraphs.Count; i++)
+            {
+                var para = valueParagraphs[i];
+                valueList.Add(para.InnerText);
+            }
+
+            result.Add("Value", valueList);
+
+
+            List<DocumentFormat.OpenXml.Drawing.Paragraph> growthParagraphs = GrowthtextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().ToList();
+            List<string> growthList = new List<string>();
+            for (int i = 0; i < growthParagraphs.Count; i++)
+            {
+                var para = growthParagraphs[i];
+                growthList.Add(para.InnerText);
+            }
+
+            result.Add("Growth", growthList);
+
+            List<DocumentFormat.OpenXml.Drawing.Paragraph> qualityParagraphs = QualitytextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().ToList();
+            List<string> qltyList = new List<string>();
+            for (int i = 0; i < qualityParagraphs.Count; i++)
+            {
+                var para = qualityParagraphs[i];
+                qltyList.Add(para.InnerText);
+            }
+
+            result.Add("Quality", qltyList);
+
+
+            return result;
         }
 
         /// <summary>
@@ -1990,7 +2579,7 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="slidePart">SlidePart</param>
         /// <returns>key Value pair dictionary data</returns>
-        private static Dictionary<int, List<String>> GetVQG(SlidePart slidePart)
+        private static Dictionary<int, List<String>> GetVQG2(SlidePart slidePart)
         {
             Dictionary<int, List<String>> result = new Dictionary<int, List<string>>();
 
@@ -2036,6 +2625,109 @@ namespace GreenField.Web.Helpers
             }
             return result;
         }
+
+
+        /// Get strength, weakness, opportunity and threat data-- mOdified to read the new presentation format
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>key Value pair dictionary data</returns>
+        private static Dictionary<string, List<String>> GetSWOTAnalysis(SlidePart slidePart)
+        {
+            Dictionary<string, List<String>> result = new Dictionary<string, List<string>>();
+            CommonSlideData commonSlideData = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+            List<DocumentFormat.OpenXml.Presentation.GraphicFrame> graphicFrame = commonSlideData.Descendants<DocumentFormat.OpenXml.Presentation.GraphicFrame>().ToList();
+            Table table = graphicFrame[0].Graphic.GraphicData.Descendants<Table>().FirstOrDefault();
+            List<TableRow> tableRow = table.Descendants<TableRow>().ToList();
+
+            List<TableCell> swtablecells = tableRow[1].Descendants<TableCell>().ToList();
+            var strengthparagraphs = swtablecells[0].TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().ToList();
+            List<string> strengths = new List<string>();
+            foreach (var para in strengthparagraphs)
+            {
+                if(!String.IsNullOrEmpty(para.InnerText))
+                {
+                  strengths.Add(para.InnerText);
+                }
+            }
+
+            result.Add("Strength", strengths);
+
+            var weaknessparagraphs = swtablecells[1].TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().ToList();
+            List<string> weaknesses = new List<string>();
+            foreach (var para in weaknessparagraphs)
+            {
+                if (!String.IsNullOrEmpty(para.InnerText))
+                {
+                    weaknesses.Add(para.InnerText);
+                }
+            }
+
+            result.Add("Weakness", weaknesses);
+
+
+
+            List<TableCell> oppthreattablecells = tableRow[3].Descendants<TableCell>().ToList();
+            var opportunityparagraphs = oppthreattablecells[0].TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().ToList();
+            List<string> opportunity = new List<string>();
+            foreach (var para in opportunityparagraphs)
+            {
+                if (!String.IsNullOrEmpty(para.InnerText))
+                {
+                    opportunity.Add(para.InnerText);
+                }
+            }
+
+            result.Add("Opportunity", opportunity);
+
+            var threatparagraphs = oppthreattablecells[1].TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().ToList();
+            List<string> threats = new List<string>();
+            foreach (var para in threatparagraphs)
+            {
+                if (!String.IsNullOrEmpty(para.InnerText))
+                {
+                    threats.Add(para.InnerText);
+                }
+            }
+
+            result.Add("Threat", threats);
+
+
+           
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Get strength, weakness, opportunity and threat data
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <returns>key Value pair dictionary data</returns>
+        /// 
+        private static List<string> GetESGCommentaries(SlidePart slidePart)
+        {
+            List<string> commentaries = new List<string>();
+            Dictionary<string, List<String>> result = new Dictionary<string, List<string>>();
+            CommonSlideData commonSlideData = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+            List<DocumentFormat.OpenXml.Presentation.GraphicFrame> graphicFrame = commonSlideData.Descendants<DocumentFormat.OpenXml.Presentation.GraphicFrame>().ToList();
+            Table table = graphicFrame[1].Graphic.GraphicData.Descendants<Table>().FirstOrDefault();
+            List<TableRow> tableRow = table.Descendants<TableRow>().ToList();
+
+            TableCell esgtablecells = tableRow[1].Descendants<TableCell>().FirstOrDefault();
+            List<DocumentFormat.OpenXml.Drawing.Paragraph> paragraphs=esgtablecells.TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().ToList();
+            foreach (var para in paragraphs)
+            {
+                if (!String.IsNullOrEmpty(para.InnerText))
+                {
+                    commentaries.Add(para.InnerText);
+                }
+            }
+
+
+            return commentaries;
+        }
+
+
 
         /// <summary>
         /// Get strength, weakness, opportunity and threat data
@@ -2098,7 +2790,7 @@ namespace GreenField.Web.Helpers
          /// </summary>
          /// <param name="slidePart">SlidePart</param>
          /// <returns>key Value pair dictionary data</returns>
-         private static Dictionary<int, List<String>> GetSWOTAnalysis(SlidePart slidePart)
+         private static Dictionary<int, List<String>> GetSWOTAnalysis2(SlidePart slidePart)
          {
              Dictionary<int, List<String>> result = new Dictionary<int, List<string>>();
 

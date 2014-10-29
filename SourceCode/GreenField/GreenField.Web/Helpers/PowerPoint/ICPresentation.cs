@@ -29,5 +29,12 @@
         /// Stores strength, weakness, opportunity and threat information in powerpoint presentation file
         /// </summary>
         public SWOTAnalysis SWOTAnalysisInstance { get; set; }
+
+        /// <summary>
+        /// Stores ESG Commentaries
+        /// </summary>
+        public ESGCommentaries ESGCommentaries { get; set; }
+
+
     }
 }

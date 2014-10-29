@@ -188,6 +188,8 @@
     <Compile Include="Helpers\DefaultCacheProvider.cs" />
     <Compile Include="Helpers\GroupCalculations.cs" />
     <Compile Include="Helpers\PortfolioValuation.cs" />
+    <Compile Include="Helpers\PowerPoint\ESGCommentaries.cs" />
+    <Compile Include="Helpers\PowerPoint\PresentationFile.cs" />
     <Compile Include="Helpers\PredicateBuilder.cs" />
     <Compile Include="Helpers\EMSummaryMarketBenchmarkData.cs" />
     <Compile Include="Helpers\EMSummFinalData.cs" />

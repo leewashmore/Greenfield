@@ -2,6 +2,7 @@
 using System.Windows;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
+using System.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -155,6 +156,17 @@ namespace GreenField.Gadgets.Views
         {
             RaiseICPresentationOverviewInfoChanged();
         }
+
+
+        private void btnCreate_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog() { Filter = "PowerPoint Presentation (*.pptx)|*.pptx" };
+            if (dialog.ShowDialog() == true)
+            {
+              //  DataContextViewModelCreateUpdatePresentations.DownloadStream = dialog.OpenFile();
+                DataContextViewModelICPresentationNew.DownloadStream = dialog.OpenFile();
+            }
+        } 
 
         #endregion        
 

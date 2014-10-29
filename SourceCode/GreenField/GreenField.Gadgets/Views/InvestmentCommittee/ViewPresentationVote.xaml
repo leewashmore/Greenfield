@@ -96,12 +96,12 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <!--Presentation-->
-                <TextBlock Text="PRESENTATION:" Margin="2,5,0,0" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <!--<TextBlock Text="PRESENTATION:" Margin="2,5,0,0" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
                 <HyperlinkButton Content="{Binding SelectedPresentationPowerpointDocument.Name}"  
                                  NavigateUri="{Binding SelectedPresentationPowerpointDocument.Location}" 
                                  TargetName = "_blank"                                 
                                  Margin="2,5,0,0" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" 
-                                 Style="{StaticResource HyperlinkButtonStyle}"/>
+                                 Style="{StaticResource HyperlinkButtonStyle}"/>-->
                 <!--IC Packet-->
                 <TextBlock Grid.Row="1" Margin="2,5,0,0" Text="IC PACKET:" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
                 <HyperlinkButton Grid.Row="1" Grid.Column="1" Margin="2,5,0,0" FontWeight="Bold" VerticalAlignment="Center" 

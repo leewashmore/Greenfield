@@ -155,12 +155,12 @@ namespace GreenField.Web.Services
         /// <returns>True if successful</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public long CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData,string template)
+        public PresentationFile CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData,string template)
         {
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-
+                PresentationFile pf = new PresentationFile();
                 #region Creation of PresentationInfo and VoterInfo objects
                 XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
                 String[] votingUsers = Roles.GetUsersInRole("IC_MEMBER_VOTING");
@@ -207,9 +207,9 @@ namespace GreenField.Web.Services
                 String xmlScript = xmlDoc.ToString();
                 Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
                 presentationOverviewData.PresentationID = (long)result;
-
+                pf.PresentationId = (long)result;
                 if (result < 0)
-                    return (long)result;
+                { throw new Exception("Exception occurred while creating the presentation!!!"); }
 
                 String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_NewICPresentation.pptx";
                 File.Copy(presentationFile, copiedFilePath, true);
@@ -241,16 +241,17 @@ namespace GreenField.Web.Services
                 }
                 #endregion
 
-                #region Upload generated powerpoint presentation and create file master object
+                //#region Upload generated powerpoint presentation and create file master object
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
-                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
-                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
+                pf.FileStream = fileStream;
+               /* String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";*/
 
                 /*GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
                 .Where(record => record.ISSUE_NAME == presentationOverviewData.SecurityName
                     && record.TICKER == presentationOverviewData.SecurityTicker).FirstOrDefault();*/
 
-                GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
+               /* GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
                 .Where(record => record.SECURITY_ID == presentationOverviewData.Security_id).FirstOrDefault();
                 String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
 
@@ -280,9 +281,10 @@ namespace GreenField.Web.Services
                 {
                     return (long)result;
                 }
-                else { return -1; };
+                else { return -1; };*/
 
                 //return UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false);
+                return pf;
             }
             catch (Exception ex)
             {
@@ -721,24 +723,27 @@ namespace GreenField.Web.Services
         private void SetSlideContent(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
         {
             //get security information    
-            DocumentFormat.OpenXml.Drawing.Table tblSecurityOverview = slidePart.Slide
-                .Descendants<DocumentFormat.OpenXml.Drawing.Table>().FirstOrDefault();
+            CommonSlideData commonSlideData = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+            List<GraphicFrame> graphicFrames = commonSlideData.Descendants<GraphicFrame>().ToList();
+            DocumentFormat.OpenXml.Drawing.Table tblSecurityOverview = graphicFrames[0].Graphic.GraphicData.Descendants<DocumentFormat.OpenXml.Drawing.Table>().FirstOrDefault();
 
             SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.Analyst);
-            SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.SecurityCountry);
-            SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.SecurityIndustry);
-            SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.CurrentHoldings);
-            SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
-            SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.PercentEMIF);
-            SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.Price.ToString());
-            SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityBMWeight);
-            SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.FVCalc);
-            SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.SecurityActiveWeight);
-            SwapPlaceholderText(tblSecurityOverview, 5, 2, " ");
-           // SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_RELtoLOC);
-            SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
+            SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.CurrentHoldings);  
+            SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.SecurityCountry);
+            SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.PercentEMIF);
+            SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityIndustry);
+            SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.SecurityBMWeight); 
+            SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
+            SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityActiveWeight);
+            SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.Price.ToString());
+            SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.YTDRet_Absolute);
+            SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.FVCalc);
+            SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_RELtoLOC);
+            SwapPlaceholderText(tblSecurityOverview, 6, 2, " ");
+            SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
+            SwapPlaceholderText(tblSecurityOverview, 7, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
                 presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
-           // SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
+            SwapPlaceholderText(tblSecurityOverview, 7, 4, " ");
         }
 
         /// <summary>
@@ -841,8 +846,10 @@ namespace GreenField.Web.Services
                 Int32? result = entity.UpdatePresentationInfo(userName, xmlScript).FirstOrDefault();
                 if (result == null)
                     throw new Exception("Unable to update presentation info object");
-
-                #region Update power point presentation file
+                List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
+                GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.SECURITY_ID == presentationOverviewData.Security_id).FirstOrDefault();
+                String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
+             /*   #region Update power point presentation file
                 #region Retrieve presentation file or create new one if not exists
                 String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_NewICPresentation.pptx";
                 List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
@@ -902,9 +909,7 @@ namespace GreenField.Web.Services
                 #endregion
 
                 #region Upload power point to share point and modify database
-                /*GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
-                .Where(record => record.ISSUE_NAME == presentationOverviewData.SecurityName
-                    && record.TICKER == presentationOverviewData.SecurityTicker).FirstOrDefault(); */
+     
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
                 .Where(record => record.SECURITY_ID == presentationOverviewData.Security_id).FirstOrDefault();
                 String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
@@ -936,13 +941,11 @@ namespace GreenField.Web.Services
                 };
 
                 Boolean insertedFileMasterRecord = UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster, false);
-               /* if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord)
-                {
-                    documentOperations.DeleteDocument(presentationPowerPointAttachedFile.Location);
-                    entity.DeleteFileMaster(presentationPowerPointAttachedFile.FileID);
-                } */
+            
                 #endregion
                 #endregion
+
+                */
 
                 #region IC Packet
                 if (presentationAttachedFiles != null)
@@ -1076,7 +1079,7 @@ namespace GreenField.Web.Services
                 List<FileMaster> presentationAttachedFileData = RetrievePresentationAttachedFileDetails(presentationId);
                 presentationAttachedFileData = presentationAttachedFileData
                     .Where(record => record.Type == "IC Presentations"
-                        && (record.Category == "Power Point Presentation"
+                        && (record.Category == "Presentation"
                             || record.Category == "FinStat Report"
                             || record.Category == "Investment Context Report"
                             || record.Category == "DCF Model"
@@ -1280,10 +1283,21 @@ namespace GreenField.Web.Services
         private List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo, PresentationInfo presentationInfo)
         {
             List<String> result = new List<String>();
-            FileMaster powerPointFile = fileMasterInfo.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
+           /* FileMaster powerPointFile = fileMasterInfo.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
             if (powerPointFile != null)
             {
                 String uploadLocation = ConvertPowerpointPresentationTpPdf(powerPointFile, presentationInfo);
+                if (uploadLocation != null)
+                {
+                    result.Add(uploadLocation);
+                }
+            }
+            */
+
+            FileMaster presentationFile = fileMasterInfo.Where(record => record.Category == "Presentation").FirstOrDefault();
+            if (presentationFile != null)
+            {
+                String uploadLocation = ConvertImagePdfFileToLocalPdf(presentationFile);
                 if (uploadLocation != null)
                 {
                     result.Add(uploadLocation);
