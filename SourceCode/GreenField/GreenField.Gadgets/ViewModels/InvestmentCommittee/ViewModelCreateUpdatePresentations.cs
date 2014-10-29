@@ -341,6 +341,7 @@ namespace GreenField.Gadgets.ViewModels
             return SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.PRESENTATION).Count() == 1
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.INVESTMENT_CONTEXT_REPORT).Count() == 1
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.FINSTAT_REPORT).Count() == 1
+                && EditEnabled
                 //&& SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.DCF_MODEL).Count() == 1
                 ;
         }

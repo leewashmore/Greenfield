@@ -125,7 +125,7 @@
                                             <HyperlinkButton Name="PowerPointHyperLink" Margin="2" Content="{Binding Name}" VerticalAlignment="Center" 
                                                              Style="{StaticResource HyperlinkButtonStyle}"
                                                              HorizontalAlignment="Left" NavigateUri="{Binding Location}" 
-                                                             TargetName = "_blank" IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"/>
+                                                             TargetName = "_blank" />
                                         </Grid>
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
@@ -164,12 +164,12 @@
                                                              Style="{StaticResource HyperlinkButtonStyle}"
                                                              HorizontalAlignment="Left" 
                                                              NavigateUri="{Binding Location}" 
-                                                             TargetName = "_blank" IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"/>
+                                                             TargetName = "_blank" />
                                         </Grid>
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                                Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
-                                                               CommandParameter="{Binding}" IsEnabled="False"
+                                                               CommandParameter="{Binding}" IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"
                                                                Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>
                                     </StackPanel>
@@ -207,12 +207,12 @@
                                                              Style="{StaticResource HyperlinkButtonStyle}"
                                                              HorizontalAlignment="Left" 
                                                              NavigateUri="{Binding Location}" 
-                                                             TargetName = "_blank" IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"/>
+                                                             TargetName = "_blank" />
                                         </Grid>
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                                Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
-                                                               CommandParameter="{Binding}" IsEnabled="False"
+                                                               CommandParameter="{Binding}" IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"
                                                                Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>
                                     </StackPanel>
@@ -246,12 +246,12 @@
                                                              Style="{StaticResource HyperlinkButtonStyle}"
                                                              HorizontalAlignment="Left" 
                                                              NavigateUri="{Binding Location}" 
-                                                             TargetName = "_blank"  IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"/>
+                                                             TargetName = "_blank"  />
                                         </Grid>
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                                Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
-                                                               CommandParameter="{Binding}" IsEnabled="False"
+                                                               CommandParameter="{Binding}" IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"
                                                                Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>
                                     </StackPanel>
@@ -290,7 +290,7 @@
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                                Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
-                                                               CommandParameter="{Binding}"
+                                                               CommandParameter="{Binding}" IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"
                                                                Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>
                                     </StackPanel>
@@ -327,7 +327,7 @@
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                                Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
-                                                               CommandParameter="{Binding}"
+                                                               CommandParameter="{Binding}" IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"
                                                                Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>
                                     </StackPanel>
@@ -351,7 +351,7 @@
                     <telerik:RadButton x:Name="btnPreview" Content="Preview" Grid.Column="0" Width="75" Style="{StaticResource RadButtonStyle}"
                                        Click="btnPreview_Click"  HorizontalAlignment="Right" Margin="0,0,10,0"/>
                     <telerik:RadButton Content="Submit for Voting" Grid.Column="1" Width="75"  Style="{StaticResource RadButtonStyle}"
-                                       Command="{Binding SubmitCommand}" HorizontalAlignment="Left" Margin="10,0,0,0"  IsEnabled="{Binding EditEnabled}"/>
+                                       Command="{Binding SubmitCommand}" HorizontalAlignment="Left" Margin="10,0,0,0" />
                 </Grid>
             </Grid>
         </ScrollViewer>
