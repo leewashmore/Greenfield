@@ -139,7 +139,15 @@
     <Content Include="Templates\ICPresentationTemplate.pptx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Templates\New IC template.pptx" />
+    <Content Include="Templates\Abbrev IC Report template.pptx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Full IC Report template.pptx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\New IC template.pptx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Web References\DocumentCopyService\copy.disco" />
     <None Include="Web References\ListsDefinitions\lists.disco" />
     <Content Include="Web.config">
