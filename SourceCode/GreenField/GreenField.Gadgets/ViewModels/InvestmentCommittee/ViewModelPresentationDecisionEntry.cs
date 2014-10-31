@@ -81,7 +81,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (value != null)
                 {
-                    if (value.AcceptWithoutDiscussionFlag == null)
+                    if (value.AcceptWithoutDiscussionFlag == null || value.AcceptWithoutDiscussionFlag==true)
                     {
                         value.AcceptWithoutDiscussionFlag = true;
                         value.CommitteePFVMeasure = value.SecurityPFVMeasure;

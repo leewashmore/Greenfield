@@ -130,7 +130,7 @@
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                                Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
-                                                               CommandParameter="{Binding}" IsEnabled="False"
+                                                               CommandParameter="{Binding}" IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"
                                                                Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>
                                     </StackPanel>

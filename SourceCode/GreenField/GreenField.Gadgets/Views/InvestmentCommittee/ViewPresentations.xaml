@@ -7,7 +7,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
+     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers;assembly=GreenField.Gadgets"
     d:DesignHeight="300" d:DesignWidth="800">
 
     <helpers:ViewBaseUserControl.Resources>
@@ -15,6 +15,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
                 <ResourceDictionary>
+                    <helpers:GridRowBackgroundColorConverter x:Key="GridRowBackgroundColorConverter"/>
                     <helpers:UTCToLocalDateTimeConverter x:Key="UTCToLocalDateTimeConverter"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
@@ -122,7 +123,8 @@
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"
                                                 IsFilterable="True"/>
-                   <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListTime"
+                        
+                    <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListTime"
                                                 DataFormatString="{}{0:h:mm tt}"
                                                 Width="Auto"
                                                 Header="Time"
@@ -133,6 +135,7 @@
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"
                                                 IsFilterable="True"/>
+                                                
                     <!-- <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListSubmitDeadline"
                                                 DataFormatString="{}{0:MM/dd/yyyy h:mm tt}"
                                                 Width="Auto"
@@ -182,7 +185,7 @@
                                                 UniqueName="Security"
                                                 DataMemberBinding="{Binding SecurityName}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"
                                                 IsFilterable="True"/>
@@ -192,7 +195,7 @@
                                                 UniqueName="Ticker"
                                                 DataMemberBinding="{Binding SecurityTicker}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"
                                                 IsFilterable="True"/>
@@ -202,7 +205,7 @@
                                                 UniqueName="Country"
                                                 DataMemberBinding="{Binding SecurityCountry}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"
                                                 IsFilterable="True"/>
@@ -212,7 +215,7 @@
                                                 UniqueName="Industry"
                                                 DataMemberBinding="{Binding SecurityIndustry}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                  CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"
                                                 IsFilterable="True"/>
