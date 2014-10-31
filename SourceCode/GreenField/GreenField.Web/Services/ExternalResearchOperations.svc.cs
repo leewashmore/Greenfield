@@ -3076,7 +3076,7 @@ namespace GreenField.Web.Services
             foreach (var group in groups)
             {
                 var main = group.Where(x => x.GicsSectorCode == group.Key).FirstOrDefault();
-                if (group.Count() > 1)
+                if (group.Count() >= 1) //If no companies in the sector, we do not include it on the report.
                 {
                     var icd = new InvestmentContextDetailsData
                     {
