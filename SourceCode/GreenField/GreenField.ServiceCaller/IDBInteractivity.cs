@@ -393,7 +393,7 @@ namespace GreenField.ServiceCaller
 
         void UpdateDecisionEntryDetails(String userName, ICPresentationOverviewData presentationOverViewData, List<VoterInfo> voterInfo, Action<Boolean?> callback);
 
-        void CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData, Action<Int64?> callback);
+        void CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData, string template, Action<PresentationFile> callback);
         void DeletePresentation(String userName, ICPresentationOverviewData presentationOverviewData, Action<Boolean?> callback);
 
         void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData, PortfolioSelectionData portfolioData, Action<ICPresentationOverviewData> callback);
@@ -431,7 +431,7 @@ namespace GreenField.ServiceCaller
         void SetMessageInfo(String emailTo, String emailCc, String emailSubject, String emailMessageBody, String emailAttachment
             , String userName, Action<Boolean?> callback);
 
-        void GenerateMeetingMinutesReport(Int64 meetingId, Action<Byte[]> callback);
+        //void GenerateMeetingMinutesReport(Int64 meetingId, Action<Byte[]> callback);
 
         void GeneratePreMeetingVotingReport(Int64 presentationId, Action<Byte[]> callback);
 
@@ -566,6 +566,12 @@ namespace GreenField.ServiceCaller
 
         void RetrieveInvestmentContextData(string issuerId, string context, Action<List<List<InvestmentContextDetailsData>>> callback);
         void RetrieveDataMaster(Action<List<DATA_MASTER>> callback);
+
+        void DistributeICPacks(Action<Boolean?> callback);
+
+        void VotingClosed(string fromstatus, string tostatus ,Action<Boolean?> callback);
+
+        void PublishDecision(string fromstatus, string tostatus, Action<Boolean?> callback);
 
     }
 }

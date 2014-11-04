@@ -61,7 +61,20 @@ namespace GreenField.Gadgets.ViewModels
                     Initialize();
                 }
             }
+        }
+
+
+        private Boolean editEnabled;
+        public Boolean EditEnabled
+        {
+            get { return editEnabled; }
+            set
+            {
+                editEnabled = value;
+                RaisePropertyChanged(() => this.EditEnabled);
+            }
         } 
+
         #endregion
 
         #region Upload/Delete Document
@@ -77,7 +90,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     uploadDocumentInfo = new List<string> 
                     {
-                        UploadDocumentType.POWERPOINT_PRESENTATION, 
+                        UploadDocumentType.PRESENTATION, 
                         UploadDocumentType.FINSTAT_REPORT, 
                         UploadDocumentType.INVESTMENT_CONTEXT_REPORT, 
                         UploadDocumentType.DCF_MODEL, 
@@ -91,7 +104,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected upload document type
         /// </summary>
-        private String selectedUploadDocumentInfo = UploadDocumentType.POWERPOINT_PRESENTATION;
+        private String selectedUploadDocumentInfo = UploadDocumentType.PRESENTATION;
         public String SelectedUploadDocumentInfo
         {
             get { return selectedUploadDocumentInfo; }
@@ -165,6 +178,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 selectedPresentationOverviewInfo = value;
+                RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
             }
         }
 
@@ -208,6 +222,8 @@ namespace GreenField.Gadgets.ViewModels
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
         }
+
+
         #endregion
 
         #region Busy Indicator Notification
@@ -289,7 +305,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <returns>True/False</returns>
         private Boolean UploadCommandValidationMethod(object param)
         {
-            return UploadFileStreamData != null && UploadFileData != null;
+            return UploadFileStreamData != null && UploadFileData != null && (SelectedPresentationOverviewInfo.StatusType==StatusType.IN_PROGRESS);
         }
 
         /// <summary>
@@ -322,9 +338,10 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (SelectedPresentationDocumentationInfo == null)
                 return false;
-            return SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.POWERPOINT_PRESENTATION).Count() == 1
+            return SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.PRESENTATION).Count() == 1
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.INVESTMENT_CONTEXT_REPORT).Count() == 1
                 && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.FINSTAT_REPORT).Count() == 1
+                && EditEnabled
                 //&& SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.DCF_MODEL).Count() == 1
                 ;
         }
@@ -335,9 +352,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         private void SubmitCommandMethod(object param)
         {
-            if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING
-                && SelectedPresentationOverviewInfo.MeetingDateTime > DateTime.UtcNow)
-            {
+            //if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING)
+           // {
                 Prompt.ShowDialog("Please ensure that all changes have been made before submitting meeting presentation for voting", ""
                     , MessageBoxButton.OKCancel, (result) =>
                 {
@@ -351,12 +367,12 @@ namespace GreenField.Gadgets.ViewModels
                             BusyIndicatorNotification(true, "Updating selected presentation to status 'Ready for Voting'...");
                             dbInteractivity.SetICPPresentationStatus(GreenField.UserSession.SessionManager.SESSION.UserName
                                 , SelectedPresentationOverviewInfo.PresentationID,
-                                    StatusType.READY_FOR_VOTING, SetICPPresentationStatusCallbackMethod);
+                                    StatusType.IN_PROGRESS, SetICPPresentationStatusCallbackMethod);
                         }
                     }
                 });
-            }
-            else
+         //   }
+           /* else
             {
                 ChildViewReSubmitPresentation dialog = new ChildViewReSubmitPresentation();
                 dialog.Show();
@@ -373,8 +389,11 @@ namespace GreenField.Gadgets.ViewModels
                         }
                     }
                 };
-            }
+            }*/
         }
+
+       
+
         #endregion        
 
         #region Callback Methods
@@ -392,6 +411,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     SelectedPresentationDocumentationInfo = result;
+                    if (SelectedPresentationOverviewInfo != null)
+                    {
+                        EditEnabled = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS;
+                    }
+                  
                 }
                 else
                 {
@@ -618,6 +642,10 @@ namespace GreenField.Gadgets.ViewModels
             if (presentationInfo != null)
             {
                 SelectedPresentationOverviewInfo = presentationInfo;
+                if(SelectedPresentationOverviewInfo != null)
+                {
+                    EditEnabled = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS;
+                }
                 if (dbInteractivity != null)
                 {
                     BusyIndicatorNotification(true, "Retrieving updated upload documentation...");

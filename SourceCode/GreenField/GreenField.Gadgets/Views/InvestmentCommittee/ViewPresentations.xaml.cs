@@ -57,16 +57,19 @@ namespace GreenField.Gadgets.Views
             {
                 btnICPPresentationsListEdit.Visibility = Visibility.Visible;
                 btnICPPresentationsListView.Visibility = Visibility.Collapsed;
-                btnICPPresentationsListChangeDate.Visibility = Visibility.Visible;
+               // btnICPPresentationsListChangeDate.Visibility = Visibility.Visible;
                 btnICPPresentationsDelete.Visibility = Visibility.Visible;
             }
             else if (dashboardCategoryType == DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION && UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
             {
                 btnICPPresentationsListView.Visibility = Visibility.Visible;
                 btnICPPresentationsListDecisionEntry.Visibility = Visibility.Visible;
-                btnICPPresentationsListChangeDate.Visibility = Visibility.Visible;
+              //  btnICPPresentationsListChangeDate.Visibility = Visibility.Visible;
                 btnICPPresentationsListWithdrawRequest.Visibility = Visibility.Visible;
                 btnICPPresentationsListEdit.Visibility = Visibility.Collapsed;
+                btnICPPresentationsListDistribute.Visibility = Visibility.Visible;
+                btnICPPresentationsListVotingClosed.Visibility = Visibility.Visible;
+                btnICPPresentationsListPublishDecision.Visibility = Visibility.Visible;
                 
 
             }
@@ -183,6 +186,8 @@ namespace GreenField.Gadgets.Views
         {
             RadGridView_ElementExport.ElementExporting(e);
         }
+
+
         #endregion
 
         #region Dispose Method

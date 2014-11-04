@@ -14,6 +14,8 @@ using System.Xml.Linq;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Presentation;
+using X14 = DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using GreenField.DAL;
@@ -22,7 +24,11 @@ using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
 using System.Text.RegularExpressions;
-
+using System.Net.Mail;
+using System.Web.Configuration;
+using System.Web;
+using System.Net.Configuration;
+//using System.Drawing;
 namespace GreenField.Web.Services
 {
     /// <summary>
@@ -60,6 +66,16 @@ namespace GreenField.Web.Services
                 }
                 return dimensionEntity;
             }
+        }
+
+        /// <summary>
+        /// MaxWidth of a Column
+        /// </summary>
+        private static DoubleValue maxWidth;
+        public static DoubleValue MaxWidth
+        {
+            get { return maxWidth; }
+            set { maxWidth = value; }
         }
 
         /// <summary>
@@ -139,12 +155,12 @@ namespace GreenField.Web.Services
         /// <returns>True if successful</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public long CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData)
+        public PresentationFile CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData,string template)
         {
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-
+                PresentationFile pf = new PresentationFile();
                 #region Creation of PresentationInfo and VoterInfo objects
                 XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
                 String[] votingUsers = Roles.GetUsersInRole("IC_MEMBER_VOTING");
@@ -167,20 +183,33 @@ namespace GreenField.Web.Services
                     XElement element = new XElement("VotingUser", userName.ToLower());
                     xmlDoc.Root.Add(element);
                 }
-                //generate presentation info and voter info in database
-                String xmlScript = xmlDoc.ToString();
-                Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
-                presentationOverviewData.PresentationID = (long) result;
-
-                if (result < 0)
-                    return (long)result;
+               
                 #endregion
 
                 #region Generate powerpoint presentation
-                String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\New IC template.pptx";
+                string presentationFile=null;
+                if (template == "Full")
+                {
 
+                    presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\Full IC Report template.pptx";
+                }
+                else if (template == "Abreviated")
+                {
+                    presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\Abbrev IC Report template.pptx";
+                }
                 if (!File.Exists(presentationFile))
+                {
                     throw new Exception("Missing IC Presentation Template file");
+                }
+
+
+                //generate presentation info and voter info in database
+                String xmlScript = xmlDoc.ToString();
+                Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
+                presentationOverviewData.PresentationID = (long)result;
+                pf.PresentationId = (long)result;
+                if (result < 0)
+                { throw new Exception("Exception occurred while creating the presentation!!!"); }
 
                 String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_NewICPresentation.pptx";
                 File.Copy(presentationFile, copiedFilePath, true);
@@ -196,7 +225,8 @@ namespace GreenField.Web.Services
 
                         //get the slide part from the relationship id
                         SlidePart slidePart = (SlidePart)presentatioPart.GetPartById(relId);
-
+                       
+                        //SetSlideTitleonFullPresentation(slidePart, presentationOverviewData);
                         SetSlideTitle(slidePart, presentationOverviewData);
                         SetSlideContent(slidePart, presentationOverviewData);
 
@@ -211,14 +241,18 @@ namespace GreenField.Web.Services
                 }
                 #endregion
 
-                #region Upload generated powerpoint presentation and create file master object
+                //#region Upload generated powerpoint presentation and create file master object
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
-                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
-                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
+                pf.FileStream = fileStream;
+               /* String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";*/
 
-                GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
+                /*GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
                 .Where(record => record.ISSUE_NAME == presentationOverviewData.SecurityName
-                    && record.TICKER == presentationOverviewData.SecurityTicker).FirstOrDefault();
+                    && record.TICKER == presentationOverviewData.SecurityTicker).FirstOrDefault();*/
+
+               /* GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
+                .Where(record => record.SECURITY_ID == presentationOverviewData.Security_id).FirstOrDefault();
                 String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
 
                 DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
@@ -247,9 +281,10 @@ namespace GreenField.Web.Services
                 {
                     return (long)result;
                 }
-                else { return -1; };
+                else { return -1; };*/
 
                 //return UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false);
+                return pf;
             }
             catch (Exception ex)
             {
@@ -258,6 +293,11 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+
+   
+
+
 
         private String removeSpecialCharacters(String str)
         {
@@ -478,7 +518,7 @@ namespace GreenField.Web.Services
                         presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
                         presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
                         presentationOverviewData.FVCalc = String.Format("{0} {1:n2} - {2:n2}",
-                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL) + "Akhtar was here";
+                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL);
 
                         if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
                         {
@@ -600,7 +640,6 @@ namespace GreenField.Web.Services
             }
 
             //declare a paragraph separator.
-            string paragraphSeparator = null;
 
             if (slidePart.Slide != null)
             {
@@ -609,25 +648,72 @@ namespace GreenField.Web.Services
                              where IsTitleShape(shape)
                              select shape;
 
-                StringBuilder paragraphText = new StringBuilder();
 
                 foreach (var shape in shapes)
                 {
                     //get the text in each paragraph in this shape.
                     foreach (var paragraph in shape.TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>())
                     {
-                        //sdd a line break.
-                        paragraphText.Append(paragraphSeparator);
-
+                        
+                        
                         foreach (var text in paragraph.Descendants<DocumentFormat.OpenXml.Drawing.Text>())
                         {
-                            text.Text = presentationOverviewData.SecurityName + " - " + presentationOverviewData.SecurityRecommendation;
+                            text.Text = presentationOverviewData.SecurityName ;
                         }
-                        paragraphSeparator = "\n";
+                        
                     }
                 }
             }
         }
+
+
+        /// <summary>
+        /// Get the title string of the slide
+        /// </summary>
+        /// <param name="slidePart">SlidePart</param>
+        /// <param name="presentationOverviewData">ICPresentationOverviewData</param>
+        private void SetSlideTitleonFullPresentation(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
+        {
+            if (slidePart == null)
+            {
+                throw new ArgumentNullException("presentationDocument");
+            }
+
+            //declare a paragraph separator.
+           
+
+            if (slidePart.Slide != null)
+            {
+                                
+                //find all the title shapes.
+                var shapes = from shape in slidePart.Slide.Descendants<Shape>()
+                             where IsTitleShape(shape)
+                             select shape;
+
+                foreach (var shape in shapes)
+                {
+                    //get the text in each paragraph in this shape.
+                   
+                    foreach (var paragraph in shape.TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>())
+                    {
+                        //sdd a line break.
+                       
+
+                        foreach (var text in paragraph.Descendants<DocumentFormat.OpenXml.Drawing.Text>())
+                        {
+                            
+                            text.Text = presentationOverviewData.SecurityName ;
+                            
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+        }
+
 
         /// <summary>
         /// Get the title string of the slide
@@ -637,24 +723,27 @@ namespace GreenField.Web.Services
         private void SetSlideContent(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
         {
             //get security information    
-            DocumentFormat.OpenXml.Drawing.Table tblSecurityOverview = slidePart.Slide
-                .Descendants<DocumentFormat.OpenXml.Drawing.Table>().FirstOrDefault();
+            CommonSlideData commonSlideData = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
+            List<GraphicFrame> graphicFrames = commonSlideData.Descendants<GraphicFrame>().ToList();
+            DocumentFormat.OpenXml.Drawing.Table tblSecurityOverview = graphicFrames[0].Graphic.GraphicData.Descendants<DocumentFormat.OpenXml.Drawing.Table>().FirstOrDefault();
 
             SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.Analyst);
-            SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.CurrentHoldings);
+            SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.CurrentHoldings);  
             SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.SecurityCountry);
             SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.PercentEMIF);
             SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityIndustry);
-            SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.SecurityBMWeight);
+            SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.SecurityBMWeight); 
             SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
             SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityActiveWeight);
-            SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.Price);
+            SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.Price.ToString());
             SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.YTDRet_Absolute);
             SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.FVCalc);
             SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_RELtoLOC);
-           // SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
-             //   presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
+            SwapPlaceholderText(tblSecurityOverview, 6, 2, " ");
             SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
+            SwapPlaceholderText(tblSecurityOverview, 7, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
+                presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
+            SwapPlaceholderText(tblSecurityOverview, 7, 4, " ");
         }
 
         /// <summary>
@@ -673,7 +762,7 @@ namespace GreenField.Web.Services
                     case PlaceholderValues.Title:
 
                     // A centered title.
-                    case PlaceholderValues.CenteredTitle:
+                 //   case PlaceholderValues.CenteredTitle:
                         return true;
 
                     default:
@@ -694,7 +783,17 @@ namespace GreenField.Web.Services
         {
             DocumentFormat.OpenXml.Drawing.TableRow row = tbl.Descendants<DocumentFormat.OpenXml.Drawing.TableRow>().ElementAt(rowNum);
             DocumentFormat.OpenXml.Drawing.TableCell cell = row.Descendants<DocumentFormat.OpenXml.Drawing.TableCell>().ElementAt(columnNum - 1);
-            DocumentFormat.OpenXml.Drawing.Text text = cell.Descendants<DocumentFormat.OpenXml.Drawing.Text>().FirstOrDefault();
+
+
+            DocumentFormat.OpenXml.Drawing.TextBody textBody = cell.Descendants<DocumentFormat.OpenXml.Drawing.TextBody>().FirstOrDefault();
+            DocumentFormat.OpenXml.Drawing.Paragraph paragraph = textBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().FirstOrDefault();
+            DocumentFormat.OpenXml.Drawing.Run run = paragraph.Descendants<DocumentFormat.OpenXml.Drawing.Run>().FirstOrDefault();
+            DocumentFormat.OpenXml.Drawing.Text text = run.Text;//run.Descendants<DocumentFormat.OpenXml.Drawing.Text>().FirstOrDefault();
+                                            
+
+            //DocumentFormat.OpenXml.Drawing.Paragraph paragraph = cell.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>().FirstOrDefault();
+           // DocumentFormat.OpenXml.Drawing.Text text = cell.Descendants<DocumentFormat.OpenXml.Drawing.Text>().FirstOrDefault();
+            //DocumentFormat.OpenXml.Drawing.Text text = paragraph.Descendants<DocumentFormat.OpenXml.Drawing.Text>().FirstOrDefault();
             text.Text = value;
         } 
         #endregion
@@ -747,8 +846,10 @@ namespace GreenField.Web.Services
                 Int32? result = entity.UpdatePresentationInfo(userName, xmlScript).FirstOrDefault();
                 if (result == null)
                     throw new Exception("Unable to update presentation info object");
-
-                #region Update power point presentation file
+                List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
+                GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.SECURITY_ID == presentationOverviewData.Security_id).FirstOrDefault();
+                String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
+             /*   #region Update power point presentation file
                 #region Retrieve presentation file or create new one if not exists
                 String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_NewICPresentation.pptx";
                 List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
@@ -808,9 +909,9 @@ namespace GreenField.Web.Services
                 #endregion
 
                 #region Upload power point to share point and modify database
+     
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
-                .Where(record => record.ISSUE_NAME == presentationOverviewData.SecurityName
-                    && record.TICKER == presentationOverviewData.SecurityTicker).FirstOrDefault();
+                .Where(record => record.SECURITY_ID == presentationOverviewData.Security_id).FirstOrDefault();
                 String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
 
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
@@ -840,13 +941,11 @@ namespace GreenField.Web.Services
                 };
 
                 Boolean insertedFileMasterRecord = UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster, false);
-               /* if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord)
-                {
-                    documentOperations.DeleteDocument(presentationPowerPointAttachedFile.Location);
-                    entity.DeleteFileMaster(presentationPowerPointAttachedFile.FileID);
-                } */
+            
                 #endregion
                 #endregion
+
+                */
 
                 #region IC Packet
                 if (presentationAttachedFiles != null)
@@ -862,7 +961,7 @@ namespace GreenField.Web.Services
                 String emailAttachments = null;
                 String uploadFileName = String.Format("{0}_{1}_ICPacket.pdf"
                             , Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("MMddyyyy")
-                            , presentationOverviewData.SecurityTicker);
+                            , removeSpecialCharacters(presentationOverviewData.SecurityTicker));
                 if (generatedICPacketStream != null)
                 {
                     String uploadFileLocation = documentOperations.UploadDocument(uploadFileName, generatedICPacketStream, String.Empty);
@@ -980,7 +1079,7 @@ namespace GreenField.Web.Services
                 List<FileMaster> presentationAttachedFileData = RetrievePresentationAttachedFileDetails(presentationId);
                 presentationAttachedFileData = presentationAttachedFileData
                     .Where(record => record.Type == "IC Presentations"
-                        && (record.Category == "Power Point Presentation"
+                        && (record.Category == "Presentation"
                             || record.Category == "FinStat Report"
                             || record.Category == "Investment Context Report"
                             || record.Category == "DCF Model"
@@ -1025,11 +1124,11 @@ namespace GreenField.Web.Services
 
                 #region GF_SECURITY_BASEVIEW info
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
-                            .Where(record => record.TICKER == presentationOverviewData.SecurityTicker
-                                && record.ISSUE_NAME == presentationOverviewData.SecurityName)
+                            .Where(record => record.SECURITY_ID==presentationOverviewData.Security_id)
                             .FirstOrDefault();
 
                 presentationOverviewData.SecurityCountry = securityData.ASEC_SEC_COUNTRY_NAME;
+                presentationOverviewData.SecurityName = securityData.ISSUE_NAME;
                 presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
                 presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
                 presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
@@ -1184,10 +1283,21 @@ namespace GreenField.Web.Services
         private List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo, PresentationInfo presentationInfo)
         {
             List<String> result = new List<String>();
-            FileMaster powerPointFile = fileMasterInfo.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
+           /* FileMaster powerPointFile = fileMasterInfo.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
             if (powerPointFile != null)
             {
                 String uploadLocation = ConvertPowerpointPresentationTpPdf(powerPointFile, presentationInfo);
+                if (uploadLocation != null)
+                {
+                    result.Add(uploadLocation);
+                }
+            }
+            */
+
+            FileMaster presentationFile = fileMasterInfo.Where(record => record.Category == "Presentation").FirstOrDefault();
+            if (presentationFile != null)
+            {
+                String uploadLocation = ConvertImagePdfFileToLocalPdf(presentationFile);
                 if (uploadLocation != null)
                 {
                     result.Add(uploadLocation);
@@ -1324,9 +1434,12 @@ namespace GreenField.Web.Services
                     SecurityName = presentationInfo.SecurityName
                 };
 
-                ICPresentation presentationData = PptRead.Fetch(localFile, securityInformation);
+                //ICPresentation presentationData = PptRead.Fetch(localFile, securityInformation);
+
+                ICPresentation presentationData = PptRead.FetchDataFromPpt(localFile, securityInformation);
                 result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
-                PptRead.Generate(result, presentationData);
+               // PptRead.Generate(result, presentationData);
+                PptRead.GenerateFullVersionPdf(result, presentationData);
             }
             catch (Exception)
             {
@@ -1865,7 +1978,7 @@ namespace GreenField.Web.Services
             }
         }
 
-        /// <summary>
+/*        /// <summary>
         /// Generates meeting minutes report for a specific meeting
         /// </summary>
         /// <param name="meetingId">Meeting Id</param>
@@ -1888,7 +2001,7 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        }
+        } */
 
         /// <summary>
         /// Generates pre-meeting voting report for a specific presentation
@@ -2018,7 +2131,7 @@ namespace GreenField.Web.Services
             return xmlDoc;
         }
 
-        /// <summary>
+       /* /// <summary>
         /// Generate post meeting voting report for a specific presentation
         /// </summary>
         /// <param name="presentationFinalizeInfo">MeetingMinutesReportData object</param>
@@ -2274,7 +2387,7 @@ namespace GreenField.Web.Services
             Byte[] result = File.ReadAllBytes(reportOutputFile);
             File.Delete(reportOutputFile);
             return result;
-        }
+        } */
 
         /// <summary>
         /// Generates pre meeting report
@@ -2298,7 +2411,7 @@ namespace GreenField.Web.Services
             String reportOutputFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPPreMeetingReport.pdf";
             PdfWriter.GetInstance(doc, new FileStream(reportOutputFile, FileMode.Create));
             doc.Open();
-            Rectangle page = doc.PageSize;
+            iTextSharp.text.Rectangle page = doc.PageSize;
 
             PdfPTable topHeaderTableContent = new PdfPTable(5);
             topHeaderTableContent.WidthPercentage = 100;
@@ -2681,5 +2794,724 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
+
+        #region Distribute IC Pack
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean DistributeICPacks()
+        {
+
+
+            DocumentWorkspaceOperations documentOperations = new DocumentWorkspaceOperations();
+            ICPresentationEntities entity = new ICPresentationEntities();
+            try
+            {
+                List<ICPackLocationData> icPackDataList = entity.RetrieveICPack().ToList();
+                
+                Configuration config = WebConfigurationManager.OpenWebConfiguration(HttpContext.Current.Request.ApplicationPath);
+                MailSettingsSectionGroup settings = (MailSettingsSectionGroup)config.GetSectionGroup("system.net/mailSettings");
+                 
+
+                MailMessage message = new MailMessage();
+
+                message.From = new MailAddress(settings.Smtp.From);
+
+                //message.To.Add("Akhtar.Nazirali@Ashmoregroup.com");
+                message.To.Add(ConfigurationManager.AppSettings["ICDistributionTo"]);
+                message.CC.Add(ConfigurationManager.AppSettings["ICDistributionCC"]);
+                message.Subject = "Presentations ready for voting "+DateTime.Now;
+                message.Body = "Please see attached the packets for the IC Meeting";
+
+                //string smtpserver = "smtpexternal.ashmore.local";
+                string smtpserver = settings.Smtp.Network.Host;
+                Attachment att = null;
+
+                foreach (ICPackLocationData icpack in icPackDataList)
+                {
+
+                    Byte[] fileData = documentOperations.RetrieveDocument(icpack.Location.Substring(icpack.Location.LastIndexOf(@"/") + 1));
+                    att = new Attachment(new MemoryStream(fileData), icpack.Name);
+                    message.Attachments.Add(att);
+
+                }
+                if (message.Attachments.Count() > 0)
+                {
+                    SmtpClient client = new SmtpClient(smtpserver);
+                    client.Send(message);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+#endregion
+
+
+        #region Voting Closed
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean VotingClosed(string fromstatus, string tostatus)
+        {
+
+
+            DocumentWorkspaceOperations documentOperations = new DocumentWorkspaceOperations();
+            ICPresentationEntities entity = new ICPresentationEntities();
+            try
+            {
+
+
+                //Update status from Ready for voting to Voting closed
+               int status =  entity.UpdatePresentationInfoStatus(fromstatus, tostatus);
+                //Generate Pre meeting voting results pdf and merge pdf;
+               List<ICPresentationOverviewData> icpresentationdataList  = entity.RetrieveICPresentationOverviewData("", "Voting").ToList();
+               if(icpresentationdataList.Count()>0)
+               {
+               String outFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"PreMeetingVotingResult.pdf";
+
+               Byte[] all;
+               int pageOffset = 0;
+               int f = 0;
+               Document document = null;
+               PdfCopy writer = null;
+               foreach (ICPresentationOverviewData icData in icpresentationdataList)
+               {
+                   Byte[] fileData = GeneratePreMeetingVotingReport(icData.PresentationID);
+                   PdfReader reader = new PdfReader(fileData);
+                   reader.ConsolidateNamedDestinations();
+                   int n = reader.NumberOfPages;
+                   pageOffset += n;
+                   if (f == 0)
+                   {
+                       document = new Document(reader.GetPageSizeWithRotation(1));
+                       writer = new PdfCopy(document, new FileStream(outFile, FileMode.Create));
+                       document.Open();
+                   }
+                   for (int i = 0; i < n; )
+                   {
+                       ++i;
+                       if (writer != null)
+                       {
+                           PdfImportedPage page = writer.GetImportedPage(reader, i);
+                           writer.AddPage(page);
+                       }
+                   }
+
+                   PRAcroForm form = reader.AcroForm;
+                   if (form != null && writer != null)
+                   {
+                       writer.CopyAcroForm(reader);
+                   }
+                   f++;
+
+
+
+               }
+               if (document != null)
+               {
+                   document.Close();
+               }
+
+               all = File.ReadAllBytes(outFile);
+
+                //Send email to the distribution group
+
+               Configuration config = WebConfigurationManager.OpenWebConfiguration(HttpContext.Current.Request.ApplicationPath);
+               MailSettingsSectionGroup settings = (MailSettingsSectionGroup)config.GetSectionGroup("system.net/mailSettings");
+
+
+               MailMessage message = new MailMessage();
+
+               message.From = new MailAddress(settings.Smtp.From);
+
+              
+               message.To.Add(ConfigurationManager.AppSettings["ICDistributionTo"]);
+               message.CC.Add(ConfigurationManager.AppSettings["ICDistributionCC"]);
+               message.Subject = "Pre meeting voting results " + DateTime.Now;
+               message.Body = "Please see attached pre meeting voting results";
+
+               string smtpserver = settings.Smtp.Network.Host;
+               Attachment att = null;
+
+               att = new Attachment(new MemoryStream(all), "PreMeetingVotingResults.pdf");
+               message.Attachments.Add(att);
+
+              
+
+                   SmtpClient client = new SmtpClient(smtpserver);
+                   client.Send(message);
+                   return true;
+               }
+               else
+               {
+                   return false;
+               }
+              
+             
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        #endregion
+        #region Publish Decision
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean PublishDecision(string fromstatus, string tostatus)
+        {
+              ICPresentationEntities entity = new ICPresentationEntities();
+              List<VoterInfo> voterDataList;
+              try
+              {
+                  //Update status from Ready for voting to Voting closed
+                  List<ICPresentationOverviewData> icpresentationdataList = entity.RetrieveICPresentationOverviewData("", "Voting").ToList();
+                  if (icpresentationdataList.Count() > 0)
+                  {
+                      string fileName = GetFileName();
+
+                      SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.Create(fileName, SpreadsheetDocumentType.Workbook);
+
+                      // Add a WorkbookPart to the document.
+                      WorkbookPart workbookpart = spreadsheetDocument.AddWorkbookPart();
+                      workbookpart.Workbook = new Workbook();
+
+                      // Add a WorksheetPart to the WorkbookPart.
+                      WorksheetPart worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
+                      worksheetPart.Worksheet = new Worksheet();
+
+
+                      //Set a custom width for the first column
+                      DocumentFormat.OpenXml.Spreadsheet.Columns columns = new DocumentFormat.OpenXml.Spreadsheet.Columns();
+                      columns.AppendChild(new Column { Min = 1, Max = 1, CustomWidth = true, Width = 25 });
+                      columns.AppendChild(new Column { Min = 2, Max = 2, CustomWidth = true, Width = 25 });
+                      worksheetPart.Worksheet.AppendChild(columns);
+
+
+                      SheetData sheetData = new SheetData();
+                      worksheetPart.Worksheet.AppendChild(sheetData);
+
+                      // add styles to sheet
+                      WorkbookStylesPart wbsp = workbookpart.AddNewPart<WorkbookStylesPart>();
+                      wbsp.Stylesheet = GenerateStyleSheet();// CreateStylesheet();
+                      wbsp.Stylesheet.Save();
+
+                      // Add Sheets to the Workbook.
+                      Sheets sheets = spreadsheetDocument.WorkbookPart.Workbook.
+                          AppendChild<Sheets>(new Sheets());
+
+                      // Append a new worksheet and associate it with the workbook.
+                      Sheet sheet = new Sheet()
+                      {
+                          Id = spreadsheetDocument.WorkbookPart.
+                              GetIdOfPart(worksheetPart),
+                          SheetId = 1,
+                          Name = "Post Meeting Results"
+                      };
+                      sheets.Append(sheet);
+
+                      UInt32 rowIndex = 1;
+                      string cell1Name;
+                      string cell2Name;
+                      Worksheet worksheet = worksheetPart.Worksheet;
+                      // SheetData sheetData = worksheet.GetFirstChild<SheetData>();
+
+
+
+                      foreach (ICPresentationOverviewData icdata in icpresentationdataList)
+                      {
+
+                          rowIndex += 1;
+
+                          Cell cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Company Name") };
+                          cell.StyleIndex = 1;
+                          //cell.CellValue = new CellValue("Company Name");
+
+
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.StyleIndex = 1;
+
+                          cell1Name = "A" + rowIndex;
+                          cell2Name = "B" + rowIndex;
+                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);
+
+                          rowIndex += 1;
+                          cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.ISSUER_NAME) };
+                          cell.StyleIndex = 2;
+
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.StyleIndex = 2;
+                          cell1Name = "A" + rowIndex;
+                          cell2Name = "B" + rowIndex;
+                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);
+
+                          rowIndex += 1;
+                          cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell1Name = "A" + rowIndex;
+                          cell2Name = "B" + rowIndex;
+                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);
+
+
+                          rowIndex += 1;
+
+                          cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Country") };
+                          cell.StyleIndex = 1;
+                          //cell.CellValue = new CellValue("Company Name");
+
+
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Industry ") };
+                          cell.StyleIndex = 1;
+
+                          rowIndex += 1;
+
+                          cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.SecurityCountry) };
+                          cell.StyleIndex = 6;
+
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.SecurityIndustry) };
+                          cell.StyleIndex = 6;
+
+
+                          rowIndex += 1;
+                          cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell1Name = "A" + rowIndex;
+                          cell2Name = "B" + rowIndex;
+                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);
+
+
+                          rowIndex += 1;
+                          cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Proposed Range") };
+                          cell.StyleIndex = 1;
+
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Approved Range") };
+                          cell.StyleIndex = 1;
+
+                          rowIndex += 1;
+                          cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.SecurityPFVMeasure + "  " + icdata.SecurityBuyRange + " - " + icdata.SecuritySellRange) };
+                          cell.StyleIndex = 6;
+
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.CommitteePFVMeasure + "  " + icdata.CommitteeBuyRange + " - " + icdata.CommitteeSellRange) };
+                          cell.StyleIndex = 6;
+
+                          rowIndex += 1;
+                          Row row = new Row() { RowIndex = rowIndex };
+                          sheetData.Append(row);
+
+                          rowIndex += 1;
+                          cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Voting Members") };
+                          cell.StyleIndex = 1;
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Range") };
+                          cell.StyleIndex = 1;
+
+
+                          voterDataList = entity.VoterInfoes.Where(record => record.PresentationID == icdata.PresentationID && record.PostMeetingFlag == true).ToList();
+                          foreach (VoterInfo voterData in voterDataList)
+                          {
+
+                              rowIndex += 1;
+                              cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                              cell.DataType = CellValues.InlineString;
+                              cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(voterData.Name) };
+                              cell.StyleIndex = 6;
+                              cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                              cell.DataType = CellValues.InlineString;
+                              if (voterData.VoterPFVMeasure != null)
+                              {
+
+                                  cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(voterData.VoterPFVMeasure + "  " + voterData.VoterBuyRange + " - " + voterData.VoterSellRange) };
+                              }
+                              else
+                              {
+
+                                  cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                              }
+                              cell.StyleIndex = 6;
+                          }
+
+                          rowIndex += 1;
+                          row = new Row() { RowIndex = rowIndex };
+                          sheetData.Append(row);
+
+
+
+                          rowIndex += 1;
+                          cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Notes: ") };
+                          cell.StyleIndex = 5;
+
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.StyleIndex = 5;
+
+                          rowIndex += 1;
+                          cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.StyleIndex = 5;
+
+                          cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
+                          cell.DataType = CellValues.InlineString;
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.StyleIndex = 5;
+
+                          cell1Name = "A" + (rowIndex - 1);
+                          cell2Name = "B" + rowIndex;
+                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);
+
+                          rowIndex += 1;
+                          row = new Row() { RowIndex = rowIndex };
+                          sheetData.Append(row);
+
+                      }
+                      workbookpart.Workbook.Save();
+
+                      //workbookpart.Workbook.Save();
+
+                      // Close the document.
+                      spreadsheetDocument.Close();
+
+
+                      Configuration config = WebConfigurationManager.OpenWebConfiguration(HttpContext.Current.Request.ApplicationPath);
+                      MailSettingsSectionGroup settings = (MailSettingsSectionGroup)config.GetSectionGroup("system.net/mailSettings");
+
+
+                      MailMessage message = new MailMessage();
+
+                      message.From = new MailAddress(settings.Smtp.From);
+
+
+                      message.To.Add(ConfigurationManager.AppSettings["ICDistributionTo"]);
+                      message.CC.Add(ConfigurationManager.AppSettings["ICDistributionCC"]);
+                      message.Subject = "Post meeting results " + DateTime.Now;
+                      message.Body = "Please see attached post meeting voting results";
+
+                      string smtpserver = settings.Smtp.Network.Host;
+                      Attachment att = null;
+
+                      att = new Attachment(new MemoryStream(GetBytsForFile(fileName)), "PostMeetingVotingResults.xlsx");
+                      message.Attachments.Add(att);
+
+
+
+                      SmtpClient client = new SmtpClient(smtpserver);
+                      client.Send(message);
+
+
+                      int status = entity.UpdatePresentationInfoStatus(fromstatus, tostatus);
+                      return true;
+                  }
+                  else
+                  {
+                      return false;
+                  }
+              }
+              catch (Exception ex)
+              {
+                  ExceptionTrace.LogException(ex);
+                  string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                  throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+              }
+        }
+
+
+
+
+       
+
+
+
+        private static void MergeTwoCells(WorksheetPart worksheetPart, string cell1Name, string cell2Name)
+        {
+            // Open the document for editing.
+            Worksheet worksheet = worksheetPart.Worksheet;
+
+                MergeCells mergeCells;
+                if (worksheet.Elements<MergeCells>().Count() > 0)
+                {
+                    mergeCells = worksheet.Elements<MergeCells>().First();
+                }
+                else
+                {
+                    mergeCells = new MergeCells();
+
+                    // Insert a MergeCells object into the specified position.
+                    if (worksheet.Elements<CustomSheetView>().Count() > 0)
+                    {
+                        worksheet.InsertAfter(mergeCells, worksheet.Elements<CustomSheetView>().First());
+                    }
+                    else if (worksheet.Elements<DataConsolidate>().Count() > 0)
+                    {
+                        worksheet.InsertAfter(mergeCells, worksheet.Elements<DataConsolidate>().First());
+                    }
+                    else if (worksheet.Elements<SortState>().Count() > 0)
+                    {
+                        worksheet.InsertAfter(mergeCells, worksheet.Elements<SortState>().First());
+                    }
+                    else if (worksheet.Elements<AutoFilter>().Count() > 0)
+                    {
+                        worksheet.InsertAfter(mergeCells, worksheet.Elements<AutoFilter>().First());
+                    }
+                    else if (worksheet.Elements<Scenarios>().Count() > 0)
+                    {
+                        worksheet.InsertAfter(mergeCells, worksheet.Elements<Scenarios>().First());
+                    }
+                    else if (worksheet.Elements<ProtectedRanges>().Count() > 0)
+                    {
+                        worksheet.InsertAfter(mergeCells, worksheet.Elements<ProtectedRanges>().First());
+                    }
+                    else if (worksheet.Elements<SheetProtection>().Count() > 0)
+                    {
+                        worksheet.InsertAfter(mergeCells, worksheet.Elements<SheetProtection>().First());
+                    }
+                    else if (worksheet.Elements<SheetCalculationProperties>().Count() > 0)
+                    {
+                        worksheet.InsertAfter(mergeCells, worksheet.Elements<SheetCalculationProperties>().First());
+                    }
+                    else
+                    {
+                        worksheet.InsertAfter(mergeCells, worksheet.Elements<SheetData>().First());
+                    }
+                }
+
+                // Create the merged cell and append it to the MergeCells collection.
+                MergeCell mergeCell = new MergeCell() { Reference = new StringValue(cell1Name + ":" + cell2Name) };
+                mergeCells.Append(mergeCell);
+
+                worksheet.Save();
+            
+        }
+
+
+
+        // Given a column name, a row index, and a WorksheetPart, inserts a cell into the worksheet. 
+        // If the cell already exists, returns it. 
+        private static Cell InsertCellInWorksheet(string columnName, uint rowIndex, WorksheetPart worksheetPart)
+        {
+            Worksheet worksheet = worksheetPart.Worksheet;
+            SheetData sheetData = worksheet.GetFirstChild<SheetData>();
+            string cellReference = columnName + rowIndex;
+
+            // If the worksheet does not contain a row with the specified row index, insert one.
+            Row row;
+            if (sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).Count() != 0)
+            {
+                row = sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).First();
+            }
+            else
+            {
+                row = new Row() { RowIndex = rowIndex };
+                sheetData.Append(row);
+            }
+
+            // If there is not a cell with the specified column name, insert one.  
+            if (row.Elements<Cell>().Where(c => c.CellReference.Value == columnName + rowIndex).Count() > 0)
+            {
+                return row.Elements<Cell>().Where(c => c.CellReference.Value == cellReference).First();
+            }
+            else
+            {
+                // Cells must be in sequential order according to CellReference. Determine where to insert the new cell.
+                Cell refCell = null;
+                foreach (Cell cell in row.Elements<Cell>())
+                {
+                    if (string.Compare(cell.CellReference.Value, cellReference, true) > 0)
+                    {
+                        refCell = cell;
+                        break;
+                    }
+                }
+
+                Cell newCell = new Cell() { CellReference = cellReference };
+                row.InsertBefore(newCell, refCell);
+
+                worksheet.Save();
+                return newCell;
+            }
+        }
+
+
+        private static Stylesheet GenerateStyleSheet()
+        {
+            return new Stylesheet(
+                new Fonts(
+                    new DocumentFormat.OpenXml.Spreadsheet.Font(                                                               // Index 0 - The default font.
+                        new FontSize() { Val = 11 },
+                        new Color() { Rgb = new HexBinaryValue() { Value = "000000" } },
+                        new FontName() { Val = "Calibri" }),
+                    new DocumentFormat.OpenXml.Spreadsheet.Font(                                                               // Index 1 - The bold font.
+                        new Bold(),
+                        new FontSize() { Val = 11 },
+                        new Color() { Rgb = new HexBinaryValue() { Value = "000000" } },
+                        new FontName() { Val = "Calibri" }),
+                    new DocumentFormat.OpenXml.Spreadsheet.Font(                                                               // Index 2 - The Italic font.
+                        new Italic(),
+                        new FontSize() { Val = 11 },
+                        new Color() { Rgb = new HexBinaryValue() { Value = "000000" } },
+                        new FontName() { Val = "Calibri" }),
+                    new DocumentFormat.OpenXml.Spreadsheet.Font(                                                               // Index 2 - The Times Roman font. with 16 size
+                        new FontSize() { Val = 16 },
+                        new Color() { Rgb = new HexBinaryValue() { Value = "000000" } },
+                        new FontName() { Val = "Times New Roman" })
+                ),
+                new Fills(
+                    new Fill(                                                           // Index 0 - The default fill.
+                        new PatternFill() { PatternType = PatternValues.None }),
+                    new Fill(                                                           // Index 1 - The default fill of gray 125 (required)
+                        new PatternFill(
+                                new BackgroundColor() { Rgb = new HexBinaryValue { Value = "D9D9D9" } }
+                                ) { PatternType = PatternValues.Gray125 }),
+                    new Fill(                                                           // Index 2 - The yellow fill.
+                        new PatternFill(
+                            new ForegroundColor() { Rgb = new HexBinaryValue() { Value = "D9D9D9" } }
+                        ) { PatternType = PatternValues.Solid })
+                ),
+                new Borders(
+                    new Border(                                                         // Index 0 - The default border.
+                        new LeftBorder(),
+                        new RightBorder(),
+                        new TopBorder(),
+                        new BottomBorder(),
+                        new DiagonalBorder()),
+                    new Border(                                                         // Index 1 - Applies a Left, Right, Top, Bottom border to a cell
+                        new LeftBorder(
+                            new Color() { Auto = true }
+                        ) { Style = BorderStyleValues.Thin },
+                        new RightBorder(
+                            new Color() { Auto = true }
+                        ) { Style = BorderStyleValues.Thin },
+                        new TopBorder(
+                            new Color() { Auto = true }
+                        ) { Style = BorderStyleValues.Thin },
+                        new BottomBorder(
+                            new Color() { Auto = true }
+                        ) { Style = BorderStyleValues.Thin },
+                        new DiagonalBorder())
+                ),
+                new CellFormats(
+                    new CellFormat() { FontId = 0, FillId = 0, BorderId = 1, ApplyBorder = true},                          // Index 0 - The default cell style.  If a cell does not have a style index applied it will use this style combination instead
+                    new CellFormat(
+                            new Alignment() { Horizontal = HorizontalAlignmentValues.Center, Vertical = VerticalAlignmentValues.Center }
+                        ) { FontId = 1, FillId = 2, BorderId = 1, ApplyFont = true, ApplyAlignment = true },       // Index 1 - Bold  Center Aligned with border
+                    new CellFormat(
+                        new Alignment() { Horizontal = HorizontalAlignmentValues.Center, Vertical = VerticalAlignmentValues.Center }
+                        ) { FontId = 0, FillId = 0, BorderId = 1, ApplyBorder = true },       // Index 2 - Regular Center Aligned with border
+                    new CellFormat() { FontId = 3, FillId = 0, BorderId = 0, ApplyFont = true },       // Index 3 
+                    new CellFormat() { FontId = 0, FillId = 2, BorderId = 0, ApplyFill = true },       // Index 4 
+                    new CellFormat(                                                                   // Index 5 Bold Top Left Aligned with Border
+                        new Alignment() { Horizontal = HorizontalAlignmentValues.Left, Vertical = VerticalAlignmentValues.Top } 
+                    ) { FontId = 1, FillId = 0, BorderId = 1, ApplyAlignment = true },
+                    new CellFormat() { FontId = 0, FillId = 0, BorderId = 1, ApplyBorder = true }      // Index 6 - Regular with Border
+                )
+            ); // return
+        }
+
+
+
+        
+        private static Column CreateColumnData(UInt32 StartColumnIndex, UInt32 EndColumnIndex, double ColumnWidth)
+        {
+            Column column;
+            column = new Column();
+            column.Min = StartColumnIndex;
+            column.Max = EndColumnIndex;
+            column.Width = ColumnWidth;
+            column.CustomWidth = true;
+            return column;
+        }
+
+
+                  /// <summary>
+        /// Generate Filename
+        /// </summary>
+        /// <returns>Name of File</returns>
+        private static string GetFileName()
+        {
+            string fileName = Path.GetTempPath() + Guid.NewGuid() + "_PostMeetingResults.xlsx";
+            return fileName;
+        }
+
+        /// <returns>Byte Stream of the File</returns>
+        private static byte[] GetBytsForFile(string filePath)
+        {
+            try
+            {
+                FileStream fileStream;
+                byte[] fileByte;
+                using (fileStream = File.OpenRead(filePath))
+                {
+                    fileByte = new byte[fileStream.Length];
+                    fileStream.Read(fileByte, 0, Convert.ToInt32(fileStream.Length));
+                }
+                return fileByte;
+            }
+            catch (Exception ex)
+            {
+                GreenField.Web.Helpers.ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+
+      
+        #endregion
+
+
+
+
     }
 }

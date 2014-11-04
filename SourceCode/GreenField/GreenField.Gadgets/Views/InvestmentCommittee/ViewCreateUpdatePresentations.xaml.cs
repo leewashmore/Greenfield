@@ -55,6 +55,20 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextViewModelCreateUpdatePresentations = dataContextSource;
+
+            if (dataContextSource != null)
+            {
+                if (dataContextSource.SelectedPresentationOverviewInfo!= null && dataContextSource.SelectedPresentationOverviewInfo.StatusType != StatusType.IN_PROGRESS)
+                {
+                    HyperlinkButton pphyp = this.PPItemsControl.FindName("PowerPointHyperLink") as HyperlinkButton;
+                    pphyp.IsEnabled = false;
+                }
+
+            }
+
+          
+
+           
         }
         #endregion
 
@@ -67,9 +81,9 @@ namespace GreenField.Gadgets.Views
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
             String filter = "All Files (*.*)|*.*";
-            if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.POWERPOINT_PRESENTATION)
+            if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.PRESENTATION)
             {
-                filter = "PowerPoint Presentation (*.pptx)|*.pptx";
+                filter = "PDF (*.pdf)|*.pdf";
             }
             else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
             {
@@ -82,9 +96,9 @@ namespace GreenField.Gadgets.Views
             OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false, Filter = filter };
             if (dialog.ShowDialog() == true)
             {
-                if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.POWERPOINT_PRESENTATION)
+                if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.PRESENTATION)
                 {
-                    if (dialog.File.Extension != ".pptx")
+                    if (dialog.File.Extension != ".pdf")
                         return;
                 }
                 else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
@@ -182,5 +196,15 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        private void ICPacketHyperLink_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBlock_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+
+        }
     }
 }

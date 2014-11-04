@@ -396,6 +396,7 @@
         <Function Name="RetrieveICMeetingInfoByStatusType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PresentationStatus" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="RetrieveICPack" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="RetrieveICPMeetingAttachedFileDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MeetingId" Type="bigint" Mode="In" />
         </Function>
@@ -525,6 +526,10 @@
         <Function Name="UpdatePresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userName" Type="varchar" Mode="In" />
           <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="UpdatePresentationInfoStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FromStatus" Type="varchar" Mode="In" />
+          <Parameter Name="ToStatus" Type="varchar" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -844,7 +849,12 @@
             <End Role="VoterInfo" EntitySet="VoterInfoes" />
           </AssociationSet>
           <FunctionImport Name="DeletePresentationInfo" ReturnType="Collection(Int32)">
-            <Parameter Name="PresentationId" Mode="In" Type="Int64" />
+          <Parameter Name="PresentationId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveICPack" ReturnType="Collection(ICPresentationModel.ICPackLocationData)" />
+          <FunctionImport Name="UpdatePresentationInfoStatus">
+            <Parameter Name="FromStatus" Mode="In" Type="String" />
+            <Parameter Name="ToStatus" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
@@ -1085,6 +1095,7 @@
           <Property Type="String" Name="CurrentBuySellRange" Nullable="true" MaxLength="103" />
           <Property Type="Decimal" Name="CurrentPFVMeasureValue" Nullable="true" Precision="18" Scale="0" />
           <Property Type="Single" Name="CurrentUpside" Nullable="true" />
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
         </ComplexType>
         <ComplexType Name="PresentationVotingDeadlineDetails">
           <Property Type="Int64" Name="MeetingID" Nullable="true" />
@@ -1161,6 +1172,10 @@
           <Property Type="Int32" Name="Data_id" Nullable="true" />
           <Property Type="String" Name="Security_id" Nullable="true" />
           <Property Type="String" Name="Issuer_id" Nullable="true" />
+          <Property Type="Single" Name="SecurityMSCIStdWeight" Nullable="true" />
+          <Property Type="Single" Name="SecurityMSCIIMIWeight" Nullable="true" />
+          <Property Type="Single" Name="SecurityGlobalActiveWeight" Nullable="true" />
+          <Property Type="String" Name="ISSUER_NAME" Nullable="true" MaxLength="255" />
         </ComplexType>
         <EntityType Name="FileMaster">
           <Key>
@@ -1356,6 +1371,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="ICPackLocationData">
+          <Property Type="Int64" Name="FileID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SecurityName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SecurityTicker" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1563,6 +1585,7 @@
                 <ScalarProperty Name="CurrentBuySellRange" ColumnName="CurrentBuySellRange" />
                 <ScalarProperty Name="CurrentPFVMeasureValue" ColumnName="CurrentPFVMeasureValue" />
                 <ScalarProperty Name="CurrentUpside" ColumnName="CurrentUpside" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1647,6 +1670,10 @@
                 <ScalarProperty Name="Data_id" ColumnName="Data_id" />
                 <ScalarProperty Name="Security_id" ColumnName="Security_id" />
                 <ScalarProperty Name="Issuer_id" ColumnName="Issuer_id" />
+                <ScalarProperty Name="SecurityMSCIStdWeight" ColumnName="SecurityMSCIStdWeight" />
+                <ScalarProperty Name="SecurityMSCIIMIWeight" ColumnName="SecurityMSCIIMIWeight" />
+                <ScalarProperty Name="SecurityGlobalActiveWeight" ColumnName="SecurityGlobalActiveWeight" />
+                <ScalarProperty Name="ISSUER_NAME" ColumnName="ISSUER_NAME" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1820,6 +1847,18 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DeletePresentationInfo" FunctionName="ICPresentationModel.Store.DeletePresentationInfo" />
+          <FunctionImportMapping FunctionImportName="RetrieveICPack" FunctionName="ICPresentationModel.Store.RetrieveICPack">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ICPresentationModel.ICPackLocationData">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdatePresentationInfoStatus" FunctionName="ICPresentationModel.Store.UpdatePresentationInfoStatus" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

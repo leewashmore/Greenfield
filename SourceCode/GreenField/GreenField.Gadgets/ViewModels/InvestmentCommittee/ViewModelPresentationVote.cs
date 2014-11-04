@@ -334,7 +334,12 @@ namespace GreenField.Gadgets.ViewModels
         public ICommand RefreshCommentCommand
         {
             get { return new DelegateCommand<object>(RefreshCommentCommandMethod); }
-        }                
+        }
+
+
+
+        
+
         #endregion
 
         #region Busy Indicator Notification

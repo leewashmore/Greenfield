@@ -11,6 +11,7 @@
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
     xmlns:my="clr-namespace:GreenField.Common;assembly=GreenField.Common"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"  
     d:DesignHeight="300" d:DesignWidth="800">
     
     <helpers:ViewBaseUserControl.Resources>
@@ -53,26 +54,23 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <!--<StackPanel Grid.Column="0" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock FontWeight="Bold" Text="Meeting DateTime: " Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock FontWeight="Bold" 
-                               Text="{Binding ICPresentationOverviewInfo.MeetingDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
-                               Style="{StaticResource TextBlockStyle}"/>    
-                </StackPanel>  -->
+
                 <StackPanel Grid.Column="0" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock FontWeight="Bold" Text="Planned Submission Date: " Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center"/>
-                    <telerik:RadDatePicker Grid.Column="1" HorizontalAlignment="Left" Name="PresentationDeadlineDatePicker" VerticalAlignment="Top" Width="90" Height="18"  SelectedValue="{Binding ICPresentationOverviewInfo.MeetingClosedDateTime, Mode=TwoWay}" />
-                    <!--<TextBlock FontWeight="Bold" 
-                               Text="{Binding ICPresentationOverviewInfo.MeetingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}" 
-                               Style="{StaticResource TextBlockStyle}"/> -->
-                </StackPanel>
-                <!--<StackPanel Grid.Column="2" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock FontWeight="Bold" Text="Pre-Meeting Voting Deadline: " Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock FontWeight="Bold" Text="Date: " Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center"/>
                     <TextBlock FontWeight="Bold" 
-                               Text="{Binding ICPresentationOverviewInfo.MeetingVotingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}" 
-                               Style="{StaticResource TextBlockStyle}"/>
-                </StackPanel>-->
-                
+                               Text="{Binding CurrDate}" 
+                               Style="{StaticResource TextBlockStyle}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="5,2,0,0" HorizontalAlignment="Right">
+                    <TextBlock FontWeight="Bold" Text="Template: " Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center"/>
+                    <telerik:RadComboBox Margin="5,0,0,0" Name="PPTTemplate" SelectedIndex="0" SelectedItem="{Binding PowerpointTemplate}"
+                                         VerticalAlignment="Center" HorizontalContentAlignment="Left" 
+                                         Style="{StaticResource RadComboBoxStyle}" Width="120" 
+                                         ItemsSource="{Binding PowerpointTemplateList}" HorizontalAlignment="Left" SelectionChanged="PPTTemplate_SelectionChanged"/>
+
+                </StackPanel>
+
+
             </Grid>
             <Grid Grid.Row="2" Margin="0,2,0,2">
                 <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
@@ -181,6 +179,7 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
                         <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
@@ -254,15 +253,22 @@
             </Grid>
             <!-- Security Details -->
             <Grid Grid.Row="5">
-                <telerik:RadButton x:Name="btnICPPresentationsSubmit"
+               <!-- <telerik:RadButton x:Name="btnICPPresentationsSubmit"
                                    Command="{Binding SubmitCommand}"
                                    Grid.Row="1"
                                    VerticalAlignment="Center"
                                    Width="75"
                                    Visibility="Visible"
                                    HorizontalAlignment="Center"
-                                   Content="Create"/>
-            </Grid>
+                                   Content="Create" /> -->
+                <telerik:RadButton x:Name="btnICPPresentationsCreate"
+                                   Grid.Row="1"
+                                   VerticalAlignment="Center"
+                                   Width="75"
+                                   Visibility="Visible"
+                                   HorizontalAlignment="Center"
+                                   Content="Create" Click="btnCreate_Click" />
+                     </Grid>
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

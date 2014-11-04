@@ -10,6 +10,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Views;
 using GreenField.ServiceCaller;
+using System;
 
 namespace GreenField.DashboardModule.Views
 {
@@ -54,6 +55,7 @@ namespace GreenField.DashboardModule.Views
             dBInteractivity = dbInteractivity;
             regionManager = regionManager1;
             eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
+            eventAggregator.GetEvent<DashboardTileViewItemAdded>().Subscribe(HandleDashboardTileViewItemAdded);
         }
         #endregion
 
@@ -150,6 +152,31 @@ namespace GreenField.DashboardModule.Views
                 }
             }
         }
+
+        public void HandleDashboardTileViewItemAdded(DashboardTileViewItemInfo param)
+        {
+            try
+            {
+                foreach (RadTileViewItem rtvitem in this.rtvDashboard.Items)
+                {
+                    if (rtvitem.Header as string == param.DashboardTileHeader)
+                    {
+                        ViewBaseUserControl control = (ViewBaseUserControl)(rtvitem.Content);
+                        if (control != null)
+                        {
+                            control.IsActive = true;
+                        }
+
+                    }
+                }
+
+            }
+            catch (InvalidOperationException)
+            {
+                //System generates data errors that could be ignored
+            }
+        }
+
         #endregion
     }
 }

@@ -129,6 +129,7 @@
     <Compile Include="Helpers\ChildExportOptions.xaml.cs">
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Converters\GridRowBackgroundColorConverter.cs" />
     <Compile Include="Helpers\Converters\MarketCapitalizationConverter.cs" />
     <Compile Include="Helpers\Converters\DocumentCategoryConverter.cs" />
     <Compile Include="Helpers\Converters\OneDecimalPointConverter.cs" />

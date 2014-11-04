@@ -103,15 +103,24 @@
                                  SelectedItem="{Binding SelectedPresentationOverviewInfo, Mode=TwoWay}"
                                  RowStyle="{StaticResource GridViewRowStyle}">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn 
-                                            Width="Auto"
-                                            Header="ID"
-                                            DataMemberBinding="{Binding Sno}"
-                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Left"
-                                            TextAlignment="Left"
-                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn Header="ID"     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+
+                                 <HyperlinkButton 
+                                 NavigateUri="{Binding Location}" 
+                                 TargetName = "_blank"                                 
+                                 Margin="2,5,0,0" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" 
+                                 Style="{StaticResource HyperlinkButtonStyle}">
+                                        <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                                    </HyperlinkButton>
+                                </StackPanel>
+                        </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+
                     <telerik:GridViewDataColumn 
                                             Width="Auto"
                                             Header="Ticker"

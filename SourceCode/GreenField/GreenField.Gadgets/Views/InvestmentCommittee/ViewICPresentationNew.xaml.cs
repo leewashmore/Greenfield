@@ -2,6 +2,7 @@
 using System.Windows;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
+using System.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -34,7 +35,13 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Value FV Sell
         /// </summary>
-        private Decimal valueFVSell; 
+        private Decimal valueFVSell;
+
+
+        /// <summary>
+        /// ppt template
+        /// </summary>
+        private string pptTemplate; 
 
 
         #endregion
@@ -69,6 +76,7 @@ namespace GreenField.Gadgets.Views
                     this.txtbYTDAbsolute.Text = "0.00";
                     this.txtbYTDReltoLoc.Text = "0.00";
                     this.txtbYTDReltoEM.Text = "0.00";
+                    DataContextViewModelICPresentationNew.PowerpointTemplate = "Full";
                 }
             }
         }
@@ -137,7 +145,29 @@ namespace GreenField.Gadgets.Views
         private void txtFVSell_LostFocus(object sender, RoutedEventArgs e)
         {
             RaiseICPresentationOverviewInfoChanged();
-        }  
+        }
+
+        /// <summary>
+        /// PPT Template SelectionChanged EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">SelectionChangedEventArgs</param>
+        private void PPTTemplate_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            RaiseICPresentationOverviewInfoChanged();
+        }
+
+
+        private void btnCreate_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog() { Filter = "PowerPoint Presentation (*.pptx)|*.pptx" };
+            if (dialog.ShowDialog() == true)
+            {
+              //  DataContextViewModelCreateUpdatePresentations.DownloadStream = dialog.OpenFile();
+                DataContextViewModelICPresentationNew.DownloadStream = dialog.OpenFile();
+            }
+        } 
+
         #endregion        
 
         #region Helper Methods
@@ -209,10 +239,14 @@ namespace GreenField.Gadgets.Views
             }
             valueYTDReltoEM = Convert.ToDecimal((int)(valueYTDReltoEM * Convert.ToDecimal(100))) / Convert.ToDecimal(100);
             this.txtbYTDReltoEM.Text = valueYTDReltoEM.ToString();
-            this.valueYTDReltoEM = valueYTDReltoEM; 
+            this.valueYTDReltoEM = valueYTDReltoEM;
+
+
+            this.pptTemplate = (string)PPTTemplate.SelectedItem;
+
             #endregion
 
-            DataContextViewModelICPresentationNew.RaiseICPresentationOverviewInfoChanged(valueYTDAbs, valueYTDReltoLoc, valueYTDReltoEM, valueFVBuy, valueFVSell, valFVMeasure);
+            DataContextViewModelICPresentationNew.RaiseICPresentationOverviewInfoChanged(valueYTDAbs, valueYTDReltoLoc, valueYTDReltoEM, valueFVBuy, valueFVSell, valFVMeasure,pptTemplate);
         }
 
 

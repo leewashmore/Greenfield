@@ -282,8 +282,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (value != null && dbInteractivity != null)
                 {
                     BusyIndicatorNotification(true, "Downloading generated meeting minutes report...");
-                    dbInteractivity.GenerateMeetingMinutesReport(SelectedClosedForVotingMeetingInfo.MeetingID
-                        , GenerateMeetingMinutesReportCallbackMethod);
+                 //   dbInteractivity.GenerateMeetingMinutesReport(SelectedClosedForVotingMeetingInfo.MeetingID
+                   //     , GenerateMeetingMinutesReportCallbackMethod);
                 }
             }
         }
