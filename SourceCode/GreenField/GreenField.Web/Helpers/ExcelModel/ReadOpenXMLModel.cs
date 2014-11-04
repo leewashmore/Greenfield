@@ -1156,7 +1156,9 @@ namespace GreenField.Web.Helpers
 
                     if (cellList.Count == 1)
                     {
-                        rowData[i] = cellList[0].InnerText;
+                        //rowData[i] = cellList[0].InnerText;
+                        rowData[i] = cellList[0].CellValue.Text;
+                        
                         if (cellList[0].DataType != null)
                         {
                             if (cellList[0].DataType == CellValues.SharedString)
@@ -1177,7 +1179,9 @@ namespace GreenField.Web.Helpers
                         {
                             if (c != null)
                             {
-                                rowData[i] = c.InnerText;
+                                //rowData[i] = c.InnerText;
+                                rowData[i] = c.CellValue.Text;
+
                                 if (c.DataType != null)
                                 {
                                     if (c.DataType == CellValues.SharedString)
