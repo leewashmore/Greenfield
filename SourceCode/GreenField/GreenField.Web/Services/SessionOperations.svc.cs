@@ -88,7 +88,8 @@ namespace GreenField.Web.Services
         {
             try
             {
-                HttpContext.Current.Session["Session"] = null;
+               // HttpContext.Current.Session["Session"] = null;
+                HttpContext.Current.Session.RemoveAll();
                 return true;
 
             }
