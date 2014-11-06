@@ -211,7 +211,7 @@
                                             HeaderTextAlignment="Right"
                                             TextAlignment="Right"
                                             IsFilterable="True"/>
-                    <telerik:GridViewDataColumn 
+                    <!--<telerik:GridViewDataColumn 
                                             Width="Auto"
                                             Header="Recommendation (Presented)"
                                             DataMemberBinding="{Binding SecurityRecommendation}"
@@ -219,7 +219,7 @@
                                             CellStyle="{StaticResource GridViewCellStyle}"
                                             HeaderTextAlignment="Left"
                                             TextAlignment="Left"
-                                            IsFilterable="True"/>
+                                            IsFilterable="True"/> -->
                     <telerik:GridViewDataColumn 
                                             Width="Auto"
                                             Header="P/FV Measure (Committee)"
@@ -247,7 +247,7 @@
                                             HeaderTextAlignment="Right"
                                             TextAlignment="Right"
                                             IsFilterable="True"/>
-                    <telerik:GridViewDataColumn 
+                    <!--<telerik:GridViewDataColumn 
                                             Width="Auto"
                                             Header="Recommendation (Committee)"
                                             DataMemberBinding="{Binding CommitteeRecommendation}"
@@ -255,7 +255,7 @@
                                             CellStyle="{StaticResource GridViewCellStyle}"
                                             HeaderTextAlignment="Left"
                                             TextAlignment="Left"
-                                            IsFilterable="True"/>
+                                            IsFilterable="True"/> -->
                     <telerik:GridViewDataColumn
                                             Width="Auto"
                                             Header="Holdings ($US) (Current)"

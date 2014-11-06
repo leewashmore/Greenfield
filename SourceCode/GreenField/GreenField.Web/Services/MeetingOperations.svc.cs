@@ -193,7 +193,7 @@ namespace GreenField.Web.Services
 
                     presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\Full IC Report template.pptx";
                 }
-                else if (template == "Abreviated")
+                else if (template == "Abbreviated")
                 {
                     presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\Abbrev IC Report template.pptx";
                 }
@@ -400,6 +400,8 @@ namespace GreenField.Web.Services
                     throw new Exception("Services are not available");
                 }*/
                 //manual inputs
+ 
+
                 presentationOverviewData.PortfolioId = portfolio.PortfolioId;
                 presentationOverviewData.YTDRet_Absolute = "0.00%";
                 presentationOverviewData.YTDRet_RELtoLOC = "0.00%";
@@ -409,6 +411,7 @@ namespace GreenField.Web.Services
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
                             .Where(record => record.SECURITY_ID == entitySelectionData.SecurityId)
                             .FirstOrDefault();
+                GreenField.DAL.PRICE prices = externalResearchEntity.PRICES.Where(record => record.SECURITY_ID == entitySelectionData.SecurityId).OrderByDescending(x => x.PRICE_DATE).FirstOrDefault();
 
                 presentationOverviewData.SecurityTicker = securityData.TICKER ;
                 presentationOverviewData.SecurityName = securityData.ISSUE_NAME ;
@@ -423,7 +426,7 @@ namespace GreenField.Web.Services
                 {
                     presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
                 }
-                presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : String.Format("{0:n2}", securityData.CLOSING_PRICE))
+                presentationOverviewData.Price = (prices == null ? "" : String.Format("{0:n2}", prices.PRICE1))
                     + " " + (securityData.TRADING_CURRENCY == null ? "" : securityData.TRADING_CURRENCY.ToString());
                 #endregion
 
@@ -517,19 +520,22 @@ namespace GreenField.Web.Services
                         presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
                         presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
                         presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
-                        presentationOverviewData.FVCalc = String.Format("{0} {1:n2} - {2:n2}",
-                            dataMasterRecord.DATA_DESC, fairValueRecord.FV_BUY, fairValueRecord.FV_SELL);
+                        presentationOverviewData.FVCalc = String.Concat(String.Format("{0:n2}",fairValueRecord.UPSIDE ),"x ",dataMasterRecord.DATA_DESC);
 
                         if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
                         {
-                            presentationOverviewData.SecurityBuySellvsCrnt = String.Format("{0} {1:n2} - {0} {2:n2}",
+                          /*  presentationOverviewData.SecurityBuySellvsCrnt = String.Format("{0} {1:n2} - {0} {2:n2}",
                                 securityData.TRADING_CURRENCY,
                                 ((fairValueRecord.FV_BUY * (decimal)securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE),
                                 ((fairValueRecord.FV_SELL * (decimal)securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE));
+                            
+                           */
+                            presentationOverviewData.SecurityBuySellvsCrnt = String.Concat(String.Format("{0:n2}",  fairValueRecord.CURRENT_MEASURE_VALUE),"x ", dataMasterRecord.DATA_DESC );
+
                         }
                         Decimal upperLimit = fairValueRecord.FV_BUY >= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
                         Decimal lowerLimit = fairValueRecord.FV_BUY <= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
-
+                        
                         if (presentationOverviewData.CurrentHoldings == "YES")
                         {
                             presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= upperLimit
@@ -552,6 +558,8 @@ namespace GreenField.Web.Services
                             presentationOverviewData.SecurityMarketCapitalization = Convert.ToSingle(periodFinancialRecord.AMOUNT);
                         }
                     }
+                    
+                   
                 }
                 #endregion
 
@@ -738,11 +746,13 @@ namespace GreenField.Web.Services
             SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.Price.ToString());
             SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.YTDRet_Absolute);
             SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.FVCalc);
+           
             SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_RELtoLOC);
-            SwapPlaceholderText(tblSecurityOverview, 6, 2, " ");
+            SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityBuySellvsCrnt);
             SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
+         
             SwapPlaceholderText(tblSecurityOverview, 7, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
-                presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
+         presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
             SwapPlaceholderText(tblSecurityOverview, 7, 4, " ");
         }
 
@@ -849,112 +859,18 @@ namespace GreenField.Web.Services
                 List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
                 GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.SECURITY_ID == presentationOverviewData.Security_id).FirstOrDefault();
                 String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
-             /*   #region Update power point presentation file
-                #region Retrieve presentation file or create new one if not exists
-                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_NewICPresentation.pptx";
-                List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
-                FileMaster presentationPowerPointAttachedFile = null;
 
-                if (presentationAttachedFiles != null)
-                {
-                    presentationPowerPointAttachedFile = presentationAttachedFiles.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
-                    if (presentationPowerPointAttachedFile != null)
-                    {
-                        Byte[] powerPointFileStream = documentOperations.RetrieveDocument(presentationPowerPointAttachedFile.Location
-                            .Substring(presentationPowerPointAttachedFile.Location.LastIndexOf(@"/") + 1));
-
-                        if (powerPointFileStream == null)
-                            throw new Exception("Unable to download power point file from repository");
-
-                        File.WriteAllBytes(copiedFilePath, powerPointFileStream);
-                    }
-                    else
-                    {
-                        String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\New IC template.pptx";
-                        File.Copy(presentationFile, copiedFilePath, true);
-                    }
-                }
-                else
-                {
-                    String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\New IC template.pptx";
-                    File.Copy(presentationFile, copiedFilePath, true);
-                }
-                #endregion
-
-                #region Edit presentation file
-                try
-                {
-                    using (PresentationDocument presentationDocument = PresentationDocument.Open(copiedFilePath, true))
-                    {
-                        PresentationPart presentatioPart = presentationDocument.PresentationPart;
-                        OpenXmlElementList slideIds = presentatioPart.Presentation.SlideIdList.ChildElements;
-
-                        string relId = (slideIds[0] as SlideId).RelationshipId;
-
-                        //get the slide part from the relationship ID.
-                        SlidePart slidePart = (SlidePart)presentatioPart.GetPartById(relId);
-
-                        SetSlideTitle(slidePart, presentationOverviewData);
-                        SetSlideContent(slidePart, presentationOverviewData);
-
-                        //save the slide and presentation
-                        slidePart.Slide.Save();
-                        presentatioPart.Presentation.Save();
-                    }
-                }
-                catch
-                {
-                    throw new Exception("Exception occurred while opening powerpoint presentation!!!");
-                }
-                #endregion
-
-                #region Upload power point to share point and modify database
-     
-                GreenField.DAL.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
-                .Where(record => record.SECURITY_ID == presentationOverviewData.Security_id).FirstOrDefault();
-                String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
-
-                Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
-                String fileName = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
-                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
-
-                String url = documentOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath), String.Empty);
-
-                if (url == String.Empty)
-                    throw new Exception("Exception occurred while uploading template powerpoint presentation!!!");
-
-                FileMaster fileMaster = new FileMaster()
-                {
-                    Category = "Power Point Presentation",
-                    Location = url,
-                    Name = removeSpecialCharacters(presentationOverviewData.SecurityName) + "_" + (presentationOverviewData.MeetingClosedDateTime.HasValue
-                    ? Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx",
-                    IssuerName = issuerName,
-                    SecurityName = presentationOverviewData.SecurityName,
-                    SecurityTicker = presentationOverviewData.SecurityTicker,
-                    Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),
-                    CreatedBy = userName,
-                    CreatedOn = DateTime.UtcNow,
-                    ModifiedBy = userName,
-                    ModifiedOn = DateTime.UtcNow,
-                    FileID = presentationPowerPointAttachedFile.FileID
-                };
-
-                Boolean insertedFileMasterRecord = UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster, false);
-            
-                #endregion
-                #endregion
-
-                */
-
+               FileMaster icPacket = null;
                 #region IC Packet
                 if (presentationAttachedFiles != null)
                 {
-                    List<FileMaster> icPacketFiles = presentationAttachedFiles.Where(record => record.Category == "Investment Committee Packet").ToList();
-                    foreach (FileMaster record in icPacketFiles)
+                    icPacket = presentationAttachedFiles.Where(record => record.Category == "Investment Committee Packet").FirstOrDefault();
+                    if (icPacket != null)
                     {
-                        documentOperations.DeleteDocument(record.Location);
+
+                        documentOperations.DeleteDocument(icPacket.Location);
                     }
+                    
                 }
 
                 Byte[] generatedICPacketStream = GenerateICPacketReport(presentationOverviewData.PresentationID);
@@ -965,38 +881,45 @@ namespace GreenField.Web.Services
                 if (generatedICPacketStream != null)
                 {
                     String uploadFileLocation = documentOperations.UploadDocument(uploadFileName, generatedICPacketStream, String.Empty);
-
-                    FileMaster fileMaster_ICPacket = new FileMaster()
+                    FileMaster fileMaster_ICPacket = null;
+                    
+                    if(icPacket == null)
                     {
-                        Category = "Investment Committee Packet",
-                        Location = uploadFileLocation,
-                        Name = uploadFileName,
-                        IssuerName = issuerName,
-                        SecurityName = presentationOverviewData.SecurityName,
-                        SecurityTicker = presentationOverviewData.SecurityTicker,
-                        Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),
-                        CreatedBy = userName,
-                        CreatedOn = DateTime.UtcNow,
-                        ModifiedBy = userName,
-                        ModifiedOn = DateTime.UtcNow
-                    };
+                            fileMaster_ICPacket = new FileMaster()
+                            {
+                                Category = "Investment Committee Packet",
+                                Location = uploadFileLocation,
+                                Name = uploadFileName,
+                                IssuerName = issuerName,
+                                SecurityName = presentationOverviewData.SecurityName,
+                                SecurityTicker = presentationOverviewData.SecurityTicker,
+                                Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),
+                                CreatedBy = userName,
+                                CreatedOn = DateTime.UtcNow,
+                                ModifiedBy = userName,
+                        
+                                ModifiedOn = DateTime.UtcNow
+                            };
+                    }else
+                    {
+                        fileMaster_ICPacket = icPacket;
+                        
+                        fileMaster_ICPacket.Location=uploadFileLocation;
+                        fileMaster_ICPacket.Name = uploadFileName;
+                        fileMaster_ICPacket.CreatedBy = userName;
+                        fileMaster_ICPacket.CreatedOn = DateTime.UtcNow;
+                        fileMaster_ICPacket. ModifiedBy = userName;
+                        fileMaster_ICPacket.ModifiedOn = DateTime.UtcNow;
+                    }
 
-                    UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster_ICPacket, false);
+                    UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster_ICPacket,false);
 
                     if (!String.IsNullOrEmpty(uploadFileLocation))
                     {
                         emailAttachments += uploadFileLocation;
                     }
 
-                    //Make document Readonly 
-                    /*if (presentationAttachedFiles != null)
-                    {
-                        List<FileMaster> icPacketFiles = presentationAttachedFiles.Where(record => record.Category != "Investment Committee Packet").ToList();
-                        foreach (FileMaster record in icPacketFiles)
-                        {
-                            documentOperations.MakeDocumentReadOnly(record.Location);
-                        }
-                    }*/
+
 
                 }
                 #endregion

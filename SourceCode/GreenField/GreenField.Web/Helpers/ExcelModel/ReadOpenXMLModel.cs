@@ -1029,10 +1029,10 @@ namespace GreenField.Web.Helpers
                     foreach (var year in YearsToLoad)
                     {
                         periodYear = Convert.ToInt32(year.Value);
-                        internalCOAChangesData = FetchInternalCOAChangesData(issuerId, rootSource, item.COA, periodYear, currency); //Pull the current values for this COA from SQL
-                        if (ModelUploadData.Any(a => a.COA == item.COA && a.Year == year.Key))
+                        internalCOAChangesData = FetchInternalCOAChangesData(issuerId, rootSource, item.COA.ToUpper().Trim(), periodYear, currency); //Pull the current values for this COA from SQL
+                        if (ModelUploadData.Any(a => a.COA.ToUpper().Trim() == item.COA.ToUpper().Trim() && a.Year == year.Key))
                         {
-                            amount = Decimal.Parse(ModelUploadData.Where(a => a.COA == item.COA && a.Year == year.Key).Select(a => a.Amount).FirstOrDefault() as string);
+                            amount = Decimal.Parse(ModelUploadData.Where(a => a.COA.ToUpper().Trim() == item.COA.ToUpper().Trim() && a.Year == year.Key).Select(a => a.Amount).FirstOrDefault() as string);
                         }
                         else
                         {
@@ -1052,7 +1052,7 @@ namespace GreenField.Web.Helpers
 
                             if (internalCOAChangesData == null || internalCOAChangesData.Count == 0) //If there was no current values pulled, then insert a new values in SQL
                             {
-                                InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
+                                InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA.ToUpper().Trim(), periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
                             }
                             else //If there were current values and they were different from new values, then update with End Date and insert a new values.  
                             {
@@ -1060,8 +1060,8 @@ namespace GreenField.Web.Helpers
                                 // if (fetchedAmount != amount) - replaced to correct matching issue when precision is different - Request ID : 18420 Model upload "COA" value change tracking 
                                 if (Math.Round((decimal)fetchedAmount, 6, MidpointRounding.AwayFromZero) != Math.Round((decimal)amount, 6, MidpointRounding.AwayFromZero))
                                 {
-                                    UpdateInternalCOAChanges(issuerId, rootSource, currency, item.COA, periodYear, TimeStamp);
-                                    InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
+                                    UpdateInternalCOAChanges(issuerId, rootSource, currency, item.COA.ToUpper().Trim(), periodYear, TimeStamp);
+                                    InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA.ToUpper().Trim(), periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
                                 }
                             }
                         }

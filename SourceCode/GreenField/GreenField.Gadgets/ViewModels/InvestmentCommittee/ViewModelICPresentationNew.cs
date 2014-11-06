@@ -81,7 +81,16 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
+        private Boolean createEnabled;
+        public Boolean CreateEnabled
+        {
+            get { return createEnabled; }
+            set
+            {
+                createEnabled = value;
+                RaisePropertyChanged(() => this.CreateEnabled);
+            }
+        } 
         public List<String> PFVTypeInfo
         {
             get
@@ -120,7 +129,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return new List<string>
                 { "Full",
-                  "Abreviated"
+                  "Abbreviated"
                 };
             }
         }
@@ -154,10 +163,10 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         AcceptWithoutDiscussionFlag = true,
                         StatusType = StatusType.IN_PROGRESS,
-                        Presenter = SessionManager.SESSION.UserName.ToLower(),
-                        CreatedBy = SessionManager.SESSION.UserName.ToLower(),
+                        Presenter = SessionManager.SESSION.UserName.ToUpper(),
+                        CreatedBy = SessionManager.SESSION.UserName.ToUpper(),
                         CreatedOn = DateTime.UtcNow,
-                        ModifiedBy = SessionManager.SESSION.UserName.ToLower(),
+                        ModifiedBy = SessionManager.SESSION.UserName.ToUpper(),
                         ModifiedOn = DateTime.UtcNow
                     };
                 }
@@ -295,6 +304,7 @@ namespace GreenField.Gadgets.ViewModels
                 && ICPresentationOverviewInfo.YTDRet_RELtoEM != null
                 && ICPresentationOverviewInfo.YTDRet_RELtoEM.Count() > 1
                 && ICPresentationOverviewInfo.YTDRet_RELtoLOC != null
+                && (UserSession.SessionManager.SESSION.UserName!=null && ICPresentationOverviewInfo.Analyst!=null && ICPresentationOverviewInfo.Analyst.ToUpper().Trim() == UserSession.SessionManager.SESSION.UserName.ToUpper().Trim())
                 && ICPresentationOverviewInfo.YTDRet_RELtoLOC.Count() > 1;
                
 
@@ -375,7 +385,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     ICPresentationOverviewInfo = result;
-                    RaisePropertyChanged(() => this.SubmitCommand);
+                    CreateEnabled = SubmitCommandValidationMethod(null);
+                  //  RaisePropertyChanged(() => this.SubmitCommand);
                 }
                 else
                 {
@@ -414,7 +425,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (IsActive && EntitySelectionInfo != null && PortfolioSelectionInfo != null)
                     {
-                        RaisePropertyChanged(() => this.SubmitCommand);
+                      //  RaisePropertyChanged(() => this.SubmitCommand);
                         HandlePortfolioReferenceSet(PortfolioSelectionInfo);
                     }
                 }
@@ -448,9 +459,25 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (IsActive && entitySelectionInfo != null && PortfolioSelectionInfo != null)
                     {
-                        RaisePropertyChanged(() => this.SubmitCommand);
+                      //  RaisePropertyChanged(() => this.SubmitCommand);
                         BusyIndicatorNotification(true, "Retrieving security reference data for '" 
                             + entitySelectionInfo.LongName + " (" + entitySelectionInfo.ShortName + ")'");
+
+                        ICPresentationOverviewInfo = new ICPresentationOverviewData()
+                        {
+                            AcceptWithoutDiscussionFlag = true,
+                            StatusType = StatusType.IN_PROGRESS,
+                            Presenter = SessionManager.SESSION.UserName.ToLower(),
+                            CreatedBy = SessionManager.SESSION.UserName.ToLower(),
+                            CreatedOn = DateTime.UtcNow,
+                            ModifiedBy = SessionManager.SESSION.UserName.ToLower(),
+                            ModifiedOn = DateTime.UtcNow,
+                            MeetingDateTime = DateTime.UtcNow,
+
+                            MeetingClosedDateTime = DateTime.UtcNow,
+                            MeetingVotingClosedDateTime = DateTime.UtcNow,
+                        };
+
                         dbInteractivity.RetrieveSecurityDetails(entitySelectionInfo, ICPresentationOverviewInfo
                             , portfolioSelectionInfo, RetrieveSecurityDetailsCallBackMethod);
                     }
@@ -525,7 +552,9 @@ namespace GreenField.Gadgets.ViewModels
             //iCPresentationOverviewInfo. = valueFVMeasure;
             iCPresentationOverviewInfo.FVCalc = String.Format("{0} {1:n2} - {2:n2}", valueFVMeasure, valueFVBuy, valueFVSell);
             PowerpointTemplate = pptTemplate;
-            RaisePropertyChanged(() => this.SubmitCommand);
+            CreateEnabled = SubmitCommandValidationMethod(null);
+
+            //RaisePropertyChanged(() => this.EditEna);
         }
         #endregion
 
