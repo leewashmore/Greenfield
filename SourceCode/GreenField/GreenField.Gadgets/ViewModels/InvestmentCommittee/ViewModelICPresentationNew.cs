@@ -473,7 +473,7 @@ namespace GreenField.Gadgets.ViewModels
                             ModifiedBy = SessionManager.SESSION.UserName.ToLower(),
                             ModifiedOn = DateTime.UtcNow,
                             MeetingDateTime = DateTime.UtcNow,
-
+                            
                             MeetingClosedDateTime = DateTime.UtcNow,
                             MeetingVotingClosedDateTime = DateTime.UtcNow,
                         };
@@ -550,7 +550,7 @@ namespace GreenField.Gadgets.ViewModels
             ICPresentationOverviewInfo.SecuritySellRange = (float?)valueFVSell;
             iCPresentationOverviewInfo.SecurityPFVMeasure = valueFVMeasure;
             //iCPresentationOverviewInfo. = valueFVMeasure;
-            iCPresentationOverviewInfo.FVCalc = String.Format("{0} {1:n2} - {2:n2}", valueFVMeasure, valueFVBuy, valueFVSell);
+          //  iCPresentationOverviewInfo.FVCalc = String.Format("{0} {1:n2} - {2:n2}", valueFVMeasure, valueFVBuy, valueFVSell);
             PowerpointTemplate = pptTemplate;
             CreateEnabled = SubmitCommandValidationMethod(null);
 

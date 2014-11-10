@@ -257,13 +257,13 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility();
                     break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_CREATE_EDIT:
-                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible, supportsCompositesSelection: true);
                     break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_NEW_PRESENTATION:
-                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible, supportsCompositesSelection: true);
                     break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_IC_PRESENTATION:
-                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible, supportsCompositesSelection: true);
                     break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_IC_VOTE_DECISION:
                     UpdateToolBoxItemVisibility();
@@ -277,7 +277,7 @@ namespace GreenField.App.Helpers
                     break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION:
                     //UpdateToolBoxItemVisibility();
-                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible, supportsCompositesSelection: true);
 
                     break;
                 case DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATION_CHANGE_DATE:

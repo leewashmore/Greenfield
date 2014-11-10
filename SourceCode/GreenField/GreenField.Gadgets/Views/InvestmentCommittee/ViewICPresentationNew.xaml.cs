@@ -203,7 +203,7 @@ namespace GreenField.Gadgets.Views
             #endregion
 
             #region FVMeasure
-            String valFVMeasure = this.FVMeasure.SelectedValue as String;
+            String valFVMeasure = this.FVMeasure.Text as String;
             #endregion
 
             #region valueYTDAbs

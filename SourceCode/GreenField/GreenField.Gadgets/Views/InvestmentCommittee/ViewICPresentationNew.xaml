@@ -137,17 +137,17 @@
                                          SelectedItem="{Binding ICPresentationOverviewInfo.SecurityPFVMeasure, Mode=TwoWay}" 
                                          VerticalAlignment="Center" HorizontalContentAlignment="Left" 
                                          Style="{StaticResource RadComboBoxStyle}" Width="120" EmptyText="Select P/FV Measure"
-                                         ItemsSource="{Binding PFVTypeInfo}" HorizontalAlignment="Left"  SelectionChanged="FVMeasure_SelectionChanged"/>
+                                         ItemsSource="{Binding PFVTypeInfo}" HorizontalAlignment="Left"  SelectionChanged="FVMeasure_SelectionChanged" IsEnabled="True"/>
                         <TextBlock  x:Name="txtSpace" TextWrapping="Wrap" 
                                VerticalAlignment="Center" Margin="5,0,0,0" Text="" 
                                Style="{StaticResource TextBlockStyle}"/>
                          <TextBox Width="50" HorizontalAlignment="Right" x:Name="txtFVBuy" VerticalAlignment="Center" 
-                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtFVBuy_LostFocus" Text="{Binding ICPresentationOverviewInfo.SecurityBuyRange, Mode=TwoWay}"/>
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtFVBuy_LostFocus" Text="{Binding ICPresentationOverviewInfo.SecurityBuyRange, Mode=TwoWay}" IsEnabled="True"/>
                         <TextBlock  x:Name="txtHyphen" TextWrapping="Wrap" 
                                VerticalAlignment="Center" Margin="5,0,0,0" Text="- " 
                                Style="{StaticResource TextBlockStyle}"/>
                         <TextBox Width="50" HorizontalAlignment="Right" x:Name="txtFVSell" VerticalAlignment="Center" 
-                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtFVSell_LostFocus" Text="{Binding ICPresentationOverviewInfo.SecuritySellRange, Mode=TwoWay}"/>
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtFVSell_LostFocus" Text="{Binding ICPresentationOverviewInfo.SecuritySellRange, Mode=TwoWay}" IsEnabled="True"/>
                         <!-- <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtFVCalc" TextWrapping="Wrap" 
                                VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.FVCalc}" 
                                Style="{StaticResource TextBlockStyle}"/>-->

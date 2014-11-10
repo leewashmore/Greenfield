@@ -430,42 +430,113 @@ namespace GreenField.Web.Services
                     + " " + (securityData.TRADING_CURRENCY == null ? "" : securityData.TRADING_CURRENCY.ToString());
                 #endregion
 
-                #region GF_PORTFOLIO_HOLDINGS info
+                #region Current Holdings info
+                //portfolio.IsComposite
                 DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
-                GreenField.DAL.GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
-                if (lastBusinessRecord != null)
+          
+                GreenField.DAL.GF_PORTFOLIO_HOLDINGS lastBusinessRecordPortfolio = null;
+                GreenField.DAL.GF_COMPOSITE_LTHOLDINGS lastBusinessRecordComposite = null;
+                if (portfolio.IsComposite)
                 {
-                    if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                    lastBusinessRecordComposite = externalResearchEntity.GF_COMPOSITE_LTHOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                }else
+                {
+                    lastBusinessRecordPortfolio = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                }
+
+                if (lastBusinessRecordComposite != null)
+                {
+                    if (lastBusinessRecordComposite.PORTFOLIO_DATE != null)
                     {
-                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecordComposite.PORTFOLIO_DATE);
                     }
                 }
-                List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> securityHoldingData = entity.GF_PORTFOLIO_HOLDINGS.Where(
-                    record => record.TICKER == entitySelectionData.ShortName && record.PORTFOLIO_DATE == lastBusinessDate
+                else if (lastBusinessRecordPortfolio != null)
+                {
+                    if (lastBusinessRecordPortfolio.PORTFOLIO_DATE != null)
+                    {
+                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecordComposite.PORTFOLIO_DATE);
+                    }
+                }
+
+                decimal? sumSecDirtyValuePC;
+                decimal? sumSecBalanceNominal;
+                decimal? sumDirtyValuePC;
+                decimal? tempNAV;
+                string benchmarkID;
+                if (portfolio.IsComposite)
+                {
+                    List<GF_COMPOSITE_LTHOLDINGS> securityHoldingData = externalResearchEntity.GF_COMPOSITE_LTHOLDINGS.Where(
+                        record => record.ASEC_SEC_SHORT_NAME== entitySelectionData.InstrumentID && record.PORTFOLIO_DATE == lastBusinessDate
+                        && record.DIRTY_VALUE_PC > 0).ToList();
+
+                    sumSecDirtyValuePC = securityHoldingData.Sum(record => record.DIRTY_VALUE_PC);
+                    sumSecBalanceNominal = securityHoldingData.Sum(record => record.BALANCE_NOMINAL);
+
+                    List<GF_COMPOSITE_LTHOLDINGS> portfolioData = externalResearchEntity.GF_COMPOSITE_LTHOLDINGS.Where(record => record.PORTFOLIO_ID == portfolio.PortfolioId && record.PORTFOLIO_DATE == lastBusinessDate).ToList();
+                    sumDirtyValuePC = portfolioData.Sum(record => record.DIRTY_VALUE_PC);
+
+                    if (securityHoldingData != null && sumSecDirtyValuePC > 0)
+                    {
+                        presentationOverviewData.CurrentHoldings = "YES";
+                        if (sumDirtyValuePC != 0)
+                        {
+                            presentationOverviewData.PercentEMIF = String.Format("{0:n2}%", ((sumSecDirtyValuePC / sumDirtyValuePC) * 100));
+                        }
+                        tempNAV = ((sumSecDirtyValuePC / sumDirtyValuePC) * 100);
+                    }
+                    else
+                    {
+                        presentationOverviewData.CurrentHoldings = "No";
+                        presentationOverviewData.PercentEMIF = "0%";
+                        tempNAV = 0;
+                    }
+                   benchmarkID = portfolioData.Select(a => a.BENCHMARK_ID).FirstOrDefault();
+
+                }
+                else
+                {
+                    List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> securityHoldingData = entity.GF_PORTFOLIO_HOLDINGS.Where(
+                    record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID && record.PORTFOLIO_DATE == lastBusinessDate
                     && record.DIRTY_VALUE_PC > 0)
                     .ToList();
 
-                decimal? sumSecDirtyValuePC = securityHoldingData.Sum(record => record.DIRTY_VALUE_PC);
-                decimal? sumSecBalanceNominal = securityHoldingData.Sum(record => record.BALANCE_NOMINAL);
+                    sumSecDirtyValuePC = securityHoldingData.Sum(record => record.DIRTY_VALUE_PC);
+                    sumSecBalanceNominal = securityHoldingData.Sum(record => record.BALANCE_NOMINAL);
+
+                    List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> portfolioData = entity.GF_PORTFOLIO_HOLDINGS.Where(
+                 record => record.PORTFOLIO_ID == portfolio.PortfolioId && record.PORTFOLIO_DATE == lastBusinessDate).ToList();
+                     sumDirtyValuePC = portfolioData.Sum(record => record.DIRTY_VALUE_PC);
+
+
+                     if (securityHoldingData != null && sumSecDirtyValuePC > 0)
+                     {
+                         presentationOverviewData.CurrentHoldings = "YES";
+                         if (sumDirtyValuePC != 0)
+                         {
+                             presentationOverviewData.PercentEMIF = String.Format("{0:n2}%", ((sumSecDirtyValuePC / sumDirtyValuePC) * 100));
+                         }
+                         tempNAV = ((sumSecDirtyValuePC / sumDirtyValuePC) * 100);
+                     }
+                     else
+                     {
+                         presentationOverviewData.CurrentHoldings = "No";
+                         presentationOverviewData.PercentEMIF = "0%";
+                         tempNAV = 0;
+                     }
+                      benchmarkID = portfolioData.Select(a => a.BENCHMARK_ID).FirstOrDefault();
+                }
 
                 if (sumSecDirtyValuePC != null)
                 {
                     presentationOverviewData.SecurityCashPosition = Convert.ToSingle(sumSecDirtyValuePC);
                     presentationOverviewData.SecurityPosition = Convert.ToInt64(sumSecBalanceNominal);
                 }
-                List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> portfolioData = entity.GF_PORTFOLIO_HOLDINGS.Where(
-                    record => record.PORTFOLIO_ID == portfolio.PortfolioId && record.PORTFOLIO_DATE == lastBusinessDate)
-                    .ToList();
-                decimal? sumDirtyValuePC = portfolioData.Sum(record => record.DIRTY_VALUE_PC);
-                decimal? tempNAV;
+             
 
-                List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> securityInPortfolio = portfolioData
-                    .Where(a => a.TICKER == entitySelectionData.ShortName
-                        && a.PORTFOLIO_ID == portfolio.PortfolioId
-                        && a.PORTFOLIO_DATE == lastBusinessDate).ToList();
-                decimal? sumSecurityDirtyValuePC = securityInPortfolio.Sum(record => record.DIRTY_VALUE_PC);
+            
 
-                if (securityInPortfolio != null && sumSecurityDirtyValuePC > 0)
+           /*     if (securityInPortfolio != null && sumSecurityDirtyValuePC > 0)
                 {
                     presentationOverviewData.CurrentHoldings = "YES";
                     if (sumDirtyValuePC != 0)
@@ -479,14 +550,13 @@ namespace GreenField.Web.Services
                     presentationOverviewData.CurrentHoldings = "No";
                     presentationOverviewData.PercentEMIF = "0%";
                     tempNAV = 0;
-                }
+                } */
                 #endregion
 
                 #region GF_BENCHMARK_HOLDINGS Info
-                string benchmarkID = portfolioData.Select(a => a.BENCHMARK_ID).FirstOrDefault();
-                GreenField.DAL.GF_BENCHMARK_HOLDINGS benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(
-                    record => record.BENCHMARK_ID == benchmarkID
-                        && record.TICKER == entitySelectionData.ShortName
+              
+                GreenField.DAL.GF_BENCHMARK_HOLDINGS benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benchmarkID
+                        && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
                         && record.PORTFOLIO_DATE == lastBusinessDate)
                     .FirstOrDefault();
 
