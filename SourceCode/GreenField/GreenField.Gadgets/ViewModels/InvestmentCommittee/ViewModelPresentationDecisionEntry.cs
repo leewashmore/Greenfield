@@ -158,6 +158,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return new List<string> 
                 { 
+                   
                     VoteType.AGREE,
                     VoteType.ABSTAIN,
                     VoteType.MODIFY

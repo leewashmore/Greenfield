@@ -279,7 +279,7 @@ namespace GreenField.Gadgets.ViewModels
             if (eventAggregator != null)
             {
                 eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
-                eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+              //  eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
             }
         }
         #endregion        
@@ -422,10 +422,15 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(logger, methodNamespace, entitySelectionData, 1);
                     EntitySelectionInfo = entitySelectionData;
-
+                    PortfolioSelectionData p = new PortfolioSelectionData();
+                    p.IsComposite = true;
+                    p.PortfolioId = "EQYALL";
+                        PortfolioSelectionInfo = p;
                     if (IsActive && EntitySelectionInfo != null && PortfolioSelectionInfo != null)
                     {
                       //  RaisePropertyChanged(() => this.SubmitCommand);
+                        
+
                         HandlePortfolioReferenceSet(PortfolioSelectionInfo);
                     }
                 }

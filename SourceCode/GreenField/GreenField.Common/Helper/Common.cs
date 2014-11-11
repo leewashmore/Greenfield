@@ -202,6 +202,8 @@ namespace GreenField.Common
         public static String AGREE = "Agree";
         public static String MODIFY = "Modify";
         public static String ABSTAIN = "Abstain";
+        public static String DIDNOTVOTE = "--";
+
     }
 
     public static class AttendanceType
