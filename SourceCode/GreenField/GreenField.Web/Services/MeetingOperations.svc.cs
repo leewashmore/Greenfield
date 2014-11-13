@@ -578,6 +578,9 @@ namespace GreenField.Web.Services
                 FAIR_VALUE fairValueRecord = externalResearchEntity.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
                     && record.SECURITY_ID == securityId).FirstOrDefault();
 
+                FAIR_VALUE fairValueICRecord = externalResearchEntity.FAIR_VALUE.Where(record => record.VALUE_TYPE == "IC"
+               && record.SECURITY_ID == securityId).FirstOrDefault();
+
                 if (fairValueRecord != null)
                 {
                     DATA_MASTER dataMasterRecord = externalResearchEntity.DATA_MASTER
@@ -590,7 +593,7 @@ namespace GreenField.Web.Services
                         presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
                         presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
                         presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
-                        presentationOverviewData.FVCalc = String.Concat(String.Format("{0:n2}",fairValueRecord.UPSIDE ),"x ",dataMasterRecord.DATA_DESC);
+                       // presentationOverviewData.FVCalc = String.Concat(String.Format("{0:n2}",fairValueRecord.UPSIDE ),"x ",dataMasterRecord.DATA_DESC);
 
                         if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
                         {
@@ -631,6 +634,17 @@ namespace GreenField.Web.Services
                     
                    
                 }
+                if (fairValueICRecord != null)
+                {
+                    DATA_MASTER dataMasterRecord = externalResearchEntity.DATA_MASTER
+                      .Where(record => record.DATA_ID == fairValueICRecord.FV_MEASURE).FirstOrDefault();
+                    if (dataMasterRecord != null)
+                    {
+                        presentationOverviewData.FVCalc = String.Concat(String.Format("{0:n2}", fairValueICRecord.FV_BUY), "x - ", String.Format("{0:n2}", fairValueICRecord.FV_SELL),"x", dataMasterRecord.DATA_DESC);
+                    }
+                }
+
+
                 #endregion
 
                 return presentationOverviewData;
