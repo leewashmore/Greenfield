@@ -88,7 +88,7 @@
                                  ItemsSource="{Binding ICPresentationOverviewInfo}"
                                  Grid.Row="1" Margin="0,2,0,0"
                                  FrozenColumnsSplitterVisibility="Collapsed"
-                                 telerik:StyleManager.Theme="Metro"
+                                 telerik:StyleManager.Theme="Metro" 
                                  CanUserReorderColumns ="False" 
                                  CanUserSelect="True"
                                  CanUserSortColumns="True"
@@ -110,7 +110,7 @@
                                  EnableColumnVirtualization="False"                             
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  SelectedItem="{Binding SelectedPresentationOverviewInfo, Mode=TwoWay}"
-                                 RowStyle="{StaticResource GridViewRowStyle}">
+                                 RowStyle="{StaticResource GridViewRowStyle}" >
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListDate"
                                                 DataFormatString="{}{0:MMMM dd, yyyy}"
@@ -223,7 +223,7 @@
             </telerik:RadGridView>
 
             <!--Action Buttons-->
-            <Grid Grid.Row="2" Margin="0,5,0,0">
+            <Grid Grid.Row="2" Margin="0,5,0,0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>

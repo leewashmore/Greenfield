@@ -959,9 +959,9 @@ namespace GreenField.Web.Services
 
                 Byte[] generatedICPacketStream = GenerateICPacketReport(presentationOverviewData.PresentationID);
                 String emailAttachments = null;
-                String uploadFileName = String.Format("{0}_{1}_ICPacket.pdf"
-                            , Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("MMddyyyy")
-                            , removeSpecialCharacters(presentationOverviewData.SecurityTicker));
+                String uploadFileName = String.Format("{0}_{1}.pdf"
+                            , removeSpecialCharacters(presentationOverviewData.SecurityTicker)
+                            , Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("yyyyMMdd"));
                 if (generatedICPacketStream != null)
                 {
                     String uploadFileLocation = documentOperations.UploadDocument(uploadFileName, generatedICPacketStream, String.Empty);

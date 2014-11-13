@@ -5,6 +5,8 @@ using System;
 using GreenField.ServiceCaller;
 using System.Collections.Generic;
 using GreenField.Common;
+using Telerik.Windows.Controls.GridView;
+using System.Windows.Input;
 
 namespace GreenField.Gadgets.Views
 {
@@ -12,7 +14,8 @@ namespace GreenField.Gadgets.Views
     /// code behind for ViewPresentations
     /// </summary>
     public partial class ViewPresentations : ViewBaseUserControl
-    {   
+    {
+
         #region Properties
         /// <summary>
         /// property to set data context
@@ -81,6 +84,7 @@ namespace GreenField.Gadgets.Views
 
             }
 
+        
             
         }
 
@@ -188,6 +192,7 @@ namespace GreenField.Gadgets.Views
         }
 
 
+       
         #endregion
 
         #region Dispose Method
