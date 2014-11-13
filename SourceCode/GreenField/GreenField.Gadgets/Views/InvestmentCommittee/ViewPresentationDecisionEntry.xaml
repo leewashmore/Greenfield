@@ -280,7 +280,7 @@
                                                      Style="{StaticResource RadComboBoxStyle}"
                                                      Width="100" SelectionChanged="cbFinalVoteType_SelectionChanged"
                                                      ItemsSource="{Binding Source={StaticResource DataContextProxy},Path=DataSource.VoteTypeInfo}"
-                                                     HorizontalAlignment="Left" />
+                                                     HorizontalAlignment="Left"  IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.IsICDecisionEnable}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -294,7 +294,7 @@
                                                      Style="{StaticResource RadComboBoxStyle}" Width="250"
                                                      IsEnabled="{Binding VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"
                                                      ItemsSource="{Binding Source={StaticResource DataContextProxy},Path=DataSource.PFVTypeInfo}"
-                                                     HorizontalAlignment="Left" />
+                                                     HorizontalAlignment="Left"  />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

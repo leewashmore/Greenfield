@@ -120,7 +120,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores true if Accept without discussion checkbox is checked
         /// </summary>
-        private Boolean? isAcceptWithoutDiscussionChecked = true;
+        private Boolean? isAcceptWithoutDiscussionChecked = false;
         public Boolean? IsAcceptWithoutDiscussionChecked
         {
             get { return isAcceptWithoutDiscussionChecked; }
