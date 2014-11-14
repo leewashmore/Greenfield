@@ -2826,7 +2826,8 @@ namespace GreenField.Web.Services
 
                 //message.To.Add("Akhtar.Nazirali@Ashmoregroup.com");
                 message.To.Add(ConfigurationManager.AppSettings["ICDistributionTo"]);
-                message.CC.Add(ConfigurationManager.AppSettings["ICDistributionCC"]);
+                //message.CC.Add(ConfigurationManager.AppSettings["ICDistributionCC"]);
+                message.Bcc.Add(ConfigurationManager.AppSettings["ICDistributionBCC"]);
                 message.Subject = "Presentations ready for voting "+DateTime.Now;
                 message.Body = "Please see attached the packets for the IC Meeting";
 
@@ -2943,7 +2944,8 @@ namespace GreenField.Web.Services
 
               
                message.To.Add(ConfigurationManager.AppSettings["ICDistributionTo"]);
-               message.CC.Add(ConfigurationManager.AppSettings["ICDistributionCC"]);
+              // message.CC.Add(ConfigurationManager.AppSettings["ICDistributionCC"]);
+               message.Bcc.Add(ConfigurationManager.AppSettings["ICDistributionBCC"]);
                message.Subject = "Pre meeting voting results " + DateTime.Now;
                message.Body = "Please see attached pre meeting voting results";
 
@@ -3243,7 +3245,8 @@ namespace GreenField.Web.Services
 
 
                       message.To.Add(ConfigurationManager.AppSettings["ICDistributionTo"]);
-                      message.CC.Add(ConfigurationManager.AppSettings["ICDistributionCC"]);
+                     //message.CC.Add(ConfigurationManager.AppSettings["ICDistributionCC"]);
+                      message.Bcc.Add(ConfigurationManager.AppSettings["ICDistributionBCC"]);
                       message.Subject = "Post meeting results " + DateTime.Now;
                       message.Body = "Please see attached post meeting voting results";
 
