@@ -1,4 +1,4 @@
-create procedure updateICMonitorTable
+alter procedure updateICMonitorTable
 as 
 begin
 	declare @buffer as decimal(32,6) = .02
