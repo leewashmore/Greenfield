@@ -98,17 +98,17 @@ namespace GreenField.Gadgets.Views
             {
                 if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.PRESENTATION)
                 {
-                    if (dialog.File.Extension != ".pdf")
+                    if (dialog.File.Extension != null && dialog.File.Extension.ToLower()  != ".pdf"  )
                         return;
                 }
                 else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
                 {
-                    if (dialog.File.Extension != ".pdf" && dialog.File.Extension != ".jpeg" && dialog.File.Extension != ".jpg")
+                    if (dialog.File.Extension != null && dialog.File.Extension.ToLower() != ".pdf" && dialog.File.Extension.ToLower() != ".jpeg" && dialog.File.Extension.ToLower() != ".jpg")
                         return;
                 }
                 else
                 {
-                    if (dialog.File.Extension != ".pdf")
+                    if (dialog.File.Extension != null && dialog.File.Extension.ToLower() != ".pdf")
                         return;
                 }
                 DataContextViewModelCreateUpdatePresentations.BusyIndicatorNotification(true, "Reading file...");
@@ -171,7 +171,7 @@ namespace GreenField.Gadgets.Views
         /// <returns></returns>
         private Byte[] ReadFully(Stream input)
         {
-            Byte[] buffer = new byte[16 * 1024];
+            Byte[] buffer = new byte[input.Length];
 
             using (MemoryStream ms = new MemoryStream())
             {
