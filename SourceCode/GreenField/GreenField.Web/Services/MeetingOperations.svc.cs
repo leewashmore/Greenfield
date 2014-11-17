@@ -1368,16 +1368,16 @@ namespace GreenField.Web.Services
                 if (fileData == null)
                     return result;
 
-                if (file.Location.Contains(".pdf"))
+                if (file.Location.ToLower().Contains(".pdf"))
                 {
                     result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
                     File.WriteAllBytes(result, fileData);
                 }
 
-                else if (file.Location.Contains(".jpeg") || file.Location.Contains(".jpg"))
+                else if (file.Location.ToLower().Contains(".jpeg") || file.Location.ToLower().Contains(".jpg"))
                 {
                     String localFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp" +
-                        (file.Location.Contains(".jpeg") ? ".jpeg" : ".jpg");
+                        (file.Location.ToLower().Contains(".jpeg") ? ".jpeg" : ".jpg");
                     result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
                     File.WriteAllBytes(localFile, fileData);
                     Document doc = new Document(PageSize.A4, 10F, 10F, 10F, 10F);
@@ -1476,7 +1476,7 @@ namespace GreenField.Web.Services
 
                 while (f < pdfFileNames.Count())
                 {
-                    if (pdfFileNames[f].Contains(".pdf"))
+                    if (pdfFileNames[f].ToLower().Contains(".pdf"))
                     {
                         PdfReader reader = new PdfReader(pdfFileNames[f]);
                         reader.ConsolidateNamedDestinations();
