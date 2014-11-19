@@ -429,7 +429,7 @@ namespace GreenField.Gadgets.ViewModels
             
            // return true;
             return UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
-                && SelectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING;
+                && (SelectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING || SelectedPresentationOverviewInfo.StatusType == StatusType.DECISION_ENTERED);
         }
 
         /// <summary>
@@ -736,7 +736,7 @@ namespace GreenField.Gadgets.ViewModels
         private void PublishDecisionCommandMethod(object param)
         {
             BusyIndicatorNotification(true, "Decision Published. Sending meeting minutes");
-            dbInteractivity.PublishDecision(StatusType.CLOSED_FOR_VOTING, StatusType.PUBLISH_DECISION, PublishDecisionCallback);
+            dbInteractivity.PublishDecision(StatusType.DECISION_ENTERED, StatusType.PUBLISH_DECISION, PublishDecisionCallback);
         }
         #endregion
 

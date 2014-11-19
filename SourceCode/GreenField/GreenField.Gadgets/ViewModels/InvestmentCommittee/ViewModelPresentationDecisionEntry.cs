@@ -368,6 +368,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             if (dbInteractivity != null)
             {
+                SelectedPresentationOverviewInfo.StatusType = StatusType.DECISION_ENTERED;
                 dbInteractivity.UpdateDecisionEntryDetails(UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo
                     , PresentationPostMeetingVoterInfo, UpdateDecisionEntryDetailsCallbackMethod);
             }

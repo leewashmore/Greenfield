@@ -2988,7 +2988,7 @@ namespace GreenField.Web.Services
               try
               {
                   //Update status from Ready for voting to Voting closed
-                  List<ICPresentationOverviewData> icpresentationdataList = entity.RetrieveICPresentationOverviewData("", "Voting").ToList();
+                  List<ICPresentationOverviewData> icpresentationdataList = entity.RetrieveICPresentationOverviewData("", fromstatus).ToList();
                   if (icpresentationdataList.Count() > 0)
                   {
                       string fileName = GetFileName();
@@ -3199,28 +3199,29 @@ namespace GreenField.Web.Services
                           rowIndex += 1;
                           cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
-                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Notes: ") };
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Notes: " + icdata.AdminNotes) };
                           cell.StyleIndex = 5;
 
                           cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
-                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.AdminNotes) };
                           cell.StyleIndex = 5;
 
                           rowIndex += 1;
                           cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
-                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("") };
                           cell.StyleIndex = 5;
 
                           cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
-                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("") };
                           cell.StyleIndex = 5;
 
                           cell1Name = "A" + (rowIndex - 1);
                           cell2Name = "B" + rowIndex;
                           MergeTwoCells(worksheetPart, cell1Name, cell2Name);
+
 
                           rowIndex += 1;
                           row = new Row() { RowIndex = rowIndex };
@@ -3281,7 +3282,7 @@ namespace GreenField.Web.Services
 
 
 
-       
+
 
 
 

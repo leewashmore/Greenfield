@@ -303,7 +303,7 @@ namespace GreenField.Gadgets.ViewModels
                 && ICPresentationOverviewInfo.YTDRet_RELtoEM != null
                 && ICPresentationOverviewInfo.YTDRet_RELtoEM.Count() > 1
                 && ICPresentationOverviewInfo.YTDRet_RELtoLOC != null
-                && (UserSession.SessionManager.SESSION.UserName!=null && ICPresentationOverviewInfo.Analyst!=null && ICPresentationOverviewInfo.Analyst.ToUpper().Trim() == UserSession.SessionManager.SESSION.UserName.ToUpper().Trim())
+               // && (UserSession.SessionManager.SESSION.UserName!=null && ICPresentationOverviewInfo.Analyst!=null && ICPresentationOverviewInfo.Analyst.ToUpper().Trim() == UserSession.SessionManager.SESSION.UserName.ToUpper().Trim())
                 && ICPresentationOverviewInfo.YTDRet_RELtoLOC.Count() > 1;
                
 

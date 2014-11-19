@@ -63,7 +63,7 @@ namespace GreenField.Gadgets.Views
                 {
                     DataContextViewModelPresentationDecisionEntry.IsActive = isActive;
                     ICPresentationOverviewData selectedPresentationOverviewInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
-                    if (selectedPresentationOverviewInfo != null && selectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING)
+                    if (selectedPresentationOverviewInfo != null && (selectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING || selectedPresentationOverviewInfo.StatusType == StatusType.DECISION_ENTERED))
                     {
                         this.btnSubmit.IsEnabled = true;
                     }
