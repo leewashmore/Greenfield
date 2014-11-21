@@ -127,7 +127,7 @@
                     <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtPrice" TextWrapping="Wrap" 
                                VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.Price}" 
                                Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Buy/Sell Range :" TextWrapping="Wrap" 
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Recommended Range :" TextWrapping="noWrap" 
                                VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" 
                                Style="{StaticResource TextBlockStyle}"/>
                     <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="5,2,0,0">
