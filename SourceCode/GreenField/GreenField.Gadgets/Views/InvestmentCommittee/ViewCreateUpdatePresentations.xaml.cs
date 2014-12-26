@@ -172,10 +172,17 @@ namespace GreenField.Gadgets.Views
             options.Toolbar = false;
             options.Resizeable = true;
           
-            var startuppath = System.Windows.Application.Current.Host.Source.Scheme + @"://" +
+            /*var startuppath = System.Windows.Application.Current.Host.Source.Scheme + @"://" +
                             System.Windows.Application.Current.Host.Source.Host + ":" +
-                              System.Windows.Application.Current.Host.Source.Port.ToString() + @"/OpenPdf.aspx?PresentationId=" + DataContextViewModelCreateUpdatePresentations.SelectedPresentationOverviewInfo.PresentationID;
+                              System.Windows.Application.Current.Host.Source.Port.ToString() + @"/OpenPdf.aspx?PresentationId=" + DataContextViewModelCreateUpdatePresentations.SelectedPresentationOverviewInfo.PresentationID;*/
 
+            
+            string absoluteuri = System.Windows.Application.Current.Host.Source.AbsoluteUri;
+            string path = absoluteuri.Substring(0, absoluteuri.LastIndexOf("/"));
+            string path1 = path.Substring(0, path.LastIndexOf("/"));
+
+            var startuppath = path1 + @"/OpenPdf.aspx?PresentationId=" + DataContextViewModelCreateUpdatePresentations.SelectedPresentationOverviewInfo.PresentationID;
+         
 
 
             HtmlPage.PopupWindow(new System.Uri(startuppath, System.UriKind.Absolute), "self", options);
