@@ -318,11 +318,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 BusyIndicatorNotification(true, "Uploading document");
                 String deleteUrl = String.Empty;
-                FileMaster overwriteFileMaster = SelectedPresentationDocumentationInfo.Where(record => record.Category == SelectedUploadDocumentInfo)
-                    .FirstOrDefault();
-                if(overwriteFileMaster != null)
+                if (SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT)
                 {
-                    deleteUrl = overwriteFileMaster.Location;
+                    FileMaster overwriteFileMaster = SelectedPresentationDocumentationInfo.Where(record => record.Category == SelectedUploadDocumentInfo)
+                        .FirstOrDefault();
+                    if (overwriteFileMaster != null)
+                    {
+                        deleteUrl = overwriteFileMaster.Location;
+                    }
                 }
                 dbInteractivity.UploadDocument(UploadFileData.Name, UploadFileStreamData
                     , deleteUrl, UploadDocumentCallbackMethod);
@@ -415,6 +418,8 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         EditEnabled = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS;
                     }
+
+
                   
                 }
                 else
@@ -597,6 +602,7 @@ namespace GreenField.Gadgets.ViewModels
                     DownloadStream.Write(result, 0, result.Length);
                     DownloadStream.Close();
                     DownloadStream = null;
+                   
                 }
                 else
                 {

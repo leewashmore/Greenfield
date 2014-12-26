@@ -6,6 +6,7 @@ using GreenField.ServiceCaller;
 using System.Collections.Generic;
 using GreenField.Common;
 using Telerik.Windows.Controls.GridView;
+
 using System.Windows.Input;
 
 namespace GreenField.Gadgets.Views

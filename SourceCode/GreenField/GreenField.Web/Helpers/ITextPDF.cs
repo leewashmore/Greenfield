@@ -19,7 +19,9 @@ namespace GreenField.Web.Helpers
         public static Font STYLE_9 = FontFactory.GetFont("Verdana", 16F, Font.BOLD, BaseColor.WHITE);
         public static Font STYLE_10 = FontFactory.GetFont("Verdana", 16F, Font.BOLD, BaseColor.BLACK);
         public static Font STYLE_11 = FontFactory.GetFont("Verdana", 20F, Font.BOLD, BaseColor.BLACK);
+        public static Font STYLE_12 = FontFactory.GetFont("Verdana", 12F, Font.NORMAL, BaseColor.BLACK);
     }
+
 
     /// <summary>
     /// static Pdf border types

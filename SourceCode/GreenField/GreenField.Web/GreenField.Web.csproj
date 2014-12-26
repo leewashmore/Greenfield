@@ -92,6 +92,7 @@
     <Content Include="crossdomain.xml" />
     <Content Include="GreenField.Login.AppTestPage.aspx" />
     <Content Include="GreenField.Login.AppTestPage.html" />
+    <Content Include="OpenPdf.aspx" />
     <Content Include="RefreshCache.aspx" />
     <Content Include="Services\MacroeconomicOperations.svc" />
     <Content Include="Services\CustomScreeningToolOperations.svc" />
@@ -222,6 +223,13 @@
     <Compile Include="IssuerShares\IssuerSharesInstanceProvider.cs" />
     <Compile Include="IssuerShares\IssuerSharesServiceHostFactory.cs" />
     <Compile Include="ListUtils.cs" />
+    <Compile Include="OpenPdf.aspx.cs">
+      <DependentUpon>OpenPdf.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenPdf.aspx.designer.cs">
+      <DependentUpon>OpenPdf.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RefreshCache.aspx.cs">
       <DependentUpon>RefreshCache.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
