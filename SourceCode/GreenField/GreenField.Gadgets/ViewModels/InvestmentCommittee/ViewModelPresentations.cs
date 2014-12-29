@@ -606,8 +606,7 @@ namespace GreenField.Gadgets.ViewModels
                 return false;
             }
             bool isUserRoleValidated = UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN);
-            bool isStatusValided = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
-                || SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING;
+            bool isStatusValided =  (SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING);
 
             return isUserRoleValidated && isStatusValided;
         }
