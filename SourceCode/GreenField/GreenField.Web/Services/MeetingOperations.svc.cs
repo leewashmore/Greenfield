@@ -28,6 +28,7 @@ using System.Net.Mail;
 using System.Web.Configuration;
 using System.Web;
 using System.Net.Configuration;
+using System.Globalization;
 //using System.Drawing;
 namespace GreenField.Web.Services
 {
@@ -2507,6 +2508,13 @@ namespace GreenField.Web.Services
             PdfPCell IndustryAnalystCell = new PdfPCell(new Phrase("Industry Analyst: " + presentationDetails.ASHMOREEMM_INDUSTRY_ANALYST, PDFFontStyle.STYLE_4));
             AddTextCell(IndustryAnalystTable, IndustryAnalystCell, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
             doc.Add(IndustryAnalystTable);
+
+            PdfPTable MeetingDateTable = new PdfPTable(1);
+            MeetingDateTable.WidthPercentage = 100;
+            MeetingDateTable.SetWidths(new float[] { 1 });
+            PdfPCell MeetingDateTableCell = new PdfPCell(new Phrase("Meeting Date: " + String.Format("{0:MM/dd/yyyy}", presentationDetails.MeetingDateTime), PDFFontStyle.STYLE_4));
+            AddTextCell(MeetingDateTable, MeetingDateTableCell, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
+            doc.Add(MeetingDateTable);
 
 
             PdfPTable contentTable = new PdfPTable(6);
