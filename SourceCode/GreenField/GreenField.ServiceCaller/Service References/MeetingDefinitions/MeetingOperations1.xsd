@@ -398,6 +398,7 @@
           <xs:element minOccurs="0" name="SecurityPosition" nillable="true" type="xs:long" />
           <xs:element minOccurs="0" name="SecurityRecommendation" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Security_Id" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Sno" nillable="true" type="xs:long" />
         </xs:sequence>
       </xs:extension>

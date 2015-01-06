@@ -2807,8 +2807,7 @@ namespace GreenField.Web.Services
                 foreach (SummaryReportData item in result)
                 {
                     GreenField.DAL.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
-                            .Where(record => record.TICKER == item.SecurityTicker
-                                && record.ISSUE_NAME == item.SecurityName)
+                            .Where(record => record.SECURITY_ID == item.Security_Id)
                             .FirstOrDefault();
 
                     List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> securityHoldingData = entity.GF_PORTFOLIO_HOLDINGS.Where(
@@ -2823,7 +2822,7 @@ namespace GreenField.Web.Services
                         item.CurrentCashPosition = Convert.ToSingle(sumSecDirtyValuePC);
                         item.CurrentPosition = Convert.ToInt64(sumSecBalanceNominal);
                     }
-                    String securityId = securityData.SECURITY_ID == null ? null : securityData.SECURITY_ID.ToString();
+                    String securityId = (securityData==null || securityData.SECURITY_ID == null ) ? null : securityData.SECURITY_ID.ToString();
                     FAIR_VALUE fairValueRecord = externalResearchEntity.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
                         && record.SECURITY_ID == securityId).FirstOrDefault();
 

@@ -3378,6 +3378,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private string SecurityTickerField;
         
+        private string Security_IdField;
+        
         private System.Nullable<long> SnoField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
@@ -3662,6 +3664,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.SecurityTickerField, value) != true)) {
                     this.SecurityTickerField = value;
                     this.RaisePropertyChanged("SecurityTicker");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Security_Id {
+            get {
+                return this.Security_IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Security_IdField, value) != true)) {
+                    this.Security_IdField = value;
+                    this.RaisePropertyChanged("Security_Id");
                 }
             }
         }
