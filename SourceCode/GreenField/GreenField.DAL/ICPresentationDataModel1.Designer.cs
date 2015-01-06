@@ -11420,6 +11420,30 @@ namespace GreenField.DAL
         private global::System.String _Location;
         partial void OnLocationChanging(global::System.String value);
         partial void OnLocationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Security_Id
+        {
+            get
+            {
+                return _Security_Id;
+            }
+            set
+            {
+                OnSecurity_IdChanging(value);
+                ReportPropertyChanging("Security_Id");
+                _Security_Id = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Security_Id");
+                OnSecurity_IdChanged();
+            }
+        }
+        private global::System.String _Security_Id;
+        partial void OnSecurity_IdChanging(global::System.String value);
+        partial void OnSecurity_IdChanged();
 
         #endregion
 

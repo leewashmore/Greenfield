@@ -1096,6 +1096,7 @@
           <Property Type="Decimal" Name="CurrentPFVMeasureValue" Nullable="true" Precision="18" Scale="0" />
           <Property Type="Single" Name="CurrentUpside" Nullable="true" />
           <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Security_Id" Nullable="true" MaxLength="20" />
         </ComplexType>
         <ComplexType Name="PresentationVotingDeadlineDetails">
           <Property Type="Int64" Name="MeetingID" Nullable="true" />
@@ -1586,6 +1587,7 @@
                 <ScalarProperty Name="CurrentPFVMeasureValue" ColumnName="CurrentPFVMeasureValue" />
                 <ScalarProperty Name="CurrentUpside" ColumnName="CurrentUpside" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Security_Id" ColumnName="Security_Id" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

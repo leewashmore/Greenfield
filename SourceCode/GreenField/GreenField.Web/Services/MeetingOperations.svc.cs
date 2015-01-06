@@ -391,6 +391,7 @@ namespace GreenField.Web.Services
             {
                 DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities externalResearchEntity = new ExternalResearchEntities();
+                ICPresentationEntities icPresentationEntity = new ICPresentationEntities();
 
                 /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -422,6 +423,7 @@ namespace GreenField.Web.Services
                 presentationOverviewData.Security_id = securityData.SECURITY_ID;
                 presentationOverviewData.Issuer_id = securityData.ISSUER_ID;
 
+                string issuerId = securityData.ISSUER_ID;
                 if (securityData.CLOSING_PRICE != null)
                 {
                     presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
@@ -581,7 +583,21 @@ namespace GreenField.Web.Services
                 FAIR_VALUE fairValueICRecord = externalResearchEntity.FAIR_VALUE.Where(record => record.VALUE_TYPE == "IC"
                && record.SECURITY_ID == securityId).FirstOrDefault();
 
-                if (fairValueRecord != null)
+                var presentationInfoData = icPresentationEntity.PresentationInfoes.Where(record => record.Security_id == securityId && record.Issuer_id == issuerId && record.StatusType == "In Progress").FirstOrDefault();
+
+                if (presentationInfoData != null)
+                {
+                    presentationOverviewData.SecurityPFVMeasure = presentationInfoData.SecurityPFVMeasure;
+                    //presentationOverviewData.Data_id     = (int?)dataMasterRecord.DATA_ID;
+                    presentationOverviewData.SecurityBuyRange = presentationInfoData.SecurityBuyRange;
+                    presentationOverviewData.SecuritySellRange = presentationInfoData.SecuritySellRange;
+                    presentationOverviewData.SecurityPFVMeasureValue = presentationInfoData.SecurityPFVMeasureValue;
+                    presentationOverviewData.SecurityBuySellvsCrnt = presentationInfoData.SecurityBuySellvsCrnt;
+                    presentationOverviewData.CurrentHoldings = presentationInfoData.CurrentHoldings;
+                    presentationOverviewData.SecurityRecommendation = presentationInfoData.SecurityRecommendation;
+                    presentationOverviewData.SecurityMarketCapitalization = presentationInfoData.SecurityMarketCapitalization;
+                }
+                else if (fairValueRecord != null)
                 {
                     DATA_MASTER dataMasterRecord = externalResearchEntity.DATA_MASTER
                         .Where(record => record.DATA_ID == fairValueRecord.FV_MEASURE).FirstOrDefault();
@@ -1120,7 +1136,7 @@ namespace GreenField.Web.Services
             {
                 DimensionEntities entity = DimensionEntity;
                 ExternalResearchEntities externalResearchEntity = new ExternalResearchEntities();
-
+                ICPresentationEntities icPresentationEntity = new ICPresentationEntities();
                 /*bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
@@ -1141,6 +1157,7 @@ namespace GreenField.Web.Services
                 presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
                 presentationOverviewData.Security_id = securityData.SECURITY_ID;
                 presentationOverviewData.Issuer_id = securityData.ISSUER_ID;
+                String issuerId = securityData.ISSUER_ID;
                 if (securityData.CLOSING_PRICE != null)
                     presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
 
@@ -1221,7 +1238,26 @@ namespace GreenField.Web.Services
                 FAIR_VALUE fairValueRecord = externalResearchEntity.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
                             && record.SECURITY_ID == securityId).FirstOrDefault();
 
-                if (fairValueRecord != null)
+
+                var presentationInfoData = icPresentationEntity.PresentationInfoes.Where(record => record.Security_id == securityId && record.Issuer_id == issuerId && (record.StatusType == "Ready for Voting" || record.StatusType == "In Progress" )).FirstOrDefault();
+
+                if (presentationInfoData != null)
+                {
+                    presentationOverviewData.SecurityPFVMeasure = presentationInfoData.SecurityPFVMeasure;
+                    //presentationOverviewData.Data_id     = (int?)dataMasterRecord.DATA_ID;
+                    presentationOverviewData.SecurityBuyRange = presentationInfoData.SecurityBuyRange;
+                    presentationOverviewData.SecuritySellRange = presentationInfoData.SecuritySellRange;
+                    presentationOverviewData.SecurityPFVMeasureValue = presentationInfoData.SecurityPFVMeasureValue;
+                    presentationOverviewData.SecurityBuySellvsCrnt = presentationInfoData.SecurityBuySellvsCrnt;
+                    presentationOverviewData.CurrentHoldings = presentationInfoData.CurrentHoldings;
+                    presentationOverviewData.SecurityRecommendation = presentationInfoData.SecurityRecommendation;
+                    presentationOverviewData.SecurityMarketCapitalization = presentationInfoData.SecurityMarketCapitalization;
+                    presentationOverviewData.Data_id = presentationInfoData.Data_id;
+                    presentationOverviewData.FVCalc = presentationInfoData.FVCalc;
+
+                }
+
+                else if (fairValueRecord != null)
                 {
                     DATA_MASTER dataMasterRecord = externalResearchEntity.DATA_MASTER
                         .Where(record => record.DATA_ID == fairValueRecord.FV_MEASURE).FirstOrDefault();
@@ -2414,7 +2450,7 @@ namespace GreenField.Web.Services
             String securityTicker = presentationDetails.SecurityTicker;
             String meetingDate = Convert.ToDateTime(presentationDetails.MeetingDateTime).ToString("MM-dd-yyyy");
             Document doc = new Document(PageSize.A4, 10F, 10F, 10F, 10F);
-
+            doc.SetPageSize(iTextSharp.text.PageSize.A4.Rotate());
             String reportOutputFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPPreMeetingReport.pdf";
             PdfWriter.GetInstance(doc, new FileStream(reportOutputFile, FileMode.Create));
             doc.Open();
@@ -2425,22 +2461,22 @@ namespace GreenField.Web.Services
             topHeaderTableContent.SetWidths(new float[] { 4, 1, 1, 1, 1 });
 
             Paragraph securityPara = new Paragraph();
-            securityPara.Add(new Phrase(presentationDetails.SecurityName, PDFFontStyle.STYLE_1));
-            securityPara.Add(new Phrase(" (" + presentationDetails.SecurityTicker + ")", PDFFontStyle.STYLE_5));
+            securityPara.Add(new Phrase(presentationDetails.SecurityName, PDFFontStyle.STYLE_10));
+            securityPara.Add(new Phrase(" (" + presentationDetails.SecurityTicker + ")", PDFFontStyle.STYLE_1));
 
             PdfPCell securityName = new PdfPCell(securityPara);
             securityName.PaddingLeft = 5;
 
             AddTextCell(topHeaderTableContent, securityName, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.LEFT_TOP);
 
-            PdfPCell securityCountry = new PdfPCell(new Phrase(presentationDetails.SecurityCountry, PDFFontStyle.STYLE_5));
+            PdfPCell securityCountry = new PdfPCell(new Phrase(presentationDetails.SecurityCountry, PDFFontStyle.STYLE_1));
             AddTextCell(topHeaderTableContent, securityCountry, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.TOP);
-            PdfPCell securityPFVMeasure = new PdfPCell(new Phrase(presentationDetails.SecurityPFVMeasure, PDFFontStyle.STYLE_5));
+            PdfPCell securityPFVMeasure = new PdfPCell(new Phrase(presentationDetails.SecurityPFVMeasure, PDFFontStyle.STYLE_1));
             AddTextCell(topHeaderTableContent, securityPFVMeasure, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.TOP);
             String presentationSecurityBuySellRange = String.Format("{0:n2} to {1:n2}", presentationDetails.SecurityBuyRange, presentationDetails.SecuritySellRange);
-            PdfPCell securityBuySellRange = new PdfPCell(new Phrase(presentationSecurityBuySellRange, PDFFontStyle.STYLE_5));
+            PdfPCell securityBuySellRange = new PdfPCell(new Phrase(presentationSecurityBuySellRange, PDFFontStyle.STYLE_1));
             AddTextCell(topHeaderTableContent, securityBuySellRange, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.TOP);
-            PdfPCell securityRecommendation = new PdfPCell(new Phrase(string.Empty, PDFFontStyle.STYLE_5)); // Per felicia no required to display the Recommendation
+            PdfPCell securityRecommendation = new PdfPCell(new Phrase(string.Empty, PDFFontStyle.STYLE_1)); // Per felicia no required to display the Recommendation
             securityRecommendation.RightIndent = 5;
             AddTextCell(topHeaderTableContent, securityRecommendation, Element.ALIGN_RIGHT, Element.ALIGN_BOTTOM, PDFBorderType.RIGHT_TOP);
             
@@ -2461,14 +2497,14 @@ namespace GreenField.Web.Services
             PdfPTable PresentedTable = new PdfPTable(1);
             PresentedTable.WidthPercentage = 100;
             PresentedTable.SetWidths(new float[] { 1 });
-            PdfPCell AnalystCell = new PdfPCell(new Phrase("Presented By: " + presentationDetails.Presenter, PDFFontStyle.STYLE_2));
+            PdfPCell AnalystCell = new PdfPCell(new Phrase("Presented By: " + presentationDetails.Presenter, PDFFontStyle.STYLE_4));
             AddTextCell(PresentedTable, AnalystCell, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
             doc.Add(PresentedTable);
 
             PdfPTable IndustryAnalystTable = new PdfPTable(1);
             IndustryAnalystTable.WidthPercentage = 100;
             IndustryAnalystTable.SetWidths(new float[] { 1 });
-            PdfPCell IndustryAnalystCell = new PdfPCell(new Phrase("Industry Analyst: " + presentationDetails.ASHMOREEMM_INDUSTRY_ANALYST, PDFFontStyle.STYLE_2));
+            PdfPCell IndustryAnalystCell = new PdfPCell(new Phrase("Industry Analyst: " + presentationDetails.ASHMOREEMM_INDUSTRY_ANALYST, PDFFontStyle.STYLE_4));
             AddTextCell(IndustryAnalystTable, IndustryAnalystCell, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
             doc.Add(IndustryAnalystTable);
 
@@ -2479,27 +2515,27 @@ namespace GreenField.Web.Services
             contentTable.SpacingAfter = 1;
             contentTable.SetWidths(new float[] { 1, 1, 1, 1, 1, 4 });
 
-            PdfPCell voterNameContent = new PdfPCell(new Phrase("VoterName", PDFFontStyle.STYLE_2));
+            PdfPCell voterNameContent = new PdfPCell(new Phrase("VoterName", PDFFontStyle.STYLE_4));
             voterNameContent.PaddingLeft = 5;
             AddTextCell(contentTable, voterNameContent, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
 
-            PdfPCell voteContent = new PdfPCell(new Phrase("Vote", PDFFontStyle.STYLE_2));
+            PdfPCell voteContent = new PdfPCell(new Phrase("Vote", PDFFontStyle.STYLE_4));
             voteContent.PaddingLeft = 5;
             AddTextCell(contentTable, voteContent, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
 
-            PdfPCell modifiedBuyContent = new PdfPCell(new Phrase("Modified Buy", PDFFontStyle.STYLE_2));
+            PdfPCell modifiedBuyContent = new PdfPCell(new Phrase("Modified Buy", PDFFontStyle.STYLE_4));
             modifiedBuyContent.PaddingLeft = 5;
             AddTextCell(contentTable, modifiedBuyContent, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
 
-            PdfPCell modifiedSellContent = new PdfPCell(new Phrase("Modified Sell", PDFFontStyle.STYLE_2));
+            PdfPCell modifiedSellContent = new PdfPCell(new Phrase("Modified Sell", PDFFontStyle.STYLE_4));
             modifiedSellContent.PaddingLeft = 5;
             AddTextCell(contentTable, modifiedSellContent, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
 
-            PdfPCell discussionContent = new PdfPCell(new Phrase("Discussion", PDFFontStyle.STYLE_2));
+            PdfPCell discussionContent = new PdfPCell(new Phrase("Discussion", PDFFontStyle.STYLE_4));
             discussionContent.PaddingLeft = 5;
             AddTextCell(contentTable, discussionContent, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
 
-            PdfPCell notesContent = new PdfPCell(new Phrase("Notes", PDFFontStyle.STYLE_2));
+            PdfPCell notesContent = new PdfPCell(new Phrase("Notes", PDFFontStyle.STYLE_4));
             notesContent.PaddingLeft = 5;
             AddTextCell(contentTable, notesContent, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
 
@@ -2511,55 +2547,69 @@ namespace GreenField.Web.Services
                 contentTableRow.WidthPercentage = 100;
                 contentTableRow.SetWidths(new float[] { 1, 1, 1, 1, 1, 4 });
 
-                PdfPCell voterName = new PdfPCell(new Phrase(presentationDeadlineInfo[i].Name, PDFFontStyle.STYLE_3));
+                PdfPCell voterName = new PdfPCell(new Phrase(presentationDeadlineInfo[i].Name, PDFFontStyle.STYLE_12));
                 voterName.PaddingLeft = 5;
+                voterName.PaddingTop = 5;
+                voterName.PaddingBottom = 5;
+                voterName.NoWrap = true;
+
                 if (i % 2 == 0)
                 {
                     voterName.BackgroundColor = new BaseColor(255, 240, 240);
                 }
-                AddTextCell(contentTableRow, voterName, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+                AddTextCell(contentTableRow, voterName, Element.ALIGN_LEFT, Element.ALIGN_CENTER, PDFBorderType.NONE);
 
-                PdfPCell vote = new PdfPCell(new Phrase(presentationDeadlineInfo[i].VoteType, PDFFontStyle.STYLE_3));
+                PdfPCell vote = new PdfPCell(new Phrase(presentationDeadlineInfo[i].VoteType, PDFFontStyle.STYLE_12));
                 vote.PaddingLeft = 5;
+                vote.PaddingTop = 5;
+                vote.PaddingBottom = 5;
                 if (i % 2 == 0)
                 {
                     vote.BackgroundColor = new BaseColor(255, 240, 240);
                 }
-                AddTextCell(contentTableRow, vote, Element.ALIGN_CENTER, Element.ALIGN_TOP, PDFBorderType.NONE);
+                AddTextCell(contentTableRow, vote, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
 
                 PdfPCell modifiedBuy = new PdfPCell(new Phrase(presentationDeadlineInfo[i].VoteType == "Modify"
-                    ? String.Format("{0:n4}", presentationDeadlineInfo[i].VoterBuyRange) : "", PDFFontStyle.STYLE_3));
+                    ? String.Format("{0:n4}", presentationDeadlineInfo[i].VoterBuyRange) : "", PDFFontStyle.STYLE_12));
                 modifiedBuy.PaddingLeft = 5;
+                modifiedBuy.PaddingTop = 5;
+                modifiedBuy.PaddingBottom = 5;
                 if (i % 2 == 0)
                 {
                     modifiedBuy.BackgroundColor = new BaseColor(255, 240, 240);
                 }
-                AddTextCell(contentTableRow, modifiedBuy, Element.ALIGN_CENTER, Element.ALIGN_TOP, PDFBorderType.NONE);
+                AddTextCell(contentTableRow, modifiedBuy, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
 
                 PdfPCell modifiedSell = new PdfPCell(new Phrase(presentationDeadlineInfo[i].VoteType == "Modify"
-                    ? String.Format("{0:n4}", presentationDeadlineInfo[i].VoterSellRange) : "", PDFFontStyle.STYLE_3));
+                    ? String.Format("{0:n4}", presentationDeadlineInfo[i].VoterSellRange) : "", PDFFontStyle.STYLE_12));
                 modifiedSell.PaddingLeft = 5;
+                modifiedSell.PaddingTop = 5;
+                modifiedSell.PaddingBottom = 5;
                 if (i % 2 == 0)
                 {
                     modifiedSell.BackgroundColor = new BaseColor(255, 240, 240);
                 }
-                AddTextCell(contentTableRow, modifiedSell, Element.ALIGN_CENTER, Element.ALIGN_TOP, PDFBorderType.NONE);
+                AddTextCell(contentTableRow, modifiedSell, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
 
-                PdfPCell discussion = new PdfPCell(new Phrase(presentationDeadlineInfo[i].DiscussionFlag == true ? "X" : "", PDFFontStyle.STYLE_3));
+                PdfPCell discussion = new PdfPCell(new Phrase(presentationDeadlineInfo[i].DiscussionFlag == true ? "X" : "", PDFFontStyle.STYLE_12));
                 discussion.PaddingLeft = 5;
+                discussion.PaddingTop = 5;
+                discussion.PaddingBottom = 5;
                 if (i % 2 == 0)
                 {
                     discussion.BackgroundColor = new BaseColor(255, 240, 240);
                 }
-                AddTextCell(contentTableRow, discussion, Element.ALIGN_CENTER, Element.ALIGN_TOP, PDFBorderType.NONE);
+                AddTextCell(contentTableRow, discussion, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
 
-                PdfPCell notes = new PdfPCell(new Phrase(presentationDeadlineInfo[i].Notes, PDFFontStyle.STYLE_3));
+                PdfPCell notes = new PdfPCell(new Phrase(presentationDeadlineInfo[i].Notes, PDFFontStyle.STYLE_12));
                 notes.PaddingLeft = 5;
+                notes.PaddingTop = 5;
+                notes.PaddingBottom = 5;
                 if (i % 2 == 0)
                 {
                     notes.BackgroundColor = new BaseColor(255, 240, 240);
                 }
-                AddTextCell(contentTableRow, notes, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+                AddTextCell(contentTableRow, notes, Element.ALIGN_LEFT, Element.ALIGN_CENTER, PDFBorderType.NONE);
 
                 doc.Add(contentTableRow);
             }
@@ -2757,8 +2807,7 @@ namespace GreenField.Web.Services
                 foreach (SummaryReportData item in result)
                 {
                     GreenField.DAL.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
-                            .Where(record => record.TICKER == item.SecurityTicker
-                                && record.ISSUE_NAME == item.SecurityName)
+                            .Where(record => record.SECURITY_ID == item.Security_Id)
                             .FirstOrDefault();
 
                     List<GreenField.DAL.GF_PORTFOLIO_HOLDINGS> securityHoldingData = entity.GF_PORTFOLIO_HOLDINGS.Where(
@@ -2773,7 +2822,7 @@ namespace GreenField.Web.Services
                         item.CurrentCashPosition = Convert.ToSingle(sumSecDirtyValuePC);
                         item.CurrentPosition = Convert.ToInt64(sumSecBalanceNominal);
                     }
-                    String securityId = securityData.SECURITY_ID == null ? null : securityData.SECURITY_ID.ToString();
+                    String securityId = (securityData==null || securityData.SECURITY_ID == null ) ? null : securityData.SECURITY_ID.ToString();
                     FAIR_VALUE fairValueRecord = externalResearchEntity.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
                         && record.SECURITY_ID == securityId).FirstOrDefault();
 

@@ -285,7 +285,7 @@
                                                              Style="{StaticResource HyperlinkButtonStyle}"
                                                              HorizontalAlignment="Left" 
                                                              NavigateUri="{Binding Location}" 
-                                                             TargetName = "_blank" IsEnabled="{Binding Source={StaticResource DataContextProxy},Path=DataSource.EditEnabled}"/>
+                                                             TargetName = "_blank"/>
                                         </Grid>
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"

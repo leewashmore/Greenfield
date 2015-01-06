@@ -8,6 +8,10 @@ using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller.MeetingDefinitions;
+using System.Diagnostics;
+using Telerik.Windows.Controls.Navigation;
+using Telerik.Windows.Controls;
+using System.Windows.Browser;
 
 namespace GreenField.Gadgets.Views
 {
@@ -155,11 +159,36 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnPreview_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog() { Filter = "PDF (*.pdf) |*.pdf" };
-            if (dialog.ShowDialog() == true)
-            {
-                DataContextViewModelCreateUpdatePresentations.DownloadStream = dialog.OpenFile();
-            }
+
+            HtmlPopupWindowOptions options = new HtmlPopupWindowOptions();
+            options.Left = 300;
+            options.Top = 150;
+            options.Width = 1024;
+            options.Height = 768;
+            options.Directories = false;
+            options.Location = false;
+            options.Menubar = false;
+            options.Status = false;
+            options.Toolbar = false;
+            options.Resizeable = true;
+          
+            /*var startuppath = System.Windows.Application.Current.Host.Source.Scheme + @"://" +
+                            System.Windows.Application.Current.Host.Source.Host + ":" +
+                              System.Windows.Application.Current.Host.Source.Port.ToString() + @"/OpenPdf.aspx?PresentationId=" + DataContextViewModelCreateUpdatePresentations.SelectedPresentationOverviewInfo.PresentationID;*/
+
+            
+            string absoluteuri = System.Windows.Application.Current.Host.Source.AbsoluteUri;
+            string path = absoluteuri.Substring(0, absoluteuri.LastIndexOf("/"));
+            string path1 = path.Substring(0, path.LastIndexOf("/"));
+
+            var startuppath = path1 + @"/OpenPdf.aspx?PresentationId=" + DataContextViewModelCreateUpdatePresentations.SelectedPresentationOverviewInfo.PresentationID;
+         
+
+
+            HtmlPage.PopupWindow(new System.Uri(startuppath, System.UriKind.Absolute), "self", options);
+
+           
+
         } 
         #endregion
 
