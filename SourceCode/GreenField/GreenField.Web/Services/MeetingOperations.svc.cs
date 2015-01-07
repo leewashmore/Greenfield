@@ -3165,12 +3165,12 @@ namespace GreenField.Web.Services
                           cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
                           cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.SecurityCountry) };
-                          cell.StyleIndex = 6;
+                          cell.StyleIndex = 2;
 
                           cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
                           cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.SecurityIndustry) };
-                          cell.StyleIndex = 6;
+                          cell.StyleIndex = 2;
 
 
                           rowIndex += 1;
@@ -3201,12 +3201,12 @@ namespace GreenField.Web.Services
                           cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
                           cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.SecurityPFVMeasure + "  " + icdata.SecurityBuyRange + " - " + icdata.SecuritySellRange) };
-                          cell.StyleIndex = 6;
+                          cell.StyleIndex = 2;
 
                           cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
                           cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.CommitteePFVMeasure + "  " + icdata.CommitteeBuyRange + " - " + icdata.CommitteeSellRange) };
-                          cell.StyleIndex = 6;
+                          cell.StyleIndex = 2;
 
                           rowIndex += 1;
                           Row row = new Row() { RowIndex = rowIndex };
@@ -3231,7 +3231,7 @@ namespace GreenField.Web.Services
                               cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
                               cell.DataType = CellValues.InlineString;
                               cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(voterData.Name) };
-                              cell.StyleIndex = 6;
+                              cell.StyleIndex = 2;
                               cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                               cell.DataType = CellValues.InlineString;
                               if (voterData.VoterPFVMeasure != null)
@@ -3244,7 +3244,7 @@ namespace GreenField.Web.Services
 
                                   cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
                               }
-                              cell.StyleIndex = 6;
+                              cell.StyleIndex = 2;
                           }
 
                           rowIndex += 1;
