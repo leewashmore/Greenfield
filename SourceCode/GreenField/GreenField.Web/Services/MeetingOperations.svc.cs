@@ -3112,12 +3112,12 @@ namespace GreenField.Web.Services
 
                           cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
-                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Presented By") };
                           cell.StyleIndex = 1;
 
-                          cell1Name = "A" + rowIndex;
+                          /*cell1Name = "A" + rowIndex;
                           cell2Name = "B" + rowIndex;
-                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);
+                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);*/
 
                           rowIndex += 1;
                           cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
@@ -3127,11 +3127,11 @@ namespace GreenField.Web.Services
 
                           cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
-                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.Analyst) };
                           cell.StyleIndex = 2;
-                          cell1Name = "A" + rowIndex;
+                          /*cell1Name = "A" + rowIndex;
                           cell2Name = "B" + rowIndex;
-                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);
+                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);*/
 
                           rowIndex += 1;
                           cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
