@@ -5,7 +5,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
 GO
-create procedure [dbo].[UpdatePresentationInfoStatus]
+alter procedure [dbo].[UpdatePresentationInfoStatus]
 (@FromStatus varchar(20),
 @ToStatus varchar(20))
 	
@@ -21,6 +21,12 @@ BEGIN
     where p.statustype = 'Ready for Voting'
     and FM.Category='Investment Committee Packet'
     and FM.Type = 'IC Presentations'*/
+    -- update the time the status was changed
+    update meetinginfo set meetingdatetime = getdate(), meetingcloseddatetime = getdate(),
+    meetingvotingclosedDateTime = getdate() where meetingid in (
+    select meetingid from meetingpresentationmappinginfo where presentationid in (
+    select presentationid from dbo.presentationInfo where statustype = @FromStatus)
+    )
     
     update dbo.Presentationinfo set statustype = @ToStatus
     where presentationId in (select presentationid from dbo.presentationInfo where statustype = @FromStatus)

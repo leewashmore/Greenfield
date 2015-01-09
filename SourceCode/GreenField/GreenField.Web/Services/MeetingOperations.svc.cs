@@ -28,6 +28,7 @@ using System.Net.Mail;
 using System.Web.Configuration;
 using System.Web;
 using System.Net.Configuration;
+using System.Globalization;
 //using System.Drawing;
 namespace GreenField.Web.Services
 {
@@ -2508,6 +2509,13 @@ namespace GreenField.Web.Services
             AddTextCell(IndustryAnalystTable, IndustryAnalystCell, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
             doc.Add(IndustryAnalystTable);
 
+            PdfPTable MeetingDateTable = new PdfPTable(1);
+            MeetingDateTable.WidthPercentage = 100;
+            MeetingDateTable.SetWidths(new float[] { 1 });
+            PdfPCell MeetingDateTableCell = new PdfPCell(new Phrase("Meeting Date: " + String.Format("{0:MM/dd/yyyy}", presentationDetails.MeetingDateTime), PDFFontStyle.STYLE_4));
+            AddTextCell(MeetingDateTable, MeetingDateTableCell, Element.ALIGN_CENTER, Element.ALIGN_CENTER, PDFBorderType.NONE);
+            doc.Add(MeetingDateTable);
+
 
             PdfPTable contentTable = new PdfPTable(6);
             contentTable.WidthPercentage = 100;
@@ -3104,12 +3112,12 @@ namespace GreenField.Web.Services
 
                           cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
-                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text("Presented By") };
                           cell.StyleIndex = 1;
 
-                          cell1Name = "A" + rowIndex;
+                          /*cell1Name = "A" + rowIndex;
                           cell2Name = "B" + rowIndex;
-                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);
+                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);*/
 
                           rowIndex += 1;
                           cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
@@ -3119,11 +3127,11 @@ namespace GreenField.Web.Services
 
                           cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
-                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
+                          cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.Analyst) };
                           cell.StyleIndex = 2;
-                          cell1Name = "A" + rowIndex;
+                          /*cell1Name = "A" + rowIndex;
                           cell2Name = "B" + rowIndex;
-                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);
+                          MergeTwoCells(worksheetPart, cell1Name, cell2Name);*/
 
                           rowIndex += 1;
                           cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
@@ -3157,12 +3165,12 @@ namespace GreenField.Web.Services
                           cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
                           cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.SecurityCountry) };
-                          cell.StyleIndex = 6;
+                          cell.StyleIndex = 2;
 
                           cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
                           cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.SecurityIndustry) };
-                          cell.StyleIndex = 6;
+                          cell.StyleIndex = 2;
 
 
                           rowIndex += 1;
@@ -3193,12 +3201,12 @@ namespace GreenField.Web.Services
                           cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
                           cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.SecurityPFVMeasure + "  " + icdata.SecurityBuyRange + " - " + icdata.SecuritySellRange) };
-                          cell.StyleIndex = 6;
+                          cell.StyleIndex = 2;
 
                           cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                           cell.DataType = CellValues.InlineString;
                           cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(icdata.CommitteePFVMeasure + "  " + icdata.CommitteeBuyRange + " - " + icdata.CommitteeSellRange) };
-                          cell.StyleIndex = 6;
+                          cell.StyleIndex = 2;
 
                           rowIndex += 1;
                           Row row = new Row() { RowIndex = rowIndex };
@@ -3223,7 +3231,7 @@ namespace GreenField.Web.Services
                               cell = InsertCellInWorksheet("A", rowIndex, worksheetPart);
                               cell.DataType = CellValues.InlineString;
                               cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(voterData.Name) };
-                              cell.StyleIndex = 6;
+                              cell.StyleIndex = 2;
                               cell = InsertCellInWorksheet("B", rowIndex, worksheetPart);
                               cell.DataType = CellValues.InlineString;
                               if (voterData.VoterPFVMeasure != null)
@@ -3236,7 +3244,7 @@ namespace GreenField.Web.Services
 
                                   cell.InlineString = new InlineString() { Text = new DocumentFormat.OpenXml.Spreadsheet.Text(" ") };
                               }
-                              cell.StyleIndex = 6;
+                              cell.StyleIndex = 2;
                           }
 
                           rowIndex += 1;

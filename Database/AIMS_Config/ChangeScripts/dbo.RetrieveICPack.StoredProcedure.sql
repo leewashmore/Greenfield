@@ -26,7 +26,7 @@ BEGIN
     FileMaster FM
     INNER JOIN  dbo.PresentationAttachedFileInfo Pa ON Pa.FileId = Fm.FileId
     Inner Join dbo.Presentationinfo p on p.presentationid = pa.presentationid
-    where p.statustype = 'Ready for Voting'
+    where p.statustype in( 'Ready for Voting','Voting Closed')
     and FM.Category='Investment Committee Packet'
     and FM.Type = 'IC Presentations'
    
