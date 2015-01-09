@@ -510,7 +510,7 @@ namespace GreenField.Web.Services
                     foreach (GreenField.DAL.GF_SELECTION_BASEVIEW record in data)
                     {
                         var security = securities.Where(sec => sec.ASEC_SEC_SHORT_NAME == record.INSTRUMENT_ID).FirstOrDefault();
-                        if (security!=null && (security.UPDATE_BB_STATUS == "ACTIVE"||security.SECURITY_TYPE=="PNOTE" || security.UPDATE_BB_STATUS == "NEW" ))  //Suppress all the inactive securities except for pnotes
+                        if (security != null && (security.UPDATE_BB_STATUS == "ACTIVE" || security.SECURITY_TYPE == "PNOTE" || security.UPDATE_BB_STATUS == "NEW" || security.UPDATE_BB_STATUS == "PRICE N/A"))  //Suppress all the inactive securities except for pnotes
                         {
                             result.Add(new EntitySelectionData()
                             {

@@ -636,17 +636,7 @@ namespace GreenField.Web.Services
                             presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= lowerLimit
                                 ? "Buy" : "Watch";
                         }
-                        String securityID = securityData.SECURITY_ID.ToString();
-                        PERIOD_FINANCIALS_SECURITY periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS_SECURITY
-                            .Where(record => record.SECURITY_ID == securityID
-                                && record.DATA_ID == 185
-                                && record.CURRENCY == "USD"
-                                && record.PERIOD_TYPE == "C").FirstOrDefault();
-
-                        if (periodFinancialRecord != null)
-                        {
-                            presentationOverviewData.SecurityMarketCapitalization = Convert.ToSingle(periodFinancialRecord.AMOUNT);
-                        }
+                        
                     }
                     
                    
@@ -660,7 +650,17 @@ namespace GreenField.Web.Services
                         presentationOverviewData.FVCalc = String.Concat(String.Format("{0:n2}", fairValueICRecord.FV_BUY), "x - ", String.Format("{0:n2}", fairValueICRecord.FV_SELL),"x", dataMasterRecord.DATA_DESC);
                     }
                 }
+                String securityID = securityData.SECURITY_ID.ToString();
+                PERIOD_FINANCIALS_SECURITY periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS_SECURITY
+                    .Where(record => record.SECURITY_ID == securityID
+                        && record.DATA_ID == 185
+                        && record.CURRENCY == "USD"
+                        && record.PERIOD_TYPE == "C").FirstOrDefault();
 
+                if (periodFinancialRecord != null)
+                {
+                    presentationOverviewData.SecurityMarketCapitalization = Convert.ToSingle(periodFinancialRecord.AMOUNT);
+                }
 
                 #endregion
 
