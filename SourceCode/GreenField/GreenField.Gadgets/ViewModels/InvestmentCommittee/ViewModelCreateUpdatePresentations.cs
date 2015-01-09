@@ -318,7 +318,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 BusyIndicatorNotification(true, "Uploading document");
                 String deleteUrl = String.Empty;
-                if (SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT)
+                if (SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT && SelectedUploadDocumentInfo != UploadDocumentType.DCF_MODEL)
                 {
                     FileMaster overwriteFileMaster = SelectedPresentationDocumentationInfo.Where(record => record.Category == SelectedUploadDocumentInfo)
                         .FirstOrDefault();
@@ -457,7 +457,7 @@ namespace GreenField.Gadgets.ViewModels
                         UploadFileData.Location = result;
                         if (dbInteractivity != null)
                         {
-                            if (SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT)
+                            if (SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT && SelectedUploadDocumentInfo != UploadDocumentType.DCF_MODEL)
                             {
                                 UploadFileData.Name = SelectedUploadFileName;
                             }
@@ -530,7 +530,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     if (SelectedPresentationOverviewInfo != null && dbInteractivity != null)
                     {
-                        BusyIndicatorNotification(true, "Resubmitting presentation...");
+                        BusyIndicatorNotification(true, "Submitting presentation for voting...");
                         dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
                             SelectedPresentationOverviewInfo, false, ReSubmitPresentationCallbackMethod);
                     }

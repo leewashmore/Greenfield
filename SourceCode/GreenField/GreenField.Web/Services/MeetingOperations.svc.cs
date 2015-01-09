@@ -1368,8 +1368,7 @@ namespace GreenField.Web.Services
                 }
             }
 
-            FileMaster dcfFile = fileMasterInfo.Where(record => record.Category == "DCF Model").FirstOrDefault();
-            if (dcfFile != null)
+            foreach(FileMaster dcfFile in fileMasterInfo.Where(record => record.Category == "DCF Model"))
             {
                 String convertedPdf = ConvertImagePdfFileToLocalPdf(dcfFile);
                 if (convertedPdf != null)

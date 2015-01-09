@@ -117,7 +117,7 @@ namespace GreenField.Gadgets.Views
                 }
                 DataContextViewModelCreateUpdatePresentations.BusyIndicatorNotification(true, "Reading file...");
 
-                Boolean uploadFileExists = DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT
+                Boolean uploadFileExists = DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT && DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo != UploadDocumentType.DCF_MODEL
                     && DataContextViewModelCreateUpdatePresentations.SelectedPresentationDocumentationInfo
                         .Any(record => record.Category.ToUpper() == DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo.ToUpper());
 
