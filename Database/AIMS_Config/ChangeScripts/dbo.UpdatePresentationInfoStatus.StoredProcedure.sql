@@ -22,14 +22,16 @@ BEGIN
     and FM.Category='Investment Committee Packet'
     and FM.Type = 'IC Presentations'*/
     -- update the time the status was changed
-    update meetinginfo set meetingdatetime = getdate(), meetingcloseddatetime = getdate(),
-    meetingvotingclosedDateTime = getdate() where meetingid in (
-    select meetingid from meetingpresentationmappinginfo where presentationid in (
-    select presentationid from dbo.presentationInfo where statustype = @FromStatus)
-    )
-    
+ 
     update dbo.Presentationinfo set statustype = @ToStatus
     where presentationId in (select presentationid from dbo.presentationInfo where statustype = @FromStatus)
+    
+   
+      update meetinginfo set meetingdatetime = getdate(), meetingcloseddatetime = getdate(),
+    meetingvotingclosedDateTime = getdate() where meetingid in (
+    select meetingid from meetingpresentationmappinginfo where presentationid in (
+    select presentationid from dbo.presentationInfo where statustype = @ToStatus)
+    )
     
    
 END
